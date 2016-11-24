@@ -1,4 +1,4 @@
-package com.wu1g.panorama.dto;
+package com.wu1g.framework.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BaseDto extends com.wu1g.framework.dto.BaseDto {
+public class BaseDto extends com.wu1g.framework.vo.BaseDto {
 
     String token;
 

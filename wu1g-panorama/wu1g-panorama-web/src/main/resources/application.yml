@@ -12,7 +12,7 @@ server:
 # Spring properties
 spring:
   application:
-     name: client
+     name: wu1g-services
   datasource:
 #    name: cwwyw
 #    type: com.alibaba.druid.pool.DruidDataSource

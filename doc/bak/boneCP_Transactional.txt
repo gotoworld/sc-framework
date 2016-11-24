@@ -1,0 +1,59 @@
+	
+	==================jdbc.properties=====================
+	
+	# 数据库驱动 
+	db.driverClass=com.mysql.jdbc.Driver
+	# 相应驱动的jdbcUrl,你懂的 
+	db.jdbcUrl=jdbc:mysql://localhost:3306/baseos?noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+	# 数据库的用户名 
+	db.username=root
+	# 数据库的密码 
+	db.password=root
+	# 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 
+	db.idleConnectionTestPeriodInMinutes=240
+	# 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 
+	db.idleMaxAgeInMinutes=60
+	# 每个分区最大的连接数 
+	#设置每个分区含有connection最大个数。这个参数默认为2。如果小于2，BoneCP将设置为50。 
+	db.maxConnectionsPerPartition=60
+	# 设置每个分区含有connection最小个数。这个参数默认为0。 
+	db.minConnectionsPerPartition=20
+	#设置分区个数。这个参数默认为1，建议3-4（根据特定应用程序而定）。 
+	db.partitionCount=3
+	# 每次去拿数据库连接的时候一次性要拿几个,默认值：2 
+	db.acquireIncrement=2
+	# 缓存prepared statements的大小，默认值：0 
+	db.statementsCacheSize=50
+	
+		
+	=================================maven pom========================================
+	
+	<dependency>
+	    <groupId>com.jolbox</groupId>
+	    <artifactId>bonecp</artifactId>
+	    <version>0.8.0.RELEASE</version>
+	</dependency>
+	
+	==============================spring-xml=========================================
+	
+	<bean id="dataSource_db1" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close"> 
+		<property name="driverClass" value="${db.driverClass}" /> 
+		<property name="jdbcUrl" value="${db.jdbcUrl}" /> 
+		<property name="username" value="${db.username}" /> 
+		<property name="password" value="${db.password}" /> 
+		<property name="idleConnectionTestPeriodInMinutes" value="${db.idleConnectionTestPeriodInMinutes}" /> 
+		<property name="idleMaxAgeInMinutes" value="${db.idleMaxAgeInMinutes}" /> 
+		<property name="maxConnectionsPerPartition" value="${db.maxConnectionsPerPartition}" /> 
+		<property name="minConnectionsPerPartition" value="${db.minConnectionsPerPartition}" /> 
+		<property name="partitionCount" value="${db.partitionCount}" /> 
+		<property name="acquireIncrement" value="${db.acquireIncrement}" /> 
+		<property name="statementsCacheSize" value="${db.statementsCacheSize}" /> 
+	</bean>  
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource_db1" />
+	</bean>
+	<!-- 声明式事务 @Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.baseos.dao.daointer.adi.IAreaDao" >
+<!-- 
+	/**
+	 * <p>信息列表。</p>
+	 * <ol>[功能概要] 
+	 * <div>信息检索。</div>
+	 * <div>列表 省。</div>
+	 * </ol>
+	 * @return 处理结果
+	 */
+	public List<java.util.HashMap> findDataIsListA(Map<String,String> map);
+ -->
+ <select id="findDataIsListA" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+ 	select province_id as id,province_name as name from t_adi_province 
+ 	order by sort_num asc
+ </select>
+ <!-- 
+	/**
+	 * <p>信息列表。</p>
+	 * <ol>[功能概要] 
+	 * <div>信息检索。</div>
+	 * <div>列表 市。</div>
+	 * </ol>
+	 * @return 处理结果
+	 */
+	public List<java.util.HashMap> findDataIsListB(Map<String,String> map);
+ -->
+ <select id="findDataIsListB" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+ 	select city_id as id,city_name as name from t_adi_city
+ 	where city_id like concat(#{id},'%') 
+ 	order by sort_num asc
+ </select>
+ <!-- 
+	/**
+	 * <p>信息列表。</p>
+	 * <ol>[功能概要] 
+	 * <div>信息检索。</div>
+	 * <div>列表 县。</div>
+	 * </ol>
+	 * @return 处理结果
+	 */
+	public List<java.util.HashMap> findDataIsListC(Map<String,String> map);
+ -->
+ <select id="findDataIsListC" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+ 	select county_id as id,county_name as name from t_adi_county
+ 	where county_id like concat(#{id},'%') 
+ 	order by sort_num asc
+ </select>
+ <!-- 
+	/**
+	 * <p>信息列表。</p>
+	 * <ol>[功能概要] 
+	 * <div>信息检索。</div>
+	 * <div>列表 镇。</div>
+	 * </ol>
+	 * @return 处理结果
+	 */
+	public List<java.util.HashMap> findDataIsListD(Map<String,String> map);
+ -->
+  <select id="findDataIsListD" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+ 	select town_id as id,town_name as name from t_adi_town
+ 	where town_id like concat(#{id},'%') 
+ 	order by sort_num asc
+ </select>
+ <!-- 
+	/**
+	 * <p>信息列表。</p>
+	 * <ol>[功能概要] 
+	 * <div>信息检索。</div>
+	 * <div>列表村。</div>
+	 * </ol>
+	 * @return 处理结果
+	 */
+	public List<java.util.HashMap> findDataIsListE(Map<String,String> map);
+ -->
+ <select id="findDataIsListE" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+ 	select village_id as id,town_name as name from t_adi_village
+ 	where village_id like concat(#{id},'%') 
+ 	order by sort_num asc
+ </select>
+ 
+ <!-- TODO  -->
+ 
+ <!-- 获取子地址列表 -->
+	<select id="getSubAddress" parameterType="String" resultType="java.util.HashMap">
+		select id,code,parentCode,name,lv from mall_china_map where parentCode=#{parentCode} order by code;
+	</select>
+	
+	<!-- 获取所有子地址列表 ，包括下级的下级-->
+	<select id="getSubAddress_all" parameterType="String" resultType="java.util.HashMap">
+		select id,code,parentCode,name,lv from mall_china_map where code like #{parentCode}+"%" order by parentCode;
+	</select>
+	
+	<!-- 根据级别获取地址列表-->
+	<select id="getAddressByLevel" parameterType="String" resultType="java.util.HashMap">
+		
+		select id,code,parentCode,name,lv from mall_china_map where lv= #{level} order by parentCode
+	</select>
+	
+	<!-- 模版设置获取省市-->
+ 	<select id="getAddressAll" parameterType="String" resultType="java.util.HashMap"> 
+ 		<![CDATA[
+ 		    select id,code,parentCode,name,lv from mall_china_map where lv <= #{level} order by parentCode
+ 		]]> 
+ 	</select> 
+</mapper>

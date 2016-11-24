@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status=debug 可以查看log4j的装配过程 -->
+<configuration status="off" monitorInterval="1800">
+	<properties>
+		<property name="LOG_HOME">/home/logs</property>
+		<!-- 日志备份目录 -->
+		<property name="BACKUP_HOME">{LOG_HOME}/backup</property>
+		<property name="ERROR_NAME">error</property>
+		<property name="SERVER_NAME">all</property>
+	</properties>
+	<appenders>
+		<!-- 定义控制台输出 -->
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+		</Console>
+		<!-- 程序员调试日志 -->
+		<RollingRandomAccessFile name="DevLog" fileName="${LOG_HOME}/${SERVER_NAME}" filePattern="${LOG_HOME}/${SERVER_NAME}.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+		<!-- 生产错误日志 -->
+        <RollingRandomAccessFile name="Errorlog" fileName="${LOG_HOME}/${ERROR_NAME}" filePattern="${LOG_HOME}/${ERROR_NAME}.%d{yyyy-MM-dd-HH}.log">
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingRandomAccessFile>
+	</appenders>
+	<loggers>
+		<logger name="org.apache.http" level="warn" />
+		<logger name="com.mchange.v2" level="warn" />
+
+		<!-- Spring -->
+		<logger name="org.springframework" level="WARN" />
+		<logger name="org.springframework.beans" level="WARN" />
+		<!-- 显示SQL语句部分 -->
+		<logger name="cn.com.baseos" level="DEBUG" />
+		<!-- mybatis loggers -->
+		<logger name="com.ibatis" level="DEBUG,stdout" />
+		<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG,stdout" />
+		<logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG,stdout" />
+		<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG,stdout" />
+		<!-- sql loggers -->
+		<logger name="java.sql.Connection" level="DEBUG,stdout" />
+		<logger name="java.sql.Statement" level="DEBUG,stdout" />
+		<logger name="java.sql.PreparedStatement" level="DEBUG,stdout" />
+		<logger name="java.sql.ResultSet" level="DEBUG,stdout" />
+		<!-- General Apache libraries -->
+		<logger name="org.apache" level="WARN" />
+		<!-- Default Shiro logging -->
+		<logger name="org.apache.shiro" level="WARN" />
+		<!-- Disable verbose logging -->
+		<logger name="org.apache.shiro.util.ThreadContext" level="WARN" />
+		<logger name="org.apache.shiro.cache.ehcache.EhCache" level="WARN" />
+
+		<!-- error logger -->
+		<logger name="cn.com.baseos" level="error" additivity="false">
+			<appender-ref ref="Errorlog" />
+		</logger>
+		<!-- Root Logger -->
+		<root level="DEBUG">
+			<appender-ref ref="DevLog" />
+			<appender-ref ref="Console" />
+		</root>
+	</loggers>
+</configuration>

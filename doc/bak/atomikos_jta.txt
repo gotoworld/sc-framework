@@ -1,0 +1,100 @@
+	==================jta.properties=====================
+	略
+	==================jdbc.properties=====================
+	#MYSQL数据库--平台业务库
+	db1.driverClassName=com.mysql.jdbc.Driver
+	db1.url=jdbc:mysql://localhost:3306/baseos?noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+	db1.username=root
+	db1.password=root
+	#连接池初始化数量
+	db1.poolSize=3
+	#连接池最小数量
+	db1.minPoolSize=5
+	#连接池最大数量
+	db1.maxPoolSize=5
+	db1.loginTimeout=30
+	db1.reapTimeout=20000
+		
+	=================================maven pom========================================
+	
+	<properties>
+		<atomikos.version>3.8.0</atomikos.version>
+	</properties>
+	<!-- 事务管理 atomikos -->
+    <dependency>
+		<groupId>com.atomikos</groupId>
+		<artifactId>atomikos-util</artifactId>
+		<version>${atomikos.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.atomikos</groupId>
+		<artifactId>transactions</artifactId>
+		<version>${atomikos.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.atomikos</groupId>
+		<artifactId>transactions-api</artifactId>
+		<version>${atomikos.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.atomikos</groupId>
+		<artifactId>transactions-jta</artifactId>
+		<version>${atomikos.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.atomikos</groupId>
+		<artifactId>transactions-jdbc</artifactId>
+		<version>${atomikos.version}</version>
+	</dependency>
+	<!-- JTA -->
+	<dependency>
+		<groupId>javax.transaction</groupId>
+		<artifactId>jta</artifactId>
+		<version>1.1</version>
+	</dependency>
+		
+		
+	================================spring xml================================================
+	
+	<!-- JTA事务管理器 -->
+	<bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+		<description>UserTransactionImp</description>
+		<property name="transactionTimeout" value="800"/>
+	</bean>
+	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" destroy-method="close">
+		<description>UserTransactionManager</description>
+		<property name="forceShutdown" value="true"/>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+		<description>JtaTransactionManager</description>
+		<property name="transactionManager" ref="atomikosTransactionManager"/>
+		<property name="userTransaction" ref="atomikosUserTransaction"/>
+		<property name="allowCustomIsolationLevels" value="true"/>
+	</bean>
+	 
+	<!-- 声明式事务 @Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- *****平台业务库连接信息开始************************************ -->
+	<bean id="dataSource_db1" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+        <description>DB1_XA_DATASOURCE</description>
+        <property name="uniqueResourceName">
+            <value>MysqlXADataSource_db1</value>
+        </property>
+        <property name="xaDataSourceClassName">
+            <value>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</value>
+        </property>
+        <property name="xaProperties">
+            <props>
+                <prop key="user">${db1.username}</prop>
+                <prop key="password">${db1.password}</prop>
+                <prop key="URL">${db1.url}</prop>
+            </props>
+        </property>
+		<property name="testQuery"><value>select 1</value></property>
+		<property name="poolSize"><value>${db1.poolSize}</value></property>
+		<property name="minPoolSize"><value>${db1.minPoolSize}</value></property>  
+        <property name="maxPoolSize"><value>${db1.maxPoolSize}</value></property>      
+        <property name="loginTimeout"><value>${db1.loginTimeout}</value></property>    
+        <property name="reapTimeout"><value>${db1.reapTimeout}</value></property>
+    </bean>

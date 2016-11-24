@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>wu1g-commons</artifactId>
+        <groupId>com.wu1g.commons</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.wu1g.commons</groupId>
+    <artifactId>wu1g-common-web</artifactId>
+    <version>1.0</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.wu1g.framework</groupId>
+            <artifactId>wu1g-framework-web</artifactId>
+            <version>${wu1g.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[7.0.0, 7.1.99]</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wu1g.commons</groupId>
+            <artifactId>wu1g-common-biz</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+</project>

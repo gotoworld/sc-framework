@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+	<bean name="vendorProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="SQL Server">sqlserver</prop>
+				<prop key="DB2">db2</prop>
+				<prop key="Oracle">oracle</prop>
+				<prop key="MySQL">mysql</prop>
+				<prop key="H2">h2</prop>
+			</props>
+		</property>
+	</bean>
+	<bean name="dbProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+		<property name="properties" ref="vendorProperties" />
+	</bean>
+
+	<!-- 配置sqlSessionFactory -->
+	<bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource_db1" />
+		<property name="databaseIdProvider" ref="dbProvider" />
+		<property name="typeAliasesPackage" value="${mybatis.aliasesPackage}" />
+		<property name="configLocation" value="${mybatis.configLocation}" />
+		<property name="mapperLocations" value="${mybatis.mapperLocations}" />
+	</bean>
+	<!-- 配置sqlSessionTemplate -->
+	<bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	<bean name="mapperScanner-mpapp" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.com.baseos" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+
+</beans>

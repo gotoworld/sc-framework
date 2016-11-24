@@ -62,3 +62,10 @@ configuration:
   mapUnderscoreToCamelCase: true
   callSettersOnNulls: true
   logPrefix: dao.
+
+wu1g:
+  common:
+    fileServer:
+      rootFolder:
+        upload: /mnt/app/nginx/html/download/
+        download: /download/

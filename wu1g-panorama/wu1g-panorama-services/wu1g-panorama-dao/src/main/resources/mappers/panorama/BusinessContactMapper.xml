@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wu1g.panorama.mapper.IpanoramaContactMapper" >
+	<!-- 字段列表 -->
+	<sql id="Base_Column_List" >
+		 t1.id as  "id"
+		,t1.panorama_type as  "panoramaType"
+		,t1.panorama_name as  "panoramaName"
+		,t1.contact_name as  "contactName"
+		,t1.telphone as  "telphone"
+		,t1.province as  "province"
+		,t1.city as  "city"
+		,t1.county as  "county"
+		,CONCAT( t3.name,' ',t4.name,' ',t5.name) as "areaName"
+		,t1.adderss as  "adderss"
+		,t1.brief_info as  "briefInfo"
+		,t1.detail_info as  "detailInfo"
+		,t1.state as  "state"
+		,(CASE
+			when t1.state = 1  THEN '未通过'
+			when t1.state = 2 then '成功'
+			else '待处理'
+		end) as  "stateName"
+		,t1.created_id as  "createdId"
+		,t1.created_at as  "createdAt"
+		,t1.updated_at as  "updatedAt"
+		,t1.remarks as  "remarks"
+		,t2.nick_name as "createdName"
+	</sql>
+
+	<!-- 根据主键获取信息详情 -->
+	<select id="selectByPrimaryKey" resultType="com.wu1g.panorama.modal.panoramaContact" parameterType="com.wu1g.panorama.modal.panoramaContact" >
+		select
+		<include refid="Base_Column_List" />
+		from t_panorama_contact t1
+		left join us_info t2 on (t1.created_id=t2.accid)
+		left join sys_area_info t3 on (t1.province=t3.id)
+		left join sys_area_info t4 on (t1.city=t4.id)
+		left join sys_area_info t5 on (t1.county=t5.id)
+		where
+		t1.id = #{id}
+		<if test="delFlag!= null" > and t1.del_flag=#{delFlag}</if>
+	</select>
+
+	<!-- 根据主键物理删除信息 -->
+	<delete id="deleteByPrimaryKey" parameterType="com.wu1g.panorama.modal.panoramaContact" >
+		delete
+		from t_panorama_contact
+		where
+		id = #{id}
+	</delete>
+
+	<!-- 新增单条数据 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.wu1g.panorama.modal.panoramaContact" >
+		insert into t_panorama_contact(
+		panorama_type
+		,panorama_name
+		,contact_name
+		,telphone
+		,province
+		,city
+		,county
+		,adderss
+		,brief_info
+		,detail_info
+		,state
+		,version
+		,sort_num
+		,created_id
+		,created_at
+		,updated_at
+		,remarks
+		,del_flag
+		) values (
+		 #{panoramaType}
+		,#{panoramaName}
+		,#{contactName}
+		,#{telphone}
+		,#{province}
+		,#{city}
+		,#{county}
+		,#{adderss}
+		,#{briefInfo}
+		,#{detailInfo}
+		,0
+		,0
+		,0
+		,#{createdId}
+		,now()
+		,now()
+		,#{remarks}
+		,0
+		)
+	</insert>
+
+	<!-- 数据更新 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.wu1g.panorama.modal.panoramaContact" >
+		update t_panorama_contact set
+		version=version+1
+		,updated_at=now()
+		<if test="panoramaType!= null" >,panorama_type=#{panoramaType}</if>
+		<if test="panoramaName!= null" >,panorama_name=#{panoramaName}</if>
+		<if test="contactName!= null" >,contact_name=#{contactName}</if>
+		<if test="telphone!= null" >,telphone=#{telphone}</if>
+		<if test="province!= null" >,province=#{province}</if>
+		<if test="city!= null" >,city=#{city}</if>
+		<if test="county!= null" >,county=#{county}</if>
+		<if test="adderss!= null" >,adderss=#{adderss}</if>
+		<if test="briefInfo!= null" >,brief_info=#{briefInfo}</if>
+		<if test="detailInfo!= null" >,detail_info=#{detailInfo}</if>
+		<if test="state!= null" >,state=#{state}</if>
+		<if test="sortNum!= null" >,sort_num=#{sortNum}</if>
+		<if test="remarks!= null" >,remarks=#{remarks}</if>
+		where
+		id= #{id}
+	</update>
+
+	<!-- 判断是否存在 -->
+	<select id="isDataYN" parameterType="com.wu1g.panorama.modal.panoramaContact" resultType="int">
+		select
+		count(0)
+		from t_panorama_contact
+		where
+		id = #{id}
+	</select>
+
+	<!-- 列表查询通用条件 -->
+	<sql id="find_list_where_sql" >
+		<choose>
+			<when test="delFlag!=null">
+				and t1.del_flag=#{delFlag}
+			</when>
+			<otherwise>
+				and t1.del_flag=0
+			</otherwise>
+		</choose>
+		<if test="panoramaName!=null and panoramaName!=''">
+			and (
+			t1.panorama_name like concat('%',#{panoramaName},'%')
+			or t1.contact_name like concat('%',#{panoramaName},'%')
+			or t1.telphone like concat('%',#{panoramaName},'%')
+			)
+		</if>
+		<if test="panoramaType!=null and panoramaType!=''">
+			and t1.panorama_type =  #{panoramaType}
+		</if>
+		<if test="province!=null and province!=''">
+			and t1.province = #{province}
+		</if>
+		<if test="city!=null and city!=''">
+			and t1.city = #{city}
+		</if>
+		<if test="county!=null and county!=''">
+			and t1.county =  #{county}
+		</if>
+		<choose>
+			<when test="stateFlag==0 and state!=2">
+				<choose>
+					<when test="state!=null">
+						and t1.state =#{state}
+					</when>
+					<otherwise>
+						and t1.state in (0,1)
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				and t1.state = 2
+			</otherwise>
+		</choose>
+		<if test="dateBegin!=null and dateBegin!=''">
+			<![CDATA[ and UNIX_TIMESTAMP(t1.created_at)>=UNIX_TIMESTAMP(#{dateBegin,jdbcType=TIMESTAMP})]]>
+		</if>
+		<if test="dateEnd!=null and dateEnd!=''">
+			<![CDATA[ and UNIX_TIMESTAMP(t1.created_at)<=UNIX_TIMESTAMP(#{dateEnd,jdbcType=TIMESTAMP})]]>
+		</if>
+	</sql>
+
+	<!--信息列表 分页 -->
+	<select id="findDataIsPage" parameterType="com.wu1g.panorama.modal.panoramaContact" resultType="com.wu1g.panorama.modal.panoramaContact">
+		select
+		<include refid="Base_Column_List" />
+		from t_panorama_contact t1
+		left join us_info t2 on (t1.created_id=t2.accid)
+		left join sys_area_info t3 on (t1.province=t3.id)
+		left join sys_area_info t4 on (t1.city=t4.id)
+		left join sys_area_info t5 on (t1.county=t5.id)
+		where 1=1
+		<include refid="find_list_where_sql" />
+		order by t1.sort_num desc,t1.created_at desc
+	</select>
+
+	<!--信息列表 -->
+	<select id="findDataIsList" parameterType="com.wu1g.panorama.modal.panoramaContact" resultType="com.wu1g.panorama.modal.panoramaContact">
+		select
+		<include refid="Base_Column_List" />
+		from t_panorama_contact t1
+		left join us_info t2 on (t1.created_id=t2.accid)
+		left join sys_area_info t3 on (t1.province=t3.id)
+		left join sys_area_info t4 on (t1.city=t4.id)
+		left join sys_area_info t5 on (t1.county=t5.id)
+		where 1=1
+		<include refid="find_list_where_sql" />
+		order by t1.sort_num desc,t1.created_at desc
+	</select>
+
+	<!-- 逻辑删除-->
+	<update id="deleteById" parameterType="com.wu1g.panorama.modal.panoramaContact" >
+		update t_panorama_contact set
+		version=version+1
+		,updated_at=now()
+		,del_flag=1
+		where
+		id = #{id}
+	</update>
+
+	<!-- 恢复逻辑删除 -->
+	<update id="recoveryDataById" parameterType="com.wu1g.panorama.modal.panoramaContact" >
+		update t_panorama_contact set
+			version=version+1
+			,updated_at=now()
+			,del_flag=0
+		where
+			id = #{id}
+	</update>
+
+
+	<!--Xls导出信息列表 -->
+	<select id="findXlsDataIsList" parameterType="com.wu1g.panorama.modal.panoramaContact" resultType="java.util.LinkedHashMap">
+		select
+		t1.created_at as  "createdAt"
+		,t1.panorama_name as  "panoramaName"
+		,t1.contact_name as  "contactName"
+		,t1.telphone as  "telphone"
+		,CONCAT( t3.name,' ',t4.name,' ',t5.name,' ',t1.adderss) as "areaName"
+		,t1.panorama_type as  "panoramaType"
+		,t2.nick_name as "createdName"
+		,(CASE
+		when t1.state = 1  THEN '未通过'
+		when t1.state = 2 then '成功'
+		else '待处理'
+		end) as  "stateName"
+		from t_panorama_contact t1
+		left join us_info t2 on (t1.created_id=t2.accid)
+		left join sys_area_info t3 on (t1.province=t3.id)
+		left join sys_area_info t4 on (t1.city=t4.id)
+		left join sys_area_info t5 on (t1.county=t5.id)
+		where 1=1
+		<include refid="find_list_where_sql" />
+		order by t1.sort_num desc,t1.created_at desc
+	</select>
+
+</mapper>

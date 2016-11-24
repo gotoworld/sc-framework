@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="common-web" />
+        <module name="framework-api" />
+        <module name="framework-cache" />
+        <module name="framework-core" />
+        <module name="framework-service" />
+        <module name="framework-web" />
+        <module name="wu1g-common-api" />
+        <module name="wu1g-common-biz" />
+        <module name="wu1g-common-core" />
+        <module name="wu1g-common-dao" />
+        <module name="wu1g-common-web" />
+        <module name="wu1g-framework-api" />
+        <module name="wu1g-framework-cache" />
+        <module name="wu1g-framework-core" />
+        <module name="wu1g-framework-service" />
+        <module name="wu1g-framework-web" />
+        <module name="wu1g-panorama-api" />
+        <module name="wu1g-panorama-biz" />
+        <module name="wu1g-panorama-dao" />
+        <module name="wu1g-panorama-server" />
+        <module name="wu1g-panorama-web" />
+        <module name="wu1g-panorama-web-boss" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common-web" target="1.8" />
+      <module name="framework-api" target="1.6" />
+      <module name="framework-cache" target="1.8" />
+      <module name="framework-core" target="1.8" />
+      <module name="framework-service" target="1.8" />
+      <module name="framework-web" target="1.8" />
+      <module name="servers" target="1.8" />
+      <module name="wu1g-common-api" target="1.8" />
+      <module name="wu1g-common-biz" target="1.8" />
+      <module name="wu1g-common-core" target="1.8" />
+      <module name="wu1g-common-dao" target="1.8" />
+      <module name="wu1g-common-services" target="1.8" />
+      <module name="wu1g-common-web" target="1.8" />
+      <module name="wu1g-commons" target="1.8" />
+      <module name="wu1g-framework" target="1.8" />
+      <module name="wu1g-framework-api" target="1.8" />
+      <module name="wu1g-framework-cache" target="1.8" />
+      <module name="wu1g-framework-core" target="1.8" />
+      <module name="wu1g-framework-service" target="1.8" />
+      <module name="wu1g-framework-starter" target="1.8" />
+      <module name="wu1g-framework-web" target="1.8" />
+      <module name="wu1g-panorama" target="1.8" />
+      <module name="wu1g-panorama-api" target="1.8" />
+      <module name="wu1g-panorama-biz" target="1.8" />
+      <module name="wu1g-panorama-dao" target="1.8" />
+      <module name="wu1g-panorama-server" target="1.8" />
+      <module name="wu1g-panorama-service" target="1.8" />
+      <module name="wu1g-panorama-services" target="1.8" />
+      <module name="wu1g-panorama-web" target="1.8" />
+      <module name="wu1g-panorama-web-boss" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

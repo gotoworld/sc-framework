@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/wu1g-commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-commons/common-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-commons/common-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-commons/common-web/wu1g-common-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-commons/common-web/wu1g-common-services" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-commons/common-web/wu1g-common-services/wu1g-common-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-commons/common-web/wu1g-common-services/wu1g-common-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-commons/common-web/wu1g-common-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-cache" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-panorama" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-web" charset="UTF-8" />
+  </component>
+</project>

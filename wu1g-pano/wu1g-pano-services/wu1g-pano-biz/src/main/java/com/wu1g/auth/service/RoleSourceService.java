@@ -9,22 +9,23 @@
  *	
  */
 package com.wu1g.auth.service;
+
+import com.wu1g.auth.api.IRoleSourceService;
+import com.wu1g.auth.dao.IAuthPermDao;
+import com.wu1g.auth.dao.IAuthRoleDao;
+import com.wu1g.auth.vo.AuthPerm;
+import com.wu1g.auth.vo.AuthRole;
+import com.wu1g.framework.service.BaseService;
+import com.wu1g.org.dao.IOrgUserDao;
+import com.wu1g.org.vo.OrgUser;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import cn.com.baseos.bean.auth.AuthPerm;
-import cn.com.baseos.bean.auth.AuthRole;
-import cn.com.baseos.bean.org.OrgUser;
-import cn.com.baseos.dao.daointer.auth.IAuthPermDao;
-import cn.com.baseos.dao.daointer.auth.IAuthRoleDao;
-import cn.com.baseos.dao.daointer.org.IOrgUserDao;
-import cn.com.baseos.service.BaseService;
-import cn.com.baseos.service.auth.IRoleSourceService;
 /**
  * <p>角色资源 业务处理实现类。</p>	
  * <ol>[功能概要] 
@@ -32,9 +33,9 @@ import cn.com.baseos.service.auth.IRoleSourceService;
  * @author wuxiaogang
  */
 @Service("roleSourceService")
-public class RoleSourceService extends BaseService implements IRoleSourceService{
+@Slf4j
+public class RoleSourceService extends BaseService implements IRoleSourceService {
 
-	private static final transient Logger log = Logger.getLogger(RoleSourceService.class);
 	/**角色信息表 Dao接口类*/
 	@Autowired
 	private IAuthRoleDao authRoleDao;

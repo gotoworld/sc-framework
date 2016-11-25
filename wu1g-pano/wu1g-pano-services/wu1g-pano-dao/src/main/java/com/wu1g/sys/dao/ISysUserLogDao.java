@@ -12,6 +12,7 @@ package com.wu1g.sys.dao;
 
 
 import com.wu1g.framework.IBaseDao;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -20,5 +21,6 @@ import com.wu1g.framework.IBaseDao;
  * 
  * @author easycode
  */
+@Mapper
 public interface ISysUserLogDao extends IBaseDao {
 }

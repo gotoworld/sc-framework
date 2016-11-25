@@ -20,7 +20,13 @@
         <option value="$PROJECT_DIR$/wu1g-commons/common-web/wu1g-common-web/pom.xml" />
         <option value="$PROJECT_DIR$/wu1g-commons/common-web/wu1g-common-services/cddang-common-biz/pom.xml" />
         <option value="$PROJECT_DIR$/wu1g-commons/common-web/wu1g-common-services/cddang-common-dao/pom.xml" />
+        <option value="$PROJECT_DIR$/wu1g-pano/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/wu1g-commons/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">

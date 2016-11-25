@@ -23,6 +23,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class Application extends SpringBootServletInitializer implements Environ
 		BeetlGroupUtilConfiguration beetlGroupUtilConfiguration = new BeetlGroupUtilConfiguration();
 		ResourcePatternResolver patternResolver = ResourcePatternUtils.getResourcePatternResolver(new DefaultResourceLoader());
 		try {
-			String root =  patternResolver.getResource("classpath:/view/").getFile().toString();
+			String root =  patternResolver.getResource("classpath:/views/").getFile().toString();
 			WebAppResourceLoader webAppResourceLoader = new WebAppResourceLoader(root);
 			beetlGroupUtilConfiguration.setResourceLoader(webAppResourceLoader);
 
@@ -123,5 +124,22 @@ public class Application extends SpringBootServletInitializer implements Environ
 		creator.setInterceptorNames( "druidStatInterceptor" );
 
 		return creator;
+	}
+
+	/***
+	 *  线程池
+	 */
+	@Bean
+	public ThreadPoolTaskExecutor getTaskExecutor(){
+		ThreadPoolTaskExecutor taskExecutor=new ThreadPoolTaskExecutor();
+//		线程池维护线程的最少数量 
+		taskExecutor.setCorePoolSize(15);
+//		线程池维护线程所允许的空闲时间 
+		taskExecutor.setKeepAliveSeconds(300);
+//		线程池维护线程的最大数量 
+		taskExecutor.setMaxPoolSize(20);
+//		线程池所使用的缓冲队列 (卡不死机) 
+		taskExecutor.setQueueCapacity(1024);
+		return taskExecutor;
 	}
 }

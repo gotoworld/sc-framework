@@ -38,9 +38,9 @@ public class KrPanoUtil {
 			String os = System.getProperty( "os.name" );
 			String config=" -askforxmloverwrite=false -xml=false -html=false ";
 			if (os.toLowerCase().startsWith( "win" )) {
-				shellCommand = "/home/krpano/win/krpanotools64.exe  makepano -config=templates/vtour-multires.config"+config;
+				shellCommand = "/home/krpano/win/krpanotools64.exe  makepano -shiro=templates/vtour-multires.shiro"+config;
 			}else{
-				shellCommand="/home/krpano/linux/krpanotools makepano -config=templates/vtour-multires.config"+config;
+				shellCommand="/home/krpano/linux/krpanotools makepano -shiro=templates/vtour-multires.shiro"+config;
 			}
 		} catch (Exception e) {
 			log.error("参数路径初始化失败!",e );

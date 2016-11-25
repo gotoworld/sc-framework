@@ -14,12 +14,14 @@ import java.util.Map;
 
 import com.wu1g.framework.IBaseDao;
 import com.wu1g.org.vo.OrgUser;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>组织架构_用户  数据库处理接口类。</p>	
  * @author easycode
  */
+@Mapper
 public interface IOrgUserDao extends IBaseDao {
 	/**	
 	 * <p>获取用户信息>根据用户登录名。</p>	

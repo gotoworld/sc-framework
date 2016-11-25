@@ -13,8 +13,6 @@ package com.wu1g.pano.vo;
 
 
 import com.wu1g.framework.vo.BaseVO;
-
-import cn.com.baseos.bean.pano.PanoSpots;
 /**
  * <p>全景_热点  BEAN类。
  * @author easycode

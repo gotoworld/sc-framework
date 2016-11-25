@@ -11,6 +11,7 @@
 package com.wu1g.org.dao;
 
 import com.wu1g.framework.IBaseDao;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import java.util.Map;
  * 
  * @author easycode
  */
+@Mapper
 public interface IOrgUserVsDepartmentDao extends IBaseDao {
 	/** 根据用户id清空用户关联部门信息 */
 	int deleteDataByUid(Map dto) throws Exception;

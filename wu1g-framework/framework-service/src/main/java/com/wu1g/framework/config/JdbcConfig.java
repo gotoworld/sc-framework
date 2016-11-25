@@ -185,7 +185,7 @@ public class JdbcConfig implements EnvironmentAware {
         } catch (Exception e) {
             log.error("mapperLocations: " + e.getMessage());
         }
-        /**myBatis config*/
+        /**myBatis shiro*/
         val = myBatisResolver.getProperty("configLocation");
         try {
             if (val != null)
@@ -193,6 +193,9 @@ public class JdbcConfig implements EnvironmentAware {
         } catch (Exception e) {
             log.error("configLocation: " + e.getMessage());
         }
+        //typeAliasesPackage
+        bean.setTypeAliasesPackage("com.wu1g");
+
 
         try {
             return bean.getObject();

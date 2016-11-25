@@ -58,7 +58,7 @@ spring:
 
 mybatis:
   configLocation: classpath:mybatis-config.xml
-  mapperLocations: classpath:/mappers/**/*.xml
+  mapperLocations: classpath:/mybatis/**/*.xml
 
 configuration:
   mapUnderscoreToCamelCase: true

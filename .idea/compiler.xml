@@ -22,17 +22,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="common-web" />
         <module name="framework-api" />
         <module name="framework-cache" />
         <module name="framework-core" />
         <module name="framework-service" />
         <module name="framework-web" />
-        <module name="wu1g-common-api" />
-        <module name="wu1g-common-biz" />
-        <module name="wu1g-common-core" />
-        <module name="wu1g-common-dao" />
-        <module name="wu1g-common-web" />
         <module name="wu1g-framework-api" />
         <module name="wu1g-framework-cache" />
         <module name="wu1g-framework-core" />

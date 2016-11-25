@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.wu1g;
+package com.wu1g.shiro;
 
 import com.wu1g.auth.api.IRoleSourceService;
 import com.wu1g.auth.vo.AuthPerm;

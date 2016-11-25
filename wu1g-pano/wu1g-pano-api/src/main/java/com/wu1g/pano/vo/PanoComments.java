@@ -13,8 +13,6 @@ package com.wu1g.pano.vo;
 
 
 import com.wu1g.framework.vo.BaseVO;
-
-import cn.com.baseos.bean.pano.PanoComments;
 /**
  * <p>全景_评论  BEAN类。
  * @author easycode

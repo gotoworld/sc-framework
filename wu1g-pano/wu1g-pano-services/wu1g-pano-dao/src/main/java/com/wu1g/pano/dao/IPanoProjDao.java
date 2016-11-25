@@ -14,11 +14,13 @@ package com.wu1g.pano.dao;
 
 import com.wu1g.framework.IBaseDao;
 import com.wu1g.framework.IEntity;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>全景_项目 数据库处理接口类
  * @author easycode
  */
+@Mapper
 public interface IPanoProjDao  extends IBaseDao {
 	int updateXmlData(IEntity dto) throws Exception;
 	

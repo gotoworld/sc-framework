@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.com.baseos.dao.daointer.pano.IPanoCommentsDao" >
+<mapper namespace="com.wu1g.pano.daoIPanoCommentsDao" >
 	<!-- 字段列表 -->
 	<sql id="Base_Column_List" >
 		t1.id as "id"

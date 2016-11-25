@@ -8,7 +8,7 @@
  * Copyright 2016 baseos  System. - All Rights Reserved.
  *
  */
-package com.wu1g;
+package com.wu1g.config;
 
 import com.wu1g.framework.interceptor.UserRememberInterceptor;
 import org.apache.commons.logging.Log;

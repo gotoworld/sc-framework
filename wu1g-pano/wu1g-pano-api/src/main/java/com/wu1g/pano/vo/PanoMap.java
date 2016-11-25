@@ -14,7 +14,6 @@ package com.wu1g.pano.vo;
 
 import com.wu1g.framework.vo.BaseVO;
 
-import cn.com.baseos.bean.pano.PanoMap;
 /**
  * <p>全景_导览图  BEAN类。
  * @author easycode

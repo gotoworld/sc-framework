@@ -26,16 +26,5 @@
             <artifactId>wu1g-framework-service</artifactId>
             <version>${wu1g.framework.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.wu1g.commons</groupId>
-            <artifactId>wu1g-common-core</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>RELEASE</version>
-        </dependency>
     </dependencies>
 </project>

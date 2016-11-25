@@ -13,10 +13,12 @@ package com.wu1g.pano.dao;
 
 
 import com.wu1g.framework.IBaseDao;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>全景_评论 数据库处理接口类
  * @author easycode
  */
+@Mapper
 public interface IPanoCommentsDao  extends IBaseDao {
 }

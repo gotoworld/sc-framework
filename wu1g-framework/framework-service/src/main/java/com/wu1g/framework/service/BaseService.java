@@ -32,9 +32,9 @@ import java.util.Observable;
  */
 @Service
 public abstract class BaseService extends Observable {
-	/** 线程池 */
-	@Autowired
-	protected TaskExecutor			taskExecutor;
+//	/** 线程池 */
+//	@Autowired
+//	protected TaskExecutor			taskExecutor;
 	/** 用户登录id */
 	protected String				uid;
 	/** 权限验证框架 */

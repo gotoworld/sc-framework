@@ -41,7 +41,7 @@ function show_comment(){
 				"set(plugin[commname_avatar].edge,lefttop);"+
 				"set(plugin[commname_avatar].roundedge,3);"+
 				"set(plugin[commname_avatar].enabled,false);"+
-				"set(plugin[commname_avatar].css,'margin:0;width:30px;height:30px;background:url("+basePath+"static/img/avatar.png) 0 0 no-repeat;background-size:30px');"+
+				"set(plugin[commname_avatar].css,'margin:0;width:30px;height:30px;background:url("+basePath+"/img/avatar.png) 0 0 no-repeat;background-size:30px');"+
 				"if(autorotate.enabled==true,switch_xuanzhuan(););"
 		);
    switch_show_comment(true);
@@ -78,7 +78,7 @@ function get_comm(){
 				var commname_txt = commname+"_txt";
 				var commname_avatar = commname+"_avatar";
 				var is_visible = is_show_comment===true ? true : false;
-				var head_img =basePath+"static/img/avatar.png";// comment_list[i].img
+				var head_img =basePath+"/img/avatar.png";// comment_list[i].img
 			    krpano.call(
 				"addhotspot("+commname+");"+
 				"set(hotspot["+commname+"].url,%SWFPATH%/skin/comm-hide-icon.png);"+

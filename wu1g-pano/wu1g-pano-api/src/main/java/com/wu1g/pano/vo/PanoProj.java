@@ -12,9 +12,9 @@
 package com.wu1g.pano.vo;
 
 
-import java.util.List;
-
 import com.wu1g.framework.vo.BaseVO;
+
+import java.util.List;
 /**
  * <p>全景_项目  BEAN类。
  * @author easycode

@@ -10,10 +10,8 @@
  */
 package com.wu1g.framework.interceptor;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.wu1g.framework.util.CommonConstant;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -22,15 +20,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.com.baseos.common.CommonConstant;
-import cn.com.baseos.filter.ExceptionAndExecuteTimeFilter;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *<p>用户免登陆
  */
 @ControllerAdvice
+@Slf4j
 public class UserRememberInterceptor  implements HandlerInterceptor{
-	private static final Log	log	= LogFactory.getLog( UserRememberInterceptor.class );
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		log.debug( "==>UserRememberInterceptor>>preHandle" );

@@ -76,6 +76,8 @@ public class Response<T> {
         Response response = new Response(400, "");
         return response;
     }
-
+    public static Response error(int code,String message) {
+        return new Response(code,message);
+    }
 
 }

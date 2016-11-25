@@ -107,19 +107,6 @@ public class AppConfig implements ApplicationContextAware, EnvironmentAware {
         return password;
     }
 
-    /**
-     * 注入自定义配置Property
-     * @return
-     */
-//    @Bean(name = "appProperty")
-//    @Order(1)
-//    @ConditionalOnMissingBean
-//    public AppPropertyResolver getAppPropertyResolver() {
-//        appProperty = new AppPropertyResolver();
-//        log.info("注入 自定义配置： Prefix=" + keyPrefix + " ！！！");
-//        return appProperty;
-//    }
-
     @Bean
     @Order(2)
     @ConditionalOnMissingBean
@@ -152,38 +139,4 @@ public class AppConfig implements ApplicationContextAware, EnvironmentAware {
     public static Map<String ,Object> getSubProperties(String keyPrefix) {
         return appProperty.getSubProperties(keyPrefix);
     }
-
-//    public class AppPropertyResolver implements  EnvironmentAware {
-//        private RelaxedPropertyResolver propertyResolver;
-//
-//        @Override
-//        public void setEnvironment(Environment env) {
-//            this.propertyResolver = new RelaxedPropertyResolver(env, keyPrefix);
-//        }
-//
-//        public String getProperty(String name) {
-//            return propertyResolver.getProperty(name);
-//        }
-//
-//        public String getProperty(String name, String defaulValue) {
-//            return propertyResolver.getProperty(name, defaulValue);
-//        }
-//
-//        public <T> T getProperty(String name, Class<T> targetType) {
-//            return propertyResolver.getProperty(name, targetType);
-//        }
-//
-//        public <T> T getProperty(String name, Class<T> targetType, T defaulValue) {
-//            return propertyResolver.getProperty(name, targetType, defaulValue);
-//        }
-//
-//        public boolean containsProperty(String key) {
-//            return propertyResolver.containsProperty(key );
-//        }
-//
-//        public Map<String ,Object> getSubProperties(String keyPrefix) {
-//            return propertyResolver.getSubProperties(keyPrefix);
-//        }
-//    }
-
 }

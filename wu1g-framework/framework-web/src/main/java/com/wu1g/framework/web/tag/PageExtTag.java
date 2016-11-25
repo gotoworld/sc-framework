@@ -12,17 +12,15 @@
  */
 package com.wu1g.framework.web.tag;
 
+import com.github.pagehelper.PageInfo;
+import com.wu1g.framework.util.CommonConstant;
+import com.wu1g.framework.util.ValidatorUtil;
+import org.beetl.core.GeneralVarTagBinding;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.beetl.core.GeneralVarTagBinding;
-
-import com.github.pagehelper.PageInfo;
-
-import cn.com.baseos.common.CommonConstant;
-import cn.com.baseos.common.ValidatorUtil;
 
 /**
  * <p>分页显示标签</p>

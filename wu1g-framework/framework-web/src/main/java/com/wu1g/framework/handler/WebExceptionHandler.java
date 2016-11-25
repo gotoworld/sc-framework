@@ -1,12 +1,5 @@
 package com.wu1g.framework.handler;
 
-import java.io.IOException;
-import java.net.ConnectException;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,7 +7,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.com.baseos.common.DateUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.util.Date;
 
 /**
  * @ClassName: WebExceptionHandler
@@ -51,7 +48,7 @@ public class WebExceptionHandler {
 	public String operateExp(RuntimeException ex, HttpServletRequest request) {
 		log.error( "访问异常！" + request.getParameter( "url_427d668497464195893069825e272146" ) );
 		log.error( ex.getMessage(), ex );
-		log.info( "************* ------ 异常信息已记录（" + DateUtil.getDateTimeStr( new Date() ) + "） ------- ***********" );
+		log.info( "************* ------ 异常信息已记录（" +  new Date()  + "） ------- ***********" );
 		request.setAttribute( "errorTips", ex.getMessage() );
 		request.setAttribute( "ex", ex );
 		return "error/500";
@@ -60,7 +57,7 @@ public class WebExceptionHandler {
 	@ExceptionHandler(ConnectException.class)
 	public void operateExpNetException(ConnectException ex, HttpServletResponse response) throws IOException {
 		log.error( ex.getMessage(), ex );
-		log.info( "************* ------ 异常信息已记录（" + DateUtil.getDateTimeStr( new Date() ) + "） ------- ***********" );
+		log.info( "************* ------ 异常信息已记录（" +  new Date()  + "） ------- ***********" );
 		// 将Ajax异常信息回写到前台，用于页面的提示
 		response.getWriter().write( "sorry,网络连接出错！！！" );
 	}

@@ -1,7 +1,7 @@
 package com.wu1g.framework.service;
 
 import com.github.pagehelper.PageInfo;
-import com.wu1g.framework.vo.IVO;
+import com.wu1g.framework.IVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;

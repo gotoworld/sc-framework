@@ -23,14 +23,14 @@
       <module fileurl="file://$PROJECT_DIR$/wu1g-framework/framework-service/wu1g-framework-service.iml" filepath="$PROJECT_DIR$/wu1g-framework/framework-service/wu1g-framework-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/wu1g-framework/wu1g-framework-starter.iml" filepath="$PROJECT_DIR$/wu1g-framework/wu1g-framework-starter.iml" />
       <module fileurl="file://$PROJECT_DIR$/wu1g-framework/framework-web/wu1g-framework-web.iml" filepath="$PROJECT_DIR$/wu1g-framework/framework-web/wu1g-framework-web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama.iml" filepath="$PROJECT_DIR$/wu1g-panorama/wu1g-panorama.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-api/wu1g-panorama-api.iml" filepath="$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-api/wu1g-panorama-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-biz/wu1g-panorama-biz.iml" filepath="$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-biz/wu1g-panorama-biz.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-dao/wu1g-panorama-dao.iml" filepath="$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-dao/wu1g-panorama-dao.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-server/wu1g-panorama-server.iml" filepath="$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-server/wu1g-panorama-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-services.iml" filepath="$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-services.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-web/wu1g-panorama-web.iml" filepath="$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-web/wu1g-panorama-web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-web/wu1g-panorama-web-boss.iml" filepath="$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-web/wu1g-panorama-web-boss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-pano/wu1g-panorama.iml" filepath="$PROJECT_DIR$/wu1g-pano/wu1g-panorama.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-api/wu1g-panorama-api.iml" filepath="$PROJECT_DIR$/wu1g-pano/wu1g-pano-api/wu1g-panorama-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-biz/wu1g-panorama-biz.iml" filepath="$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-biz/wu1g-panorama-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-dao/wu1g-panorama-dao.iml" filepath="$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-dao/wu1g-panorama-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-server/wu1g-panorama-server.iml" filepath="$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-server/wu1g-panorama-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-panorama-services.iml" filepath="$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-panorama-services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-web/wu1g-panorama-web.iml" filepath="$PROJECT_DIR$/wu1g-pano/wu1g-pano-web/wu1g-panorama-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-web/wu1g-panorama-web-boss.iml" filepath="$PROJECT_DIR$/wu1g-pano/wu1g-pano-web/wu1g-panorama-web-boss.iml" />
     </modules>
   </component>
 </project>

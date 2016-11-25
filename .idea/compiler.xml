@@ -38,6 +38,11 @@
         <module name="wu1g-framework-core" />
         <module name="wu1g-framework-service" />
         <module name="wu1g-framework-web" />
+        <module name="wu1g-pano-api" />
+        <module name="wu1g-pano-biz" />
+        <module name="wu1g-pano-dao" />
+        <module name="wu1g-pano-server" />
+        <module name="wu1g-pano-web" />
         <module name="wu1g-panorama-api" />
         <module name="wu1g-panorama-biz" />
         <module name="wu1g-panorama-dao" />
@@ -68,6 +73,13 @@
       <module name="wu1g-framework-service" target="1.8" />
       <module name="wu1g-framework-starter" target="1.8" />
       <module name="wu1g-framework-web" target="1.8" />
+      <module name="wu1g-pano" target="1.8" />
+      <module name="wu1g-pano-api" target="1.8" />
+      <module name="wu1g-pano-biz" target="1.8" />
+      <module name="wu1g-pano-dao" target="1.8" />
+      <module name="wu1g-pano-server" target="1.8" />
+      <module name="wu1g-pano-services" target="1.8" />
+      <module name="wu1g-pano-web" target="1.8" />
       <module name="wu1g-panorama" target="1.8" />
       <module name="wu1g-panorama-api" target="1.8" />
       <module name="wu1g-panorama-biz" target="1.8" />

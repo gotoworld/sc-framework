@@ -1,26 +1,16 @@
 package com.wu1g.framework.thread;
 
-import cn.com.baseos.common.ResourcesUtil;
 
+import com.wu1g.framework.util.ResourcesUtil;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.name.Rename;
-
 import org.apache.log4j.Logger;
 
-import java.awt.image.BufferedImage;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import java.text.SimpleDateFormat;
-
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.text.SimpleDateFormat;
 
 public class ImageUtilThread implements Runnable {
 	private static final transient Logger	log			= Logger.getLogger( ImageUtilThread.class );

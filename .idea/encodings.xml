@@ -15,12 +15,12 @@
     <file url="file://$PROJECT_DIR$/wu1g-framework/framework-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/wu1g-framework/framework-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/wu1g-framework/framework-web" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wu1g-panorama" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-api" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-biz" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-dao" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-services/wu1g-panorama-server" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wu1g-panorama/wu1g-panorama-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-web" charset="UTF-8" />
   </component>
 </project>

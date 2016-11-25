@@ -785,7 +785,7 @@
                     blocked = true
                 } else {
                     // The next tab memory contains nothing...
-                    // check the cursor position to determine tab action
+                    // check the cursor position to determine tab controller
                     var cursor = this.getSelection()
 
                     if (cursor.start == cursor.end && cursor.end == this.getContent().length) {

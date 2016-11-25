@@ -4156,7 +4156,7 @@ _extend(KUploadButton, {
 		var html = [
 			'<div class="ke-inline-block ' + cls + '">',
 			(options.target ? '' : '<iframe name="' + target + '" style="display:none;"></iframe>'),
-			(options.form ? '<div class="ke-upload-area">' : '<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + url + '">'),
+			(options.form ? '<div class="ke-upload-area">' : '<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" controller="' + url + '">'),
 			'<span class="ke-button-common">',
 			hiddenElements.join(''),
 			'<input type="button" class="ke-button-common ke-button" value="' + title + '" />',
@@ -7033,7 +7033,7 @@ KindEditor.plugin('image', function(K) {
 			//local upload - start
 			'<div class="tab2" style="display:none;">',
 			'<iframe name="' + target + '" style="display:none;"></iframe>',
-			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + K.addParam(uploadJson, 'dir=image') + '">',
+			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" controller="' + K.addParam(uploadJson, 'dir=image') + '">',
 			//file
 			'<div class="ke-dialog-row">',
 			hiddenElements.join(''),
@@ -8821,7 +8821,7 @@ SWFUpload.prototype.setButtonDisabled = function (isDisabled) {
 	this.settings.button_disabled = isDisabled;
 	this.callFlash("SetButtonDisabled", [isDisabled]);
 };
-// Public: setButtonAction sets the action that occurs when the button is clicked
+// Public: setButtonAction sets the controller that occurs when the button is clicked
 SWFUpload.prototype.setButtonAction = function (buttonAction) {
 	this.settings.button_action = buttonAction;
 	this.callFlash("SetButtonAction", [buttonAction]);

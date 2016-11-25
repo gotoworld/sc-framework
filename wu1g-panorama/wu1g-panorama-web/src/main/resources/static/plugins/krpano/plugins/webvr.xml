@@ -57,7 +57,7 @@
 	         />
 
 
-	<!-- vr_auto_click() - call this action in the onover event of a
+	<!-- vr_auto_click() - call this controller in the onover event of a
 	     hotspot to trigger automatically a click after some time.  -->
 	<action name="vr_auto_click">
 		if(webvr.isenabled,

@@ -38,8 +38,8 @@
         placeClass      : 'dd-placeholder',
         noDragClass     : 'dd-nodrag',
         emptyClass      : 'dd-empty',
-        expandBtnHTML   : '<button data-action="expand" type="button">展开</button>',
-        collapseBtnHTML : '<button data-action="collapse" type="button">关闭</button>',
+        expandBtnHTML   : '<button data-controller="expand" type="button">展开</button>',
+        collapseBtnHTML : '<button data-controller="collapse" type="button">关闭</button>',
         group           : 0,
         maxDepth        : 5,
         threshold       : 20
@@ -199,8 +199,8 @@
         expandItem: function(li)
         {
             li.removeClass(this.options.collapsedClass);
-            li.children('[data-action="expand"]').hide();
-            li.children('[data-action="collapse"]').show();
+            li.children('[data-controller="expand"]').hide();
+            li.children('[data-controller="collapse"]').show();
             li.children(this.options.listNodeName).show();
         },
 
@@ -209,8 +209,8 @@
             var lists = li.children(this.options.listNodeName);
             if (lists.length) {
                 li.addClass(this.options.collapsedClass);
-                li.children('[data-action="collapse"]').hide();
-                li.children('[data-action="expand"]').show();
+                li.children('[data-controller="collapse"]').hide();
+                li.children('[data-controller="expand"]').show();
                 li.children(this.options.listNodeName).hide();
             }
         },
@@ -237,13 +237,13 @@
                 li.prepend($(this.options.expandBtnHTML));
                 li.prepend($(this.options.collapseBtnHTML));
             }
-            li.children('[data-action="expand"]').hide();
+            li.children('[data-controller="expand"]').hide();
         },
 
         unsetParent: function(li)
         {
             li.removeClass(this.options.collapsedClass);
-            li.children('[data-action]').remove();
+            li.children('[data-controller]').remove();
             li.children(this.options.listNodeName).remove();
         },
 

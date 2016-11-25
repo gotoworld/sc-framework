@@ -2629,7 +2629,7 @@ define('moxie/runtime/Runtime', [
 			@method shimExec
 			@param {Mixed} []
 			@protected
-			@return {Mixed} Depends on the action and component
+			@return {Mixed} Depends on the controller and component
 			*/
 			shimExec: function(component, action) {
 				var args = [].slice.call(arguments, 2);
@@ -2643,7 +2643,7 @@ define('moxie/runtime/Runtime', [
 			@method exec
 			@param {Mixed} []*
 			@protected
-			@return {Mixed} Depends on the action and component
+			@return {Mixed} Depends on the controller and component
 			*/
 			exec: function(component, action) { // this is called in the context of component, not runtime
 				var args = [].slice.call(arguments, 2);

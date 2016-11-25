@@ -1029,7 +1029,7 @@
 	}
 
 
-	// Private variable that is used to match action syntax in the data property object
+	// Private variable that is used to match controller syntax in the data property object
 	var __reArray = /\[.*?\]$/;
 	var __reFn = /\(\)$/;
 
@@ -3180,7 +3180,7 @@
 	/**
 	 * Alter the display settings to change the page
 	 *  @param {object} settings DataTables settings object
-	 *  @param {string|int} action Paging action to take: "first", "previous",
+	 *  @param {string|int} action Paging controller to take: "first", "previous",
 	 *    "next" or "last" or page number to jump to (integer)
 	 *  @param [bool] redraw Automatically draw the update or not
 	 *  @returns {bool} true page has changed, false - no change
@@ -3234,7 +3234,7 @@
 		}
 		else
 		{
-			_fnLog( settings, 0, "Unknown paging action: "+action, 5 );
+			_fnLog( settings, 0, "Unknown paging controller: "+action, 5 );
 		}
 
 		var changed = settings._iDisplayStart !== start;
@@ -4769,7 +4769,7 @@
 	 * Bind an event handers to allow a click or return key to activate the callback.
 	 * This is good for accessibility since a return on the keyboard will have the
 	 * same effect as a click, if the element has focus.
-	 *  @param {element} n Element to bind the action to
+	 *  @param {element} n Element to bind the controller to
 	 *  @param {object} oData Data object to pass to the triggered function
 	 *  @param {function} fn Callback function for when the event is triggered
 	 *  @memberof DataTable#oApi
@@ -5485,7 +5485,7 @@
 		 * Change the pagination - provides the internal logic for pagination in a simple API
 		 * function. With this function you can have a DataTables table go to the next,
 		 * previous, first or last pages.
-		 *  @param {string|int} mAction Paging action to take: "first", "previous", "next" or "last"
+		 *  @param {string|int} mAction Paging controller to take: "first", "previous", "next" or "last"
 		 *    or page number to jump to (integer), note that page 0 is the first page.
 		 *  @param {bool} [bRedraw=true] Redraw the table or not
 		 *  @dtopt API
@@ -7010,7 +7010,7 @@
 	 *
 	 * @param {boolean} [reset=true] Reset (default) or hold the current paging
 	 *   position. A full re-sort and re-filter is performed when this method is
-	 *   called, which is why the pagination reset is the default action.
+	 *   called, which is why the pagination reset is the default controller.
 	 * @returns {DataTables.Api} this
 	 */
 	_api_register( 'draw()', function ( resetPaging ) {
@@ -7031,9 +7031,9 @@
 	 * Note that if you attempt to show a page which does not exist, DataTables will
 	 * not throw an error, but rather reset the paging.
 	 *
-	 * @param {integer|string} action The paging action to take. This can be one of:
+	 * @param {integer|string} controller The paging controller to take. This can be one of:
 	 *  * `integer` - The page index to jump to
-	 *  * `string` - An action to take:
+	 *  * `string` - An controller to take:
 	 *    * `first` - Jump to first page.
 	 *    * `next` - Jump to the next page
 	 *    * `previous` - Jump to previous page
@@ -7045,7 +7045,7 @@
 			return this.page.info().page; // not an expensive call
 		}
 
-		// else, have an action to take on all tables
+		// else, have an controller to take on all tables
 		return this.iterator( 'table', function ( settings ) {
 			_fnPageChange( settings, action );
 		} );
@@ -7172,7 +7172,7 @@
 	 *
 	 * @param {boolean} [reset=true] Reset (default) or hold the current paging
 	 *   position. A full re-sort and re-filter is performed when this method is
-	 *   called, which is why the pagination reset is the default action.
+	 *   called, which is why the pagination reset is the default controller.
 	 * @returns {DataTables.Api} this
 	 */
 	_api_register( 'ajax.reload()', function ( callback, resetPaging ) {
@@ -8500,7 +8500,7 @@
 			var rows      = $.map( settings.aoData, function (r) { return r.nTr; } );
 			var i, ien;
 
-			// Flag to note that the table is currently being destroyed - no action
+			// Flag to note that the table is currently being destroyed - no controller
 			// should be taken
 			settings.bDestroying = true;
 

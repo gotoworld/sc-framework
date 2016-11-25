@@ -191,7 +191,7 @@ function loadUrlPage(pageNumA, formId, divId) {
 	$("#" + formId).ajaxSubmit({
 			type:"post",  //提交方式  
             //dataType:"json", //数据类型  
-            url:$("#" + formId).attr('data-action'), //请求url  
+            url:$("#" + formId).attr('data-controller'), //请求url
             success:function(data) {
             	$('#' + divId).html(data);
             }

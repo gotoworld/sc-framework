@@ -125,7 +125,7 @@ function cPwd(val){
 	}
 }
 function submitUserInfo(){
-	//jQuery("#org02_04").attr('action','${basePath}/h/org02.update');
+	//jQuery("#org02_04").attr('controller','${basePath}/h/org02.update');
 	jQuery("#org02_04").ajaxSubmit({  
         type:"post",  //提交方式  
         url:"${basePath}/h/org02.update", //请求url  

@@ -3803,7 +3803,7 @@
   }
 
   // When an operation has its scrollToPos property set, and another
-  // scroll action is applied before the end of the operation, this
+  // scroll controller is applied before the end of the operation, this
   // 'simulates' scrolling that position into view in a cheap way, so
   // that the effect of intermediate scroll commands is not ignored.
   function resolveScrollToPos(cm) {

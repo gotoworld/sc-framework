@@ -228,7 +228,7 @@
 	       onclick="if(linkedscene, skin_hidetooltips(); skin_hidehotspot_vr(); tween(scale,0.25,0.5); tween(oy,-20,0.5); tween(alpha,0,0.5); looktohotspot(); loadscene(get(linkedscene),null,get(skin_settings.loadscene_flags),get(skin_settings.loadscene_blend)); skin_updatescroll(); );"
 	       onloaded="hotspot_animate();add_all_the_time_tooltip();"/>
 		   
-	<!-- hotspot animation action -->
+	<!-- hotspot animation controller -->
 	<action name="hotspot_animate">	    
 		inc(frame,1,get(lastframe),0);
 		mul(ypos,frame,frameheight);

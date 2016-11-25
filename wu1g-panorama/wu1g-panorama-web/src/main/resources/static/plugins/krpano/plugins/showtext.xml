@@ -2,7 +2,7 @@
 	<!--
 		showtext() xml plugin
 		- showtext() and <textstyle> support for HTML5
-		- extended <textstyle> functionality compared to the build-in showtext() action
+		- extended <textstyle> functionality compared to the build-in showtext() controller
 		- just include this xml file via: <include url="showtext.xml" />
 		- docu: http://krpano.com/plugins/showtext/
 		- krpano 1.19
@@ -13,9 +13,9 @@
 	<textstyle name="DEFAULT" />
 
 
-	<!-- the automatic running (autorun=preinit) install action -->
+	<!-- the automatic running (autorun=preinit) install controller -->
 	<action name="showtext_install" autorun="preinit">
-		<!-- redirect the build-in 'showtext' action to the 'showtext_xml' action: -->
+		<!-- redirect the build-in 'showtext' controller to the 'showtext_xml' controller: -->
 		set(showtext, action(showtext_xml,'%%1','%%2') );
 
 		<!-- initialize internal variables -->

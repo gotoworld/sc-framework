@@ -18,5 +18,10 @@
             <artifactId>dayu</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl</artifactId>
+            <version>2.7.0</version>
+        </dependency>
     </dependencies>
 </project>

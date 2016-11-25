@@ -13,6 +13,9 @@ server:
 spring:
   application:
      name: wu1g-services
+  mvc:
+      view:
+        suffix: .html
   datasource:
 #    name: cwwyw
 #    type: com.alibaba.druid.pool.DruidDataSource

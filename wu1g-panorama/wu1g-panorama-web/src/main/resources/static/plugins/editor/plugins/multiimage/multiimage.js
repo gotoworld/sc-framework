@@ -985,7 +985,7 @@ SWFUpload.prototype.setButtonDisabled = function (isDisabled) {
 	this.settings.button_disabled = isDisabled;
 	this.callFlash("SetButtonDisabled", [isDisabled]);
 };
-// Public: setButtonAction sets the action that occurs when the button is clicked
+// Public: setButtonAction sets the controller that occurs when the button is clicked
 SWFUpload.prototype.setButtonAction = function (buttonAction) {
 	this.settings.button_action = buttonAction;
 	this.callFlash("SetButtonAction", [buttonAction]);

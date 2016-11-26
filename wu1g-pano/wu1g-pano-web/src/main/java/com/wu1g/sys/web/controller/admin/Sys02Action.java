@@ -9,18 +9,17 @@
  *	
  */
 package com.wu1g.sys.web.controller.admin;
+
+import com.github.pagehelper.PageInfo;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.web.controller.BaseController;
 import com.wu1g.sys.api.ISysUserLogService;
 import com.wu1g.sys.vo.SysUserLog;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.github.pagehelper.PageInfo;
 
 /**
  * <p>系统_管理员操作日志  ACTION类。</p>	

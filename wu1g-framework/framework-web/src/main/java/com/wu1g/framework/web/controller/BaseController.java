@@ -1,6 +1,8 @@
 package com.wu1g.framework.web.controller;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,5 +86,13 @@ public class BaseController {
             basePath = request.getScheme() + "://" + request.getServerName() + path;
         }
         return basePath;
+    }
+    /**
+     * 权限验证框架取得
+     *
+     * @return 权限验证框架
+     */
+    public Subject getAuth() {
+        return SecurityUtils.getSubject();
     }
 }

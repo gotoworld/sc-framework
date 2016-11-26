@@ -7,7 +7,7 @@ eureka:
 
 # HTTP Server
 server:
-  port: 8080
+  port: 80
   context-path: /
 # Spring properties
 spring:
@@ -28,9 +28,9 @@ spring:
 #    username: kfuser
 #    password: kfuser
     driverClass: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.8.233:3306/dev_wu1g
-    username: wu1g_dbuser
-    password: DsWmLi123@#!8Afjlo
+    url: jdbc:mysql://127.0.0.1:3306/krpano
+    username: root
+    password: root
 #    # 下面为连接池的补充设置，应用到上面所有数据源中
 #    # 初始化大小，最小，最大
 #    initialSize: 5

@@ -17,16 +17,6 @@ spring:
       view:
         suffix: .html
   datasource:
-#    name: cwwyw
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://192.168.8.233:3306/kf_cwwyw1
-#    username: root
-#    password: btol123456
-
-#    url: jdbc:mysql://192.168.8.233:3306/dev_wu1g
-#    username: kfuser
-#    password: kfuser
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/krpano
     username: root
@@ -57,7 +47,7 @@ spring:
 #    useGlobalDataSourceStat: true
 
 mybatis:
-  configLocation: classpath:mybatis-config.xml
+  configLocation: classpath:conf/mybatis-config.xml
   mapperLocations: classpath:/mybatis/**/*.xml
 
 configuration:

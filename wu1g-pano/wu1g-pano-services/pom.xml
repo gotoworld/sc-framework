@@ -30,5 +30,10 @@
             <artifactId>wu1g-pano-api</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.wu1g.common</groupId>
+            <artifactId>wu1g-common-api</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

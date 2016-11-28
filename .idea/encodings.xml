@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/wu1g-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-common/wu1g-common-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-common/wu1g-common-services" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-common/wu1g-common-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-cache" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-framework/framework-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-services/wu1g-pano-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wu1g-pano/wu1g-pano-web" charset="UTF-8" />
+  </component>
+</project>

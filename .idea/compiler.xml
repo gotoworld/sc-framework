@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wu1g-common-api" />
+        <module name="wu1g-common-biz" />
+        <module name="wu1g-common-dao" />
+        <module name="wu1g-common-server" />
+        <module name="wu1g-common-web" />
+        <module name="wu1g-framework-api" />
+        <module name="wu1g-framework-cache" />
+        <module name="wu1g-framework-core" />
+        <module name="wu1g-framework-service" />
+        <module name="wu1g-framework-web" />
+        <module name="wu1g-pano-api" />
+        <module name="wu1g-pano-biz" />
+        <module name="wu1g-pano-dao" />
+        <module name="wu1g-pano-server" />
+        <module name="wu1g-pano-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="servers" target="1.8" />
+      <module name="wu1g-common" target="1.8" />
+      <module name="wu1g-common-api" target="1.8" />
+      <module name="wu1g-common-biz" target="1.8" />
+      <module name="wu1g-common-dao" target="1.8" />
+      <module name="wu1g-common-server" target="1.8" />
+      <module name="wu1g-common-services" target="1.8" />
+      <module name="wu1g-common-web" target="1.8" />
+      <module name="wu1g-framework-api" target="1.8" />
+      <module name="wu1g-framework-cache" target="1.8" />
+      <module name="wu1g-framework-core" target="1.8" />
+      <module name="wu1g-framework-service" target="1.8" />
+      <module name="wu1g-framework-starter" target="1.8" />
+      <module name="wu1g-framework-web" target="1.8" />
+      <module name="wu1g-pano" target="1.8" />
+      <module name="wu1g-pano-api" target="1.8" />
+      <module name="wu1g-pano-biz" target="1.8" />
+      <module name="wu1g-pano-dao" target="1.8" />
+      <module name="wu1g-pano-server" target="1.8" />
+      <module name="wu1g-pano-services" target="1.8" />
+      <module name="wu1g-pano-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

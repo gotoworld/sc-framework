@@ -35,8 +35,8 @@ import javax.annotation.Resource;
 @Service
 @Slf4j
 public class PanoMapService   extends BaseService implements IPanoMapService {
-	@Resource(name="sysUserLogService")
-	protected ISysUserLogService alog;
+	//@Autowired
+	//protected ISysUserLogService alog;
 	/**全景_导览图 Dao接口类*/
 	@Autowired
 	private IPanoMapDao panoMapDao;

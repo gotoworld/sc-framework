@@ -26,13 +26,13 @@
             <version>${wu1g.framework.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.wu1g.pano</groupId>
-            <artifactId>wu1g-pano-api</artifactId>
+            <groupId>com.wu1g.common</groupId>
+            <artifactId>wu1g-common-api</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.wu1g.common</groupId>
-            <artifactId>wu1g-common-api</artifactId>
+            <groupId>com.wu1g.pano</groupId>
+            <artifactId>wu1g-pano-api</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

@@ -33,8 +33,8 @@ import java.util.Map;
 @Service
 @Slf4j
 public class AuthPermService extends BaseService implements IAuthPermService {
-	@Resource(name="sysUserLogService")
-	protected ISysUserLogService alog;
+	//@Autowired
+	//protected ISysUserLogService alog;
 	@Autowired
 	private IAuthPermDao authPermDao;
 	 /**	
@@ -55,14 +55,14 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 				if(authPermDao.isDataYN(dto)!=0){	
 					//数据存在	
 					authPermDao.updateByPrimaryKeySelective(dto);	
-					alog.info("修改", "用户["+getUid()+"]修改,权限功能信息,id["+dto.getId()+"],名称["+dto.getName()+"]", dto.getCreateId(), dto.getCreateIp());
+					//alog.info("修改", "用户["+getUid()+"]修改,权限功能信息,id["+dto.getId()+"],名称["+dto.getName()+"]", dto.getCreateId(), dto.getCreateIp());
 				}else{	
 					//新增	
 					if(ValidatorUtil.isEmpty(dto.getId())){
 						dto.setId(IdUtil.createUUID(22));
 					}	
 					authPermDao.insert(dto);	
-					alog.info("新增", "用户["+getUid()+"]新增,权限功能信息,id["+dto.getId()+"],名称["+dto.getName()+"]", dto.getCreateId(), dto.getCreateIp());
+					//alog.info("新增", "用户["+getUid()+"]新增,权限功能信息,id["+dto.getId()+"],名称["+dto.getName()+"]", dto.getCreateId(), dto.getCreateIp());
 				}
 			} catch (Exception e) {	
 				msg="信息保存失败,数据库处理错误!";	
@@ -109,7 +109,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 				AuthPerm dto=new AuthPerm();	
 				dto.setId(bean.getId());//权限id	
 				authPermDao.deleteById(dto);	
-				alog.info("删除", "用户["+getUid()+"]删除,权限功能信息,id["+dto.getId()+"]", dto.getCreateId(), dto.getCreateIp());
+				//alog.info("删除", "用户["+getUid()+"]删除,权限功能信息,id["+dto.getId()+"]", dto.getCreateId(), dto.getCreateIp());
 			} catch (Exception e) {	
 				msg="信息删除失败,数据库处理错误!";	
 				log.error(msg, e);	

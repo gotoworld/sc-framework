@@ -44,9 +44,8 @@ import java.util.Map;
 
 @Configuration
 @AutoConfigureAfter(AppConfig.class)
-@EnableTransactionManagement
 @Slf4j
-@Order(-999)
+@Order(-998)
 public class ShiroConfig {
 //    /**
 //     * FilterRegistrationBean

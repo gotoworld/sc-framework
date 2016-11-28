@@ -33,8 +33,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class OrgDepartmentService extends BaseService implements IOrgDepartmentService {
-	@Resource(name="sysUserLogService")
-	protected ISysUserLogService alog;
+	//@Autowired
+	//protected ISysUserLogService alog;
 	/** 组织架构_部门 Dao接口类 */
 	@Autowired
 	private IOrgDepartmentDao orgDepartmentDao;
@@ -59,14 +59,14 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 				if (orgDepartmentDao.isDataYN( bean ) != 0) {
 					// 数据存在
 					orgDepartmentDao.updateByPrimaryKeySelective( bean );
-					alog.info( "修改", "用户[" + getUid() + "]修改,部门信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp() );
+					//alog.info( "修改", "用户[" + getUid() + "]修改,部门信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp() );
 				} else {
 					// 新增
 					if (ValidatorUtil.isEmpty( bean.getId() )) {
 						bean.setId( IdUtil.createUUID( 32 ) );
 					}
 					orgDepartmentDao.insert( bean );
-					alog.info( "新增", "用户[" + getUid() + "]新增,部门信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp() );
+					//alog.info( "新增", "用户[" + getUid() + "]新增,部门信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp() );
 				}
 			} catch (Exception e) {
 				msg = "信息保存失败,数据库处理错误!";
@@ -116,7 +116,7 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 		if (bean != null) {
 			try {
 				orgDepartmentDao.deleteById( bean );
-				alog.info( "删除", "用户[" + getUid() + "]删除,部门信息,id[" + bean.getId() + "]", bean.getCreateId(), bean.getCreateIp() );
+				//alog.info( "删除", "用户[" + getUid() + "]删除,部门信息,id[" + bean.getId() + "]", bean.getCreateId(), bean.getCreateIp() );
 			} catch (Exception e) {
 				msg = "信息删除失败,数据库处理错误!";
 				log.error( msg, e );

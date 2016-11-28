@@ -11,6 +11,7 @@
 package com.wu1g.sys.service;
 
 import com.github.pagehelper.PageHelper;
+import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -26,9 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("sysUserLogService")
+@Service
 @Slf4j
-public class SysUserLogService implements ISysUserLogService {
+public class SysUserLogService extends BaseService implements ISysUserLogService {
 
 	/** 系统_管理员操作日志 Dao接口类 */
 	@Autowired

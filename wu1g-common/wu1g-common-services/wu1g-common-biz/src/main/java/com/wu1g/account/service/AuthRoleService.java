@@ -39,8 +39,8 @@ import java.util.Map;
 public class AuthRoleService extends BaseService implements IAuthRoleService {
 
     /** 系统_管理员操作日志 业务处理 */
-	@Resource(name="sysUserLogService")
-	protected ISysUserLogService alog;
+	//@Autowired
+	//protected ISysUserLogService alog;
     /**
      * 权限_角色信息 Dao接口类
      */
@@ -72,14 +72,14 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                         xdto.put("roleId", bean.getId());
                         authRoleVsPermDao.deleteDataByRid(xdto);
                     }
-                    alog.info("修改", "用户[" + getUid() + "]修改,角色信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp());
+                    //alog.info("修改", "用户[" + getUid() + "]修改,角色信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp());
                 } else {
                     // 新增
                     if (ValidatorUtil.isEmpty(bean.getId())) {
                         bean.setId(IdUtil.createUUID(22));
                     }
                     authRoleDao.insert(bean);
-                    alog.info("新增", "用户[" + getUid() + "]新增,角色信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp());
+                    //alog.info("新增", "用户[" + getUid() + "]新增,角色信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp());
                 }
                 if (getAuth().isPermitted("authRole:parm")) {
                     // 2.新增角色权限关联信息
@@ -144,7 +144,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         if (bean != null) {
             try {
                 authRoleDao.deleteById(bean);
-                alog.info("删除", "用户[" + getUid() + "]删除,角色信息,id[" + bean.getId() + "]", bean.getCreateId(), bean.getCreateIp());
+                //alog.info("删除", "用户[" + getUid() + "]删除,角色信息,id[" + bean.getId() + "]", bean.getCreateId(), bean.getCreateIp());
             } catch (Exception e) {
                 msg = "信息删除失败,数据库处理错误!";
                 log.error(msg, e);

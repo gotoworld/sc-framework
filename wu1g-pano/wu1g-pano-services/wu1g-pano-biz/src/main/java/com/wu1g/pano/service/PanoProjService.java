@@ -46,8 +46,8 @@ import javax.annotation.Resource;
 @Service
 @Slf4j
 public class PanoProjService   extends BaseService implements IPanoProjService {
-	@Resource(name="sysUserLogService")
-	protected ISysUserLogService alog;
+	//@Autowired
+	//protected ISysUserLogService alog;
 	@Autowired
 	private IPanoProjDao panoProjDao;
 	@Autowired
@@ -67,14 +67,14 @@ public class PanoProjService   extends BaseService implements IPanoProjService {
 				if(panoProjDao.isDataYN(bean)!=0){	
 					//数据存在	
 					panoProjDao.updateByPrimaryKeySelective(bean);	
-					alog.info("修改", "用户["+getUid()+"]修改,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());	
+					//alog.info("修改", "用户["+getUid()+"]修改,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
 				}else{
 					//新增	
 					if(ValidatorUtil.isEmpty(bean.getId())){
 						bean.setId(IdUtil.createUUID(32));//id
 					}
 					panoProjDao.insert(bean);	
-					alog.info("新增", "用户["+getUid()+"]新增,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());	
+					//alog.info("新增", "用户["+getUid()+"]新增,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
 				}
 				
 				if(bean.getScenes()!=null && bean.getScenes().size()>0){
@@ -99,7 +99,7 @@ public class PanoProjService   extends BaseService implements IPanoProjService {
 		if(bean!=null){	
 			try {	
 				panoProjDao.deleteByPrimaryKey(bean);	
-				alog.info("删除", "用户["+getUid()+"]物理删除,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());	
+				//alog.info("删除", "用户["+getUid()+"]物理删除,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
 			} catch (Exception e) {	
 				msg="信息删除失败,数据库处理错误!";	
 				log.error(msg, e);	
@@ -115,7 +115,7 @@ public class PanoProjService   extends BaseService implements IPanoProjService {
 		if(bean!=null){	
 			try {	
 				panoProjDao.deleteById(bean);	
-				alog.info("删除", "用户["+getUid()+"]删除,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());	
+				//alog.info("删除", "用户["+getUid()+"]删除,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
 			} catch (Exception e) {	
 				msg="信息删除失败,数据库处理错误!";	
 				log.error(msg, e);	
@@ -164,7 +164,7 @@ public class PanoProjService   extends BaseService implements IPanoProjService {
 		if(bean!=null){	
 			try {	
 				panoProjDao.recoveryDataById(bean);	
-				alog.info("恢复", "用户["+getUid()+"]恢复,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());	
+				//alog.info("恢复", "用户["+getUid()+"]恢复,全景_项目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
 			} catch (Exception e) {	
 				msg="信息恢复失败,数据库处理错误!";	
 				log.error(msg, e);	
@@ -300,7 +300,7 @@ public class PanoProjService   extends BaseService implements IPanoProjService {
 						panoMapDao.insertBatch( bean.getRadars() );
 					}
 				
-					alog.info("修改", "用户["+getUid()+"]修改,全景_信息,id["+bean.getId()+"],[场景编辑]", bean.getCreateId(), bean.getCreateIp());	
+					//alog.info("修改", "用户["+getUid()+"]修改,全景_信息,id["+bean.getId()+"],[场景编辑]", bean.getCreateId(), bean.getCreateIp());
 				}
 			} catch (Exception e) {
 				msg="信息保存失败,数据库处理错误!";	

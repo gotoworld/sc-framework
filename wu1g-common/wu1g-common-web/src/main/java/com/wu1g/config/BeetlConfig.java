@@ -40,13 +40,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.io.IOException;
 
 @Configuration
 @AutoConfigureAfter(AppConfig.class)
-@EnableTransactionManagement
 @Slf4j
 @Order(-999)
 public class BeetlConfig implements EnvironmentAware {
@@ -63,11 +61,11 @@ public class BeetlConfig implements EnvironmentAware {
         BeetlGroupUtilConfiguration beetlGroupUtilConfiguration = new BeetlGroupUtilConfiguration();
         ResourcePatternResolver patternResolver = ResourcePatternUtils.getResourcePatternResolver(new DefaultResourceLoader());
         try {
-            String root =  patternResolver.getResource("classpath:/views/").getFile().toString();
+            String root =  patternResolver.getResource("classpath*:/views/").getFile().toString();
             WebAppResourceLoader webAppResourceLoader = new WebAppResourceLoader(root);
             beetlGroupUtilConfiguration.setResourceLoader(webAppResourceLoader);
 
-            beetlGroupUtilConfiguration.setConfigFileResource(patternResolver.getResource("classpath:/conf/beetl.properties"));
+            beetlGroupUtilConfiguration.setConfigFileResource(patternResolver.getResource("classpath*:/conf/beetl.properties"));
             return beetlGroupUtilConfiguration;
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -33,8 +33,8 @@ import java.util.List;
 @Service
 @Slf4j
 public abstract class PanoSpotsService   extends BaseService implements IPanoSpotsService {
-	@Resource(name="sysUserLogService")
-	protected ISysUserLogService alog;
+	//@Autowired
+	//protected ISysUserLogService alog;
 	/**全景_热点 Dao接口类*/
 	@Autowired
 	private IPanoSpotsDao panoSpotsDao;

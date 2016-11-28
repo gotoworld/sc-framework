@@ -45,9 +45,8 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 @Configuration
 @AutoConfigureAfter(AppConfig.class)
-@EnableTransactionManagement
 @Slf4j
-@Order(-999)
+@Order(-998)
 public class ExecutorConfig implements EnvironmentAware {
     private RelaxedPropertyResolver myResolver;
     @Override

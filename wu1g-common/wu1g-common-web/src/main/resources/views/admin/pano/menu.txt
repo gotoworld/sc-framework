@@ -1,0 +1,33 @@
+		<li>
+			<a href="#">
+				<i class="fa fa-cutlery"></i> 
+				<span class="nav-label">全景</span>
+				<span class="fa arrow"></span>
+			</a>
+			<ul class="nav nav-second-level">
+				<% if(shiro.hasPermission("common01:init")){ %>
+				  <!--全景_类目 -->
+				  <li><a class="J_menuItem" href="${basePath }/h/common01.init">全景_类目</a></li>
+				<%}%>
+				<% if(shiro.hasPermission("common02:init")){ %>
+				  <!--全景_项目 -->
+				  <li><a class="J_menuItem" href="${basePath }/h/common02.init">全景_项目</a></li>
+				<%}%>
+				<% if(shiro.hasPermission("common03:init")){ %>
+				  <!--全景_场景 -->
+				  <li><a class="J_menuItem" href="${basePath }/h/common03.init">全景_场景</a></li>
+				<%}%>
+				<% if(shiro.hasPermission("common04:init")){ %>
+				  <!--全景_导览图 -->
+				  <li><a class="J_menuItem" href="${basePath }/h/common04.init">全景_导览图</a></li>
+				<%}%>
+				<% if(shiro.hasPermission("common05:init")){ %>
+				  <!--全景_热点 -->
+				  <li><a class="J_menuItem" href="${basePath }/h/common05.init">全景_热点</a></li>
+				<%}%>
+				<% if(shiro.hasPermission("common06:init")){ %>
+				  <!--全景_评论 -->
+				  <li><a class="J_menuItem" href="${basePath }/h/common06.init">全景_评论</a></li>
+				<%}%>
+			</ul>
+		</li>

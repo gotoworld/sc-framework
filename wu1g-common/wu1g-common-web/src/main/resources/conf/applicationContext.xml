@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.2.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+						http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	 					http://www.springframework.org/schema/mvc 
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd"
+	default-autowire="byName"
+>
+<!-- 	<context:annotation-shiro /> -->
+<!-- 	<context:component-scan base-package="cn.com.**" /> -->
+	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"></bean>
+	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:conf/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 线程池 -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 线程池维护线程的最少数量 -->
+		<property name="corePoolSize" value="15" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="300" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name="maxPoolSize" value="20" />
+		<!-- 线程池所使用的缓冲队列 (卡不死机) -->
+		<property name="queueCapacity" value="2147483647" />
+	</bean>
+	
+<!-- 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+<!-- 		<property name="exceptionMappings"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="org.apache.shiro.authz.UnauthenticatedException">error/403</prop> -->
+<!-- 				<prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop> -->
+<!-- 				<prop key="org.apache.shiro.authc.LockedAccountException">error/locked</prop> -->
+<!-- 				<prop key="java.lang.Throwable">error/500</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	<!-- 导入Spring配置文件 -->
+	<import resource="spring/spring-jdbc.xml" />
+	<import resource="spring/spring-mybatis.xml" />
+	<import resource="spring/spring-shiro.xml" />
+</beans>

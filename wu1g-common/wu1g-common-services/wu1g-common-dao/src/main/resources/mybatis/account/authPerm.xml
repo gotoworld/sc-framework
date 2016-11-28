@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wu1g.account.dao.IAuthPermDao" >
+	<!-- 字段列表 -->
+	<sql id="Base_Column_List" >
+		t1.id as "id",
+		t1.name as "name",
+		t1.match_str as "matchStr",
+		t1.memo as "memo",
+		t1.order_no as "orderNo",
+		t1.version as "version",
+		t1.keyword as "keyword",
+		t1.del_flag as "delFlag",
+		t1.date_created as "dateCreated",
+		t1.create_id as "createId",
+		t1.create_ip as "createIp",
+		t1.date_update as "dateUpdate",
+		t1.update_id as "updateId",
+		t1.update_ip as "updateIp",
+		t1.parentid as "parentid"
+	</sql>
+	<!-- 根据主键获取信息详情 -->
+	<select id="selectByPrimaryKey" resultType="authPerm" parameterType="authPerm" >
+		select
+		<include refid="Base_Column_List" />
+		from t_auth_perm t1 
+		where  t1.id = #{id}
+	</select>
+	<!-- 根据主键物理删除信息 -->
+	<delete id="deleteByPrimaryKey" parameterType="authPerm" >
+		delete
+		from t_auth_perm
+		where  id = #{id}
+	</delete>
+	<!-- 新增单条数据 -->
+	<insert id="insert" parameterType="authPerm" >
+		insert into t_auth_perm(
+		id,
+		name,
+		match_str,
+		memo,
+		order_no,
+		version,
+		keyword,
+		del_flag,
+		date_created,
+		create_id,
+		create_ip,
+		date_update,
+		update_id,
+		update_ip,
+		parentid
+	) values (
+		#{id},
+		#{name},
+		#{matchStr},
+		#{memo},
+		#{orderNo},
+		0,
+		#{keyword},
+		'0',
+		now(),
+		#{createId},
+		#{createIp},
+		#{dateUpdate},
+		#{updateId},
+		#{updateIp},
+		#{parentid}
+	)
+	 ON DUPLICATE KEY UPDATE 
+		memo=VALUES(memo)
+		,version=version+1
+		,update_id=VALUES(update_id)
+		,update_ip=VALUES(update_ip)
+		<if test="name!= null" >,name=VALUES(name)</if>
+		<if test="matchStr!= null" >,match_str=VALUES(match_str)</if>
+		<if test="orderNo!= null" >,order_no=VALUES(order_no)</if>
+		<if test="keyword!= null" >,keyword=VALUES(keyword)</if>
+		<if test="delFlag!= null" >,del_flag=VALUES(del_flag)</if>
+		<if test="dateUpdate!= null" >,date_update=VALUES(date_update)</if>
+		<if test="parentid!= null" >,parentid=VALUES(parentid)</if>
+	</insert>
+	<!-- 新增 批量数据 -->
+	<insert id="insertBatch">
+		insert into t_auth_perm(
+		id,
+		name,
+		match_str,
+		memo,
+		order_no,
+		version,
+		keyword,
+		del_flag,
+		date_created,
+		create_id,
+		create_ip,
+		date_update,
+		update_id,
+		update_ip,
+		parentid
+		) values 
+		<foreach collection="list" item="t" separator=",">
+		(
+		#{t.id},
+		#{t.name},
+		#{t.matchStr},
+		#{t.memo},
+		#{t.orderNo},
+		0,
+		#{t.keyword},
+		'0',
+		now(),
+		#{t.createId},
+		#{t.createIp},
+		#{t.dateUpdate},
+		#{t.updateId},
+		#{t.updateIp},
+		#{t.parentid}
+		)
+		</foreach>
+	</insert>
+	<!-- 数据更新 -->
+	<update id="updateByPrimaryKeySelective" parameterType="authPerm" >
+		update t_auth_perm set 
+		version=version+1
+		,update_id=#{updateId}
+		,update_ip=#{updateIp}
+		<if test="name!= null" >,name=#{name}</if>
+		<if test="matchStr!= null" >,match_str=#{matchStr}</if>
+		<if test="memo!= null" >,memo=#{memo}</if>
+		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
+		<if test="keyword!= null" >,keyword=#{keyword}</if>
+		<if test="delFlag!= null" >,del_flag=#{delFlag}</if>
+		<if test="dateUpdate!= null" >,date_update=#{dateUpdate}</if>
+		<if test="parentid!= null" >,parentid=#{parentid}</if>
+		where  id = #{id}
+	</update>
+	<!-- 判断是否存在 -->
+	<select id="isDataYN" parameterType="authPerm" resultType="int">
+		select count(0) from t_auth_perm where  id = #{id}
+	</select>
+	<!--信息列表 分页 -->
+	<select id="findDataIsPage" parameterType="authPerm" resultType="authPerm">
+		select
+		<include refid="Base_Column_List" />
+		from t_auth_perm t1 
+		where 1=1 
+		<choose>
+			<when test="delFlag!=null">
+				and t1.del_flag=#{delFlag}
+			</when>
+			<otherwise>
+				and t1.del_flag='0'
+			</otherwise>
+		</choose>
+		<if test="date1!=null and date1!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		</if>
+		<if test="date2!=null and date2!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		</if>
+	</select>
+	<!--信息列表 -->
+	<select id="findDataIsList" parameterType="authPerm" resultType="authPerm">
+		select
+		<include refid="Base_Column_List" />
+		from t_auth_perm t1 
+		where 1=1 
+		<choose>
+			<when test="delFlag!=null">
+				and t1.del_flag=#{delFlag}
+			</when>
+			<otherwise>
+				and t1.del_flag='0'
+			</otherwise>
+		</choose>
+		<if test="date1!=null and date1!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		</if>
+		<if test="date2!=null and date2!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		</if>
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="deleteById" parameterType="authPerm" >
+		update t_auth_perm set 
+		version=version+1
+		,update_id=#{updateId}
+		,update_ip=#{updateIp}
+		,del_flag='1'
+		where  id = #{id}
+	</update>
+	<!-- 恢复逻辑删除 -->
+	<update id="recoveryDataById" parameterType="authPerm" >
+		update t_auth_perm set 
+		version=version+1
+		,update_id=#{updateId}
+		,update_ip=#{updateIp}
+		,del_flag='0'
+		where  id = #{id}
+	</update>
+	
+	<!-- 角色权限信息列表>根据用户id -->
+	<select id="getPermListByUId" resultType="authPerm" parameterType="map" >
+		<choose>
+			<when test="iissuperman==1"><!-- i'm superman -->
+				select
+				<include refid="Base_Column_List" />
+				from t_auth_perm t1
+				where t1.del_flag='0' 
+			</when>
+			<otherwise>	
+				select
+				DISTINCT(t1.match_str) as "matchStr",t1.id
+				from t_auth_perm t1
+				inner join t_auth_role_vs_perm t2 on (t1.id=t2.perm_id)
+				inner join t_auth_user_vs_role t3 on (t2.role_id=t3.role_id)
+				where t1.del_flag='0' and t3.user_id= #{uid} 
+			</otherwise>
+		</choose>
+	</select>
+	<select id="findPermDataIsListByRoleId" resultType="authPerm" parameterType="map" >
+		select
+		DISTINCT(t1.match_str) as "matchStr",t1.id
+		from t_auth_perm t1
+		inner join t_auth_role_vs_perm t2 on (t1.id=t2.perm_id)
+		where t1.del_flag='0' and t2.role_id= #{roleId} 
+	</select>
+</mapper>

@@ -1,0 +1,174 @@
+<!--
+<security cors="anonymous">
+	<crossdomainxml url="%SWFPATH%/crossdomain.xml" />
+	<allowdomain domain="*" />
+</security>
+-->
+<%if(proj.isFps == "1"){%>
+<include url="%SWFPATH%/plugins/fps.xml" />
+<%}%>
+<%if(isNotEmpty(proj.snowType)){%>
+<include url="%SWFPATH%/skin/snow.xml" />
+<%}%>
+
+
+<include url="%SWFPATH%/skin/vtourskin.xml" />
+
+<!-- startup action - load the first scene -->
+<action name="startup" autorun="onstart">
+	if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+	loadscene(get(startscene), null, MERGE);
+	if(startactions !== null, startactions() );
+	
+	<!-- sceneJump(); -->
+</action>
+
+
+<!-- 自动旋转 -->
+<autorotate enabled="true"
+		waittime="3.0" 
+		speed="3.0" 
+		horizon="0.0" 
+		tofov="120.0" 
+		/>
+<%if(isNotEmpty(proj.snowType)){%>		
+<!-- 下雪效果-->
+<plugin name="snow" zorder="1"  
+       url="%SWFPATH%/plugins/snow.swf"  
+       alturl="%SWFPATH%/plugins/snow.js"  
+       floor="0.7"  
+       keep="true"  
+       onloaded="${proj.snowType}();"  
+       />  
+<%}%>	   		
+		
+<!-- 自动旋转一周 跳转到下一个场景 -->
+<action name="sceneJump">
+	set(a,0);
+	if(autorotate.enabled==true,set(a,get(view.hlookat));
+		if(a GT 355.00,skin_nextscene(););
+	);
+	delayedcall(tz,0.05,sceneJump() );
+</action>
+  
+<action name="skin_nextscene">
+	if(scene[get(xml.scene)].index==0,set(indexOperator, +1););
+	if(scene[get(xml.scene)].index==scene.count-1,set(indexOperator, -1););
+
+	add(newsceneindex, scene[get(xml.scene)].index,indexOperator);
+	if(newsceneindex GE 0,
+		if(newsceneindex LT scene.count,
+			txtadd(layer[skin_thumbborder].parent, 'skin_thumb_', get(scene[get(xml.scene)].index));
+			layer[skin_thumbs].scrolltocenter(get(scene[get(newsceneindex)].thumbx), get(scene[get(newsceneindex)].thumby));
+			loadscene(get(newsceneindex), null, MERGE, BLEND(0.5));
+		  );
+	  );
+</action>
+
+ <%if(isNotEmpty(proj.mapSrc)){%>
+	<!-- 导览图 -->
+	<layer name="mapcontainer"  keep="true" type="container"  align="righttop" x="80" y="160" width="264" height="264" visible="false">
+		<layer name="map" url="${proj.mapSrc}" align="top" x="0" y="0" width="100%" height="264" handcursor="false" scalechildren="true">
+		</layer>
+		<layer name="radarmask" type="container" align="lefttop"  width="100%" height="100%" maskchildren="true">
+			<layer name="radar" visible="false"
+			       url="%SWFPATH%/plugins/radar.swf" alturl="%SWFPATH%/plugins/radar.js"
+			       align="lefttop" edge="center" zorder="1"
+			       scale="0.3"
+			       fillcolor="0xFFFFFF" fillalpha="0.8"
+			       linecolor="0xFF0000" linewidth="0.5" linealpha="0.5" 
+			       headingoffset="0"
+			       />
+			  <!-- 雷达列表 -->
+			 <%if(proj.radars!=null){%>
+     			<%for(radar in proj.radars){%>
+					<layer name="${radar.sceneId}"  style="spot" x="${parseInt(radar.y)+30}" y="${parseInt(radar.x)+35}"  />
+  				<%}%> 
+        	 <%}%>
+			<layer name="activespot" url="%SWFPATH%/skin/vtourskin_mapspotactive.png"  width="57.2" height="71.5" scale="0.5" oy="-17" align="lefttop" edge="center" zorder="3" visible="false"/>
+		</layer>
+	</layer>
+
+    <style name="spot" url="%SWFPATH%/skin/vtourskin_mapspot.png" scale="0.5" oy="-17" width="57.2" height="71.5" align="lefttop" edge="center" zorder="2" onclick="if(get(name) != xml.scene, loadscene(get(name),null,MERGE,BLEND(1)); );" />  
+
+
+	<!-- 激活热点 - %1 = 当前雷达的方向值heading -->
+	<action name="activatespot">  
+    
+    for(set(i,0),i LT scene.count,inc(i),  
+   	 set(layer[get(scene[get(i)].name)].visible, true);  
+    );  
+  
+  	if(%1===null,
+  	<!-- jscall(calc('console.log("ath'+%1+'atv:")')); -->
+	  	set(layer[radar].visible, false); 
+	  	set(layer[activespot].visible, false);
+		,
+		set(spotidnow,get(xml.scene));  
+	    copy(layer[radar].x, layer[get(spotidnow)].x);  
+	    copy(layer[radar].y, layer[get(spotidnow)].y);  
+	    copy(layer[activespot].x, layer[get(spotidnow)].x);  
+	    copy(layer[activespot].y, layer[get(spotidnow)].y); 
+	    set(layer[radar].heading, %1);  
+	    set(layer[radar].visible, true);  
+	    set(layer[activespot].visible, true);  
+	    set(layer[get(spotidnow)].visible, false);  
+  	)
+   
+    </action>  
+<%}%>
+<!--场景列表-->
+<%for(scene in proj.scenes){%>
+<%
+   var radar_rotate=0;
+   if(proj.radars != null){
+  	 for(radar in proj.radars){
+   		if(radar.sceneId==scene.id){
+   			radar_rotate=radar.rotate;
+   		}
+	 }
+	}
+%>
+   <scene name="${scene.id}" title="${scene.sceneTitle}" onstart="activatespot(${radar_rotate})"  havevrimage="true"  thumburl="${scene.breakdownImg}thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="${scene.hlookat}" vlookat="${scene.vlookat}" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="${scene.breakdownImg!}preview.jpg" />
+		<!--<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			
+			<level tiledimagewidth="1664" tiledimageheight="1664">
+				<cube url="${scene.breakdownImg!}%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="${scene.breakdownImg!}%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>-->
+		<image>
+			<cube url="${scene.breakdownImg!}vr/common_%s.jpg" />
+		</image>
+		<%if(scene.hotSpots!=null && scene.hotSpots.~size>0){%>
+		<!-- 场景 跳转热点 -->
+		<%for(hot in scene.hotSpots){%>
+		<hotspot name="${hot.hname}" style="skin_hotspotstyle" distorted="true" <%if(isNotEmpty(hot.depth)){%>depth="${hot.depth}" <%}%> <%if(isNotEmpty(hot.scale)){%>scale="${hot.scale}" <%}%> <%if(isNotEmpty(hot.rotate)){%>rotate="${hot.rotate}" <%}%> zoom="false" ath="${hot.ath}" atv="${hot.atv}" linkedscene="${hot.linkedscene}" />
+		<%}}%>
+		<%if(scene.imgSpots!=null && scene.imgSpots.~size>0){%>
+		<!-- 场景 图片装饰 -->
+		<%for(hot in scene.imgSpots){%>
+		<hotspot name="${hot.hname}" url="${hot.url}"  <%if(hot.isOnclick=='1'){%> style="flyoutimage" <%}else{%> enabled="false" <%}%> distorted="true" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}"/>
+		<%}}%>
+	</scene>      
+<%}%>
+
+<%if(isNotEmpty(proj.soundSrc)){%>
+<!-- 背景音乐 -->
+<plugin name="soundinterface"
+        url.flash="%SWFPATH%/plugins/soundinterface.swf"
+        url.html5="%SWFPATH%/plugins/soundinterface.js"
+        rootpath=""
+        preload="true"
+        keep="true"
+ />
+<action name="bgsnd_action" autorun="onstart">
+	playsound(bgm, '${proj.soundSrc}', 0);
+</action>
+
+<%}%>

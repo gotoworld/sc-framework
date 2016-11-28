@@ -1,0 +1,63 @@
+<%
+ /*	
+ * 全景_评论 (初始化页面 信息列表)
+ *		
+ * VERSION      DATE          BY              REASON		
+ * -------- ----------- --------------- ---------------------------	
+ * 1.00     2016.10.02      easycode         程序.发布		
+ * -------- ----------- --------------- ---------------------------	
+ * Copyright 2016 baseos System. - All Rights Reserved.
+ *	
+ */
+%>
+<div class="table-responsive table-scrollable">
+	<table class="table table-bordered table-striped  table-hover">
+		<thead>
+			<tr>
+				<th style="width:20px;">#</th>
+				<th style="width:150px;">全景项目</th>
+				<th style="width:150px;">场景</th>
+				<th>留言内容</th>
+				<th style="width:150px;">留言时间</th>
+				<th class="col-md-2">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+			if(beans!=null && beans.~size>0){
+				for(bean in beans){
+			%>
+			<tr>
+				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
+				<td>
+				<a href="${basePath}/tour/${bean.projId}" target="_blank"><i class="fa fa-desktop"></i> ${bean.projTitle}</a>
+				</td>
+				<td>${bean.sceneTitle}</td>
+				<td>${bean.content}</td>
+				<td>${bean.dateCreated}</td>
+				<td>
+	               <% if(shiro.hasPermission("common06:del")){ %>
+	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/common06.del/${bean.id}');};" rel="nofollow" class="btn btn-danger btn-sm" ><i class="fa fa-trash-o"></i> 删除</a>
+	               <%}%>
+                </td>
+			</tr>
+			<%	
+				}
+			}else{
+			%>
+			<tr>
+				<td colspan="4">
+				<div class="alert"><strong>暂无数据!</strong></div>
+				</td>
+			</tr>
+			<%}%>
+		</tbody>
+	</table>
+	<#pageTag func="loadUrlPage" params="'info_search_form','info_list_div'" />
+	</div>
+	<script type="text/javascript">
+	 //判断是否尾页
+	 if(${PAGEROW_OBJECT_KEY.hasNextPage!}){
+	 	$('#pageNumA').val(${PAGEROW_OBJECT_KEY.pageNum!});
+	 }
+	</script>

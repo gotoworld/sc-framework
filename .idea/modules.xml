@@ -8,6 +8,13 @@
       <module fileurl="file://$PROJECT_DIR$/wu1g-framework/framework-service/framework-service.iml" filepath="$PROJECT_DIR$/wu1g-framework/framework-service/framework-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/wu1g-framework/framework-web/framework-web.iml" filepath="$PROJECT_DIR$/wu1g-framework/framework-web/framework-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/servers.iml" filepath="$PROJECT_DIR$/servers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-common/wu1g-common.iml" filepath="$PROJECT_DIR$/wu1g-common/wu1g-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-common/wu1g-common-api/wu1g-common-api.iml" filepath="$PROJECT_DIR$/wu1g-common/wu1g-common-api/wu1g-common-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-biz/wu1g-common-biz.iml" filepath="$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-biz/wu1g-common-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-dao/wu1g-common-dao.iml" filepath="$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-dao/wu1g-common-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-server/wu1g-common-server.iml" filepath="$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-server/wu1g-common-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-services.iml" filepath="$PROJECT_DIR$/wu1g-common/wu1g-common-services/wu1g-common-services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wu1g-common/wu1g-common-web/wu1g-common-web.iml" filepath="$PROJECT_DIR$/wu1g-common/wu1g-common-web/wu1g-common-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/wu1g-framework/wu1g-framework.iml" filepath="$PROJECT_DIR$/wu1g-framework/wu1g-framework.iml" />
       <module fileurl="file://$PROJECT_DIR$/wu1g-framework/framework-api/wu1g-framework-api.iml" filepath="$PROJECT_DIR$/wu1g-framework/framework-api/wu1g-framework-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/wu1g-framework/framework-cache/wu1g-framework-cache.iml" filepath="$PROJECT_DIR$/wu1g-framework/framework-cache/wu1g-framework-cache.iml" />

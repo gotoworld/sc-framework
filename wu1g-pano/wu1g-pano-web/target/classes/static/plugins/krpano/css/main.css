@@ -1,0 +1,283 @@
+/* CSS Document */
+.radar-container{
+          position: absolute;
+          width: 264px;
+          height: 340px;
+          right: 30px;
+          top: 80px;
+           background-color: rgba(80,80,80,0.5);
+          border: 1px solid #000;
+          display: none;
+}
+.radar-container-close{
+	float: right;
+	color: red;
+	width: 40px;
+	height: 20px;
+	cursor: pointer;
+}
+.sandtable-img-margin{
+	position: relative;
+    height: 264px;
+    width: 264px;
+/*     margin-top: 10px; */
+    margin-bottom: 10px;
+          background-color: rgba(80,80,80,0.5);
+}
+.sandtable-window-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.radar-control{
+	position: absolute;
+	width: 60px;
+	height: 60px;
+}
+.radar-control-img{
+	position: absolute;
+	    top: 20px;
+	    left: 20px;
+	    cursor: pointer;
+}
+.radar-circle{
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	background: url('../images/radar-back.png') no-repeat;
+}
+.radar-point{
+	position: absolute;
+    left: 20px;
+    top: -5px;
+    width: 20px;
+    height: 20px;
+    background: url('../images/radar-out.png') no-repeat;
+    cursor:move;
+}
+.radar-center-point{
+	position: absolute;
+	left: 18px;
+	top: 18px;
+	width: 24px;
+	height: 24px;
+	cursor: move;
+	 background: url('../images/radar-center.png') no-repeat;
+          
+}
+.radar-title{
+    font-size: 16px;
+    height: 20px;
+    line-height: 20px;
+    background: #666666;
+}
+.radar-btn-group{
+    height: 30px;
+}
+.radar-add-btn{
+    float: left;
+    margin-left: 10px;
+}
+.radar-del-btn{
+    float: right;
+    margin-right: 10px;
+}
+.radar-btn-group button{
+    background-color: #36b127;
+    border: 0;
+    height: 24px;
+    margin-top: 5px;
+    width: 100px;
+    color: #fff;    
+    border-radius: 5px;
+    cursor: pointer;
+}
+.radar-scenes-container{
+	position: absolute;
+    top: 30%;
+    left: 30%;
+    display: none;
+}
+.radar-scenes-content{
+    width: 550px;
+    height: 250px;
+    border:1px solid #ddd;
+     background-color: rgba(85,85,85,0.7);
+     overflow-y:hidden;
+    overflow-x:auto;
+    white-space: nowrap;
+}
+.radar-scenes-btn{
+	 margin-top:5px;
+	 height: 40px;
+	 background-color:#666666;
+	 width: 100%;
+	 text-align: center;
+	 line-height: 40px;
+	 cursor: pointer;
+}
+.radar-scenes-one{
+    display: inline-table;
+    vertical-align: top;
+    width: 200px;
+    height: 220px;
+    margin-right: 20px;
+    margin-top: 10px;
+    background-color: #696969;
+    border-radius: 10px;
+}
+.scenes-img{
+    padding:10px;
+    cursor: pointer;
+}
+.scenes-img img{
+    width: 174px;
+    height:174px;
+}
+.scenes-title{
+    text-align: center;
+}
+/*说一说*/
+.commentBox{
+      width:390px;
+	  height:192px;
+	  position:absolute;
+      left:50%;
+	  margin-left:-195px;
+	  bottom:60px;
+	  zIndex:9002;
+	  visibility:visible;
+	  opacity:1;
+
+	font-size:14px;
+	color:#fff;
+	font-weight:bold;
+	background-color:rgba(0,0,0,0.5);
+	user-select: none;
+    -webkit-user-select: none; 
+	pointer-events: none; 
+	display:none;
+}
+
+.commentBox h4{
+	margin:0;
+	padding:0 0 0 27px;
+	height:50px;
+	line-height:50px;
+	overflow:hidden;
+	background:url(../images/comm-title-icon.png) no-repeat left center transparent;
+}
+
+.commentBox textarea{
+	width:348px;
+	padding:5px;
+	height:70px;
+	font-size:14px;
+	resize: none;
+	background-color:#fff;
+	border:none;
+	pointer-events:auto;
+}
+
+.commentBox .commentbtn{
+	height:33px;
+	line-height:33px;
+	overflow:hidden;
+	padding:10px 0;
+}
+
+.commentBox .commentbtn i{
+	display:inline-block;
+	height:33px;
+	line-height:33px;
+	font-style:normal;
+	cursor:pointer;
+	padding:0 0 0 30px;
+	background:url(../images/comm-hide-icon.png) no-repeat 5px center transparent;
+	pointer-events:auto;
+}
+
+.commentBox .commentbtn span{
+	display:inline-block;
+	height:33px;
+	line-height:33px;
+	border-color: rgb(0, 163, 216);
+    background-color: rgb(0, 163, 216);
+	padding:0 18px;
+	float:right;
+	margin-left:10px;
+	cursor:pointer;
+	pointer-events:auto;
+} 
+
+/*移动端*/
+.commentWapBox{
+    width: 100%;
+    height: 120px;
+    background-color: #f1f1f1;
+    padding: 15px 15px 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    overflow: hidden;
+	position:absolute;
+	left:0;
+	bottom:0;
+	z-index:9999;
+}
+
+.commentWapBox textarea{
+	width: 100%;
+    height: 50px;
+    padding: 5px;
+    color: #333;
+    font-size: 16px;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-family: "Microsoft YaHei","微软雅黑";	
+	background-color:#fff;
+}
+
+.commentWapBox .commentbtn{
+	height: 40px;
+    padding: 10px 0 0;
+    overflow: hidden;
+}
+
+.commentWapBox .commentbtn i{
+	font-style:normal;
+	height: 30px;
+    line-height: 30px;
+	display:inline-block;
+	padding:0 0 0 30px;
+	background:url(../images/comm-hide-wapicon.png) no-repeat 5px center transparent;
+}
+
+.commentWapBox .commentbtn span{
+	height: 30px;
+    line-height: 30px;
+    width: 80px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #106cab;
+    color: #fff;
+    float: right;
+    font-family: "Microsoft YaHei","微软雅黑";
+	margin-left: 10px;
+}
+
+
+@media screen and (max-width:400px) { /*当屏幕尺寸小于400px时，应用下面的CSS样式*/
+  .commentBox {
+    width:100%;
+	position:absolute;
+	bottom:0;
+	left:0;
+	margin-left:0;
+  }
+  .commentBox textarea{
+    width:100%;
+	padding:0;
+  }
+}

@@ -1,9 +1,0 @@
-com\wu1g\account\service\AuthPermService.class
-com\wu1g\sys\service\SysUserLogService.class
-com\wu1g\account\service\RoleSourceService.class
-com\wu1g\org\service\OrgUserService.class
-com\wu1g\org\service\OrgDepartmentBeanTree.class
-com\wu1g\sys\service\VariableService.class
-com\wu1g\account\service\AuthPermBeanTree.class
-com\wu1g\account\service\AuthRoleService.class
-com\wu1g\org\service\OrgDepartmentService.class

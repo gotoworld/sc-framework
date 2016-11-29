@@ -1,9 +1,0 @@
-com\wu1g\account\dao\IAuthRoleDao.class
-com\wu1g\sys\dao\ISysUserLogDao.class
-com\wu1g\org\dao\IOrgDepartmentDao.class
-com\wu1g\account\dao\IAuthPermDao.class
-com\wu1g\org\dao\IOrgUserDao.class
-com\wu1g\account\dao\IAuthUserVsRoleDao.class
-com\wu1g\sys\dao\ISysVariableDao.class
-com\wu1g\org\dao\IOrgUserVsDepartmentDao.class
-com\wu1g\account\dao\IAuthRoleVsPermDao.class

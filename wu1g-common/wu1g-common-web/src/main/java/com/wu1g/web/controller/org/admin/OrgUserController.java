@@ -45,7 +45,7 @@ import java.io.PrintWriter;
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
-public class Org02Action extends BaseController {
+public class OrgUserController extends BaseController {
 
 	private static final long serialVersionUID = -847589285730427889L;
 	/**组织架构_用户 业务处理*/
@@ -77,7 +77,7 @@ public class Org02Action extends BaseController {
 	@RequiresPermissions("orgUser:menu")
 	@RequestMapping(value=acPrefix+"init")
 	public String init() {
-		log.info("Org02Action init.........");
+		log.info("OrgUserController init.........");
 		return init;
 	}
 	/**
@@ -91,7 +91,7 @@ public class Org02Action extends BaseController {
 	@RequiresPermissions("orgUser:menu")
 	@RequestMapping(value=acPrefix+"infoList")
 	public String infoList( OrgUser bean) {
-		log.info("Org02Action infoList.........");
+		log.info("OrgUserController infoList.........");
 		if(bean==null){
 			bean = new OrgUser();
 		}
@@ -114,7 +114,7 @@ public class Org02Action extends BaseController {
 	@RequiresPermissions("orgUser:edit")
 	@RequestMapping(value=acPrefix+"edit/{id}")
 	public String edit( OrgUser bean,@PathVariable("id") String id) {
-		log.info("Org02Action edit.........");
+		log.info("OrgUserController edit.........");
 		int pageNum = 0;
 		if(bean!=null && bean.getPageNum()!=null){
 			pageNum=bean.getPageNum();
@@ -156,7 +156,7 @@ public class Org02Action extends BaseController {
 	 */
 	@RequestMapping(value=acPrefix+"editUser/{id}")
 	public String editUser(@PathVariable("id") String id) {
-		log.info("Org02Action editUser.........");
+		log.info("OrgUserController editUser.........");
 		if(ValidatorUtil.notEmpty(id)){
 			OrgUser bean=new OrgUser();
 			bean.setId(id);//ID
@@ -176,7 +176,7 @@ public class Org02Action extends BaseController {
 	@RequiresPermissions("orgUser:del")
 	@RequestMapping(value=acPrefix+"del/{id}")
 	public String del(@PathVariable("id") String id) {
-		log.info("Org02Action del.........");
+		log.info("OrgUserController del.........");
 		OrgUser bean1=new OrgUser();
 		bean1.setId(id);//ID
 		String msg="1";
@@ -228,7 +228,7 @@ public class Org02Action extends BaseController {
 	@RequiresPermissions(value={"orgUser:add","orgUser:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
 	public String save( OrgUser bean) {
-		log.info("Org02Action save.........");
+		log.info("OrgUserController save.........");
 		if(bean!=null){
 			String msg="1";
 			try {
@@ -267,7 +267,7 @@ public class Org02Action extends BaseController {
 	 */
 	@RequestMapping(value=acPrefix+"update")
 	public String update( OrgUser bean) throws IOException {
-		log.info("Org02Action save.........");
+		log.info("OrgUserController save.........");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		String msg="1";

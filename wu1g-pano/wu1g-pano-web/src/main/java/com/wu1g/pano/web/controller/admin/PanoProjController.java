@@ -58,7 +58,7 @@ import java.util.Map.Entry;
  */
 @Controller
 @Slf4j
-public class Pano02Action extends BaseController {
+public class PanoProjController extends BaseController {
 	private static final long				serialVersionUID	= -528422099490438672L;
 	/** 全景_项目 业务处理 */
 	@Autowired
@@ -89,7 +89,7 @@ public class Pano02Action extends BaseController {
 	@RequiresPermissions("pano02:init")
 	@RequestMapping(value = acPrefix + "init")
 	public String init() {
-		log.info( "Pano02Action init........." );
+		log.info( "PanoProjController init........." );
 		return init;
 	}
 	/**
@@ -104,7 +104,7 @@ public class Pano02Action extends BaseController {
 	@RequiresPermissions("pano02:init")
 	@RequestMapping(value = acPrefix + "list")
 	public String list(PanoProj bean) {
-		log.info( "Pano02Action list........." );
+		log.info( "PanoProjController list........." );
 		if (bean == null) {
 			bean = new PanoProj();
 		}
@@ -131,7 +131,7 @@ public class Pano02Action extends BaseController {
 	@RequiresPermissions("pano02:edit")
 	@RequestMapping(value = acPrefix + "edit/{id}")
 	public String edit(PanoProj bean, @PathVariable("id") String id) {
-		log.info( "Pano02Action edit........." );
+		log.info( "PanoProjController edit........." );
 		int pageNum = 0;
 		if (bean != null && bean.getPageNum() != null) {
 			pageNum = bean.getPageNum();
@@ -177,7 +177,7 @@ public class Pano02Action extends BaseController {
 	@RequiresPermissions("pano02:del")
 	@RequestMapping(value = acPrefix + "del/{id}")
 	public String del(@PathVariable("id") String id,RedirectAttributesModelMap modelMap) {
-		log.info( "Pano02Action del........." );
+		log.info( "PanoProjController del........." );
 
 		// String id=request.getParameter("id");//id
 		PanoProj bean = new PanoProj();
@@ -205,7 +205,7 @@ public class Pano02Action extends BaseController {
 	@RequiresPermissions(value = { "pano02:add", "pano02:edit" }, logical = Logical.OR)
 	@RequestMapping(value = acPrefix + "save")
 	public String save(PanoProj bean,RedirectAttributesModelMap modelMap) {
-		log.info( "Pano02Action save........." );
+		log.info( "PanoProjController save........." );
 		if (bean != null) {
 			String msg = "1";
 			try {
@@ -267,7 +267,7 @@ public class Pano02Action extends BaseController {
 	@RequestMapping(value = acPrefix + "xmlsave")
 	@ResponseBody
 	public String xmlsave() {
-		log.info( "Pano02Action xmlsave........." );
+		log.info( "PanoProjController xmlsave........." );
 		Map msg=new HashMap();
 		msg.put( "status", 1 );
 		msg.put( "msg", "保存成功" );
@@ -434,7 +434,7 @@ public class Pano02Action extends BaseController {
 	@RequiresPermissions(value = {"pano02:edit" }, logical = Logical.OR)
 	@RequestMapping(value = "/h/touredit/{id}")
 	public String touredit(@PathVariable("id") String id) {
-		log.info( "Pano02Action touredit........." );
+		log.info( "PanoProjController touredit........." );
 		PanoProj bean=new PanoProj();
 		bean.setId( id );
 		bean.setType( "0" );

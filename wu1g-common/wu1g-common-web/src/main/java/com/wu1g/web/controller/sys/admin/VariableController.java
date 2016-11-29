@@ -45,7 +45,7 @@ import com.github.pagehelper.PageInfo;
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
-public class Sys03Action extends BaseController {
+public class VariableController extends BaseController {
 
 	private static final long serialVersionUID = -184287954681953050L;
 	@Autowired
@@ -68,7 +68,7 @@ public class Sys03Action extends BaseController {
 	@RequiresPermissions("sysDic:menu")
 	@RequestMapping(value=acPrefix+"init")
 	public String init() {
-		log.info("Sys03Action init.........");
+		log.info("VariableController init.........");
 		return init;
 	}
 	/**
@@ -82,7 +82,7 @@ public class Sys03Action extends BaseController {
 	@RequiresPermissions("sysDic:menu")
 	@RequestMapping(value=acPrefix+"infoList")
 	public String infoList(SysVariable bean) {
-		log.info("Sys03Action infoList.........");
+		log.info("VariableController infoList.........");
 		if(bean==null){
 			bean = new SysVariable();
 		}
@@ -103,7 +103,7 @@ public class Sys03Action extends BaseController {
 	@RequiresPermissions("sysDic:edit")
 	@RequestMapping(value=acPrefix+"edit/{id}")
 	public String edit(SysVariable bean,@PathVariable("id") String id) {
-		log.info("Sys03Action edit.........");
+		log.info("VariableController edit.........");
 		int pageNum = 0;
 		if(bean!=null && bean.getPageNum()!=null){
 			pageNum=bean.getPageNum();
@@ -131,7 +131,7 @@ public class Sys03Action extends BaseController {
 	@RequiresPermissions("sysDic:del")
 	@RequestMapping(value=acPrefix+"del/{id}")
 	public String del(@PathVariable("id") String id) {
-		log.info("Sys03Action del.........");
+		log.info("VariableController del.........");
 		SysVariable bean1=new SysVariable();
 		bean1.setId(id);//ID
 		String msg="1";
@@ -154,7 +154,7 @@ public class Sys03Action extends BaseController {
 //	 */
 //	@RequiresPermissions("sysDic:delph")
 //	public String delph() {
-//		log.info("Sys03Action del ph.........");
+//		log.info("VariableController del ph.........");
 //		String id=request.getParameter("id");
 //		SysVariable bean1=new SysVariable();
 //		bean1.setId(id);//ID
@@ -180,7 +180,7 @@ public class Sys03Action extends BaseController {
 	@RequiresPermissions(value={"sysDic:add","sysDic:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
 	public String save(SysVariable bean) {
-		log.info("Sys03Action save.........");
+		log.info("VariableController save.........");
 		if(bean!=null){
 			String msg="1";
 			try {
@@ -215,7 +215,7 @@ public class Sys03Action extends BaseController {
 //	 */
 //	@RequiresPermissions("sysDic:view")
 //	public String view() {
-//		log.info("Sys03Action view.........");
+//		log.info("VariableController view.........");
 //		String id=request.getParameter("id");
 //		if(ValidatorUtil.notEmpty(id)){
 //			SysVariable bean1=new SysVariable();
@@ -234,7 +234,7 @@ public class Sys03Action extends BaseController {
 //	 */
 //	@RequiresPermissions("sysDic:recycle")
 //	public String recycle() {
-//		log.info("Sys03Action recycle.........");
+//		log.info("VariableController recycle.........");
 //		int offset = 0;
 //		// 分页偏移量
 //		if (!ValidatorUtil.isNullEmpty(request.getParameter("offset"))
@@ -265,7 +265,7 @@ public class Sys03Action extends BaseController {
 //	 */
 //	@RequiresPermissions("sysDic:recovery")
 //	public String recovery() {
-//		log.info("Sys03Action recovery.........");
+//		log.info("VariableController recovery.........");
 //		String id=request.getParameter("id");
 //		//========创建bena对象=============
 //		SysVariable bean1=new SysVariable();

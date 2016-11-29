@@ -49,7 +49,7 @@ import java.util.List;
  */
 @Controller
 @Slf4j
-public class Video01Action extends BaseController {
+public class VideoController extends BaseController {
 	private static final long				serialVersionUID	= -528422099490438672L;
 	/** 全景_项目 业务处理 */
 	@Autowired
@@ -77,7 +77,7 @@ public class Video01Action extends BaseController {
 	@RequiresPermissions("video:init")
 	@RequestMapping(value = acPrefix + "init")
 	public String init() {
-		log.info( "VideoAction init........." );
+		log.info( "PanoVideoController init........." );
 		return init;
 	}
 	/**
@@ -92,7 +92,7 @@ public class Video01Action extends BaseController {
 	@RequiresPermissions("video:init")
 	@RequestMapping(value = acPrefix + "list")
 	public String list(PanoProj bean) {
-		log.info( "VideoAction list........." );
+		log.info( "PanoVideoController list........." );
 		if (bean == null) {
 			bean = new PanoProj();
 		}
@@ -119,7 +119,7 @@ public class Video01Action extends BaseController {
 	@RequiresPermissions("video:edit")
 	@RequestMapping(value = acPrefix + "edit/{id}")
 	public String edit(PanoProj bean, @PathVariable("id") String id) {
-		log.info( "VideoAction edit........." );
+		log.info( "PanoVideoController edit........." );
 		int pageNum = 0;
 		if (bean != null && bean.getPageNum() != null) {
 			pageNum = bean.getPageNum();
@@ -165,7 +165,7 @@ public class Video01Action extends BaseController {
 	@RequiresPermissions("video:del")
 	@RequestMapping(value = acPrefix + "del/{id}")
 	public String del(@PathVariable("id") String id,RedirectAttributesModelMap modelMap) {
-		log.info( "VideoAction del........." );
+		log.info( "PanoVideoController del........." );
 		PanoProj bean = new PanoProj();
 		bean.setId( id );// id
 		String msg = "1";
@@ -191,7 +191,7 @@ public class Video01Action extends BaseController {
 	@RequiresPermissions(value = { "video:add", "video:edit" }, logical = Logical.OR)
 	@RequestMapping(value = acPrefix + "save")
 	public String save(PanoProj bean,RedirectAttributesModelMap modelMap) {
-		log.info( "VideoAction save........." );
+		log.info( "PanoVideoController save........." );
 		if (bean != null) {
 			String msg = "1";
 			try {

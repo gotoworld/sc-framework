@@ -73,10 +73,8 @@ public class DruidConfig implements EnvironmentAware {
      * Druid Servlet
      */
     @Bean
-    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
-        ServletRegistrationBean registration = new ServletRegistrationBean( dispatcherServlet );
-        dispatcherServlet.setThrowExceptionIfNoHandlerFound( true );
-
+    public ServletRegistrationBean dispatcherRegistration() {
+        ServletRegistrationBean registration = new ServletRegistrationBean();
         // 添加druidServlet
         registration.setServlet( new StatViewServlet() );
         registration.addInitParameter( "resetEnable", "true" );

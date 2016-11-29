@@ -44,7 +44,7 @@ import java.util.Map;
  */
 @Controller
 @Slf4j
-public class VideoAction extends BaseController {
+public class PanoVideoController extends BaseController {
 	private static final long				serialVersionUID	= -528422099490438672L;
 	@Autowired
 	private IPanoProjService panoProjService;
@@ -56,7 +56,7 @@ public class VideoAction extends BaseController {
 	@RequestMapping(value = acPrefix+"thumbsUpNum")
 	@ResponseBody
 	public String thumbsUpNum() {
-		log.info( "VideoAction thumbsUpNum........." );
+		log.info( "PanoVideoController thumbsUpNum........." );
 		Map msg=new HashMap();
 		msg.put( "status", 1 );
 		try {
@@ -82,7 +82,7 @@ public class VideoAction extends BaseController {
 	@RequestMapping(value = acPrefix+"getComment")
 	@ResponseBody
 	public String getComment() {
-		log.info( "VideoAction getComment........." );
+		log.info( "PanoVideoController getComment........." );
 		Map msg=new HashMap();
 		msg.put( "status", 1 );
 		try {
@@ -106,7 +106,7 @@ public class VideoAction extends BaseController {
 	@RequestMapping(value = acPrefix+"addComment")
 	@ResponseBody
 	public String addComment() {
-		log.info( "VideoAction addComment........." );
+		log.info( "PanoVideoController addComment........." );
 		Map msg=new HashMap();
 		msg.put( "status", 1 );
 		try {
@@ -143,7 +143,7 @@ public class VideoAction extends BaseController {
 	@RequestMapping(value = acPrefix+"pvNum")
 	@ResponseBody
 	public String pvNum() {
-		log.info( "VideoAction pvNum........." );
+		log.info( "PanoVideoController pvNum........." );
 		Map msg=new HashMap();
 		msg.put( "status", 1 );
 		try {
@@ -168,7 +168,7 @@ public class VideoAction extends BaseController {
 	}
 	@RequestMapping(value = "/video/{id}")
 	public String video(@PathVariable("id") String id) {
-		log.info( "VideoAction video........." );
+		log.info( "PanoVideoController video........." );
 		PanoProj bean=new PanoProj();
 		bean.setId( id );
 		bean.setType( "1" );

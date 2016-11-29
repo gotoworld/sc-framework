@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
-public class Sys02Action extends BaseController {
+public class SysUserLogController extends BaseController {
 
 	private static final long serialVersionUID = -802538749184564668L;
 	/**系统_管理员操作日志 业务处理*/
@@ -56,7 +56,7 @@ public class Sys02Action extends BaseController {
 	@RequiresPermissions("sysLog:menu")
 	@RequestMapping(value=acPrefix+"init")
 	public String init() {
-		log.info("Sys02Action init.........");
+		log.info("SysUserLogController init.........");
 		return init;
 	}
 	/**
@@ -70,7 +70,7 @@ public class Sys02Action extends BaseController {
 	@RequiresPermissions("sysLog:menu")
 	@RequestMapping(value=acPrefix+"infoList")
 	public String infoList(SysUserLog bean) {
-		log.info("Sys02Action infoList.........");
+		log.info("SysUserLogController infoList.........");
 		if(bean==null){
 			bean = new SysUserLog();
 		}

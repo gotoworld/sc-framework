@@ -36,12 +36,12 @@ import java.util.Locale;
 @Controller
 @RequestMapping(value = "/admin")
 @Slf4j
-public class LoginAction extends BaseController {
+public class LoginController extends BaseController {
 	private static final long				serialVersionUID	= -6103432072290645133L;
 
 	/** 默认的构造函数 */
-	public LoginAction() {
-		log.info( "LoginAction constructed" );
+	public LoginController() {
+		log.info( "LoginController constructed" );
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class LoginAction extends BaseController {
 	 */
 	@RequestMapping(value = "/init")
 	public String init() throws Exception {
-		log.info( "HomeAction init" );
+		log.info( "HomeController init" );
 
 		return "admin/login";
 	}
@@ -73,7 +73,7 @@ public class LoginAction extends BaseController {
 	 */
 	 @RequestMapping(value="/noauth")
 	 public String noauth() throws Exception {
-	 log.info("HomeAction noauth");
+	 log.info("HomeController noauth");
 	
 	 return "error/noauth";
 	 }
@@ -90,7 +90,7 @@ public class LoginAction extends BaseController {
 	 */
 	@RequestMapping(value = "/login")
 	public String login() throws Exception {
-		log.info( "HomeAction login" );
+		log.info( "HomeController login" );
 
 		String userid = request.getParameter( "userid" );
 		String password = request.getParameter( "password" );
@@ -149,7 +149,7 @@ public class LoginAction extends BaseController {
 	 */
 	@RequestMapping(value = "/switchlanguage")
 	public String switchlanguage() throws Exception {
-		log.info( "HomeAction switchlanguage" );
+		log.info( "HomeController switchlanguage" );
 
 		// String o = (String) session.getAttribute( "_language" );
 		String language = request.getParameter( "language" );
@@ -176,7 +176,7 @@ public class LoginAction extends BaseController {
 	 */
 	@RequestMapping(value = "/logout")
 	public String logout() throws Exception {
-		log.info( "LoginAction logout" );
+		log.info( "LoginController logout" );
 		getAuth().logout();
 		log.debug( getAuth().getPrincipal() + "你已安全退出!" );
 		// 清空用户登录信息

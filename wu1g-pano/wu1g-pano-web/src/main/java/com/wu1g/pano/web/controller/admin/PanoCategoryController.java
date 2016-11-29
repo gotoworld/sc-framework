@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
-public class Pano01Action extends BaseController {
+public class PanoCategoryController extends BaseController {
 
 	private static final long				serialVersionUID	= -344702788488841783L;
 	/** 全景_类目 业务处理 */
@@ -66,7 +66,7 @@ public class Pano01Action extends BaseController {
 	@RequiresPermissions("pano01:init")
 	@RequestMapping(value = acPrefix + "init")
 	public String init() {
-		log.info( "Pano01Action init........." );
+		log.info( "PanoCategoryController init........." );
 		//获取类目列表
 		request.setAttribute( "categoryBeans", panoCategoryService.findDataTree(null) );
 		return init;
@@ -84,7 +84,7 @@ public class Pano01Action extends BaseController {
 	@RequiresPermissions("pano01:edit")
 	@RequestMapping(value = acPrefix + "edit/{id}")
 	public String edit(PanoCategory bean, @PathVariable("id") String id) {
-		log.info( "Pano01Action edit........." );
+		log.info( "PanoCategoryController edit........." );
 		int pageNum = 0;
 		if (bean != null && bean.getPageNum() != null) {
 			pageNum = bean.getPageNum();
@@ -121,7 +121,7 @@ public class Pano01Action extends BaseController {
 	@RequiresPermissions("pano01:del")
 	@RequestMapping(value = acPrefix + "del/{id}")
 	public String del(@PathVariable("id") String id) {
-		log.info( "Pano01Action del........." );
+		log.info( "PanoCategoryController del........." );
 
 		// String id=request.getParameter("id");//ID
 		PanoCategory bean = new PanoCategory();
@@ -150,7 +150,7 @@ public class Pano01Action extends BaseController {
 	@RequiresPermissions(value = { "pano01:add", "pano01:edit" }, logical = Logical.OR)
 	@RequestMapping(value = acPrefix + "save")
 	public String save(PanoCategory bean) {
-		log.info( "Pano01Action save........." );
+		log.info( "PanoCategoryController save........." );
 		if (bean != null) {
 			String msg = "1";
 			try {

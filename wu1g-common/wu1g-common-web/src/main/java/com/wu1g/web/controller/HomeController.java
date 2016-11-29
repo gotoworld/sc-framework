@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
-public class HomeAction extends BaseController {
+public class HomeController extends BaseController {
 
     private static final long serialVersionUID = -6103432072290645133L;
 
     /**
      * 默认的构造函数
      */
-    public HomeAction() {
-        log.info("HomeAction constructed");
+    public HomeController() {
+        log.info("HomeController constructed");
     }
 
     /**
@@ -37,7 +37,7 @@ public class HomeAction extends BaseController {
      */
     @RequestMapping(value = "/index")
     public String init() throws Exception {
-        log.info("HomeAction init");
+        log.info("HomeController init");
         return "admin/index";
     }
 
@@ -46,7 +46,7 @@ public class HomeAction extends BaseController {
      */
     @RequestMapping(value = "/home")
     public String home() throws Exception {
-        log.info("HomeAction home");
+        log.info("HomeController home");
         return "admin/home";
     }
 }

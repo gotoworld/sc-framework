@@ -1,5 +1,5 @@
 /*	
- * 组织架构_部门  ACTION类	
+ * 权限_权限信息  ACTION类	
  *		
  * VERSION      DATE          BY              REASON		
  * -------- ----------- --------------- ------------------------------------------	
@@ -8,25 +8,28 @@
  * Copyright 2015 isd System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.web.controller.org.admin;
+package com.wu1g.web.controller.auth.admin;
+
+import com.wu1g.account.api.IAuthPermService;
+import com.wu1g.account.vo.AuthPerm;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.framework.web.controller.BaseController;
-import com.wu1g.org.api.IOrgDepartmentService;
-import com.wu1g.org.vo.OrgDepartment;
 import com.wu1g.org.vo.OrgUser;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 /**
- * <p>组织架构_部门  ACTION类。</p>	
+ * <p>权限_权限信息  ACTION类。</p>	
  * <ol>[功能概要] 
  * <li>初始化。 
  * <li>信息列表(未删除)。 
@@ -37,21 +40,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value = "/h")
-public class Org01Action extends BaseController {
-
-	private static final long serialVersionUID = -905929872130603565L;
-	private static final transient Logger log = LoggerFactory.getLogger(Org01Action.class);
-	/**组织架构_部门 业务处理*/
+@Slf4j
+public class AuthPermController extends BaseController {
+	private static final long serialVersionUID = -255059907001339225L;
+	/**权限_权限信息 业务处理*/
 	@Autowired
-	private IOrgDepartmentService orgDepartmentService;
+	private IAuthPermService authPermService;
 	
-	//组织架构_部门 管理
-	private static final String acPrefix="/org01.";
-	private static final String init = "admin/org/org01";
-	private static final String edit = "admin/org/org01_01";
-	private static final String infoList = "admin/org/org01_list";
+	//权限_权限信息 管理
+	private static final String acPrefix="/auth02.";
+	private static final String init = "admin/auth/auth02";
+	private static final String edit = "admin/auth/auth02_01";
+	private static final String infoList = "admin/auth/auth02_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
-	
 	/**
 	 * <p> 初始化处理。 </p>
 	 * <ol>
@@ -60,11 +61,13 @@ public class Org01Action extends BaseController {
 	 * </ol>
 	 * @return 转发字符串
 	 */
-	@RequiresPermissions("orgDept:menu")
+	@RequiresPermissions("authPerm:menu")
 	@RequestMapping(value=acPrefix+"init")
 	public String init() {
-		log.info("Org01Action init.........");
-		request.setAttribute( "beans", orgDepartmentService.findDataTree(null) );
+		log.info("Auth02Action init.........");
+		//信息列表
+		List<AuthPerm> beans=authPermService.findDataTree(null);
+		request.setAttribute( "beans", beans );
 		return init;
 	}
 	/**
@@ -75,27 +78,23 @@ public class Org01Action extends BaseController {
 	 * </ol>
 	 * @return 转发字符串
 	 */
-	@RequiresPermissions("orgDept:edit")
-	@RequestMapping(value=acPrefix+"edit/{id}")
-	public String edit(OrgDepartment bean, @PathVariable("id") String id) {
-		log.info("Org01Action edit.........");
-		int pageNum = 0;
-		if(bean!=null && bean.getPageNum()!=null){
-			pageNum=bean.getPageNum();
-		}
+	@RequiresPermissions("authPerm:edit")
+	@RequestMapping(value = acPrefix+"edit/{id}")
+	public String edit( AuthPerm bean,@PathVariable("id") String id) {
+		log.info("Auth02Action edit.........");
 		if(ValidatorUtil.notEmpty(id)){
-			OrgDepartment bean1=new OrgDepartment();
-			bean1.setId(id);//ID
-			bean=orgDepartmentService.findDataById(bean1);
+			AuthPerm bean1=new AuthPerm();
+			bean1.setId(id);//权限id
+			bean=authPermService.findDataById(bean1);
 		}
 		if(bean==null){
-			bean=new OrgDepartment();
-			bean.setId(IdUtil.createUUID(32));//ID
+			bean=new AuthPerm();
+			bean.setId(IdUtil.createUUID(22));//权限id
 		}
-		bean.setPageNum(pageNum);
 		request.setAttribute( "bean", bean );
-		//--部门树
-		request.setAttribute( "beans", orgDepartmentService.findDataTree(null) );
+		//信息列表
+		List<AuthPerm> beans=authPermService.findDataTree(null);
+		request.setAttribute( "beans", beans );
 		return edit;
 	}
 	/**
@@ -106,15 +105,15 @@ public class Org01Action extends BaseController {
 	 * </ol>
 	 * @return 转发字符串
 	 */
-	@RequiresPermissions("orgDept:del")
-	@RequestMapping(value=acPrefix+"del/{id}")
+	@RequiresPermissions("authPerm:del")
+	@RequestMapping(value = acPrefix+"del/{id}")
 	public String del(@PathVariable("id") String id) {
-		log.info("Org01Action del.........");
-		OrgDepartment bean1=new OrgDepartment();
-		bean1.setId(id);//ID
+		log.info("Auth02Action del.........");
+		AuthPerm bean1=new AuthPerm();
+		bean1.setId(id);//权限id
 		String msg="1";
 		try {
-			msg=orgDepartmentService.deleteDataById(bean1);
+			msg=authPermService.deleteDataById(bean1);
 		} catch (Exception e) {
 			msg=e.getMessage();
 		}
@@ -130,15 +129,15 @@ public class Org01Action extends BaseController {
 //	 * </ol>
 //	 * @return 转发字符串
 //	 */
-//	@RequiresPermissions("orgDept:delph")
-//	@RequestMapping(value=acPrefix+"delph/{id}")
+//	@RequiresPermissions("authPerm:delph")
+//	@RequestMapping(value = acPrefix+"delph/{id}")
 //	public String delph(@PathVariable("id") String id) {
-//		log.info("Org01Action del ph.........");
-//		OrgDepartment bean1=new OrgDepartment();
-//		bean1.setId(id);//ID
+//		log.info("Auth02Action del ph.........");
+//		AuthPerm bean1=new AuthPerm();
+//		bean1.setId(id);//权限id
 //		String msg="1";
 //		try {
-//			msg=orgDepartmentService.deleteData(bean1);
+//			msg=authPermService.deleteData(bean1);
 //		} catch (Exception e) {
 //			msg=e.getMessage();
 //		}
@@ -155,10 +154,10 @@ public class Org01Action extends BaseController {
 	 * </ol>
 	 * @return 转发字符串
 	 */
-	@RequiresPermissions(value={"orgDept:add","orgDept:edit"},logical=Logical.OR)
+	@RequiresPermissions(value={"authPerm:edit","authPerm:add"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
-	public String save(OrgDepartment bean) {
-		log.info("Org01Action save.........");
+	public String save( AuthPerm bean) {
+		log.info("Auth02Action save.........");
 		if(bean!=null){
 			String msg="1";
 			try {
@@ -172,7 +171,7 @@ public class Org01Action extends BaseController {
 						bean.setUpdateIp(getIpAddr());
 						bean.setUpdateId(user.getId());
 					}
-					msg=orgDepartmentService.saveOrUpdateData(bean);
+					msg=authPermService.saveOrUpdateData(bean);
 				}
 			} catch (Exception e) {
 				msg=e.getMessage();
@@ -184,25 +183,6 @@ public class Org01Action extends BaseController {
 		return success;
 	}
 //	/**
-//	 * <p> 预览。</p>
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>预览。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("orgDept:view")
-//	@RequestMapping(value=acPrefix+"view/{id}")
-//	public String view(@PathVariable("id") String id) {
-//		log.info("Org01Action view.........");
-//		if(ValidatorUtil.notEmpty(id)){
-//			OrgDepartment bean1=new OrgDepartment();
-//			bean1.setId(id);//ID
-//			request.setAttribute( "bean",orgDepartmentService.findDataById(bean1));
-//		}
-//		return "view";
-//	}
-//	/**
 //	 * <p> 回收站。</p>
 //	 * <ol>
 //	 * [功能概要] 
@@ -210,16 +190,16 @@ public class Org01Action extends BaseController {
 //	 * </ol>
 //	 * @return 转发字符串
 //	 */
-//	@RequiresPermissions("orgDept:recyle")
-//	@RequestMapping(value=acPrefix+"recycle")
-//	public String recycle(OrgDepartment bean) {
-//		log.info("Org01Action recycle.........");
-//		bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+//	@RequiresPermissions("authPerm:recycle")
+//	@RequestMapping(value = acPrefix+"recycle/{pageNum}")
+//	public String recycle( AuthPerm bean) {
+//		log.info("Auth02Action recycle.........");
+//		bean.setPageSize( CommonConstant.PAGEROW_DEFAULT_COUNT );
+//		bean.setDelFlag( "1" );
 //		//列表
-//		PageInfo<?> page=new PageInfo<>(orgDepartmentService.findDataIsPage(bean));
-//		request.setAttribute( "beans", page.getList() );
-//		//分页对象-JSP标签使用-
-//		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
+//		List<AuthPerm> beans=authPermService.findDataIsPage(bean);
+//		request.setAttribute("beans",beans);
+//		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,beans);
 //		return "recycle";
 //	}
 //	/**
@@ -229,16 +209,16 @@ public class Org01Action extends BaseController {
 //	 * </ol>
 //	 * @return 转发字符串
 //	 */
-//	@RequiresPermissions("orgDept:recovery")
-//	@RequestMapping(value=acPrefix+"recovery/{id}")
+//	@RequiresPermissions("authPerm:recovery")
+//	@RequestMapping(value = acPrefix+"recovery/{id}")
 //	public String recovery(@PathVariable("id") String id) {
-//		log.info("Org01Action recovery.........");
+//		log.info("Auth02Action recovery.........");
 //		//========创建bena对象=============
-//		OrgDepartment bean1=new OrgDepartment();
-//		bean1.setId(id);//ID
+//		AuthPerm bean1=new AuthPerm();
+//		bean1.setId(id);//权限id
 //		String msg="1";
 //		try {
-//			msg=orgDepartmentService.recoveryDataById(bean1);
+//			msg=authPermService.recoveryDataById(bean1);
 //		} catch (Exception e) {
 //			msg=e.getMessage();
 //		}

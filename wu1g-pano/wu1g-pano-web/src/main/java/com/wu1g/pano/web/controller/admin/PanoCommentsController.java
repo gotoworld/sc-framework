@@ -39,7 +39,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
-public class Pano06Action extends BaseController {
+public class PanoCommentsController extends BaseController {
 
 	private static final long				serialVersionUID	= -893683902158611114L;
 	/** 全景_评论 业务处理 */
@@ -65,7 +65,7 @@ public class Pano06Action extends BaseController {
 	@RequiresPermissions("pano06:init")
 	@RequestMapping(value = acPrefix + "init")
 	public String init() {
-		log.info( "Pano06Action init........." );
+		log.info( "PanoCommentsController init........." );
 		return init;
 	}
 
@@ -81,7 +81,7 @@ public class Pano06Action extends BaseController {
 	@RequiresPermissions("pano06:init")
 	@RequestMapping(value = acPrefix + "list")
 	public String list(PanoComments bean) {
-		log.info( "Pano06Action list........." );
+		log.info( "PanoCommentsController list........." );
 		if (bean == null) {
 			bean = new PanoComments();
 		}
@@ -106,7 +106,7 @@ public class Pano06Action extends BaseController {
 	@RequiresPermissions("pano06:del")
 	@RequestMapping(value = acPrefix + "del/{id}")
 	public String del(@PathVariable("id") String id,RedirectAttributesModelMap modelMap) {
-		log.info( "Pano06Action del........." );
+		log.info( "PanoCommentsController del........." );
 
 		PanoComments bean = new PanoComments();
 		bean.setId( id );// id

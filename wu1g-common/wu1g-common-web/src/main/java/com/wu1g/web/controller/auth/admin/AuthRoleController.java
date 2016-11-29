@@ -8,7 +8,7 @@
  * Copyright 2015 isd System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.web.controller.account.admin;
+package com.wu1g.web.controller.auth.admin;
 
 import com.github.pagehelper.PageInfo;
 import com.wu1g.account.api.IAuthPermService;
@@ -44,7 +44,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
-public class Auth03Action extends BaseController {
+public class AuthRoleController extends BaseController {
 
 	private static final long serialVersionUID = -250454793558646875L;
 	/**权限_角色信息 业务处理*/
@@ -56,9 +56,9 @@ public class Auth03Action extends BaseController {
 	
 	//权限_角色信息 管理
 	private static final String acPrefix="/auth03.";
-	private static final String init = "admin/account/auth03";
-	private static final String edit = "admin/account/auth03_01";
-	private static final String infoList = "admin/account/auth03_list";
+	private static final String init = "admin/auth/auth03";
+	private static final String edit = "admin/auth/auth03_01";
+	private static final String infoList = "admin/auth/auth03_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
 	 * <p> 初始化处理。 </p>
@@ -71,7 +71,7 @@ public class Auth03Action extends BaseController {
 	@RequiresPermissions("authRole:menu")
 	@RequestMapping(value=acPrefix+"init")
 	public String init() {
-		log.info("Auth03Action init.........");
+		log.info("AuthRoleController init.........");
 		return init;
 	}
 	/**
@@ -85,7 +85,7 @@ public class Auth03Action extends BaseController {
 	@RequiresPermissions("authRole:menu")
 	@RequestMapping(value=acPrefix+"infoList")
 	public String infoList(AuthRole bean) {
-		log.info("Auth03Action infoList.........");
+		log.info("AuthRoleController infoList.........");
 		if(bean==null){
 			bean = new AuthRole();
 		}
@@ -108,7 +108,7 @@ public class Auth03Action extends BaseController {
 	@RequiresPermissions("authRole:edit")
 	@RequestMapping(value=acPrefix+"edit/{id}")
 	public String edit(AuthRole bean,@PathVariable("id") String id){
-		log.info("Auth03Action edit.........");
+		log.info("AuthRoleController edit.........");
 		int pageNum = 0;
 		if(bean!=null){
 			pageNum=bean.getPageNum();
@@ -146,7 +146,7 @@ public class Auth03Action extends BaseController {
 	 */
 	@RequiresPermissions("authRole:del")
 	public String del(@PathVariable("id") String id) {
-		log.info("Auth03Action del.........");
+		log.info("AuthRoleController del.........");
 		AuthRole bean1=new AuthRole();
 		bean1.setId(id);//角色ID
 		String msg="1";
@@ -169,7 +169,7 @@ public class Auth03Action extends BaseController {
 //	 */
 //	@RequiresPermissions("authRole:deph")
 //	public String delph(@PathVariable("id") String id) {
-//		log.info("Auth03Action del ph.........");
+//		log.info("AuthRoleController del ph.........");
 //		AuthRole bean1=new AuthRole();
 //		bean1.setId(id);//角色ID
 //		String msg="1";
@@ -194,7 +194,7 @@ public class Auth03Action extends BaseController {
 	@RequiresPermissions(value={"authRole:add","authRole:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
 	public String save(AuthRole bean) {
-		log.info("Auth03Action save.........");
+		log.info("AuthRoleController save.........");
 		if(bean!=null){
 			String msg="1";
 			try {
@@ -229,7 +229,7 @@ public class Auth03Action extends BaseController {
 //	 */
 //	@RequiresPermissions("authRole:view")
 //	public String view() {
-//		log.info("Auth03Action view.........");
+//		log.info("AuthRoleController view.........");
 //		String id=request.getParameter("id");
 //		if(ValidatorUtil.notEmpty(id)){
 //			AuthRole bean1=new AuthRole();
@@ -248,7 +248,7 @@ public class Auth03Action extends BaseController {
 //	 */
 //	@RequiresPermissions("authRole:recycle")
 //	public String recycle(AuthRole bean) {
-//		log.info("Auth03Action recycle.........");
+//		log.info("AuthRoleController recycle.........");
 //		int offset = 0;
 //		// 分页偏移量
 //		if (!ValidatorUtil.isNullEmpty(request.getParameter("offset"))
@@ -279,7 +279,7 @@ public class Auth03Action extends BaseController {
 //	 */
 //	@RequiresPermissions("authRole:recovery")
 //	public String recovery() {
-//		log.info("Auth03Action recovery.........");
+//		log.info("AuthRoleController recovery.........");
 //		String id=request.getParameter("id");
 //		//========创建bena对象=============
 //		AuthRole bean1=new AuthRole();

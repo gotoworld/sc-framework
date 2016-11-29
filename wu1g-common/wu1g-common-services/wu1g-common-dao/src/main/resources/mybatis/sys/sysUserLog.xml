@@ -85,11 +85,11 @@
 		<if test="description!=null and description!=''">
 			and t1.description like CONCAT('%',#{description},'%')
 		</if>
-		<if test="date1!=null and date1!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		<if test="dateBegin!=null and dateBegin!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
 		</if>
-		<if test="date2!=null and date2!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		<if test="dateEnd!=null and dateEnd!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
 		</if>
 		order by t1.date_created desc
 	</select>
@@ -100,11 +100,11 @@
 		from t_sys_user_log t1 
 		where 1=1 
 		<!--未找到逻辑删除标记 字段-->
-		<if test="date1!=null and date1!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		<if test="dateBegin!=null and dateBegin!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
 		</if>
-		<if test="date2!=null and date2!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		<if test="dateEnd!=null and dateEnd!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
 		</if>
 		order by t1.date_created desc
 	</select>

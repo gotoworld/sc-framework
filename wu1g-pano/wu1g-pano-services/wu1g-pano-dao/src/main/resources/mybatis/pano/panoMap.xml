@@ -115,11 +115,11 @@
 		from t_pano_map t1 
 		inner join t_pano_scene t2 on t1.scene_id=t2.id
 		where t1.proj_id = #{projId}
-		<if test="date1!=null and date1!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		<if test="dateBegin!=null and dateBegin!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
 		</if>
-		<if test="date2!=null and date2!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		<if test="dateEnd!=null and dateEnd!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
 		</if>
 		order by t1.date_created desc
 	</select>

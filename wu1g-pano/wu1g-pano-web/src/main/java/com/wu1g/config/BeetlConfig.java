@@ -25,6 +25,7 @@
 package com.wu1g.config;
 
 import com.wu1g.framework.config.AppConfig;
+import org.beetl.core.resource.WebAppResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
 import org.fox.beetl.resource.SpringResourceLoader;
@@ -60,7 +61,9 @@ public class BeetlConfig implements EnvironmentAware {
         BeetlGroupUtilConfiguration beetlGroupUtilConfiguration = new BeetlGroupUtilConfiguration();
         ResourcePatternResolver patternResolver = ResourcePatternUtils.getResourcePatternResolver(new DefaultResourceLoader());
         try {
-            beetlGroupUtilConfiguration.setResourceLoader(springResourceLoader);
+            WebAppResourceLoader webAppResourceLoader = new WebAppResourceLoader(patternResolver.getResource("classpath:/views/").getFile().getPath());
+            beetlGroupUtilConfiguration.setResourceLoader(webAppResourceLoader);
+//            beetlGroupUtilConfiguration.setResourceLoader(springResourceLoader);
             beetlGroupUtilConfiguration.setConfigFileResource(patternResolver.getResource("classpath:/conf/beetl.properties"));
             return beetlGroupUtilConfiguration;
         } catch (Exception e) {
@@ -71,7 +74,7 @@ public class BeetlConfig implements EnvironmentAware {
     @Bean(name = "beetlViewResolver")
     public BeetlSpringViewResolver getBeetlSpringViewResolver(@Qualifier("beetlGroupUtilConfiguration") BeetlGroupUtilConfiguration beetlGroupUtilConfiguration) {
         BeetlSpringViewResolver beetlSpringViewResolver = new BeetlSpringViewResolver();
-        beetlSpringViewResolver.setPrefix("classpath*:views/");
+//        beetlSpringViewResolver.setPrefix("classpath*:views/");
         beetlSpringViewResolver.setSuffix(".html");
         beetlSpringViewResolver.setContentType("text/html;charset=UTF-8");
         beetlSpringViewResolver.setOrder(0);

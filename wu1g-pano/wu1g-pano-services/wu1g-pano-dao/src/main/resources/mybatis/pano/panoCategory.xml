@@ -173,11 +173,11 @@
 		     and t1.del_flag='0'
 		 </otherwise>
 		</choose>
-		<if test="date1!=null and date1!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		<if test="dateBegin!=null and dateBegin!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
 		</if>
-		<if test="date2!=null and date2!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		<if test="dateEnd!=null and dateEnd!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
 		</if>
 	</select>
 	
@@ -195,11 +195,11 @@
 		     and t1.del_flag='0'
 		 </otherwise>
 		</choose>
-		<if test="date1!=null and date1!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		<if test="dateBegin!=null and dateBegin!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
 		</if>
-		<if test="date2!=null and date2!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		<if test="dateEnd!=null and dateEnd!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
 		</if>
 	</select>
 	

@@ -150,11 +150,11 @@
 			and t1.name like CONCAT('%',#{name},'%')
 		</if>
 		and t1.is_super!='1'
-		<if test="date1!=null and date1!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		<if test="dateBegin!=null and dateBegin!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
 		</if>
-		<if test="date2!=null and date2!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		<if test="dateEnd!=null and dateEnd!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
 		</if>
 	</select>
 	<!--信息列表 -->
@@ -172,11 +172,11 @@
 			</otherwise>
 		</choose>
 		and t1.is_super!='1'
-		<if test="date1!=null and date1!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		<if test="dateBegin!=null and dateBegin!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
 		</if>
-		<if test="date2!=null and date2!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		<if test="dateEnd!=null and dateEnd!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
 		</if>
 		
 	</select>

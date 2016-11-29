@@ -94,12 +94,12 @@
 											<span class="input-group-addon"> 字段示例 </span> <input x_placeholder="检索字段示例" class="form-control" name="errcode" value="${bean.errcode}" type="text">
 										</div>
 										<div class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-3 mt10">
-											<span class="input-group-addon"> 起始时间 </span> <input x_placeholder="检索起始时间" name="date1" value="${bean.date1}" type="text" class="form-control laydate-icon" readonly="readonly"
+											<span class="input-group-addon"> 起始时间 </span> <input x_placeholder="检索起始时间" name="dateBegin" value="${bean.dateBegin}" type="text" class="form-control laydate-icon" readonly="readonly"
 												onclick="laydate({istime: true, festival: true, istoday: true, format: 'YYYY-MM-DD hh:mm:ss'})"
 											/>
 										</div>
 										<div class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-3 mt10">
-											<span class="input-group-addon"> 终止时间 </span> <input x_placeholder="检索终止时间" name="date2" value="${bean.date2}" type="text" class="form-control laydate-icon" readonly="readonly"
+											<span class="input-group-addon"> 终止时间 </span> <input x_placeholder="检索终止时间" name="dateEnd" value="${bean.dateEnd}" type="text" class="form-control laydate-icon" readonly="readonly"
 												onclick="laydate({istime: true, festival: true, istoday: true, format: 'YYYY-MM-DD hh:mm:ss'})"
 											/>
 										</div>

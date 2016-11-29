@@ -20,8 +20,15 @@ public class BaseVO implements IVO,IEntity {
     /** 结束时间 */
     String dateEnd;
     /** 页码 */
-    Integer pageNum;
+    Integer pageNum=1;
     /** 每页显示条数 */
-    Integer pageSize;
+    Integer pageSize=15;
     String str;
+
+    public Integer getPageNum(){
+        if(pageNum==null){
+            pageNum=1;
+        }
+        return pageNum;
+    }
 }

@@ -48,7 +48,8 @@ spring:
 
 mybatis:
   configLocation: classpath:conf/mybatis-config.xml
-  mapperLocations: classpath:/mybatis/**/*.xml
+  daoBasePageake:
+  mapperLocations: classpath*:mybatis/**/*.xml
 
 configuration:
   mapUnderscoreToCamelCase: true

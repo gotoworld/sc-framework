@@ -1,11 +1,3 @@
-/*
-* 类功能说明待完善
-* VERSION       DATE       BY              REASON
-* --------  ------------  --------------  ---------------------------
-* 1.00      2015-12-7    xiaogang.wu           程序.发布
-* --------  ------------  --------------  ---------------------------
-* Copyright 2015 ec4j System. - All Rights Reserved.
-*/
 package com.wu1g.framework.util;
 
 import java.io.FileOutputStream;
@@ -17,12 +9,6 @@ import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 import org.beetl.core.resource.ClasspathResourceLoader;
 
-/**
- *<p>类功能说明待完善</p>
- * <dl>[功能概要]
- * <dt>功能1</dt>
- * </dl>
- */
 public class BeetlUtils {
 
 	/**
@@ -33,7 +19,6 @@ public class BeetlUtils {
 	}
 	/**
 	 * 根据模板生产文件
-	 * @param tlFileName
 	 * @param context
 	 * @param saveFileName
 	 */
@@ -42,7 +27,7 @@ public class BeetlUtils {
 		try {
 			ClasspathResourceLoader resourceLoader=new ClasspathResourceLoader();
 			Configuration cfg=Configuration.defaultConfiguration();
-			cfg.addPkg( "cn.com" );
+			cfg.addPkg( "com.wu1g" );
 			GroupTemplate gt=new GroupTemplate(resourceLoader,cfg);
 			Template template=gt.getTemplate( readTlFileName );
 //			String output=template.render();
@@ -63,16 +48,12 @@ public class BeetlUtils {
 	}
 	/**
 	 * 根据模板生产字符串
-	 * @param tlFileName
-	 * @param context
-	 * @param saveFileName
 	 */
 	public static String renderToString(String readTlFileName,Map context){
-//		StringTemplateResourceLoader resourceLoader=new StringTemplateResourceLoader();
 		try {
 			ClasspathResourceLoader resourceLoader=new ClasspathResourceLoader();
 			Configuration cfg=Configuration.defaultConfiguration();
-			cfg.addPkg( "cn.com" );
+			cfg.addPkg( "com.wu1g" );
 			GroupTemplate gt=new GroupTemplate(resourceLoader,cfg);
 			Template template=gt.getTemplate( readTlFileName );
 			template.binding( context );

@@ -1,33 +1,20 @@
 package com.wu1g.framework.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-import org.apache.log4j.Logger;
-//import org.apache.struts2.ServletActionContext;
-
+@Slf4j
 public class WebUtil {
-	private static final transient Logger log = Logger.getLogger(WebUtil.class);
     /**
      * 转化HTML字符，可以在HTML标签中显示
+     *
      * @param str
      * @return
      */
@@ -38,7 +25,8 @@ public class WebUtil {
         str = str.replaceAll("\"", "&quot;");
         return str;
     }
-//
+
+    //
 //    // 分页时要用的可能是用来数据在第几页显示吧，默认是第一页
 //    public static int getPageNumber(HttpServletRequest req) {
 //
@@ -69,17 +57,17 @@ public class WebUtil {
     }
 
     public static Object unserialize(String serializeObj) throws IOException,
-        ClassNotFoundException {
+            ClassNotFoundException {
         return unserialize(serializeObj, "UTF-8");
     }
 
     public static Object unserialize(String serializeObj, String encode) throws IOException,
-        ClassNotFoundException {
+            ClassNotFoundException {
         if (ValidatorUtil.isNullEmpty(serializeObj)) {
             return null;
         }
         ByteArrayInputStream bais = new ByteArrayInputStream(URLDecoder
-            .decode(serializeObj, encode).getBytes("ISO-8859-1"));
+                .decode(serializeObj, encode).getBytes("ISO-8859-1"));
         ObjectInputStream ios = new ObjectInputStream(bais);
         return ios.readObject();
     }
@@ -241,6 +229,7 @@ public class WebUtil {
 
     /**
      * 根据keys从cookie取得相应的值
+     *
      * @param request
      * @param keys
      * @return
@@ -263,8 +252,8 @@ public class WebUtil {
 
     /**
      * 从cookie取得相应KEY的值
+     *
      * @param request
-     * @param keys
      * @return
      */
     public static String getSingleByCookie(HttpServletRequest request, String key) {
@@ -334,35 +323,36 @@ public class WebUtil {
     public static String getCreateDate() {
         return getTime("yyyy-MM-dd HH:mm:ss");
     }
+
     /**
      * 获取文件后缀
+     *
      * @param fileName
      * @return
      */
     public static String getFileExt(String fileName) {
         int pos = fileName.lastIndexOf(".");
         if (pos > -1) {
-        	String temp=fileName.substring(pos + 1).toLowerCase();
-        	pos=temp.indexOf("?");
-        	if(pos>-1){
-        		return temp.substring(0,pos);
-        	}
-            return temp.trim().replaceAll("\"","");
+            String temp = fileName.substring(pos + 1).toLowerCase();
+            pos = temp.indexOf("?");
+            if (pos > -1) {
+                return temp.substring(0, pos);
+            }
+            return temp.trim().replaceAll("\"", "");
         }
         return "";
     }
 
     /**
      * 生成随机字符串
-     * 
-     * @param size
-     *            随机字符串长度
+     *
+     * @param size 随机字符串长度
      * @return 随机字符
      */
     public static String getRandomString(int size) {
         char[] c = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e', 'r', 't', 'y',
-            'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v',
-            'b', 'n', 'm'};
+                'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v',
+                'b', 'n', 'm'};
         Random random = new Random(); // 初始化随机数产生器
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < size; i++) {
@@ -373,9 +363,8 @@ public class WebUtil {
 
     /**
      * 生成随机数字
-     * 
-     * @param size
-     *            随机字符串长度
+     *
+     * @param size 随机字符串长度
      * @return 随机数字
      */
     public static String getRandomNum(int size) {
@@ -425,10 +414,9 @@ public class WebUtil {
 
     /**
      * <p>
-     *  评论者/咨询者用户名前台显示(显示前3位)共通方法
+     * 评论者/咨询者用户名前台显示(显示前3位)共通方法
      * </p>
      *
-     * @param src 字符串
      * @return 按照规则转换以后的评论/咨询用户名
      */
     public static String formatViewConsultAuthor(String viewConsultAuthor) {
@@ -436,33 +424,31 @@ public class WebUtil {
         // 评论者/咨询者(显示前3位)
         if (ValidatorUtil.isNullEmpty(viewConsultAuthor)) {
             return "匿名";
-        } 
+        }
 
         return formatString(viewConsultAuthor, 3, "***");
     }
-    
+
     /**
      * <p>
-     *  只显示指定长度的字符串，其他字符加星号
+     * 只显示指定长度的字符串，其他字符加星号
      * </p>
-     *
-     * @param src 字符串
      */
     public static String formatString(String source, int length, String append) {
 
         if (ValidatorUtil.isNullEmpty(source)) {
             return source;
         }
-        
+
         if (length <= 0 || length >= source.length()) {
             return source;
         }
-        
+
         String appendStr = "";
         if (!ValidatorUtil.isNullEmpty(append)) {
-        	appendStr = append;
+            appendStr = append;
         }
-        
+
         if (source.length() > length) {
             return source.substring(0, length) + appendStr;
         } else {
@@ -470,7 +456,8 @@ public class WebUtil {
         }
 
     }
-//    /**
+
+    //    /**
 //     * 简单的代码为文件设置版本号，这个版本号其实就是最后修改的日期
 //     * @param filePath
 //     * @return
@@ -501,7 +488,7 @@ public class WebUtil {
 
 //        log.info(WebUtils.formatString("fdafda", 2, "..."));
 //    	System.out.println(getFileExt("http://xx.jpg?xx=2?"));
-    	
-    	System.out.println();
+
+        System.out.println();
     }
 }

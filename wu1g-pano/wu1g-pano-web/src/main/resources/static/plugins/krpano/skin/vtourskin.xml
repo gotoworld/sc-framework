@@ -1144,5 +1144,5 @@
 		if(hotspot[%i].flystate GT 0, flyback_by_name(get(hotspot[get(i)].name)); );
 		);
 	</action>  
-	<include url="%SWFPATH%/skin/contextmenu.xml" />
+
 </krpano>

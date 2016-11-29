@@ -25,47 +25,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *<p>用户免登陆
+ * <p>用户免登陆
  */
 @ControllerAdvice
 @Slf4j
-public class UserRememberInterceptor  implements HandlerInterceptor{
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		log.debug( "==>UserRememberInterceptor>>preHandle" );
-		if (SecurityUtils.getSubject().getSession().getAttribute( CommonConstant.SESSION_KEY_USER )==null) {
-			log.info( "用户登录信息获取失败,尝试获取免登陆信息登录!" );
-	    	 Cookie[] cookies = request.getCookies();
-	    	 String[] cooks = null;  
-	         for (Cookie coo : cookies) {
-	             String aa = coo.getValue();  
-	             cooks = aa.split("=remember=");  
-	             if (cooks.length == 2) {
-	            	try {
-		                UsernamePasswordToken token = new UsernamePasswordToken( cooks[0], cooks[1] );
-		                SecurityUtils.getSubject().login( token );
-		                return true;
-	        		} catch (Exception ex) {
-	        			log.error( "登录失败,原因未知", ex );
-	        			request.setAttribute( "msg", "登录失败,"+ex.getMessage() );
-	        			response.sendRedirect("/admin/login");
-	        			return false;
-	        		}
-	             }  
-	         }  
-	     }
-		return true;
-	}
+public class UserRememberInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.debug("==>UserRememberInterceptor>>preHandle");
+        if (SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER) == null) {
+            log.info("用户登录信息获取失败,尝试获取免登陆信息登录!");
+            Cookie[] cookies = request.getCookies();
+            String[] cooks = null;
+            for (Cookie coo : cookies) {
+                String aa = coo.getValue();
+                cooks = aa.split("=remember=");
+                if (cooks.length == 2) {
+                    try {
+                        UsernamePasswordToken token = new UsernamePasswordToken(cooks[0], cooks[1]);
+                        SecurityUtils.getSubject().login(token);
+                        return true;
+                    } catch (Exception ex) {
+                        log.error("登录失败,原因未知", ex);
+                        request.setAttribute("msg", "登录失败," + ex.getMessage());
+                        response.sendRedirect("/admin/login");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		
-	}
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-		
-	}
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+    }
 
 }
 

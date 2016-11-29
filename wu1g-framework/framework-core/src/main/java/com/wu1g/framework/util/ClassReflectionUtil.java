@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 
 /**
@@ -20,8 +21,8 @@ import org.apache.log4j.Logger;
  * 反射实体类赋值
  * </p>
  */
+@Slf4j
 public class ClassReflectionUtil {
-	private static final transient Logger log = Logger.getLogger(ClassReflectionUtil.class);
 	/**
 	 * 反射实体类赋值
 	 * 

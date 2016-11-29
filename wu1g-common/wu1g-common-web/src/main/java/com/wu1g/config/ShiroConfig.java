@@ -26,7 +26,7 @@ package com.wu1g.config;
 
 import com.google.common.collect.Maps;
 import com.wu1g.framework.config.AppConfig;
-import com.wu1g.shiro.ShiroRealm;
+import com.wu1g.web.controller.ShiroRealm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -38,7 +38,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.annotation.Order;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Map;
 

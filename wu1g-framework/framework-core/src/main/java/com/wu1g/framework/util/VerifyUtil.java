@@ -21,6 +21,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 
 /**
@@ -30,9 +31,8 @@ import org.apache.log4j.Logger;
  * <li>随机生成验证图片</li>
  * </ol>
  */
+@Slf4j
 public class VerifyUtil {
-
-	private static final transient Logger log = Logger.getLogger(VerifyUtil.class);
 
 	 /**
      * <p>生成验证图片。</p>
@@ -108,7 +108,7 @@ public class VerifyUtil {
 			sos = null;
 			
 		} catch (Exception e) {
-			log.error(e);
+			log.error("生成验证图片",e);
 		}
 	}
 	

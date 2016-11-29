@@ -26,5 +26,10 @@
             <artifactId>wu1g-framework-service</artifactId>
             <version>${wu1g.framework.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.wu1g.framework</groupId>
+            <artifactId>wu1g-framework-web</artifactId>
+            <version>${wu1g.framework.version}</version>
+        </dependency>
     </dependencies>
 </project>

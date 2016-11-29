@@ -3,6 +3,7 @@ package com.wu1g.framework.web.servlet;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wu1g.framework.util.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -27,10 +28,9 @@ import java.util.concurrent.Executors;
  * Servlet implementation class upload
  */
 @WebServlet("/fileUpload")
+@Slf4j
 public class UploadServlet extends HttpServlet {
 	private static final long				serialVersionUID	= 1429479051595590315L;
-
-	private static final transient Logger	log					= Logger.getLogger( UploadServlet.class );
 	// 线程池 默认大小
 	public static final ExecutorService		threadPool			= Executors.newScheduledThreadPool( Integer.parseInt( ResourcesUtil.getData( "IMAGE_EXECUTOR_SERVICE_SIZE" ).trim() ) );
 	// n0图象宽度

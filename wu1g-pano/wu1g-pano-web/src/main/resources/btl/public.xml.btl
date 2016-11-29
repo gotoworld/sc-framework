@@ -10,7 +10,7 @@
 <%if(isNotEmpty(proj.snowType)){%>
 <include url="%SWFPATH%/skin/snow.xml" />
 <%}%>
-
+<include url="%SWFPATH%/skin/contextmenu.xml" />
 
 <include url="%SWFPATH%/skin/vtourskin.xml" />
 
@@ -132,16 +132,16 @@
    <scene name="${scene.id}" title="${scene.sceneTitle}" onstart="activatespot(${radar_rotate})"  havevrimage="true"  thumburl="${scene.breakdownImg}thumb.jpg" lat="" lng="" heading="">
 		<view hlookat="${scene.hlookat}" vlookat="${scene.vlookat}" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 		<preview url="${scene.breakdownImg!}preview.jpg" />
-		<!--<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
-			
+		<!--
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
 			<level tiledimagewidth="1664" tiledimageheight="1664">
 				<cube url="${scene.breakdownImg!}%s/l2/%v/l2_%s_%v_%h.jpg" />
 			</level>
-			
 			<level tiledimagewidth="768" tiledimageheight="768">
 				<cube url="${scene.breakdownImg!}%s/l1/%v/l1_%s_%v_%h.jpg" />
 			</level>
-		</image>-->
+		</image>
+		-->
 		<image>
 			<cube url="${scene.breakdownImg!}vr/pano_%s.jpg" />
 		</image>

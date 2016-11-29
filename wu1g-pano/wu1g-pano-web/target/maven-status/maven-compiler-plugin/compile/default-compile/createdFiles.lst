@@ -1,0 +1,8 @@
+com\wu1g\pano\web\controller\admin\Pano02Action.class
+com\wu1g\pano\web\controller\admin\Pano01Action.class
+com\wu1g\pano\web\controller\admin\Pano06Action.class
+com\wu1g\pano\web\controller\client\PanoAction.class
+com\wu1g\pano\web\controller\admin\Video01Action.class
+com\wu1g\PanoApplication.class
+com\wu1g\config\BeetlConfig.class
+com\wu1g\pano\web\controller\client\VideoAction.class

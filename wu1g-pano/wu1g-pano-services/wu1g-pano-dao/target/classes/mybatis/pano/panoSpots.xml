@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wu1g.pano.dao.IPanoSpotsDao" >
+	<!-- 字段列表 -->
+	<sql id="Base_Column_List" >
+		t1.id as "id"
+		,t1.proj_id as "projId"
+		,t1.htype as "htype"
+		,t1.title as "title"
+		,t1.scene_id as "sceneId"
+		,t1.hname as "hname"
+		,t1.ath as "ath"
+		,t1.atv as "atv"
+		,t1.linkedscene as "linkedscene"
+		,t1.scale as "scale"
+		,t1.depth as "depth"
+		,t1.rotate as "rotate"
+		,t1.url as "url"
+		,t1.is_onclick as "isOnclick"
+		,t1.version as "version"
+		,t1.date_created as "dateCreated"
+		,t1.date_update as "dateUpdate"
+	</sql>
+	
+	<!-- 根据主键获取信息详情 -->
+	<select id="selectByPrimaryKey" resultType="panoSpots" parameterType="panoSpots" >
+		select
+		<include refid="Base_Column_List" />
+		from t_pano_spots t1 
+		where  
+		t1.id = #{id}
+	</select>
+	
+	<!-- 根据主键物理删除信息 -->
+	<delete id="deleteByPrimaryKey" parameterType="panoSpots" >
+		delete
+		from t_pano_spots
+		where  
+		id = #{id}
+	</delete>
+	
+	<!-- 新增单条数据 -->
+	<insert id="insert" parameterType="panoSpots" >
+		insert into t_pano_spots(
+		id
+		,htype
+		,title
+		,proj_id
+		,scene_id
+		,hname
+		,ath
+		,atv
+		,linkedscene
+		,scale
+		,depth
+		,rotate
+		,url
+		,is_onclick
+		,version
+		,date_created
+		,date_update
+		) values (
+		#{id}
+		,#{htype}
+		,#{title}
+		,#{projId}
+		,#{sceneId}
+		,#{hname}
+		,#{ath}
+		,#{atv}
+		,#{linkedscene}
+		,#{scale}
+		,#{depth}
+		,#{rotate}
+		,#{url}
+		,#{isOnclick}
+		,0
+		,now()
+		,#{dateUpdate}
+		)
+	</insert>
+	
+	<!-- 新增 批量数据 -->
+	<insert id="insertBatch">
+		insert into t_pano_spots(
+		id
+		,htype
+		,title
+		,proj_id
+		,scene_id
+		,hname
+		,ath
+		,atv
+		,linkedscene
+		,scale
+		,depth
+		,rotate
+		,url
+		,is_onclick
+		,version
+		,date_created
+		,date_update
+		) values 
+		<foreach collection="list" item="t" separator=",">
+		(
+		#{t.id}
+		,#{t.htype}
+		,#{t.title}
+		,#{t.projId}
+		,#{t.sceneId}
+		,#{t.hname}
+		,#{t.ath}
+		,#{t.atv}
+		,#{t.linkedscene}
+		,#{t.scale}
+		,#{t.depth}
+		,#{t.rotate}
+		,#{t.url}
+		,#{t.isOnclick}
+		,0
+		,now()
+		,#{t.dateUpdate}
+		)
+		</foreach>
+	</insert>
+	
+	<!-- 数据更新 -->
+	<update id="updateByPrimaryKeySelective" parameterType="panoSpots" >
+		update t_pano_spots set 
+				 version=version+1
+			<if test="htype!= null" >,htype=#{htype}</if>
+			<if test="title!= null" >,title=#{title}</if>
+			<if test="projId!= null" >,proj_id=#{projId}</if>
+			<if test="sceneId!= null" >,scene_id=#{sceneId}</if>
+			<if test="hname!= null" >,hname=#{hname}</if>
+			<if test="ath!= null and ath!= '0'" >,ath=#{ath}</if>
+			<if test="atv!= null and atv!= '0'" >,atv=#{atv}</if>
+			<if test="linkedscene!= null" >,linkedscene=#{linkedscene}</if>
+			<if test="scale!= null" >,scale=#{scale}</if>
+			<if test="depth!= null" >,depth=#{depth}</if>
+			<if test="rotate!= null" >,rotate=#{rotate}</if>
+			<if test="url!= null" >,url=#{url}</if>
+			<if test="isOnclick!= null" >,is_onclick=#{isOnclick}</if>
+			<if test="dateUpdate!= null" >,date_update=#{dateUpdate}</if>
+		where 
+			id= #{id}
+	</update>
+	
+	<!-- 判断是否存在 -->
+	<select id="isDataYN" parameterType="panoSpots" resultType="int">
+		select 
+			count(0) 
+		from t_pano_spots
+		where 
+			id = #{id}
+	</select>
+	
+	<!--信息列表 -->
+	<select id="findDataIsList" parameterType="panoSpots" resultType="panoSpots">
+		select
+		<include refid="Base_Column_List" />
+		from t_pano_spots t1 
+		inner join t_pano_scene t2 on t1.scene_id=t2.id
+		where t1.proj_id = #{projId}
+		and scene_id=#{sceneId}
+		and htype=#{htype}
+		<if test="date1!=null and date1!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		</if>
+		<if test="date2!=null and date2!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		</if>
+		order by t1.date_created desc
+	</select>
+	<delete id="deleteByProjId" parameterType="panoSpots" >
+		delete
+		from t_pano_spots
+		where  
+		proj_id=#{projId}
+	</delete>
+</mapper>

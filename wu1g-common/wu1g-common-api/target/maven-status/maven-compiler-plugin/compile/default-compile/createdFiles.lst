@@ -1,0 +1,16 @@
+com\wu1g\org\api\IOrgUserService.class
+com\wu1g\account\vo\AuthRoleVsPerm.class
+com\wu1g\account\api\IAuthPermService.class
+com\wu1g\account\vo\AuthUserVsRole.class
+com\wu1g\org\api\IOrgDepartmentService.class
+com\wu1g\org\vo\OrgUserVsDepartment.class
+com\wu1g\sys\api\ISysUserLogService.class
+com\wu1g\sys\vo\SysUserLog.class
+com\wu1g\account\api\IRoleSourceService.class
+com\wu1g\sys\vo\SysVariable.class
+com\wu1g\account\vo\AuthPerm.class
+com\wu1g\account\vo\AuthRole.class
+com\wu1g\org\vo\OrgDepartment.class
+com\wu1g\org\vo\OrgUser.class
+com\wu1g\sys\api\IVariableService.class
+com\wu1g\account\api\IAuthRoleService.class

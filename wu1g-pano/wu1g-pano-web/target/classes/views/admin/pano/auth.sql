@@ -1,0 +1,37 @@
+--
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano01', '全景_类目', 'pano01:init', '', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano01_add', '全景_类目_新增', 'pano01:add', 'id_pano01', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano01_edit', '全景_类目_编辑', 'pano01:edit', 'id_pano01', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano01_del', '全景_类目_逻辑删除', 'pano01:del', 'id_pano01', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano01_save', '全景_类目_保存', 'pano01:save', 'id_pano01', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano02', '全景_项目', 'pano02:init', '', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano02_add', '全景_项目_新增', 'pano02:add', 'id_pano02', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano02_edit', '全景_项目_编辑', 'pano02:edit', 'id_pano02', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano02_del', '全景_项目_逻辑删除', 'pano02:del', 'id_pano02', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano02_save', '全景_项目_保存', 'pano02:save', 'id_pano02', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano03', '全景_场景', 'pano03:init', '', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano03_add', '全景_场景_新增', 'pano03:add', 'id_pano03', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano03_edit', '全景_场景_编辑', 'pano03:edit', 'id_pano03', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano03_del', '全景_场景_逻辑删除', 'pano03:del', 'id_pano03', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano03_save', '全景_场景_保存', 'pano03:save', 'id_pano03', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano04', '全景_导览图', 'pano04:init', '', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano04_add', '全景_导览图_新增', 'pano04:add', 'id_pano04', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano04_edit', '全景_导览图_编辑', 'pano04:edit', 'id_pano04', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano04_del', '全景_导览图_逻辑删除', 'pano04:del', 'id_pano04', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano04_save', '全景_导览图_保存', 'pano04:save', 'id_pano04', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano05', '全景_热点', 'pano05:init', '', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano05_add', '全景_热点_新增', 'pano05:add', 'id_pano05', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano05_edit', '全景_热点_编辑', 'pano05:edit', 'id_pano05', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano05_del', '全景_热点_逻辑删除', 'pano05:del', 'id_pano05', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano05_save', '全景_热点_保存', 'pano05:save', 'id_pano05', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano06', '全景_评论', 'pano06:init', '', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano06_add', '全景_评论_新增', 'pano06:add', 'id_pano06', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano06_edit', '全景_评论_编辑', 'pano06:edit', 'id_pano06', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano06_del', '全景_评论_逻辑删除', 'pano06:del', 'id_pano06', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_pano06_save', '全景_评论_保存', 'pano06:save', 'id_pano06', '系统生成', '0', '0');
+
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_video', '全景_视频', 'video:init', '', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_video_add', '全景_视频_新增', 'video:add', 'id_video', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_video_edit', '全景_视频_编辑', 'video:edit', 'id_video', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_video_del', '全景_视频_逻辑删除', 'video:del', 'id_video', '系统生成', '0', '0');
+INSERT INTO `t_auth_perm` (id,name,match_str,parentid,memo,order_no,del_flag) VALUES ('id_video_save', '全景_视频_保存', 'video:save', 'id_video', '系统生成', '0', '0');

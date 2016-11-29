@@ -1,0 +1,6 @@
+com\wu1g\pano\dao\IPanoSceneDao.class
+com\wu1g\pano\dao\IPanoSpotsDao.class
+com\wu1g\pano\dao\IPanoCategoryDao.class
+com\wu1g\pano\dao\IPanoMapDao.class
+com\wu1g\pano\dao\IPanoCommentsDao.class
+com\wu1g\pano\dao\IPanoProjDao.class

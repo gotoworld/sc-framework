@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wu1g.account.dao.IAuthRoleDao" >
+	<!-- 字段列表 -->
+	<sql id="Base_Column_List" >
+		t1.id as "id",
+		t1.name as "name",
+		t1.is_super as "isSuper",
+		t1.memo as "memo",
+		t1.order_no as "orderNo",
+		t1.version as "version",
+		t1.keyword as "keyword",
+		t1.del_flag as "delFlag",
+		t1.date_created as "dateCreated",
+		t1.create_id as "createId",
+		t1.create_ip as "createIp",
+		t1.date_update as "dateUpdate",
+		t1.update_id as "updateId",
+		t1.update_ip as "updateIp"
+	</sql>
+	<!-- 根据主键获取信息详情 -->
+	<select id="selectByPrimaryKey" resultType="authRole" parameterType="authRole" >
+		select
+		<include refid="Base_Column_List" />
+		from t_auth_role t1 
+		where  t1.id = #{id}
+	</select>
+	<!-- 根据主键物理删除信息 -->
+	<delete id="deleteByPrimaryKey" parameterType="authRole" >
+		delete
+		from t_auth_role
+		where  id = #{id}
+	</delete>
+	<!-- 新增单条数据 -->
+	<insert id="insert" parameterType="authRole" >
+		insert into t_auth_role(
+		id,
+		name,
+		is_super,
+		memo,
+		order_no,
+		version,
+		keyword,
+		del_flag,
+		date_created,
+		create_id,
+		create_ip,
+		date_update,
+		update_id,
+		update_ip
+	) values (
+		#{id},
+		#{name},
+		#{isSuper},
+		#{memo},
+		#{orderNo},
+		0,
+		#{keyword},
+		'0',
+		now(),
+		#{createId},
+		#{createIp},
+		#{dateUpdate},
+		#{updateId},
+		#{updateIp}
+	)
+	 ON DUPLICATE KEY UPDATE 
+		memo=VALUES(memo)
+		,version=version+1
+		,update_id=VALUES(update_id)
+		,update_ip=VALUES(update_ip)
+		<if test="name!= null" >,name=VALUES(name)</if>
+		<if test="isSuper!= null" >,is_super=VALUES(is_super)</if>
+		<if test="orderNo!= null" >,order_no=VALUES(order_no)</if>
+		<if test="keyword!= null" >,keyword=VALUES(keyword)</if>
+		<if test="delFlag!= null" >,del_flag=VALUES(del_flag)</if>
+		<if test="dateUpdate!= null" >,date_update=VALUES(date_update)</if>
+	</insert>
+	<!-- 新增 批量数据 -->
+	<insert id="insertBatch">
+		insert into t_auth_role(
+		id,
+		name,
+		is_super,
+		memo,
+		order_no,
+		version,
+		keyword,
+		del_flag,
+		date_created,
+		create_id,
+		create_ip,
+		date_update,
+		update_id,
+		update_ip
+		) values 
+		<foreach collection="list" item="t" separator=",">
+		(
+		#{t.id},
+		#{t.name},
+		#{t.isSuper},
+		#{t.memo},
+		#{t.orderNo},
+		0,
+		#{t.keyword},
+		'0',
+		now(),
+		#{t.createId},
+		#{t.createIp},
+		#{t.dateUpdate},
+		#{t.updateId},
+		#{t.updateIp}
+		)
+		</foreach>
+	</insert>
+	<!-- 数据更新 -->
+	<update id="updateByPrimaryKeySelective" parameterType="authRole" >
+		update t_auth_role set 
+		version=version+1
+		,update_id=#{updateId}
+		,update_ip=#{updateIp}
+		<if test="name!= null" >,name=#{name}</if>
+		<if test="isSuper!= null" >,is_super=#{isSuper}</if>
+		<if test="memo!= null" >,memo=#{memo}</if>
+		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
+		<if test="keyword!= null" >,keyword=#{keyword}</if>
+		<if test="delFlag!= null" >,del_flag=#{delFlag}</if>
+		<if test="dateUpdate!= null" >,date_update=#{dateUpdate}</if>
+		where  id = #{id}
+	</update>
+	<!-- 判断是否存在 -->
+	<select id="isDataYN" parameterType="authRole" resultType="int">
+		select count(0) from t_auth_role where  id = #{id}
+	</select>
+	<!--信息列表 分页 -->
+	<select id="findDataIsPage" parameterType="authRole" resultType="authRole">
+		select
+		<include refid="Base_Column_List" />
+		from t_auth_role t1 
+		where 1=1 
+		<choose>
+			<when test="delFlag!=null">
+				and t1.del_flag=#{delFlag}
+			</when>
+			<otherwise>
+				and t1.del_flag='0'
+			</otherwise>
+		</choose>
+		<if test="name!=null and name!=''">
+			and t1.name like CONCAT('%',#{name},'%')
+		</if>
+		and t1.is_super!='1'
+		<if test="date1!=null and date1!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		</if>
+		<if test="date2!=null and date2!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		</if>
+	</select>
+	<!--信息列表 -->
+	<select id="findDataIsList" parameterType="authRole" resultType="authRole">
+		select
+		<include refid="Base_Column_List" />
+		from t_auth_role t1 
+		where 1=1 
+		<choose>
+			<when test="delFlag!=null">
+				and t1.del_flag=#{delFlag}
+			</when>
+			<otherwise>
+				and t1.del_flag='0'
+			</otherwise>
+		</choose>
+		and t1.is_super!='1'
+		<if test="date1!=null and date1!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{date1})]]>
+		</if>
+		<if test="date2!=null and date2!=''">
+			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{date2})]]>
+		</if>
+		
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="deleteById" parameterType="authRole" >
+		update t_auth_role set 
+		version=version+1
+		,update_id=#{updateId}
+		,update_ip=#{updateIp}
+		,del_flag='1'
+		where  id = #{id} and is_super!='1'
+	</update>
+	<!-- 恢复逻辑删除 -->
+	<update id="recoveryDataById" parameterType="authRole" >
+		update t_auth_role set 
+		version=version+1
+		,update_id=#{updateId}
+		,update_ip=#{updateIp}
+		,del_flag='0'
+		where  id = #{id}
+	</update>
+	
+	<!-- 角色信息列表>根据用户id -->
+	<select id="getRoleListByUId" resultType="authRole" parameterType="map" >
+		<choose>
+			<when test="iissuperman==1"><!-- i'm superman -->
+				select 
+				<include refid="Base_Column_List" /> 
+				from t_auth_role t1
+				where t1.del_flag='0'  and  t1.is_super!='1'
+			</when>
+			<otherwise>
+				select 
+				<include refid="Base_Column_List" /> 
+				from t_auth_role t1
+				inner join t_auth_user_vs_role t2 on (t1.id=t2.role_id)
+				where t1.del_flag='0' and t2.user_id=#{uid}  and t1.is_super!='1'
+			</otherwise>
+		</choose>
+	</select>
+	<!-- 根据用户id,判断用户是否为超级管理员,要的就是特权. -->
+	<select id="isSuperAdmin" resultType="int" parameterType="map" >
+		select count(0) from t_auth_role t1
+		inner join t_auth_user_vs_role t2 on (t1.id=t2.role_id)
+		where t2.user_id=#{uid} and t1.is_super='1'
+	</select>
+</mapper>

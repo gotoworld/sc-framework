@@ -25,7 +25,8 @@
 package com.wu1g.config;
 
 import com.wu1g.framework.config.AppConfig;
-import org.beetl.core.resource.WebAppResourceLoader;
+import org.beetl.core.ResourceLoader;
+import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
 import org.fox.beetl.resource.SpringResourceLoader;
@@ -37,8 +38,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
+
+import java.net.URL;
+import java.util.Enumeration;
+
 @AutoConfigureAfter(AppConfig.class)
 @Configuration
 public class BeetlConfig implements EnvironmentAware {
@@ -51,19 +58,17 @@ public class BeetlConfig implements EnvironmentAware {
     @Bean(name = "beetlSpringResourceLoader")
     public SpringResourceLoader getSpringResourceLoader() {
         SpringResourceLoader springResourceLoader=new SpringResourceLoader();
-//        springResourceLoader.setPrefix("classpath*:views/");
-//        springResourceLoader.setSuffix(".html");
+//        springResourceLoader.setPrefix("classpath*:template/");
+        springResourceLoader.setSuffix(".html");
         return springResourceLoader;
     }
 
     @Bean(initMethod = "init", name = "beetlGroupUtilConfiguration")
     public BeetlGroupUtilConfiguration getBeetlGroupUtilConfiguration(@Qualifier("beetlSpringResourceLoader") SpringResourceLoader springResourceLoader) {
         BeetlGroupUtilConfiguration beetlGroupUtilConfiguration = new BeetlGroupUtilConfiguration();
-        ResourcePatternResolver patternResolver = ResourcePatternUtils.getResourcePatternResolver(new DefaultResourceLoader());
+        ResourcePatternResolver patternResolver = ResourcePatternUtils.getResourcePatternResolver( new PathMatchingResourcePatternResolver());
         try {
-            WebAppResourceLoader webAppResourceLoader = new WebAppResourceLoader(patternResolver.getResource("classpath:/views/").getFile().getPath());
-            beetlGroupUtilConfiguration.setResourceLoader(webAppResourceLoader);
-//            beetlGroupUtilConfiguration.setResourceLoader(springResourceLoader);
+            beetlGroupUtilConfiguration.setResourceLoader(springResourceLoader);
             beetlGroupUtilConfiguration.setConfigFileResource(patternResolver.getResource("classpath:/conf/beetl.properties"));
             return beetlGroupUtilConfiguration;
         } catch (Exception e) {
@@ -74,8 +79,8 @@ public class BeetlConfig implements EnvironmentAware {
     @Bean(name = "beetlViewResolver")
     public BeetlSpringViewResolver getBeetlSpringViewResolver(@Qualifier("beetlGroupUtilConfiguration") BeetlGroupUtilConfiguration beetlGroupUtilConfiguration) {
         BeetlSpringViewResolver beetlSpringViewResolver = new BeetlSpringViewResolver();
-//        beetlSpringViewResolver.setPrefix("classpath*:views/");
-        beetlSpringViewResolver.setSuffix(".html");
+        beetlSpringViewResolver.setPrefix("classpath*:template/");
+//        beetlSpringViewResolver.setSuffix(".html");
         beetlSpringViewResolver.setContentType("text/html;charset=UTF-8");
         beetlSpringViewResolver.setOrder(0);
         beetlSpringViewResolver.setConfig(beetlGroupUtilConfiguration);

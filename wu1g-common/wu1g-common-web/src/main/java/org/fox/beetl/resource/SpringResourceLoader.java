@@ -10,9 +10,6 @@ import org.beetl.core.fun.FileFunctionWrapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -176,9 +173,9 @@ public class SpringResourceLoader implements ResourceLoader, ApplicationContextA
      * 加载函数定义文件<br>
      * <strong>仿照Beetl的实现</strong>
      *
-     * @param searchRoot     搜索根路径
-     * @param ns             命名空间
-     * @param groupTemplate  Beetl GroupTemplate
+     * @param searchRoot    搜索根路径
+     * @param ns            命名空间
+     * @param groupTemplate Beetl GroupTemplate
      */
     protected void readFuntionFile(File searchRoot, String ns, GroupTemplate groupTemplate) throws IOException {
         for (File file : searchRoot.listFiles()) {
@@ -213,7 +210,8 @@ public class SpringResourceLoader implements ResourceLoader, ApplicationContextA
         try {
             org.springframework.core.io.Resource resource = createResource(key);
             // 资源存在且可读
-            return (resource != null) && resource.exists() && resource.isReadable();
+            boolean bl = (resource != null) && resource.exists() && resource.isReadable();
+            return bl;
         } catch (Exception e) {
             SpringResourceLoader.LOG.debug("Access Resource IO Error!", e);
             // 出现IO异常，返回false
@@ -246,10 +244,8 @@ public class SpringResourceLoader implements ResourceLoader, ApplicationContextA
             return key;
         } else {
             try {
-//                String realPath=getRealPath(((SpringResource) resource).resource, key);
-                String realPath=createResource(getRealPath(resource.getId(),key)).getURI().toString();
-                return realPath;
-            } catch (Exception e) {
+                return getRealPath(((SpringResource) resource).resource, key);
+            } catch (IOException e) {
                 SpringResourceLoader.LOG.debug("Access Resource IO Error!", e);
                 return key.startsWith("/") ? key.substring(1) : key;
             }
@@ -283,15 +279,9 @@ public class SpringResourceLoader implements ResourceLoader, ApplicationContextA
      * @throws IOException
      */
     public org.springframework.core.io.Resource createResource(String id) throws IOException {
-        ResourcePatternResolver patternResolver = ResourcePatternUtils.getResourcePatternResolver( new PathMatchingResourcePatternResolver());
-
-        org.springframework.core.io.Resource resourceArr[] = patternResolver.getResources((id.startsWith("/") ? prefix : "").concat(id).concat(id.endsWith(functionSuffix) ? "" : suffix));
-        for(org.springframework.core.io.Resource resource:resourceArr){
-            if((resource != null) && resource.exists() && resource.isReadable()){
-                return resource;
-            }
-        }
-        return null;
+        // 添加后缀
+        String rid = (id.startsWith("/") ? prefix : "").concat(id).concat(id.endsWith(functionSuffix) ? "" : suffix);
+        return applicationContext.getResource(rid);
     }
 
     /**
@@ -305,27 +295,7 @@ public class SpringResourceLoader implements ResourceLoader, ApplicationContextA
     private String getRealPath(org.springframework.core.io.Resource base, String key) throws IOException {
         return base.createRelative(key).getURI().toString();
     }
-    public String getRealPath(String basePath,String relativePath){
-        if(relativePath.startsWith("../")){
-            basePath=basePath.substring(0,basePath.lastIndexOf("/"));
-            do{
-                basePath=basePath.substring(0,basePath.lastIndexOf("/"));
-                relativePath=relativePath.substring(relativePath.indexOf("../")+3,relativePath.length());
-            }while(relativePath.startsWith("../"));
-        }else if(relativePath.startsWith("/")){
-            basePath=basePath.substring(0,basePath.indexOf("/"));
-            relativePath=relativePath.substring(1);
-        }else{
-            if(relativePath.startsWith("./")){
-                basePath=basePath.substring(0,basePath.lastIndexOf("/"));
-                relativePath=relativePath.substring(relativePath.indexOf("./")+2,relativePath.length());
-            }else{
-                basePath=basePath.substring(0,basePath.lastIndexOf("/"));
-//                relativePath;
-            }
-        }
-        return basePath+"/"+relativePath;
-    }
+
     /**
      * 创建资源加载异常
      *

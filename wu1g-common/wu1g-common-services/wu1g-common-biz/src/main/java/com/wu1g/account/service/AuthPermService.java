@@ -38,7 +38,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 	@Autowired
 	private IAuthPermDao authPermDao;
 	 /**	
-	 * <p>信息编辑。</p>	
+	 * <p>信息编辑。
 	 * <ol>[功能概要] 	
 	 * <li>新增信息。	
 	 * <li>修改信息。	
@@ -73,11 +73,11 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 		return msg;	
 	}	
 	/**	
-	 * <p>信息编辑。</p>	
+	 * <p>信息编辑。
 	 * <ol>[功能概要] 	
 	 * <li>物理删除。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String deleteData(AuthPerm bean) throws Exception{	
 		String msg="1";	
@@ -94,11 +94,11 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 		return msg;	
 	}	
 	/**	
-	 * <p>信息 单条。</p>	
+	 * <p>信息 单条。
 	 * <ol>[功能概要] 	
 	 * <li>逻辑删除。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {	
 			Exception.class, RuntimeException.class })	
@@ -119,12 +119,12 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 		return msg;	
 	}	
 	/**	
-	 * <p>信息列表 分页。</p>	
+	 * <p>信息列表 分页。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * <li>分页。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<AuthPerm> findDataIsPage(AuthPerm bean){	
 		List<AuthPerm> beans=null;	
@@ -137,12 +137,12 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 		return beans;	
 	}	
 	/**	
-	 * <p>信息列表。</p>	
+	 * <p>信息列表。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * <li>列表。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<AuthPerm> findDataIsList(AuthPerm bean){	
 		List<AuthPerm> beans=null;	
@@ -154,12 +154,12 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 		return beans;	
 	}	
 	/**	
-	 * <p>信息详情。</p>	
+	 * <p>信息详情。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * <li>详情。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public AuthPerm findDataById(AuthPerm bean){	
 	   AuthPerm bean1=null;	
@@ -174,11 +174,11 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 		return bean1;	
 	}	
 	/**	
-	 * <p>信息 单条。</p>	
+	 * <p>信息 单条。
 	 * <ol>[功能概要] 	
 	 * <li>恢复逻辑删除的数据。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String recoveryDataById(AuthPerm bean) throws Exception{	
 		String msg="1";	
@@ -196,11 +196,11 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 		return msg;	
 	}
 	/**	
-	 * <p>信息列表。</p>	
+	 * <p>信息列表。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索 根据xx查询所有圈圈。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<AuthPerm> findDataTree(AuthPerm bean){
 		List<AuthPerm> beans=findDataIsList(bean);
@@ -211,7 +211,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 		return	tree.buildTree();
 	}
 	/**	
-	 * <p>根据角色id获取对应的权限信息列表。</p>	
+	 * <p>根据角色id获取对应的权限信息列表。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * <li>列表。	

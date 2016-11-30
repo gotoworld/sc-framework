@@ -5,7 +5,7 @@
  * -------- ----------- --------------- ---------------------------	
  * 1.00     2016.10.05      easycode         程序.发布		
  * -------- ----------- --------------- ---------------------------	
- * Copyright 2016 baseos System. - All Rights Reserved.
+ * Copyright 2016 pano System. - All Rights Reserved.
  *	
  */
 

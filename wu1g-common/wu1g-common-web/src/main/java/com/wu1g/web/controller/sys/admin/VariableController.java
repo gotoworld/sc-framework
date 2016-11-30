@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.github.pagehelper.PageInfo;
 
 /**
- * <p>系统_数据字典  ACTION类。</p>
+ * <p>系统_数据字典  ACTION类。
  * <ol>[功能概要] 
  * <li>初始化。 
  * <li>信息列表(未删除)。 
@@ -58,7 +58,7 @@ public class VariableController extends BaseController {
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**
-	 * <p> 初始化处理。 </p>
+	 * <p> 初始化处理。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>初始化处理。
@@ -72,7 +72,7 @@ public class VariableController extends BaseController {
 		return init;
 	}
 	/**
-	 * <p> 信息列表 (未删除)。 </p>
+	 * <p> 信息列表 (未删除)。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>信息列表。
@@ -93,7 +93,7 @@ public class VariableController extends BaseController {
 		return infoList;
 	}
 	/**
-	 * <p> 编辑。</p>
+	 * <p> 编辑。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>编辑。
@@ -121,7 +121,7 @@ public class VariableController extends BaseController {
 		return edit;
 	}
 	/**
-	 * <p> 删除。 </p>
+	 * <p> 删除。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>逻辑删除。
@@ -145,7 +145,7 @@ public class VariableController extends BaseController {
 		return success;
 	}
 //	/**
-//	 * <p> 删除。 </p>
+//	 * <p> 删除。
 //	 * <ol>
 //	 * [功能概要] 
 //	 * <li>物理删除。
@@ -169,7 +169,7 @@ public class VariableController extends BaseController {
 //		return success;
 //	}
 	/**
-	 * <p> 信息保存 </p>
+	 * <p> 信息保存
 	 * <ol>
 	 * [功能概要] 
 	 * <li>新增。
@@ -206,7 +206,7 @@ public class VariableController extends BaseController {
 		return success;
 	}
 //	/**
-//	 * <p> 预览。</p>
+//	 * <p> 预览。
 //	 * <ol>
 //	 * [功能概要] 
 //	 * <li>预览。
@@ -225,7 +225,7 @@ public class VariableController extends BaseController {
 //		return "view";
 //	}
 //	/**
-//	 * <p> 回收站。</p>
+//	 * <p> 回收站。
 //	 * <ol>
 //	 * [功能概要] 
 //	 * <li>回收站。
@@ -257,7 +257,7 @@ public class VariableController extends BaseController {
 //		return "recycle";
 //	}
 //	/**
-//	 * <p> 恢复。</p>
+//	 * <p> 恢复。
 //	 * <ol>[功能概要] 
 //	 * <li>恢复逻辑删除的数据。
 //	 * </ol>

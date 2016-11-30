@@ -14,7 +14,7 @@ import com.wu1g.framework.IBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * <p>数据字典  数据库处理接口类。</p>	
+ * <p>数据字典  数据库处理接口类。
  * @author easycode
  */
 @Mapper

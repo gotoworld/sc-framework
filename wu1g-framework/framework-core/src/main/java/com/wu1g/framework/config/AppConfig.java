@@ -45,9 +45,6 @@ import java.util.Map;
 
 /**
  * Application 自定义配置
- *
- * @author liuzh
- * @since 2015-12-19 10:11
  */
 @Configuration
 @Order(-1000)

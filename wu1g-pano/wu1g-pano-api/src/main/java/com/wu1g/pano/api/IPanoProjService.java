@@ -5,7 +5,7 @@
  * -------- ----------- --------------- ---------------------------	
  * 1.00     2016.10.02      easycode         程序.发布		
  * -------- ----------- --------------- ---------------------------	
- * Copyright 2016 baseos System. - All Rights Reserved.
+ * Copyright 2016 pano System. - All Rights Reserved.
  *	
  */
 
@@ -37,7 +37,7 @@ public interface IPanoProjService {
 	 * <li>新增信息。	
 	 * <li>修改信息。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String saveOrUpdateData(PanoProj bean) throws Exception;
 	/**	
@@ -45,7 +45,7 @@ public interface IPanoProjService {
 	 * <ol>[功能概要] 	
 	 * <li>物理删除。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String deleteData(PanoProj bean) throws Exception;	
 	/**	
@@ -53,7 +53,7 @@ public interface IPanoProjService {
 	 * <ol>[功能概要] 	
 	 * <li>恢复逻辑删除的数据。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String recoveryDataById(PanoProj bean) throws Exception;	
 	/**	
@@ -61,7 +61,7 @@ public interface IPanoProjService {
 	 * <ol>[功能概要] 	
 	 * <li>逻辑删除。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String deleteDataById(PanoProj bean) throws Exception;	
 	/**	
@@ -70,7 +70,7 @@ public interface IPanoProjService {
 	 * <li>信息检索。	
 	 * <li>分页。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<PanoProj> findDataIsPage(PanoProj bean);	
 	/**	
@@ -79,7 +79,7 @@ public interface IPanoProjService {
 	 * <li>信息检索。	
 	 * <li>列表。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<PanoProj> findDataIsList(PanoProj bean);	
 	/**	
@@ -88,7 +88,7 @@ public interface IPanoProjService {
 	 * <li>信息检索。	
 	 * <li>详情。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public PanoProj findDataById(PanoProj bean);	
 	

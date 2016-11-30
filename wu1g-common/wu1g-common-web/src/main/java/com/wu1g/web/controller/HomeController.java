@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * <p>后台页面首页 action</p>
+ * <p>后台页面首页 action
  */
 @Controller
 @RequestMapping(value = "/h")

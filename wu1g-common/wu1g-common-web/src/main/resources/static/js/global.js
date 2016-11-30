@@ -134,7 +134,7 @@ $(document).ajaxStop(function() {
 
 function openMyBoxLayer(mytitle, myurl) {
 	if (mytitle != 'a') {
-		var pageNumA = 0;
+		var pageNumA = 1;
 		if ($('#pageNumA').val()) {
 			pageNumA = $('#pageNumA').val();
 		}

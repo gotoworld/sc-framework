@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>组织架构_部门  数据库处理接口类。</p>	
+ * <p>组织架构_部门  数据库处理接口类。
  * @author easycode
  */
 @Mapper

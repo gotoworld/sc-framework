@@ -47,7 +47,7 @@ public class LoginController extends BaseController {
 	/**
 	 * <p>
 	 * init
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>init。
 	 * </ol>
@@ -64,7 +64,7 @@ public class LoginController extends BaseController {
 	 /**
 	 * <p>
 	 * 无权限页面
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>无权限页面。
 	 * </ol>
@@ -81,7 +81,7 @@ public class LoginController extends BaseController {
 	/**
 	 * <p>
 	 * 用户登录
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>登陆。
 	 * </ol>
@@ -140,7 +140,7 @@ public class LoginController extends BaseController {
 	/**
 	 * <p>
 	 * 切换界面语言
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>zh_CN,中文
 	 * </ol>
@@ -167,7 +167,7 @@ public class LoginController extends BaseController {
 	/**
 	 * <p>
 	 * 用户登出
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>登出。
 	 * </ol>

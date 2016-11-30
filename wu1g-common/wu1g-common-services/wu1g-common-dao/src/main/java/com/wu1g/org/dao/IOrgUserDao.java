@@ -18,13 +18,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * <p>组织架构_用户  数据库处理接口类。</p>	
+ * <p>组织架构_用户  数据库处理接口类。
  * @author easycode
  */
 @Mapper
 public interface IOrgUserDao extends IBaseDao {
 	/**	
-	 * <p>获取用户信息>根据用户登录名。</p>	
+	 * <p>获取用户信息>根据用户登录名。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * </ol>	
@@ -37,7 +37,7 @@ public interface IOrgUserDao extends IBaseDao {
 	/**获取某一种角色所有用户(分页)*/
 	List<OrgUser> getUserIsPage(OrgUser dto) throws Exception;
 	
-	/**<p>判断用户id是否存在</p>	*/
+	/**<p>判断用户id是否存在	*/
 	public int isUidYN(@Param("userid") String uid) throws Exception;
 
 	List<OrgUser> findTeacherDataIsList(OrgUser dto);

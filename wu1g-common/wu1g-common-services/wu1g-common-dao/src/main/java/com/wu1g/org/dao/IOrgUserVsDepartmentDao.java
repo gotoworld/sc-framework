@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * <p>
  * 组织架构_用户vs部门 数据库处理接口类。
- * </p>
+ *
  * 
  * @author easycode
  */

@@ -72,12 +72,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息编辑。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>新增信息。 <li>修改信息。
      * </ol>
      *
-     * @return 处理结果
+     *
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -150,12 +150,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息编辑。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>修改信息。
      * </ol>
      *
-     * @return 处理结果
+     *
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -181,12 +181,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息编辑。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>物理删除。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public String deleteData(OrgUser bean) throws Exception {
         String msg = "1";
@@ -204,12 +204,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息 单条。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>逻辑删除。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(OrgUser bean) throws Exception {
@@ -230,12 +230,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息列表 分页。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>分页。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public List<OrgUser> findDataIsPage(OrgUser bean) {
         List<OrgUser> beans = null;
@@ -251,12 +251,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息列表。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public List<OrgUser> findDataIsList(OrgUser bean) {
         List<OrgUser> beans = null;
@@ -271,12 +271,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息详情。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>详情。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public OrgUser findDataById(OrgUser bean) {
         OrgUser bean1 = null;
@@ -294,12 +294,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息 单条。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>恢复逻辑删除的数据。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public String recoveryDataById(OrgUser bean) throws Exception {
         String msg = "1";
@@ -318,12 +318,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 获取用户角色集合。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public List<AuthRole> findRoleDataIsList(OrgUser bean) {
         List<AuthRole> beans = null;
@@ -342,12 +342,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 获取用户所在部门集合。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public List<OrgDepartment> findDeptDataIsList(OrgUser bean) {
         List<OrgDepartment> beans = null;
@@ -366,12 +366,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 某一种角色所有用户。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public List<OrgUser> findUserList(OrgUser bean) {
         List<OrgUser> beans = null;
@@ -388,12 +388,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 某一种角色所有用户。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>分页。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public List<OrgUser> findUserIsPage(OrgUser bean) {
         List<OrgUser> beans = null;
@@ -411,7 +411,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 判断用户id是否存在
-     * </p>
+     *
      */
     public String isUidYN(String uid) {
         String msg = "1";

@@ -47,13 +47,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 @AutoConfigureAfter(AppConfig.class)
 @Slf4j
 @Order(-998)
-public class ExecutorConfig implements EnvironmentAware {
-    private RelaxedPropertyResolver myResolver;
-    @Override
-    public void setEnvironment(Environment env) {
-        this.myResolver = new RelaxedPropertyResolver(env, "wu1g.");
-    }
-
+public class ExecutorConfig {
     /***
      *  线程池
      */

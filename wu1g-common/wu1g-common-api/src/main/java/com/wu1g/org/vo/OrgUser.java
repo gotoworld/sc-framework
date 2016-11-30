@@ -11,11 +11,19 @@
 package com.wu1g.org.vo;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wu1g.framework.vo.BaseVO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
- * <p>组织架构_用户  BEAN类。</p>	
- * @author easycode
+ * <p>组织架构_用户  BEAN类。
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrgUser extends BaseVO{
 
 	private static final long serialVersionUID = -520196248671485682L;

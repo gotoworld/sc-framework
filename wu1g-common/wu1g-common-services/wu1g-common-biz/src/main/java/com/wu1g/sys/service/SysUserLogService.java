@@ -38,12 +38,12 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
 	/**
 	 * <p>
 	 * 信息编辑。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>新增信息。 <li>修改信息。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 * @throws Exception
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = { Exception.class, RuntimeException.class })
@@ -74,12 +74,12 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
 	/**
 	 * <p>
 	 * 信息列表 分页。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>信息检索。 <li>分页。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 */
 	public List<SysUserLog> findDataIsPage(SysUserLog bean) {
 		List<SysUserLog> beans = null;

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>权限_角色信息  数据库处理接口类。</p>	
+ * <p>权限_角色信息  数据库处理接口类。
  * @author easycode
  */
 @Mapper

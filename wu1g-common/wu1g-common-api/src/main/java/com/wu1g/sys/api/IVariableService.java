@@ -14,7 +14,7 @@ import com.wu1g.sys.vo.SysVariable;
 import java.util.List;
 
 /**
- * <p>数据字典   业务处理接口类。</p>	
+ * <p>数据字典   业务处理接口类。
  * <ol>[功能概要] 
  * <li>编辑(新增or修改)。 
  * <li>详情检索。 
@@ -29,63 +29,63 @@ import java.util.List;
 public interface IVariableService{
 
 	/**	
-	 * <p>信息编辑。</p>	
+	 * <p>信息编辑。
 	 * <ol>[功能概要] 	
 	 * <li>新增信息。	
 	 * <li>修改信息。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String saveOrUpdateData(SysVariable bean) throws Exception;
 	/**	
-	 * <p>信息编辑。</p>	
+	 * <p>信息编辑。
 	 * <ol>[功能概要] 	
 	 * <li>物理删除。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String deleteData(SysVariable bean) throws Exception;	
 	/**	
-	 * <p>信息 单条。</p>	
+	 * <p>信息 单条。
 	 * <ol>[功能概要] 	
 	 * <li>恢复逻辑删除的数据。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String recoveryDataById(SysVariable bean) throws Exception;	
 	/**	
-	 * <p>信息 单条。</p>	
+	 * <p>信息 单条。
 	 * <ol>[功能概要] 	
 	 * <li>逻辑删除。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String deleteDataById(SysVariable bean) throws Exception;	
 	/**	
-	 * <p>信息列表 分页。</p>	
+	 * <p>信息列表 分页。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * <li>分页。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<SysVariable> findDataIsPage(SysVariable bean);	
 	/**	
-	 * <p>信息列表。</p>	
+	 * <p>信息列表。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * <li>列表。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<SysVariable> findDataIsList(SysVariable bean);	
 	/**	
-	 * <p>信息详情。</p>	
+	 * <p>信息详情。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * <li>详情。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public SysVariable findDataById(SysVariable bean);	
 }

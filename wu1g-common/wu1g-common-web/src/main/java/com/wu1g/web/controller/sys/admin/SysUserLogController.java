@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * <p>系统_管理员操作日志  ACTION类。</p>	
+ * <p>系统_管理员操作日志  ACTION类。
  * <ol>[功能概要] 
  * <li>初始化。 
  * <li>信息列表(未删除)。 
@@ -46,7 +46,7 @@ public class SysUserLogController extends BaseController {
 	private static final String infoList = "admin/sys/sys02_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
-	 * <p> 初始化处理。 </p>
+	 * <p> 初始化处理。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>初始化处理。
@@ -60,7 +60,7 @@ public class SysUserLogController extends BaseController {
 		return init;
 	}
 	/**
-	 * <p> 信息列表 (未删除)。 </p>
+	 * <p> 信息列表 (未删除)。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>信息列表。

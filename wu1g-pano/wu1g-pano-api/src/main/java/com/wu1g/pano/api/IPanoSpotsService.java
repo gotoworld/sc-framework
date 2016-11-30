@@ -5,7 +5,7 @@
  * -------- ----------- --------------- ---------------------------	
  * 1.00     2016.10.02      easycode         程序.发布		
  * -------- ----------- --------------- ---------------------------	
- * Copyright 2016 baseos System. - All Rights Reserved.
+ * Copyright 2016 pano System. - All Rights Reserved.
  *	
  */
 
@@ -33,7 +33,7 @@ public interface IPanoSpotsService {
 	 * <li>新增信息。	
 	 * <li>修改信息。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String saveOrUpdateData(PanoSpots bean) throws Exception;
 	/**	
@@ -41,7 +41,7 @@ public interface IPanoSpotsService {
 	 * <ol>[功能概要] 	
 	 * <li>物理删除。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public String deleteData(PanoSpots bean) throws Exception;	
 	/**	
@@ -50,7 +50,7 @@ public interface IPanoSpotsService {
 	 * <li>信息检索。	
 	 * <li>列表。	
 	 * 	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<PanoSpots> findDataIsList(PanoSpots bean);	
 }

@@ -5,6 +5,7 @@ import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.wu1g.framework.config.AppConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,10 @@ public class KrPanoUtil {
     static {
         try {
             String os = System.getProperty("os.name");
-            String config = " -askforxmloverwrite=false -xml=false -html=false ";
             if (os.toLowerCase().startsWith("win")) {
-                shellCommand = "/home/krpano/win/krpanotools64.exe  makepano -config=templates/vtour-multires.config" + config;
+                shellCommand = AppConfig.getProperty("krpano.win")+" "+AppConfig.getProperty("krpano.config");
             } else {
-                shellCommand = "/home/krpano/linux/krpanotools makepano -config=templates/vtour-multires.config" + config;
+                shellCommand = AppConfig.getProperty("krpano.linux")+" "+AppConfig.getProperty("krpano.config");
             }
         } catch (Exception e) {
             log.error("参数路径初始化失败!", e);

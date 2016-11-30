@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * <p>组织架构_用户  ACTION类。</p>	
+ * <p>组织架构_用户  ACTION类。
  * <ol>[功能概要] 
  * <li>初始化。 
  * <li>信息列表(未删除)。 
@@ -67,7 +67,7 @@ public class OrgUserController extends BaseController {
 	private static final String success = "redirect:/h"+acPrefix+init;
 	
 	/**
-	 * <p> 初始化处理。 </p>
+	 * <p> 初始化处理。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>初始化处理。
@@ -81,7 +81,7 @@ public class OrgUserController extends BaseController {
 		return init;
 	}
 	/**
-	 * <p> 信息列表 (未删除)。 </p>
+	 * <p> 信息列表 (未删除)。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>信息列表。
@@ -104,7 +104,7 @@ public class OrgUserController extends BaseController {
 		return infoList;
 	}
 	/**
-	 * <p> 编辑。</p>
+	 * <p> 编辑。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>编辑。
@@ -147,7 +147,7 @@ public class OrgUserController extends BaseController {
 		return edit;
 	}
 	/**
-	 * <p> 编辑。</p>
+	 * <p> 编辑。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>编辑。
@@ -166,7 +166,7 @@ public class OrgUserController extends BaseController {
 		return editUser;
 	}
 	/**
-	 * <p> 删除。 </p>
+	 * <p> 删除。
 	 * <ol>
 	 * [功能概要] 
 	 * <li>逻辑删除。
@@ -217,7 +217,7 @@ public class OrgUserController extends BaseController {
 	
 	
 	/**
-	 * <p> 信息保存 </p>
+	 * <p> 信息保存
 	 * <ol>
 	 * [功能概要] 
 	 * <li>新增。
@@ -257,7 +257,7 @@ public class OrgUserController extends BaseController {
 		return success;
 	}
 	/**
-	 * <p> 信息保存 </p>
+	 * <p> 信息保存
 	 * <ol>
 	 * [功能概要] 
 	 * <li>修改。

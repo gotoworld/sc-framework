@@ -108,12 +108,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息编辑。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>物理删除。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public String deleteData(AuthRole bean) throws Exception {
         String msg = "1";
@@ -131,12 +131,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息 单条。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>逻辑删除。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(AuthRole bean) throws Exception {
@@ -157,12 +157,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息列表 分页。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>分页。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public List<AuthRole> findDataIsPage(AuthRole bean) {
         List<AuthRole> beans = null;
@@ -178,12 +178,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息列表。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public List<AuthRole> findDataIsList(AuthRole bean) {
         List<AuthRole> beans = null;
@@ -198,12 +198,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息详情。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>信息检索。 <li>详情。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public AuthRole findDataById(AuthRole bean) {
         AuthRole bean1 = null;
@@ -221,12 +221,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息 单条。
-     * </p>
+     *
      * <ol>
      * [功能概要] <li>恢复逻辑删除的数据。
      * </ol>
      *
-     * @return 处理结果
+     *
      */
     public String recoveryDataById(AuthRole bean) throws Exception {
         String msg = "1";

@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * <p>
  * 系统_管理员操作日志 数据库处理接口类。
- * </p>
+ *
  * 
  * @author easycode
  */

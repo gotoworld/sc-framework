@@ -42,12 +42,12 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 	/**
 	 * <p>
 	 * 信息编辑。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>新增信息。 <li>修改信息。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 * @throws Exception
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = { Exception.class, RuntimeException.class })
@@ -80,12 +80,12 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 	/**
 	 * <p>
 	 * 信息编辑。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>物理删除。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 */
 	public String deleteData(OrgDepartment bean) throws Exception {
 		String msg = "1";
@@ -103,12 +103,12 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 	/**
 	 * <p>
 	 * 信息 单条。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>逻辑删除。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = { Exception.class, RuntimeException.class })
 	public String deleteDataById(OrgDepartment bean) throws Exception {
@@ -129,12 +129,12 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 	/**
 	 * <p>
 	 * 信息列表 分页。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>信息检索。 <li>分页。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 */
 	public List<OrgDepartment> findDataIsPage(OrgDepartment bean) {
 		List<OrgDepartment> beans = null;
@@ -150,12 +150,12 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 	/**
 	 * <p>
 	 * 信息列表。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>信息检索。 <li>列表。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 */
 	public List<OrgDepartment> findDataIsList(OrgDepartment bean) {
 		List<OrgDepartment> beans = null;
@@ -170,12 +170,12 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 	/**
 	 * <p>
 	 * 信息详情。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>信息检索。 <li>详情。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 */
 	public OrgDepartment findDataById(OrgDepartment bean) {
 		OrgDepartment bean1 = null;
@@ -193,12 +193,12 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 	/**
 	 * <p>
 	 * 信息 单条。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>恢复逻辑删除的数据。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 */
 	public String recoveryDataById(OrgDepartment bean) throws Exception {
 		String msg = "1";
@@ -217,12 +217,12 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 	/**
 	 * <p>
 	 * 信息列表。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要] <li>信息检索 根据xx查询所有圈圈。
 	 * </ol>
 	 * 
-	 * @return 处理结果
+	 *
 	 */
 	public List<OrgDepartment> findDataTree(OrgDepartment bean) {
 		List<OrgDepartment> beans = findDataIsList( bean );

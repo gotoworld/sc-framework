@@ -13,7 +13,7 @@ import com.wu1g.sys.vo.SysUserLog;
 
 import java.util.List;
 /**
- * <p>系统_管理员操作日志   业务处理接口类。</p>	
+ * <p>系统_管理员操作日志   业务处理接口类。
  * <ol>[功能概要] 
  * <li>编辑(新增)。 
  * <li>分页检索。 
@@ -32,12 +32,12 @@ public interface ISysUserLogService{
 	 */
 	public void info(String type, String memo, String userId, String ip);
 	/**	
-	 * <p>信息列表 分页。</p>	
+	 * <p>信息列表 分页。
 	 * <ol>[功能概要] 	
 	 * <li>信息检索。	
 	 * <li>分页。	
 	 * </ol>	
-	 * @return 处理结果	
+	 *
 	 */	
 	public List<SysUserLog> findDataIsPage(SysUserLog bean);
 }

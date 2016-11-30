@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.Map;
 
 /**
- * <p>权限_用户vs角色  数据库处理接口类。</p>	
+ * <p>权限_用户vs角色  数据库处理接口类。
  * @author easycode
  */
 @Mapper

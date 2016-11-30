@@ -9,10 +9,7 @@ import java.nio.file.Path;
 public class T1 {
     public static void main(String[] args) {
 //        System.out.println(getRealPath("classpath*:template/1/2/admin/index.html","/include/meta.html"));
-
         System.out.println(JSON.toJSON(Response.error("11111111")));
-
-
     }
 
     public static String getRealPath(String basePath,String relativePath){

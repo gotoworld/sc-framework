@@ -1,5 +1,6 @@
 package com.wu1g.framework;
 
+import com.alibaba.fastjson.JSON;
 import com.wu1g.framework.exception.ErrorCode;
 import com.sun.org.apache.regexp.internal.recompile;
 
@@ -79,5 +80,4 @@ public class Response<T> {
     public static Response error(int code,String message) {
         return new Response(code,message);
     }
-
 }

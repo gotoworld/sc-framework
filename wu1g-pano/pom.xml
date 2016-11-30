@@ -26,5 +26,10 @@
             <artifactId>wu1g-framework-service</artifactId>
             <version>${wu1g.framework.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.2.4.Final</version>
+        </dependency>
     </dependencies>
 </project>

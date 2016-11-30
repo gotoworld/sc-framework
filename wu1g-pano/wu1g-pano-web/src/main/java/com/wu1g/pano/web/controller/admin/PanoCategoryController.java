@@ -11,6 +11,7 @@
 
 package com.wu1g.pano.web.controller.admin;
 
+import com.wu1g.framework.Response;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -23,8 +24,14 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 
 /**
@@ -149,14 +156,23 @@ public class PanoCategoryController extends BaseController {
 	 */
 	@RequiresPermissions(value = { "pano01:add", "pano01:edit" }, logical = Logical.OR)
 	@RequestMapping(value = acPrefix + "save")
-	public String save(PanoCategory bean) {
+	public String save(@Validated @RequestBody PanoCategory bean, BindingResult bindingResult) {
 		log.info( "PanoCategoryController save........." );
 		if (bean != null) {
-			String msg = "1";
+			Response result = new Response();
 			try {
-				// TODO--请加入验证字段--
-				if (ValidatorUtil.isEmpty( "需要验证的字段" )) {
-					msg = "保存失败!信息为空!";
+				if ("1".equals(request.getSession().getAttribute("bussiness_contact_" + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				} else {
+					request.getSession().setAttribute("bussiness_contact_" + bean.getToken(), "1");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
+					}
+					result = Response.error(errorMsg);
 				} else {
 					OrgUser user = (OrgUser) request.getSession().getAttribute( CommonConstant.SESSION_KEY_USER );
 					if (user != null) {
@@ -165,12 +181,13 @@ public class PanoCategoryController extends BaseController {
 						bean.setUpdateIp( getIpAddr() );
 						bean.setUpdateId( user.getId() );
 					}
-					msg = panoCategoryService.saveOrUpdateData( bean );
+					result.message = panoCategoryService.saveOrUpdateData(bean);
+					result.data = bean.getId();
 				}
 			} catch (Exception e) {
-				msg = e.getMessage();
+				result = Response.error(e.getMessage());
 			}
-			request.setAttribute( "msg", msg );
+			request.setAttribute( "msg", result );
 		} else {
 			request.setAttribute( "msg", "信息保存失败!" );
 		}

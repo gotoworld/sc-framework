@@ -1,3 +1,6 @@
+import com.alibaba.fastjson.JSON;
+import com.wu1g.framework.Response;
+
 import java.nio.file.Path;
 
 /**
@@ -5,8 +8,13 @@ import java.nio.file.Path;
  */
 public class T1 {
     public static void main(String[] args) {
-        System.out.println(getRealPath("classpath*:template/1/2/admin/index.html","/include/meta.html"));
+//        System.out.println(getRealPath("classpath*:template/1/2/admin/index.html","/include/meta.html"));
+
+        System.out.println(JSON.toJSON(Response.error("11111111")));
+
+
     }
+
     public static String getRealPath(String basePath,String relativePath){
         if(relativePath.startsWith("../")){
             basePath=basePath.substring(0,basePath.lastIndexOf("/"));

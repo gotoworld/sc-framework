@@ -160,4 +160,6 @@ public class PanoComments extends BaseVO {
      * 项目Id
      */
     private String projId;
+    /** 场景标题*/
+    private String sceneTitle;
 }

@@ -59,7 +59,7 @@ public class BeetlConfig implements EnvironmentAware {
     public SpringResourceLoader getSpringResourceLoader() {
         SpringResourceLoader springResourceLoader=new SpringResourceLoader();
 //        springResourceLoader.setPrefix("classpath*:template/");
-        springResourceLoader.setSuffix(".html");
+//        springResourceLoader.setSuffix(".html");
         return springResourceLoader;
     }
 
@@ -80,7 +80,7 @@ public class BeetlConfig implements EnvironmentAware {
     public BeetlSpringViewResolver getBeetlSpringViewResolver(@Qualifier("beetlGroupUtilConfiguration") BeetlGroupUtilConfiguration beetlGroupUtilConfiguration) {
         BeetlSpringViewResolver beetlSpringViewResolver = new BeetlSpringViewResolver();
         beetlSpringViewResolver.setPrefix("classpath*:template/");
-//        beetlSpringViewResolver.setSuffix(".html");
+        beetlSpringViewResolver.setSuffix(".html");
         beetlSpringViewResolver.setContentType("text/html;charset=UTF-8");
         beetlSpringViewResolver.setOrder(0);
         beetlSpringViewResolver.setConfig(beetlGroupUtilConfiguration);

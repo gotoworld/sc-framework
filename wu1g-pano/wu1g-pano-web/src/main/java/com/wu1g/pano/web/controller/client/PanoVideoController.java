@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * <p>
  * 全景_视频 ACTION类。
- * </p>
+ *
  * <ol>
  * [功能概要]
  * <li>初始化。

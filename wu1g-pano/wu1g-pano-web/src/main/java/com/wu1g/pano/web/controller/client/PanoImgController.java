@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * <p>
  * 全景_项目 ACTION类。
- * </p>
+ *
  * <ol>
  * [功能概要]
  * <li>初始化。

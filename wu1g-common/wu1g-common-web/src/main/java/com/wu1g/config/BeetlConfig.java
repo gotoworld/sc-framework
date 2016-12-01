@@ -1,8 +1,6 @@
 package com.wu1g.config;
 
 import com.wu1g.framework.config.AppConfig;
-import org.beetl.core.ResourceLoader;
-import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
 import org.fox.beetl.resource.SpringResourceLoader;
@@ -13,14 +11,9 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
-
-import java.net.URL;
-import java.util.Enumeration;
 
 @AutoConfigureAfter(AppConfig.class)
 @Configuration

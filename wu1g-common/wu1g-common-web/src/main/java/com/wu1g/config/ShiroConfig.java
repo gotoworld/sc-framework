@@ -79,11 +79,16 @@ public class ShiroConfig {
 //        bean.setFilters(filters);
 
         Map<String, String> chains = Maps.newHashMap();
+        chains.put("/css/**", "anon");
+        chains.put("/js/**", "anon");
+        chains.put("/img/**", "anon");
+        chains.put("/plugins/**", "anon");
+
         chains.put("/error/noauth", "anon");
         chains.put("/admin/init", "anon");
         chains.put("/admin/logout", "logout");
         chains.put("/admin/login", "anon");
-        chains.put("/css/**", "anon");
+
         chains.put("/h/**", "authc");
         bean.setFilterChainDefinitionMap(chains);
         return bean;

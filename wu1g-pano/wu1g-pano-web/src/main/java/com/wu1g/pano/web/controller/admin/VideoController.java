@@ -12,6 +12,7 @@
 package com.wu1g.pano.web.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.wu1g.framework.Response;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -27,8 +28,13 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.ArrayList;
@@ -38,7 +44,7 @@ import java.util.List;
 /**
  * <p>
  * 全景_视频 ACTION类。
- * </p>
+ *
  * <ol>
  * [功能概要]
  * <li>初始化。
@@ -72,7 +78,7 @@ public class VideoController extends BaseController {
 	 * [功能概要]
 	 * <li>初始化处理。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("video:init")
 	@RequestMapping(value = acPrefix + "init")
@@ -87,7 +93,7 @@ public class VideoController extends BaseController {
 	 * [功能概要]
 	 * <li>信息列表。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("video:init")
 	@RequestMapping(value = acPrefix + "list")
@@ -109,12 +115,12 @@ public class VideoController extends BaseController {
 	/**
 	 * <p>
 	 * 编辑。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要]
 	 * <li>编辑。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("video:edit")
 	@RequestMapping(value = acPrefix + "edit/{id}")
@@ -160,7 +166,7 @@ public class VideoController extends BaseController {
 	 * [功能概要]
 	 * <li>逻辑删除。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("video:del")
 	@RequestMapping(value = acPrefix + "del/{id}")
@@ -186,18 +192,27 @@ public class VideoController extends BaseController {
 	 * <li>新增。
 	 * <li>修改。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions(value = { "video:add", "video:edit" }, logical = Logical.OR)
-	@RequestMapping(value = acPrefix + "save")
-	public String save(PanoProj bean,RedirectAttributesModelMap modelMap) {
+	@RequestMapping(method = {RequestMethod.POST},value = acPrefix + "save")
+	public String save(@Validated @RequestBody PanoProj bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info( "PanoVideoController save........." );
+		Response result = new Response();
 		if (bean != null) {
-			String msg = "1";
 			try {
-				// TODO--请加入验证字段--
-				if (ValidatorUtil.isEmpty( "需要验证的字段" )) {
-					msg = "保存失败!信息为空!";
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				} else {
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
+					}
+					result = Response.error(errorMsg);
 				} else {
 					OrgUser user = (OrgUser) request.getSession().getAttribute( CommonConstant.SESSION_KEY_USER );
 					if (user != null) {
@@ -227,18 +242,19 @@ public class VideoController extends BaseController {
 						}
 					}
 					bean.setScenes( scenes );
-					msg = panoProjService.saveOrUpdateData( bean );
+					result.message = panoProjService.saveOrUpdateData( bean );
 					
 					bean.setStr( getBasePath() );
 					panoProjService.makeVideo( bean );
 				}
-			} catch (Exception e) {
-				msg = e.getMessage();
-			}
-			modelMap.addFlashAttribute( "msg", msg );
-		} else {
-			modelMap.addFlashAttribute( "msg", "信息保存失败!" );
+				result.data = bean.getId();
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
 		}
+	} else {
+		result = Response.error("信息保存失败!");
+	}
+		modelMap.addFlashAttribute("msg", result );
 		return success;
 	}
 }

@@ -30,14 +30,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.List;
 
 
 /**
- * <p>
- * 全景_类目 ACTION类。
- * </p>
+ * <p>全景_类目 ACTION类。
  * <ol>
  * [功能概要]
  * <li>初始化。
@@ -49,148 +48,143 @@ import java.util.List;
 @Slf4j
 public class PanoCategoryController extends BaseController {
 
-	private static final long				serialVersionUID	= -344702788488841783L;
-	/** 全景_类目 业务处理 */
-	@Autowired
-	private IPanoCategoryService panoCategoryService;
+    private static final long serialVersionUID = -344702788488841783L;
+    /**
+     * 全景_类目 业务处理
+     */
+    @Autowired
+    private IPanoCategoryService panoCategoryService;
 
-	// 全景_类目
-	private static final String				acPrefix			= "/pano01.";
-	private static final String				init				= "admin/pano/pano01";
-	private static final String				edit				= "admin/pano/pano01_edit";
-	private static final String				list				= "admin/pano/pano01_list";
-	private static final String				success				= "redirect:/h" + acPrefix + "init";
+    // 全景_类目
+    private static final String acPrefix = "/pano01.";
+    private static final String init = "admin/pano/pano01";
+    private static final String edit = "admin/pano/pano01_edit";
+    private static final String list = "admin/pano/pano01_list";
+    private static final String success = "redirect:/h" + acPrefix + "init";
 
-	/**
-	 * <p>
-	 * 初始化处理。
-	 * <ol>
-	 * [功能概要]
-	 * <li>初始化处理。
-	 * 
-	 * @return 转发字符串
-	 */
-	@RequiresPermissions("pano01:init")
-	@RequestMapping(value = acPrefix + "init")
-	public String init() {
-		log.info( "PanoCategoryController init........." );
-		//获取类目列表
-		request.setAttribute( "categoryBeans", panoCategoryService.findDataTree(null) );
-		return init;
-	}
-	/**
-	 * <p>
-	 * 编辑。
-	 * </p>
-	 * <ol>
-	 * [功能概要]
-	 * <li>编辑。
-	 * 
-	 * @return 转发字符串
-	 */
-	@RequiresPermissions("pano01:edit")
-	@RequestMapping(value = acPrefix + "edit/{id}")
-	public String edit(PanoCategory bean, @PathVariable("id") String id) {
-		log.info( "PanoCategoryController edit........." );
-		int pageNum = 0;
-		if (bean != null && bean.getPageNum() != null) {
-			pageNum = bean.getPageNum();
-		}
-		if("add".equals( id )){
-			id=null;
-			bean=null;
-		}
-		if (ValidatorUtil.notEmpty( id )) {
-			if (bean == null) {
-				bean = new PanoCategory();
-			}
-			bean.setId( id );// ID
-			bean = panoCategoryService.findDataById( bean );
-		}
-		if (bean == null) {
-			bean = new PanoCategory();
-			bean.setId( IdUtil.createUUID( 32 ) );// ID
-		}
-		bean.setPageNum( pageNum );
-		request.setAttribute( "bean", bean );
-		return edit;
-	}
+    /**
+     * <p>
+     * 初始化处理。
+     * <ol>
+     * [功能概要]
+     * <li>初始化处理。
+     */
+    @RequiresPermissions("pano01:init")
+    @RequestMapping(value = acPrefix + "init")
+    public String init() {
+        log.info("PanoCategoryController init.........");
+        //获取类目列表
+        request.setAttribute("categoryBeans", panoCategoryService.findDataTree(null));
+        return init;
+    }
 
-	/**
-	 * <p>
-	 * 删除。
-	 * <ol>
-	 * [功能概要]
-	 * <li>逻辑删除。
-	 * 
-	 * @return 转发字符串
-	 */
-	@RequiresPermissions("pano01:del")
-	@RequestMapping(value = acPrefix + "del/{id}")
-	public String del(@PathVariable("id") String id) {
-		log.info( "PanoCategoryController del........." );
+    /**
+     * <p>
+     * 编辑。
+     * <p>
+     * <ol>
+     * [功能概要]
+     * <li>编辑。
+     */
+    @RequiresPermissions("pano01:edit")
+    @RequestMapping(value = acPrefix + "edit/{id}")
+    public String edit(PanoCategory bean, @PathVariable("id") String id) {
+        log.info("PanoCategoryController edit.........");
+        int pageNum = 0;
+        if (bean != null && bean.getPageNum() != null) {
+            pageNum = bean.getPageNum();
+        }
+        if ("add".equals(id)) {
+            id = null;
+            bean = null;
+        }
+        if (ValidatorUtil.notEmpty(id)) {
+            if (bean == null) {
+                bean = new PanoCategory();
+            }
+            bean.setId(id);// ID
+            bean = panoCategoryService.findDataById(bean);
+        }
+        if (bean == null) {
+            bean = new PanoCategory();
+            bean.setId(IdUtil.createUUID(32));// ID
+        }
+        bean.setPageNum(pageNum);
+        request.setAttribute("bean", bean);
+        return edit;
+    }
 
-		// String id=request.getParameter("id");//ID
-		PanoCategory bean = new PanoCategory();
-		bean.setId( id );// ID
-		String msg = "1";
-		try {
-			msg = panoCategoryService.deleteDataById( bean );
-		} catch (Exception e) {
-			msg = e.getMessage();
-		}
-		request.setAttribute( "msg", msg );
+    /**
+     * <p>
+     * 删除。
+     * <ol>
+     * [功能概要]
+     * <li>逻辑删除。
+     */
+    @RequiresPermissions("pano01:del")
+    @RequestMapping(value = acPrefix + "del/{id}")
+    public String del(@PathVariable("id") String id) {
+        log.info("PanoCategoryController del.........");
 
-		return success;
-	}
+        // String id=request.getParameter("id");//ID
+        PanoCategory bean = new PanoCategory();
+        bean.setId(id);// ID
+        String msg = "1";
+        try {
+            msg = panoCategoryService.deleteDataById(bean);
+        } catch (Exception e) {
+            msg = e.getMessage();
+        }
+        request.setAttribute("msg", msg);
 
-	/**
-	 * <p>
-	 * 信息保存
-	 * <ol>
-	 * [功能概要]
-	 * <li>新增。
-	 * <li>修改。
-	 * 
-	 * @return 转发字符串
-	 */
-	@RequiresPermissions(value = { "pano01:add", "pano01:edit" }, logical = Logical.OR)
-	@RequestMapping(value = acPrefix + "save")
-	public String save(@Validated @RequestBody PanoCategory bean, BindingResult bindingResult) {
-		log.info( "PanoCategoryController save........." );
-		if (bean != null) {
-			Response result = new Response();
-			try {
-				if ("1".equals(request.getSession().getAttribute("bussiness_contact_" + bean.getToken()))) {
-					throw new RuntimeException("请不要重复提交!");
-				} else {
-					request.getSession().setAttribute("bussiness_contact_" + bean.getToken(), "1");
-				}
-				if (bindingResult.hasErrors()) {
-					String errorMsg = "";
-					List<ObjectError> errorList = bindingResult.getAllErrors();
-					for (ObjectError error : errorList) {
-						errorMsg += (error.getDefaultMessage()) + ";";
-					}
-					result = Response.error(errorMsg);
-				} else {
-					OrgUser user = (OrgUser) request.getSession().getAttribute( CommonConstant.SESSION_KEY_USER );
-					if (user != null) {
-						bean.setCreateIp( getIpAddr() );
-						bean.setCreateId( user.getId() );
-						bean.setUpdateIp( getIpAddr() );
-						bean.setUpdateId( user.getId() );
-					}
-					result.message = panoCategoryService.saveOrUpdateData(bean);
-					result.data = bean.getId();
-				}
-			} catch (Exception e) {
-				result = Response.error(e.getMessage());
-			}
-			request.setAttribute( "msg", result );
-		} else {
-			request.setAttribute( "msg", "信息保存失败!" );
-		}
-		return success;
-	}
+        return success;
+    }
+
+    /**
+     * <p>
+     * 信息保存
+     * <ol>
+     * [功能概要]
+     * <li>新增。
+     * <li>修改。
+     */
+    @RequiresPermissions(value = {"pano01:add", "pano01:edit"}, logical = Logical.OR)
+    @RequestMapping(value = acPrefix + "save")
+    public String save(@Validated @RequestBody PanoCategory bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+        log.info("PanoCategoryController save.........");
+        Response result = new Response();
+        if (bean != null) {
+            try {
+                if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+                    throw new RuntimeException("请不要重复提交!");
+                } else {
+                    request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+                }
+                if (bindingResult.hasErrors()) {
+                    String errorMsg = "";
+                    List<ObjectError> errorList = bindingResult.getAllErrors();
+                    for (ObjectError error : errorList) {
+                        errorMsg += (error.getDefaultMessage()) + ";";
+                    }
+                    result = Response.error(errorMsg);
+                } else {
+                    OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+                    if (user != null) {
+                        bean.setCreateIp(getIpAddr());
+                        bean.setCreateId(user.getId());
+                        bean.setUpdateIp(getIpAddr());
+                        bean.setUpdateId(user.getId());
+                    }
+                    result.message = panoCategoryService.saveOrUpdateData(bean);
+                    result.data = bean.getId();
+                }
+            } catch (Exception e) {
+                result = Response.error(e.getMessage());
+            }
+        } else {
+            result = Response.error("表单获取失败!");
+        }
+        modelMap.addFlashAttribute("msg", result);
+        return success;
+    }
 }

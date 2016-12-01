@@ -27,7 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 /**
  * <p>
  * 全景_评论 ACTION类。
- * </p>
+ *
  * <ol>
  * [功能概要]
  * <li>初始化。
@@ -60,7 +60,7 @@ public class PanoCommentsController extends BaseController {
 	 * [功能概要]
 	 * <li>初始化处理。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("pano06:init")
 	@RequestMapping(value = acPrefix + "init")
@@ -76,7 +76,7 @@ public class PanoCommentsController extends BaseController {
 	 * [功能概要]
 	 * <li>信息列表。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("pano06:init")
 	@RequestMapping(value = acPrefix + "list")
@@ -101,7 +101,7 @@ public class PanoCommentsController extends BaseController {
 	 * [功能概要]
 	 * <li>逻辑删除。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("pano06:del")
 	@RequestMapping(value = acPrefix + "del/{id}")

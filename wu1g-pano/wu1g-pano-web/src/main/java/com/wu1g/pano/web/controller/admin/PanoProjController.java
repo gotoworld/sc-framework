@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.wu1g.framework.Response;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -33,8 +34,11 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
@@ -47,7 +51,7 @@ import java.util.Map.Entry;
 /**
  * <p>
  * 全景_项目 ACTION类。
- * </p>
+ *
  * <ol>
  * [功能概要]
  * <li>初始化。
@@ -84,7 +88,7 @@ public class PanoProjController extends BaseController {
 	 * [功能概要]
 	 * <li>初始化处理。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("pano02:init")
 	@RequestMapping(value = acPrefix + "init")
@@ -99,7 +103,7 @@ public class PanoProjController extends BaseController {
 	 * [功能概要]
 	 * <li>信息列表。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("pano02:init")
 	@RequestMapping(value = acPrefix + "list")
@@ -121,12 +125,12 @@ public class PanoProjController extends BaseController {
 	/**
 	 * <p>
 	 * 编辑。
-	 * </p>
+	 *
 	 * <ol>
 	 * [功能概要]
 	 * <li>编辑。
-	 * 
-	 * @return 转发字符串
+	 *
+	 *
 	 */
 	@RequiresPermissions("pano02:edit")
 	@RequestMapping(value = acPrefix + "edit/{id}")
@@ -172,7 +176,7 @@ public class PanoProjController extends BaseController {
 	 * [功能概要]
 	 * <li>逻辑删除。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions("pano02:del")
 	@RequestMapping(value = acPrefix + "del/{id}")
@@ -200,18 +204,27 @@ public class PanoProjController extends BaseController {
 	 * <li>新增。
 	 * <li>修改。
 	 * 
-	 * @return 转发字符串
+	 *
 	 */
 	@RequiresPermissions(value = { "pano02:add", "pano02:edit" }, logical = Logical.OR)
-	@RequestMapping(value = acPrefix + "save")
-	public String save(PanoProj bean,RedirectAttributesModelMap modelMap) {
+	@RequestMapping(method = {RequestMethod.POST},value = acPrefix + "save")
+	public String save(PanoProj bean,RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info( "PanoProjController save........." );
+		Response result = new Response();
 		if (bean != null) {
-			String msg = "1";
 			try {
-				// TODO--请加入验证字段--
-				if (ValidatorUtil.isEmpty( "需要验证的字段" )) {
-					msg = "保存失败!信息为空!";
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				} else {
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
+					}
+					result = Response.error(errorMsg);
 				} else {
 					OrgUser user = (OrgUser) request.getSession().getAttribute( CommonConstant.SESSION_KEY_USER );
 					if (user != null) {
@@ -248,23 +261,24 @@ public class PanoProjController extends BaseController {
 					}else{
 						bean.setMakePanoFlag( false );
 					}
-					msg = panoProjService.saveOrUpdateData( bean );
-					
+					result.message = panoProjService.saveOrUpdateData( bean );
+					result.data = bean.getId();
+
 					bean.setStr( getBasePath() );
 					//生成全景图
 					panoProjService.makePano( bean );
 				}
 			} catch (Exception e) {
-				msg = e.getMessage();
+				result = Response.error(e.getMessage());
 			}
-			modelMap.addFlashAttribute( "msg", msg );
 		} else {
-			modelMap.addFlashAttribute( "msg", "信息保存失败!" );
+			result = Response.error("信息保存失败!");
 		}
+		modelMap.addFlashAttribute("msg", result );
 		return success;
 	}
 	@RequiresPermissions(value = {"pano02:edit" }, logical = Logical.OR)
-	@RequestMapping(value = acPrefix + "xmlsave")
+	@RequestMapping(method = {RequestMethod.POST},value = acPrefix + "xmlsave")
 	@ResponseBody
 	public String xmlsave() {
 		log.info( "PanoProjController xmlsave........." );

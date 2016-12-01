@@ -8,7 +8,7 @@
  * Copyright 2015 isd System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.account.dao;
+package com.wu1g.auth.dao;
 import com.wu1g.framework.IBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 

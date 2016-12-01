@@ -8,10 +8,10 @@
  * Copyright 2015 isd System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.account.api;
+package com.wu1g.auth.api;
 
 
-import com.wu1g.account.vo.AuthRole;
+import com.wu1g.auth.vo.AuthRole;
 
 import java.util.List;
 /**

@@ -18,9 +18,9 @@
  */
 package com.wu1g.web.controller;
 
-import com.wu1g.account.api.IRoleSourceService;
-import com.wu1g.account.vo.AuthPerm;
-import com.wu1g.account.vo.AuthRole;
+import com.wu1g.auth.api.IRoleSourceService;
+import com.wu1g.auth.vo.AuthPerm;
+import com.wu1g.auth.vo.AuthRole;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.org.vo.OrgUser;
 import lombok.extern.slf4j.Slf4j;

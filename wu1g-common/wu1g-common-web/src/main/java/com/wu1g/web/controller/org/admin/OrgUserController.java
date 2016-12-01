@@ -13,7 +13,7 @@ package com.wu1g.web.controller.org.admin;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.wu1g.account.api.IAuthRoleService;
+import com.wu1g.auth.api.IAuthRoleService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;

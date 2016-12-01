@@ -8,13 +8,13 @@
  * Copyright 2015 baseos System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.account.service;
+package com.wu1g.auth.service;
 
-import com.wu1g.account.api.IRoleSourceService;
-import com.wu1g.account.dao.IAuthPermDao;
-import com.wu1g.account.dao.IAuthRoleDao;
-import com.wu1g.account.vo.AuthPerm;
-import com.wu1g.account.vo.AuthRole;
+import com.wu1g.auth.api.IRoleSourceService;
+import com.wu1g.auth.dao.IAuthPermDao;
+import com.wu1g.auth.dao.IAuthRoleDao;
+import com.wu1g.auth.vo.AuthPerm;
+import com.wu1g.auth.vo.AuthRole;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.org.dao.IOrgUserDao;
 import com.wu1g.org.vo.OrgUser;

@@ -8,19 +8,18 @@
  * Copyright 2015 isd System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.account.service;
+package com.wu1g.auth.service;
 
 import com.github.pagehelper.PageHelper;
-import com.wu1g.account.api.IAuthRoleService;
-import com.wu1g.account.dao.IAuthRoleDao;
-import com.wu1g.account.dao.IAuthRoleVsPermDao;
-import com.wu1g.account.vo.AuthRole;
-import com.wu1g.account.vo.AuthRoleVsPerm;
+import com.wu1g.auth.api.IAuthRoleService;
+import com.wu1g.auth.dao.IAuthRoleDao;
+import com.wu1g.auth.dao.IAuthRoleVsPermDao;
+import com.wu1g.auth.vo.AuthRole;
+import com.wu1g.auth.vo.AuthRoleVsPerm;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

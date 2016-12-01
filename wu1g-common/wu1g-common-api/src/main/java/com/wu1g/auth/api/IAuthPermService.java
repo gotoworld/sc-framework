@@ -8,8 +8,8 @@
  * Copyright 2015 isd System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.account.api;
-import com.wu1g.account.vo.AuthPerm;
+package com.wu1g.auth.api;
+import com.wu1g.auth.vo.AuthPerm;
 
 import java.util.List;
 import java.util.Map;

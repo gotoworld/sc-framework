@@ -8,11 +8,11 @@
  * Copyright 2015 baseos System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.account.api;
+package com.wu1g.auth.api;
 
 
-import com.wu1g.account.vo.AuthPerm;
-import com.wu1g.account.vo.AuthRole;
+import com.wu1g.auth.vo.AuthPerm;
+import com.wu1g.auth.vo.AuthRole;
 import com.wu1g.org.vo.OrgUser;
 
 import java.util.List;

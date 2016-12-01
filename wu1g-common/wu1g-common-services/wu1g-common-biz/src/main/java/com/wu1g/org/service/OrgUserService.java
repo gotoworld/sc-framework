@@ -11,10 +11,10 @@
 package com.wu1g.org.service;
 
 import com.github.pagehelper.PageHelper;
-import com.wu1g.account.dao.IAuthRoleDao;
-import com.wu1g.account.dao.IAuthUserVsRoleDao;
-import com.wu1g.account.vo.AuthRole;
-import com.wu1g.account.vo.AuthUserVsRole;
+import com.wu1g.auth.dao.IAuthRoleDao;
+import com.wu1g.auth.dao.IAuthUserVsRoleDao;
+import com.wu1g.auth.vo.AuthRole;
+import com.wu1g.auth.vo.AuthUserVsRole;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;

@@ -11,7 +11,7 @@
 package com.wu1g.org.api;
 
 
-import com.wu1g.account.vo.AuthRole;
+import com.wu1g.auth.vo.AuthRole;
 import com.wu1g.org.vo.OrgDepartment;
 import com.wu1g.org.vo.OrgUser;
 

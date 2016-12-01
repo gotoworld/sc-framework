@@ -10,15 +10,14 @@
  */
 package com.wu1g.web.controller.auth.admin;
 
-import com.wu1g.account.api.IAuthPermService;
-import com.wu1g.account.vo.AuthPerm;
+import com.wu1g.auth.api.IAuthPermService;
+import com.wu1g.auth.vo.AuthPerm;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.framework.web.controller.BaseController;
 import com.wu1g.org.vo.OrgUser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

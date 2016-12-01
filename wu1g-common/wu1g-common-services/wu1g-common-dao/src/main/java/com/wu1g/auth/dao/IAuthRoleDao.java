@@ -1,5 +1,5 @@
 /*	
- * 权限_角色vs权限  数据库处理接口类	
+ * 权限_角色信息  数据库处理接口类	
  *		
  * VERSION      DATE          BY              REASON		
  * -------- ----------- --------------- ------------------------------------------	
@@ -8,18 +8,24 @@
  * Copyright 2015 isd System. - All Rights Reserved.		
  *	
  */
-package com.wu1g.account.dao;
+package com.wu1g.auth.dao;
+import com.wu1g.auth.vo.AuthRole;
 import com.wu1g.framework.IBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 import java.util.Map;
 
 /**
- * <p>权限_角色vs权限  数据库处理接口类。
+ * <p>权限_角色信息  数据库处理接口类。
  * @author easycode
  */
 @Mapper
-public interface IAuthRoleVsPermDao extends IBaseDao {
-	/**根据角色id清空角色关联权限信息*/
-	int deleteDataByRid(Map dto) throws Exception;
+public interface IAuthRoleDao extends IBaseDao {
+	/**角色信息列表>根据用户id。*/
+	List<AuthRole> getRoleListByUId(Map dto) throws Exception;
+	/**	
+	 * 根据用户id,判断用户是否为超级管理员,要的就是特权.
+	 */	
+	int isSuperAdmin(Map dto) throws Exception;
 }

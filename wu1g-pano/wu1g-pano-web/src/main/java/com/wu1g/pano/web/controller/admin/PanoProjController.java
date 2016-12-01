@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogController;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -119,6 +120,7 @@ public class PanoProjController extends BaseController {
      */
     @RequiresPermissions("pano02:edit")
     @RequestMapping(value = acPrefix + "edit/{id}")
+    @ALogController(desc = "编辑全景项目")
     public String edit(PanoProj bean, @PathVariable("id") String id) {
         log.info("PanoProjController edit.........");
         int pageNum = 0;
@@ -163,6 +165,7 @@ public class PanoProjController extends BaseController {
      */
     @RequiresPermissions("pano02:del")
     @RequestMapping(value = acPrefix + "del/{id}")
+    @ALogController(desc = "删除全景项目")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
         log.info("PanoProjController del.........");
 

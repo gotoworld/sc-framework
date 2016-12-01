@@ -11,6 +11,8 @@ server:
   context-path: /
 # Spring properties
 spring:
+  aop:
+    auto: true
   application:
      name: wu1g-services
   mvc:

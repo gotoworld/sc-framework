@@ -1,5 +1,6 @@
 package com.wu1g.framework.web.controller;
 
+import com.wu1g.framework.util.IpUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -53,26 +54,7 @@ public class BaseController {
      * @return
      */
     public String getIpAddr() {
-        String ip = request.getHeader("Proxy-Client-IP");
-        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
-            return ip;
-        }
-        ip = request.getHeader("WL-Proxy-Client-IP");
-        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
-            return ip;
-        }
-        ip = request.getHeader("X-Forwarded-For");
-        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
-            // 多次反向代理后会有多个IP值，第一个为真实IP。
-            int index = ip.indexOf(',');
-            if (index != -1) {
-                return ip.substring(0, index);
-            } else {
-                return ip;
-            }
-        } else {
-            return request.getRemoteAddr();
-        }
+        return IpUtils.getIpAddr(request);
     }
 
     public String getBasePath() {

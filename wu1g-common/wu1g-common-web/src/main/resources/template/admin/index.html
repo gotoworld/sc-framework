@@ -43,7 +43,7 @@
 					</a></li>
 					<% if(shiro.hasPermission("pano01:init2")){ %>
 						<li>
-							<a class="J_menuItem" href="${basePath }/h/pano01.init"> <i class="fa fa-columns"></i> <span class="nav-label">全景类目</span>
+							<a class="J_menuItem" href="${basePath }/h/pano/category/init"> <i class="fa fa-columns"></i> <span class="nav-label">全景类目</span>
 							</a>
 						</li>
 					<%}%>
@@ -55,16 +55,16 @@
 					</a>
 						<ul class="nav nav-second-level">
 							<% if(shiro.hasPermission("pano02:init")){ %>
-								<li><a class="J_menuItem" href="${basePath }/h/pano02.init">全景管理</a></li>
+								<li><a class="J_menuItem" href="${basePath }/h/pano/proj/init">全景管理</a></li>
 							<%}%>
 							<% if(shiro.hasPermission("pano06:init")){ %>
-								<li><a class="J_menuItem" href="${basePath }/h/pano06.init">评论管理</a></li>
+								<li><a class="J_menuItem" href="${basePath }/h/pano/comments/init">评论管理</a></li>
 							<%}%>
 						</ul>
 					</li>
 					<li><a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">全景视频</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="${basePath }/h/video.init">视频列表</a></li>
+							<li><a class="J_menuItem" href="${basePath }/h/video/init">视频列表</a></li>
 						</ul></li>
 					<% if(shiro.hasPermission("admin")){ %>
 					<li><a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">系统管理 </span><span class="fa arrow"></span></a>

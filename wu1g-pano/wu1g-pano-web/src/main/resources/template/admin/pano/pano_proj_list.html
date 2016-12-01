@@ -51,10 +51,10 @@
 				<td>${bean.dateCreated}</td>
 				<td>
 				    <% if(shiro.hasPermission("pano02:edit")){ %>
-	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/pano02.edit/${bean.id}');" class="btn btn-success btn-sm" ><i class="fa fa-edit"></i> 编辑项目</a>
+	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/pano/proj/edit/${bean.id}');" class="btn btn-success btn-sm" ><i class="fa fa-edit"></i> 编辑项目</a>
 	               <%}%>
 <!-- 	               <% if(shiro.hasPermission("pano02:del")){ %> -->
-<!-- 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/pano02.del/${bean.id}');};" rel="nofollow" class="btn btn-danger btn-sm" ><i class="fa fa-trash-o"></i> 删除项目</a> -->
+<!-- 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/pano/proj/del/${bean.id}');};" rel="nofollow" class="btn btn-danger btn-sm" ><i class="fa fa-trash-o"></i> 删除项目</a> -->
 <!-- 	               <%}%> -->
 	               <a href="${basePath}/tour/${bean.id}" target="_blank" class="btn btn-primary" ><i class="fa fa-desktop"></i> 预览场景</a>
 				   <a href="${basePath}/h/touredit/${bean.id}"  target="_blank" class="btn btn-info" ><i class="fa fa-edit"></i> 编辑场景</a>

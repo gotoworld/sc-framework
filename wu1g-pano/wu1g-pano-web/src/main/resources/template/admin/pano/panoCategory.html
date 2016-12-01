@@ -1,6 +1,6 @@
 <%
  /*	
- * 全景_项目 后台管理 (初始化页面)
+ * 全景_类目 后台管理 (初始化页面)
  *		
  * VERSION      DATE          BY              REASON		
  * -------- ----------- --------------- ---------------------------	
@@ -17,23 +17,13 @@
 	<% layout("../include/meta.html"){}%>
 	<% layout("../include/public_init_js_css.html"){}%>
 	<style type="text/css">
-	.qrcode{
-	position:relative;
-	width: 100px;
-	}
-	.qrcode .sizes{
-	position:absolute;top:-78px;padding:5px;background:#fff;border:1px solid #ddd;display:none;
-	}
-	.qrcode:hover .sizes{
-	display:block;
-	}
-	.qrcode .line{display:block;width: 100px;text-align: center;}
 	</style>
 </head>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
 			<div class="col-sm-12">
+				${msg!}
 				<div class="clients-list">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
@@ -50,18 +40,18 @@
 													role="form" class="form-inline" 
 													method="post"  accept-charset="UTF-8" 
 													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
-													data-action="${basePath}/h/pano02.list">
+													data-action="/h/pano/category/list">
 													<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum!}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
-															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="data1" value="" /> 
 															<span class="input-group-addon">到</span> 
-															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="data2" value="" />
 														</div>
 													</div>
 													<div class="input-group">
-														<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+														<input type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 														</span>
 													</div>
@@ -69,8 +59,8 @@
 											</td>
 										</tr>
 									</table>
-									<% if(shiro.hasPermission("pano02:add")){ %>
-									<a href="#" onclick="openMyBoxLayer('a','${basePath}/h/pano02.edit/add');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<% if(shiro.hasPermission("pano01:add")){ %>
+									<a href="#" onclick="openMyBoxLayer('a','${basePath}/h/pano/category/edit/add');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<%}%>
 									<div id="info_list_div">
 										<div class="alert alert-warning mt10">
@@ -88,17 +78,13 @@
 	</div>
 	<% layout("../include/public_last_js_css.html"){}%>
 	<script>
-		//打开不同尺寸的二维码
-		function get_qrcode(pid,size,version){
-		    window.open('http://qr.liantu.com/api.php?w='+size+'&m=10&text=${basePath}/tour/'+pid);
-		}
 		$("#data_5 .input-daterange").datepicker({
 			keyboardNavigation : !1,
 			forceParse : !1,
 			autoclose : !0
 		});
 		//初始加载..
-		loadUrlPage(null, 'info_search_form', 'info_list_div');
+        loadUrlPage(null, 'info_search_form', 'info_list_div');
 	</script>
 </body>
 </html>

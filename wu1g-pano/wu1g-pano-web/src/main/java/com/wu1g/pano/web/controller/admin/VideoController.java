@@ -44,14 +44,6 @@ import java.util.List;
 /**
  * <p>
  * 全景_视频 ACTION类。
- *
- * <ol>
- * [功能概要]
- * <li>初始化。
- * <li>信息列表(未删除)。
- * <li>编辑页面(页面)(新增or修改)。
- * 
- * @author easycode
  */
 @Controller
 @Slf4j
@@ -65,7 +57,7 @@ public class VideoController extends BaseController {
 	@Autowired
 	private IPanoSceneService panoSceneService;
 	// 全景_项目
-	private static final String				acPrefix			= "/h/video.";
+	private static final String				acPrefix			= "/h/video/";
 	private static final String				init				= "admin/pano/video";
 	private static final String				edit				= "admin/pano/video_edit";
 	private static final String				list				= "admin/pano/video_list";

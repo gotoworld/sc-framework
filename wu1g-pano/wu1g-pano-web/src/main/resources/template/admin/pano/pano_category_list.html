@@ -1,6 +1,6 @@
 <%
  /*	
- * 全景_评论 (初始化页面 信息列表)
+ * 全景_类目 (初始化页面 信息列表)
  *		
  * VERSION      DATE          BY              REASON		
  * -------- ----------- --------------- ---------------------------	
@@ -15,10 +15,7 @@
 		<thead>
 			<tr>
 				<th style="width:20px;">#</th>
-				<th style="width:150px;">全景项目</th>
-				<th style="width:150px;">场景</th>
-				<th>留言内容</th>
-				<th style="width:150px;">留言时间</th>
+				<th class="col-md-1">version</th><th class="col-md-1">编号</th><th class="col-md-2">名称</th><th class="col-md-2">创建时间</th>
 				<th class="col-md-2">操作</th>
 			</tr>
 		</thead>
@@ -29,15 +26,13 @@
 			%>
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
+				<td>${bean.version}</td><td>${bean.code}</td><td>${bean.name}</td><td>${bean.dateCreated}</td>
 				<td>
-				<a href="${basePath}/tour/${bean.projId}" target="_blank"><i class="fa fa-desktop"></i> ${bean.projTitle}</a>
-				</td>
-				<td>${bean.sceneTitle}</td>
-				<td>${bean.content}</td>
-				<td>${bean.dateCreated}</td>
-				<td>
-	               <% if(shiro.hasPermission("pano06:del")){ %>
-	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/pano06.del/${bean.id}');};" rel="nofollow" class="btn btn-danger btn-sm" ><i class="fa fa-trash-o"></i> 删除</a>
+	               <% if(shiro.hasPermission("pano01:edit")){ %>
+	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/pano/category/edit/${bean.id}');" class="btn btn-success btn-sm" ><i class="fa fa-edit"></i> 编辑</a>
+	               <%}%>
+	               <% if(shiro.hasPermission("pano01:del")){ %>
+	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/pano/category/del/${bean.id}');};" rel="nofollow" class="btn btn-danger btn-sm" ><i class="fa fa-trash-o"></i> 删除</a>
 	               <%}%>
                 </td>
 			</tr>
@@ -46,7 +41,7 @@
 			}else{
 			%>
 			<tr>
-				<td colspan="4">
+				<td colspan="6">
 				<div class="alert"><strong>暂无数据!</strong></div>
 				</td>
 			</tr>

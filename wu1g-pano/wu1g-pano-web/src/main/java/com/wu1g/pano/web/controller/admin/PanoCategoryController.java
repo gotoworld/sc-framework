@@ -37,11 +37,6 @@ import java.util.List;
 
 /**
  * <p>全景_类目 ACTION类。
- * <ol>
- * [功能概要]
- * <li>初始化。
- * <li>信息列表(未删除)。
- * <li>编辑页面(页面)(新增or修改)。
  */
 @Controller
 @RequestMapping(value = "/h")
@@ -49,17 +44,14 @@ import java.util.List;
 public class PanoCategoryController extends BaseController {
 
     private static final long serialVersionUID = -344702788488841783L;
-    /**
-     * 全景_类目 业务处理
-     */
+
     @Autowired
     private IPanoCategoryService panoCategoryService;
 
-    // 全景_类目
-    private static final String acPrefix = "/pano01.";
-    private static final String init = "admin/pano/pano01";
-    private static final String edit = "admin/pano/pano01_edit";
-    private static final String list = "admin/pano/pano01_list";
+    private static final String acPrefix = "/pano/category/";
+    private static final String init = "admin/pano/pano_category";
+    private static final String edit = "admin/pano/pano_category_edit";
+    private static final String list = "admin/pano/pano_category_list";
     private static final String success = "redirect:/h" + acPrefix + "init";
 
     /**

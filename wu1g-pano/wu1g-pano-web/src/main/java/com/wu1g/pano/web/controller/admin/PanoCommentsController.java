@@ -27,97 +27,76 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 /**
  * <p>
  * 全景_评论 ACTION类。
- *
- * <ol>
- * [功能概要]
- * <li>初始化。
- * <li>信息列表(未删除)。
- * <li>编辑页面(页面)(新增or修改)。
- * 
- * @author easycode
  */
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
 public class PanoCommentsController extends BaseController {
 
-	private static final long				serialVersionUID	= -893683902158611114L;
-	/** 全景_评论 业务处理 */
-	@Autowired
-	private IPanoCommentsService panoCommentsService;
+    private static final long serialVersionUID = -893683902158611114L;
+    /**
+     * 全景_评论 业务处理
+     */
+    @Autowired
+    private IPanoCommentsService panoCommentsService;
 
-	// 全景_评论
-	private static final String				acPrefix			= "/pano06.";
-	private static final String				init				= "admin/pano/pano06";
-//	private static final String				edit				= "admin/pano/pano06_edit";
-	private static final String				list				= "admin/pano/pano06_list";
-	private static final String				success				= "redirect:/h" + acPrefix + "init";
+    // 全景_评论
+    private static final String acPrefix = "/pano/comments/";
+    private static final String init = "admin/pano/pano_comments";
+    private static final String list = "admin/pano/pano_comments_list";
+    private static final String success = "redirect:/h" + acPrefix + "init";
 
-	/**
-	 * <p>
-	 * 初始化处理。
-	 * <ol>
-	 * [功能概要]
-	 * <li>初始化处理。
-	 * 
-	 *
-	 */
-	@RequiresPermissions("pano06:init")
-	@RequestMapping(value = acPrefix + "init")
-	public String init() {
-		log.info( "PanoCommentsController init........." );
-		return init;
-	}
+    /**
+     * <p>初始化处理。
+     * <ol>[功能概要]
+     * <li>初始化处理。
+     */
+    @RequiresPermissions("pano06:init")
+    @RequestMapping(value = acPrefix + "init")
+    public String init() {
+        log.info("PanoCommentsController init.........");
+        return init;
+    }
 
-	/**
-	 * <p>
-	 * 信息列表 (未删除)。
-	 * <ol>
-	 * [功能概要]
-	 * <li>信息列表。
-	 * 
-	 *
-	 */
-	@RequiresPermissions("pano06:init")
-	@RequestMapping(value = acPrefix + "list")
-	public String list(PanoComments bean) {
-		log.info( "PanoCommentsController list........." );
-		if (bean == null) {
-			bean = new PanoComments();
-		}
-		bean.setPageSize( CommonConstant.PAGEROW_DEFAULT_COUNT );
-		// 信息列表
-		PageInfo<?> page = new PageInfo<>( panoCommentsService.findDataIsPage( bean ) );
-		request.setAttribute( "beans", page.getList() );
-		// 分页对象-JSP标签使用-
-		request.setAttribute( CommonConstant.PAGEROW_OBJECT_KEY, page );
-		return list;
-	}
+    /**
+     * <p>信息列表 (未删除)。
+     * <ol>[功能概要]
+     * <li>信息列表。
+     */
+    @RequiresPermissions("pano06:init")
+    @RequestMapping(value = acPrefix + "list")
+    public String list(PanoComments bean) {
+        log.info("PanoCommentsController list.........");
+        if (bean == null) {
+            bean = new PanoComments();
+        }
+        bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+        // 信息列表
+        PageInfo<?> page = new PageInfo<>(panoCommentsService.findDataIsPage(bean));
+        request.setAttribute("beans", page.getList());
+        // 分页对象-JSP标签使用-
+        request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY, page);
+        return list;
+    }
 
-	/**
-	 * <p>
-	 * 删除。
-	 * <ol>
-	 * [功能概要]
-	 * <li>逻辑删除。
-	 * 
-	 *
-	 */
-	@RequiresPermissions("pano06:del")
-	@RequestMapping(value = acPrefix + "del/{id}")
-	public String del(@PathVariable("id") String id,RedirectAttributesModelMap modelMap) {
-		log.info( "PanoCommentsController del........." );
-
-		PanoComments bean = new PanoComments();
-		bean.setId( id );// id
-		String msg = "1";
-		try {
-			msg = panoCommentsService.deleteDataById( bean );
-		} catch (Exception e) {
-			msg = e.getMessage();
-		}
-		modelMap.addFlashAttribute( "msg", msg );
-
-		return success;
-	}
+    /**
+     * <p>删除。
+     * <ol>[功能概要]
+     * <li>逻辑删除。
+     */
+    @RequiresPermissions("pano06:del")
+    @RequestMapping(value = acPrefix + "del/{id}")
+    public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
+        log.info("PanoCommentsController del.........");
+        PanoComments bean = new PanoComments();
+        bean.setId(id);// id
+        String msg = "1";
+        try {
+            msg = panoCommentsService.deleteDataById(bean);
+        } catch (Exception e) {
+            msg = e.getMessage();
+        }
+        modelMap.addFlashAttribute("msg", msg);
+        return success;
+    }
 }

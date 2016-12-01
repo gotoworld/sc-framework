@@ -1,14 +1,3 @@
-/*	
- * 全景_项目 ACTION类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ---------------------------	
- * 1.00     2016.10.04      easycode         程序.发布		
- * -------- ----------- --------------- ---------------------------	
- * Copyright 2016 pano System. - All Rights Reserved.
- *	
- */
-
 package com.wu1g.pano.web.controller.client;
 
 import com.alibaba.fastjson.JSON;
@@ -33,15 +22,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 全景_项目 ACTION类。
- *
- * <ol>
- * [功能概要]
- * <li>初始化。
- * <li>信息列表(未删除)。
- * <li>编辑页面(页面)(新增or修改)。
- * 
- * @author easycode
+ * 全景_图 ACTION类。
  */
 @Controller
 @Slf4j

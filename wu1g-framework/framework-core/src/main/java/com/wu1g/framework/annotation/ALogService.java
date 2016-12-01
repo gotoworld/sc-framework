@@ -10,5 +10,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ALogService {
+    String type() default  "";
     String desc()  default "";
 }

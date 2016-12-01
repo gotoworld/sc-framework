@@ -10,9 +10,7 @@
  */
 
 package com.wu1g.pano.service;
- 
 
-import java.util.List;
 
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
@@ -21,22 +19,18 @@ import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.pano.api.IPanoMapService;
 import com.wu1g.pano.dao.IPanoMapDao;
 import com.wu1g.pano.vo.PanoMap;
-import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Slf4j
 public class PanoMapService   extends BaseService implements IPanoMapService {
-	//@Autowired
-	//protected ISysUserLogService alog;
 	/**全景_导览图 Dao接口类*/
 	@Autowired
 	private IPanoMapDao panoMapDao;

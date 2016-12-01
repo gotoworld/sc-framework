@@ -9,6 +9,8 @@
  *	
  */
 package com.wu1g.web.controller.sys.admin;
+
+import com.github.pagehelper.PageInfo;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -17,7 +19,6 @@ import com.wu1g.org.vo.OrgUser;
 import com.wu1g.sys.api.IVariableService;
 import com.wu1g.sys.vo.SysVariable;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +26,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.github.pagehelper.PageInfo;
-
 /**
  * <p>系统_数据字典  ACTION类。
- * <ol>[功能概要] 
- * <li>初始化。 
- * <li>信息列表(未删除)。 
- * <li>编辑页面(页面)(新增or修改)。 
- * <li>信息保存(功能)(新增or修改)。 
- * <li>预览(页面)。 
- * <li>回收站(页面)。 
- * <li>逻辑删除(功能)。 
- * <li>物理删除(功能)。 
- * <li>恢复逻辑删除(功能)。 
- *</ol> 
- * @author easycode
  */
 @Controller
 @RequestMapping(value = "/h")

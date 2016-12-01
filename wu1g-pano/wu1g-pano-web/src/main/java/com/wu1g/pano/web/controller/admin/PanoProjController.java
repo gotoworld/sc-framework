@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.wu1g.framework.Response;
-import com.wu1g.framework.annotation.ALogController;
+import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -120,10 +120,10 @@ public class PanoProjController extends BaseController {
      */
     @RequiresPermissions("pano02:edit")
     @RequestMapping(value = acPrefix + "edit/{id}")
-    @ALogController(desc = "编辑全景项目")
+    @ALogOperation(type="查询",desc = "进入编辑页面")
     public String edit(PanoProj bean, @PathVariable("id") String id) {
         log.info("PanoProjController edit.........");
-        int pageNum = 0;
+        int pageNum = 1;
         if (bean != null && bean.getPageNum() != null) {
             pageNum = bean.getPageNum();
         }
@@ -148,6 +148,7 @@ public class PanoProjController extends BaseController {
             bean.setId(IdUtil.createUUID(32));// id
         }
         bean.setPageNum(pageNum);
+        bean.setToken(IdUtil.createUUID(32));
         request.setAttribute("bean", bean);
 
         //获取类目列表
@@ -165,7 +166,7 @@ public class PanoProjController extends BaseController {
      */
     @RequiresPermissions("pano02:del")
     @RequestMapping(value = acPrefix + "del/{id}")
-    @ALogController(desc = "删除全景项目")
+    @ALogOperation(type="删除",desc = "删除全景项目")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
         log.info("PanoProjController del.........");
 
@@ -192,6 +193,7 @@ public class PanoProjController extends BaseController {
      */
     @RequiresPermissions(value = {"pano02:add", "pano02:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "save")
+    @ALogOperation(desc = "编辑全景项目")
     public String save(PanoProj bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
         log.info("PanoProjController save.........");
         Response result = new Response();
@@ -210,13 +212,13 @@ public class PanoProjController extends BaseController {
                     }
                     result = Response.error(errorMsg);
                 } else {
-                    OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-                    if (user != null) {
-                        bean.setCreateIp(getIpAddr());
-                        bean.setCreateId(user.getId());
-                        bean.setUpdateIp(getIpAddr());
-                        bean.setUpdateId(user.getId());
-                    }
+//                    OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+//                    if (user != null) {
+//                        bean.setCreateIp(getIpAddr());
+//                        bean.setCreateId(user.getId());
+//                        bean.setUpdateIp(getIpAddr());
+//                        bean.setUpdateId(user.getId());
+//                    }
                     if ("1".equals(request.getParameter("makePanoFlag"))) {
                         List<PanoScene> scenes = new ArrayList<PanoScene>();
                         String[] scene_id_arr = request.getParameterValues("scene_id");
@@ -231,10 +233,10 @@ public class PanoProjController extends BaseController {
                                 scene.setKeyword(request.getParameter(scene_id + "_scene_key"));
                                 scene.setSceneTitle(request.getParameter(scene_id + "_scene_tit"));
 
-                                scene.setCreateIp(getIpAddr());
-                                scene.setCreateId(user.getId());
-                                scene.setUpdateIp(getIpAddr());
-                                scene.setUpdateId(user.getId());
+//                                scene.setCreateIp(getIpAddr());
+//                                scene.setCreateId(user.getId());
+//                                scene.setUpdateIp(getIpAddr());
+//                                scene.setUpdateId(user.getId());
 
                                 scenes.add(scene);
                             }
@@ -279,13 +281,13 @@ public class PanoProjController extends BaseController {
             bean.setXmlData(scene_str);
             bean.setScenes(getScenesByjson(pid, scene_str));
             bean.setRadars(getRadarsByjson(pid, radars_str));
-            OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-            if (user != null) {
-                bean.setCreateIp(getIpAddr());
-                bean.setCreateId(user.getId());
-                bean.setUpdateIp(getIpAddr());
-                bean.setUpdateId(user.getId());
-            }
+//            OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+//            if (user != null) {
+//                bean.setCreateIp(getIpAddr());
+//                bean.setCreateId(user.getId());
+//                bean.setUpdateIp(getIpAddr());
+//                bean.setUpdateId(user.getId());
+//            }
             panoProjService.saveXmlData(bean);
 
             bean.setStr(getBasePath());

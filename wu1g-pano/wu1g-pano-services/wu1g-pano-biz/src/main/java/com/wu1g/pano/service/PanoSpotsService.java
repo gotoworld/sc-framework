@@ -33,9 +33,6 @@ import java.util.List;
 @Service
 @Slf4j
 public abstract class PanoSpotsService   extends BaseService implements IPanoSpotsService {
-	//@Autowired
-	//protected ISysUserLogService alog;
-	/**全景_热点 Dao接口类*/
 	@Autowired
 	private IPanoSpotsDao panoSpotsDao;
 	@Override
@@ -53,8 +50,7 @@ public abstract class PanoSpotsService   extends BaseService implements IPanoSpo
 					if(ValidatorUtil.isEmpty(bean.getId())){
 						bean.setId(IdUtil.createUUID(32));//id
 					}
-
-					panoSpotsDao.insert(bean);	
+					panoSpotsDao.insert(bean);
 				}	
 			} catch (Exception e) {	
 				msg="信息保存失败,数据库处理错误!";	

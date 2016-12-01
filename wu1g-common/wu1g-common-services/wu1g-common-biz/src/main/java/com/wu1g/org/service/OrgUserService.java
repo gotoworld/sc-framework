@@ -41,8 +41,6 @@ import java.util.Map;
 @Service
 @Slf4j
 public class OrgUserService extends BaseService implements IOrgUserService {
-    //	@Autowired
-    //protected ISysUserLogService alog;
     /**
      * 组织架构_用户 Dao接口类
      */
@@ -72,11 +70,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息编辑。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>新增信息。 <li>修改信息。
      * </ol>
-     *
      *
      * @throws Exception
      */
@@ -99,14 +96,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                         // 1.根据用户id清空用户部门关联表
                         orgUserVsDepartmentDao.deleteDataByUid(xdto);
                     }
-                    //alog.info( "修改", "用户[" + getUid() + "]修改,用户信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp() );
                 } else {
                     // 新增
                     if (ValidatorUtil.isEmpty(bean.getId())) {
                         bean.setId(IdUtil.createUUID(32));
                     }
                     orgUserDao.insert(bean);
-                    //alog.info( "新增", "用户[" + getUid() + "]新增,用户信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp() );
                 }
                 if (getAuth().isPermitted("orgUser:role.edit")) {
                     // 2.新增用户角色关联信息
@@ -150,11 +145,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息编辑。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>修改信息。
      * </ol>
-     *
      *
      * @throws Exception
      */
@@ -167,7 +161,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 if (orgUserDao.isDataYN(bean) != 0) {
                     // 数据存在
                     orgUserDao.updateByPrimaryKeySelective(bean);
-                    //alog.info( "修改", "用户[" + getUid() + "]修改,个人信息", bean.getCreateId(), bean.getCreateIp() );
                 }
             } catch (Exception e) {
                 msg = "信息保存失败,数据库处理错误!";
@@ -181,12 +174,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息编辑。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>物理删除。
      * </ol>
-     *
-     *
      */
     public String deleteData(OrgUser bean) throws Exception {
         String msg = "1";
@@ -204,12 +195,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息 单条。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>逻辑删除。
      * </ol>
-     *
-     *
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(OrgUser bean) throws Exception {
@@ -217,7 +206,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         if (bean != null) {
             try {
                 orgUserDao.deleteById(bean);
-                //alog.info( "删除", "用户[" + getUid() + "]删除,用户信息,id[" + bean.getId() + "]", bean.getCreateId(), bean.getCreateIp() );
             } catch (Exception e) {
                 msg = "信息删除失败,数据库处理错误!";
                 log.error(msg, e);
@@ -230,12 +218,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息列表 分页。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>分页。
      * </ol>
-     *
-     *
      */
     public List<OrgUser> findDataIsPage(OrgUser bean) {
         List<OrgUser> beans = null;
@@ -251,12 +237,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息列表。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
-     *
-     *
      */
     public List<OrgUser> findDataIsList(OrgUser bean) {
         List<OrgUser> beans = null;
@@ -271,12 +255,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息详情。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>详情。
      * </ol>
-     *
-     *
      */
     public OrgUser findDataById(OrgUser bean) {
         OrgUser bean1 = null;
@@ -294,12 +276,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 信息 单条。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>恢复逻辑删除的数据。
      * </ol>
-     *
-     *
      */
     public String recoveryDataById(OrgUser bean) throws Exception {
         String msg = "1";
@@ -318,12 +298,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 获取用户角色集合。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
-     *
-     *
      */
     public List<AuthRole> findRoleDataIsList(OrgUser bean) {
         List<AuthRole> beans = null;
@@ -342,12 +320,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 获取用户所在部门集合。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
-     *
-     *
      */
     public List<OrgDepartment> findDeptDataIsList(OrgUser bean) {
         List<OrgDepartment> beans = null;
@@ -366,12 +342,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 某一种角色所有用户。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
-     *
-     *
      */
     public List<OrgUser> findUserList(OrgUser bean) {
         List<OrgUser> beans = null;
@@ -388,12 +362,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 某一种角色所有用户。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>分页。
      * </ol>
-     *
-     *
      */
     public List<OrgUser> findUserIsPage(OrgUser bean) {
         List<OrgUser> beans = null;
@@ -411,7 +383,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     /**
      * <p>
      * 判断用户id是否存在
-     *
      */
     public String isUidYN(String uid) {
         String msg = "1";

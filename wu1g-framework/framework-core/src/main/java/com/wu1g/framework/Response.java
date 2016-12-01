@@ -1,18 +1,18 @@
 package com.wu1g.framework;
 
-import com.alibaba.fastjson.JSON;
 import com.wu1g.framework.exception.ErrorCode;
-import com.sun.org.apache.regexp.internal.recompile;
+import lombok.Data;
 
 /**
  * Created by leo on 16/6/6.
  */
+@Data
 public class Response<T> {
-
 
     /**
      * code 0 - 正确； 非0为错误码
      */
+
     public int code = 0;
 
 

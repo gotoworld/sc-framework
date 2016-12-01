@@ -118,7 +118,7 @@ public class VideoController extends BaseController {
 	@RequestMapping(value = acPrefix + "edit/{id}")
 	public String edit(PanoProj bean, @PathVariable("id") String id) {
 		log.info( "PanoVideoController edit........." );
-		int pageNum = 0;
+		int pageNum = 1;
 		if (bean != null && bean.getPageNum() != null) {
 			pageNum = bean.getPageNum();
 		}
@@ -143,6 +143,7 @@ public class VideoController extends BaseController {
 			bean.setId( IdUtil.createUUID( 32 ) );// id
 		}
 		bean.setPageNum( pageNum );
+		bean.setToken(IdUtil.createUUID(32));
 		request.setAttribute( "bean", bean );
 		
 		//获取类目列表

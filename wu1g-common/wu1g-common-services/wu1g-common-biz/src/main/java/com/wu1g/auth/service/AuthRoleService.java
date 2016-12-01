@@ -35,10 +35,6 @@ import java.util.Map;
 @Service
 @Slf4j
 public class AuthRoleService extends BaseService implements IAuthRoleService {
-
-    /** 系统_管理员操作日志 业务处理 */
-	//@Autowired
-	//protected ISysUserLogService alog;
     /**
      * 权限_角色信息 Dao接口类
      */
@@ -70,14 +66,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                         xdto.put("roleId", bean.getId());
                         authRoleVsPermDao.deleteDataByRid(xdto);
                     }
-                    //alog.info("修改", "用户[" + getUid() + "]修改,角色信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp());
                 } else {
                     // 新增
                     if (ValidatorUtil.isEmpty(bean.getId())) {
                         bean.setId(IdUtil.createUUID(22));
                     }
                     authRoleDao.insert(bean);
-                    //alog.info("新增", "用户[" + getUid() + "]新增,角色信息,id[" + bean.getId() + "],名称[" + bean.getName() + "]", bean.getCreateId(), bean.getCreateIp());
                 }
                 if (getAuth().isPermitted("authRole:parm")) {
                     // 2.新增角色权限关联信息
@@ -106,12 +100,10 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息编辑。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>物理删除。
      * </ol>
-     *
-     *
      */
     public String deleteData(AuthRole bean) throws Exception {
         String msg = "1";
@@ -129,12 +121,10 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息 单条。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>逻辑删除。
      * </ol>
-     *
-     *
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(AuthRole bean) throws Exception {
@@ -142,7 +132,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         if (bean != null) {
             try {
                 authRoleDao.deleteById(bean);
-                //alog.info("删除", "用户[" + getUid() + "]删除,角色信息,id[" + bean.getId() + "]", bean.getCreateId(), bean.getCreateIp());
             } catch (Exception e) {
                 msg = "信息删除失败,数据库处理错误!";
                 log.error(msg, e);
@@ -155,12 +144,10 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息列表 分页。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>分页。
      * </ol>
-     *
-     *
      */
     public List<AuthRole> findDataIsPage(AuthRole bean) {
         List<AuthRole> beans = null;
@@ -176,12 +163,10 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息列表。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>列表。
      * </ol>
-     *
-     *
      */
     public List<AuthRole> findDataIsList(AuthRole bean) {
         List<AuthRole> beans = null;
@@ -196,20 +181,15 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息详情。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>信息检索。 <li>详情。
      * </ol>
-     *
-     *
      */
     public AuthRole findDataById(AuthRole bean) {
         AuthRole bean1 = null;
         try {
             bean1 = (AuthRole) authRoleDao.selectByPrimaryKey(bean);
-            // if(bean1!=null && ValidatorUtil.notEmpty(bean1.getDetailInfo())){
-            // bean1.setDetailInfo(IOHelper.readHtml(bean1.getDetailInfo()));
-            // }
         } catch (Exception e) {
             log.error("信息详情查询失败,数据库错误!", e);
         }
@@ -219,12 +199,10 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     /**
      * <p>
      * 信息 单条。
-     *
+     * <p>
      * <ol>
      * [功能概要] <li>恢复逻辑删除的数据。
      * </ol>
-     *
-     *
      */
     public String recoveryDataById(AuthRole bean) throws Exception {
         String msg = "1";

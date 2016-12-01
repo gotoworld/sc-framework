@@ -10,10 +10,9 @@
  */
 
 package com.wu1g.pano.service;
- 
 
-import java.util.List;
 
+import com.github.pagehelper.PageHelper;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
@@ -21,24 +20,18 @@ import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.pano.api.IPanoSceneService;
 import com.wu1g.pano.dao.IPanoSceneDao;
 import com.wu1g.pano.vo.PanoScene;
-import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.PageHelper;
-
-import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Slf4j
 public class PanoSceneService   extends BaseService implements IPanoSceneService {
-	//@Autowired
-	//protected ISysUserLogService alog;
 	/**全景_场景 Dao接口类*/
 	@Autowired
 	private IPanoSceneDao panoSceneDao;
@@ -52,16 +45,13 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 				if(panoSceneDao.isDataYN(bean)!=0){	
 					//数据存在	
 					panoSceneDao.updateByPrimaryKeySelective(bean);	
-					//alog.info("修改", "用户["+getUid()+"]修改,全景_场景信息,id["+bean.getId()+"],数据["+bean.getSceneTitle()+"]", bean.getCreateId(), bean.getCreateIp());
-				}else{	
+				}else{
 					//新增	
 					if(ValidatorUtil.isEmpty(bean.getId())){
 						bean.setId(IdUtil.createUUID(32));//id
 					}
-
-					panoSceneDao.insert(bean);	
-					//alog.info("新增", "用户["+getUid()+"]新增,全景_场景信息,id["+bean.getId()+"],数据["+bean.getSceneTitle()+"]", bean.getCreateId(), bean.getCreateIp());
-				}	
+					panoSceneDao.insert(bean);
+				}
 			} catch (Exception e) {	
 				msg="信息保存失败,数据库处理错误!";	
 				log.error(msg, e);	
@@ -76,8 +66,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 		if(bean!=null){	
 			try {	
 				panoSceneDao.deleteByPrimaryKey(bean);	
-				//alog.info("删除", "用户["+getUid()+"]物理删除,全景_场景信息,id["+bean.getId()+"],数据["+bean.getSceneTitle()+"]", bean.getCreateId(), bean.getCreateIp());
-			} catch (Exception e) {	
+			} catch (Exception e) {
 				msg="信息删除失败,数据库处理错误!";	
 				log.error(msg, e);	
 			}	
@@ -92,8 +81,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 		if(bean!=null){	
 			try {	
 				panoSceneDao.deleteById(bean);	
-				//alog.info("删除", "用户["+getUid()+"]删除,全景_场景信息,id["+bean.getId()+"],数据["+bean.getSceneTitle()+"]", bean.getCreateId(), bean.getCreateIp());
-			} catch (Exception e) {	
+			} catch (Exception e) {
 				msg="信息删除失败,数据库处理错误!";	
 				log.error(msg, e);	
 				throw new Exception(msg);	
@@ -127,10 +115,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 	   PanoScene bean1=null;	
 	   try {	
 			bean1=(PanoScene) panoSceneDao.selectByPrimaryKey(bean);	
-			//if(bean1!=null  && ValidatorUtil.notEmpty(bean1.getDetailInfo())){	
-				//bean1.setDetailInfo(IOHelper.readHtml(bean1.getDetailInfo()));	
-			//}	
-		} catch (Exception e) {	
+		} catch (Exception e) {
 			log.error("信息详情查询失败,数据库错误!", e);	
 		}	
 		return bean1;	
@@ -141,8 +126,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 		if(bean!=null){	
 			try {	
 				panoSceneDao.recoveryDataById(bean);	
-				//alog.info("恢复", "用户["+getUid()+"]恢复,全景_场景信息,id["+bean.getId()+"],数据["+bean.getSceneTitle()+"]", bean.getCreateId(), bean.getCreateIp());
-			} catch (Exception e) {	
+			} catch (Exception e) {
 				msg="信息恢复失败,数据库处理错误!";	
 				log.error(msg, e);	
 				throw new Exception(msg);	

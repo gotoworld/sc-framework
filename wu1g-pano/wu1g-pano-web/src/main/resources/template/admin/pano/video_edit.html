@@ -32,7 +32,8 @@
 					<form id="video_editor" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/video/save">
 						<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}">
 			            <input type="hidden" name="id" value="${bean.id}" />
-			            <input type="hidden" name="type" value="1" />
+						<input type="hidden" name="token" value="${bean.token}" />
+						<input type="hidden" name="type" value="1" />
 					    <div class="col-sm-12">						
 							<div class="form-group">
 								<label class="col-sm-1 control-label"  for="bean_categoryId">类目:</label>

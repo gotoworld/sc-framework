@@ -10,11 +10,9 @@
  */
 
 package com.wu1g.pano.service;
- 
 
-import java.util.ArrayList;
-import java.util.List;
 
+import com.github.pagehelper.PageHelper;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
@@ -22,186 +20,179 @@ import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.pano.api.IPanoCategoryService;
 import com.wu1g.pano.dao.IPanoCategoryDao;
 import com.wu1g.pano.vo.PanoCategory;
-import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.PageHelper;
-
-import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
-public class PanoCategoryService   extends BaseService implements IPanoCategoryService {
-	//@Autowired
-	//protected ISysUserLogService alog;
-	/**全景_类目 Dao接口类*/
-	@Autowired
-	private IPanoCategoryDao panoCategoryDao;
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = { Exception.class, RuntimeException.class })
-	public String saveOrUpdateData(PanoCategory bean) throws Exception{
-		String msg="1";	
-		if(bean!=null){	
-			try {	
-				//判断数据是否存在	
-				if(panoCategoryDao.isDataYN(bean)!=0){	
-					//数据存在	
-					panoCategoryDao.updateByPrimaryKeySelective(bean);	
-					//alog.info("修改", "用户["+getUid()+"]修改,全景_类目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
-				}else{	
-					//新增	
-					if(ValidatorUtil.isEmpty(bean.getId())){
-						bean.setId(IdUtil.createUUID(32));//ID
-					}
+public class PanoCategoryService extends BaseService implements IPanoCategoryService {
+    @Autowired
+    private IPanoCategoryDao panoCategoryDao;
 
-					panoCategoryDao.insert(bean);	
-					//alog.info("新增", "用户["+getUid()+"]新增,全景_类目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
-				}	
-			} catch (Exception e) {	
-				msg="信息保存失败,数据库处理错误!";	
-				log.error(msg, e);	
-				throw new Exception(msg);	
-			}	
-		}	
-		return msg;	
-	}	
-	@Override
-	public String deleteData(PanoCategory bean) throws Exception{	
-		String msg="1";	
-		if(bean!=null){	
-			try {	
-				panoCategoryDao.deleteByPrimaryKey(bean);	
-				//alog.info("删除", "用户["+getUid()+"]物理删除,全景_类目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
-			} catch (Exception e) {	
-				msg="信息删除失败,数据库处理错误!";	
-				log.error(msg, e);	
-			}	
-		}	
-		return msg;	
-	}	
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {	
-			Exception.class, RuntimeException.class })	
-	public String deleteDataById(PanoCategory bean) throws Exception{	
-		String msg="1";	
-		if(bean!=null){	
-			try {	
-				panoCategoryDao.deleteById(bean);	
-				//alog.info("删除", "用户["+getUid()+"]删除,全景_类目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
-			} catch (Exception e) {	
-				msg="信息删除失败,数据库处理错误!";	
-				log.error(msg, e);	
-				throw new Exception(msg);	
-			}	
-		}	
-		return msg;	
-	}	
-	@Override
-	public List<PanoCategory> findDataIsPage(PanoCategory bean){	
-		List<PanoCategory> beans=null;	
-		try {	
-			PageHelper.startPage( (Integer) bean.getPageNum(), (Integer) bean.getPageSize() );
-			beans=(List<PanoCategory>) panoCategoryDao.findDataIsPage(bean);	
-		} catch (Exception e) {	
-			log.error("信息查询失败,数据库错误!", e);	
-		}	
-		return beans;	
-	}	
-	@Override
-	public List<PanoCategory> findDataIsList(PanoCategory bean){	
-		List<PanoCategory> beans=null;	
-		try {	
-			beans=(List<PanoCategory>) panoCategoryDao.findDataIsList(bean);	
-		} catch (Exception e) {	
-			log.error("信息查询失败,数据库错误!", e);	
-		}	
-		return beans;	
-	}	
-	@Override
-	public PanoCategory findDataById(PanoCategory bean){	
-	   PanoCategory bean1=null;	
-	   try {	
-			bean1=(PanoCategory) panoCategoryDao.selectByPrimaryKey(bean);	
-			//if(bean1!=null  && ValidatorUtil.notEmpty(bean1.getDetailInfo())){	
-				//bean1.setDetailInfo(IOHelper.readHtml(bean1.getDetailInfo()));	
-			//}	
-		} catch (Exception e) {	
-			log.error("信息详情查询失败,数据库错误!", e);	
-		}	
-		return bean1;	
-	}	
-	@Override
-	public String recoveryDataById(PanoCategory bean) throws Exception{	
-		String msg="1";	
-		if(bean!=null){	
-			try {	
-				panoCategoryDao.recoveryDataById(bean);	
-				//alog.info("恢复", "用户["+getUid()+"]恢复,全景_类目信息,id["+bean.getId()+"],数据["+bean.getName()+"]", bean.getCreateId(), bean.getCreateIp());
-			} catch (Exception e) {	
-				msg="信息恢复失败,数据库处理错误!";	
-				log.error(msg, e);	
-				throw new Exception(msg);	
-			}	
-		}	
-		return msg;	
-	}
-	public List<PanoCategory> findDataTree(PanoCategory bean) {
-		List<PanoCategory> beans = findDataIsList( bean );
-		if (beans == null) {
-			return null;
-		}
-		PanoCategoryBeanTree tree = new PanoCategoryBeanTree( beans );
-		return tree.buildTree();
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public String saveOrUpdateData(PanoCategory bean) throws Exception {
+        String msg = "1";
+        if (bean != null) {
+            try {
+                //判断数据是否存在
+                if (panoCategoryDao.isDataYN(bean) != 0) {
+                    //数据存在
+                    panoCategoryDao.updateByPrimaryKeySelective(bean);
+                } else {
+                    //新增
+                    if (ValidatorUtil.isEmpty(bean.getId())) {
+                        bean.setId(IdUtil.createUUID(32));//ID
+                    }
+                    panoCategoryDao.insert(bean);
+                }
+            } catch (Exception e) {
+                msg = "信息保存失败,数据库处理错误!";
+                log.error(msg, e);
+                throw new Exception(msg);
+            }
+        }
+        return msg;
+    }
+
+    @Override
+    public String deleteData(PanoCategory bean) throws Exception {
+        String msg = "1";
+        if (bean != null) {
+            try {
+                panoCategoryDao.deleteByPrimaryKey(bean);
+            } catch (Exception e) {
+                msg = "信息删除失败,数据库处理错误!";
+                log.error(msg, e);
+            }
+        }
+        return msg;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
+            Exception.class, RuntimeException.class})
+    public String deleteDataById(PanoCategory bean) throws Exception {
+        String msg = "1";
+        if (bean != null) {
+            try {
+                panoCategoryDao.deleteById(bean);
+            } catch (Exception e) {
+                msg = "信息删除失败,数据库处理错误!";
+                log.error(msg, e);
+                throw new Exception(msg);
+            }
+        }
+        return msg;
+    }
+
+    @Override
+    public List<PanoCategory> findDataIsPage(PanoCategory bean) {
+        List<PanoCategory> beans = null;
+        try {
+            PageHelper.startPage((Integer) bean.getPageNum(), (Integer) bean.getPageSize());
+            beans = (List<PanoCategory>) panoCategoryDao.findDataIsPage(bean);
+        } catch (Exception e) {
+            log.error("信息查询失败,数据库错误!", e);
+        }
+        return beans;
+    }
+
+    @Override
+    public List<PanoCategory> findDataIsList(PanoCategory bean) {
+        List<PanoCategory> beans = null;
+        try {
+            beans = (List<PanoCategory>) panoCategoryDao.findDataIsList(bean);
+        } catch (Exception e) {
+            log.error("信息查询失败,数据库错误!", e);
+        }
+        return beans;
+    }
+
+    @Override
+    public PanoCategory findDataById(PanoCategory bean) {
+        PanoCategory bean1 = null;
+        try {
+            bean1 = (PanoCategory) panoCategoryDao.selectByPrimaryKey(bean);
+        } catch (Exception e) {
+            log.error("信息详情查询失败,数据库错误!", e);
+        }
+        return bean1;
+    }
+
+    @Override
+    public String recoveryDataById(PanoCategory bean) throws Exception {
+        String msg = "1";
+        if (bean != null) {
+            try {
+                panoCategoryDao.recoveryDataById(bean);
+            } catch (Exception e) {
+                msg = "信息恢复失败,数据库处理错误!";
+                log.error(msg, e);
+                throw new Exception(msg);
+            }
+        }
+        return msg;
+    }
+
+    public List<PanoCategory> findDataTree(PanoCategory bean) {
+        List<PanoCategory> beans = findDataIsList(bean);
+        if (beans == null) {
+            return null;
+        }
+        PanoCategoryBeanTree tree = new PanoCategoryBeanTree(beans);
+        return tree.buildTree();
+    }
 }
 
 class PanoCategoryBeanTree {
-	private List<PanoCategory>	new_nodes	= new ArrayList<PanoCategory>();
-	private List<PanoCategory>	nodes;
+    private List<PanoCategory> new_nodes = new ArrayList<PanoCategory>();
+    private List<PanoCategory> nodes;
 
-	public PanoCategoryBeanTree(List<PanoCategory> nodes) {
-		this.nodes = nodes;
-	}
+    public PanoCategoryBeanTree(List<PanoCategory> nodes) {
+        this.nodes = nodes;
+    }
 
-	public List<PanoCategory> buildTree() {
-		for (PanoCategory node : nodes) {
-			// String id = node.getCode();
-			if (ValidatorUtil.isNullEmpty( node.getParentid() )) {
-				new_nodes.add( node );
-				build( node );
-			}
-		}
-		return new_nodes;
-	}
+    public List<PanoCategory> buildTree() {
+        for (PanoCategory node : nodes) {
+            // String id = node.getCode();
+            if (ValidatorUtil.isNullEmpty(node.getParentid())) {
+                new_nodes.add(node);
+                build(node);
+            }
+        }
+        return new_nodes;
+    }
 
-	private void build(PanoCategory node) {
-		List<PanoCategory> children = getChildren( node );
-		if (!children.isEmpty()) {
-			if (node.getBeans() == null) {
-				node.setBeans( new ArrayList() );
-			}
-			for (PanoCategory child : children) {
-				String id = child.getId();
-				node.getBeans().add( child );
-				build( child );
-			}
-		}
-	}
+    private void build(PanoCategory node) {
+        List<PanoCategory> children = getChildren(node);
+        if (!children.isEmpty()) {
+            if (node.getBeans() == null) {
+                node.setBeans(new ArrayList());
+            }
+            for (PanoCategory child : children) {
+                String id = child.getId();
+                node.getBeans().add(child);
+                build(child);
+            }
+        }
+    }
 
-	private List<PanoCategory> getChildren(PanoCategory node) {
-		List<PanoCategory> children = new ArrayList<PanoCategory>();
-		String id = node.getId();
-		for (PanoCategory child : nodes) {
-			if (id.equals( child.getParentid() )) {
-				children.add( child );
-			}
-		}
-		return children;
-	}
+    private List<PanoCategory> getChildren(PanoCategory node) {
+        List<PanoCategory> children = new ArrayList<PanoCategory>();
+        String id = node.getId();
+        for (PanoCategory child : nodes) {
+            if (id.equals(child.getParentid())) {
+                children.add(child);
+            }
+        }
+        return children;
+    }
 }

@@ -13,6 +13,7 @@ server:
 spring:
   aop:
     auto: true
+    proxy-target-class: true
   application:
      name: wu1g-services
   mvc:

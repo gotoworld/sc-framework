@@ -82,7 +82,7 @@ public class PanoCategoryController extends BaseController {
     @RequestMapping(value = acPrefix + "edit/{id}")
     public String edit(PanoCategory bean, @PathVariable("id") String id) {
         log.info("PanoCategoryController edit.........");
-        int pageNum = 0;
+        int pageNum = 1;
         if (bean != null && bean.getPageNum() != null) {
             pageNum = bean.getPageNum();
         }
@@ -102,6 +102,7 @@ public class PanoCategoryController extends BaseController {
             bean.setId(IdUtil.createUUID(32));// ID
         }
         bean.setPageNum(pageNum);
+        bean.setToken(IdUtil.createUUID(32));
         request.setAttribute("bean", bean);
         return edit;
     }

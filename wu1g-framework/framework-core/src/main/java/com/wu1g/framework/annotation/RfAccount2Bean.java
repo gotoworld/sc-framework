@@ -3,13 +3,12 @@ package com.wu1g.framework.annotation;
 import java.lang.annotation.*;
 
 /**
- *自定义注解 拦截service
+ *自定义注解 写入账户信息到实体bean中
  */
 
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ALogService {
-    String type() default  "";
-    String desc()  default "";
+public @interface RfAccount2Bean {
+    String value() default "";
 }

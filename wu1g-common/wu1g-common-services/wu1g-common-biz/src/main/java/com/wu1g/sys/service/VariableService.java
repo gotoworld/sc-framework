@@ -10,8 +10,6 @@
  */
 package com.wu1g.sys.service;
 
-import java.util.List;
-
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -19,12 +17,13 @@ import com.wu1g.sys.api.IVariableService;
 import com.wu1g.sys.dao.ISysVariableDao;
 import com.wu1g.sys.vo.SysVariable;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**

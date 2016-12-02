@@ -51,11 +51,9 @@ import java.util.Map;
 @Slf4j
 public class AppConfig implements ApplicationContextAware, EnvironmentAware {
     private static final String keyPrefix = "wu1g.";
-
+    private static final String prikey="A1B2C3D4E5F60708";
     private static ApplicationContext applicationContext;
     private static RelaxedPropertyResolver appProperty;
-
-//    private static String appName = "${spring.application.name}";
 
     @Override
     public void setApplicationContext(ApplicationContext appContext) throws BeansException {
@@ -71,22 +69,21 @@ public class AppConfig implements ApplicationContextAware, EnvironmentAware {
         return applicationContext;
     }
 
-//    public static String getAppName() {
-//        return appName;
-//    }
     public static String getKey(String key) {
-        if (key == null ) {
+        if (key == null) {
             return null;
         }
         String prefix = null;
         try {
             prefix = getProperty("common.appPrefix");
-        }catch (Exception e){}
-        return (StringUtils.isEmpty(prefix) ? key : prefix + ":" + key) ;
+        } catch (Exception e) {
+        }
+        return (StringUtils.isEmpty(prefix) ? key : prefix + ":" + key);
     }
 
     /**
      * 检查配置数据password，是否采用默认加密。如加密，则解密
+     *
      * @param password
      * @return
      */
@@ -94,11 +91,11 @@ public class AppConfig implements ApplicationContextAware, EnvironmentAware {
         int idx = password.indexOf(":");
         if (idx > 0) {
             if (password.startsWith("AES:")) {
-                password = AES.decrypt(password.substring(idx + 1).trim() );
+                password = AES.decrypt(password.substring(idx + 1).trim(), prikey);
             } else if (password.startsWith("DES:")) {
-                password = DES.decrypt(password.substring(idx + 1).trim());
+                password = DES.decrypt(password.substring(idx + 1).trim(),prikey);
             } else if (password.startsWith("DES3:")) {
-                password = DES3.decrypt(password.substring(idx + 1).trim());
+                password = DES3.decrypt(password.substring(idx + 1).trim(),prikey);
             }
         }
         return password;
@@ -130,10 +127,10 @@ public class AppConfig implements ApplicationContextAware, EnvironmentAware {
     }
 
     public static boolean containsProperty(String key) {
-        return appProperty.containsProperty(key );
+        return appProperty.containsProperty(key);
     }
 
-    public static Map<String ,Object> getSubProperties(String keyPrefix) {
+    public static Map<String, Object> getSubProperties(String keyPrefix) {
         return appProperty.getSubProperties(keyPrefix);
     }
 }

@@ -10,6 +10,7 @@
  */
 package com.wu1g.framework.util;
 
+import com.wu1g.framework.config.AppConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
@@ -17,11 +18,11 @@ import java.io.*;
 
 /**
  * <p>IO工具类</p>
- *
- * @author Huyunlin
  */
 @Slf4j
 public class IOUtil extends IOUtils {
+    private static final String rootFolderUpload = AppConfig.getProperty("common.fileServer.rootFolder.upload");
+    private static final String rootFolderDownload = AppConfig.getProperty("common.fileServer.rootFolder.download");
     /**
      * <p>读取文件</p>
      *
@@ -90,10 +91,10 @@ public class IOUtil extends IOUtils {
      */
     public static String writeHtml(String dirName, String content) {
         // 文件保存目录路径
-        String savePath = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") +
+        String savePath = rootFolderUpload +
                 dirName + PathCommonConstant.PATH_SEPARATOR;
         // 文件保存目录URL
-        String saveUrl = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER_URL") +
+        String saveUrl = rootFolderDownload +
                 dirName + PathCommonConstant.PATH_SEPARATOR;
 
         //创建文件夹
@@ -251,7 +252,7 @@ public class IOUtil extends IOUtils {
         }
 
         // 文件物理路径
-        String savePath = ResourcesUtil.getData("FILE_ROOT_FOLDER") + fileName;
+        String savePath = rootFolderUpload+ fileName;
 
         //检查文件是否存在
         File saveDirFile = new File(savePath);
@@ -283,8 +284,8 @@ public class IOUtil extends IOUtils {
         if (url != null) {
             if (!ValidatorUtil.isUrl(url)) {
                 local_url = url.replaceAll(
-                        ResourcesUtil.getData("UPLOAD_ROOT_FOLDER_URL"),
-                        ResourcesUtil.getData("UPLOAD_ROOT_FOLDER")).replaceAll(
+                        rootFolderDownload,
+                        rootFolderUpload).replaceAll(
                         "//", "/");
             }
         }
@@ -302,8 +303,8 @@ public class IOUtil extends IOUtils {
         if (url != null) {
             if (!ValidatorUtil.isUrl(url)) {
                 remote_url = url.replaceAll(
-                        ResourcesUtil.getData("UPLOAD_ROOT_FOLDER"),
-                        ResourcesUtil.getData("UPLOAD_ROOT_FOLDER_URL"))
+                        rootFolderUpload,
+                        rootFolderDownload)
                         .replaceAll("//", "/");
             }
         }

@@ -20,11 +20,11 @@
 <%@ include file="../include/admin_title.jsp"%>
 <%@ include file="../include/public_init_js_css.jsp"%>
 <link rel="stylesheet"
-	href="${basePath}/static/plugins/bootstrapvalidator/vendor/bootstrap/css/bootstrap.css" />
+	href="${basePath}/plugins/bootstrapvalidator/vendor/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet"
-	href="${basePath}/static/plugins/bootstrapvalidator/dist/css/bootstrapValidator.css" />
+	href="${basePath}/plugins/bootstrapvalidator/dist/css/bootstrapValidator.css" />
 <link
-	href="${basePath}/static/plugins/metronic/v4.1.0/theme/assets/admin/layout/css/themes/light.css"
+	href="${basePath}/plugins/metronic/v4.1.0/theme/assets/admin/layout/css/themes/light.css"
 	rel="stylesheet" type="text/css" id="style_color" />
 
 </head>
@@ -113,9 +113,9 @@
 <!-- END BODY -->
 <%@ include file="../include/public_last_js_css.jsp"%>
 <script type="text/javascript"
-	src="${basePath}/static/plugins/bootstrapvalidator/vendor/bootstrap/js/bootstrap.min.js"></script>
+	src="${basePath}/plugins/bootstrapvalidator/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript"
-	src="${basePath}/static/plugins/bootstrapvalidator/dist/js/bootstrapValidator.js"></script>
+	src="${basePath}/plugins/bootstrapvalidator/dist/js/bootstrapValidator.js"></script>
 <script type="text/javascript">
 function cPwd(val){
 	if(val){

@@ -1,8 +1,12 @@
 package com.wu1g.framework.web.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wu1g.framework.config.AppConfig;
 import com.wu1g.framework.thread.ImageUtilThread;
-import com.wu1g.framework.util.*;
+import com.wu1g.framework.util.ImageUtil;
+import com.wu1g.framework.util.PathCommonConstant;
+import com.wu1g.framework.util.ValidatorUtil;
+import com.wu1g.framework.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -28,23 +32,18 @@ import java.util.concurrent.Executors;
 public class jQueryFileUpload extends HttpServlet {
     private static final long serialVersionUID = 1L;
     // 线程池 默认大小
-    ExecutorService threadPool = Executors.newScheduledThreadPool(Integer.parseInt(ResourcesUtil.getData("IMAGE_EXECUTOR_SERVICE_SIZE").trim()));
-    // n0图象宽度
-    private static final int IMAGE_N0_WIDTH = Integer.parseInt(ResourcesUtil.getData("IMAGE_N0_WIDTH").trim());
-    // n0图象高度
-    private static final int IMAGE_N0_HEIGHT = Integer.parseInt(ResourcesUtil.getData("IMAGE_N0_HEIGHT").trim());
-    // n1图象宽度
-    private static final int IMAGE_N1_WIDTH = Integer.parseInt(ResourcesUtil.getData("IMAGE_N1_WIDTH").trim());
-    // n1图象高度
-    private static final int IMAGE_N1_HEIGHT = Integer.parseInt(ResourcesUtil.getData("IMAGE_N1_HEIGHT").trim());
-    // n2图象宽度
-    private static final int IMAGE_N2_WIDTH = Integer.parseInt(ResourcesUtil.getData("IMAGE_N2_WIDTH").trim());
-    // n2图象高度
-    private static final int IMAGE_N2_HEIGHT = Integer.parseInt(ResourcesUtil.getData("IMAGE_N2_HEIGHT").trim());
-    // n3图像宽度
-    private static final int IMAGE_N3_WIDTH = Integer.parseInt(ResourcesUtil.getData("IMAGE_N3_WIDTH").trim());
-    // n3图像高度
-    private static final int IMAGE_N3_HEIGHT = Integer.parseInt(ResourcesUtil.getData("IMAGE_N3_HEIGHT").trim());
+    ExecutorService threadPool = Executors.newScheduledThreadPool(Integer.parseInt(AppConfig.getProperty("common.fileServer.image.executorServiceSize")));
+
+    private static final String rootFolderUpload = AppConfig.getProperty("common.fileServer.rootFolder.upload");
+    private static final String rootFolderDownload = AppConfig.getProperty("common.fileServer.rootFolder.download");
+    private static final int imageN0Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n0.width"));
+    private static final int imageN0Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n0.height"));
+    private static final int imageN1Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n1.width"));
+    private static final int imageN1Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n1.height"));
+    private static final int imageN2Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n2.width"));
+    private static final int imageN2Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n2.height"));
+    private static final int imageN3Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n3.width"));
+    private static final int imageN3Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n3.height"));
     //
     private static final SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMM/");
 
@@ -84,11 +83,11 @@ public class jQueryFileUpload extends HttpServlet {
             // 根据是否是图片处理保存路径
             if (PathCommonConstant.UPLOAD_CATAGORY_IMAGE.equals(dirName)) {
                 // 文件保存目录路径
-                savePathN0 = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + dirName + "/" + "n0" + forDate;
-                savePathN1 = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + dirName + "/" + "n1" + forDate;
-                savePathN2 = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + dirName + "/" + "n2" + forDate;
-                savePathN3 = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + dirName + "/" + "n3" + forDate;
-                savePathN4 = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + dirName + "/" + "n4" + forDate;
+                savePathN0 = rootFolderUpload + dirName + "/" + "n0" + forDate;
+                savePathN1 = rootFolderUpload + dirName + "/" + "n1" + forDate;
+                savePathN2 = rootFolderUpload + dirName + "/" + "n2" + forDate;
+                savePathN3 = rootFolderUpload + dirName + "/" + "n3" + forDate;
+                savePathN4 = rootFolderUpload + dirName + "/" + "n4" + forDate;
                 // 创建文件夹
                 File saveDirFileN0 = new File(savePathN0);
                 if (!saveDirFileN0.exists()) {
@@ -130,18 +129,18 @@ public class jQueryFileUpload extends HttpServlet {
             String isRichEditor = req.getParameter(PathCommonConstant.IS_RICH_EDITOR);
             if (!ValidatorUtil.isNullEmpty(isRichEditor) && isRichEditor.equals("1")) {
                 // 在富文本编辑器内上传的返n3
-                saveUrl = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER_URL") + "/" + dirName + "/" + "n3" + forDate;
+                saveUrl = rootFolderDownload + "/" + dirName + "/" + "n3" + forDate;
             } else {
                 // 在其他地方上传的返n1
-                saveUrl = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER_URL") + "/" + dirName + "/" + "n1" + forDate;
+                saveUrl = rootFolderDownload + "/" + dirName + "/" + "n1" + forDate;
             }
         } else {
             // 非图片的保存路径中没有Nx
             // 文件保存目录路径
-            savePath = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + dirName + forDate;
+            savePath = rootFolderUpload + dirName + forDate;
 
             // 文件保存目录URL
-            saveUrl = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER_URL") + "/" + dirName + forDate;
+            saveUrl = rootFolderDownload + "/" + dirName + forDate;
         }
 
         // 创建文件夹
@@ -210,16 +209,16 @@ public class jQueryFileUpload extends HttpServlet {
                     // 对于图片,存储n0,n1,n2,n3
                     if (PathCommonConstant.UPLOAD_CATAGORY_IMAGE.equals(dirName)) {
                         // 处理n0 其它的使用多线程处理
-                        ImageUtil.resizeNx(savePath, savePathN0, newFileName, newFileName, IMAGE_N0_WIDTH, IMAGE_N0_HEIGHT, true);
-                        threadPool.execute(new ImageUtilThread(savePath, savePathN1, newFileName, newFileName, IMAGE_N1_WIDTH, IMAGE_N1_HEIGHT, false));
-                        threadPool.execute(new ImageUtilThread(savePath, savePathN2, newFileName, newFileName, IMAGE_N2_WIDTH, IMAGE_N2_HEIGHT, false));
-                        threadPool.execute(new ImageUtilThread(savePath, savePathN3, newFileName, newFileName, IMAGE_N3_WIDTH, IMAGE_N3_HEIGHT, false));
+                        ImageUtil.resizeNx(savePath, savePathN0, newFileName, newFileName, imageN0Width, imageN0Height, true);
+                        threadPool.execute(new ImageUtilThread(savePath, savePathN1, newFileName, newFileName, imageN1Width, imageN1Height, false));
+                        threadPool.execute(new ImageUtilThread(savePath, savePathN2, newFileName, newFileName, imageN2Width, imageN2Height, false));
+                        threadPool.execute(new ImageUtilThread(savePath, savePathN3, newFileName, newFileName, imageN3Width, imageN3Height, false));
                     }
                     json.put("name", fileName);
                     json.put("size", item.getSize());
                     if ("image".equals(dirName)) {
-                        json.put("url", (ResourcesUtil.getData("UPLOAD_ROOT_FOLDER_URL") + "/" + dirName + "/" + "n3" + forDate + newFileName));
-                        json.put("thumbnailUrl", (ResourcesUtil.getData("UPLOAD_ROOT_FOLDER_URL") + "/" + dirName + "/" + "n0" + forDate + newFileName));
+                        json.put("url", (rootFolderDownload + dirName + "/" + "n3" + forDate + newFileName));
+                        json.put("thumbnailUrl", (rootFolderDownload + dirName + "/" + "n0" + forDate + newFileName));
                     } else {
                         json.put("url", (saveUrl + newFileName));
                     }
@@ -228,7 +227,7 @@ public class jQueryFileUpload extends HttpServlet {
                 } catch (Exception e) {
                     log.error(PathCommonConstant.LOG_ERROR_TITLE, e);
                     /*
-					 * 注：插件需要服务器端返回JSON格式的字符串，且必须以下面的格式来返回，一个字段都不能少 如果上传失败，那么则须用特定格式返回信息： "name": "picture1.jpg", "size": 902604, "error":
+                     * 注：插件需要服务器端返回JSON格式的字符串，且必须以下面的格式来返回，一个字段都不能少 如果上传失败，那么则须用特定格式返回信息： "name": "picture1.jpg", "size": 902604, "error":
 					 * "Filetype not allowed" 另外，files必须为一个JSON数组，哪怕上传的是一个文件
 					 */
                     json = new HashMap<String, Object>();

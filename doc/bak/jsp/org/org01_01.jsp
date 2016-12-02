@@ -20,11 +20,11 @@
 <%@ include file="../include/meta.jsp" %>
 <%@ include file="../include/admin_title.jsp" %>
 <%@ include file="../include/public_init_js_css.jsp" %>
-<link rel="stylesheet" href="${basePath}/static/plugins/bootstrapvalidator/vendor/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" href="${basePath}/static/plugins/bootstrapvalidator/dist/css/bootstrapValidator.css" />
-<link rel="stylesheet" type="text/css" href="${basePath}/static/plugins/metronic/v4.1.0/theme/assets/global/plugins/jquery-multi-select/css/multi-select.css" />
-<link rel="stylesheet" type="text/css" href="${basePath}/static/plugins/metronic/v4.1.0/theme/assets/global/plugins/select2/select2-bootstrap.css" />
-<link href="${basePath}/static/plugins/metronic/v4.1.0/theme/assets/admin/layout/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link rel="stylesheet" href="${basePath}/plugins/bootstrapvalidator/vendor/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="${basePath}/plugins/bootstrapvalidator/dist/css/bootstrapValidator.css" />
+<link rel="stylesheet" type="text/css" href="${basePath}/plugins/metronic/v4.1.0/theme/assets/global/plugins/jquery-multi-select/css/multi-select.css" />
+<link rel="stylesheet" type="text/css" href="${basePath}/plugins/metronic/v4.1.0/theme/assets/global/plugins/select2/select2-bootstrap.css" />
+<link href="${basePath}/plugins/metronic/v4.1.0/theme/assets/admin/layout/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color"/>
 
 
 </head>
@@ -98,9 +98,9 @@
 <!-- END BODY -->
 </html>
 <%@ include file="../include/public_last_js_css.jsp"%>
-<script type="text/javascript" src="${basePath}/static/plugins/bootstrapvalidator/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${basePath}/static/plugins/bootstrapvalidator/dist/js/bootstrapValidator.js"></script>
-<script type="text/javascript" src="${basePath}/static/plugins/metronic/v4.1.0/theme/assets/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="${basePath}/plugins/bootstrapvalidator/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${basePath}/plugins/bootstrapvalidator/dist/js/bootstrapValidator.js"></script>
+<script type="text/javascript" src="${basePath}/plugins/metronic/v4.1.0/theme/assets/global/plugins/select2/select2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#org01_01').bootstrapValidator({

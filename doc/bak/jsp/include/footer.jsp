@@ -18,8 +18,8 @@
 	<div class="page-footer " style="height: 50px;">
 		<div class="page-footer-inner">
 			Copyright 2016 全景. - All Rights Reserved. .${onlineNumber}.
-<%-- 			<a class="_language" l="zh_CN"><img alt="中文" src="${basePath}/static/img/flags/cn.gif"></a>  --%>
-<%-- 			<a class="_language" l="en_US"><img alt="English" src="${basePath}/static/img/flags/us.gif"></a> --%>
+<%-- 			<a class="_language" l="zh_CN"><img alt="中文" src="${basePath}/img/flags/cn.gif"></a>  --%>
+<%-- 			<a class="_language" l="en_US"><img alt="English" src="${basePath}/img/flags/us.gif"></a> --%>
 		</div>
 		<div class="scroll-to-top">
 			<i class="icon-arrow-up"></i>

@@ -14,6 +14,7 @@ package com.wu1g.pano.service;
 
 import com.github.pagehelper.PageHelper;
 import com.wu1g.framework.annotation.RfAccount2Bean;
+import com.wu1g.framework.config.AppConfig;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.*;
 import com.wu1g.pano.api.IPanoProjService;
@@ -191,7 +192,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             if (sceneList != null && sceneList.size() > 0) {
                 PanoSpots panoSpots = null;
                 for (PanoScene scene : sceneList) {
-                    imgappend += ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + scene.getSceneSrc().replace("/upload/", "").replace("/n1/", "/n4/") + " ";
+                    imgappend += AppConfig.getProperty("common.fileServer.rootFolder.upload") + scene.getSceneSrc().replace(AppConfig.getProperty("common.fileServer.rootFolder.download"), "").replace("/n1/", "/n4/") + " ";
                     scene.setBreakdownImg(getBreakdownImg(proj.getId(), scene.getSceneSrc()));
 
                     //--获取场景-跳转热点
@@ -218,9 +219,9 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             proj.setScenes(sceneList);
             context.put("proj", proj);
             context.put("basePath", bean.getStr());
-            context.put("panoPath", bean.getStr() + "/static/plugins/krpano/");
+            context.put("panoPath", bean.getStr() + "/plugins/krpano/");
 
-            String saveDir = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + "pano/";
+            String saveDir = AppConfig.getProperty("common.fileServer.rootFolder.upload") + "pano/";
 
 //			创建文件夹
             File saveDirFile = new File(saveDir);
@@ -355,9 +356,9 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             proj.setScenes(sceneList);
             context.put("proj", proj);
             context.put("basePath", bean.getStr());
-            context.put("panoPath", bean.getStr() + "/static/plugins/krpano/");
+            context.put("panoPath", bean.getStr() + "/plugins/krpano/");
 
-            String saveDir = ResourcesUtil.getData("UPLOAD_ROOT_FOLDER") + "pano/";
+            String saveDir = AppConfig.getProperty("common.fileServer.rootFolder.upload") + "pano/";
 
 //			创建文件夹
             File saveDirFile = new File(saveDir);

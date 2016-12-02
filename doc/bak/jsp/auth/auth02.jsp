@@ -23,7 +23,7 @@
 <%@ include file="../include/meta.jsp"%>
 <%@ include file="../include/admin_title.jsp"%>
 <%@ include file="../include/public_init_js_css.jsp"%>
-<link rel="stylesheet" type="text/css" href="${basePath}/static/plugins/metronic/v4.1.0/theme/assets/global/plugins/fuelux/css/tree-metronic.css" />
+<link rel="stylesheet" type="text/css" href="${basePath}/plugins/metronic/v4.1.0/theme/assets/global/plugins/fuelux/css/tree-metronic.css" />
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->

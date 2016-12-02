@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;
+
 @Slf4j
 public class ImageUtilThread implements Runnable {
     // 水印图片
@@ -55,12 +56,12 @@ public class ImageUtilThread implements Runnable {
     /**
      * 构造
      *
-     * @param srcPath 源图目录
-     * @param optPath 新图保存目录
-     * @param picFrom 源图地址
-     * @param picTo   新图保存地址
-     * @param width   新图宽度
-     * @param height  新图高度
+     * @param _srcPath 源图目录
+     * @param _optPath 新图保存目录
+     * @param _picFrom 源图地址
+     * @param _picTo   新图保存地址
+     * @param _width   新图宽度
+     * @param _height  新图高度
      */
     public ImageUtilThread(String _srcPath, String _optPath, String _picFrom, String _picTo, int _width, int _height, boolean _forceSize) {
         this.srcPath = _srcPath;
@@ -115,10 +116,7 @@ public class ImageUtilThread implements Runnable {
      * 给图片加水印
      *
      * @param savePath 存放目录
-     * @param picFrom  源图地址
-     * @param picTo    新图保存地址
-     * @param width    新图宽度
-     * @param height   新图高度
+     * @param pic      源图地址
      * @return
      */
     public void watermark(String savePath, String pic) throws IOException {
@@ -130,7 +128,7 @@ public class ImageUtilThread implements Runnable {
      * 复制单个文件
      *
      * @param srcFile  待复制的文件
-     * @param descFile 目标文件
+     * @param destFile 目标文件
      * @return 如果复制成功返回true，否则返回false
      */
     public boolean copyFile(File srcFile, File destFile) {

@@ -156,7 +156,7 @@ public class PanoVideoController extends BaseController {
 		PanoProj proj=panoProjService.findDataById( bean );
 		request.setAttribute("proj", proj );
 		request.setAttribute("basePath", getBasePath() );
-		request.setAttribute("panoPath", getBasePath()+"/static/plugins/krpano/" );
+		request.setAttribute("panoPath", getBasePath()+"/plugins/krpano/" );
 		return "client/pano/video";
 	}
 }

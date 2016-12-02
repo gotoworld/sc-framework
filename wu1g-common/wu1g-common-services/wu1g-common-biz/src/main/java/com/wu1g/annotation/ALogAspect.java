@@ -1,15 +1,17 @@
 package com.wu1g.annotation;
 
 import com.alibaba.fastjson.JSON;
-import com.wu1g.framework.IVO;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IpUtils;
 import com.wu1g.org.vo.OrgUser;
-import com.wu1g.sys.service.SysUserLogService;
+import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -28,7 +30,7 @@ import java.lang.reflect.Method;
 public class ALogAspect {
     //注入Service用于把日志保存数据库
     @Resource
-    private SysUserLogService sysUserLogService;
+    private ISysUserLogService sysUserLogService;
 
     //操作日志切点
     @Pointcut("@annotation(com.wu1g.framework.annotation.ALogOperation)")

@@ -460,7 +460,7 @@ public class PanoProjController extends BaseController {
         proj.setScenes(sceneList);
         request.setAttribute("proj", proj);
         request.setAttribute("basePath", getBasePath());
-        request.setAttribute("panoPath", getBasePath() + "/static/plugins/krpano/");
+        request.setAttribute("panoPath", getBasePath() + "/plugins/krpano/");
         return touredit;
     }
 

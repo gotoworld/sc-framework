@@ -67,7 +67,7 @@ public class BaseController {
         } else {
             basePath = request.getScheme() + "://" + request.getServerName() + path;
         }
-        return basePath;
+        return path;
     }
     /**
      * 权限验证框架取得

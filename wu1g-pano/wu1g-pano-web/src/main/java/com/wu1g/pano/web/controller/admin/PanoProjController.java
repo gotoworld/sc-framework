@@ -121,7 +121,6 @@ public class PanoProjController extends BaseController {
      */
     @RequiresPermissions("pano02:edit")
     @RequestMapping(value = acPrefix + "edit/{id}")
-    @ALogOperation(type="查询",desc = "进入编辑页面")
     public String edit(PanoProj bean, @PathVariable("id") String id) {
         log.info("PanoProjController edit.........");
         int pageNum = 1;

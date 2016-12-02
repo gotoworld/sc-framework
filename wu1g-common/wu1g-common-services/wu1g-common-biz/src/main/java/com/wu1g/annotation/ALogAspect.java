@@ -1,9 +1,11 @@
 package com.wu1g.annotation;
 
 import com.alibaba.fastjson.JSON;
+import com.wu1g.framework.IVO;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IpUtils;
+import com.wu1g.framework.util.ReflectUtil;
 import com.wu1g.org.vo.OrgUser;
 import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +45,7 @@ public class ALogAspect {
     @After("alogOperationAspect()")
     public void doAfter(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
         //读取session中的用户
         OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
         //请求的IP
@@ -56,15 +58,21 @@ public class ALogAspect {
 //            log.debug("方法描述:" + logArr[1]);
 //            log.debug("请求人:" + user.getName());
 //            log.debug("请求IP:" + ip);
-//            Object[] objArr=joinPoint.getArgs();
-//            if(objArr!=null){
-//                for(Object obj:objArr){
-//                    if(obj instanceof IVO){
+            Object object=null;
+            Object[] objArr=joinPoint.getArgs();
+            if(objArr!=null){
+                for(Object obj:objArr){
+                    if(obj instanceof IVO){
 //                        log.debug(JSON.toJSONString(obj));
-//                        break;
-//                    }
-//                }
-//            }
+                        object=obj;
+                        break;
+                    }
+                }
+            }
+            String id= (String) ReflectUtil.getValueByFieldName(object,"id");
+            if("add".equals(id)){
+                logArr[0]="新增";
+            }
 //            //*========数据库日志=========*//
             sysUserLogService.info(logArr[0],logArr[1], user.getName(), ip);
 //            log.debug("=====前置通知结束=====");
@@ -82,7 +90,7 @@ public class ALogAspect {
     @AfterThrowing(pointcut = "alogOperationAspect()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
         //获取用户请求方法的参数并序列化为JSON格式字符串
         String params = "";
         if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
@@ -96,17 +104,17 @@ public class ALogAspect {
             //获取请求ip
             String ip = IpUtils.getIpAddr(request);
             String[] logArr = getMethodDesc(joinPoint);
-              /*========控制台输出=========*/
-            log.debug("=====异常通知开始=====");
-            log.debug("异常代码:" + e.getClass().getName());
-            log.debug("异常信息:" + e.getMessage());
-            log.debug("异常方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-            log.debug("方法描述:" + logArr[1]);
-            log.debug("请求人:" + user.getName());
-            log.debug("请求IP:" + ip);
-            log.debug("请求参数:" + params);
+//              /*========控制台输出=========*/
+//            log.debug("=====异常通知开始=====");
+//            log.debug("异常代码:" + e.getClass().getName());
+//            log.debug("异常信息:" + e.getMessage());
+//            log.debug("异常方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
+//            log.debug("方法描述:" + logArr[1]);
+//            log.debug("请求人:" + user.getName());
+//            log.debug("请求IP:" + ip);
+//            log.debug("请求参数:" + params);
             sysUserLogService.info(logArr[0], logArr[1] + e.getMessage(), user.getName(), ip);
-            log.debug("=====异常通知结束=====");
+//            log.debug("=====异常通知结束=====");
         } catch (Exception ex) {
             //记录本地异常日志
             log.error("==异常通知异常==");

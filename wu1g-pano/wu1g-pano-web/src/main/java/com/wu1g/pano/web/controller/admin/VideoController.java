@@ -74,7 +74,7 @@ public class VideoController extends BaseController {
 	 * 
 	 *
 	 */
-	@RequiresPermissions("video:init")
+	@RequiresPermissions("video:menu")
 	@RequestMapping(value = acPrefix + "init")
 	public String init() {
 		log.info( "PanoVideoController init........." );
@@ -89,7 +89,7 @@ public class VideoController extends BaseController {
 	 * 
 	 *
 	 */
-	@RequiresPermissions("video:init")
+	@RequiresPermissions("video:menu")
 	@RequestMapping(value = acPrefix + "list")
 	public String list(PanoProj bean) {
 		log.info( "PanoVideoController list........." );

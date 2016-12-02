@@ -80,7 +80,7 @@ public class PanoProjController extends BaseController {
      * [功能概要]
      * <li>初始化处理。
      */
-    @RequiresPermissions("pano02:init")
+    @RequiresPermissions("panoProj:menu")
     @RequestMapping(value = acPrefix + "init")
     public String init() {
         log.info("PanoProjController init.........");
@@ -94,7 +94,7 @@ public class PanoProjController extends BaseController {
      * [功能概要]
      * <li>信息列表。
      */
-    @RequiresPermissions("pano02:init")
+    @RequiresPermissions("panoProj:menu")
     @RequestMapping(value = acPrefix + "list")
     public String list(PanoProj bean) {
         log.info("PanoProjController list.........");
@@ -119,7 +119,7 @@ public class PanoProjController extends BaseController {
      * [功能概要]
      * <li>编辑。
      */
-    @RequiresPermissions("pano02:edit")
+    @RequiresPermissions("panoProj:edit")
     @RequestMapping(value = acPrefix + "edit/{id}")
     public String edit(PanoProj bean, @PathVariable("id") String id) {
         log.info("PanoProjController edit.........");
@@ -164,7 +164,7 @@ public class PanoProjController extends BaseController {
      * [功能概要]
      * <li>逻辑删除。
      */
-    @RequiresPermissions("pano02:del")
+    @RequiresPermissions("panoProj:del")
     @RequestMapping(value = acPrefix + "del/{id}")
     @ALogOperation(type="删除",desc = "全景项目")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
@@ -189,7 +189,7 @@ public class PanoProjController extends BaseController {
      * <li>新增。
      * <li>修改。
      */
-    @RequiresPermissions(value = {"pano02:add", "pano02:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"panoProj:add", "panoProj:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type="修改",desc="全景项目信息")
@@ -256,7 +256,7 @@ public class PanoProjController extends BaseController {
         return success;
     }
 
-    @RequiresPermissions(value = {"pano02:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "xmlsave")
     @ResponseBody
     @RfAccount2Bean
@@ -421,7 +421,7 @@ public class PanoProjController extends BaseController {
         return radars;
     }
 
-    @RequiresPermissions(value = {"pano02:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
     @RequestMapping(value = "/h/touredit/{id}")
     public String touredit(@PathVariable("id") String id) {
         log.info("PanoProjController touredit.........");

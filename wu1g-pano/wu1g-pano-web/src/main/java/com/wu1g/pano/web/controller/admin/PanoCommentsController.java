@@ -53,7 +53,7 @@ public class PanoCommentsController extends BaseController {
      * <ol>[功能概要]
      * <li>初始化处理。
      */
-    @RequiresPermissions("pano06:init")
+    @RequiresPermissions("panoComment:menu")
     @RequestMapping(value = acPrefix + "init")
     public String init() {
         log.info("PanoCommentsController init.........");
@@ -65,7 +65,7 @@ public class PanoCommentsController extends BaseController {
      * <ol>[功能概要]
      * <li>信息列表。
      */
-    @RequiresPermissions("pano06:init")
+    @RequiresPermissions("panoComment:menu")
     @RequestMapping(value = acPrefix + "list")
     public String list(PanoComments bean) {
         log.info("PanoCommentsController list.........");
@@ -86,7 +86,7 @@ public class PanoCommentsController extends BaseController {
      * <ol>[功能概要]
      * <li>逻辑删除。
      */
-    @RequiresPermissions("pano06:del")
+    @RequiresPermissions("panoComment:del")
     @RequestMapping(value = acPrefix + "del/{id}")
     @ALogOperation(type="删除",desc="全景评论信息")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {

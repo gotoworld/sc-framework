@@ -31,19 +31,19 @@
 					<span id="menu_pano_arrow" class="arrow"></span>
 				</a>
 				<ul id="menu_pano_sub" style="display: none;" class="sub-menu">
-					<shiro:hasPermission name="pano01:init">
+					<shiro:hasPermission name="panoCat:menu">
 					  <%--全景_类目 --%>
 					  <li id="menu_pano_sub_1"><a href="${basePath }/h/pano01.init">全景_类目</a></li>
 					</shiro:hasPermission>
-					<shiro:hasPermission name="pano02:init">
+					<shiro:hasPermission name="panoProj:menu">
 					  <%--全景_项目 --%>
 					  <li id="menu_pano_sub_2"><a href="${basePath }/h/pano02.init">全景_项目</a></li>
 					</shiro:hasPermission>
-					<shiro:hasPermission name="pano03:init">
+					<shiro:hasPermission name="pano03:menu">
 					  <%--全景_场景 --%>
 					  <li id="menu_pano_sub_3"><a href="${basePath }/h/pano03.init">全景_场景</a></li>
 					</shiro:hasPermission>
-					<shiro:hasPermission name="pano04:init">
+					<shiro:hasPermission name="pano04:menu">
 					  <%--全景_场景_评论 --%>
 					  <li id="menu_pano_sub_4"><a href="${basePath }/h/pano04.init">全景_场景_评论</a></li>
 					</shiro:hasPermission>

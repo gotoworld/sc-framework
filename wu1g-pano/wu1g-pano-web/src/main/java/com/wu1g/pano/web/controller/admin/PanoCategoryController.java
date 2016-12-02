@@ -63,7 +63,7 @@ public class PanoCategoryController extends BaseController {
      * [功能概要]
      * <li>初始化处理。
      */
-    @RequiresPermissions("pano01:init")
+    @RequiresPermissions("panoCat:menu")
     @RequestMapping(value = acPrefix + "init")
     public String init() {
         log.info("PanoCategoryController init.........");
@@ -80,7 +80,7 @@ public class PanoCategoryController extends BaseController {
      * [功能概要]
      * <li>编辑。
      */
-    @RequiresPermissions("pano01:edit")
+    @RequiresPermissions("panoCat:edit")
     @RequestMapping(value = acPrefix + "edit/{id}")
     public String edit(PanoCategory bean, @PathVariable("id") String id) {
         log.info("PanoCategoryController edit.........");
@@ -116,7 +116,7 @@ public class PanoCategoryController extends BaseController {
      * [功能概要]
      * <li>逻辑删除。
      */
-    @RequiresPermissions("pano01:del")
+    @RequiresPermissions("panoCat:del")
     @RequestMapping(value = acPrefix + "del/{id}")
     @ALogOperation(type="删除",desc="全景类目信息")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
@@ -141,7 +141,7 @@ public class PanoCategoryController extends BaseController {
      * <li>新增。
      * <li>修改。
      */
-    @RequiresPermissions(value = {"pano01:add", "pano01:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"panoCat:add", "panoCat:edit"}, logical = Logical.OR)
     @RequestMapping(value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type="修改",desc="全景类目信息")

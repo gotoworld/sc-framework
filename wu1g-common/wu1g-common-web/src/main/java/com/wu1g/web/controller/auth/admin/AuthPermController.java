@@ -12,6 +12,9 @@ package com.wu1g.web.controller.auth.admin;
 
 import com.wu1g.auth.api.IAuthPermService;
 import com.wu1g.auth.vo.AuthPerm;
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -22,8 +25,13 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.List;
 
@@ -50,7 +58,7 @@ public class AuthPermController extends BaseController {
 	private static final String acPrefix="/auth02.";
 	private static final String init = "admin/auth/auth02";
 	private static final String edit = "admin/auth/auth02_01";
-	private static final String infoList = "admin/auth/auth02_list";
+	private static final String list = "admin/auth/auth02_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
 	 * <p> 初始化处理。
@@ -106,44 +114,21 @@ public class AuthPermController extends BaseController {
 	 */
 	@RequiresPermissions("authPerm:del")
 	@RequestMapping(value = acPrefix+"del/{id}")
-	public String del(@PathVariable("id") String id) {
+	@ALogOperation(type="删除",desc="权限信息")
+	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
 		log.info("Auth02Action del.........");
-		AuthPerm bean1=new AuthPerm();
-		bean1.setId(id);//权限id
-		String msg="1";
+		Response result = new Response();
 		try {
-			msg=authPermService.deleteDataById(bean1);
+			AuthPerm bean1=new AuthPerm();
+			bean1.setId(id);//权限id
+			result.message=authPermService.deleteDataById(bean1);
 		} catch (Exception e) {
-			msg=e.getMessage();
+			result=Response.error(e.getMessage());
 		}
-		request.setAttribute("msg",msg);
+		modelMap.addFlashAttribute("msg", result);
 		
 		return success;
 	}
-//	/**
-//	 * <p> 删除。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>物理删除。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("authPerm:delph")
-//	@RequestMapping(value = acPrefix+"delph/{id}")
-//	public String delph(@PathVariable("id") String id) {
-//		log.info("Auth02Action del ph.........");
-//		AuthPerm bean1=new AuthPerm();
-//		bean1.setId(id);//权限id
-//		String msg="1";
-//		try {
-//			msg=authPermService.deleteData(bean1);
-//		} catch (Exception e) {
-//			msg=e.getMessage();
-//		}
-//		request.setAttribute("msg",msg);
-//		
-//		return success;
-//	}
 	/**
 	 * <p> 信息保存
 	 * <ol>
@@ -155,74 +140,35 @@ public class AuthPermController extends BaseController {
 	 */
 	@RequiresPermissions(value={"authPerm:edit","authPerm:add"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
-	public String save( AuthPerm bean) {
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="权限信息")
+	public String save(@Validated @RequestBody AuthPerm bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("Auth02Action save.........");
+		Response result = new Response();
 		if(bean!=null){
-			String msg="1";
 			try {
-				if(ValidatorUtil.isEmpty(bean.getName())){
-					msg="保存失败!信息为空!";
-				}else{
-					OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-					if(user!=null){
-						bean.setCreateIp(getIpAddr());
-						bean.setCreateId(user.getId());
-						bean.setUpdateIp(getIpAddr());
-						bean.setUpdateId(user.getId());
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
 					}
-					msg=authPermService.saveOrUpdateData(bean);
+					result = Response.error(errorMsg);
+				}else{
+					result.message=authPermService.saveOrUpdateData(bean);
+					result.data = bean.getId();
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {
-				msg=e.getMessage();
+				result = Response.error(e.getMessage());
 			}
-			request.setAttribute("msg",msg);
-		}else{
-			request.setAttribute("msg", "信息保存失败!");
+		} else {
+			result = Response.error("信息保存失败!");
 		}
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-//	/**
-//	 * <p> 回收站。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>回收站。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("authPerm:recycle")
-//	@RequestMapping(value = acPrefix+"recycle/{pageNum}")
-//	public String recycle( AuthPerm bean) {
-//		log.info("Auth02Action recycle.........");
-//		bean.setPageSize( CommonConstant.PAGEROW_DEFAULT_COUNT );
-//		bean.setDelFlag( "1" );
-//		//列表
-//		List<AuthPerm> beans=authPermService.findDataIsPage(bean);
-//		request.setAttribute("beans",beans);
-//		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,beans);
-//		return "recycle";
-//	}
-//	/**
-//	 * <p> 恢复。
-//	 * <ol>[功能概要] 
-//	 * <li>恢复逻辑删除的数据。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("authPerm:recovery")
-//	@RequestMapping(value = acPrefix+"recovery/{id}")
-//	public String recovery(@PathVariable("id") String id) {
-//		log.info("Auth02Action recovery.........");
-//		//========创建bena对象=============
-//		AuthPerm bean1=new AuthPerm();
-//		bean1.setId(id);//权限id
-//		String msg="1";
-//		try {
-//			msg=authPermService.recoveryDataById(bean1);
-//		} catch (Exception e) {
-//			msg=e.getMessage();
-//		}
-//		request.setAttribute("msg",msg);
-//		
-//		return success;
-//	}
 }

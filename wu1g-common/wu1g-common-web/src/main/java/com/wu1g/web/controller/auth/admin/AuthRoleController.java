@@ -14,6 +14,9 @@ import com.github.pagehelper.PageInfo;
 import com.wu1g.auth.api.IAuthPermService;
 import com.wu1g.auth.api.IAuthRoleService;
 import com.wu1g.auth.vo.AuthRole;
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -24,10 +27,16 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,7 +66,7 @@ public class AuthRoleController extends BaseController {
 	private static final String acPrefix="/auth03.";
 	private static final String init = "admin/auth/auth03";
 	private static final String edit = "admin/auth/auth03_01";
-	private static final String infoList = "admin/auth/auth03_list";
+	private static final String list = "admin/auth/auth03_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
 	 * <p> 初始化处理。
@@ -82,9 +91,9 @@ public class AuthRoleController extends BaseController {
 	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authRole:menu")
-	@RequestMapping(value=acPrefix+"infoList")
-	public String infoList(AuthRole bean) {
-		log.info("AuthRoleController infoList.........");
+	@RequestMapping(value=acPrefix+"list")
+	public String list(AuthRole bean) {
+		log.info("AuthRoleController list.........");
 		if(bean==null){
 			bean = new AuthRole();
 		}
@@ -94,7 +103,7 @@ public class AuthRoleController extends BaseController {
 		PageInfo<?> page =new PageInfo<>(authRoleService.findDataIsPage(bean));
 		//分页对象-JSP标签使用-
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
-		return infoList;
+		return list;
 	}
 	/**
 	 * <p> 编辑。
@@ -144,43 +153,20 @@ public class AuthRoleController extends BaseController {
 	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authRole:del")
-	public String del(@PathVariable("id") String id) {
+	@ALogOperation(type="删除",desc="角色信息")
+	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
 		log.info("AuthRoleController del.........");
-		AuthRole bean1=new AuthRole();
-		bean1.setId(id);//角色ID
-		String msg="1";
+		Response result = new Response();
 		try {
-			msg=authRoleService.deleteDataById(bean1);
+			AuthRole bean1=new AuthRole();
+			bean1.setId(id);//角色ID
+			result.message=authRoleService.deleteDataById(bean1);
 		} catch (Exception e) {
-			msg=e.getMessage();
+			result=Response.error(e.getMessage());
 		}
-		request.setAttribute("msg",msg);
-		
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-//	/**
-//	 * <p> 删除。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>物理删除。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("authRole:deph")
-//	public String delph(@PathVariable("id") String id) {
-//		log.info("AuthRoleController del ph.........");
-//		AuthRole bean1=new AuthRole();
-//		bean1.setId(id);//角色ID
-//		String msg="1";
-//		try {
-//			msg=authRoleService.deleteData(bean1);
-//		} catch (Exception e) {
-//			msg=e.getMessage();
-//		}
-//		request.setAttribute("msg",msg);
-//		
-//		return success;
-//	}
 	/**
 	 * <p> 信息保存
 	 * <ol>
@@ -192,105 +178,35 @@ public class AuthRoleController extends BaseController {
 	 */
 	@RequiresPermissions(value={"authRole:add","authRole:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
-	public String save(AuthRole bean) {
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="角色信息")
+	public String save(@Validated @RequestBody AuthRole bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("AuthRoleController save.........");
+		Response result = new Response();
 		if(bean!=null){
-			String msg="1";
 			try {
-				if(ValidatorUtil.isEmpty(bean.getName())){
-					msg="保存失败!信息为空!";
-				}else{
-					OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-					if(user!=null){
-						bean.setCreateIp(getIpAddr());
-						bean.setCreateId(user.getId());
-						bean.setUpdateIp(getIpAddr());
-						bean.setUpdateId(user.getId());
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
 					}
-					msg=authRoleService.saveOrUpdateData(bean);
+					result = Response.error(errorMsg);
+				}else{
+					result.message=authRoleService.saveOrUpdateData(bean);
+					result.data = bean.getId();
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {
-				msg=e.getMessage();
+				result = Response.error(e.getMessage());
 			}
-			request.setAttribute("msg",msg);
-		}else{
-			request.setAttribute("msg", "信息保存失败!");
+		} else {
+			result = Response.error("信息保存失败!");
 		}
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-//	/**
-//	 * <p> 预览。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>预览。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("authRole:view")
-//	public String view() {
-//		log.info("AuthRoleController view.........");
-//		String id=request.getParameter("id");
-//		if(ValidatorUtil.notEmpty(id)){
-//			AuthRole bean1=new AuthRole();
-//			bean1.setId(id);//角色ID
-//			bean=authRoleService.findDataById(bean1);
-//		}
-//		return "view";
-//	}
-//	/**
-//	 * <p> 回收站。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>回收站。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("authRole:recycle")
-//	public String recycle(AuthRole bean) {
-//		log.info("AuthRoleController recycle.........");
-//		int offset = 0;
-//		// 分页偏移量
-//		if (!ValidatorUtil.isNullEmpty(request.getParameter("offset"))
-//				&& ValidatorUtil.isNum(request.getParameter("offset"))) {
-//			offset = Integer.parseInt(request.getParameter("offset"));
-//		}
-//		PageInfo page = new PageInfo(); 
-//		//当前页
-//		page.setCurrOffset(offset);
-//		//每页显示条数
-//		page.setPageRowCount(15);
-//		AuthRole bean1 = new AuthRole();
-//		bean1.setPageInfo(page);
-//		//已删除
-//		//TODO 未找到逻辑删除标记 字段
-//		//列表
-//		List<AuthRole> beans=authRoleService.findDataIsPage(bean1);
-//		request.setAttribute("beans",beans);
-//		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
-//		return "recycle";
-//	}
-//	/**
-//	 * <p> 恢复。
-//	 * <ol>[功能概要] 
-//	 * <li>恢复逻辑删除的数据。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("authRole:recovery")
-//	public String recovery() {
-//		log.info("AuthRoleController recovery.........");
-//		String id=request.getParameter("id");
-//		//========创建bena对象=============
-//		AuthRole bean1=new AuthRole();
-//		bean1.setId(id);//角色ID
-//		String msg="1";
-//		try {
-//			msg=authRoleService.recoveryDataById(bean1);
-//		} catch (Exception e) {
-//			msg=e.getMessage();
-//		}
-//		request.setAttribute("msg",msg);
-//		
-//		return success;
-//	}
 }

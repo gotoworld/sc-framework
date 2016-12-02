@@ -43,7 +43,7 @@ public class SysUserLogController extends BaseController {
 	private static final String acPrefix="/sys02.";
 	private static final String init = "admin/sys/sys02";
 	private static final String edit = "admin/sys/sys02_01";
-	private static final String infoList = "admin/sys/sys02_list";
+	private static final String list = "admin/sys/sys02_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
 	 * <p> 初始化处理。
@@ -68,9 +68,9 @@ public class SysUserLogController extends BaseController {
 	 * @return 转发字符串
 	 */
 	@RequiresPermissions("sysLog:menu")
-	@RequestMapping(value=acPrefix+"infoList")
-	public String infoList(SysUserLog bean) {
-		log.info("SysUserLogController infoList.........");
+	@RequestMapping(value=acPrefix+"list")
+	public String list(SysUserLog bean) {
+		log.info("SysUserLogController list.........");
 		if(bean==null){
 			bean = new SysUserLog();
 		}
@@ -79,6 +79,6 @@ public class SysUserLogController extends BaseController {
 		request.setAttribute( "beans", page.getList() );
 		//分页对象-JSP标签使用-
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
-		return infoList;
+		return list;
 	}
 }

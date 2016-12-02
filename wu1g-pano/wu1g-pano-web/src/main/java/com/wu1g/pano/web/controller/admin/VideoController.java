@@ -13,6 +13,8 @@ package com.wu1g.pano.web.controller.admin;
 
 import com.github.pagehelper.PageInfo;
 import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -163,17 +165,18 @@ public class VideoController extends BaseController {
 	 */
 	@RequiresPermissions("video:del")
 	@RequestMapping(value = acPrefix + "del/{id}")
+	@ALogOperation(type="删除",desc="全景视频信息")
 	public String del(@PathVariable("id") String id,RedirectAttributesModelMap modelMap) {
 		log.info( "PanoVideoController del........." );
-		PanoProj bean = new PanoProj();
-		bean.setId( id );// id
-		String msg = "1";
+		Response result = new Response();
 		try {
-			msg = panoProjService.deleteDataById( bean );
+			PanoProj bean = new PanoProj();
+			bean.setId( id );// id
+			result.message = panoProjService.deleteDataById( bean );
 		} catch (Exception e) {
-			msg = e.getMessage();
+			result=Response.error(e.getMessage());
 		}
-		modelMap.addFlashAttribute( "msg", msg );
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
 
@@ -189,6 +192,8 @@ public class VideoController extends BaseController {
 	 */
 	@RequiresPermissions(value = { "video:add", "video:edit" }, logical = Logical.OR)
 	@RequestMapping(method = {RequestMethod.POST},value = acPrefix + "save")
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="全景视频信息")
 	public String save(@Validated @RequestBody PanoProj bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info( "PanoVideoController save........." );
 		Response result = new Response();
@@ -196,8 +201,6 @@ public class VideoController extends BaseController {
 			try {
 				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
 					throw new RuntimeException("请不要重复提交!");
-				} else {
-					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 				if (bindingResult.hasErrors()) {
 					String errorMsg = "";
@@ -207,13 +210,6 @@ public class VideoController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				} else {
-					OrgUser user = (OrgUser) request.getSession().getAttribute( CommonConstant.SESSION_KEY_USER );
-					if (user != null) {
-						bean.setCreateIp( getIpAddr() );
-						bean.setCreateId( user.getId() );
-						bean.setUpdateIp( getIpAddr() );
-						bean.setUpdateId( user.getId() );
-					}
 					List<PanoScene> scenes=new ArrayList<PanoScene>();
 					String[] scene_id_arr=request.getParameterValues( "scene_id" );
 					if(scene_id_arr!=null && scene_id_arr.length>0){
@@ -227,18 +223,21 @@ public class VideoController extends BaseController {
 							scene.setSceneTitle(request.getParameter( scene_id+"_scene_tit" ) );
 							
 							scene.setCreateIp( getIpAddr() );
-							scene.setCreateId( user.getId() );
+							scene.setCreateId( bean.getId() );
 							scene.setUpdateIp( getIpAddr() );
-							scene.setUpdateId( user.getId() );
+							scene.setUpdateId( bean.getId() );
 							
 							scenes.add( scene );
 						}
 					}
 					bean.setScenes( scenes );
 					result.message = panoProjService.saveOrUpdateData( bean );
-					
+					result.data = bean.getId();
+
 					bean.setStr( getBasePath() );
 					panoProjService.makeVideo( bean );
+
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 				result.data = bean.getId();
 		} catch (Exception e) {

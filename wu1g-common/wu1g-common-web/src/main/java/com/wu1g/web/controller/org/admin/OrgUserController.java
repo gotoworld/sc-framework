@@ -14,6 +14,9 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.wu1g.auth.api.IAuthRoleService;
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -26,11 +29,17 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * <p>组织架构_用户  ACTION类。
@@ -62,7 +71,7 @@ public class OrgUserController extends BaseController {
 	private static final String acPrefix="/org02.";
 	private static final String init = "admin/org/org02";
 	private static final String edit = "admin/org/org02_01";
-	private static final String infoList = "admin/org/org02_list";
+	private static final String list = "admin/org/org02_list";
 	private static final String editUser = "admin/org/org02_04";
 	private static final String success = "redirect:/h"+acPrefix+init;
 	
@@ -86,12 +95,11 @@ public class OrgUserController extends BaseController {
 	 * [功能概要] 
 	 * <li>信息列表。
 	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("orgUser:menu")
-	@RequestMapping(value=acPrefix+"infoList")
-	public String infoList( OrgUser bean) {
-		log.info("OrgUserController infoList.........");
+	@RequestMapping(value=acPrefix+"list")
+	public String list( OrgUser bean) {
+		log.info("OrgUserController list.........");
 		if(bean==null){
 			bean = new OrgUser();
 		}
@@ -101,7 +109,7 @@ public class OrgUserController extends BaseController {
 		request.setAttribute( "beans", page.getList() );
 		//分页对象-JSP标签使用-
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
-		return infoList;
+		return list;
 	}
 	/**
 	 * <p> 编辑。
@@ -175,18 +183,17 @@ public class OrgUserController extends BaseController {
 	 */
 	@RequiresPermissions("orgUser:del")
 	@RequestMapping(value=acPrefix+"del/{id}")
-	public String del(@PathVariable("id") String id) {
+	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
 		log.info("OrgUserController del.........");
-		OrgUser bean1=new OrgUser();
-		bean1.setId(id);//ID
-		String msg="1";
+		Response result = new Response();
 		try {
-			msg=orgUserService.deleteDataById(bean1);
+			OrgUser bean1=new OrgUser();
+			bean1.setId(id);//ID
+			result.message=orgUserService.deleteDataById(bean1);
 		} catch (Exception e) {
-			msg=e.getMessage();
+			result=Response.error(e.getMessage());
 		}
-		request.setAttribute("msg",msg);
-		
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
 	/**判断用户id是否存在
@@ -227,33 +234,41 @@ public class OrgUserController extends BaseController {
 	 */
 	@RequiresPermissions(value={"orgUser:add","orgUser:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
-	public String save( OrgUser bean) {
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="权限信息")
+	public String save(@Validated @RequestBody OrgUser bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("OrgUserController save.........");
+		Response result = new Response();
 		if(bean!=null){
-			String msg="1";
 			try {
-				if(ValidatorUtil.isEmpty(bean.getName())){
-					msg="保存失败!信息为空!";
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
+					}
+					result = Response.error(errorMsg);
 				}else{
 					OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
 					if(user!=null){
 						if(ValidatorUtil.isEmpty(bean.getUserid())){
 							bean.setUserid(user.getUserid());
 						}
-						bean.setCreateIp(getIpAddr());
-						bean.setCreateId(user.getId());
-						bean.setUpdateIp(getIpAddr());
-						bean.setUpdateId(user.getId());
 					}
-					msg=orgUserService.saveOrUpdateData(bean);
+					result.message=orgUserService.saveOrUpdateData(bean);
+					result.data = bean.getId();
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {
-				msg=e.getMessage();
+				result = Response.error(e.getMessage());
 			}
-			request.setAttribute("msg",msg);
-		}else{
-			request.setAttribute("msg", "信息保存失败!");
+		} else {
+			result = Response.error("信息保存失败!");
 		}
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
 	/**
@@ -266,35 +281,43 @@ public class OrgUserController extends BaseController {
 	 * @throws IOException 
 	 */
 	@RequestMapping(value=acPrefix+"update")
-	public String update( OrgUser bean) throws IOException {
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="用户信息")
+	public String update(@Validated @RequestBody OrgUser bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) throws IOException {
 		log.info("OrgUserController save.........");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		String msg="1";
+		Response result = new Response();
 		if(bean!=null){
 			try {
-				if(ValidatorUtil.isEmpty(bean.getName())){
-					msg="保存失败!信息为空!";
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
+					}
+					result = Response.error(errorMsg);
 				}else{
 					OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
 					if(user!=null){
 						if(ValidatorUtil.isEmpty(bean.getUserid())){
 							bean.setUserid(user.getUserid());
 						}
-						bean.setCreateIp(getIpAddr());
-						bean.setCreateId(user.getId());
-						bean.setUpdateIp(getIpAddr());
-						bean.setUpdateId(user.getId());
 					}
-					msg=orgUserService.updateData(bean);
+					result.message=orgUserService.updateData(bean);
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {
-				msg=e.getMessage();
+				result = Response.error(e.getMessage());
 			}
-		}else{
-			msg="信息保存失败!";
+		} else {
+			result = Response.error("信息保存失败!");
 		}
-		response.getWriter().print(msg);
+		modelMap.addFlashAttribute("msg", result);
+		response.getWriter().print(result);
 		return null;
 	}
 }

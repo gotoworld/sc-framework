@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -166,20 +167,18 @@ public class PanoProjController extends BaseController {
      */
     @RequiresPermissions("pano02:del")
     @RequestMapping(value = acPrefix + "del/{id}")
-    @ALogOperation(type="删除",desc = "删除全景项目")
+    @ALogOperation(type="删除",desc = "全景项目")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
         log.info("PanoProjController del.........");
-
-        // String id=request.getParameter("id");//id
-        PanoProj bean = new PanoProj();
-        bean.setId(id);// id
-        String msg = "1";
+        Response result = new Response();
         try {
-            msg = panoProjService.deleteDataById(bean);
+            PanoProj bean = new PanoProj();
+            bean.setId(id);// id
+            result.message = panoProjService.deleteDataById(bean);
         } catch (Exception e) {
-            msg = e.getMessage();
+            result=Response.error(e.getMessage());
         }
-        modelMap.addFlashAttribute("msg", msg);
+        modelMap.addFlashAttribute("msg", result);
         return success;
     }
 
@@ -193,7 +192,8 @@ public class PanoProjController extends BaseController {
      */
     @RequiresPermissions(value = {"pano02:add", "pano02:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "save")
-    @ALogOperation(desc = "编辑全景项目")
+    @RfAccount2Bean
+    @ALogOperation(type="修改",desc="全景项目信息")
     public String save(PanoProj bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
         log.info("PanoProjController save.........");
         Response result = new Response();
@@ -201,8 +201,6 @@ public class PanoProjController extends BaseController {
             try {
                 if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
                     throw new RuntimeException("请不要重复提交!");
-                } else {
-                    request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
                 }
                 if (bindingResult.hasErrors()) {
                     String errorMsg = "";
@@ -212,13 +210,6 @@ public class PanoProjController extends BaseController {
                     }
                     result = Response.error(errorMsg);
                 } else {
-//                    OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-//                    if (user != null) {
-//                        bean.setCreateIp(getIpAddr());
-//                        bean.setCreateId(user.getId());
-//                        bean.setUpdateIp(getIpAddr());
-//                        bean.setUpdateId(user.getId());
-//                    }
                     if ("1".equals(request.getParameter("makePanoFlag"))) {
                         List<PanoScene> scenes = new ArrayList<PanoScene>();
                         String[] scene_id_arr = request.getParameterValues("scene_id");
@@ -253,6 +244,8 @@ public class PanoProjController extends BaseController {
                     bean.setStr(getBasePath());
                     //生成全景图
                     panoProjService.makePano(bean);
+
+                    request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
                 }
             } catch (Exception e) {
                 result = Response.error(e.getMessage());
@@ -267,6 +260,8 @@ public class PanoProjController extends BaseController {
     @RequiresPermissions(value = {"pano02:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "xmlsave")
     @ResponseBody
+    @RfAccount2Bean
+    @ALogOperation(type="修改",desc="漫游场景信息")
     public String xmlsave() {
         log.info("PanoProjController xmlsave.........");
         Map msg = new HashMap();
@@ -281,13 +276,6 @@ public class PanoProjController extends BaseController {
             bean.setXmlData(scene_str);
             bean.setScenes(getScenesByjson(pid, scene_str));
             bean.setRadars(getRadarsByjson(pid, radars_str));
-//            OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-//            if (user != null) {
-//                bean.setCreateIp(getIpAddr());
-//                bean.setCreateId(user.getId());
-//                bean.setUpdateIp(getIpAddr());
-//                bean.setUpdateId(user.getId());
-//            }
             panoProjService.saveXmlData(bean);
 
             bean.setStr(getBasePath());

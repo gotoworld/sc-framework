@@ -12,6 +12,8 @@
 package com.wu1g.pano.web.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.web.controller.BaseController;
 import com.wu1g.pano.api.IPanoCommentsService;
@@ -86,17 +88,18 @@ public class PanoCommentsController extends BaseController {
      */
     @RequiresPermissions("pano06:del")
     @RequestMapping(value = acPrefix + "del/{id}")
+    @ALogOperation(type="删除",desc="全景评论信息")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
         log.info("PanoCommentsController del.........");
-        PanoComments bean = new PanoComments();
-        bean.setId(id);// id
-        String msg = "1";
+        Response result = new Response();
         try {
-            msg = panoCommentsService.deleteDataById(bean);
+            PanoComments bean = new PanoComments();
+            bean.setId(id);// id
+            result.message = panoCommentsService.deleteDataById(bean);
         } catch (Exception e) {
-            msg = e.getMessage();
+            result= Response.error(e.getMessage());
         }
-        modelMap.addFlashAttribute("msg", msg);
+        modelMap.addFlashAttribute("msg", result);
         return success;
     }
 }

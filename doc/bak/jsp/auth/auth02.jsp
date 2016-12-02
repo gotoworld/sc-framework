@@ -88,7 +88,7 @@
 							<div id="msg"></div>
 							<shiro:hasPermission name="authPerm:add">
 								<div class="form-actions">
-									<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/auth02.edit/null')" class="label label-primary"><i class="fa fa-pencil"></i> 新增</a>
+									<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/auth02.edit/add')" class="label label-primary"><i class="fa fa-pencil"></i> 新增</a>
 								</div>
 							</shiro:hasPermission>
 							<div class="mt10 clearfix"></div>

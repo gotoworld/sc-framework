@@ -9,6 +9,9 @@
  *	
  */
 package com.wu1g.web.controller.org.admin;
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -23,8 +26,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+
+import java.util.List;
 
 /**
  * <p>组织架构_部门  ACTION类。
@@ -50,7 +60,7 @@ public class OrgDepartmentController extends BaseController {
 	private static final String acPrefix="/org01.";
 	private static final String init = "admin/org/org01";
 	private static final String edit = "admin/org/org01_01";
-	private static final String infoList = "admin/org/org01_list";
+	private static final String list = "admin/org/org01_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**
@@ -109,44 +119,20 @@ public class OrgDepartmentController extends BaseController {
 	 */
 	@RequiresPermissions("orgDept:del")
 	@RequestMapping(value=acPrefix+"del/{id}")
-	public String del(@PathVariable("id") String id) {
+	@ALogOperation(type="删除",desc="部门信息")
+	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
 		log.info("OrgDepartmentController del.........");
-		OrgDepartment bean1=new OrgDepartment();
-		bean1.setId(id);//ID
-		String msg="1";
+		Response result = new Response();
 		try {
-			msg=orgDepartmentService.deleteDataById(bean1);
+			OrgDepartment bean1=new OrgDepartment();
+			bean1.setId(id);//ID
+			result.message=orgDepartmentService.deleteDataById(bean1);
 		} catch (Exception e) {
-			msg=e.getMessage();
+			result=Response.error(e.getMessage());
 		}
-		request.setAttribute("msg",msg);
-		
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-//	/**
-//	 * <p> 删除。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>物理删除。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("orgDept:delph")
-//	@RequestMapping(value=acPrefix+"delph/{id}")
-//	public String delph(@PathVariable("id") String id) {
-//		log.info("OrgDepartmentController del ph.........");
-//		OrgDepartment bean1=new OrgDepartment();
-//		bean1.setId(id);//ID
-//		String msg="1";
-//		try {
-//			msg=orgDepartmentService.deleteData(bean1);
-//		} catch (Exception e) {
-//			msg=e.getMessage();
-//		}
-//		request.setAttribute("msg",msg);
-//		
-//		return success;
-//	}
 	/**
 	 * <p> 信息保存
 	 * <ol>
@@ -158,93 +144,35 @@ public class OrgDepartmentController extends BaseController {
 	 */
 	@RequiresPermissions(value={"orgDept:add","orgDept:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
-	public String save(OrgDepartment bean) {
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="部门信息")
+	public String save(@Validated @RequestBody OrgDepartment bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("OrgDepartmentController save.........");
+		Response result = new Response();
 		if(bean!=null){
-			String msg="1";
 			try {
-				if(ValidatorUtil.isEmpty(bean.getName())){
-					msg="保存失败!信息为空!";
-				}else{
-					OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-					if(user!=null){
-						bean.setCreateIp(getIpAddr());
-						bean.setCreateId(user.getId());
-						bean.setUpdateIp(getIpAddr());
-						bean.setUpdateId(user.getId());
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
 					}
-					msg=orgDepartmentService.saveOrUpdateData(bean);
+					result = Response.error(errorMsg);
+				}else{
+					result.message=orgDepartmentService.saveOrUpdateData(bean);
+					result.data = bean.getId();
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {
-				msg=e.getMessage();
+				result = Response.error(e.getMessage());
 			}
-			request.setAttribute("msg",msg);
-		}else{
-			request.setAttribute("msg", "信息保存失败!");
+		} else {
+			result = Response.error("信息保存失败!");
 		}
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-//	/**
-//	 * <p> 预览。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>预览。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("orgDept:view")
-//	@RequestMapping(value=acPrefix+"view/{id}")
-//	public String view(@PathVariable("id") String id) {
-//		log.info("OrgDepartmentController view.........");
-//		if(ValidatorUtil.notEmpty(id)){
-//			OrgDepartment bean1=new OrgDepartment();
-//			bean1.setId(id);//ID
-//			request.setAttribute( "bean",orgDepartmentService.findDataById(bean1));
-//		}
-//		return "view";
-//	}
-//	/**
-//	 * <p> 回收站。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>回收站。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("orgDept:recyle")
-//	@RequestMapping(value=acPrefix+"recycle")
-//	public String recycle(OrgDepartment bean) {
-//		log.info("OrgDepartmentController recycle.........");
-//		bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-//		//列表
-//		PageInfo<?> page=new PageInfo<>(orgDepartmentService.findDataIsPage(bean));
-//		request.setAttribute( "beans", page.getList() );
-//		//分页对象-JSP标签使用-
-//		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
-//		return "recycle";
-//	}
-//	/**
-//	 * <p> 恢复。
-//	 * <ol>[功能概要] 
-//	 * <li>恢复逻辑删除的数据。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("orgDept:recovery")
-//	@RequestMapping(value=acPrefix+"recovery/{id}")
-//	public String recovery(@PathVariable("id") String id) {
-//		log.info("OrgDepartmentController recovery.........");
-//		//========创建bena对象=============
-//		OrgDepartment bean1=new OrgDepartment();
-//		bean1.setId(id);//ID
-//		String msg="1";
-//		try {
-//			msg=orgDepartmentService.recoveryDataById(bean1);
-//		} catch (Exception e) {
-//			msg=e.getMessage();
-//		}
-//		request.setAttribute("msg",msg);
-//		
-//		return success;
-//	}
 }

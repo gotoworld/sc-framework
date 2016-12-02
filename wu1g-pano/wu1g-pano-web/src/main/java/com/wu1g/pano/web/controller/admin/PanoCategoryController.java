@@ -12,6 +12,8 @@
 package com.wu1g.pano.web.controller.admin;
 
 import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -116,20 +118,18 @@ public class PanoCategoryController extends BaseController {
      */
     @RequiresPermissions("pano01:del")
     @RequestMapping(value = acPrefix + "del/{id}")
-    public String del(@PathVariable("id") String id) {
+    @ALogOperation(type="删除",desc="全景类目信息")
+    public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
         log.info("PanoCategoryController del.........");
-
-        // String id=request.getParameter("id");//ID
-        PanoCategory bean = new PanoCategory();
-        bean.setId(id);// ID
-        String msg = "1";
+        Response result = new Response();
         try {
-            msg = panoCategoryService.deleteDataById(bean);
+            PanoCategory bean = new PanoCategory();
+            bean.setId(id);// ID
+            result.message = panoCategoryService.deleteDataById(bean);
         } catch (Exception e) {
-            msg = e.getMessage();
+            result=Response.error(e.getMessage());
         }
-        request.setAttribute("msg", msg);
-
+        modelMap.addFlashAttribute("msg", result);
         return success;
     }
 
@@ -143,6 +143,8 @@ public class PanoCategoryController extends BaseController {
      */
     @RequiresPermissions(value = {"pano01:add", "pano01:edit"}, logical = Logical.OR)
     @RequestMapping(value = acPrefix + "save")
+    @RfAccount2Bean
+    @ALogOperation(type="修改",desc="全景类目信息")
     public String save(@Validated @RequestBody PanoCategory bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
         log.info("PanoCategoryController save.........");
         Response result = new Response();
@@ -150,8 +152,6 @@ public class PanoCategoryController extends BaseController {
             try {
                 if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
                     throw new RuntimeException("请不要重复提交!");
-                } else {
-                    request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
                 }
                 if (bindingResult.hasErrors()) {
                     String errorMsg = "";
@@ -161,15 +161,10 @@ public class PanoCategoryController extends BaseController {
                     }
                     result = Response.error(errorMsg);
                 } else {
-                    OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-                    if (user != null) {
-                        bean.setCreateIp(getIpAddr());
-                        bean.setCreateId(user.getId());
-                        bean.setUpdateIp(getIpAddr());
-                        bean.setUpdateId(user.getId());
-                    }
                     result.message = panoCategoryService.saveOrUpdateData(bean);
                     result.data = bean.getId();
+
+                    request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
                 }
             } catch (Exception e) {
                 result = Response.error(e.getMessage());

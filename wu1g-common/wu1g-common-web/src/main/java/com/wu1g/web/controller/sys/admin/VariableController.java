@@ -11,6 +11,9 @@
 package com.wu1g.web.controller.sys.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -23,8 +26,15 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+
+import java.util.List;
 
 /**
  * <p>系统_数据字典  ACTION类。
@@ -41,7 +51,7 @@ public class VariableController extends BaseController {
 	private static final String acPrefix="/sys03.";
 	private static final String init = "admin/sys/sys03";
 	private static final String edit = "admin/sys/sys03_01";
-	private static final String infoList = "admin/sys/sys03_list";
+	private static final String list = "admin/sys/sys03_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**
@@ -67,9 +77,9 @@ public class VariableController extends BaseController {
 	 * @return 转发字符串
 	 */
 	@RequiresPermissions("sysDic:menu")
-	@RequestMapping(value=acPrefix+"infoList")
-	public String infoList(SysVariable bean) {
-		log.info("VariableController infoList.........");
+	@RequestMapping(value=acPrefix+"list")
+	public String list(SysVariable bean) {
+		log.info("VariableController list.........");
 		if(bean==null){
 			bean = new SysVariable();
 		}
@@ -77,7 +87,7 @@ public class VariableController extends BaseController {
 		request.setAttribute( "beans", page.getList() );
 		//分页对象-JSP标签使用-
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
-		return infoList;
+		return list;
 	}
 	/**
 	 * <p> 编辑。
@@ -117,44 +127,20 @@ public class VariableController extends BaseController {
 	 */
 	@RequiresPermissions("sysDic:del")
 	@RequestMapping(value=acPrefix+"del/{id}")
-	public String del(@PathVariable("id") String id) {
+	@ALogOperation(type="删除",desc="数据字典信息")
+	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
 		log.info("VariableController del.........");
-		SysVariable bean1=new SysVariable();
-		bean1.setId(id);//ID
-		String msg="1";
+		Response result = new Response();
 		try {
-			msg=variableService.deleteDataById(bean1);
+			SysVariable bean1=new SysVariable();
+			bean1.setId(id);//ID
+			result.message=variableService.deleteDataById(bean1);
 		} catch (Exception e) {
-			msg=e.getMessage();
+			result=Response.error(e.getMessage());
 		}
-		request.setAttribute("msg",msg);
-		
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-//	/**
-//	 * <p> 删除。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>物理删除。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("sysDic:delph")
-//	public String delph() {
-//		log.info("VariableController del ph.........");
-//		String id=request.getParameter("id");
-//		SysVariable bean1=new SysVariable();
-//		bean1.setId(id);//ID
-//		String msg="1";
-//		try {
-//			msg=variableService.deleteData(bean1);
-//		} catch (Exception e) {
-//			msg=e.getMessage();
-//		}
-//		request.setAttribute("msg",msg);
-//		
-//		return success;
-//	}
 	/**
 	 * <p> 信息保存
 	 * <ol>
@@ -166,105 +152,35 @@ public class VariableController extends BaseController {
 	 */
 	@RequiresPermissions(value={"sysDic:add","sysDic:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")
-	public String save(SysVariable bean) {
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="数据字典信息")
+	public String save(@Validated @RequestBody SysVariable bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("VariableController save.........");
+		Response result = new Response();
 		if(bean!=null){
-			String msg="1";
 			try {
-				if(ValidatorUtil.isEmpty(bean.getName())){
-					msg="保存失败!信息为空!";
-				}else{
-					OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-					if(user!=null){
-						bean.setCreateIp(getIpAddr());
-						bean.setCreateId(user.getId());
-						bean.setUpdateIp(getIpAddr());
-						bean.setUpdateId(user.getId());
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
 					}
-					msg=variableService.saveOrUpdateData(bean);
+					result = Response.error(errorMsg);
+				}else{
+					result.message=variableService.saveOrUpdateData(bean);
+					result.data = bean.getId();
+					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {
-				msg=e.getMessage();
+				result = Response.error(e.getMessage());
 			}
-			request.setAttribute("msg",msg);
-		}else{
-			request.setAttribute("msg", "信息保存失败!");
+		} else {
+			result = Response.error("信息保存失败!");
 		}
+		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-//	/**
-//	 * <p> 预览。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>预览。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("sysDic:view")
-//	public String view() {
-//		log.info("VariableController view.........");
-//		String id=request.getParameter("id");
-//		if(ValidatorUtil.notEmpty(id)){
-//			SysVariable bean1=new SysVariable();
-//			bean1.setId(id);//ID
-//			bean=variableService.findDataById(bean1);
-//		}
-//		return "view";
-//	}
-//	/**
-//	 * <p> 回收站。
-//	 * <ol>
-//	 * [功能概要] 
-//	 * <li>回收站。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("sysDic:recycle")
-//	public String recycle() {
-//		log.info("VariableController recycle.........");
-//		int offset = 0;
-//		// 分页偏移量
-//		if (!ValidatorUtil.isNullEmpty(request.getParameter("offset"))
-//				&& ValidatorUtil.isNum(request.getParameter("offset"))) {
-//			offset = Integer.parseInt(request.getParameter("offset"));
-//		}
-//		PageInfo page = new PageInfo(); 
-//		//当前页
-//		page.setCurrOffset(offset);
-//		//每页显示条数
-//		page.setPageRowCount(15);
-//		SysVariable bean1 = new SysVariable();
-//		bean1.setPageInfo(page);
-//		//已删除
-//		//TODO 未找到逻辑删除标记 字段
-//		//列表
-//		List<SysVariable> beans=variableService.findDataIsPage(bean1);
-//		request.setAttribute("beans",beans);
-//		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
-//		return "recycle";
-//	}
-//	/**
-//	 * <p> 恢复。
-//	 * <ol>[功能概要] 
-//	 * <li>恢复逻辑删除的数据。
-//	 * </ol>
-//	 * @return 转发字符串
-//	 */
-//	@RequiresPermissions("sysDic:recovery")
-//	public String recovery() {
-//		log.info("VariableController recovery.........");
-//		String id=request.getParameter("id");
-//		//========创建bena对象=============
-//		SysVariable bean1=new SysVariable();
-//		bean1.setId(id);//ID
-//		String msg="1";
-//		try {
-//			msg=variableService.recoveryDataById(bean1);
-//		} catch (Exception e) {
-//			msg=e.getMessage();
-//		}
-//		request.setAttribute("msg",msg);
-//		
-//		return success;
-//	}
 }

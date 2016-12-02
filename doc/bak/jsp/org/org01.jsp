@@ -90,7 +90,7 @@
 							<div id="msg"></div>
 							<shiro:hasPermission name="orgDept:add">
 								<div class="form-actions">
-									<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/org01.edit/null')" class="label label-primary"> <i class="fa fa-plus"></i> 新增
+									<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/org01.edit/add')" class="label label-primary"> <i class="fa fa-plus"></i> 新增
 									</a>
 								</div>
 							</shiro:hasPermission>

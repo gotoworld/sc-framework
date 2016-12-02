@@ -88,7 +88,7 @@
 							</c:if>
 							<div id="msg"></div>
 							<div class="form-actions">
-								<form id="info_search_form" method="post" class="form-horizontal" accept-charset="UTF-8" action="${basePath}/h/org02.infoList">
+								<form id="info_search_form" method="post" class="form-horizontal" accept-charset="UTF-8" action="${basePath}/h/org02.list">
 									<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum}">
 									<div class="row clearfix">
 										<div class="input-group col-xs-12 col-sm-6 col-md-2 mt10">
@@ -115,7 +115,7 @@
 							</div>
 							<div class="mt10 clearfix"></div>
 							<shiro:hasPermission name="orgUser:add">
-								<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/org02.edit/null')" class="label label-primary"> <i class="fa fa-plus"></i> 新增
+								<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/org02.edit/add')" class="label label-primary"> <i class="fa fa-plus"></i> 新增
 								</a>
 							</shiro:hasPermission>
 							<div id="info_list_div">

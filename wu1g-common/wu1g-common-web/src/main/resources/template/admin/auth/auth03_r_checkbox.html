@@ -19,11 +19,11 @@
 			<c:forEach var="myperm" items="${myPermListx}">
 				<c:if test="${myperm.id==bean.id}">
 					<c:set var="checkBoxX" value='checked="checked"' />
-				</c:if>
+				<%}%>
 			</c:forEach>
-		</c:if>
+		<%}%>
 		<c:choose>
-		  <c:when test="${fn:length(bean.beans)>0}">
+		  <%if(fn:length(bean.beans)>0}">
 				<div class="tree-folder" style="display: block;">
 					<div class="tree-folder-header">
 						<i class="fa fa-folder-open"></i>
@@ -40,7 +40,7 @@
 							<c:set var="treeList" value="${bean.beans}" scope="request" />  
 							<c:import url="auth03_r_checkbox.jsp" />
 						</div>
-					</c:if>
+					<%}%>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -59,8 +59,8 @@
 						<c:set var="treeList" value="${bean.beans}" scope="request" />  
 						<c:import url="auth03_r_checkbox.jsp" />
 					</div>
-				</c:if>
+				<%}%>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
-</c:if>
+<%}%>

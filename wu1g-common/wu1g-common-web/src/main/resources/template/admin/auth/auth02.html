@@ -70,48 +70,45 @@
 					<div class="col-md-12">
 						<div class="matter">
 							<c:if test="${msg!=null}">
-								<c:choose>
-									<c:when test="${msg!='1'}">
+									<%if(msg!='1'}">
 										<div class="alert alert-danger">
 											<button class="close" data-dismiss="alert"></button>
 											<strong>Error!</strong> ${msg}
 										</div>
-									</c:when>
-									<c:otherwise>
+									<%}else{%>
 										<div class="alert alert-success">
 											<button class="close" data-dismiss="alert"></button>
 											<strong>Success!</strong> 操作成功。
 										</div>
-									</c:otherwise>
-								</c:choose>
-							</c:if>
+									<%}%>
+							<%}%>
 							<div id="msg"></div>
-							<shiro:hasPermission name="authPerm:add">
+							<% if(shiro.hasPermission("authPerm:add")){ %>
 								<div class="form-actions">
-									<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/auth02.edit/add')" class="label label-primary"><i class="fa fa-pencil"></i> 新增</a>
+									<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/auth02/edit/add')" class="label label-primary"><i class="fa fa-pencil"></i> 新增</a>
 								</div>
-							</shiro:hasPermission>
+							<%}%>
 							<div class="mt10 clearfix"></div>
 							<div id="info_list_div" style="margin-top: 30px">
 								<div class="tree tree-plus-minus tree-solid-line tree-unselectable">
-									<c:if test="${beans!=null && fn:length(beans)>0}">
-										<c:forEach items="${beans}" var="b" varStatus="i">
-											<c:choose>
-												<c:when test="${fn:length(b.beans)>0}">
+									<% if(isNotEmpty(beans) && beans.~size>0){ %>
+										<% for(bean in beans){
+												if(b.beans.~size>0){
+										%>
 													<div class="tree-folder" style="display: block;">
 														<div class="tree-folder-header">
 															<i class="fa fa-folder-open"></i>
 															<div class="tree-folder-name">
 																${b.name} - ${b.matchStr}
 																<div class="tree-actions">
-																	<shiro:hasPermission name="authPerm:edit">
+																	<%if(shiro.hasPermission(authPerm:edit">
 																		<a style="display: block; float: left;" href="javascript:;" onclick="openMyBoxLayer('e','${basePath}/h/auth02.edit/${b.id}');" class="label label-success"><i class="fa fa-pencil"></i></a>
-																	</shiro:hasPermission>
-																	<shiro:hasPermission name="authPerm:del">
+																	<%}%>
+																	<%if(shiro.hasPermission(authPerm:del">
 																		<c:if test="${fn:length(b.beans)==0}">
 																			<a href="javascript:;" onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/auth02.del/${b.id}');};" rel="nofollow" class="label label-danger"><i class="fa fa-trash-o"></i></a>
-																		</c:if>
-																	</shiro:hasPermission>
+																		<%}%>
+																	<%}%>
 																</div>
 															</div>
 														</div>
@@ -121,23 +118,22 @@
 																<c:import url="auth02_r_init.jsp" />
 																<!-- 递归 -->
 															</div>
-														</c:if>
+														<%}%>
 													</div>
-												</c:when>
-												<c:otherwise>
+												<%}else{%>
 													<div class="tree-item">
 														<i class="tree-dot"></i>
 														<div class="tree-item-name">
 															${b.name} - ${b.matchStr}
 															<div class="tree-actions">
-																<shiro:hasPermission name="authPerm:edit">
+																<%if(shiro.hasPermission(authPerm:edit">
 																	<a style="display: block; float: left;" href="javascript:;" onclick="openMyBoxLayer('e','${basePath}/h/auth02.edit/${b.id}');" class="label label-success"><i class="fa fa-pencil"></i></a>
-																</shiro:hasPermission>
-																<shiro:hasPermission name="authPerm:del">
+																<%}%>
+																<%if(shiro.hasPermission(authPerm:del">
 																	<c:if test="${fn:length(b.beans)==0}">
 																		<a href="javascript:;" onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/auth02.del/${b.id}');};" rel="nofollow" class="label label-danger"><i class="fa fa-trash-o"></i></a>
-																	</c:if>
-																</shiro:hasPermission>
+																	<%}%>
+																<%}%>
 															</div>
 														</div>
 													</div>
@@ -147,12 +143,10 @@
 															<c:import url="auth02_r_init.jsp" />
 															<!-- 递归 -->
 														</div>
-													</c:if>
-												</c:otherwise>
-											</c:choose>
-
-										</c:forEach>
-									</c:if>
+													<%}%>
+										<%}
+									}
+									}%>
 								</div>
 							</div>
 						</div>

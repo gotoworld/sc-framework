@@ -70,7 +70,7 @@
 						<div class="matter">
 							<c:if test="${msg!=null}">
 								<c:choose>
-									<c:when test="${msg!='1'}">
+									<%if(msg!='1'}">
 										<div class="alert alert-danger">
 											<button class="close" data-dismiss="alert"></button>
 											<strong>Error!</strong> ${msg}
@@ -83,7 +83,7 @@
 										</div>
 									</c:otherwise>
 								</c:choose>
-							</c:if>
+							<%}%>
 							<div id="msg"></div>
 							<div class="form-actions">
 								<form id="info_search_form" method="post" class="form-horizontal" accept-charset="UTF-8" action="${basePath}/h/sys02.list">

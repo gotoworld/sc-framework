@@ -46,10 +46,10 @@
 						</td>
 						<td>
 						<shiro:hasPermission name="orgUser:edit"> 
-						<a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/org02.edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+						<a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/org02/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 						</shiro:hasPermission>
 						<shiro:hasPermission name="orgUser:del"> 
-						<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/org02.del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+						<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/org02/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
 						</shiro:hasPermission>
 						</td>
 					</tr>

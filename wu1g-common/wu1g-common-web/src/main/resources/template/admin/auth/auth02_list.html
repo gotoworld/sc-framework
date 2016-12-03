@@ -12,7 +12,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@ include file="../include/public_tags.jsp" %>
-<c:if test="${beans!=null && fn:length(beans)>0}">
+<% if(isNotEmpty(beans) && beans.~size>0){ %>
 	<ol class="dd-list">
 	<c:forEach var="bean" items="${beans}" varStatus="n">
 		<c:set var="index" value="${index+1}" scope="request" />
@@ -26,8 +26,8 @@
 			<c:if test="${bean.beans!=null && fn:length(bean.beans)>0}">
 				<c:set var="treeList" value="${bean.beans}" scope="request" />  
 				<c:import url="auth02_r.jsp" /><!-- 递归 -->  
-			</c:if>
+			<%}%>
 		</li>
 	</c:forEach>
 	</ol>
-</c:if>
+<%}%>

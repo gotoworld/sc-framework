@@ -49,7 +49,7 @@ public class PanoCategoryService extends BaseService implements IPanoCategorySer
                 } else {
                     //新增
                     if (ValidatorUtil.isEmpty(bean.getId())) {
-                        bean.setId(IdUtil.createUUID(32));//ID
+                        bean.setId(IdUtil.createUUID(32));
                     }
                     panoCategoryDao.insert(bean);
                 }

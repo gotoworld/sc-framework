@@ -44,7 +44,7 @@
 			<div class="col-md-12">
 				<form id="org02_01" method="post" class="form-horizontal note"
 					target="_top" accept-charset="UTF-8"
-					action="${basePath}/h/org02.save">
+					action="${basePath}/h/org02/save">
 					<input type="hidden" name="pageNum" id="bean_pageNum"
 						value="${bean.pageNum}"> <input type="hidden"
 						name="id" value="${bean.id}" />
@@ -345,7 +345,7 @@ $(document).ready(function() {
 					 ,
                      remote: {
                        type: "post",
-                         url: '${basePath}/h/org02.isUidYN',
+                         url: '${basePath}/h/org02/isUidYN',
                          data: function (validator) {
                              return {
                                  uid: validator.getFieldElements('bean.userid').val()

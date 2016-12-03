@@ -125,10 +125,10 @@ function cPwd(val){
 	}
 }
 function submitUserInfo(){
-	//jQuery("#org02_04").attr('controller','${basePath}/h/org02.update');
+	//jQuery("#org02_04").attr('controller','${basePath}/h/org02/update');
 	jQuery("#org02_04").ajaxSubmit({  
         type:"post",  //提交方式  
-        url:"${basePath}/h/org02.update", //请求url  
+        url:"${basePath}/h/org02/update", //请求url
         success:function(data){ //提交成功的回调函数  
             if(data==1){
     			//myAlert_success('修改成功!');

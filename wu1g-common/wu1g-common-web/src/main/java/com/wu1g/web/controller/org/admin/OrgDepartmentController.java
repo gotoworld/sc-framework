@@ -57,7 +57,7 @@ public class OrgDepartmentController extends BaseController {
 	private IOrgDepartmentService orgDepartmentService;
 	
 	//组织架构_部门 管理
-	private static final String acPrefix="/org01.";
+	private static final String acPrefix="/org01/";
 	private static final String init = "admin/org/org01";
 	private static final String edit = "admin/org/org01_01";
 	private static final String list = "admin/org/org01_list";
@@ -75,7 +75,8 @@ public class OrgDepartmentController extends BaseController {
 	@RequestMapping(value=acPrefix+"init")
 	public String init() {
 		log.info("OrgDepartmentController init.........");
-		request.setAttribute( "beans", orgDepartmentService.findDataTree(null) );
+		Object x=orgDepartmentService.findDataTree(null);
+		request.setAttribute( "beans", x );
 		return init;
 	}
 	/**
@@ -96,14 +97,15 @@ public class OrgDepartmentController extends BaseController {
 		}
 		if(ValidatorUtil.notEmpty(id)){
 			OrgDepartment bean1=new OrgDepartment();
-			bean1.setId(id);//ID
+			bean1.setId(id);
 			bean=orgDepartmentService.findDataById(bean1);
 		}
 		if(bean==null){
 			bean=new OrgDepartment();
-			bean.setId(IdUtil.createUUID(32));//ID
+			bean.setId(IdUtil.createUUID(32));
 		}
 		bean.setPageNum(pageNum);
+		bean.setToken(IdUtil.createUUID(32));
 		request.setAttribute( "bean", bean );
 		//--部门树
 		request.setAttribute( "beans", orgDepartmentService.findDataTree(null) );
@@ -125,7 +127,7 @@ public class OrgDepartmentController extends BaseController {
 		Response result = new Response();
 		try {
 			OrgDepartment bean1=new OrgDepartment();
-			bean1.setId(id);//ID
+			bean1.setId(id);
 			result.message=orgDepartmentService.deleteDataById(bean1);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
@@ -146,7 +148,7 @@ public class OrgDepartmentController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="部门信息")
-	public String save(@Validated @RequestBody OrgDepartment bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated  OrgDepartment bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("OrgDepartmentController save.........");
 		Response result = new Response();
 		if(bean!=null){

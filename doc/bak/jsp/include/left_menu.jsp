@@ -61,7 +61,7 @@
 					<li id="menu_org_sub_1"><a href="${basePath }/h/org01.init">组织架构_部门</a></li>
 					</shiro:hasPermission>
 					<shiro:hasPermission name="orgUser:menu"> 
-					<li id="menu_org_sub_2"><a href="${basePath }/h/org02.init">组织架构_用户</a></li>
+					<li id="menu_org_sub_2"><a href="${basePath }/h/org02/init">组织架构_用户</a></li>
 					</shiro:hasPermission>
 					<shiro:hasPermission name="authPerm:menu"> 
 					<li id="menu_auth_sub_2"><a href="${basePath }/h/auth02.init">权限_权限信息</a></li>

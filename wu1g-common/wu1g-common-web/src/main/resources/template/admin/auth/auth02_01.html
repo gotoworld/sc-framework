@@ -43,16 +43,16 @@
 					  		<c:set var="_band_flag" value="${bean.parentid}" scope="request" />  
 					  		<select  class="form-control" name="parentid">
 					  			<option value="">---顶级---</option>
-					  			<c:if test="${beans!=null && fn:length(beans)>0}">
-					  				<c:forEach items="${beans}" var="b" varStatus="i">
+					  			<% if(isNotEmpty(beans) && beans.~size>0){ %>
+					  				<% for(bean in beans){ %>
 					  					<c:if test="${_this_self!=b.id}">
-					  					<option  value="${b.id}" <c:if test="${_band_flag==b.id}">selected="selected"</c:if>>${b.name}</option>
+					  					<option  value="${b.id}" <c:if test="${_band_flag==b.id}">selected="selected"<%}%>>${b.name}</option>
 					  					<c:set var="treeList" value="${b.beans}" scope="request" /> 
 					  					<c:set var="numx" value="1" scope="request" />  
 					  					<c:import url="auth02_r_select.jsp" />
-					  					</c:if>
+					  					<%}%>
 					  				</c:forEach>
-					  			</c:if>
+					  			<%}%>
 					  		</select>
 							<span class="help-block"></span>
 					  </div>

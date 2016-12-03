@@ -48,7 +48,7 @@ public abstract class PanoSpotsService   extends BaseService implements IPanoSpo
 				}else{	
 					//新增	
 					if(ValidatorUtil.isEmpty(bean.getId())){
-						bean.setId(IdUtil.createUUID(32));//id
+						bean.setId(IdUtil.createUUID(32));
 					}
 					panoSpotsDao.insert(bean);
 				}	

@@ -43,13 +43,6 @@ import java.util.List;
 
 /**
  * <p>组织架构_用户  ACTION类。
- * <ol>[功能概要] 
- * <li>初始化。 
- * <li>信息列表(未删除)。 
- * <li>编辑页面(页面)(新增or修改)。 
- * <li>信息保存(功能)(新增or修改)。 
- *</ol> 
- * @author easycode
  */
 @Controller
 @RequestMapping(value = "/h")
@@ -68,7 +61,7 @@ public class OrgUserController extends BaseController {
 	private IOrgDepartmentService orgDepartmentService;
 	
 	//组织架构_用户 管理
-	private static final String acPrefix="/org02.";
+	private static final String acPrefix="/org02/";
 	private static final String init = "admin/org/org02";
 	private static final String edit = "admin/org/org02_01";
 	private static final String list = "admin/org/org02_list";
@@ -129,7 +122,7 @@ public class OrgUserController extends BaseController {
 		}
 		if(ValidatorUtil.notEmpty(id)){
 			OrgUser bean1=new OrgUser();
-			bean1.setId(id);//ID
+			bean1.setId(id);
 			bean=orgUserService.findDataById(bean1);
 			if(bean!=null){
 				if(!"admin".equals(bean.getUserid())){
@@ -142,7 +135,7 @@ public class OrgUserController extends BaseController {
 		}
 		if(bean==null){
 			bean=new OrgUser();
-			bean.setId(IdUtil.createUUID(32));//ID
+			bean.setId(IdUtil.createUUID(32));
 		}
 		bean.setPageNum(pageNum);
 		request.setAttribute( "bean", bean );
@@ -167,7 +160,7 @@ public class OrgUserController extends BaseController {
 		log.info("OrgUserController editUser.........");
 		if(ValidatorUtil.notEmpty(id)){
 			OrgUser bean=new OrgUser();
-			bean.setId(id);//ID
+			bean.setId(id);
 			bean=orgUserService.findDataById(bean);
 			request.setAttribute( "bean", bean );
 		}
@@ -187,8 +180,12 @@ public class OrgUserController extends BaseController {
 		log.info("OrgUserController del.........");
 		Response result = new Response();
 		try {
+			OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+			if(user.getId().equals(id)){
+				throw new RuntimeException("不能删除自己!");
+			}
 			OrgUser bean1=new OrgUser();
-			bean1.setId(id);//ID
+			bean1.setId(id);
 			result.message=orgUserService.deleteDataById(bean1);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());

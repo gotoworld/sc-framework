@@ -65,7 +65,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                 } else {
                     //新增
                     if (ValidatorUtil.isEmpty(bean.getId())) {
-                        bean.setId(IdUtil.createUUID(32));//id
+                        bean.setId(IdUtil.createUUID(32));
                     }
                     panoProjDao.insert(bean);
                 }

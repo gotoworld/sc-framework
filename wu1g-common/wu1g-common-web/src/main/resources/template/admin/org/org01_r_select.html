@@ -1,4 +1,4 @@
-<%--
+<%
 /*
  * 组织架构_部门 后台管理 (信息编辑页面)
  *
@@ -9,23 +9,19 @@
  * Copyright 2015 isd System. - All Rights Reserved.
  *
  */
---%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
-<%@ include file="../include/public_tags.jsp" %>
-<c:if test="${treeList!=null && fn:length(treeList)>0}">
-	<c:forEach var="bean" items="${treeList}" varStatus="n">
-		<c:if test="${_this_self!=bean.id}">
-		<option value="${bean.id}" <c:if test="${_band_flag==bean.id}">selected="selected"</c:if>>
-		<c:forEach begin="1" end="${numx}" step="1">
+%>
+<% if(isNotEmpty(treeList) && treeList.~size>0){%>
+	<%for(bean in treeList){%>
+		<% if(_this_self!=bean.id){%>
+		<option value="${bean.id}" ${_band_flag==bean.id?'selected="selected"':''}>
+		<% for(var xn=1;xn<=numx;xn++){ %>
 		|-
-		</c:forEach>
+		<%}%>
 		${bean.name}</option>
-		<c:if test="${bean.beans!=null && fn:length(bean.beans)>0}">
-			<c:set var="numx" value="${numx+1}" scope="request" />
-			<c:set var="treeList" value="${bean.beans}" scope="request" /> 
-			<c:import url="org01_r_select.jsp" />
-			<c:set var="numx" value="${numx-1}" scope="request" />
-		</c:if>
-		</c:if>
-	</c:forEach>
-</c:if>
+		<<% if(isNotEmpty(bean.beans) && bean.beans.~size>0){%>
+			<% include("org01_r_select.html",{"numx":numx+1,"treeList":bean.beans}){} %>
+			<% numx=numx-1; %>
+		<%}%>
+		<%}%>
+	<%}%>
+<%}%>

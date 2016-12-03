@@ -48,7 +48,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 				}else{
 					//新增	
 					if(ValidatorUtil.isEmpty(bean.getId())){
-						bean.setId(IdUtil.createUUID(32));//id
+						bean.setId(IdUtil.createUUID(32));
 					}
 					panoSceneDao.insert(bean);
 				}

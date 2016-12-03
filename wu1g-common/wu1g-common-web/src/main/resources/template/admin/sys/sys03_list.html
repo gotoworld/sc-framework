@@ -27,7 +27,7 @@
 				</thead>
 				<tbody>
 				<c:choose>
-				<c:when test="${beans!=null && fn:length(beans)>0}">
+				<%if(beans!=null && fn:length(beans)>0}">
 				<c:forEach items="${beans}" var="bean" varStatus="i">
 					<tr class="odd gradeX">
 						<td>${PAGEROW_OBJECT_KEY.startRow+i.index+1}</td>

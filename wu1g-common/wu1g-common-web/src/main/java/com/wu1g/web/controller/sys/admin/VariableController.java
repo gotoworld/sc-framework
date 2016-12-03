@@ -107,12 +107,12 @@ public class VariableController extends BaseController {
 		}
 		if(ValidatorUtil.notEmpty(id)){
 			SysVariable bean1=new SysVariable();
-			bean1.setId(id);//ID
+			bean1.setId(id);
 			bean=variableService.findDataById(bean1);
 		}
 		if(bean==null){
 			bean=new SysVariable();
-			bean.setId(IdUtil.createUUID(22));//ID
+			bean.setId(IdUtil.createUUID(22));
 		}
 		bean.setPageNum( pageNum );
 		return edit;
@@ -133,7 +133,7 @@ public class VariableController extends BaseController {
 		Response result = new Response();
 		try {
 			SysVariable bean1=new SysVariable();
-			bean1.setId(id);//ID
+			bean1.setId(id);
 			result.message=variableService.deleteDataById(bean1);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());

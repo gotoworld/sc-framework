@@ -50,13 +50,13 @@
 					      <input type="text" class="form-control" x_placeholder="请输入角色名称" id="bean_name" name="name" value="${bean.name}"/>
 							<span class="help-block"></span>
 					  </div>
-					  <shiro:hasPermission name="authRole:super">  
+					  <%if(shiro.hasPermission(authRole:super">
 					  <label class="col-md-2 control-label checkbox-inline">
-							<input id="bean_isSuper" <c:if test="${bean.isSuper=='1'}"> checked="checked"</c:if> name="isSuper" value="1" type="checkbox"> 超级管理员
+							<input id="bean_isSuper" <c:if test="${bean.isSuper=='1'}"> checked="checked"<%}%> name="isSuper" value="1" type="checkbox"> 超级管理员
 					  	</label>
-					  </shiro:hasPermission>
+					  <%}%>
 					</div>
-					<shiro:hasPermission name="authRole:parm">  
+					<%if(shiro.hasPermission(authRole:parm">
 					<div class="form-group">
 					  <label class="col-md-2 control-label ">
 					  	功能列表
@@ -66,18 +66,18 @@
 								<c:if test="${permTree!=null && fn:length(permTree)>0}">
 									<c:if test="${myPermList!=null && fn:length(myPermList)>0 }">
 										<c:set var="myPermListx" value="${myPermList}" scope="request" />
-									</c:if>
+									<%}%>
 									<c:forEach items="${permTree}" var="b">
 										<c:set var="checkBoxX" value="" />
 										<c:if test="${myPermList!=null && fn:length(myPermList)>0 }">
 											<c:forEach var="myperm" items="${myPermList}">
 												<c:if test="${myperm.id==b.id}">
 													<c:set var="checkBoxX" value='checked="checked"' />
-												</c:if>
+												<%}%>
 											</c:forEach>
-										</c:if>
+										<%}%>
 										<c:choose>
-										  <c:when test="${fn:length(b.beans)>0}">
+										  <%if(fn:length(b.beans)>0}">
 												<div class="tree-folder" style="display: block;">
 													<div class="tree-folder-header">
 														<i class="fa fa-folder-open"></i>
@@ -94,7 +94,7 @@
 															<c:set var="treeList" value="${b.beans}" scope="request" />  
 															<c:import url="auth03_r_checkbox.jsp" />
 														</div>
-													</c:if>
+													<%}%>
 												</div>
 											</c:when>
 											<c:otherwise>
@@ -112,15 +112,15 @@
 														<c:set var="treeList" value="${b.beans}" scope="request" />  
 														<c:import url="auth03_r_checkbox.jsp" />
 													</div>
-												</c:if>
+												<%}%>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
-								</c:if>
+								<%}%>
 							</div>
 					  </div>
 					</div>
-					</shiro:hasPermission>
+					<%}%>
 					
 					<div class="form-actions">
 						<div style="width: 100px;margin: 0 auto;">

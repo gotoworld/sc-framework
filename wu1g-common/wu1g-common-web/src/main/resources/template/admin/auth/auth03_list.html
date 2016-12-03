@@ -26,25 +26,25 @@
 				</thead>
 				<tbody>
 				<c:choose>
-				<c:when test="${beans!=null && fn:length(beans)>0}">
+				<%if(beans!=null && fn:length(beans)>0}">
 				<c:forEach items="${beans}" var="bean" varStatus="i">
 					<tr class="odd gradeX">
 						<td>${PAGEROW_OBJECT_KEY.startRow+1+i.index}<!--<input name="pk" type="checkbox" class="checkboxes" value="${bean.id}" />--></td>
 						<td>${bean.name}</td>
 						<td>
 							<c:choose>
-								<c:when test="${bean.isSuper=='1'}">是</c:when>
+								<%if(bean.isSuper=='1'}">是</c:when>
 								<c:otherwise>否</c:otherwise>
 							</c:choose>
 						</td>
 						<td>${bean.dateCreated}</td>
 						<td>
-						<shiro:hasPermission name="authRole:edit"> 
+						<%if(shiro.hasPermission(authRole:edit">
 						<a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/auth03.edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="authRole:del"> 
+						<%}%>
+						<%if(shiro.hasPermission(authRole:del">
 						<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/auth03.del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-						</shiro:hasPermission>
+						<%}%>
 						</td>
 					</tr>
 					</c:forEach>
@@ -67,10 +67,10 @@ $(document).ready(function() {
 //js code 
 
  //判断表格中是否有数据
- <c:if test="${beans!=null && fn:length(beans)>0}">
+ <% if(isNotEmpty(beans) && beans.~size>0){ %>
  	//有坑提醒! 使用此功能表格必须为标准表格
  	//表格排序功能  参数1:表格id 参数2:json格式 哪些列不参与排序 null为参与  参数3:数组 隐藏列[0,1]表示隐藏1,2列
- </c:if>
+ <%}%>
  //判断是否尾页
  if(${PAGEROW_OBJECT_KEY.hasNextPage}){
  	$('#pageNumA').val(${PAGEROW_OBJECT_KEY.pageNum});

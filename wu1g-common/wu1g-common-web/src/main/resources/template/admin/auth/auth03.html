@@ -71,7 +71,7 @@
 						<div class="matter">
 							<c:if test="${msg!=null}">
 								<c:choose>
-									<c:when test="${msg!='1'}">
+									<%if(msg!='1'}">
 										<div class="alert alert-danger">
 											<button class="close" data-dismiss="alert"></button>
 											<strong>Error!</strong> ${msg}
@@ -84,7 +84,7 @@
 										</div>
 									</c:otherwise>
 								</c:choose>
-							</c:if>
+							<%}%>
 							<div id="msg"></div>
 							<div class="form-actions">
 								<form id="info_search_form" method="post" class="form-horizontal" accept-charset="UTF-8" action="${basePath}/h/auth03.list">
@@ -110,9 +110,9 @@
 								</form>
 							</div>
 							<div class="mt10 clearfix"></div>
-							<shiro:hasPermission name="authRole:add">
+							<%if(shiro.hasPermission(authRole:add">
 								<a href="javascript:;" onclick="openMyBoxLayer('a','${basePath}/h/auth03.edit/add')" class="label label-primary"><i class="fa fa-plus"></i> 新增</a>
-							</shiro:hasPermission>
+							<%}%>
 							<div id="info_list_div">
 								<div class="alert alert-warning mt10">
 									<strong>数据加载中!</strong>data loading...

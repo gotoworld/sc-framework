@@ -1,4 +1,4 @@
-<%--
+<%
 /*
  * 权限_权限信息 后台管理  
  *
@@ -9,21 +9,19 @@
  * Copyright 2015 isd System. - All Rights Reserved.
  *
  */
---%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
-<%@ include file="../include/public_tags.jsp" %>
-<c:if test="${treeList!=null && fn:length(treeList)>0}">
-	<c:forEach var="bean" items="${treeList}" varStatus="n">
-		<c:set var="checkBoxX" value="" />
-		<c:if test="${myDeptBeansx!=null && fn:length(myDeptBeansx)>0 }">
-			<c:forEach var="myDept" items="${myDeptBeansx}">
-				<c:if test="${myDept.id==bean.id}">
-					<c:set var="checkBoxX" value='oldc="1" checked="checked"' />
-				</c:if>
-			</c:forEach>
-		</c:if>
-		<c:choose>
-		  <c:when test="${fn:length(bean.beans)>0}">
+%>
+<% if(isNotEmpty(treeList) && treeList.~size>0){%>
+<% var dcodex=""; %>
+<%for(bean in treeList){%>
+		<% checkBoxX=""; %>
+		<% if(myDeptBeansx!=null && myDeptBeansx.~size>0){%>
+			<%for(myDept in myDeptBeansx){%>
+				<%if(myDept.id==bean.id){%>
+					<% checkBoxX='oldc="1" checked="checked"'; %>
+				<%}%>
+			<%}%>
+		<%}%>
+		  <%if(isNotEmpty(bean.beans) && bean.beans.~size>0){%>
 				<div class="tree-folder" style="display: block;">
 					<div class="tree-folder-header">
 						<i class="fa fa-folder-open"></i>
@@ -34,20 +32,15 @@
 							</label>
 						</div>
 					</div>
-					<c:if test="${fn:length(bean.beans)>0}">
+					<%if(isNotEmpty(bean.beans) && bean.beans.~size>0){%>
 						<div class="tree-folder-content">
-							<c:set var="treeList" value="${bean.beans}" scope="request" />  
-							<c:set var="numx" value="${numx+1}" scope="request" />  
-							<c:set var="dcodex" value="${dcode}" />   
-							<c:set var="dcode" value="${dcode} ${bean.id}" scope="request" />  
-							<c:import url="org02_r_checkbox.jsp" />
-							<c:set var="numx" value="${numx-1}" scope="request" />
-							<c:set var="dcode" value="${dcodex}" scope="request" />  
+							<%layout("org02_r_checkbox.html",{"bean":bean,"treeList":bean.beans,"numx":numx+1,"dcodex":dcode,"dcode":dcode+bean.id}){} %>
+							<% numx=numx-1; %>>
+							<% dcode=dcodex; %>
 						</div>
-					</c:if>
+					<%}%>
 				</div>
-			</c:when>
-			<c:otherwise>
+			<%}else{%>
 				<div class="tree-item">
 					<i class="tree-dot"></i>
 					<div class="tree-item-name">
@@ -57,18 +50,13 @@
 						</label>
 					</div>
 				</div>
-				<c:if test="${fn:length(bean.beans)>0}">
+				<%if(isNotEmpty(bean.beans) && bean.beans.~size>0){%>
 					<div class="tree-folder-content">
-						<c:set var="treeList" value="${bean.beans}" scope="request" />
-						<c:set var="numx" value="${numx+1}" scope="request" /> 
-						<c:set var="dcodex" value="${dcode}" />   
-						<c:set var="dcode" value="${dcode} ${bean.id}" scope="request" />  
-						<c:import url="org02_r_checkbox.jsp" />
-						<c:set var="numx" value="${numx-1}" scope="request" />
-						<c:set var="dcode" value="${dcodex}" scope="request" />  
+						<%layout("org02_r_checkbox.html",{"bean":bean,"treeList":bean.beans,"numx":numx+1,"dcodex":dcode,"dcode":dcode+bean.id}){} %>
+						<% numx=numx-1; %>
+						<% dcode=dcodex; %>
 					</div>
-				</c:if>
-			</c:otherwise>
-		</c:choose>
-	</c:forEach>
-</c:if>
+				<%}%>
+			<%}%>
+		<%}%>
+<%}%>

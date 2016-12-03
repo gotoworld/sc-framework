@@ -57,7 +57,7 @@ public class VariableService implements IVariableService {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = { Exception.class, RuntimeException.class })
 	public String saveOrUpdateData(SysVariable bean) throws Exception {
-		String msg = "1";
+		String msg = "seccuss";
 		if (bean != null) {
 			try {
 				// 判断数据是否存在
@@ -91,7 +91,7 @@ public class VariableService implements IVariableService {
 	 *
 	 */
 	public String deleteData(SysVariable bean) throws Exception {
-		String msg = "1";
+		String msg = "seccuss";
 		if (bean != null) {
 			try {
 				SysVariableDao.deleteByPrimaryKey( bean );
@@ -115,7 +115,7 @@ public class VariableService implements IVariableService {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = { Exception.class, RuntimeException.class })
 	public String deleteDataById(SysVariable bean) throws Exception {
-		String msg = "1";
+		String msg = "seccuss";
 		if (bean != null) {
 			try {
 				SysVariableDao.deleteById( bean );
@@ -202,7 +202,7 @@ public class VariableService implements IVariableService {
 	 *
 	 */
 	public String recoveryDataById(SysVariable bean) throws Exception {
-		String msg = "1";
+		String msg = "seccuss";
 		if (bean != null) {
 			try {
 				SysVariableDao.recoveryDataById( bean );

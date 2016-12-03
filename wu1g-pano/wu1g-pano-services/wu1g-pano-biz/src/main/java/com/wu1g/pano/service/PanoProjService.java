@@ -55,7 +55,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(PanoProj bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -89,7 +89,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
 
     @Override
     public String deleteData(PanoProj bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoProjDao.deleteByPrimaryKey(bean);
@@ -105,7 +105,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
     public String deleteDataById(PanoProj bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoProjDao.deleteById(bean);
@@ -155,7 +155,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
 
     @Override
     public String recoveryDataById(PanoProj bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoProjDao.recoveryDataById(bean);
@@ -253,7 +253,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveXmlData(PanoProj bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -306,7 +306,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     }
 
     public String thumbsUpNum(PanoProj bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -323,7 +323,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     }
 
     public String pvNum(PanoProj bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在

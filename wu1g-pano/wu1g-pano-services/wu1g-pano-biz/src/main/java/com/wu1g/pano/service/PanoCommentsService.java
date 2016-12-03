@@ -38,7 +38,7 @@ public class PanoCommentsService extends BaseService implements IPanoCommentsSer
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(PanoComments bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -63,7 +63,7 @@ public class PanoCommentsService extends BaseService implements IPanoCommentsSer
 
     @Override
     public String deleteData(PanoComments bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoCommentsDao.deleteByPrimaryKey(bean);
@@ -78,7 +78,7 @@ public class PanoCommentsService extends BaseService implements IPanoCommentsSer
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(PanoComments bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoCommentsDao.deleteById(bean);
@@ -127,7 +127,7 @@ public class PanoCommentsService extends BaseService implements IPanoCommentsSer
 
     @Override
     public String recoveryDataById(PanoComments bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoCommentsDao.recoveryDataById(bean);

@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -193,7 +194,7 @@ public class PanoProjController extends BaseController {
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type="修改",desc="全景项目信息")
-    public String save(PanoProj bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+    public String save(@Validated PanoProj bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
         log.info("PanoProjController save.........");
         Response result = new Response();
         if (bean != null) {

@@ -147,9 +147,7 @@ public class OrgUser extends BaseVO {
     /**
      * 是否删除(0否1是)
      */
-    @NotNull(message = "delFlag不能为空")
-    @Size(max = 1, message = "delFlag最大1字符")
-    private Byte delFlag;
+    private String delFlag;
     /**
      * 数据过期时间0:永不过期
      */

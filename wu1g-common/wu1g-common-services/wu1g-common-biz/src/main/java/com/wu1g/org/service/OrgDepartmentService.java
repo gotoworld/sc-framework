@@ -48,7 +48,7 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String saveOrUpdateData(OrgDepartment bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -81,7 +81,7 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
      */
     @RfAccount2Bean
     public String deleteData(OrgDepartment bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 orgDepartmentDao.deleteByPrimaryKey(bean);
@@ -104,7 +104,7 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String deleteDataById(OrgDepartment bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 orgDepartmentDao.deleteById(bean);
@@ -181,7 +181,7 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
      * </ol>
      */
     public String recoveryDataById(OrgDepartment bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 orgDepartmentDao.recoveryDataById(bean);

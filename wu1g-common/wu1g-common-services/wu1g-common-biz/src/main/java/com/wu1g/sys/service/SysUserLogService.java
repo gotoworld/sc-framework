@@ -49,7 +49,7 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysUserLog bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在

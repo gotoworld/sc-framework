@@ -142,7 +142,7 @@ public class AuthPermController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
-	public String save(@Validated @RequestBody AuthPerm bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated  AuthPerm bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("Auth02Action save.........");
 		Response result = new Response();
 		if(bean!=null){

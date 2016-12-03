@@ -48,7 +48,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(AuthRole bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 if (getAuth().isPermitted("authRole:super")) {
@@ -106,7 +106,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
      * </ol>
      */
     public String deleteData(AuthRole bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 authRoleDao.deleteByPrimaryKey(bean);
@@ -128,7 +128,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(AuthRole bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 authRoleDao.deleteById(bean);
@@ -205,7 +205,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
      * </ol>
      */
     public String recoveryDataById(AuthRole bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 authRoleDao.recoveryDataById(bean);

@@ -45,7 +45,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
     public String saveOrUpdateData(AuthPerm bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 AuthPerm dto = new AuthPerm();
@@ -76,7 +76,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
      * </ol>
      */
     public String deleteData(AuthPerm bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 AuthPerm dto = new AuthPerm();
@@ -99,7 +99,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
     public String deleteDataById(AuthPerm bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 AuthPerm dto = new AuthPerm();
@@ -173,7 +173,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
      * </ol>
      */
     public String recoveryDataById(AuthPerm bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 AuthPerm dto = new AuthPerm();

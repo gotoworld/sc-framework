@@ -29,9 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.List;
@@ -148,7 +146,7 @@ public class OrgDepartmentController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="部门信息")
-	public String save(@Validated  OrgDepartment bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated @ModelAttribute OrgDepartment bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("OrgDepartmentController save.........");
 		Response result = new Response();
 		if(bean!=null){

@@ -68,9 +68,7 @@ public class AuthRole extends BaseVO {
     /**
      * 是否删除
      */
-    @NotNull(message = "delFlag不能为空")
-    @Size(max = 1, message = "delFlag最大1字符")
-    private Byte delFlag;
+    private String delFlag;
     /**
      * 创建时间
      */

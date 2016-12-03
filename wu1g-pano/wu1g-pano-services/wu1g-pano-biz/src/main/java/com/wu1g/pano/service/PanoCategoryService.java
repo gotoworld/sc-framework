@@ -39,7 +39,7 @@ public class PanoCategoryService extends BaseService implements IPanoCategorySer
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(PanoCategory bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -64,7 +64,7 @@ public class PanoCategoryService extends BaseService implements IPanoCategorySer
 
     @Override
     public String deleteData(PanoCategory bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoCategoryDao.deleteByPrimaryKey(bean);
@@ -80,7 +80,7 @@ public class PanoCategoryService extends BaseService implements IPanoCategorySer
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
     public String deleteDataById(PanoCategory bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoCategoryDao.deleteById(bean);
@@ -129,7 +129,7 @@ public class PanoCategoryService extends BaseService implements IPanoCategorySer
 
     @Override
     public String recoveryDataById(PanoCategory bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 panoCategoryDao.recoveryDataById(bean);

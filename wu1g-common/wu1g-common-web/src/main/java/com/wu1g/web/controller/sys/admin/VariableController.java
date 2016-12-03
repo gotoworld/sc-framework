@@ -155,7 +155,7 @@ public class VariableController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="数据字典信息")
-	public String save(@Validated @RequestBody SysVariable bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated SysVariable bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("VariableController save.........");
 		Response result = new Response();
 		if(bean!=null){

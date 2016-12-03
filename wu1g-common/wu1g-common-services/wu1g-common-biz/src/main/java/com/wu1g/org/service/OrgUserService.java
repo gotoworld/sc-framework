@@ -79,7 +79,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(OrgUser bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -154,7 +154,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String updateData(OrgUser bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -180,7 +180,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
      * </ol>
      */
     public String deleteData(OrgUser bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 orgUserDao.deleteByPrimaryKey(bean);
@@ -202,7 +202,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(OrgUser bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 orgUserDao.deleteById(bean);
@@ -282,7 +282,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
      * </ol>
      */
     public String recoveryDataById(OrgUser bean) throws Exception {
-        String msg = "1";
+        String msg = "seccuss";
         if (bean != null) {
             try {
                 orgUserDao.recoveryDataById(bean);
@@ -385,7 +385,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
      * 判断用户id是否存在
      */
     public String isUidYN(String uid) {
-        String msg = "1";
+        String msg = "seccuss";
         try {
             if (ValidatorUtil.notEmpty(uid)) {
                 if (orgUserDao.isUidYN(uid) == 0) {

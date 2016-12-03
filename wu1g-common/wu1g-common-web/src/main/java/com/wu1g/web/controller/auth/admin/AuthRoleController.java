@@ -180,7 +180,7 @@ public class AuthRoleController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="角色信息")
-	public String save(@Validated @RequestBody AuthRole bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated AuthRole bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
 		log.info("AuthRoleController save.........");
 		Response result = new Response();
 		if(bean!=null){

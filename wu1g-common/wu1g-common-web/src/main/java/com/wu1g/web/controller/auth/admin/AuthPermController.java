@@ -55,7 +55,7 @@ public class AuthPermController extends BaseController {
 	private IAuthPermService authPermService;
 	
 	//权限_权限信息 管理
-	private static final String acPrefix="/auth02.";
+	private static final String acPrefix="/auth02/";
 	private static final String init = "admin/auth/auth02";
 	private static final String edit = "admin/auth/auth02_01";
 	private static final String list = "admin/auth/auth02_list";

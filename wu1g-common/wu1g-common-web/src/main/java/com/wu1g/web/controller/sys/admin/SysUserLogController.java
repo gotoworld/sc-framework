@@ -40,7 +40,7 @@ public class SysUserLogController extends BaseController {
 	private ISysUserLogService sysUserLogService;
 	
 	//系统_管理员操作日志 管理
-	private static final String acPrefix="/sys02.";
+	private static final String acPrefix="/sys02/";
 	private static final String init = "admin/sys/sys02";
 	private static final String edit = "admin/sys/sys02_01";
 	private static final String list = "admin/sys/sys02_list";

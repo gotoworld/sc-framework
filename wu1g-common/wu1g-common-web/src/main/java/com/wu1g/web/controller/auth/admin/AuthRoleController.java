@@ -63,7 +63,7 @@ public class AuthRoleController extends BaseController {
 	private IAuthPermService authPermService;
 	
 	//权限_角色信息 管理
-	private static final String acPrefix="/auth03.";
+	private static final String acPrefix="/auth03/";
 	private static final String init = "admin/auth/auth03";
 	private static final String edit = "admin/auth/auth03_01";
 	private static final String list = "admin/auth/auth03_list";

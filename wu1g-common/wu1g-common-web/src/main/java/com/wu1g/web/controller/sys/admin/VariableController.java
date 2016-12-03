@@ -48,7 +48,7 @@ public class VariableController extends BaseController {
 	@Autowired
 	protected IVariableService variableService;
 	//系统_数据字典 管理
-	private static final String acPrefix="/sys03.";
+	private static final String acPrefix="/sys03/";
 	private static final String init = "admin/sys/sys03";
 	private static final String edit = "admin/sys/sys03_01";
 	private static final String list = "admin/sys/sys03_list";
@@ -115,6 +115,7 @@ public class VariableController extends BaseController {
 			bean.setId(IdUtil.createUUID(22));
 		}
 		bean.setPageNum( pageNum );
+		request.setAttribute("bean",bean);
 		return edit;
 	}
 	/**

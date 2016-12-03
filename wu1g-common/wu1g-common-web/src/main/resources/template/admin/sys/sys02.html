@@ -1,4 +1,4 @@
-<%--
+<%
 /*
  * 系统_管理员操作日志 后台管理 (初始化页面)
  *
@@ -9,129 +9,76 @@
  * Copyright 2015 isd System. - All Rights Reserved.
  *
  */
---%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
-<%@ include file="../include/public_tags.jsp"%>
+%>
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="zh-CN" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="zh-CN" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
-<html lang="zh-CN" class="no-js">
-<!--<![endif]-->
+<html>
 <head>
-<meta charset="utf-8" />
-<%@ include file="../include/meta.jsp"%>
-<%@ include file="../include/admin_title.jsp"%>
-<%@ include file="../include/public_init_js_css.jsp"%>
-
+	<meta charset="utf-8">
+	<% layout("../include/meta.html"){}%>
+	<% layout("../include/public_init_js_css.html"){}%>
 </head>
-<!-- END HEAD -->
-<!-- BEGIN BODY -->
-<body class="page-container-bg-solid page-sidebar-closed-hide-logo page-sidebar-fixed">
-	<!-- BEGIN HEADER -->
-	
-	<!-- END HEADER -->
-	<div class="clearfix"></div>
-	<!-- BEGIN CONTAINER -->
-	<div class="page-container">
-		<!-- BEGIN SIDEBAR MENU -->
-		
-		<!-- END SIDEBAR MENU -->
-		<script type="text/javascript">
-			jQuery(document).ready(function() {
-				$('#menu_sys,#menu_sys_sub_2').addClass('active');
-				$('#menu_sys_arrow').addClass('open');
-				$('#menu_sys_sub_menu').show();
-			});
-		</script>
-		<!-- BEGIN PAGE -->
-		<div class="">
-			<div class="page-content">
-				<!-- BEGIN PAGE HEADER-->
-				<div class="row">
-					<div class="col-md-12">
-						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-						<h3 class="page-title">
-							系统_管理员操作日志管理 <small><span class="help-inline">在这里你可以查看未删除的信息</span></small>
-						</h3>
-						<ul class="page-breadcrumb breadcrumb">
-							
-							<li><a href="${basePath}/h/sys02.init">系统_管理员操作日志管理</a> <i class="fa fa-angle-right"></i></li>
-							<li>列表</li>
-						</ul>
-						<!-- END PAGE TITLE & BREADCRUMB-->
-					</div>
-				</div>
-				<!-- END PAGE HEADER-->
-
-				<!-- BEGIN PAGE CONTENT-->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="matter">
-							<c:if test="${msg!=null}">
-								<c:choose>
-									<%if(msg!='1'}">
-										<div class="alert alert-danger">
-											<button class="close" data-dismiss="alert"></button>
-											<strong>Error!</strong> ${msg}
-										</div>
-									</c:when>
-									<c:otherwise>
-										<div class="alert alert-success">
-											<button class="close" data-dismiss="alert"></button>
-											<strong>Success!</strong> 操作成功。
-										</div>
-									</c:otherwise>
-								</c:choose>
-							<%}%>
-							<div id="msg"></div>
-							<div class="form-actions">
-								<form id="info_search_form" method="post" class="form-horizontal" accept-charset="UTF-8" action="${basePath}/h/sys02.list">
-									<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum}">
-									<div class="row clearfix">
-										<div class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-3 mt10">
-											<span class="input-group-addon"> 内容 </span> <input x_placeholder="内容" class="form-control" name="description" value="${bean.description}" type="text">
-										</div>
-										<div class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-3 mt10">
-											<span class="input-group-addon"> 起始时间 </span> <input x_placeholder="检索起始时间" name="dateBegin" value="${bean.dateBegin}" type="text" class="form-control laydate-icon" readonly="readonly"
-												onclick="laydate({istime: true, festival: true, istoday: true, format: 'YYYY-MM-DD hh:mm:ss'})"
-											/>
-										</div>
-										<div class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-3 mt10">
-											<span class="input-group-addon"> 终止时间 </span> <input x_placeholder="检索终止时间" name="dateEnd" value="${bean.dateEnd}" type="text" class="form-control laydate-icon" readonly="readonly"
-												onclick="laydate({istime: true, festival: true, istoday: true, format: 'YYYY-MM-DD hh:mm:ss'})"
-											/>
-										</div>
-										<div class="input-group">
-											<input class="btn default green-stripe" type="button" onclick="loadUrlPage(null,'info_search_form','info_list_div');" value="检索" /> <input class="btn default dark-stripe" type="reset" value="重置" />
-										</div>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="clients-list">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="tab-1" class="tab-pane active">
+						<div class="ibox float-e-margins">
+							<div class="ibox-content">
+								<% layout("../include/notifications.html"){}%>
+								<table class="table">
+									<tr>
+										<td>
+											<form id="info_search_form"
+												  role="form" class="form-inline"
+												  method="post"  accept-charset="UTF-8"
+												  action="javascript:loadUrlPage(null,'info_search_form','info_list_div');"
+												  data-action="${basePath}/h/sys02/list">
+												<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum!}">
+												<div class="form-group" id="data_5">
+													<label class="font-noraml">创建时间</label>
+													<div class="input-daterange input-group" id="datepicker">
+														<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+														<span class="input-group-addon">到</span>
+														<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+													</div>
+												</div>
+												<div class="input-group">
+													<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+														</span>
+												</div>
+											</form>
+										</td>
+									</tr>
+								</table>
+								<div id="info_list_div">
+									<div class="alert alert-warning mt10">
+										<strong>数据加载中!</strong>data loading...
 									</div>
-								</form>
-							</div>
-							<div class="mt10 clearfix"></div>
-							<div id="info_list_div">
-								<div class="alert alert-warning mt10">
-									<strong>数据加载中!</strong>data loading...
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- END PAGE CONTENT-->
 			</div>
 		</div>
+
 	</div>
-	<!-- BEGIN FOOTER -->
-	<%@ include file="../include/footer.jsp"%>
-	<!-- END FOOTER -->
-	<%@ include file="../include/public_last_js_css.jsp"%>
-</body>
-<!-- END BODY -->
-<script type="text/javascript">
-	$(document).ready(function() {
-		//js code 
-		//初始加载..
-		loadUrlPage(null, 'info_search_form', 'info_list_div');
-	});
+</div>
+<% layout("../include/public_last_js_css.html"){}%>
+<script>
+    $("#data_5 .input-daterange").datepicker({
+        keyboardNavigation : !1,
+        forceParse : !1,
+        autoclose : !0
+    });
+    //初始加载..
+    loadUrlPage(null, 'info_search_form', 'info_list_div');
 </script>
+</body>
 </html>

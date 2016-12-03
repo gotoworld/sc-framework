@@ -26,18 +26,18 @@
 	<select id="selectByPrimaryKey" resultType="sysVariable" parameterType="sysVariable" >
 		select
 		<include refid="Base_Column_List" />
-		from tc_sys_variable t1 
+		from t_sys_variable t1
 		where  t1.id = #{id}
 	</select>
 	<!-- 根据主键物理删除信息 -->
 	<delete id="deleteByPrimaryKey" parameterType="sysVariable" >
 		delete
-		from tc_sys_variable
+		from t_sys_variable
 		where  id = #{id}
 	</delete>
 	<!-- 新增单条数据 -->
 	<insert id="insert" parameterType="sysVariable" >
-		insert into tc_sys_variable(
+		insert into t_sys_variable(
 		id,
 		version,
 		name,
@@ -79,7 +79,7 @@
 	</insert>
 	<!-- 新增 批量数据 -->
 	<insert id="insertBatch">
-		insert into tc_sys_variable(
+		insert into t_sys_variable(
 		id,
 		version,
 		name,
@@ -120,7 +120,7 @@
 	</insert>
 	<!-- 数据更新 -->
 	<update id="updateByPrimaryKeySelective" parameterType="sysVariable" >
-		update tc_sys_variable set version=version+1
+		update t_sys_variable set version=version+1
 		<if test="name!= null" >,name=#{name}</if>
 		<if test="name!= null" >,name_en=#{nameEn}</if>
 		<if test="code!= null" >,code=#{code}</if>
@@ -137,13 +137,13 @@
 	</update>
 	<!-- 判断是否存在 -->
 	<select id="isDataYN" parameterType="sysVariable" resultType="int">
-		select count(0) from tc_sys_variable where  id = #{id}
+		select count(0) from t_sys_variable where  id = #{id}
 	</select>
 	<!--信息列表 分页 -->
 	<select id="findDataIsPage" parameterType="sysVariable" resultType="sysVariable">
 		select
 		<include refid="Base_Column_List" />,t2.name pname
-		from tc_sys_variable t1 left join tc_sys_variable t2 on t1.parentid = t2.id
+		from t_sys_variable t1 left join t_sys_variable t2 on t1.parentid = t2.id
 		where 1=1 
 		<if test="parentid!= null and parentid!= ''" >and t1.parentid=#{parentid}</if>
 		<if test="parentid== null or parentid== ''" >and t1.parentid!='#'</if>
@@ -162,7 +162,7 @@
 	<select id="findDataIsList" parameterType="sysVariable" resultType="sysVariable">
 		select
 		<include refid="Base_Column_List" />
-		from tc_sys_variable t1 
+		from t_sys_variable t1
 		where 1=1 
 		<if test="parentid!= null and parentid!= ''" >and t1.parentid=#{parentid}</if>
 		<if test="parentid== null or parentid== ''" >and t1.parentid!='#'</if>
@@ -179,13 +179,13 @@
 	</select>
 	<!-- 逻辑删除 -->
 	<update id="deleteById" parameterType="sysVariable" >
-		update tc_sys_variable set del_flag = '1'
+		update t_sys_variable set del_flag = '1'
 		<!--未找到逻辑删除标记 字段-->
 		where  id = #{id}
 	</update>
 	<!-- 恢复逻辑删除 -->
 	<update id="recoveryDataById" parameterType="sysVariable" >
-		update tc_sys_variable set del_flag = '0'
+		update t_sys_variable set del_flag = '0'
 		<!--未找到逻辑删除标记 字段-->
 		where  id = #{id}
 	</update>

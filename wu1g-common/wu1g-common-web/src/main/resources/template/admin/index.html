@@ -86,16 +86,16 @@
                         <li><a class="J_menuItem" href="${basePath }/h/org02/init">组织架构_用户</a></li>
                         <%}%>
                         <% if(shiro.hasPermission("authPerm:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/auth02.init">权限_权限信息</a></li>
+                        <li><a class="J_menuItem" href="${basePath }/h/auth02/init">权限_权限信息</a></li>
                         <%}%>
                         <% if(shiro.hasPermission("authRole:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/auth03.init">权限_角色信息</a></li>
+                        <li><a class="J_menuItem" href="${basePath }/h/auth03/init">权限_角色信息</a></li>
                         <%}%>
                         <% if(shiro.hasPermission("sysLog:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/sys02.init">系统_操作日志</a></li>
+                        <li><a class="J_menuItem" href="${basePath }/h/sys02/init">系统_操作日志</a></li>
                         <%}%>
                         <% if(shiro.hasPermission("sysDic:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/sys03.init">系统_数据字典</a></li>
+                        <li><a class="J_menuItem" href="${basePath }/h/sys03/init">系统_数据字典</a></li>
                         <%}%>
                     </ul>
                 </li>

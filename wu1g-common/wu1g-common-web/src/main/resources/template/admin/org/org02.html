@@ -75,6 +75,11 @@
 </div>
 <% layout("../include/public_last_js_css.html"){}%>
 <script>
+    $("#data_5 .input-daterange").datepicker({
+        keyboardNavigation : !1,
+        forceParse : !1,
+        autoclose : !0
+    });
     //初始加载..
     loadUrlPage(null, 'info_search_form', 'info_list_div');
 </script>

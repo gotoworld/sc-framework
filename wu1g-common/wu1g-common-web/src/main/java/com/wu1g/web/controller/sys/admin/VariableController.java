@@ -48,10 +48,10 @@ public class VariableController extends BaseController {
 	@Autowired
 	protected IVariableService variableService;
 	//系统_数据字典 管理
-	private static final String acPrefix="/sys/alog/";
-	private static final String init = "admin/sys/sys_alog";
-	private static final String edit = "admin/sys/sys_alog_edit";
-	private static final String list = "admin/sys/sys_alog_list";
+	private static final String acPrefix="/sys/dic/";
+	private static final String init = "admin/sys/sys_dic";
+	private static final String edit = "admin/sys/sys_dic_edit";
+	private static final String list = "admin/sys/sys_dic_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**

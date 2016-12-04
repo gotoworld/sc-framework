@@ -24,8 +24,8 @@
 				<%
 				for(bean in beans!){
 				%>
-				<tr>
-					<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
+					<tr>
+						<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
 						<td>${bean.id!}</td>
 						<td>${bean.name!}</td>
 						<td>
@@ -33,11 +33,11 @@
 						<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/sys/dic/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
 						</td>
 					</tr>
-					<%
-					}elsefor{
-					%>
+				<%
+				}elsefor{
+				%>
 					<tr>
-						<td colspan="6">
+						<td colspan="4">
 							<div class="alert"><strong>暂无数据!</strong></div>
 						</td>
 					</tr>

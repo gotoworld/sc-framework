@@ -37,10 +37,8 @@
 					  			<option value="">---顶级---</option>
 					  			<% if(isNotEmpty(beans) && beans.~size>0){ %>
 					  				<% for(b in beans){ %>
-					  					<% if(_this_self!=b.id){ %>
-											<option  value="${b.id}" ${_band_flag==b.id?'selected="selected"':''} >${b.name}</option>
+											<option  value="${_this_self!=b.id?b.id:''}" ${_band_flag==b.id?'selected="selected"':''} >${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
 											<% layout("org_dept_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentid,_this_self:bean.id}){} %>
-					  					<%}%>
 									<%}%>
 								<%}%>
 					  		</select>

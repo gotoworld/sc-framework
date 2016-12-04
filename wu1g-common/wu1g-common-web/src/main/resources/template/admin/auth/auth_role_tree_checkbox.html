@@ -25,7 +25,6 @@ for(b in beans!){
 <%
 	if(isNotEmpty(b.beans) && b.beans.~size>0){
 		layout("auth_role_tree_checkbox.html",{beans:b.beans,permBeansCopy:permBeansCopy,numx:numx+1,dcodex:dcode,dcode:dcode+b.id}){};
-		numx=numx-1;
 		dcode=dcodex;
 	}
 }

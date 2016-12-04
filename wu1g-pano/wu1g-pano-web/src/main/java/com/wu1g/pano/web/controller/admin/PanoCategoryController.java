@@ -145,7 +145,7 @@ public class PanoCategoryController extends BaseController {
     @RequestMapping(value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type="修改",desc="全景类目信息")
-    public String save(@Validated PanoCategory bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+    public String save(@Validated PanoCategory bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
         log.info("PanoCategoryController save.........");
         Response result = new Response();
         if (bean != null) {

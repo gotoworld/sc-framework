@@ -1,6 +1,6 @@
 <%
 /*
- * 系统_数据字典 后台管理 (初始化页面)
+ * 系统_管理员操作日志 后台管理 (初始化页面)
  *
  * VERSION  DATE		BY		   REASON
  * -------- ----------- ------------ ------------------------------------------
@@ -16,14 +16,11 @@
 	<meta charset="utf-8">
 	<% layout("../include/meta.html"){}%>
 	<% layout("../include/public_init_js_css.html"){}%>
-	<style type="text/css">
-	</style>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-sm-12">
-			<% layout("../include/notifications.html"){}%>
 			<div class="clients-list">
 				<ul class="nav nav-tabs">
 					<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
@@ -32,6 +29,7 @@
 					<div id="tab-1" class="tab-pane active">
 						<div class="ibox float-e-margins">
 							<div class="ibox-content">
+								<% layout("../include/notifications.html"){}%>
 								<table class="table">
 									<tr>
 										<td>
@@ -39,7 +37,7 @@
 												  role="form" class="form-inline"
 												  method="post"  accept-charset="UTF-8"
 												  action="javascript:loadUrlPage(null,'info_search_form','info_list_div');"
-												  data-action="${basePath}/h/sys03/list">
+												  data-action="${basePath}/h/sys/alog/list">
 												<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum!}">
 												<div class="form-group" id="data_5">
 													<label class="font-noraml">创建时间</label>
@@ -50,7 +48,7 @@
 													</div>
 												</div>
 												<div class="input-group">
-													<input type="text" name="content" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+													<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 														</span>
 												</div>
@@ -58,10 +56,6 @@
 										</td>
 									</tr>
 								</table>
-								<% if(shiro.hasPermission("panoProj:add")){ %>
-								<a href="#" onclick="openMyBoxLayer('a','${basePath}/h/sys03/edit/add');"
-								   class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-								<%}%>
 								<div id="info_list_div">
 									<div class="alert alert-warning mt10">
 										<strong>数据加载中!</strong>data loading...

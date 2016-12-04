@@ -25,29 +25,28 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-sm-12">
-				<form id="org02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/org02/save">
+				<form id="org02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/org/user/save">
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
 					<input type="hidden" name="type" id="bean_type" value="0">
 					<%if(bean.userid!='admin' ){%>
 					<%if(shiro.hasPermission("orgUser:role.edit")){%>
-					<div class="col-md-12 alert alert-info">
-						<label class="control-label" for="bean_memo">角色=></label>
+					<div class="col-md-12 ">
+						<label class="control-label">角色=></label>
 						<div class="form-group ">
-								<%if(roleBeans!=null){%>
-									<%for(role in roleBeans){%>
-										<% var myrolex=''; %>
-										<%if(myRoleBeans!=null){%>
-											<%for(myrole in myRoleBeans){%>
-												<%if(role.id==myrole.id){%>
-													<% myrolex='checked="checked"'; %>
-												<%}%>
-											<%}%>
-										<%}%>
-										<label class="checkbox-inline"> <input id="${role.id}"
-											value="${role.id}" ${myrolex} type="radio"
-											name="roleIdArray">${role.name}
+								<%if(isNotEmpty(roleBeans)){
+									for(role in roleBeans){
+										var myrolex='';
+										if(isNotEmpty(myRoleBeans)){
+											for(myrole in myRoleBeans){
+												if(role.id==myrole.id){
+													myrolex='checked="checked"';
+												}
+											}
+										}%>
+										<label class="checkbox-inline"> <input id="${role.id}" value="${role.id}" ${myrolex} type="radio" name="roleIdArray">
+											${role.name}
 										</label>
 									<%}%>
 								<%}%>
@@ -55,7 +54,7 @@
 					</div>
 					<%}%>
 					<%}%>
-					<div class="col-md-6 alert alert-info">
+					<div class="col-md-6 ">
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_userid">登录名</label>
 							<div class="col-md-8">
@@ -97,7 +96,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 alert alert-info">
+					<div class="col-md-6 ">
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_pwd">登录密码</label>
 							<div class="col-md-8">
@@ -144,65 +143,40 @@
 						</div>
 					</div>
 					<%if(shiro.hasPermission("orgUser:dept.edit")){%>
-					<%if(deptTree!=null && deptTree.~size>0){%>
+					<%if(isNotEmpty(deptTree) && deptTree.~size>0){%>
 					<div class="form-group col-md-12">
 						  <div class="col-md-10">
 							  <label class="col-md-2 control-label"  style="text-align: left;float:left ">
 							  	部门列表
 							  </label>
 							  <div class="tree tree-plus-minus tree-solid-line tree-unselectable deptTree">
-								    <% var myDeptBeansx=null; %>
-                                    <% var dcode=""; %>
-                                    <% var checkBoxX=""; %>
-									<%if(myDeptBeans!=null && myDeptBeans.~size>0 ){%>
-										<% myDeptBeansx=myDeptBeans; %>
+								<%
+								  	var deptBeansCopy=null;
+                                    var dcode="";
+                                    var checkBoxX="";
+									if(isNotEmpty(deptBeans) && deptBeans.~size>0 ){
+										deptBeansCopy=deptBeans;
+									}
+									for(b in deptTree!){
+										dcode=b.id;
+										checkBoxX="";
+										for(dept in deptBeans!){
+											if(dept.id==b.id){
+												checkBoxX='oldc="1" checked="checked"';
+											}
+										}
+								  %>
+										<p>
+											<label>
+											<input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="deptIdArray">
+											${b.name}
+											</label>
+										</p>
+										<%if(isNotEmpty(b.beans) && b.beans.~size>0){
+												layout("org_user_tree_checkbox.html",{beans:b.beans,deptBeansCopy:deptBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
+												dcode="";
+										}%>
 									<%}%>
-									<%for(b in deptTree){%>
-										<% dcode=b.id; %>
-										<% checkBoxX=""; %>
-										<%if(myDeptBeans!=null && myDeptBeans.~size>0 ){%>
-											<%for(myDept in myDeptBeans){%>
-												<%if(myDept.id==b.id){%>
-													<% checkBoxX='oldc="1" checked="checked"'; %>
-												<%}%>
-											<%}%>
-										<%}%>
-										  <%if(b.beans.~size>0){%>
-												<div class="tree-folder" style="display: block;">
-													<div class="tree-folder-header">
-														<i class="fa fa-folder-open"></i>
-														<div class="tree-folder-name">
-															<label>
-															<input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="deptIdArray">
-															${b.name}
-															</label>
-														</div>
-													</div>
-													<%if(b.beans.~size>0){%>
-														<div class="tree-folder-content">
-															<% layout("org02_r_checkbox.html",{"myDeptBeansx":myDeptBeansx,"numx":1,"treeList":b.beans,"bean":bean,"dcode":dcode+bean.id}){} %>
-															<% dcode=""; %>
-														</div>
-													<%}%>
-												</div>
-											<%}else{%>
-												<div class="tree-item">
-													<i class="tree-dot"></i>
-													<div class="tree-item-name">
-														<label>
-														<input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="deptIdArray">
-														${b.name}
-														</label>
-													</div>
-												</div>
-												<%if(b.beans.~size>0){%>
-													<div class="tree-folder-content">
-														<% layout("org02_r_checkbox.html",{"myDeptBeansx":myDeptBeansx,"numx":1,"treeList":b.beans,"bean":bean,"dcode":dcode+bean.id}){} %>
-														<% dcode=""; %>
-													</div>
-												<%}%>
-											<%}
-								 	 }%>
 							</div>
 					  </div>
 					</div>

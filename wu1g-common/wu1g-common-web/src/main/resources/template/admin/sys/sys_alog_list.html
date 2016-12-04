@@ -23,8 +23,7 @@
         </thead>
         <tbody>
         <%
-        if(beans!=null && beans.~size>0){
-        for(bean in beans){
+        for(bean in beans!){
         %>
         <tr>
             <td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
@@ -34,11 +33,10 @@
             <td>${bean.dateCreated}</td>
         </tr>
         <%
-        }
-        }else{
+        }elsefor{
         %>
         <tr>
-            <td colspan="6">
+            <td colspan="5">
                 <div class="alert"><strong>暂无数据!</strong></div>
             </td>
         </tr>

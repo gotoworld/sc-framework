@@ -1,6 +1,6 @@
 <%
 /*
- * 系统_管理员操作日志 后台管理 (初始化页面)
+ * 组织架构_用户 后台管理 (初始化页面)
  *
  * VERSION  DATE		BY		   REASON
  * -------- ----------- ------------ ------------------------------------------
@@ -37,7 +37,7 @@
 												  role="form" class="form-inline"
 												  method="post"  accept-charset="UTF-8"
 												  action="javascript:loadUrlPage(null,'info_search_form','info_list_div');"
-												  data-action="${basePath}/h/sys02/list">
+												  data-action="${basePath}/h/org/user/list">
 												<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum!}">
 												<div class="form-group" id="data_5">
 													<label class="font-noraml">创建时间</label>
@@ -56,6 +56,9 @@
 										</td>
 									</tr>
 								</table>
+								<% if(shiro.hasPermission("panoProj:add")){ %>
+								<a href="#" onclick="openMyBoxLayer('a','${basePath}/h/org/user/edit/add');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+								<%}%>
 								<div id="info_list_div">
 									<div class="alert alert-warning mt10">
 										<strong>数据加载中!</strong>data loading...
@@ -82,3 +85,4 @@
 </script>
 </body>
 </html>
+

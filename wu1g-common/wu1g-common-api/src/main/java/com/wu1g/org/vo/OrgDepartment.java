@@ -44,12 +44,12 @@ public class OrgDepartment extends BaseVO {
      * 名称
      */
     @NotNull(message = "name不能为空")
-    @Size(min=2,max = 100, message = "name最大100字符")
+    @Size(min=2,max = 50, message = "name最小2个字符,最大50字符")
     private String name;
     /**
      * 编码
      */
-    @Size(max = 100, message = "code最大100字符")
+    @Size(max = 100, message = "code最大20字符")
     private String code;
     /**
      * 父级ID

@@ -3,6 +3,7 @@ package com.wu1g.framework.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wu1g.framework.IEntity;
 import com.wu1g.framework.IVO;
+import com.wu1g.framework.util.IdUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,11 @@ public class BaseVO implements IVO,IEntity {
             pageNum=1;
         }
         return pageNum;
+    }
+    public String getToken(){
+        if(token==null){
+            token= IdUtil.createUUID(32);
+        }
+        return token;
     }
 }

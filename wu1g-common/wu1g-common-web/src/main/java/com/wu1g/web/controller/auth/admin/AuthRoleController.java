@@ -63,10 +63,10 @@ public class AuthRoleController extends BaseController {
 	private IAuthPermService authPermService;
 	
 	//权限_角色信息 管理
-	private static final String acPrefix="/auth03/";
-	private static final String init = "admin/auth/auth03";
-	private static final String edit = "admin/auth/auth03_01";
-	private static final String list = "admin/auth/auth03_list";
+	private static final String acPrefix="/auth/role/";
+	private static final String init = "admin/auth/auth_role";
+	private static final String edit = "admin/auth/auth_role_edit";
+	private static final String list = "admin/auth/auth_role_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
 	 * <p> 初始化处理。
@@ -129,7 +129,7 @@ public class AuthRoleController extends BaseController {
 				//获取当前角色所有的功能
 				Map xdto=new HashMap();
 				xdto.put("roleId", bean.getId());
-				request.setAttribute("myPermList", authPermService.findPermDataIsListByRoleId(xdto));
+				request.setAttribute("permBeans", authPermService.findPermDataIsListByRoleId(xdto));
 			}
 		}
 		if(bean==null){
@@ -137,7 +137,7 @@ public class AuthRoleController extends BaseController {
 			bean.setId(IdUtil.createUUID(22));//角色ID
 		}
 		bean.setPageNum( pageNum );
-		
+		bean.setToken( IdUtil.createUUID(32) );
 		request.setAttribute("bean",bean);
 		//权限信息树
 		request.setAttribute("permTree",authPermService.findDataTree(null));
@@ -180,7 +180,7 @@ public class AuthRoleController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="角色信息")
-	public String save(@Validated AuthRole bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated AuthRole bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
 		log.info("AuthRoleController save.........");
 		Response result = new Response();
 		if(bean!=null){

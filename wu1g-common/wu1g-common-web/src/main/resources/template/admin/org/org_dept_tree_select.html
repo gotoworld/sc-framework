@@ -1,0 +1,21 @@
+<%
+/*
+ * 组织架构_部门 树递归
+ */
+%>
+<%
+	for(bean in beans!){
+	 if(_this_self!=bean.id){
+%>
+		<option value="${bean.id}" ${_band_flag==bean.id?'selected="selected"':''}>
+		<% for(var i=1;i<=treeIndex;i++){ %>
+		|-
+		<%}%>
+		${bean.name}
+		</option>
+<% 		if(isNotEmpty(bean.beans) && bean.beans.~size>0){
+			 include("org_dept_tree_select.html",{treeIndex:treeIndex+1,beans:bean.beans}){}
+			 treeIndex=treeIndex-1;
+		}
+	}
+}%>

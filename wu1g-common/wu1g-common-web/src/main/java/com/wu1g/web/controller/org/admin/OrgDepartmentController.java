@@ -55,10 +55,9 @@ public class OrgDepartmentController extends BaseController {
 	private IOrgDepartmentService orgDepartmentService;
 	
 	//组织架构_部门 管理
-	private static final String acPrefix="/org01/";
-	private static final String init = "admin/org/org01";
-	private static final String edit = "admin/org/org01_01";
-	private static final String list = "admin/org/org01_list";
+	private static final String acPrefix="/org/dept/";
+	private static final String init = "admin/org/org_dept";
+	private static final String edit = "admin/org/org_dept_edit";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**
@@ -146,7 +145,7 @@ public class OrgDepartmentController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="部门信息")
-	public String save(@Validated @ModelAttribute OrgDepartment bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated OrgDepartment bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
 		log.info("OrgDepartmentController save.........");
 		Response result = new Response();
 		if(bean!=null){

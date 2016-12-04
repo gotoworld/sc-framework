@@ -194,7 +194,7 @@ public class PanoProjController extends BaseController {
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type="修改",desc="全景项目信息")
-    public String save(@Validated PanoProj bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+    public String save(@Validated PanoProj bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
         log.info("PanoProjController save.........");
         Response result = new Response();
         if (bean != null) {

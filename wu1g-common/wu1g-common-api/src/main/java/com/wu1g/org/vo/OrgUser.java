@@ -39,8 +39,6 @@ public class OrgUser extends BaseVO {
     /**
      * 员工UserID
      */
-    @NotNull(message = "userid不能为空")
-    @Size(max = 64, message = "userid最大64字符")
     private String userid;
     /**
      * 员工密码

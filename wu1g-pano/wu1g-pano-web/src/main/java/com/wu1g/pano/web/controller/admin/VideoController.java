@@ -194,7 +194,7 @@ public class VideoController extends BaseController {
 	@RequestMapping(method = {RequestMethod.POST},value = acPrefix + "save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="全景视频信息")
-	public String save(@Validated PanoProj bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated PanoProj bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
 		log.info( "PanoVideoController save........." );
 		Response result = new Response();
 		if (bean != null) {

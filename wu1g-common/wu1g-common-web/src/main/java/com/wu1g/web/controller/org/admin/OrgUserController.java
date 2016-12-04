@@ -61,12 +61,12 @@ public class OrgUserController extends BaseController {
 	private IOrgDepartmentService orgDepartmentService;
 	
 	//组织架构_用户 管理
-	private static final String acPrefix="/org02/";
-	private static final String init = "admin/org/org02";
-	private static final String edit = "admin/org/org02_01";
-	private static final String list = "admin/org/org02_list";
-	private static final String editUser = "admin/org/org02_04";
-	private static final String success = "redirect:/h"+acPrefix+init;
+	private static final String acPrefix="/org/user/";
+	private static final String init = "admin/org/org_user";
+	private static final String edit = "admin/org/org_user_edit";
+	private static final String list = "admin/org/org_user_list";
+	private static final String editUser = "admin/org/org_user_myinfo";
+	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**
 	 * <p> 初始化处理。
@@ -130,7 +130,7 @@ public class OrgUserController extends BaseController {
 					request.setAttribute("myRoleBeans",orgUserService.findRoleDataIsList(bean));
 				}
 				//获取用户所在部门集合
-				request.setAttribute("myDeptBeans",orgUserService.findDeptDataIsList(bean));
+				request.setAttribute("deptBeans",orgUserService.findDeptDataIsList(bean));
 			}
 		}
 		if(bean==null){
@@ -233,7 +233,7 @@ public class OrgUserController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
-	public String save(@Validated @RequestBody OrgUser bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated OrgUser bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
 		log.info("OrgUserController save.........");
 		Response result = new Response();
 		if(bean!=null){
@@ -280,10 +280,8 @@ public class OrgUserController extends BaseController {
 	@RequestMapping(value=acPrefix+"update")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="用户信息")
-	public String update(@Validated @RequestBody OrgUser bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) throws IOException {
+	public String update(@Validated  OrgUser bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) throws IOException {
 		log.info("OrgUserController save.........");
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
 		Response result = new Response();
 		if(bean!=null){
 			try {

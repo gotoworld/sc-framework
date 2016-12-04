@@ -15,8 +15,8 @@
 <c:if test="${treeList!=null && fn:length(treeList)>0}">
 	<c:forEach var="bean" items="${treeList}" varStatus="n">
 		<c:set var="checkBoxX" value="" />
-		<c:if test="${myDeptBeansx!=null && fn:length(myDeptBeansx)>0 }">
-			<c:forEach var="myDept" items="${myDeptBeansx}">
+		<c:if test="${deptBeansCopy!=null && fn:length(deptBeansCopy)>0 }">
+			<c:forEach var="myDept" items="${deptBeansCopy}">
 				<c:if test="${myDept.id==bean.id}">
 					<c:set var="checkBoxX" value='oldc="1" checked="checked"' />
 				</c:if>

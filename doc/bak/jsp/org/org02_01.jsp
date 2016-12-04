@@ -176,14 +176,14 @@
 							  </label>
 							  <div class="tree tree-plus-minus tree-solid-line tree-unselectable deptTree">
 								
-									<c:if test="${myDeptBeans!=null && fn:length(myDeptBeans)>0 }">
-										<c:set var="myDeptBeansx" value="${myDeptBeans}" scope="request" />
+									<c:if test="${deptBeans!=null && fn:length(deptBeans)>0 }">
+										<c:set var="deptBeansCopy" value="${deptBeans}" scope="request" />
 									</c:if>
 									<c:forEach items="${deptTree}" var="b">
 										<c:set var="dcode" value="${b.id}" scope="request" />  
 										<c:set var="checkBoxX" value="" />
-										<c:if test="${myDeptBeans!=null && fn:length(myDeptBeans)>0 }">
-											<c:forEach var="myDept" items="${myDeptBeans}">
+										<c:if test="${deptBeans!=null && fn:length(deptBeans)>0 }">
+											<c:forEach var="myDept" items="${deptBeans}">
 												<c:if test="${myDept.id==b.id}">
 													<c:set var="checkBoxX" value='oldc="1" checked="checked"' />
 												</c:if>

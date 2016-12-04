@@ -48,10 +48,10 @@ public class VariableController extends BaseController {
 	@Autowired
 	protected IVariableService variableService;
 	//系统_数据字典 管理
-	private static final String acPrefix="/sys03/";
-	private static final String init = "admin/sys/sys03";
-	private static final String edit = "admin/sys/sys03_01";
-	private static final String list = "admin/sys/sys03_list";
+	private static final String acPrefix="/sys/alog/";
+	private static final String init = "admin/sys/sys_alog";
+	private static final String edit = "admin/sys/sys_alog_edit";
+	private static final String list = "admin/sys/sys_alog_list";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**
@@ -155,7 +155,7 @@ public class VariableController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="数据字典信息")
-	public String save(@Validated SysVariable bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
+	public String save(@Validated SysVariable bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
 		log.info("VariableController save.........");
 		Response result = new Response();
 		if(bean!=null){

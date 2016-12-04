@@ -55,10 +55,9 @@ public class AuthPermController extends BaseController {
 	private IAuthPermService authPermService;
 	
 	//权限_权限信息 管理
-	private static final String acPrefix="/auth02/";
-	private static final String init = "admin/auth/auth02";
-	private static final String edit = "admin/auth/auth02_01";
-	private static final String list = "admin/auth/auth02_list";
+	private static final String acPrefix="/auth/perm/";
+	private static final String init = "admin/auth/auth_perm";
+	private static final String edit = "admin/auth/auth_perm_edit";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
 	 * <p> 初始化处理。
@@ -71,7 +70,7 @@ public class AuthPermController extends BaseController {
 	@RequiresPermissions("authPerm:menu")
 	@RequestMapping(value=acPrefix+"init")
 	public String init() {
-		log.info("Auth02Action init.........");
+		log.info("AuthPermController init.........");
 		//信息列表
 		List<AuthPerm> beans=authPermService.findDataTree(null);
 		request.setAttribute( "beans", beans );
@@ -88,7 +87,7 @@ public class AuthPermController extends BaseController {
 	@RequiresPermissions("authPerm:edit")
 	@RequestMapping(value = acPrefix+"edit/{id}")
 	public String edit( AuthPerm bean,@PathVariable("id") String id) {
-		log.info("Auth02Action edit.........");
+		log.info("AuthPermController edit.........");
 		if(ValidatorUtil.notEmpty(id)){
 			AuthPerm bean1=new AuthPerm();
 			bean1.setId(id);//权限id
@@ -116,7 +115,7 @@ public class AuthPermController extends BaseController {
 	@RequestMapping(value = acPrefix+"del/{id}")
 	@ALogOperation(type="删除",desc="权限信息")
 	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
-		log.info("Auth02Action del.........");
+		log.info("AuthPermController del.........");
 		Response result = new Response();
 		try {
 			AuthPerm bean1=new AuthPerm();
@@ -142,8 +141,8 @@ public class AuthPermController extends BaseController {
 	@RequestMapping(value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
-	public String save(@Validated  AuthPerm bean, RedirectAttributesModelMap modelMap, BindingResult bindingResult) {
-		log.info("Auth02Action save.........");
+	public String save(@Validated  AuthPerm bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
+		log.info("AuthPermController save.........");
 		Response result = new Response();
 		if(bean!=null){
 			try {

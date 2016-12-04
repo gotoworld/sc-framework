@@ -100,7 +100,7 @@ public class OrgUserController extends BaseController {
 		//信息列表
 		PageInfo<?> page=new PageInfo<>(orgUserService.findDataIsPage(bean));
 		request.setAttribute( "beans", page.getList() );
-		//分页对象-JSP标签使用-
+		//分页对象
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
 		return list;
 	}

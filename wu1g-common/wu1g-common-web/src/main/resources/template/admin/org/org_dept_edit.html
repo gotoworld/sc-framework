@@ -23,48 +23,51 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-sm-12">
-				<form id="org01_01" method="post" class="form-horizontal m-t" target="_parent"  accept-charset="UTF-8" action="${basePath}/h/org/dept/save">
+				<form id="id_form" method="post" class="form-horizontal m-t" target="_parent"  accept-charset="UTF-8" action="${basePath}/h/org/dept/save">
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}">
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
-					<div class="form-group">
-					  <label class="col-md-2 control-label" for="parentid">上级部门</label>
-					  <div class="col-md-4">
-							<% var treeIndex=1; %>
-					  		<% var _this_self=bean.id; %>
-					  		<% var _band_flag=bean.parentid; %>
-					  		<select  class="form-control" name="parentid" id="parentid">
-					  			<option value="">---顶级---</option>
-					  			<% if(isNotEmpty(beans) && beans.~size>0){ %>
-					  				<% for(b in beans){ %>
-											<option  value="${_this_self!=b.id?b.id:''}" ${_band_flag==b.id?'selected="selected"':''} >${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
-											<% layout("org_dept_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentid,_this_self:bean.id}){} %>
+					<div class="col-sm-6">
+						<div class="form-group">
+						  <label class="col-md-2 control-label" for="parentid">上级部门</label>
+						  <div class="col-md-4">
+								<% var treeIndex=1; %>
+								<% var _this_self=bean.id; %>
+								<% var _band_flag=bean.parentid; %>
+								<select  class="form-control" name="parentid" id="parentid">
+									<option value="">---顶级---</option>
+									<% if(isNotEmpty(beans) && beans.~size>0){ %>
+										<% for(b in beans){ %>
+												<option  value="${_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
+												<% layout("org_dept_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentid,_this_self:bean.id}){} %>
+										<%}%>
 									<%}%>
-								<%}%>
-					  		</select>
-					  </div>
+								</select>
+						  </div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="bean_code">编码</label>
+						  <div class="col-md-4">
+							  <input type="text" class="form-control" placeholder="请输入编码" id="bean_code" name="code" value="${bean.code}"/>
+								<span class="help-block"></span>
+						  </div>
+						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-md-2 control-label" for="bean_code">编码</label>
-					  <div class="col-md-4">
-					      <input type="text" class="form-control" x_placeholder="请输入编码" id="bean_code" name="code" value="${bean.code}"/>
-							<span class="help-block"></span>
-					  </div>
-					</div>
-					
-					<div class="form-group">
-					  <label class="col-md-2 control-label" for="bean_name">名称</label>
-					  <div class="col-md-4">
-					      <input type="text" class="form-control" x_placeholder="请输入名称" id="bean_name" name="name" value="${bean.name}"/>
-							<span class="help-block"></span>
-					  </div>
-					</div>
-					<div class="form-group">
-					   <label class="col-md-2 control-label" for="bean_memo">备注</label>
-					   <div class="col-md-8">
-					     <textarea class="form-control" rows="3" x_placeholder="请输入备注" id="bean_memo" name="memo">${bean.memo}</textarea>
-							<span class="help-block"></span>
-					   </div>
+					<div class="col-sm-6">
+						<div class="form-group">
+						  <label class="col-md-2 control-label" for="bean_name">名称</label>
+						  <div class="col-md-4">
+							  <input type="text" class="form-control" placeholder="请输入名称" id="bean_name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true"/>
+								<span class="help-block"></span>
+						  </div>
+						</div>
+						<div class="form-group">
+						   <label class="col-md-2 control-label" for="bean_memo">备注</label>
+						   <div class="col-md-8">
+							 <input id="bean_memo" name="memo" value="${bean.memo}" class="form-control" type="text"  placeholder="备注"   maxlength="255"   aria-invalid="true">
+								<span class="help-block"></span>
+						   </div>
+						</div>
 					</div>
 					<div class="col-sm-12">
 						<div style="width: 200px; margin: 0 auto;">
@@ -79,8 +82,13 @@
 <% include("../include/public_last_js_css.html"){} %>
 <script type="text/javascript">
     $().ready(function(){
-        $("#org01_01").validate();
+        formValidate();
     });
+    function formValidate(){
+        setTimeout(function(){
+            $("#id_form").validate();
+        },1000);
+    }
 </script>
 </body>
 </html>

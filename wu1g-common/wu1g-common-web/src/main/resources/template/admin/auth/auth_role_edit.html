@@ -29,56 +29,60 @@
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
-					<div class="form-group note note-info">
-					  <label class="col-md-2 control-label" for="bean_name">角色名称</label>
-					  <div class="col-md-4">
-					      <input type="text" class="form-control" x_placeholder="请输入角色名称" id="bean_name" name="name" value="${bean.name}"/>
-							<span class="help-block"></span>
-					  </div>
-					  <%if(shiro.hasPermission(authRole:super">
-					  <label class="col-md-2 control-label checkbox-inline">
-							<input id="bean_isSuper" ${bean.isSuper=='1'?'checked="checked"':''} name="isSuper" value="1" type="checkbox"> 超级管理员
-					  	</label>
-					  <%}%>
-					</div>
-					<%if(shiro.hasPermission(authRole:parm">
-					<div class="form-group">
-					  <label class="col-md-2 control-label ">
-					  	功能列表
-					  </label>
-					  <div class="col-md-10">
-						  <div class="tree tree-plus-minus tree-solid-line tree-unselectable permTree">
-							  <%
-							  var permBeansCopy=null;
-							  var dcode="";
-							  var checkBoxX="";
-							  if(isNotEmpty(permBeans) && permBeans.~size>0 ){
-								  permBeansCopy=permBeans;
-							  }
-							  for(b in permTree!){
-								  dcode=b.id;
-								  checkBoxX="";
-								  for(perm in permBeans!){
-									  if(perm.id==b.id){
-										 checkBoxX='oldc="1" checked="checked"';
-									  }
-								  }
-							  %>
-							  <p>
-								  <label>
-									  <input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="permIdArray">
-									  ${b.name}
-								  </label>
-							  </p>
-							  <%if(isNotEmpty(b.beans) && b.beans.~size>0){
-								  layout("auth_role_tree_checkbox.html",{beans:b.beans,permBeansCopy:permBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
-								  dcode="";
-							  }%>
-							  <%}%>
+					<div class="col-sm-6">
+						<div class="form-group">
+						  <label class="col-md-2 control-label" for="bean_name">角色名称</label>
+						  <div class="col-md-4">
+							  <input type="text" class="form-control" placeholder="请输入角色名称" id="bean_name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
+								<span class="help-block"></span>
 						  </div>
-					  </div>
+						  <%if(shiro.hasPermission("authRole:super")){ %>
+						  <label class="col-md-2 control-label checkbox-inline">
+								<input id="bean_isSuper" ${bean.isSuper=='1'?'checked="checked"':''} name="isSuper" value="1" type="checkbox"> 超级管理员
+							</label>
+						  <%}%>
+						</div>
 					</div>
-					<%}%>
+					<div class="col-sm-6">
+						<%if(shiro.hasPermission("authRole:parm")){ %>
+						<div class="form-group">
+						  <label class="col-md-2 control-label ">
+							功能列表
+						  </label>
+						  <div class="col-md-10">
+							  <div class="tree tree-plus-minus tree-solid-line tree-unselectable permTree">
+								  <%
+								  var permBeansCopy=null;
+								  var dcode="";
+								  var checkBoxX="";
+								  if(isNotEmpty(permBeans) && permBeans.~size>0 ){
+									  permBeansCopy=permBeans;
+								  }
+								  for(b in permTree!){
+									  dcode=b.id;
+									  checkBoxX="";
+									  for(perm in permBeans!){
+										  if(perm.id==b.id){
+											 checkBoxX='oldc="1" checked="checked"';
+										  }
+									  }
+								  %>
+									  <p>
+										  <label>
+											  <input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="permIdArray">
+											  ${b.name}
+										  </label>
+									  </p>
+									  <%if(isNotEmpty(b.beans) && b.beans.~size>0){
+										  layout("auth_role_tree_checkbox.html",{beans:b.beans,permBeansCopy:permBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
+										  dcode="";
+									  }%>
+								  <%}%>
+							  </div>
+						  </div>
+						</div>
+						<%}%>
+					</div>
 					<div class="col-sm-12">
 						<div style="width: 200px; margin: 0 auto;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
@@ -92,8 +96,13 @@
 <% include("../include/public_last_js_css.html"){} %>
 <script type="text/javascript">
     $().ready(function(){
-        $("#id_form").validate();
+        formValidate();
     });
+    function formValidate(){
+        setTimeout(function(){
+            $("#id_form").validate();
+        },1000);
+    }
 </script>
 </body>
 </html>

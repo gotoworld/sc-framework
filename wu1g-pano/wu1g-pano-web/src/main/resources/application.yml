@@ -74,15 +74,15 @@ wu1g:
       image:
         executorServiceSize: 5
         n0:
-          with: 200
+          width: 200
           height: 200
         n1:
-          with: 400
+          width: 400
           height: 400
         n2:
-          with: 800
+          width: 800
           height: 800
         n3:
-          with: 1200
+          width: 1200
           height: 1200
 

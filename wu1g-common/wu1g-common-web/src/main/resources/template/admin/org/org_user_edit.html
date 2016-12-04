@@ -25,7 +25,7 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-sm-12">
-				<form id="org02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/org/user/save">
+				<form id="id_form" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/org/user/save">
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
@@ -33,7 +33,7 @@
 					<%if(bean.userid!='admin' ){%>
 					<%if(shiro.hasPermission("orgUser:role.edit")){%>
 					<div class="col-md-12 ">
-						<label class="control-label">角色=></label>
+						<label class="control-label">角色></label>
 						<div class="form-group ">
 								<%if(isNotEmpty(roleBeans)){
 									for(role in roleBeans){
@@ -54,13 +54,13 @@
 					</div>
 					<%}%>
 					<%}%>
-					<div class="col-md-6 ">
+					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_userid">登录名</label>
 							<div class="col-md-8">
 							<%if(bean.userid==null){%>
-								<input type="text" class="form-control" x_placeholder="请输入用户登录名"
-									id="bean_userid" name="userid" value="${bean.userid}" />
+								<input type="text" class="form-control" placeholder="请输入用户登录名"
+									id="bean_userid" name="userid" value="" required="" aria-required="true" maxlength="20" aria-invalid="true" />
 							<%}%>
 							<%if(bean.userid!=null){%>
 								<input type="text" class="form-control" disabled="disabled" value="${bean.userid}" />
@@ -72,8 +72,8 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_name">成员名称</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" x_placeholder="请输入成员名称"
-									id="bean_name" name="name" value="${bean.name}" /> <span
+								<input type="text" class="form-control" placeholder="请输入成员名称"
+									id="bean_name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" /> <span
 									class="help-block"></span>
 							</div>
 						</div>
@@ -81,7 +81,7 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_mobile">移动电话</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" x_placeholder="请输入移动电话"
+								<input type="text" class="form-control" placeholder="请输入移动电话"
 									id="bean_mobile" name="mobile" value="${bean.mobile}" />
 								<span class="help-block"></span>
 							</div>
@@ -90,25 +90,25 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_email">邮箱</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" x_placeholder="请输入邮箱"
+								<input type="text" class="form-control" placeholder="请输入邮箱"
 									id="bean_email" name="email" value="${bean.email}" /> <span
 									class="help-block"></span>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 ">
+					<div class="col-sm-6 ">
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_pwd">登录密码</label>
 							<div class="col-md-8">
 								<input type="hidden" name="pwd"  id="bean_pwd" value="" />
-								<input type="password" class="form-control" name="pwd_x" onchange="cPwd(this.value)"  onblur="cPwd(this.value)" x_placeholder="不修改请留空" value="" />
+								<input type="password" class="form-control" name="pwd_x" onchange="cPwd(this.value)"  onblur="cPwd(this.value)" placeholder="不修改请留空" value="" />
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_jobNo">工号</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" x_placeholder="请输入工号"
+								<input type="text" class="form-control" placeholder="请输入工号"
 									id="bean_jobNo" name="jobNo" value="${bean.jobNo}" /> <span
 									class="help-block"></span>
 							</div>
@@ -116,7 +116,7 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_tel">固定电话</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" x_placeholder="请输入固定电话"
+								<input type="text" class="form-control" placeholder="请输入固定电话"
 									id="bean_tel" name="tel" value="${bean.tel}" /> <span
 									class="help-block"></span>
 							</div>
@@ -144,11 +144,11 @@
 					</div>
 					<%if(shiro.hasPermission("orgUser:dept.edit")){%>
 					<%if(isNotEmpty(deptTree) && deptTree.~size>0){%>
-					<div class="form-group col-md-12">
+					<div class="col-sm-12">
 						  <div class="col-md-10">
-							  <label class="col-md-2 control-label"  style="text-align: left;float:left ">
+							  <p class="col-md-2 control-label"  style="text-align: left;">
 							  	部门列表
-							  </label>
+							  </p>
 							  <div class="tree tree-plus-minus tree-solid-line tree-unselectable deptTree">
 								<%
 								  	var deptBeansCopy=null;
@@ -182,6 +182,7 @@
 					</div>
 					<%}%>
 					<%}%>
+
 					<div class="col-sm-12">
 						<div style="width: 200px; margin: 0 auto;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
@@ -195,8 +196,13 @@
 	<% include("../include/public_last_js_css.html"){} %>
 	<script type="text/javascript">
         $().ready(function(){
-            $("#org02_01").validate();
+            formValidate();
         });
+        function formValidate(){
+            setTimeout(function(){
+                $("#id_form").validate();
+            },1000);
+        }
 	</script>
 </body>
 </html>

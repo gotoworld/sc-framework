@@ -40,17 +40,18 @@ public class AuthPerm extends BaseVO {
      * 权限名称
      */
     @NotNull(message = "name不能为空")
-    @Size(max = 50, message = "name最大50字符")
+    @Size(min=2,max = 50, message = "name最大50字符")
     private String name;
     /**
      * 权限匹配符
      */
     @NotNull(message = "matchStr不能为空")
-    @Size(max = 50, message = "matchStr最大50字符")
+    @Size(min=2,max = 50, message = "matchStr最大50字符")
     private String matchStr;
     /**
      * 备注
      */
+    @NotNull(message = "memo不能为空")
     @Size(max = 255, message = "memo最大255字符")
     private String memo;
     /**

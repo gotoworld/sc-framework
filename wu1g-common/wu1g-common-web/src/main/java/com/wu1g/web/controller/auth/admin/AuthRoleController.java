@@ -73,8 +73,6 @@ public class AuthRoleController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>初始化处理。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authRole:menu")
 	@RequestMapping(value=acPrefix+"init")
@@ -87,8 +85,6 @@ public class AuthRoleController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>信息列表。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authRole:menu")
 	@RequestMapping(value=acPrefix+"list")
@@ -101,7 +97,8 @@ public class AuthRoleController extends BaseController {
 		bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
 		//信息列表
 		PageInfo<?> page =new PageInfo<>(authRoleService.findDataIsPage(bean));
-		//分页对象-JSP标签使用-
+		request.setAttribute("beans",page.getList());
+		//分页对象
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
 		return list;
 	}
@@ -110,14 +107,12 @@ public class AuthRoleController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>编辑。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authRole:edit")
 	@RequestMapping(value=acPrefix+"edit/{id}")
 	public String edit(AuthRole bean,@PathVariable("id") String id){
 		log.info("AuthRoleController edit.........");
-		int pageNum = 0;
+		int pageNum = 1;
 		if(bean!=null){
 			pageNum=bean.getPageNum();
 		}
@@ -153,6 +148,7 @@ public class AuthRoleController extends BaseController {
 	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authRole:del")
+	@RequestMapping(value=acPrefix+"del/{id}")
 	@ALogOperation(type="删除",desc="角色信息")
 	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
 		log.info("AuthRoleController del.........");
@@ -173,8 +169,6 @@ public class AuthRoleController extends BaseController {
 	 * [功能概要] 
 	 * <li>新增。
 	 * <li>修改。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions(value={"authRole:add","authRole:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")

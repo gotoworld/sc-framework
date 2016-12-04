@@ -132,7 +132,7 @@
 		<if test="keyword!= null" >,keyword=#{keyword}</if>
 		<if test="delFlag!= null" >,del_flag=#{delFlag}</if>
 		<if test="dateUpdate!= null" >,date_update=#{dateUpdate}</if>
-		<if test="parentid!= null" >,parentid=#{parentid}</if>
+		<if test="parentid!= null and parentid!='-999'" >,parentid=#{parentid}</if>
 		where  id = #{id}
 	</update>
 	<!-- 判断是否存在 -->

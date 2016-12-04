@@ -29,44 +29,48 @@
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
-				  	<div class="form-group">
-					  <label class="col-md-2 control-label">父级ID</label>
-					  <div class="col-md-8">
-						  <% var treeIndex=1; %>
-						  <% var _this_self=bean.id; %>
-						  <% var _band_flag=bean.parentid; %>
-						  <select  class="form-control" name="parentid" id="parentid">
-							  <option value="">---顶级---</option>
-							  <% if(isNotEmpty(beans) && beans.~size>0){ %>
-								  <% for(b in beans){ %>
-							  		 <option  value="_this_self!=b.id?b.id:''}" ${_band_flag==b.id?'selected="selected"':''} >${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
-							 		 <% layout("auth_perm_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentid,_this_self:bean.id}){} %>
+					<div class="col-md-8">
+						<div class="form-group">
+						  <label class="col-md-2 control-label">父级权限</label>
+						  <div class="col-md-8">
+							  <% var treeIndex=1; %>
+							  <% var _this_self=bean.id; %>
+							  <% var _band_flag=bean.parentid; %>
+							  <select  class="form-control" name="parentid" id="parentid">
+								  <option value="">---顶级---</option>
+								  <% if(isNotEmpty(beans) && beans.~size>0){ %>
+									  <% for(b in beans){ %>
+										 <option  value="_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
+										 <% layout("auth_perm_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentid,_this_self:bean.id}){} %>
+									  <%}%>
 								  <%}%>
-							  <%}%>
-						  </select>
-							<span class="help-block"></span>
-					  </div>
+							  </select>
+								<span class="help-block"></span>
+						  </div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="bean_name">权限名称</label>
+						  <div class="col-md-8">
+							  <input type="text" class="form-control" placeholder="请输入权限名称" id="bean_name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
+								<span class="help-block"></span>
+						  </div>
+						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-md-2 control-label" for="bean_name">权限名称</label>
-					  <div class="col-md-8">
-					      <input type="text" class="form-control" x_placeholder="请输入权限名称" id="bean_name" name="name" value="${bean.name}"/>
-							<span class="help-block"></span>
-					  </div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-2 control-label" for="bean_matchStr">权限匹配符</label>
-					  <div class="col-md-8">
-					      <input type="text" class="form-control" x_placeholder="请输入权限匹配符" id="bean_matchStr" name="matchStr" value="${bean.matchStr}"/>
-							<span class="help-block"></span>
-					  </div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-2 control-label" for="bean_memo">备注</label>
-					   <div class="col-md-8">
-					     <textarea class="form-control" rows="3"  x_placeholder="请输入备注" id="bean_memo" name="memo">${bean.memo}</textarea>
-							<span class="help-block"></span>
-					   </div>
+					<div class="col-md-8">
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="bean_matchStr">权限匹配符</label>
+						  <div class="col-md-8">
+							  <input type="text" class="form-control" placeholder="请输入权限匹配符" id="bean_matchStr" name="matchStr" value="${bean.matchStr}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
+								<span class="help-block"></span>
+						  </div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="bean_memo">备注</label>
+						   <div class="col-md-8">
+							   <input type="text" class="form-control" placeholder="请输入备注" id="bean_memo" name="memo" value="${bean.memo}"/>
+								<span class="help-block"></span>
+						   </div>
+						</div>
 					</div>
 					<div class="col-sm-12">
 					<div style="width: 200px; margin: 0 auto;">
@@ -81,8 +85,13 @@
 	<% include("../include/public_last_js_css.html"){} %>
 	<script type="text/javascript">
         $().ready(function(){
-            $("#id_form").validate();
+            formValidate();
         });
+        function formValidate(){
+            setTimeout(function(){
+                $("#id_form").validate();
+            },1000);
+        }
 	</script>
 </body>
 </html>

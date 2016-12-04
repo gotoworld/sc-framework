@@ -6,7 +6,6 @@
 		t1.id as "id",
 		t1.version as "version",
 		t1.name as "name",
-		t1.name_en as "nameEn",
 		t1.code as "code",
 		t1.parentid as "parentid",
 		t1.level as "level",
@@ -41,7 +40,6 @@
 		id,
 		version,
 		name,
-		name_en,
 		code,
 		parentid,
 		level,
@@ -60,7 +58,6 @@
 		#{id},
 		'0',
 		#{name},
-		#{nameEn},
 		#{code},
 		#{parentid},
 		#{level},
@@ -122,7 +119,6 @@
 	<update id="updateByPrimaryKeySelective" parameterType="sysVariable" >
 		update t_sys_variable set version=version+1
 		<if test="name!= null" >,name=#{name}</if>
-		<if test="name!= null" >,name_en=#{nameEn}</if>
 		<if test="code!= null" >,code=#{code}</if>
 		<if test="parentid!= null" >,parentid=#{parentid}</if>
 		<if test="level!= null" >,level=#{level}</if>
@@ -143,10 +139,10 @@
 	<select id="findDataIsPage" parameterType="sysVariable" resultType="sysVariable">
 		select
 		<include refid="Base_Column_List" />,t2.name pname
-		from t_sys_variable t1 left join t_sys_variable t2 on t1.parentid = t2.id
+		from t_sys_variable t1
+		left join t_sys_variable t2 on t1.parentid = t2.id
 		where 1=1 
 		<if test="parentid!= null and parentid!= ''" >and t1.parentid=#{parentid}</if>
-		<if test="parentid== null or parentid== ''" >and t1.parentid!='#'</if>
 		<choose>
 	    	<when test="delFlag!=null">
 	    		and t1.del_flag=#{delFlag}
@@ -156,7 +152,6 @@
 	    	</otherwise>
 	    </choose>
 	    order by t1.code
-		<!--未找到逻辑删除标记 字段-->
 	</select>
 	<!--信息列表 -->
 	<select id="findDataIsList" parameterType="sysVariable" resultType="sysVariable">
@@ -165,7 +160,6 @@
 		from t_sys_variable t1
 		where 1=1 
 		<if test="parentid!= null and parentid!= ''" >and t1.parentid=#{parentid}</if>
-		<if test="parentid== null or parentid== ''" >and t1.parentid!='#'</if>
 		<choose>
 	    	<when test="delFlag!=null">
 	    		and t1.del_flag=#{delFlag}
@@ -175,18 +169,15 @@
 	    	</otherwise>
 	    </choose>
 	     order by t1.code
-		<!--未找到逻辑删除标记 字段-->
 	</select>
 	<!-- 逻辑删除 -->
 	<update id="deleteById" parameterType="sysVariable" >
 		update t_sys_variable set del_flag = '1'
-		<!--未找到逻辑删除标记 字段-->
 		where  id = #{id}
 	</update>
 	<!-- 恢复逻辑删除 -->
 	<update id="recoveryDataById" parameterType="sysVariable" >
 		update t_sys_variable set del_flag = '0'
-		<!--未找到逻辑删除标记 字段-->
 		where  id = #{id}
 	</update>
 </mapper>

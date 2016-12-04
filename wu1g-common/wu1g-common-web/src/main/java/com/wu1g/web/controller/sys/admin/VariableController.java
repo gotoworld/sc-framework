@@ -59,8 +59,6 @@ public class VariableController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>初始化处理。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("sysDic:menu")
 	@RequestMapping(value=acPrefix+"init")
@@ -73,8 +71,6 @@ public class VariableController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>信息列表。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("sysDic:menu")
 	@RequestMapping(value=acPrefix+"list")
@@ -85,7 +81,7 @@ public class VariableController extends BaseController {
 		}
 		PageInfo<?> page=new PageInfo<>(variableService.findDataIsPage(bean));
 		request.setAttribute( "beans", page.getList() );
-		//分页对象-JSP标签使用-
+		//分页对象
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
 		return list;
 	}
@@ -94,14 +90,12 @@ public class VariableController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>编辑。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("sysDic:edit")
 	@RequestMapping(value=acPrefix+"edit/{id}")
 	public String edit(SysVariable bean,@PathVariable("id") String id) {
 		log.info("VariableController edit.........");
-		int pageNum = 0;
+		int pageNum = 1;
 		if(bean!=null && bean.getPageNum()!=null){
 			pageNum=bean.getPageNum();
 		}
@@ -123,8 +117,6 @@ public class VariableController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>逻辑删除。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("sysDic:del")
 	@RequestMapping(value=acPrefix+"del/{id}")

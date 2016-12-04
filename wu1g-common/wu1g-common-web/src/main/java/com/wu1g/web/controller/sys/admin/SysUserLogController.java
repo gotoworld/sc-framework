@@ -48,8 +48,6 @@ public class SysUserLogController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>初始化处理。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("sysLog:menu")
 	@RequestMapping(value=acPrefix+"init")
@@ -62,8 +60,6 @@ public class SysUserLogController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>信息列表。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("sysLog:menu")
 	@RequestMapping(value=acPrefix+"list")
@@ -75,7 +71,7 @@ public class SysUserLogController extends BaseController {
 		//信息列表
 		PageInfo<?> page=new PageInfo<>(sysUserLogService.findDataIsPage(bean));
 		request.setAttribute( "beans", page.getList() );
-		//分页对象-JSP标签使用-
+		//分页对象
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
 		return list;
 	}

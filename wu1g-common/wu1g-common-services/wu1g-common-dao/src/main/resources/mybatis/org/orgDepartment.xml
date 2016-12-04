@@ -151,7 +151,7 @@
 		,update_ip=#{updateIp}
 		<if test="name!= null" >,name=#{name}</if>
 		<if test="code!= null" >,code=#{code}</if>
-		<if test="parentid!= null" >,parentid=#{parentid}</if>
+		<if test="parentid!= null and parentid!='-999'" >,parentid=#{parentid}</if>
 		<if test="level!= null" >,level=#{level}</if>
 		<if test="pCode!= null" >,p_code=#{pCode}</if>
 		<if test="state!= null" >,state=#{state}</if>

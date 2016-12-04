@@ -50,7 +50,7 @@ import java.util.Map;
 @Order(-1000)
 @Slf4j
 public class AppConfig implements ApplicationContextAware, EnvironmentAware {
-    private static final String keyPrefix = "wu1g.";
+    public static final String keyPrefix = "wu1g.";
     private static final String prikey="A1B2C3D4E5F60708";
     private static ApplicationContext applicationContext;
     private static RelaxedPropertyResolver appProperty;

@@ -81,14 +81,12 @@ public class OrgDepartmentController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>编辑。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("orgDept:edit")
 	@RequestMapping(value=acPrefix+"edit/{id}")
 	public String edit(OrgDepartment bean, @PathVariable("id") String id) {
 		log.info("OrgDepartmentController edit.........");
-		int pageNum = 0;
+		int pageNum = 1;
 		if(bean!=null && bean.getPageNum()!=null){
 			pageNum=bean.getPageNum();
 		}
@@ -113,8 +111,6 @@ public class OrgDepartmentController extends BaseController {
 	 * <ol>
 	 * [功能概要] 
 	 * <li>逻辑删除。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("orgDept:del")
 	@RequestMapping(value=acPrefix+"del/{id}")
@@ -138,8 +134,6 @@ public class OrgDepartmentController extends BaseController {
 	 * [功能概要] 
 	 * <li>新增。
 	 * <li>修改。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions(value={"orgDept:add","orgDept:edit"},logical=Logical.OR)
 	@RequestMapping(value=acPrefix+"save")

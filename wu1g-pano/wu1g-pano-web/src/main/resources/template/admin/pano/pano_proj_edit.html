@@ -77,11 +77,11 @@
 								<div class="col-sm-8">
 									<select name="snowType" class="form-control m-b">
 										<option value="">--不显示--</option>
-										<option value="defaultsnow" <%if(bean.snowType=='defaultsnow'){%>selected="selected"<%}%> >默认</option>
-										<option value="snowballs" <%if(bean.snowType=='snowballs'){%>selected="selected"<%}%>>雪花球</option>
-										<option value="snowflakes" <%if(bean.snowType=='snowflakes'){%>selected="selected"<%}%>>雪花</option>
-										<option value="rain" <%if(bean.snowType=='rain'){%>selected="selected"<%}%>>雨</option>
-										<option value="heavyrain" <%if(bean.snowType=='heavyrain'){%>selected="selected"<%}%>>大雨</option>
+										<option value="defaultsnow" ${bean.snowType=='defaultsnow'?'selected="selected"':''} >默认</option>
+										<option value="snowballs" ${bean.snowType=='snowballs'?'selected="selected"':''}>雪花球</option>
+										<option value="snowflakes" ${bean.snowType=='snowflakes'?'selected="selected"':''}>雪花</option>
+										<option value="rain" ${bean.snowType=='rain'?'selected="selected"':''}>雨</option>
+										<option value="heavyrain" ${bean.snowType=='heavyrain'?'selected="selected"':''}>大雨</option>
 									</select>
 									<span id="snowType-error" class="help-block m-b-none"></span>
 								 </div>

@@ -1,4 +1,4 @@
-<%--
+<%
 /*
  * 权限_权限信息  树递归
 */
@@ -13,10 +13,9 @@ for(bean in beans!){
 			<%}%>
 			${bean.name}
 		</option>
-<%
+<%		}
 		if(isNotEmpty(bean.beans) && bean.beans.~size>0){
 			include("auth_perm_tree_select.html",{treeIndex:treeIndex+1,beans:bean.beans}){};
 			treeIndex=treeIndex-1;
 		}
-  	}
 }%>

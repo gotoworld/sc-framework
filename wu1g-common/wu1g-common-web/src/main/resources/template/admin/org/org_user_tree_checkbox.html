@@ -15,11 +15,12 @@ for(b in beans!){
 %>
 		<p>
 			<label>
-			<% for(var i=1;i<=numx;i++){ %>
-			|-
-			<%}%>
-			<input type="checkbox" class="${dcode} ${b.id}" level="${numx}" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="deptIdArray">
-			${b.name}
+				-
+				<% for(var i=1;i<=numx;i++){ %>
+				|-
+				<%}%>
+				<input type="checkbox" class="${dcode} ${b.id}" level="${numx}" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="deptIdArray">
+				${b.name}
 			</label>
 		</p>
 <%

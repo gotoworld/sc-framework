@@ -144,9 +144,10 @@ public class PanoProjController extends BaseController {
                 bean.setScenes(panoSceneService.findDataIsList(scene));
             }
         }
-        if (bean == null) {
+        if (bean == null||"add".equals(id)) {
             bean = new PanoProj();
-            bean.setId(IdUtil.createUUID(32));// id
+            bean.setId(IdUtil.createUUID(32));
+            bean.setNewFlag("1");
         }
         bean.setPageNum(pageNum);
         bean.setToken(IdUtil.createUUID(32));

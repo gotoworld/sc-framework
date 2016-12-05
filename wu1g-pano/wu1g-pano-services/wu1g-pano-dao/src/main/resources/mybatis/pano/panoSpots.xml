@@ -165,10 +165,10 @@
 		and scene_id=#{sceneId}
 		and htype=#{htype}
 		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
+			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
 		</if>
 		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
+			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
 		</if>
 		order by t1.date_created desc
 	</select>

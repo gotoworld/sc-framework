@@ -174,7 +174,7 @@ public class LoginController extends BaseController {
 	 * 
 	 * @return 转发字符串
 	 */
-	@RequestMapping(value = "/logout")
+	@RequestMapping(value="/logout")
 	public String logout() throws Exception {
 		log.info( "LoginController logout" );
 		getAuth().logout();
@@ -182,7 +182,7 @@ public class LoginController extends BaseController {
 		// 清空用户登录信息
 		SessionUtil.clearAdminSession( request );
 
-		return "redirect:/admin/init";
+		return "admin/login";
 	}
 
 	// test

@@ -6,6 +6,7 @@ import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IpUtils;
 import com.wu1g.framework.util.ReflectUtil;
+import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.org.vo.OrgUser;
 import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
@@ -69,12 +70,22 @@ public class ALogAspect {
                     }
                 }
             }
-            String id= (String) ReflectUtil.getValueByFieldName(object,"id");
-            if("add".equals(id)){
-                logArr[0]="新增";
+            String id="";
+            String newFlag="";
+            try {
+                id=(String) ReflectUtil.getValueByFieldName(object,"id");
+                newFlag=(String) ReflectUtil.getValueByFieldName(object,"newFlag");
+                if("1".equals(newFlag)){
+                    logArr[0]="新增";
+                }
+                if(ValidatorUtil.notEmpty(id)){
+                    id="["+id+"]";
+                }
+            } catch (Exception e) {
+                id="["+objArr[0]+"]";
             }
 //            //*========数据库日志=========*//
-            sysUserLogService.info(logArr[0],logArr[1], user.getName(), ip);
+            sysUserLogService.info(logArr[0],logArr[1]+id, user.getName(), ip);
 //            log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志

@@ -154,32 +154,36 @@
 		where 
 			id = #{id}
 	</select>
-	
+	<!--列表通用条件-->
+	<sql id="list_where_sql">
+		<choose>
+			<when test="delFlag!=null">
+				and t1.del_flag=#{delFlag}
+			</when>
+			<otherwise>
+				and t1.del_flag='0'
+			</otherwise>
+		</choose>
+
+		<if test="name!=null and name!=''">
+			and t1.name like CONCAT('%',#{name},'%')
+		</if>
+
+		<if test="dateBegin!=null and dateBegin!=''">
+			<![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
+		</if>
+		<if test="dateEnd!=null and dateEnd!=''">
+			<![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
+		</if>
+	</sql>
+
 	<!--信息列表 分页 -->
 	<select id="findDataIsPage" parameterType="panoProj" resultType="panoProj">
 		select
 		<include refid="Base_Column_List" />
 		from t_pano_proj t1 
 		where type=#{type}
-		<choose>
-		 <when test="delFlag!=null">
-		     and t1.del_flag=#{delFlag}
-		 </when>
-		 <otherwise>
-		     and t1.del_flag='0'
-		 </otherwise>
-		</choose>
-		
-		<if test="name!=null and name!=''">
-			and t1.name like CONCAT('%',#{name},'%')
-		</if>
-		
-		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
-		</if>
-		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
-		</if>
+		<include refid="list_where_sql" />
 		order by t1.date_created desc
 	</select>
 	
@@ -189,20 +193,7 @@
 		<include refid="Base_Column_List" />
 		from t_pano_proj t1 
 		where type=#{type}
-		<choose>
-		 <when test="delFlag!=null">
-		     and t1.del_flag=#{delFlag}
-		 </when>
-		 <otherwise>
-		     and t1.del_flag='0'
-		 </otherwise>
-		</choose>
-		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
-		</if>
-		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
-		</if>
+		<include refid="list_where_sql" />
 		order by t1.date_created desc
 	</select>
 	
@@ -215,7 +206,7 @@
 			,update_ip=#{updateIp}
 			,del_flag='1'
 		where  
-			t1.id = #{id}
+			id = #{id}
 	</update>
 	
 	<!-- 恢复逻辑删除 -->

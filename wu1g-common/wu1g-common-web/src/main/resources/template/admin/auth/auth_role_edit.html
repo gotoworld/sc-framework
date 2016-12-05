@@ -29,19 +29,24 @@
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
-					<div class="col-sm-6">
+                    <input type="hidden" name="newFlag" value="${bean.newFlag}" />
+                    <div class="col-sm-6">
 						<div class="form-group">
 						  <label class="col-md-2 control-label" for="bean_name">角色名称</label>
 						  <div class="col-md-4">
 							  <input type="text" class="form-control" placeholder="请输入角色名称" id="bean_name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
 								<span class="help-block"></span>
 						  </div>
-						  <%if(shiro.hasPermission("authRole:super")){ %>
-						  <label class="col-md-2 control-label checkbox-inline">
-								<input id="bean_isSuper" ${bean.isSuper=='1'?'checked="checked"':''} name="isSuper" value="1" type="checkbox"> 超级管理员
-							</label>
-						  <%}%>
 						</div>
+						  <%if(shiro.hasPermission("authRole:super")){ %>
+							<div class="form-group">
+								<div class="checkbox" style="margin-left: 10px;">
+									<label >
+										<input class="checkbox" id="bean_isSuper" ${bean.isSuper=='1'?'checked="checked"':''} name="isSuper" value="1" type="checkbox"> 超级管理员
+									</label>
+								</div>
+							</div>
+						  <%}%>
 					</div>
 					<div class="col-sm-6">
 						<%if(shiro.hasPermission("authRole:parm")){ %>
@@ -50,7 +55,7 @@
 							功能列表
 						  </label>
 						  <div class="col-md-10">
-							  <div class="tree tree-plus-minus tree-solid-line tree-unselectable permTree">
+							  <div class="">
 								  <%
 								  var permBeansCopy=null;
 								  var dcode="";
@@ -69,6 +74,7 @@
 								  %>
 									  <p>
 										  <label>
+											  -
 											  <input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="permIdArray">
 											  ${b.name}
 										  </label>

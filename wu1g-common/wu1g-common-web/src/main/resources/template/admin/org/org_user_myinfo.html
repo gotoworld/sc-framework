@@ -29,7 +29,8 @@
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
-					<input type="hidden" name="type" id="bean_type" value="0">
+                    <input type="hidden" name="newFlag" value="${bean.newFlag}" />
+                    <input type="hidden" name="type" id="bean_type" value="0">
 					<div class="col-md-6 alert alert-info">
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_name">成员名称</label>
@@ -94,6 +95,8 @@
 		</div>
 	</div>
 	<% include("../include/public_last_js_css.html"){} %>
+	<script src="${basePath!}/js/jQuery.md5.js" type="text/javascript"></script>
+
 	<script type="text/javascript">
         $().ready(function(){
             $("#org02_01").validate();

@@ -104,9 +104,10 @@ public class VariableController extends BaseController {
 			bean1.setId(id);
 			bean=variableService.findDataById(bean1);
 		}
-		if(bean==null){
+		if(bean==null||"add".equals(id)){
 			bean=new SysVariable();
 			bean.setId(IdUtil.createUUID(22));
+            bean.setNewFlag("1");
 		}
 		bean.setPageNum( pageNum );
 		request.setAttribute("bean",bean);

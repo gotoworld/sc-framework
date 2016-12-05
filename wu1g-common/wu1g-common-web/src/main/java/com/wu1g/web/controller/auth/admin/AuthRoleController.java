@@ -127,9 +127,10 @@ public class AuthRoleController extends BaseController {
 				request.setAttribute("permBeans", authPermService.findPermDataIsListByRoleId(xdto));
 			}
 		}
-		if(bean==null){
+		if(bean==null||"add".equals(id)){
 			bean=new AuthRole();
 			bean.setId(IdUtil.createUUID(22));//角色ID
+            bean.setNewFlag("1");
 		}
 		bean.setPageNum( pageNum );
 		bean.setToken( IdUtil.createUUID(32) );

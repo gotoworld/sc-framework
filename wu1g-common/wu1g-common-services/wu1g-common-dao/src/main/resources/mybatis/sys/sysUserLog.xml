@@ -86,10 +86,10 @@
 			and t1.description like CONCAT('%',#{description},'%')
 		</if>
 		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
+			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
 		</if>
 		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
+			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
 		</if>
 		order by t1.date_created desc
 	</select>
@@ -101,10 +101,10 @@
 		where 1=1 
 		<!--未找到逻辑删除标记 字段-->
 		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)>=UNIX_TIMESTAMP(#{dateBegin})]]>
+			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
 		</if>
 		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and UNIX_TIMESTAMP(t1.date_created)<=UNIX_TIMESTAMP(#{dateEnd})]]>
+			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
 		</if>
 		order by t1.date_created desc
 	</select>

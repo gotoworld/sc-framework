@@ -93,9 +93,10 @@ public class AuthPermController extends BaseController {
 			bean1.setId(id);//权限id
 			bean=authPermService.findDataById(bean1);
 		}
-		if(bean==null){
+		if(bean==null||"add".equals(id)){
 			bean=new AuthPerm();
 			bean.setId(IdUtil.createUUID(22));//权限id
+			bean.setNewFlag("1");
 		}
 		request.setAttribute( "bean", bean );
 		//信息列表

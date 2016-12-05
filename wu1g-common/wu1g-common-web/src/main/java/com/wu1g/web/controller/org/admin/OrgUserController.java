@@ -133,9 +133,10 @@ public class OrgUserController extends BaseController {
 				request.setAttribute("deptBeans",orgUserService.findDeptDataIsList(bean));
 			}
 		}
-		if(bean==null){
+		if(bean==null||"add".equals(id)){
 			bean=new OrgUser();
 			bean.setId(IdUtil.createUUID(32));
+            bean.setNewFlag("1");
 		}
 		bean.setPageNum(pageNum);
 		request.setAttribute( "bean", bean );

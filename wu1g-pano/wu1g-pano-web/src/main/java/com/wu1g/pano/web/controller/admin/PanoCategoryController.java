@@ -99,9 +99,10 @@ public class PanoCategoryController extends BaseController {
             bean.setId(id);// ID
             bean = panoCategoryService.findDataById(bean);
         }
-        if (bean == null) {
+        if (bean == null||"add".equals(id)) {
             bean = new PanoCategory();
-            bean.setId(IdUtil.createUUID(32));// ID
+            bean.setId(IdUtil.createUUID(32));
+            bean.setNewFlag("1");
         }
         bean.setPageNum(pageNum);
         bean.setToken(IdUtil.createUUID(32));

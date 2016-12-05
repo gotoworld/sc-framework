@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseVO implements IVO,IEntity {
-
     String token;
-
+    /**新增标记0否1是*/
+    String newFlag="0";
     /** 开始时间 */
     String dateBegin;
     /** 结束时间 */

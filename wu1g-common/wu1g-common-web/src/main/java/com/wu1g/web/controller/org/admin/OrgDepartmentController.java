@@ -95,9 +95,10 @@ public class OrgDepartmentController extends BaseController {
 			bean1.setId(id);
 			bean=orgDepartmentService.findDataById(bean1);
 		}
-		if(bean==null){
+		if(bean==null||"add".equals(id)){
 			bean=new OrgDepartment();
 			bean.setId(IdUtil.createUUID(32));
+			bean.setNewFlag("1");
 		}
 		bean.setPageNum(pageNum);
 		bean.setToken(IdUtil.createUUID(32));

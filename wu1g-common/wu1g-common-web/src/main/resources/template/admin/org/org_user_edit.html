@@ -29,7 +29,8 @@
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
-					<input type="hidden" name="type" id="bean_type" value="0">
+                    <input type="hidden" name="newFlag" value="${bean.newFlag}" />
+                    <input type="hidden" name="type" id="bean_type" value="0">
 					<%if(bean.userid!='admin' ){%>
 					<%if(shiro.hasPermission("orgUser:role.edit")){%>
 					<div class="col-md-12 ">
@@ -45,7 +46,7 @@
 												}
 											}
 										}%>
-										<label class="checkbox-inline"> <input id="${role.id}" value="${role.id}" ${myrolex} type="radio" name="roleIdArray">
+										<label class="checkbox-inline"> <input id="${role.id}" value="${role.id}" ${myrolex} type="checkbox" name="roleIdArray">
 											${role.name}
 										</label>
 									<%}%>
@@ -98,90 +99,74 @@
 					</div>
 					<div class="col-sm-6 ">
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_pwd">登录密码</label>
+							<label class="col-md-2 control-label">登录密码</label>
 							<div class="col-md-8">
 								<input type="hidden" name="pwd"  id="bean_pwd" value="" />
 								<input type="password" class="form-control" name="pwd_x" onchange="cPwd(this.value)"  onblur="cPwd(this.value)" placeholder="不修改请留空" value="" />
 								<span class="help-block"></span>
 							</div>
 						</div>
+						<!--<div class="form-group">-->
+							<!--<label class="col-md-2 control-label" for="bean_jobNo">工号</label>-->
+							<!--<div class="col-md-8">-->
+								<!--<input type="text" class="form-control" placeholder="请输入工号"-->
+									<!--id="bean_jobNo" name="jobNo" value="${bean.jobNo}" /> <span-->
+									<!--class="help-block"></span>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="form-group">-->
+							<!--<label class="col-md-2 control-label" for="bean_tel">固定电话</label>-->
+							<!--<div class="col-md-8">-->
+								<!--<input type="text" class="form-control" placeholder="请输入固定电话"-->
+									<!--id="bean_tel" name="tel" value="${bean.tel}" /> <span-->
+									<!--class="help-block"></span>-->
+							<!--</div>-->
+						<!--</div>-->
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_jobNo">工号</label>
-							<div class="col-md-8">
-								<input type="text" class="form-control" placeholder="请输入工号"
-									id="bean_jobNo" name="jobNo" value="${bean.jobNo}" /> <span
-									class="help-block"></span>
+							<div class="col-sm-10" style="text-align: left; margin-left: 5px;">
+								<div class="checkbox">
+									<label><input  class="checkbox" value="0"  ${bean.enable=='0'?'checked="checked"':''} type="checkbox" name="enable" />启用账号</label>
+								</div>
 							</div>
 						</div>
+						<%if(shiro.hasPermission("orgUser:dept.edit")){%>
+						<%if(isNotEmpty(deptTree) && deptTree.~size>0){%>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_tel">固定电话</label>
+							<label class="col-md-2 control-label">部门列表</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" placeholder="请输入固定电话"
-									id="bean_tel" name="tel" value="${bean.tel}" /> <span
-									class="help-block"></span>
-							</div>
-						</div>
-						<div class="form-group">
-						<label class="col-md-2 control-label">是否启用</label>
-						<div class="col-md-8 radio-list">
-								<%if(bean.enable=='1'){%>
-									<label class="radio-inline">
-										<input  class="form-control" value="0" type="radio" name="enable">启用
-									</label>
-									<label class="radio-inline">
-										<input  checked="checked" class="form-control" value="1" type="radio" name="enable">禁用
-									</label>
-								<%}else{%>
-									<label class="radio-inline">
-										<input  checked="checked" class="form-control" value="0" type="radio" name="enable">启用
-									</label>
-									<label class="radio-inline">
-										<input  class="form-control" value="1" type="radio" name="enable">禁用
-									</label>
-								<%}%>
-						</div>
-						</div>
-					</div>
-					<%if(shiro.hasPermission("orgUser:dept.edit")){%>
-					<%if(isNotEmpty(deptTree) && deptTree.~size>0){%>
-					<div class="col-sm-12">
-						  <div class="col-md-10">
-							  <p class="col-md-2 control-label"  style="text-align: left;">
-							  	部门列表
-							  </p>
-							  <div class="tree tree-plus-minus tree-solid-line tree-unselectable deptTree">
-								<%
-								  	var deptBeansCopy=null;
-                                    var dcode="";
-                                    var checkBoxX="";
+									<%
+									var deptBeansCopy=null;
+									var dcode="";
+									var checkBoxX="";
 									if(isNotEmpty(deptBeans) && deptBeans.~size>0 ){
-										deptBeansCopy=deptBeans;
+									deptBeansCopy=deptBeans;
 									}
 									for(b in deptTree!){
-										dcode=b.id;
-										checkBoxX="";
-										for(dept in deptBeans!){
-											if(dept.id==b.id){
-												checkBoxX='oldc="1" checked="checked"';
-											}
-										}
-								  %>
-										<p>
-											<label>
+									dcode=b.id;
+									checkBoxX="";
+									for(dept in deptBeans!){
+									if(dept.id==b.id){
+									checkBoxX='oldc="1" checked="checked"';
+									}
+									}
+									%>
+									<p>
+										<label>
+											-
 											<input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="deptIdArray">
 											${b.name}
-											</label>
-										</p>
-										<%if(isNotEmpty(b.beans) && b.beans.~size>0){
-												layout("org_user_tree_checkbox.html",{beans:b.beans,deptBeansCopy:deptBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
-												dcode="";
-										}%>
-									<%}%>
+										</label>
+									</p>
+									<%if(isNotEmpty(b.beans) && b.beans.~size>0){
+									layout("org_user_tree_checkbox.html",{beans:b.beans,deptBeansCopy:deptBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
+									dcode="";
+									}%>
+								<%}%>
 							</div>
-					  </div>
+						</div>
+						<%}%>
+						<%}%>
 					</div>
-					<%}%>
-					<%}%>
 
 					<div class="col-sm-12">
 						<div style="width: 200px; margin: 0 auto;">
@@ -194,10 +179,18 @@
 	</div>
 	</div>
 	<% include("../include/public_last_js_css.html"){} %>
+	<script src="${basePath!}/js/jQuery.md5.js" type="text/javascript"></script>
 	<script type="text/javascript">
         $().ready(function(){
             formValidate();
         });
+        function cPwd(val){
+            if(val){
+                $('#bean_pwd').val($.md5($.trim(val)));
+            }else{
+                $('#bean_pwd').val('');
+            }
+        }
         function formValidate(){
             setTimeout(function(){
                 $("#id_form").validate();

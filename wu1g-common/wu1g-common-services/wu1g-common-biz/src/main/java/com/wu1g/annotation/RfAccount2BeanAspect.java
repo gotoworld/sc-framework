@@ -1,24 +1,21 @@
 package com.wu1g.annotation;
 
-import com.alibaba.fastjson.JSON;
 import com.wu1g.framework.IVO;
-import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IpUtils;
 import com.wu1g.framework.util.ReflectUtil;
 import com.wu1g.org.vo.OrgUser;
-import com.wu1g.sys.service.SysUserLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Method;
 
 /**
  * 切点类

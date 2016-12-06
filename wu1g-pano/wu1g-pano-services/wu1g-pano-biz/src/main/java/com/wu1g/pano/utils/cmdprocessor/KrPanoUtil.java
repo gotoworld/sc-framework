@@ -16,8 +16,11 @@ public class KrPanoUtil {
 
     private static String shellCommand = null;
 
-    static {
+    private static String  getShellCommand() {
         try {
+            if(shellCommand!=null){
+                return shellCommand;
+            }
             String os = System.getProperty("os.name");
             if (os.toLowerCase().startsWith("win")) {
                 shellCommand = AppConfig.getProperty("krpano.win")+" "+AppConfig.getProperty("krpano.config");
@@ -27,10 +30,11 @@ public class KrPanoUtil {
         } catch (Exception e) {
             log.error("参数路径初始化失败!", e);
         }
+        return shellCommand;
     }
 
     public static void runShell(final String fileUrl) {
-        final String finalShellCommand = shellCommand;
+        final String finalShellCommand = getShellCommand();
         executor.execute(new Thread() {
             public void run() {
                 try {
@@ -69,12 +73,10 @@ public class KrPanoUtil {
             }
         });
     }
-
-    public static void main(String[] args) throws Exception {
-//		runShell( "D:/home/krpano/3.JPG" );
-        URL url = Thread.currentThread().getContextClassLoader().getResource("");
-        System.out.println(url.getPath());
-
-
-    }
+//
+//    public static void main(String[] args) throws Exception {
+////		runShell( "D:/home/krpano/3.JPG" );
+//        URL url = Thread.currentThread().getContextClassLoader().getResource("");
+//        System.out.println(url.getPath());
+//    }
 }

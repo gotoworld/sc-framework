@@ -23,6 +23,7 @@ import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.framework.web.controller.BaseController;
 import com.wu1g.org.vo.OrgUser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,8 @@ public class AuthRoleController extends BaseController {
 		if(bean==null){
 			bean = new AuthRole();
 		}
+		//--超级管理员标记
+		bean.setIsSuper("1".equals(SecurityUtils.getSubject().getSession().getAttribute("isSuper"))?"1":"0");
 		//每页显示条数
 		bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
 		//信息列表

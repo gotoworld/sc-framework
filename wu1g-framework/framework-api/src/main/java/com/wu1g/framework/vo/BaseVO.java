@@ -25,7 +25,6 @@ public class BaseVO implements IVO,IEntity {
     /** 每页显示条数 */
     Integer pageSize=15;
     String str;
-
     public Integer getPageNum(){
         if(pageNum==null){
             pageNum=1;

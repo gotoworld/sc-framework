@@ -60,20 +60,23 @@
 								  var permBeansCopy=null;
 								  var dcode="";
 								  var checkBoxX="";
+								  var checkLabel="";
 								  if(isNotEmpty(permBeans) && permBeans.~size>0 ){
 									  permBeansCopy=permBeans;
 								  }
 								  for(b in permTree!){
 									  dcode=b.id;
 									  checkBoxX="";
+								      checkLabel="";
 									  for(perm in permBeans!){
 										  if(perm.id==b.id){
 											 checkBoxX='oldc="1" checked="checked"';
+											 checkLabel=' style="color:#1c84c6;"';
 										  }
 									  }
 								  %>
 									  <p>
-										  <label>
+										  <label ${checkLabel}>
 											  -
 											  <input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="permIdArray">
 											  ${b.name}

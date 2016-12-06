@@ -7,14 +7,16 @@
 var dcodex="";
 for(b in beans!){
  	checkBoxX="";
+	checkLabel="";
 	for(dept in deptBeansCopy!){
 		if(dept.id==b.id){
 			 checkBoxX='oldc="1" checked="checked"';
+			checkLabel='style="color:#1c84c6;"';
 		}
 	}
 %>
 		<p>
-			<label>
+			<label ${checkLabel}>
 				-
 				<% for(var i=1;i<=numx;i++){ %>
 				|-

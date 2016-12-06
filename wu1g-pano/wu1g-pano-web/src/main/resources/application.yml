@@ -65,7 +65,7 @@ wu1g:
   krpano:
     win: /home/krpano/win/krpanotools64.exe
     linux: /home/krpano/linux/krpanotools
-    config:  makepano -config=templates/vtour-multires.config -askforxmloverwrite=false -xml=false -html=false
+    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere -tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
   common:
     fileServer:
       rootFolder:

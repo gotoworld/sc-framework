@@ -76,8 +76,8 @@ public class PageExtTag extends GeneralVarTagBinding  {
 	     cssStr.append(".b_page { width:auto; height:30px; line-height:30px; color:#5B5B5B; margin:7px 0 0 20px; float:right;}");
 	     cssStr.append(".b_page a { width:auto; height:25px; line-height:22px; border:1px solid #cdcdcb; float:left; margin-right:4px; padding:0 8px; }");
 	     cssStr.append(".b_page a.dot{ border:none;padding:0 1px}.b_page a.dot:hover{border:none; cursor:text; background:none;color:#5B5B5B;}");
-	     cssStr.append(".b_page a:hover { background:#739a2c; border:1px solid #4b6f0a; cursor:pointer; color:#FFF; }");
-	     cssStr.append(".b_page a.on { background:#739a2c; border:1px solid #4b6f0a; cursor:pointer; color:#FFF; }");
+	     cssStr.append(".b_page a:hover { background:#1c84c6; border:1px solid #4b6f0a; cursor:pointer; color:#FFF; }");
+	     cssStr.append(".b_page a.on { background:#1c84c6; border:1px solid #4b6f0a; cursor:pointer; color:#FFF; }");
 	     cssStr.append(".b_page a, .b_page a:visited { color:#5B5B5B; font-size:12px; display:block;}");
 	     cssStr.append(".b_page a:hover,.b_page li:hover a{ color:#fff; display:block;}");
 	     cssStr.append(".b_page a.disabled { background:#FFF;  border:1px solid #cdcdcb; color:#5B5B5B; cursor:text; }");

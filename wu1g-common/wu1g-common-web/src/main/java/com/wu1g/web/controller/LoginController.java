@@ -175,13 +175,16 @@ public class LoginController extends BaseController {
 	 * @return 转发字符串
 	 */
 	@RequestMapping(value="/logout")
-	public String logout() throws Exception {
+	public String logout(){
 		log.info( "LoginController logout" );
-		getAuth().logout();
-		log.debug( getAuth().getPrincipal() + "你已安全退出!" );
-		// 清空用户登录信息
-		SessionUtil.clearAdminSession( request );
-
+		try {
+			// 清空用户登录信息
+			SessionUtil.clearAdminSession( request );
+			getAuth().logout();
+			log.debug( getAuth().getPrincipal() + "你已安全退出!" );
+		} catch (Exception e) {
+			log.error("清空登录缓存异常!",e);
+		}
 		return "admin/login";
 	}
 

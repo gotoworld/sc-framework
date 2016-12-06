@@ -86,7 +86,7 @@ public class ShiroConfig {
 
         chains.put("/error/noauth", "anon");
         chains.put("/admin/init", "anon");
-        chains.put("/admin/logout", "logout");
+        chains.put("/admin/logout", "anon");
         chains.put("/admin/login", "anon");
 
         chains.put("/h/**", "authc");

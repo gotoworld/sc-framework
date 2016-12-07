@@ -218,7 +218,7 @@ public class VideoController extends BaseController {
 							PanoScene scene=new PanoScene();
 							scene.setId( scene_id );
 							scene.setProjId( bean.getId() );
-							scene.setOrderNo(i );
+							scene.setOrderNo(i+"");
 							scene.setSceneSrc( request.getParameter( scene_id+"_scene_src" ) );
 							scene.setSceneTitle(request.getParameter( scene_id+"_scene_tit" ) );
 							

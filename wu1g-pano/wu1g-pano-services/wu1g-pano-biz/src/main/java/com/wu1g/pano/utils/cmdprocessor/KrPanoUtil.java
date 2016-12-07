@@ -39,7 +39,7 @@ public class KrPanoUtil {
             public void run() {
                 try {
                     long stime = System.currentTimeMillis();
-                    log.info(fileUrl + "============begin=============" + finalShellCommand);
+                    log.info(finalShellCommand+" "+fileUrl);
                     final Process p = Runtime.getRuntime().exec(finalShellCommand + " " + fileUrl);
                     // WATCHDOG
                     Watchdog wd = null;

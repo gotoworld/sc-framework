@@ -10,7 +10,6 @@
         <version>1.0</version>
     </parent>
     <artifactId>wu1g-common-web</artifactId>
-    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.wu1g.common</groupId>

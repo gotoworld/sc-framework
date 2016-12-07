@@ -220,7 +220,7 @@ public class PanoProjController extends BaseController {
                                 PanoScene scene = new PanoScene();
                                 scene.setId(scene_id);
                                 scene.setProjId(bean.getId());
-                                scene.setOrderNo(i);
+                                scene.setOrderNo(""+i);
                                 scene.setSceneSrc(request.getParameter(scene_id + "_scene_src"));
                                 scene.setKeyword(request.getParameter(scene_id + "_scene_key"));
                                 scene.setSceneTitle(request.getParameter(scene_id + "_scene_tit"));

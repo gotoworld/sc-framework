@@ -96,7 +96,7 @@ public class PanoScene extends BaseVO {
     /**
      * 排序
      */
-    private Integer orderNo;
+    private String orderNo;
     /**
      * 关键字
      */

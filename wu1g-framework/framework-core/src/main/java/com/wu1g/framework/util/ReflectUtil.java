@@ -22,7 +22,7 @@ public class ReflectUtil {
             try {
                 return superClass.getDeclaredField(fieldName);
             } catch (Exception e) {
-                log.error("反射取属性名异常!", e);
+                log.error("反射取属性名异常!"+e.getMessage());
             }
         }
         return null;
@@ -48,7 +48,7 @@ public class ReflectUtil {
                 }
             }
         } catch (Exception e) {
-            log.error("反射取属性值异常!", e);
+            log.error("反射取属性值异常!"+e.getMessage());
         }
         return value;
     }
@@ -74,7 +74,7 @@ public class ReflectUtil {
                     }
                 }
             } catch (Exception e) {
-                log.error("反射设值异常!", e);
+                log.error("反射设值异常!"+e.getMessage());
             }
         }
     }

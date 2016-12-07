@@ -68,7 +68,7 @@ public class AES extends Crypt{
     }
 
     public static void main(String[] args) {
-        String source = "amigoxie";
+        String source = "!QAZ2wsx";
         System.out.println("原文: " + source);
         String key = "A1B2C3D4E5F60708";
         String encryptData = encrypt(source, key);

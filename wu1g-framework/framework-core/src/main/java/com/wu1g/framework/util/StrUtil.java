@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 
 public class StrUtil {
 
-    private static final String rootFolderUpload = AppConfig.getProperty("common.fileServer.rootFolder.upload");
-    private static final String rootFolderDownload = AppConfig.getProperty("common.fileServer.rootFolder.download");
+    private static final String rootFolderUpload = AppConfig.getProperty("common.fileServer.upload");
+    private static final String rootFolderDownload = AppConfig.getProperty("common.fileServer.download");
 
     /**
      * @param str        原始字符串

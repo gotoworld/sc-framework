@@ -4,7 +4,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
     registerWithEureka: false
-
 # HTTP Server
 server:
   port: 8080
@@ -15,11 +14,15 @@ spring:
     auto: true
     proxy-target-class: true
   application:
-     name: wu1g-services
+    name: wu1g-services
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${wu1g.common.fileServer.rootFolder}
   mvc:
-      view:
-        prefix: classpath*:template/
-        suffix: .html
+    #表示所有的访问都经过静态资源路径
+    static-path-pattern: /**
+    view:
+      prefix: classpath*:template/
+      suffix: .html
   datasource:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/krpano
@@ -68,9 +71,9 @@ wu1g:
     config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere -tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
   common:
     fileServer:
-      rootFolder:
-        upload: d:/home/pano/upload/
-        download: /download/
+      rootFolder: d:/home/pano/
+      upload: ${wu1g.common.fileServer.rootFolder}upload/
+      download: /upload/
       image:
         executorServiceSize: 5
         n0:

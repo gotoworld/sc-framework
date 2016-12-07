@@ -21,8 +21,8 @@ import java.io.*;
  */
 @Slf4j
 public class IOUtil extends IOUtils {
-    private static final String rootFolderUpload = AppConfig.getProperty("common.fileServer.rootFolder.upload");
-    private static final String rootFolderDownload = AppConfig.getProperty("common.fileServer.rootFolder.download");
+    private static final String rootFolderUpload = AppConfig.getProperty("common.fileServer.upload");
+    private static final String rootFolderDownload = AppConfig.getProperty("common.fileServer.download");
     /**
      * <p>读取文件</p>
      *

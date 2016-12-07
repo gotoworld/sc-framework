@@ -64,9 +64,9 @@ public class UploadServlet extends HttpServlet  implements EnvironmentAware {
         if(threadPool==null)
         this.threadPool = Executors.newScheduledThreadPool(Integer.parseInt(appProperty.getProperty("common.fileServer.image.executorServiceSize")));
         if(rootFolderUpload==null)
-        this.rootFolderUpload = appProperty.getProperty("common.fileServer.rootFolder.upload");
+        this.rootFolderUpload = appProperty.getProperty("common.fileServer.upload");
         if(rootFolderDownload==null)
-        this.rootFolderDownload = appProperty.getProperty("common.fileServer.rootFolder.download");
+        this.rootFolderDownload = appProperty.getProperty("common.fileServer.download");
         if(imageN0Width==null)
         this.imageN0Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.width"));
         if(imageN0Height==null)

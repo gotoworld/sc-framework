@@ -192,7 +192,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             if (sceneList != null && sceneList.size() > 0) {
                 PanoSpots panoSpots = null;
                 for (PanoScene scene : sceneList) {
-                    imgappend += AppConfig.getProperty("common.fileServer.rootFolder.upload") + scene.getSceneSrc().replace(AppConfig.getProperty("common.fileServer.rootFolder.download"), "").replace("/n1/", "/n4/") + " ";
+                    imgappend += AppConfig.getProperty("common.fileServer.upload") + scene.getSceneSrc().replace(AppConfig.getProperty("common.fileServer.download"), "").replace("/n1/", "/n4/") + " ";
                     scene.setBreakdownImg(getBreakdownImg(proj.getId(), scene.getSceneSrc()));
 
                     //--获取场景-跳转热点
@@ -221,7 +221,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             context.put("basePath", bean.getStr());
             context.put("panoPath", bean.getStr() + "/plugins/krpano/");
 
-            String saveDir = AppConfig.getProperty("common.fileServer.rootFolder.upload") + "pano/";
+            String saveDir = AppConfig.getProperty("common.fileServer.upload") + "pano/";
 
 //			创建文件夹
             File saveDirFile = new File(saveDir);
@@ -358,7 +358,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             context.put("basePath", bean.getStr());
             context.put("panoPath", bean.getStr() + "/plugins/krpano/");
 
-            String saveDir = AppConfig.getProperty("common.fileServer.rootFolder.upload") + "pano/";
+            String saveDir = AppConfig.getProperty("common.fileServer.upload") + "pano/";
 
 //			创建文件夹
             File saveDirFile = new File(saveDir);

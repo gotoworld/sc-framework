@@ -21,9 +21,9 @@ if (request.getServerPort() != 80) {
  */
 
 //根目录路径，可以指定绝对路径，比如 /var/www/attached/
-String rootPath = AppConfig.getProperty("common.fileServer.rootFolder.upload");
+String rootPath = AppConfig.getProperty("common.fileServer.upload");
 //根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/attached/
-String rootUrl  = path2+AppConfig.getProperty("common.fileServer.rootFolder.download");
+String rootUrl  = path2+AppConfig.getProperty("common.fileServer.download");
 //图片扩展名
 String[] fileTypes = new String[]{"gif", "jpg", "jpeg", "png", "bmp"};
 

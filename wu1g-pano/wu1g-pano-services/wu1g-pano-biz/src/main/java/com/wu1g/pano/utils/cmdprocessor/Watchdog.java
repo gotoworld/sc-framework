@@ -3,12 +3,11 @@ package com.wu1g.pano.utils.cmdprocessor;
 import java.util.LinkedList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+@Slf4j
 public class Watchdog extends Thread {
-
-  private static Logger LOG = LoggerFactory.getLogger(Watchdog.class);
 
   private final long timeout;
   private long origin = Long.MAX_VALUE;
@@ -52,7 +51,7 @@ public class Watchdog extends Thread {
         check();
       }
     } catch (final InterruptedException e) {
-      LOG.info("Watchdog has been interrupted");
+      log.info("Watchdog has been interrupted");
     }
   }
 
@@ -67,7 +66,7 @@ public class Watchdog extends Thread {
     wd.addListener(new WatchdogListener() {
       @Override
       public void timeout() {
-        LOG.debug("timeout");
+        log.debug("timeout");
         System.exit(0);
       }
     });
@@ -75,10 +74,10 @@ public class Watchdog extends Thread {
     for (int i = 0; i < 10; ++i) {
       wd.reset();
       Thread.sleep(500);
-      LOG.debug("reset");
+      log.debug("reset");
     }
 
-    LOG.debug("wait");
+    log.debug("wait");
   }
 
 }

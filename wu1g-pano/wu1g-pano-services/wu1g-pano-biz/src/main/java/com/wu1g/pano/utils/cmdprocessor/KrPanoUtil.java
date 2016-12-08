@@ -16,16 +16,16 @@ public class KrPanoUtil {
 
     private static String shellCommand = null;
 
-    private static String  getShellCommand() {
+    private static String getShellCommand() {
         try {
-            if(shellCommand!=null){
+            if (shellCommand != null) {
                 return shellCommand;
             }
             String os = System.getProperty("os.name");
             if (os.toLowerCase().startsWith("win")) {
-                shellCommand = AppConfig.getProperty("krpano.win")+" "+AppConfig.getProperty("krpano.config");
+                shellCommand = AppConfig.getProperty("krpano.win") + " " + AppConfig.getProperty("krpano.config");
             } else {
-                shellCommand = AppConfig.getProperty("krpano.linux")+" "+AppConfig.getProperty("krpano.config");
+                shellCommand = AppConfig.getProperty("krpano.linux") + " " + AppConfig.getProperty("krpano.config");
             }
         } catch (Exception e) {
             log.error("参数路径初始化失败!", e);
@@ -35,43 +35,36 @@ public class KrPanoUtil {
 
     public static void runShell(final String fileUrl) {
         final String finalShellCommand = getShellCommand();
-        executor.execute(new Thread() {
-            public void run() {
-                try {
-                    long stime = System.currentTimeMillis();
-                    log.info(finalShellCommand+" "+fileUrl);
-                    final Process p = Runtime.getRuntime().exec(finalShellCommand + " " + fileUrl);
-                    // WATCHDOG
-                    Watchdog wd = null;
-                    final Long timeout = 20 * 60 * 1000L;// 20分钟
-                    log.info(String.format("timeout is '%s' -> start watchdog", timeout));
-                    wd = new Watchdog(timeout);
-                    wd.addListener(new WatchdogListener() {
-                        @Override
-                        public void timeout() {
-                            log.error("TIMEOUT -> kill process");
-                            p.destroy();
-                        }
-                    });
-                    if (log.isDebugEnabled()) {
-                        // CREATE STREAM PUMPS
-                        final StreamPump out = new StreamPump("IN", p.getInputStream(), System.out, wd);
-                        final StreamPump err = new StreamPump("ERR", p.getErrorStream(), System.out, wd);
+        executor.execute(new Thread(() -> {
+            try {
+                long stime = System.currentTimeMillis();
+                log.info(finalShellCommand + " " + fileUrl);
+                final Process p = Runtime.getRuntime().exec(finalShellCommand + " " + fileUrl);
+                // WATCHDOG
+                Watchdog wd = null;
+                final Long timeout = 20 * 60 * 1000L;// 20分钟
+                log.info(String.format("timeout is '%s' -> start watchdog", timeout));
+                wd = new Watchdog(timeout);
+                wd.addListener(() -> {
+                    log.error("TIMEOUT -> kill process");
+                    p.destroy();
+                });
+                // CREATE STREAM PUMPS
+                final StreamPump out = new StreamPump("IN", p.getInputStream(), System.out, wd);
+                final StreamPump err = new StreamPump("ERR", p.getErrorStream(), System.out, wd);
 
-                        // WAIT FOR TERMINATION
-                        p.waitFor();
-                        log.debug("Process finished");
-                        out.join();
-                        log.debug("Outthread finished");
-                        err.join();
-                        log.debug("Errthread finished");
-                    }
-                    log.info(fileUrl + "============end=============用时:" + (System.currentTimeMillis() - stime));
-                } catch (Exception e) {
-                    log.error("全景图生成异常!" + fileUrl, e);
-                }
+                // WAIT FOR TERMINATION
+                p.waitFor();
+                log.debug("Process finished");
+                out.join();
+                log.debug("Outthread finished");
+                err.join();
+                log.debug("Errthread finished");
+                log.info(fileUrl + "============end=============用时:" + (System.currentTimeMillis() - stime));
+            } catch (Exception e) {
+                log.error("全景图生成异常!" + fileUrl, e);
             }
-        });
+        }));
     }
 //
 //    public static void main(String[] args) throws Exception {

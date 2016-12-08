@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+@Slf4j
 public class StreamPump extends Thread {
-
-  private static Logger LOG = LoggerFactory.getLogger(StreamPump.class);
-
   private final OutputStream mOs;
   private final InputStream mIs;
   private final String mName;
@@ -49,9 +47,9 @@ public class StreamPump extends Thread {
       // watchdog.reset();
       // }
     } catch (final IOException e) {
-      LOG.error(String.format("StreamPump '%s' failed ", mName), e);
+      log.error(String.format("StreamPump '%s' failed ", mName), e);
       e.printStackTrace();
     }
-    LOG.info(String.format("StreamPump '%s' finieshed ", mName));
+    log.info(String.format("StreamPump '%s' finieshed ", mName));
   }
 }

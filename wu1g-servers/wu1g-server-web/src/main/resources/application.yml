@@ -57,10 +57,10 @@ mybatis:
   configLocation: classpath:conf/mybatis-config.xml
   mapperLocations: classpath*:mybatis/**/*.xml
 
-configuration:
-  mapUnderscoreToCamelCase: true
-  callSettersOnNulls: true
-  logPrefix: dao.
+#configuration:
+#  mapUnderscoreToCamelCase: true
+#  callSettersOnNulls: true
+#  logPrefix: dao.
 
 wu1g:
   config:
@@ -68,7 +68,7 @@ wu1g:
   krpano:
     win: D:/home/krpano/win/krpanotools64.exe
     linux: d:/home/krpano/linux/krpanotools
-    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere -tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
+    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=512 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=768
   common:
     fileServer:
       rootFolder: /home/softvan/

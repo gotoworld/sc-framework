@@ -61,13 +61,12 @@ public class BaseController {
         String path = request.getContextPath();
         String basePath = null;
         // log.info("访问端口号："+ request.getServerPort());
-
         if (request.getServerPort() != 80) {
             basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
         } else {
             basePath = request.getScheme() + "://" + request.getServerName() + path;
         }
-        return path;
+        return basePath+"/";
     }
     /**
      * 权限验证框架取得

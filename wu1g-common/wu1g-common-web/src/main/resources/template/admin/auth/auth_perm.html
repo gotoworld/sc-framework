@@ -27,7 +27,7 @@
 				</ul>
 				<% layout("../include/notifications.html"){}%>
 				<% if(shiro.hasPermission("authPerm:add")){ %>
-				<a href="#" onclick="openMyBoxLayer('a','${basePath}/h/auth/perm/edit/add');"
+				<a href="#" onclick="openMyBoxLayer('a','${basePath}h/auth/perm/edit/add');"
 				   class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 				<%}%>
 				<div class="table-responsive table-scrollable">
@@ -54,11 +54,11 @@
 							<td>${bean.memo}</td>
 							<td>
 								<% if(shiro.hasPermission("authPerm:edit")){ %>
-								<a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/auth/perm/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+								<a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/auth/perm/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 								<%}%>
 								<% if(shiro.hasPermission("authPerm:del")){ %>
 								<% if(isEmpty(bean.beans) || bean.beans.~size==0){ %>
-								<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/auth/perm/del/${bean.id}');};" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+								<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/auth/perm/del/${bean.id}');};" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
 								<%}}%>
 							</td>
 						</tr>

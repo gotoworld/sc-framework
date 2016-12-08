@@ -16,8 +16,8 @@
 <meta charset="utf-8" />
 <% include("../include/meta.html"){} %> 
 <% include("../include/public_init_js_css.html"){} %>
-<link href="${basePath}/plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
-<link href="${basePath}/css/upload.css" rel="stylesheet">
+<link href="${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
+<link href="${basePath}css/upload.css" rel="stylesheet">
 
 <style type="text/css">
 #upload_scene_btn{width: 220px;height: 164px;float: left;} 
@@ -29,7 +29,7 @@
 		<div class="row">
 			<div class="ibox float-e-margins">
 				<div class="ibox-content col-sm-12">
-					<form id="pano02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/pano/proj/save">
+					<form id="pano02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/pano/proj/save">
 						<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}">
 			            <input type="hidden" name="id" value="${bean.id}" />
 						<input type="hidden" name="token" value="${bean.token}" />
@@ -136,7 +136,7 @@
 <!-- 									<span id="bean_logoPic-error" class="help-block m-b-none">可不上传</span> -->
 <!-- 									<input id="bean_logoUrl" name="logoUrl" value="${bean.logoUrl}" class="form-control" type="text"  placeholder="logo链接" aria-describedby="bean_logoUrl-error"  maxlength="255"   aria-invalid="true"> -->
 <!-- 									<div id="upload_logo_file" class="fl" style=""> -->
-<!-- 										<a href="javascript:;" id="upload_logo_src"><img src="${basePath}/img/add_pic_btn.png" style="border: solid 4px #ddd"></a> -->
+<!-- 										<a href="javascript:;" id="upload_logo_src"><img src="${basePath}img/add_pic_btn.png" style="border: solid 4px #ddd"></a> -->
 <!-- 									</div> -->
 <!-- 								 </div> -->
 <!-- 							 </div> -->
@@ -165,7 +165,7 @@
 								%>
 								</div>
 								<div class="upload_scene_btn" style="">
-									<a href="javascript:;" id="upload_scene_btn"><img src="${basePath}/img/add_pic_btn.png" style="border: solid 4px #ddd"></a>
+									<a href="javascript:;" id="upload_scene_btn"><img src="${basePath}img/add_pic_btn.png" style="border: solid 4px #ddd"></a>
 								</div>
 							</div>
 						</div>
@@ -186,11 +186,11 @@
 		</div>
 	</div>
 	<% include("../include/public_last_js_css.html"){} %>
-	<script src="${basePath}/plugins/hplus/js/plugins/plyr/plyr.js"></script>
-	<script src="${basePath}/plugins/plupload/js/plupload.min.js"></script>
-	<script type="text/javascript" src="${basePath}/js/upload.js"></script>
-	<script type="text/javascript" src="${basePath}/js/bgmsc_upload.js"></script>
-	<script type="text/javascript" src="${basePath}/js/upload_single_pic.js"></script>
+	<script src="${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
+	<script src="${basePath}plugins/plupload/js/plupload.min.js"></script>
+	<script type="text/javascript" src="${basePath}js/upload.js"></script>
+	<script type="text/javascript" src="${basePath}js/bgmsc_upload.js"></script>
+	<script type="text/javascript" src="${basePath}js/upload_single_pic.js"></script>
 	<script type="text/javascript">
 	$().ready(function(){
 		formValidate();

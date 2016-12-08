@@ -30,14 +30,14 @@
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
 				<td>
-				<a href="${basePath}/tour/${bean.projId}" target="_blank"><i class="fa fa-desktop"></i> ${bean.projTitle}</a>
+				<a href="${basePath}tour/${bean.projId}" target="_blank"><i class="fa fa-desktop"></i> ${bean.projTitle}</a>
 				</td>
 				<td>${bean.sceneTitle}</td>
 				<td>${bean.content}</td>
 				<td>${bean.dateCreated}</td>
 				<td>
 	               <% if(shiro.hasPermission("panoComment:del")){ %>
-	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/pano/comments/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/pano/comments/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
 	               <%}%>
                 </td>
 			</tr>

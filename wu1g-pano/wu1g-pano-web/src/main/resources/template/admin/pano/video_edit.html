@@ -16,8 +16,8 @@
 <meta charset="utf-8" />
 <% include("../include/meta.html"){} %> 
 <% include("../include/public_init_js_css.html"){} %>
-<link href="${basePath}/plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
-<link href="${basePath}/css/upload.css" rel="stylesheet">
+<link href="${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
+<link href="${basePath}css/upload.css" rel="stylesheet">
 
 <style type="text/css">
 #upload_scene_btn{width: 220px;height: 164px;float: left;} 
@@ -29,7 +29,7 @@
 		<div class="row">
 			<div class="ibox float-e-margins">
 				<div class="ibox-content col-sm-12">
-					<form id="video_editor" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/video/save">
+					<form id="video_editor" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/video/save">
 						<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}">
 			            <input type="hidden" name="id" value="${bean.id}" />
 						<input type="hidden" name="token" value="${bean.token}" />
@@ -72,7 +72,7 @@
 									<div id="${scene.id}" class="img-grid">
 										<input name="scene_id" value="${scene.id}" type="hidden">
 										<input name="${scene.id}_scene_src" value="${scene.sceneSrc}" type="hidden">
-										<img src="${basePath}/img/vuped.png">
+										<img src="${basePath}img/vuped.png">
 										<input name="${scene.id}_scene_tit" value="${scene.sceneTitle}" placeholder="请填写清晰度,比如:标清" required="" aria-required="true" maxlength="5" aria-invalid="true" type="text">
 										<a href="javascript:;" onclick="move_scene(this,'left');" class="ico_left"></a>
 										<a href="javascript:;" onclick="javascript:del_scene_btn(this,'${scene.id}');" class="ico_del"></a>
@@ -83,7 +83,7 @@
 								%>
 								</div>
 								<div class="upload_scene_btn" style="">
-									<a href="javascript:;" id="upload_scene_btn"><img src="${basePath}/img/add_video_btn.png" style="border: solid 4px #ddd"></a>
+									<a href="javascript:;" id="upload_scene_btn"><img src="${basePath}img/add_video_btn.png" style="border: solid 4px #ddd"></a>
 								</div>
 							</div>
 						</div>
@@ -99,9 +99,9 @@
 		</div>
 	</div>
 	<% include("../include/public_last_js_css.html"){} %>
-	<script src="${basePath}/plugins/hplus/js/plugins/plyr/plyr.js"></script>
-	<script src="${basePath}/plugins/plupload/js/plupload.min.js"></script>
-	<script type="text/javascript" src="${basePath}/js/video_upload.js"></script>
+	<script src="${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
+	<script src="${basePath}plugins/plupload/js/plupload.min.js"></script>
+	<script type="text/javascript" src="${basePath}js/video_upload.js"></script>
 	<script type="text/javascript">
 	$().ready(function(){
 		formValidate();

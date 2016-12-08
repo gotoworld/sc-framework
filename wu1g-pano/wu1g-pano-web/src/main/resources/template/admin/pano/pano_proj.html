@@ -50,7 +50,7 @@
 													role="form" class="form-inline" 
 													method="post"  accept-charset="UTF-8" 
 													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
-													data-action="${basePath}/h/pano/proj/list">
+													data-action="${basePath}h/pano/proj/list">
 													<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum!}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
@@ -71,7 +71,7 @@
 										</tr>
 									</table>
 									<% if(shiro.hasPermission("panoProj:add")){ %>
-									<a href="#" onclick="openMyBoxLayer('a','${basePath}/h/pano/proj/edit/add');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="#" onclick="openMyBoxLayer('a','${basePath}h/pano/proj/edit/add');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<%}%>
 									<div id="info_list_div">
 										<div class="alert alert-warning mt10">
@@ -91,7 +91,7 @@
 	<script>
 		//打开不同尺寸的二维码
 		function get_qrcode(pid,size,version){
-		    window.open('http://qr.liantu.com/api.php?w='+size+'&m=10&text=${basePath}/tour/'+pid);
+		    window.open('http://qr.liantu.com/api.php?w='+size+'&m=10&text=${basePath}tour/'+pid);
 		}
 		$("#data_5 .input-daterange").datepicker({
 			keyboardNavigation : !1,

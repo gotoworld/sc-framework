@@ -35,7 +35,7 @@ public class PanoImgController extends BaseController {
 	@Autowired
 	private IPanoCommentsService panoCommentsService;
 	// 全景_项目
-	private static final String				acPrefix			= "/s/pano.";
+	private static final String				acPrefix			= "/s/pano/";
 
 	@RequestMapping(value = acPrefix+"thumbsUpNum")
 	@ResponseBody

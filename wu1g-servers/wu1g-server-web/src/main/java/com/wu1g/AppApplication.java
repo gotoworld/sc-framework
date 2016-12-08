@@ -6,15 +6,15 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-@ServletComponentScan
+//@ServletComponentScan
 @SpringBootApplication
 public class AppApplication extends SpringBootServletInitializer {
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(PanoApplication.class);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(AppApplication.class);
+    }
 
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(PanoApplication.class, args);
-	}
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(AppApplication.class, args);
+    }
 }

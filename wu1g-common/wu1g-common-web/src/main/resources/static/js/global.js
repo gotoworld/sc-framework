@@ -113,7 +113,7 @@ jQuery(document).ready(function() {
 /* $(document).ajaxStart(
 				function() {
 					$.blockUI({
-								message : '<img src="${basePath}/img/ajax-loading.gif" />',
+								message : '<img src="${basePath}img/ajax-loading.gif" />',
 								css : {
 									top : '50%',
 									border : 'none',

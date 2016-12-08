@@ -53,8 +53,8 @@
 </div>
 <script type="text/javascript">
 //声明相关变量
-var img_host = '${basePath}/';
-var basePath = '${basePath}/';
+var img_host = '${basePath}';
+var basePath = '${basePath}';
 var pid = '${proj.id}';
 var allow_comment = ${proj.isComments};
 var is_show_comment = <%if(proj.isComments=='1'){%>true<%}else{%>false<%}%>;

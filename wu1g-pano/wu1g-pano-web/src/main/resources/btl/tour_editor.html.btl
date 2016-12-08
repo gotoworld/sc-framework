@@ -57,7 +57,7 @@ xml_data = {
 <%}%>
 var pid = '${proj.id}';
 var img_host = '';
-var basePath = '${basePath}/';
+var basePath = '${basePath}';
 var radar_img ="${proj.mapSrc}";
 var panoPath ="${panoPath}";
 </script>

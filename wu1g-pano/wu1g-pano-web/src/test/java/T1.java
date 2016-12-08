@@ -31,6 +31,6 @@ public class T1 {
 //                relativePath;
             }
         }
-        return basePath+"/"+relativePath;
+        return basePath+""+relativePath;
     }
 }

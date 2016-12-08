@@ -30,12 +30,12 @@
             <td>${bean.dateCreated}</td>
             <td>
                 <%if(shiro.hasPermission("authRole:edit")){%>
-                <a href="javascript:;" onclick="openMyBoxLayer('e','${basePath}/h/auth/role/edit/${bean.id}');"
+                <a href="javascript:;" onclick="openMyBoxLayer('e','${basePath}h/auth/role/edit/${bean.id}');"
                    class="label label-success"><i class="fa fa-edit"></i> 编辑</a>
                 <%}%>
                 <%if(shiro.hasPermission("authRole:del")){%>
                 <a href="javascript:;"
-                   onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/auth/role/del/${bean.id}');};"
+                   onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/auth/role/del/${bean.id}');};"
                    class="label label-danger"><i class="fa fa-trash-o"></i> 删除</a>
                 <%}%>
             </td>

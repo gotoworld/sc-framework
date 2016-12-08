@@ -33,7 +33,7 @@
 				<td>${bean.version}</td>
 				<td>${bean.name}</td>
 				<td>
-					<img style="" src='http://qr.liantu.com/api.php?w=100&m=10&text=${basePath}/video/${bean.id}'/>
+					<img style="" src='http://qr.liantu.com/api.php?w=100&m=10&text=${basePath}video/${bean.id}'/>
 					<div class="qrcode">
 						 <div class="sizes">
 							 <a  href="#" class="blue line" onClick="get_qrcode('${bean.id}',100,${bean.version})">100px*100px</a> 
@@ -46,17 +46,17 @@
 					
 				</td>
 				<td>
-				<span>${basePath}/video/${bean.id}</span>
+				<span>${basePath}video/${bean.id}</span>
 				</td>
 				<td>${bean.dateCreated}</td>
 				<td>
 				    <% if(shiro.hasPermission("video:edit")){ %>
-	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/video/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/video/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 	               <%}%>
  	               <% if(shiro.hasPermission("video:del")){ %>
- 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/video/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+ 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/video/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
  	               <%}%>
-	               <a href="${basePath}/video/${bean.id}" target="_blank" class="label label-primary" ><i class="fa fa-desktop"></i> 预览</a>
+	               <a href="${basePath}video/${bean.id}" target="_blank" class="label label-primary" ><i class="fa fa-desktop"></i> 预览</a>
                 </td>
 			</tr>
 			<%	

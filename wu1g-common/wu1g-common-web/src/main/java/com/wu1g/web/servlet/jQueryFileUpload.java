@@ -1,4 +1,4 @@
-package com.wu1g.framework.web.servlet;
+package com.wu1g.web.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wu1g.framework.config.AppConfig;

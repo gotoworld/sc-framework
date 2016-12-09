@@ -6,6 +6,7 @@ import com.wu1g.framework.util.IpUtils;
 import com.wu1g.framework.util.ReflectUtil;
 import com.wu1g.org.vo.OrgUser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -35,9 +36,8 @@ public class RfAccount2BeanAspect {
     @Before("account2BeanAspect()")
     public void doBefore(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
         //读取session中的用户
-        OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
         //请求的IP
         String ip = IpUtils.getIpAddr(request);
         try {

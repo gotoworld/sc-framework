@@ -1,4 +1,4 @@
-package com.wu1g.framework.web.servlet;
+package com.wu1g.web.servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,18 +27,17 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
  * Servlet implementation class upload
  */
 @AutoConfigureBefore(AppConfig.class)
-@WebServlet(urlPatterns="/fileUpload", description="文件上传")
+@WebServlet(urlPatterns = "/fileUpload", description = "文件上传")
 @Slf4j
-public class UploadServlet extends HttpServlet  implements EnvironmentAware {
+public class UploadServlet extends HttpServlet implements EnvironmentAware {
     private static RelaxedPropertyResolver appProperty;
+
     @Override
     public void setEnvironment(Environment env) {
         this.appProperty = new RelaxedPropertyResolver(env, AppConfig.keyPrefix);
@@ -46,44 +45,55 @@ public class UploadServlet extends HttpServlet  implements EnvironmentAware {
 
     private final long serialVersionUID = 1L;
     // 线程池 默认大小
-    private static ExecutorService threadPool = null;
+//    private static ExecutorService threadPool = null;
     private static String rootFolderUpload = null;
-    private static String rootFolderDownload =  null;
-    private static Integer imageN0Width =  null;
-    private static Integer imageN0Height =  null;
-    private static Integer imageN1Width =  null;
-    private static Integer imageN1Height =  null;
+    private static String rootFolderDownload = null;
+    private static Integer imageN0Width = null;
+    private static Integer imageN0Height = null;
+    private static Integer imageN1Width = null;
+    private static Integer imageN1Height = null;
     private static Integer imageN2Width = null;
-    private static Integer imageN2Height =  null;
-    private static Integer imageN3Width =  null;
-    private static Integer imageN3Height =  null;
+    private static Integer imageN2Height = null;
+    private static Integer imageN3Width = null;
+    private static Integer imageN3Height = null;
     //
     private static final SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMM/");
 
-    private void setAppProperty(){
-        if(threadPool==null)
-        this.threadPool = Executors.newScheduledThreadPool(Integer.parseInt(appProperty.getProperty("common.fileServer.image.executorServiceSize")));
-        if(rootFolderUpload==null)
-        this.rootFolderUpload = appProperty.getProperty("common.fileServer.upload");
-        if(rootFolderDownload==null)
-        this.rootFolderDownload = appProperty.getProperty("common.fileServer.download");
-        if(imageN0Width==null)
-        this.imageN0Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.width"));
-        if(imageN0Height==null)
-        this.imageN0Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.height"));
-        if(imageN1Width==null)
-        this.imageN1Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n1.width"));
-        if(imageN1Height==null)
-        this.imageN1Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n1.height"));
-        if(imageN2Width==null)
-        this.imageN2Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n2.width"));
-        if(imageN2Height==null)
-        this.imageN2Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n2.height"));
-        if(imageN3Width==null)
-        this.imageN3Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n3.width"));
-        if(imageN3Height==null)
-        this.imageN3Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n3.height"));
+    private void setAppProperty() {
+//        if(threadPool==null)
+//        this.threadPool = Executors.newScheduledThreadPool(Integer.parseInt(appProperty.getProperty("common.fileServer.image.executorServiceSize")));
+        if (rootFolderUpload == null) {
+            this.rootFolderUpload = appProperty.getProperty("common.fileServer.upload");
+        }
+        if (rootFolderDownload == null) {
+            this.rootFolderDownload = appProperty.getProperty("common.fileServer.download");
+        }
+        if (imageN0Width == null) {
+            this.imageN0Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.width"));
+        }
+        if (imageN0Height == null) {
+            this.imageN0Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.height"));
+        }
+        if (imageN1Width == null) {
+            this.imageN1Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n1.width"));
+        }
+        if (imageN1Height == null) {
+            this.imageN1Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n1.height"));
+        }
+        if (imageN2Width == null) {
+            this.imageN2Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n2.width"));
+        }
+        if (imageN2Height == null) {
+            this.imageN2Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n2.height"));
+        }
+        if (imageN3Width == null) {
+            this.imageN3Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n3.width"));
+        }
+        if (imageN3Height == null) {
+            this.imageN3Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n3.height"));
+        }
     }
+
     /**
      * @throws IOException
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

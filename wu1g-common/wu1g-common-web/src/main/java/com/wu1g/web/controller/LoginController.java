@@ -13,7 +13,6 @@ package com.wu1g.web.controller;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.framework.web.controller.BaseController;
-import com.wu1g.framework.web.controller.SessionUtil;
 import com.wu1g.org.vo.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -179,7 +178,7 @@ public class LoginController extends BaseController {
 		log.info( "LoginController logout" );
 		try {
 			// 清空用户登录信息
-			SessionUtil.clearAdminSession( request );
+			request.getSession().invalidate();
 			getAuth().logout();
 			log.debug( getAuth().getPrincipal() + "你已安全退出!" );
 		} catch (Exception e) {

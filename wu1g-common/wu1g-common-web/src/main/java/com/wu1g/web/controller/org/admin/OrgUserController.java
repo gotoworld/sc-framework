@@ -25,6 +25,7 @@ import com.wu1g.org.api.IOrgDepartmentService;
 import com.wu1g.org.api.IOrgUserService;
 import com.wu1g.org.vo.OrgUser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,7 +182,7 @@ public class OrgUserController extends BaseController {
 		log.info("OrgUserController del.........");
 		Response result = new Response();
 		try {
-			OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+			OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
 			if(user.getId().equals(id)){
 				throw new RuntimeException("不能删除自己!");
 			}
@@ -250,7 +251,7 @@ public class OrgUserController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+					OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
 					if(user!=null){
 						if(ValidatorUtil.isEmpty(bean.getUserid())){
 							bean.setUserid(user.getUserid());
@@ -297,7 +298,7 @@ public class OrgUserController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+					OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
 					if(user!=null){
 						if(ValidatorUtil.isEmpty(bean.getUserid())){
 							bean.setUserid(user.getUserid());

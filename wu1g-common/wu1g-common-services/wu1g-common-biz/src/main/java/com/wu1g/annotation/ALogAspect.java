@@ -10,6 +10,8 @@ import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.org.vo.OrgUser;
 import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -48,7 +50,7 @@ public class ALogAspect {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 //        HttpSession session = request.getSession();
         //读取session中的用户
-        OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
         //请求的IP
         String ip = IpUtils.getIpAddr(request);
         String[] logArr = getMethodDesc(joinPoint);
@@ -111,7 +113,7 @@ public class ALogAspect {
         }
         try {
             //读取session中的用户
-            OrgUser user = (OrgUser) request.getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+            OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
             //获取请求ip
             String ip = IpUtils.getIpAddr(request);
             String[] logArr = getMethodDesc(joinPoint);

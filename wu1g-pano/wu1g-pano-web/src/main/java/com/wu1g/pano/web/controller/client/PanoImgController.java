@@ -75,12 +75,8 @@ public class PanoImgController extends BaseController {
 			PanoComments bean=new PanoComments();
 			bean.setSceneId( sceneId );
 			List beans=panoCommentsService.findDataIsList(bean );
-			if(beans==null||beans.size()==0){
-				throw new RuntimeException();
-			}
 			msg.put( "list",beans);
 		} catch (Exception e) {
-			log.error( "点赞失败!", e );
 			msg=new HashMap();
 			msg.put( "status", 0 );
 			msg.put( "msg", e.getMessage() );

@@ -13,9 +13,7 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.context.EnvironmentAware;
-import org.springframework.core.env.Environment;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,53 +27,58 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@WebServlet(urlPatterns="/jQueryFileUpload", description="文件上传")
+@AutoConfigureBefore(AppConfig.class)
+@WebServlet(urlPatterns = "/jQueryFileUpload", description = "文件上传")
 @Slf4j
-public class jQueryFileUpload extends HttpServlet implements  EnvironmentAware {
-    private static RelaxedPropertyResolver appProperty;
-    @Override
-    public void setEnvironment(Environment env) {
-        this.appProperty = new RelaxedPropertyResolver(env, AppConfig.keyPrefix);
-    }
-    private final long serialVersionUID = 1L;
+public class jQueryFileUpload extends HttpServlet {
     // 线程池 默认大小
     private static ExecutorService threadPool = null;
     private static String rootFolderUpload = null;
-    private static String rootFolderDownload =  null;
-    private static Integer imageN0Width =  null;
-    private static Integer imageN0Height =  null;
-    private static Integer imageN1Width =  null;
-    private static Integer imageN1Height =  null;
+    private static String rootFolderDownload = null;
+    private static Integer imageN0Width = null;
+    private static Integer imageN0Height = null;
+    private static Integer imageN1Width = null;
+    private static Integer imageN1Height = null;
     private static Integer imageN2Width = null;
-    private static Integer imageN2Height =  null;
-    private static Integer imageN3Width =  null;
-    private static Integer imageN3Height =  null;
+    private static Integer imageN2Height = null;
+    private static Integer imageN3Width = null;
+    private static Integer imageN3Height = null;
     //
     private static final SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMM/");
 
-    private void setAppProperty(){
+    private void setAppConfig() {
         if(threadPool==null)
-            this.threadPool = Executors.newScheduledThreadPool(Integer.parseInt(appProperty.getProperty("common.fileServer.image.executorServiceSize")));
-        if(rootFolderUpload==null)
-            this.rootFolderUpload = appProperty.getProperty("common.fileServer.upload");
-        if(rootFolderDownload==null)
-            this.rootFolderDownload = appProperty.getProperty("common.fileServer.download");
-        if(imageN0Width==null)
-            this.imageN0Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.width"));
-        if(imageN0Height==null)
-            this.imageN0Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.height"));
-        if(imageN1Width==null)
-            this.imageN1Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n1.width"));
-        if(imageN1Height==null)
-            this.imageN1Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n1.height"));
-        if(imageN2Width==null)
-            this.imageN2Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n2.width"));
-        if(imageN2Height==null)
-            this.imageN2Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n2.height"));
-        if(imageN3Width==null)
-            this.imageN3Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n3.width"));
-        if(imageN3Height==null)
-            this.imageN3Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n3.height"));
+        this.threadPool = Executors.newScheduledThreadPool(Integer.parseInt(AppConfig.getProperty("common.fileServer.image.executorServiceSize")));
+        if (rootFolderUpload == null) {
+            this.rootFolderUpload = AppConfig.getProperty("common.fileServer.upload");
+        }
+        if (rootFolderDownload == null) {
+            this.rootFolderDownload = AppConfig.getProperty("common.fileServer.download");
+        }
+        if (imageN0Width == null) {
+            this.imageN0Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n0.width"));
+        }
+        if (imageN0Height == null) {
+            this.imageN0Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n0.height"));
+        }
+        if (imageN1Width == null) {
+            this.imageN1Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n1.width"));
+        }
+        if (imageN1Height == null) {
+            this.imageN1Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n1.height"));
+        }
+        if (imageN2Width == null) {
+            this.imageN2Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n2.width"));
+        }
+        if (imageN2Height == null) {
+            this.imageN2Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n2.height"));
+        }
+        if (imageN3Width == null) {
+            this.imageN3Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n3.width"));
+        }
+        if (imageN3Height == null) {
+            this.imageN3Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n3.height"));
+        }
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -93,7 +96,7 @@ public class jQueryFileUpload extends HttpServlet implements  EnvironmentAware {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        setAppProperty();
+        setAppConfig();
         // 路径变量
         String savePath = ""; // 文件保存路径
         String saveUrl = ""; // 文件保存目录URL(返前台)

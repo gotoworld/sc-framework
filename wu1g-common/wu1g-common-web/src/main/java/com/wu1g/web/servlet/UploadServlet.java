@@ -14,9 +14,6 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.context.EnvironmentAware;
-import org.springframework.core.env.Environment;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,14 +32,7 @@ import java.util.*;
 @AutoConfigureBefore(AppConfig.class)
 @WebServlet(urlPatterns = "/fileUpload", description = "文件上传")
 @Slf4j
-public class UploadServlet extends HttpServlet implements EnvironmentAware {
-    private static RelaxedPropertyResolver appProperty;
-
-    @Override
-    public void setEnvironment(Environment env) {
-        this.appProperty = new RelaxedPropertyResolver(env, AppConfig.keyPrefix);
-    }
-
+public class UploadServlet extends HttpServlet{
     private final long serialVersionUID = 1L;
     // 线程池 默认大小
 //    private static ExecutorService threadPool = null;
@@ -59,38 +49,38 @@ public class UploadServlet extends HttpServlet implements EnvironmentAware {
     //
     private static final SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMM/");
 
-    private void setAppProperty() {
+    private void setAppConfig() {
 //        if(threadPool==null)
-//        this.threadPool = Executors.newScheduledThreadPool(Integer.parseInt(appProperty.getProperty("common.fileServer.image.executorServiceSize")));
+//        this.threadPool = Executors.newScheduledThreadPool(Integer.parseInt(AppConfig.getProperty("common.fileServer.image.executorServiceSize")));
         if (rootFolderUpload == null) {
-            this.rootFolderUpload = appProperty.getProperty("common.fileServer.upload");
+            this.rootFolderUpload = AppConfig.getProperty("common.fileServer.upload");
         }
         if (rootFolderDownload == null) {
-            this.rootFolderDownload = appProperty.getProperty("common.fileServer.download");
+            this.rootFolderDownload = AppConfig.getProperty("common.fileServer.download");
         }
         if (imageN0Width == null) {
-            this.imageN0Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.width"));
+            this.imageN0Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n0.width"));
         }
         if (imageN0Height == null) {
-            this.imageN0Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n0.height"));
+            this.imageN0Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n0.height"));
         }
         if (imageN1Width == null) {
-            this.imageN1Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n1.width"));
+            this.imageN1Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n1.width"));
         }
         if (imageN1Height == null) {
-            this.imageN1Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n1.height"));
+            this.imageN1Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n1.height"));
         }
         if (imageN2Width == null) {
-            this.imageN2Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n2.width"));
+            this.imageN2Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n2.width"));
         }
         if (imageN2Height == null) {
-            this.imageN2Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n2.height"));
+            this.imageN2Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n2.height"));
         }
         if (imageN3Width == null) {
-            this.imageN3Width = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n3.width"));
+            this.imageN3Width = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n3.width"));
         }
         if (imageN3Height == null) {
-            this.imageN3Height = Integer.parseInt(appProperty.getProperty("common.fileServer.image.n3.height"));
+            this.imageN3Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n3.height"));
         }
     }
 
@@ -102,7 +92,7 @@ public class UploadServlet extends HttpServlet implements EnvironmentAware {
         log.info("UploadAction init");
         response.reset();
         response.setContentType("text/plain;charset=" + PathCommonConstant.DEFAULT_ENCODE);
-        setAppProperty();
+        setAppConfig();
         //--项目id
         String projId = request.getParameter("projId");
 

@@ -1,7 +1,7 @@
 select 
 
-CONCAT('/**',t.comment,'*/') as comment
--- /**
+-- CONCAT('/**',t.comment,'*/') as comment
+ /**
 ,
 CONCAT(
 CASE 
@@ -18,36 +18,29 @@ else
 		else ''
 	end
 end,
-case
+case 
 		when IFNULL(t.len,0)>0 then CONCAT('@Size(max=',t.len,',message="',t.code,'最大',t.len,'字符")')
 		else ''
 end
 )
--- */
-,
+ */
+-- ,
 CONCAT(
-'private ',
-(
-CASE
-WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN 'Date'
-when (t.DATA_TYPE in ('tinyint') or t.code in ('delFlag'))then 'Byte'
-when t.DATA_TYPE in ('bigint') then 'Long'
-when t.DATA_TYPE in ('smallint','mediumint','int') then 'Integer'
-when t.DATA_TYPE in ('float','double') then 'Double'
-when t.DATA_TYPE in ('decimal') then 'BigDecimal'
-else 'String'
-end),
-' ',
+'<if test="',
+t.code,
+'!= null" >,',
+t.columnName,
+'=#{',
 t.code
-,';'
-) as code
+,'}</if>'
+) as ddddddddddddddddddddddddddddddddddddddddddddddddd
  from (
-select
+select 
 CONCAT(
 	if(
 		position('_' in t.code)=0,
 		SUBSTR(t.code,1,CHAR_LENGTH(t.code)),
-		SUBSTR(t.code,1,position('_' in t.code)-2)
+		SUBSTR(t.code,1,position('_' in t.code)-1)
 	),
 	if(
 		position('_' in t.code)!=0,
@@ -60,9 +53,9 @@ CONCAT(
 		''
 	)
 )as code
-,t.comment,t.DATA_TYPE as DATA_TYPE, t.isNull as isNull,t.len as len
+,t.comment,t.DATA_TYPE as DATA_TYPE, t.isNull as isNull,t.len as len,t.columnName as columnName
 from (
-	select
+	select 
 	CONCAT(
 		SUBSTR(t.COLUMN_NAME,1,1),
 		if(
@@ -82,9 +75,9 @@ from (
 		)
 	) as code
 	,t.COLUMN_COMMENT as comment,
-  t.DATA_TYPE as DATA_TYPE, t.IS_NULLABLE as isNull,t.CHARACTER_MAXIMUM_LENGTH as len
-	from information_schema.`COLUMNS` t
-	where t.TABLE_SCHEMA='kf_cddportal' and t.TABLE_NAME='t_banner'
+  t.DATA_TYPE as DATA_TYPE, t.IS_NULLABLE as isNull,t.CHARACTER_MAXIMUM_LENGTH as len,t.COLUMN_NAME as columnName
+	from information_schema.`COLUMNS` t 
+	where t.TABLE_SCHEMA='test' and t.TABLE_NAME='test'
 ) t
 
 )t

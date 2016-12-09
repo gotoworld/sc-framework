@@ -37,7 +37,7 @@
                 <div class="m-b"></div>
                 <h4>欢迎使用 <strong>W全景发布系统测试版V0.1</strong></h4>
                 <ul class="m-b">
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 用户admin 密码 admin</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> pano 密码 pano</li>
                 </ul>
                 <strong>此账号只开放全景相关基础权限.</strong>
             </div>
@@ -46,10 +46,10 @@
             <form method="post" action="${basePath!}/admin/login">
                 <h4 class="no-margins">登录：</h4>
                 <h4 class="text-danger">${msg!}</h4>
-                <input type="text" value="admin" name="userid" class="form-control uname" placeholder="用户名"/>
-                <input type="hidden" value="21232f297a57a5a743894a0e4a801fc3" autocomplete="off" id="passwordA"
+                <input type="text" value="pano" name="userid" class="form-control uname" placeholder="用户名"/>
+                <input type="hidden" value="7af88f1d651067943c4aff4d7023ef55" autocomplete="off" id="passwordA"
                        name="password"/>
-                <input type="password" value="admin" name="password"
+                <input type="password" value="pano" name="password"
                        onkeydown="$('#passwordA').val($.md5($(this).val()));"
                        onchange="$('#passwordA').val($.md5($(this).val()));" class="form-control pword m-b"
                        placeholder="密码"/>

@@ -39,7 +39,7 @@ CONCAT(
 	if(
 		position('_' in t.code)=0,
 		SUBSTR(t.code,1,CHAR_LENGTH(t.code)),
-		SUBSTR(t.code,1,position('_' in t.code)-2)
+		SUBSTR(t.code,1,position('_' in t.code)-1)
 	),
 	if(
 		position('_' in t.code)!=0,
@@ -76,7 +76,7 @@ from (
 	,t.COLUMN_COMMENT as comment,
   t.DATA_TYPE as DATA_TYPE, t.IS_NULLABLE as isNull,t.CHARACTER_MAXIMUM_LENGTH as len,t.COLUMN_NAME as columnName
 	from information_schema.`COLUMNS` t 
-	where t.TABLE_SCHEMA='dev_cddang' and t.TABLE_NAME='t_business_contact'
+	where t.TABLE_SCHEMA='test' and t.TABLE_NAME='test'
 ) t
 
 )t

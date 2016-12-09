@@ -6,7 +6,7 @@ eureka:
     registerWithEureka: false
 # HTTP Server
 server:
-  port: 80
+  port: 8080
   context-path: /
 # Spring properties
 spring:
@@ -27,6 +27,7 @@ spring:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/krpano?noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
+    #password: AES:se0In3/TNQNjnGGt8Ed43g==
     password: AES:dqoJ3xPZ2A3ZF+zvunjHJQ==
 #    # 下面为连接池的补充设置，应用到上面所有数据源中
 #    # 初始化大小，最小，最大
@@ -66,9 +67,9 @@ wu1g:
   config:
     beetl: classpath:/conf/beetl.properties
   krpano:
-    win: D:/home/krpano/win/krpanotools64.exe
-    linux: d:/home/krpano/linux/krpanotools
-    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=512 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=768
+    win: /home/krpano/win/krpanotools64.exe
+    linux: /home/krpano/linux/krpanotools
+    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
   common:
     fileServer:
       rootFolder: /home/softvan/
@@ -88,4 +89,3 @@ wu1g:
         n3:
           width: 1200
           height: 1200
-

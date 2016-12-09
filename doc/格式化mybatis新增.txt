@@ -1,0 +1,81 @@
+select 
+
+-- CONCAT('/**',t.comment,'*/') as comment
+ /**
+,
+CONCAT(
+CASE 
+WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN ''
+when t.DATA_TYPE in ('tinyint','smallint','mediumint','int','bigint') then ''
+when t.DATA_TYPE in ('float','double') then ''
+when t.DATA_TYPE in ('decimal') then ''
+else 
+	CASE 
+		when t.code!='id' and  t.isNull='NO' then 
+		CONCAT('@NotNull(message="',t.code,'不能为空")',
+			''
+		)
+		else ''
+	end
+end,
+case 
+		when IFNULL(t.len,0)>0 then CONCAT('@Size(max=',t.len,',message="',t.code,'最大',t.len,'字符")')
+		else ''
+end
+)
+ */
+-- ,
+CONCAT(',',
+t.columnName),
+CONCAT(
+',#{',
+t.code
+,'}'
+) as code
+ from (
+select 
+CONCAT(
+	if(
+		position('_' in t.code)=0,
+		SUBSTR(t.code,1,CHAR_LENGTH(t.code)),
+		SUBSTR(t.code,1,position('_' in t.code)-1)
+	),
+	if(
+		position('_' in t.code)!=0,
+		UPPER(SUBSTR(t.code,position('_' in t.code)+1,1)),
+		''
+	),
+	if(
+		position('_' in t.code)!=0,
+		SUBSTR(t.code,position('_' in t.code)+2,CHAR_LENGTH(t.code)),
+		''
+	)
+)as code
+,t.comment,t.DATA_TYPE as DATA_TYPE, t.isNull as isNull,t.len as len,t.columnName as columnName
+from (
+	select 
+	CONCAT(
+		SUBSTR(t.COLUMN_NAME,1,1),
+		if(
+			position('_' in t.COLUMN_NAME)=0,
+			SUBSTR(t.COLUMN_NAME,2,CHAR_LENGTH(t.COLUMN_NAME)),
+			SUBSTR(t.COLUMN_NAME,2,position('_' in t.COLUMN_NAME)-2)
+		),
+		if(
+			position('_' in t.COLUMN_NAME)!=0,
+			UPPER(SUBSTR(t.COLUMN_NAME,position('_' in t.COLUMN_NAME)+1,1)),
+			''
+		),
+		if(
+			position('_' in t.COLUMN_NAME)!=0,
+			SUBSTR(t.COLUMN_NAME,position('_' in t.COLUMN_NAME)+2,CHAR_LENGTH(t.COLUMN_NAME)),
+			''
+		)
+	) as code
+	,t.COLUMN_COMMENT as comment,
+  t.DATA_TYPE as DATA_TYPE, t.IS_NULLABLE as isNull,t.CHARACTER_MAXIMUM_LENGTH as len,t.COLUMN_NAME as columnName
+	from information_schema.`COLUMNS` t 
+	where t.TABLE_SCHEMA='test' and t.TABLE_NAME='test'
+) t
+
+)t

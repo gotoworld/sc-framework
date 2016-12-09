@@ -6,7 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-//@ServletComponentScan
+@ServletComponentScan
 @SpringBootApplication
 public class AppApplication extends SpringBootServletInitializer {
     @Override

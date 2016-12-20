@@ -1,0 +1,25 @@
+<% if(shiro.hasPermission("sys:menu")){ %>
+<li><a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">系统管理 </span><span
+        class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <% if(shiro.hasPermission("orgDept:menu")){ %>
+        <li><a class="J_menuItem" href="${basePath }/h/org/dept/init">组织架构_部门</a></li>
+        <%}%>
+        <% if(shiro.hasPermission("orgUser:menu")){ %>
+        <li><a class="J_menuItem" href="${basePath }/h/org/user/init">组织架构_用户</a></li>
+        <%}%>
+        <% if(shiro.hasPermission("authPerm:menu")){ %>
+        <li><a class="J_menuItem" href="${basePath }/h/auth/perm/init">权限_权限信息</a></li>
+        <%}%>
+        <% if(shiro.hasPermission("authRole:menu")){ %>
+        <li><a class="J_menuItem" href="${basePath }/h/auth/role/init">权限_角色信息</a></li>
+        <%}%>
+        <% if(shiro.hasPermission("sysLog:menu")){ %>
+        <li><a class="J_menuItem" href="${basePath }/h/sys/alog/init">系统_操作日志</a></li>
+        <%}%>
+        <% if(shiro.hasPermission("sysDic:menu")){ %>
+        <li><a class="J_menuItem" href="${basePath }/h/sys/dic/init">系统_数据字典</a></li>
+        <%}%>
+    </ul>
+</li>
+<%}%>

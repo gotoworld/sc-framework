@@ -45,61 +45,8 @@
                 <li>
                     <a class="J_menuItem" href="${basePath}h/home"> <i class="fa fa-home"></i> <span class="nav-label">首页</span></a>
                 </li>
-                <% if(shiro.hasPermission("panoCat:menu2")){ %>
-                <li>
-                    <a class="J_menuItem" href="${basePath }/h/pano/category/init"> <i class="fa fa-columns"></i> <span
-                            class="nav-label">全景类目</span>
-                    </a>
-                </li>
-                <%}%>
-                <% if(shiro.hasPermission("pano:menu")){ %>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-picture-o"></i>
-                        <span class="nav-label">全景漫游</span>
-                        <span class="fa arrow"></span>
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <% if(shiro.hasPermission("panoProj:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/pano/proj/init">全景漫游</a></li>
-                        <%}%>
-                        <% if(shiro.hasPermission("panoComment:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/pano/comments/init">场景留言</a></li>
-                        <%}%>
-                    </ul>
-                </li>
-                <li><a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">全景视频</span><span
-                        class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="${basePath }/h/video/init">视频列表</a></li>
-                    </ul>
-                </li>
-                <%}%>
-                <% if(shiro.hasPermission("sys:menu")){ %>
-                <li><a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">系统管理 </span><span
-                        class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <% if(shiro.hasPermission("orgDept:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/org/dept/init">组织架构_部门</a></li>
-                        <%}%>
-                        <% if(shiro.hasPermission("orgUser:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/org/user/init">组织架构_用户</a></li>
-                        <%}%>
-                        <% if(shiro.hasPermission("authPerm:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/auth/perm/init">权限_权限信息</a></li>
-                        <%}%>
-                        <% if(shiro.hasPermission("authRole:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/auth/role/init">权限_角色信息</a></li>
-                        <%}%>
-                        <% if(shiro.hasPermission("sysLog:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/sys/alog/init">系统_操作日志</a></li>
-                        <%}%>
-                        <% if(shiro.hasPermission("sysDic:menu")){ %>
-                        <li><a class="J_menuItem" href="${basePath }/h/sys/dic/init">系统_数据字典</a></li>
-                        <%}%>
-                    </ul>
-                </li>
-                <%}%>
+                <% layout("nav_menu_pano.html"){}%>
+                <% layout("nav_menu_sys.html"){}%>
             </ul>
         </div>
     </nav>

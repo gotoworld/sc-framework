@@ -34,7 +34,7 @@
 				</td>
 				<td>${bean.sceneTitle}</td>
 				<td>${bean.content}</td>
-				<td>${bean.dateCreated}</td>
+				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
 	               <% if(shiro.hasPermission("panoComment:del")){ %>
 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/pano/comments/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>

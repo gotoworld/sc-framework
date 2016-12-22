@@ -48,7 +48,7 @@
 				<td>
 				<span>${basePath}video/${bean.id}</span>
 				</td>
-				<td>${bean.dateCreated}</td>
+				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
 				    <% if(shiro.hasPermission("video:edit")){ %>
 	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/video/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>

@@ -27,7 +27,7 @@
             <td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
             <td>${bean.name}</td>
             <td>${bean.isSuper=='1'?'是':'否'}</td>
-            <td>${bean.dateCreated}</td>
+            <td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
             <td>
                 <%if(shiro.hasPermission("authRole:edit")){%>
                 <a href="javascript:;" onclick="openMyBoxLayer('e','${basePath}h/auth/role/edit/${bean.id}');"

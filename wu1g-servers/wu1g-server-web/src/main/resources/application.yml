@@ -62,7 +62,7 @@ spring:
 mybatis:
   configLocation: classpath:conf/mybatis-config.xml
   mapperLocations: classpath*:mybatis/**/*.xml
-
+  typeAliasesPackage: com.wu1g
 #configuration:
 #  mapUnderscoreToCamelCase: true
 #  callSettersOnNulls: true

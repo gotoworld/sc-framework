@@ -194,7 +194,7 @@ public class JdbcConfig implements EnvironmentAware {
             log.error("configLocation: " + e.getMessage());
         }
         //typeAliasesPackage
-        bean.setTypeAliasesPackage("com.wu1g");
+        bean.setTypeAliasesPackage(myBatisResolver.getProperty("typeAliasesPackage"));
 
 
         try {

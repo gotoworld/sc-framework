@@ -2,36 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <!--定义全局的版本 -->
-    <properties>
-        <wu1g.framework.version>1.0</wu1g.framework.version>
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-        <!--<spring.boot.version>1.4.3.RELEASE</spring.boot.version>-->
-        <spring.cloud.version>Camden.SR2</spring.cloud.version>
-
-        <!--<slf4j.version>1.7.21</slf4j.version>-->
-        <!--<logback.version>1.1.7</logback.version>-->
-
-        <mysql.version>6.0.5</mysql.version>
-        <!--<mybatis.version>3.4.1</mybatis.version>-->
-        <!--<mybatis-spring.version>1.3.0</mybatis-spring.version>-->
-        <mybatis.spring-boot.version>1.1.1</mybatis.spring-boot.version>
-        <druid.version>1.0.25</druid.version>
-        <!--<pagehelper.version>4.1.6</pagehelper.version>-->
-        <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
-        <!--<spring-data-releasetrain.version>Hopper-SR4</spring-data-releasetrain.version>-->
-        <!--<spring-boot-starter-redis.version>1.7.4.RELEASE</spring-boot-starter-redis.version>-->
-
-        <shiro.version>1.4.0-RC2</shiro.version>
-    </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.4.3.RELEASE</version>
     </parent>
+
+    <groupId>com.wu1g.framework</groupId>
+    <artifactId>wu1g-framework-starter</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <!--定义全局的版本 -->
+    <properties>
+        <wu1g.framework.version>1.0</wu1g.framework.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <spring.cloud.version>Camden.SR2</spring.cloud.version>
+        <mysql.version>6.0.5</mysql.version>
+        <druid.version>1.0.25</druid.version>
+        <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
+        <shiro.version>1.4.0-RC2</shiro.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -44,11 +36,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <groupId>com.wu1g.framework</groupId>
-    <artifactId>wu1g-framework-starter</artifactId>
-    <version>1.0</version>
-    <packaging>pom</packaging>
 
     <modules>
         <module>framework-cache</module>
@@ -64,13 +51,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>4.3.2.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

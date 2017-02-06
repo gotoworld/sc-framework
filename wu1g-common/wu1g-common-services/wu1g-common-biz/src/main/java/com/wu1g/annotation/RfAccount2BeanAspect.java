@@ -4,7 +4,7 @@ import com.wu1g.framework.IVO;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IpUtils;
 import com.wu1g.framework.util.ReflectUtil;
-import com.wu1g.org.vo.OrgUser;
+import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
@@ -16,7 +16,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * 切点类

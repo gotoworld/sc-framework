@@ -7,11 +7,10 @@ import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IpUtils;
 import com.wu1g.framework.util.ReflectUtil;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.org.vo.OrgUser;
-import com.wu1g.sys.api.ISysUserLogService;
+import com.wu1g.vo.org.OrgUser;
+import com.wu1g.api.sys.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -23,7 +22,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 
 /**

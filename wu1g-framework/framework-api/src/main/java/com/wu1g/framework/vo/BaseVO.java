@@ -21,7 +21,7 @@ public class BaseVO implements IVO,IEntity {
     /** 结束时间 */
     String dateEnd;
     /** 页码 */
-    Integer pageNum=1;
+    Integer pageNum;
     /** 每页显示条数 */
     Integer pageSize;
     String str;

@@ -64,7 +64,7 @@ logging:
     cn.com.softvan: DEBUG
     cn.com.softvan.dao: TRACE
 mybatis:
-  type-aliases-package: com.wu1g
+  type-aliases-package: com.wu1g.vo
   mapper-locations: classpath*:mybatis/**/*.xml
 mapper:
   not-empty: false

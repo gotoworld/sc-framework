@@ -18,11 +18,11 @@
  */
 package com.wu1g.web.controller;
 
-import com.wu1g.auth.api.IRoleSourceService;
-import com.wu1g.auth.vo.AuthPerm;
-import com.wu1g.auth.vo.AuthRole;
+import com.wu1g.api.auth.IRoleSourceService;
+import com.wu1g.vo.auth.AuthPerm;
+import com.wu1g.vo.auth.AuthRole;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.org.vo.OrgUser;
+import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;

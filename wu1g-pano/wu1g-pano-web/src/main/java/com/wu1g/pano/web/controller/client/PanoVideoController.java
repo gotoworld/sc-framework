@@ -1,8 +1,8 @@
 package com.wu1g.pano.web.controller.client;
 
 import com.wu1g.framework.web.controller.BaseController;
-import com.wu1g.pano.api.IPanoProjService;
-import com.wu1g.pano.vo.PanoProj;
+import com.wu1g.api.pano.IPanoProjService;
+import com.wu1g.vo.pano.PanoProj;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

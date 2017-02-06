@@ -86,22 +86,31 @@ public class KrPanoUtil {
         }
     }
 
-    public StringBuffer getSceneImage(String path) {
-        int tilesize = 256;
-        path = IOUtil.escapeRemoteToLocal(path);
-        Dimension dimension= getImageDim(path+"/b/l1/1/l1_b_1_1.jpg");
-        tilesize=((Double)dimension.getWidth()).intValue();
-        System.out.println(path);
-        StringBuffer sb = new StringBuffer("\t\t<image type=\"CUBE\" multires=\"true\" tilesize=\""+tilesize+"\" if=\"!webvr.isenabled\">\n");
-        getFile(path+"/b", sb, (path.substring(path.indexOf("/panos/") + 7, path.indexOf(".tiles/"))));
-        sb.append("\t\t</image>");
-        return sb;
+    public StringBuffer getSceneImage(final String path) {
+        try {
+            int tilesize = 256;
+            String newPath = IOUtil.escapeRemoteToLocal(path);
+            Dimension dimension = getImageDim(newPath + "/b/l1/1/l1_b_1_1.jpg");
+            tilesize = ((Double) dimension.getWidth()).intValue();
+//        System.out.println(path);
+            StringBuffer sb = new StringBuffer("\t\t<image type=\"CUBE\" multires=\"true\" tilesize=\"" + tilesize + "\" if=\"!webvr.isenabled\">\n");
+            getFile(newPath + "/b", sb, (path.substring(path.indexOf("/panos/") + 7, path.indexOf(".tiles/"))));
+            sb.append("\t\t</image>");
+            return sb;
+        } catch (Exception e) {
+            return new StringBuffer(
+                       "            <image type=\"CUBE\" multires=\"true\" if=\"!webvr.isenabled\">\n" +
+                            "                <level>\n" +
+                            "                    <cube url=\"" + path + "%s/l1/%v/l1_%s_%v_%h.jpg\" />\n" +
+                            "                </level>\n" +
+                            "            </image>"
+            );
+        }
     }
 
     public static void main(String[] args) {
         KrPanoUtil krPanoUtil = new KrPanoUtil();
         String path = "/upload/vtour/panos/111.tiles/";
         System.out.println(krPanoUtil.getSceneImage(path));
-
     }
 }

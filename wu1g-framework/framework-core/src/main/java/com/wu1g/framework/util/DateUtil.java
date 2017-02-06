@@ -250,12 +250,14 @@ public class DateUtil {
     }
 
     public static int getThisYearMonth() throws ParseException {
-        Date today = Calendar.getInstance().getTime();
-        return (today.getYear() + 1900) * 100 + today.getMonth() + 1;
+        Calendar today = Calendar.getInstance();
+        return (today.get(Calendar.YEAR) + 1900) * 100 + today.get(Calendar.MONTH) + 1;
     }
 
     public static int getYearMonth(Date date) throws ParseException {
-        return (date.getYear() + 1900) * 100 + date.getMonth() + 1;
+        Calendar today = Calendar.getInstance();
+        today.setTime(date);
+        return (today.get(Calendar.YEAR) + 1900) * 100 + today.get(Calendar.MONTH) + 1;
     }
 
     // 获取相隔月数   

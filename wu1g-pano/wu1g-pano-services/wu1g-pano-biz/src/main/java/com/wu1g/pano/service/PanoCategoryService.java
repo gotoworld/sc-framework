@@ -97,7 +97,7 @@ public class PanoCategoryService extends BaseService implements IPanoCategorySer
     public List<PanoCategory> findDataIsPage(PanoCategory bean) {
         List<PanoCategory> beans = null;
         try {
-            PageHelper.startPage((Integer) bean.getPageNum(), (Integer) bean.getPageSize());
+            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<PanoCategory>) panoCategoryDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);

@@ -167,7 +167,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     public List<OrgUser> findDataIsPage(OrgUser bean) {
         List<OrgUser> beans = null;
         try {
-            PageHelper.startPage((Integer) bean.getPageNum(), (Integer) bean.getPageSize());
+            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<OrgUser>) orgUserDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);
@@ -256,7 +256,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         List<OrgUser> beans = null;
         try {
             if (bean != null) {
-                PageHelper.startPage((Integer) bean.getPageNum(), (Integer) bean.getPageSize());
+                PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
                 beans = orgUserDao.getUserIsPage(bean);
             }
         } catch (Exception e) {

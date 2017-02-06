@@ -115,7 +115,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     public List<PanoProj> findDataIsPage(PanoProj bean) {
         List<PanoProj> beans = null;
         try {
-            PageHelper.startPage((Integer) bean.getPageNum(), (Integer) bean.getPageSize());
+            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<PanoProj>) panoProjDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);

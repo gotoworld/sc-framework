@@ -95,7 +95,7 @@ public class PanoCommentsService extends BaseService implements IPanoCommentsSer
     public List<PanoComments> findDataIsPage(PanoComments bean) {
         List<PanoComments> beans = null;
         try {
-            PageHelper.startPage((Integer) bean.getPageNum(), (Integer) bean.getPageSize());
+            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<PanoComments>) panoCommentsDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);

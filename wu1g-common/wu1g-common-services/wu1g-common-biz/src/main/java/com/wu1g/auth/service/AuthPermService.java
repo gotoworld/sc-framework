@@ -88,7 +88,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     public List<AuthPerm> findDataIsPage(AuthPerm bean) {
         List<AuthPerm> beans = null;
         try {
-            PageHelper.startPage((Integer) bean.getPageNum(), (Integer) bean.getPageSize());
+            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<AuthPerm>) authPermDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);

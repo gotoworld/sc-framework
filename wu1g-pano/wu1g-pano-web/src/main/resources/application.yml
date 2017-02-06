@@ -32,7 +32,7 @@ spring:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/krpano?serverTimezone=UTC&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
-    password: AES:se0In3/TNQNjnGGt8Ed43g==
+    password: root
     #password: AES:dqoJ3xPZ2A3ZF+zvunjHJQ==
 #    # 下面为连接池的补充设置，应用到上面所有数据源中
 #    # 初始化大小，最小，最大

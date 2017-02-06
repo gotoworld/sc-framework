@@ -23,14 +23,8 @@ public class BaseVO implements IVO,IEntity {
     /** 页码 */
     Integer pageNum=1;
     /** 每页显示条数 */
-    Integer pageSize=15;
+    Integer pageSize;
     String str;
-    public Integer getPageNum(){
-        if(pageNum==null){
-            pageNum=1;
-        }
-        return pageNum;
-    }
     public String getToken(){
         if(token==null){
             token= IdUtil.createUUID(32);

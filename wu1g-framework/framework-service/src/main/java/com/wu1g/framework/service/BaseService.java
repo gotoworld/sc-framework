@@ -63,4 +63,19 @@ public abstract class BaseService extends Observable {
 		}
 		return auth;
 	}
+	protected Integer PN(Integer pageNum) {
+		if (pageNum == null) {
+			return 1;
+		} else {
+			return pageNum;
+		}
+	}
+
+	protected Integer PS(Integer pageSize) {
+		if (pageSize == null || pageSize > 50) {//防止被攻击 限制每页数据最大值
+			return 15;
+		} else {
+			return pageSize;
+		}
+	}
 }

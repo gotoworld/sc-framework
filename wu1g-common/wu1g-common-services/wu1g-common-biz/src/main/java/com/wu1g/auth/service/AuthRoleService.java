@@ -112,7 +112,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     public List<AuthRole> findDataIsPage(AuthRole bean) {
         List<AuthRole> beans = null;
         try {
-            PageHelper.startPage((Integer) bean.getPageNum(), (Integer) bean.getPageSize());
+            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<AuthRole>) authRoleDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);

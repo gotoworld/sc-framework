@@ -92,8 +92,8 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 	@Override
 	public List<PanoScene> findDataIsPage(PanoScene bean){	
 		List<PanoScene> beans=null;	
-		try {	
-			PageHelper.startPage( (Integer) bean.getPageNum(), (Integer) bean.getPageSize() );
+		try {
+			PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
 			beans=(List<PanoScene>) panoSceneDao.findDataIsPage(bean);	
 		} catch (Exception e) {	
 			log.error("信息查询失败,数据库错误!", e);	

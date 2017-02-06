@@ -1,12 +1,10 @@
 package com.wu1g.pano.utils.cmdprocessor;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 @Slf4j
 public class StreamPump extends Thread {
   private final OutputStream mOs;

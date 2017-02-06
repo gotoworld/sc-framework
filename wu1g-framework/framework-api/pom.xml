@@ -13,7 +13,6 @@
     <version>1.0</version>
 
     <dependencies>
-
         <dependency>
             <groupId>com.wu1g.framework</groupId>
             <artifactId>wu1g-framework-core</artifactId>

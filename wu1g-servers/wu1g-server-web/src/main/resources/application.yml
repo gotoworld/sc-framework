@@ -30,7 +30,7 @@ spring:
       suffix: .html
   datasource:
     driverClass: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/krpano?noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/krpano?serverTimezone=UTC&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
     password: AES:se0In3/TNQNjnGGt8Ed43g==
     #password: AES:dqoJ3xPZ2A3ZF+zvunjHJQ==
@@ -59,14 +59,21 @@ spring:
 #    # 合并多个DruidDataSource的监控数据
 #    useGlobalDataSourceStat: true
 
+logging:
+  level:
+    cn.com.softvan: DEBUG
+    cn.com.softvan.dao: TRACE
 mybatis:
-  configLocation: classpath:conf/mybatis-config.xml
-  mapperLocations: classpath*:mybatis/**/*.xml
-  typeAliasesPackage: com.wu1g
-#configuration:
-#  mapUnderscoreToCamelCase: true
-#  callSettersOnNulls: true
-#  logPrefix: dao.
+  type-aliases-package: com.wu1g
+  mapper-locations: classpath*:mybatis/**/*.xml
+mapper:
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+#  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 
 wu1g:
   config:

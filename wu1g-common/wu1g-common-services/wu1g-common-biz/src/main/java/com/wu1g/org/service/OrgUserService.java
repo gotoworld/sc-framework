@@ -41,42 +41,17 @@ import java.util.Map;
 @Service
 @Slf4j
 public class OrgUserService extends BaseService implements IOrgUserService {
-    /**
-     * 组织架构_用户 Dao接口类
-     */
     @Autowired
     private IOrgUserDao orgUserDao;
-    /**
-     * 权限_角色信息 数据库处理接口类
-     */
     @Autowired
     private IAuthRoleDao authRoleDao;
-    /**
-     * 权限_用户vs角色 数据库处理
-     */
     @Autowired
     private IAuthUserVsRoleDao authUserVsRoleDao;
-    /**
-     * 组织架构_部门 Dao接口类
-     */
     @Autowired
     private IOrgDepartmentDao orgDepartmentDao;
-    /**
-     * 组织架构_用户vs部门 数据库处理接口类
-     */
     @Autowired
     private IOrgUserVsDepartmentDao orgUserVsDepartmentDao;
 
-    /**
-     * <p>
-     * 信息编辑。
-     * <p>
-     * <ol>
-     * [功能概要] <li>新增信息。 <li>修改信息。
-     * </ol>
-     *
-     * @throws Exception
-     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(OrgUser bean) throws Exception {
         String msg = "seccuss";
@@ -142,16 +117,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息编辑。
-     * <p>
-     * <ol>
-     * [功能概要] <li>修改信息。
-     * </ol>
-     *
-     * @throws Exception
-     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String updateData(OrgUser bean) throws Exception {
         String msg = "seccuss";
@@ -171,14 +136,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息编辑。
-     * <p>
-     * <ol>
-     * [功能概要] <li>物理删除。
-     * </ol>
-     */
     public String deleteData(OrgUser bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
@@ -192,14 +149,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息 单条。
-     * <p>
-     * <ol>
-     * [功能概要] <li>逻辑删除。
-     * </ol>
-     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(OrgUser bean) throws Exception {
         String msg = "seccuss";
@@ -215,14 +164,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息列表 分页。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>分页。
-     * </ol>
-     */
     public List<OrgUser> findDataIsPage(OrgUser bean) {
         List<OrgUser> beans = null;
         try {
@@ -234,14 +175,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return beans;
     }
 
-    /**
-     * <p>
-     * 信息列表。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>列表。
-     * </ol>
-     */
     public List<OrgUser> findDataIsList(OrgUser bean) {
         List<OrgUser> beans = null;
         try {
@@ -252,14 +185,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return beans;
     }
 
-    /**
-     * <p>
-     * 信息详情。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>详情。
-     * </ol>
-     */
     public OrgUser findDataById(OrgUser bean) {
         OrgUser bean1 = null;
         try {
@@ -273,14 +198,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return bean1;
     }
 
-    /**
-     * <p>
-     * 信息 单条。
-     * <p>
-     * <ol>
-     * [功能概要] <li>恢复逻辑删除的数据。
-     * </ol>
-     */
     public String recoveryDataById(OrgUser bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
@@ -295,14 +212,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return msg;
     }
 
-    /**
-     * <p>
-     * 获取用户角色集合。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>列表。
-     * </ol>
-     */
     public List<AuthRole> findRoleDataIsList(OrgUser bean) {
         List<AuthRole> beans = null;
         try {
@@ -317,14 +226,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return beans;
     }
 
-    /**
-     * <p>
-     * 获取用户所在部门集合。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>列表。
-     * </ol>
-     */
     public List<OrgDepartment> findDeptDataIsList(OrgUser bean) {
         List<OrgDepartment> beans = null;
         try {
@@ -339,14 +240,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return beans;
     }
 
-    /**
-     * <p>
-     * 某一种角色所有用户。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>列表。
-     * </ol>
-     */
     public List<OrgUser> findUserList(OrgUser bean) {
         List<OrgUser> beans = null;
         try {
@@ -359,14 +252,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return beans;
     }
 
-    /**
-     * <p>
-     * 某一种角色所有用户。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>分页。
-     * </ol>
-     */
     public List<OrgUser> findUserIsPage(OrgUser bean) {
         List<OrgUser> beans = null;
         try {
@@ -380,10 +265,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return beans;
     }
 
-    /**
-     * <p>
-     * 判断用户id是否存在
-     */
     public String isUidYN(String uid) {
         String msg = "seccuss";
         try {

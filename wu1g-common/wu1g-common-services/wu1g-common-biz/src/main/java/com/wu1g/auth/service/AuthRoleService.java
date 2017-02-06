@@ -1,13 +1,3 @@
-/*	
- * 权限_角色信息   业务处理实现类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ------------------------------------------	
- * 1.00     2015.10.01      easycode         程序.发布		
- * -------- ----------- --------------- ------------------------------------------	
- * Copyright 2015 isd System. - All Rights Reserved.		
- *	
- */
 package com.wu1g.auth.service;
 
 import com.github.pagehelper.PageHelper;
@@ -35,14 +25,8 @@ import java.util.Map;
 @Service
 @Slf4j
 public class AuthRoleService extends BaseService implements IAuthRoleService {
-    /**
-     * 权限_角色信息 Dao接口类
-     */
     @Autowired
     private IAuthRoleDao authRoleDao;
-    /**
-     * 权限_角色vs权限 数据库处理接口类
-     */
     @Autowired
     private IAuthRoleVsPermDao authRoleVsPermDao;
 
@@ -97,14 +81,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息编辑。
-     * <p>
-     * <ol>
-     * [功能概要] <li>物理删除。
-     * </ol>
-     */
     public String deleteData(AuthRole bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
@@ -118,14 +94,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息 单条。
-     * <p>
-     * <ol>
-     * [功能概要] <li>逻辑删除。
-     * </ol>
-     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(AuthRole bean) throws Exception {
         String msg = "seccuss";
@@ -141,14 +109,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息列表 分页。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>分页。
-     * </ol>
-     */
     public List<AuthRole> findDataIsPage(AuthRole bean) {
         List<AuthRole> beans = null;
         try {
@@ -160,14 +120,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return beans;
     }
 
-    /**
-     * <p>
-     * 信息列表。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>列表。
-     * </ol>
-     */
     public List<AuthRole> findDataIsList(AuthRole bean) {
         List<AuthRole> beans = null;
         try {
@@ -178,14 +130,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return beans;
     }
 
-    /**
-     * <p>
-     * 信息详情。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>详情。
-     * </ol>
-     */
     public AuthRole findDataById(AuthRole bean) {
         AuthRole bean1 = null;
         try {
@@ -196,14 +140,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return bean1;
     }
 
-    /**
-     * <p>
-     * 信息 单条。
-     * <p>
-     * <ol>
-     * [功能概要] <li>恢复逻辑删除的数据。
-     * </ol>
-     */
     public String recoveryDataById(AuthRole bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {

@@ -1,14 +1,11 @@
 package com.wu1g.pano.utils.cmdprocessor;
 
-import java.net.URL;
+import com.wu1g.framework.config.AppConfig;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import com.wu1g.framework.config.AppConfig;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class KrPanoUtil {

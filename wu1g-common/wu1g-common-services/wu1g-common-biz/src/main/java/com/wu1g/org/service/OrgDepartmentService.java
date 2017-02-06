@@ -1,13 +1,3 @@
-/*	
- * 组织架构_部门   业务处理实现类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ------------------------------------------	
- * 1.00     2015.10.01      easycode         程序.发布		
- * -------- ----------- --------------- ------------------------------------------	
- * Copyright 2015 isd System. - All Rights Reserved.		
- *	
- */
 package com.wu1g.org.service;
 
 import com.github.pagehelper.PageHelper;
@@ -19,7 +9,6 @@ import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.org.api.IOrgDepartmentService;
 import com.wu1g.org.dao.IOrgDepartmentDao;
 import com.wu1g.org.vo.OrgDepartment;
-import com.wu1g.sys.api.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +16,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +25,6 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
     @Autowired
     private IOrgDepartmentDao orgDepartmentDao;
 
-    /**
-     * <p>
-     * 信息编辑。
-     * <p>
-     * <ol>
-     * [功能概要] <li>新增信息。 <li>修改信息。
-     * </ol>
-     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String saveOrUpdateData(OrgDepartment bean) throws Exception {
@@ -71,14 +51,6 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息编辑。
-     * <p>
-     * <ol>
-     * [功能概要] <li>物理删除。
-     * </ol>
-     */
     @RfAccount2Bean
     public String deleteData(OrgDepartment bean) throws Exception {
         String msg = "seccuss";
@@ -93,14 +65,6 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息 单条。
-     * <p>
-     * <ol>
-     * [功能概要] <li>逻辑删除。
-     * </ol>
-     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String deleteDataById(OrgDepartment bean) throws Exception {
@@ -117,14 +81,6 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息列表 分页。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>分页。
-     * </ol>
-     */
     public List<OrgDepartment> findDataIsPage(OrgDepartment bean) {
         List<OrgDepartment> beans = null;
         try {
@@ -136,14 +92,6 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return beans;
     }
 
-    /**
-     * <p>
-     * 信息列表。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>列表。
-     * </ol>
-     */
     public List<OrgDepartment> findDataIsList(OrgDepartment bean) {
         List<OrgDepartment> beans = null;
         try {
@@ -154,14 +102,6 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return beans;
     }
 
-    /**
-     * <p>
-     * 信息详情。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索。 <li>详情。
-     * </ol>
-     */
     public OrgDepartment findDataById(OrgDepartment bean) {
         OrgDepartment bean1 = null;
         try {
@@ -172,14 +112,6 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return bean1;
     }
 
-    /**
-     * <p>
-     * 信息 单条。
-     * <p>
-     * <ol>
-     * [功能概要] <li>恢复逻辑删除的数据。
-     * </ol>
-     */
     public String recoveryDataById(OrgDepartment bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
@@ -194,14 +126,6 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return msg;
     }
 
-    /**
-     * <p>
-     * 信息列表。
-     * <p>
-     * <ol>
-     * [功能概要] <li>信息检索 根据xx查询所有圈圈。
-     * </ol>
-     */
     public List<OrgDepartment> findDataTree(OrgDepartment bean) {
         List<OrgDepartment> beans = findDataIsList(bean);
         if (beans == null) {

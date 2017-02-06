@@ -16,7 +16,7 @@ spring:
   application:
     name: wu1g-services
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${wu1g.common.fileServer.rootFolder}
+    static-locations:classpath:/static/,file:${wu1g.common.fileServer.rootFolder}
   mvc:
     #表示所有的访问都经过静态资源路径
     static-path-pattern: /**

@@ -1,13 +1,3 @@
-/*	
- * 系统_管理员操作日志   业务处理实现类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ------------------------------------------	
- * 1.00     2015.10.01      easycode         程序.发布		
- * -------- ----------- --------------- ------------------------------------------	
- * Copyright 2015 isd System. - All Rights Reserved.		
- *	
- */
 package com.wu1g.sys.service;
 
 import com.github.pagehelper.PageHelper;
@@ -31,22 +21,8 @@ import java.util.List;
 @Slf4j
 public class SysUserLogService extends BaseService implements ISysUserLogService {
 
-    /**
-     * 系统_管理员操作日志 Dao接口类
-     */
     @Autowired
     private ISysUserLogDao sysUserLogDao;
-
-    /**
-     * <p>
-     * 信息编辑。
-     * <p>
-     * <ol>
-     * [功能概要] <li>新增信息。 <li>修改信息。
-     * </ol>
-     *
-     * @throws Exception
-     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysUserLog bean) throws Exception {
         String msg = "seccuss";
@@ -71,16 +47,6 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
         }
         return msg;
     }
-
-    /**
-     * <p>
-     * 信息列表 分页。
-     * <ol>
-     * [功能概要]
-     * <li>信息检索。
-     * <li>分页。
-     * </ol>
-     */
     public List<SysUserLog> findDataIsPage(SysUserLog bean) {
         List<SysUserLog> beans = null;
         try {
@@ -91,16 +57,6 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
         }
         return beans;
     }
-
-    /**
-     * 管理员操作日志记录。
-     *
-     * @param type   操作类型
-     * @param memo   具体描述
-     * @param userId 用户id
-     * @param ip     用户ip
-     * @return
-     */
     public void info(String type, String memo, String userId, String ip) {
         try {
             SysUserLog dto = new SysUserLog();

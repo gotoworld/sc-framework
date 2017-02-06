@@ -1,20 +1,16 @@
 package com.wu1g.framework.net;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Http，基于群集服务器的选择器
- * @author 刘良旭
- *
  */
+@Slf4j
 public class HttpCluster {
-	
-	private static Logger logger = LoggerFactory.getLogger(HttpCluster.class);
 	/**检查时间间隔（毫秒）*/
 	private static int CHECK_TIME = 20 * 1000;
 	
@@ -95,7 +91,7 @@ public class HttpCluster {
 		Host config = new Host();
 		config.host = host;
 		clusters.put(host, config);
-		logger.debug("添加Cluster:"  + host);
+		log.debug("添加Cluster:"  + host);
 	}
 	/**
 	 * 使用数组添加群集主机
@@ -148,7 +144,7 @@ public class HttpCluster {
 		if (min_conn == null)
 			return null;
 		
-		logger.debug("获得Cluster:key={}, host={}",key , min_conn.host);
+		log.debug("获得Cluster:key={}, host={}",key , min_conn.host);
 		
 //		Http conn = new Http();
 //		conn.cluster = this;
@@ -162,7 +158,7 @@ public class HttpCluster {
 	void closeClusterHost(String host){
 		Host cluster = clusters.get(host);
 		if (cluster != null) {
-			logger.debug("释放Cluster:"  +host);
+			log.debug("释放Cluster:"  +host);
 			cluster.close();
 		}
 	}

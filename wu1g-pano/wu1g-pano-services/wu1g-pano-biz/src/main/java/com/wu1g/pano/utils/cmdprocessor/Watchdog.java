@@ -1,11 +1,9 @@
 package com.wu1g.pano.utils.cmdprocessor;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 @Slf4j
 public class Watchdog extends Thread {
 

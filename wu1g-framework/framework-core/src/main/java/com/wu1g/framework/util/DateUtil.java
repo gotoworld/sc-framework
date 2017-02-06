@@ -164,78 +164,6 @@ public class DateUtil {
         return format.parse(strDate);
     }
 
-    /**
-     * Parses text in 'HH:mm:ss' format to produce a time.
-     *
-     * @param s the text
-     * @return Date
-     * @throws ParseException
-     */
-    public static Date parseTime(String s) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        return format.parse(s);
-    }
-
-    public static Date parseTimeC(String s) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("HH时mm分ss秒");
-        return format.parse(s);
-    }
-
-    public static int yearOfDate(Date s) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String d = format.format(s);
-        return Integer.parseInt(d.substring(0, 4));
-    }
-
-    public static int monthOfDate(Date s) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String d = format.format(s);
-        return Integer.parseInt(d.substring(5, 7));
-    }
-
-    public static int dayOfDate(Date s) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String d = format.format(s);
-        return Integer.parseInt(d.substring(8, 10));
-    }
-
-    public static String getDateTimeStr(java.sql.Date date, double time) {
-        int year = date.getYear() + 1900;
-        int month = date.getMonth() + 1;
-        int day = date.getDate();
-        String dateStr = year + "-" + month + "-" + day;
-        Double d = new Double(time);
-        String timeStr = String.valueOf(d.intValue()) + ":00:00";
-
-        return dateStr + " " + timeStr;
-    }
-
-    /**
-     * Get the total month from two date.
-     *
-     * @param sd the start date
-     * @param ed the end date
-     * @return int month form the start to end date
-     * @throws ParseException
-     */
-    public static int diffDateM(Date sd, Date ed) throws ParseException {
-        return (ed.getYear() - sd.getYear()) * 12 + ed.getMonth()
-                - sd.getMonth() + 1;
-    }
-
-    public static int diffDateD(Date sd, Date ed) throws ParseException {
-        return Math.round((ed.getTime() - sd.getTime()) / 86400000) + 1;
-    }
-
-    public static int diffDateD1(Date sd, Date ed) throws ParseException {
-        return Math.round((ed.getTime() - sd.getTime()) / 86400000);
-    }
-
-    public static int diffDateM(int sym, int eym) throws ParseException {
-        return (Math.round(eym / 100) - Math.round(sym / 100)) * 12
-                + (eym % 100 - sym % 100) + 1;
-    }
-
     public static java.sql.Date getNextMonthFirstDate(java.sql.Date date)
             throws ParseException {
         Calendar scalendar = new GregorianCalendar();
@@ -336,13 +264,13 @@ public class DateUtil {
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         long monthCount = 0;
         try {
-            Date d1 = d.parse(beforedate);
-            Date d2 = d.parse(afterdate);
+            Calendar d1 = Calendar.getInstance();
+            d1.setTime(d.parse(beforedate));
 
-            monthCount = (d2.getYear() - d1.getYear()) * 12 + d2.getMonth()
-                    - d1.getMonth();
-            // dayCount = (d2.getTime()-d1.getTime())/(30*24*60*60*1000);   
-
+            Calendar d2 = Calendar.getInstance();
+            d2.setTime(d.parse(afterdate));
+            monthCount = (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * 12 + d2.get(Calendar.MONTH)
+                    - d1.get(Calendar.MONTH);
         } catch (ParseException e) {
             log.info("Date parse error!");
             // throw e;   

@@ -27,30 +27,17 @@ package com.wu1g.framework.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.wu1g.framework.security.AES;
-import com.wu1g.framework.security.DES;
-import com.wu1g.framework.security.DES3;
 import com.wu1g.framework.util.Converter;
-import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -157,65 +144,63 @@ public class JdbcConfig implements EnvironmentAware {
         return dataSource;
     }
 
-    @Bean(name = "sqlSessionFactory")
-    @Order(2)
-    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(dataSource);
+//    @Bean(name = "sqlSessionFactory")
+//    @Order(2)
+//    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) {
+//        final SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+//        bean.setDataSource(dataSource);
+//
+//        // 分页插件
+//         PageHelper pageHelper = new PageHelper();
+//         Properties properties = new Properties();
+//         properties.setProperty("reasonable", "true");
+//         properties.setProperty("supportMethodsArguments", "true");
+//         properties.setProperty("returnPageInfo", "check");
+//         properties.setProperty("params", "count=countSql");
+//         pageHelper.setProperties(properties);
+//        // 添加插件
+//        bean.setPlugins(new Interceptor[]{pageHelper});
+//
+//        //添加XML目录
+//        String val = myBatisResolver.getProperty("mapperLocations");
+//        log.info("注入 SqlSessionFactory ！ mapperLocations: " + val);
+//        try {
+//            if (val != null)
+//                bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(val));
+//        } catch (Exception e) {
+//            log.error("mapperLocations: " + e.getMessage());
+//        }
+//        /**myBatis shiro*/
+//        val = myBatisResolver.getProperty("configLocation");
+//        try {
+//            if (val != null)
+//                bean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource(val));
+//        } catch (Exception e) {
+//            log.error("configLocation: " + e.getMessage());
+//        }
+//        //typeAliasesPackage
+//        bean.setTypeAliasesPackage(myBatisResolver.getProperty("typeAliasesPackage"));
+//
+//
+//        try {
+//            return bean.getObject();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 
-        //分页插件
-        log.info("注入 PageHelper ！！！");
-        PageHelper pageHelper = new PageHelper();
-        Properties properties = new Properties();
-//        properties.setProperty("reasonable", "true");
-        properties.setProperty("supportMethodsArguments", "true");
-        properties.setProperty("returnPageInfo", "check");
-        properties.setProperty("params", "count=countSql");
-        pageHelper.setProperties(properties);
-
-        //添加插件
-        bean.setPlugins(new Interceptor[]{pageHelper});
-
-        //添加XML目录
-        String val = myBatisResolver.getProperty("mapperLocations");
-        log.info("注入 SqlSessionFactory ！ mapperLocations: " + val);
-        try {
-            if (val != null)
-                bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(val));
-        } catch (Exception e) {
-            log.error("mapperLocations: " + e.getMessage());
-        }
-        /**myBatis shiro*/
-        val = myBatisResolver.getProperty("configLocation");
-        try {
-            if (val != null)
-                bean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource(val));
-        } catch (Exception e) {
-            log.error("configLocation: " + e.getMessage());
-        }
-        //typeAliasesPackage
-        bean.setTypeAliasesPackage(myBatisResolver.getProperty("typeAliasesPackage"));
-
-
-        try {
-            return bean.getObject();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Bean
-    @Order(3)
-    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-        return new SqlSessionTemplate(sqlSessionFactory);
-    }
-
-    @Bean
-    @Order(4)
-    public SqlSession sqlSession(SqlSessionFactory sqlSessionFactory) {
-        return sqlSessionFactory.openSession();
-    }
+//    @Bean
+//    @Order(3)
+//    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+//        return new SqlSessionTemplate(sqlSessionFactory);
+//    }
+//
+//    @Bean
+//    @Order(4)
+//    public SqlSession sqlSession(SqlSessionFactory sqlSessionFactory) {
+//        return sqlSessionFactory.openSession();
+//    }
 
 
     /**
@@ -239,7 +224,7 @@ public class JdbcConfig implements EnvironmentAware {
 //        servletRegistrationBean.addInitParameter("deny","192.168.1.73");
         //登录查看信息的账号密码.
         servletRegistrationBean.addInitParameter("loginUsername", "admin2");
-        servletRegistrationBean.addInitParameter("loginPassword", "admin22016");
+        servletRegistrationBean.addInitParameter("loginPassword", "admin22017");
 //        //是否能够重置数据.
 //        servletRegistrationBean.addInitParameter("resetEnable","false");
         return servletRegistrationBean;

@@ -18,9 +18,5 @@
             <artifactId>wu1g-framework-api</artifactId>
             <version>${wu1g.framework.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
     </dependencies>
 </project>

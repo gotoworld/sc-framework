@@ -1,22 +1,13 @@
-/*	
- * 全景_项目 业务处理实现类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ---------------------------	
- * 1.00     2016.10.02      easycode         程序.发布		
- * -------- ----------- --------------- ---------------------------	
- * Copyright 2016 pano System. - All Rights Reserved.
- *	
- */
-
 package com.wu1g.pano.service;
-
 
 import com.github.pagehelper.PageHelper;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.config.AppConfig;
 import com.wu1g.framework.service.BaseService;
-import com.wu1g.framework.util.*;
+import com.wu1g.framework.util.BeetlUtils;
+import com.wu1g.framework.util.CommonConstant;
+import com.wu1g.framework.util.IdUtil;
+import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.pano.api.IPanoProjService;
 import com.wu1g.pano.dao.IPanoMapDao;
 import com.wu1g.pano.dao.IPanoProjDao;
@@ -78,6 +69,8 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     //--新增场景信息
                     panoSceneDao.insertBatch(bean.getScenes());
                 }
+                //清除无效热点信息
+                panoSpotsDao.deletePanoSpots(bean);
             } catch (Exception e) {
                 msg = "信息保存失败,数据库处理错误!";
                 log.error(msg, e);

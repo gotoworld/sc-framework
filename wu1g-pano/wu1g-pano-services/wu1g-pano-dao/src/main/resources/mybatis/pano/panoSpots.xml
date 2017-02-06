@@ -178,4 +178,10 @@
 		where  
 		proj_id=#{projId}
 	</delete>
+	<delete id="deletePanoSpots" parameterType="panoSpots" >
+		delete
+		from t_pano_spots
+		where
+		scene_id not in (select id from t_pano_scene)
+	</delete>
 </mapper>

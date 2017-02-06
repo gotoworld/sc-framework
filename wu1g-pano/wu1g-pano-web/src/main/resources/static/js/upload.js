@@ -1,6 +1,6 @@
 function qj_up(btn,divId,projId){
-	var fileMaxSize=15;
-	var fileExtensions='jpg';
+	var fileMaxSize=4096;
+	var fileExtensions='jpg,jpeg,tif,tiff,btf,tf8,bigtiff,psd,psb,kro';
 	var uploader = new plupload.Uploader({
 	    runtimes : 'html5,flash,silverlight,html4',
 	    browse_button : ''+btn, 

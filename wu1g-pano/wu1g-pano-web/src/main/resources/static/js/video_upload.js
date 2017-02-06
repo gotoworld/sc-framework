@@ -1,5 +1,5 @@
 function video_upload(btn,divId){
-var fileMaxSize=1500;
+var fileMaxSize=4096;
 var fileExtensions='mp4';
 var uploader = new plupload.Uploader({
     runtimes : 'html5,flash,silverlight,html4',

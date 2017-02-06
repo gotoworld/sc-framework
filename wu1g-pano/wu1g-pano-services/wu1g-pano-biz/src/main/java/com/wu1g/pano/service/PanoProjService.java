@@ -271,6 +271,9 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                             }
                             //--新增图片热点
                             if (scene.getImgSpots() != null && scene.getImgSpots().size() > 0) {
+                                scene.getImgSpots().forEach(imgSpots->{
+                                    imgSpots.getUrl().replaceAll("/n1/","/n3/");
+                                });
                                 panoSpotsList.addAll(scene.getImgSpots());
                             }
                         }

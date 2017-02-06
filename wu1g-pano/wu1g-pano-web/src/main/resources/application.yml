@@ -10,13 +10,18 @@ server:
   context-path: /
 # Spring properties
 spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
   aop:
     auto: true
     proxy-target-class: true
   application:
     name: wu1g-services
   resources:
-    static-locations:classpath:/static/,file:${wu1g.common.fileServer.rootFolder}
+    static-locations: classpath:/static/,file:${wu1g.common.fileServer.rootFolder}
   mvc:
     #表示所有的访问都经过静态资源路径
     static-path-pattern: /**
@@ -25,7 +30,7 @@ spring:
       suffix: .html
   datasource:
     driverClass: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/krpano?noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/krpano?serverTimezone=UTC&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
     password: AES:se0In3/TNQNjnGGt8Ed43g==
     #password: AES:dqoJ3xPZ2A3ZF+zvunjHJQ==
@@ -54,25 +59,32 @@ spring:
 #    # 合并多个DruidDataSource的监控数据
 #    useGlobalDataSourceStat: true
 
+logging:
+  level:
+    cn.com.softvan: DEBUG
+    cn.com.softvan.dao: TRACE
 mybatis:
-  configLocation: classpath:conf/mybatis-config.xml
-  mapperLocations: classpath*:mybatis/**/*.xml
-
-configuration:
-  mapUnderscoreToCamelCase: true
-  callSettersOnNulls: true
-  logPrefix: dao.
+  type-aliases-package: com.wu1g
+  mapper-locations: classpath*:mybatis/**/*.xml
+mapper:
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+#  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 
 wu1g:
   config:
     beetl: classpath:/conf/beetl.properties
   krpano:
-    win: D:/home/krpano/win/krpanotools64.exe
-    linux: d:/home/krpano/linux/krpanotools
-    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere -tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
+    win: /home/krpano/win/krpanotools64.exe
+    linux: /home/krpano/linux/krpanotools
+    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
   common:
     fileServer:
-      rootFolder: d:/home/pano/
+      rootFolder: /home/softvan/
       upload: ${wu1g.common.fileServer.rootFolder}upload/
       download: /upload/
       image:
@@ -89,4 +101,3 @@ wu1g:
         n3:
           width: 1200
           height: 1200
-

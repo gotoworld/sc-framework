@@ -12,7 +12,7 @@ import java.util.Iterator;
 /**
  * Created by Administrator on 2017/2/6.
  */
-public class KrPanoUtil {
+public class KrSceneImageUtil {
     /**
      * 获取图片的分辨率
      */
@@ -109,7 +109,7 @@ public class KrPanoUtil {
     }
 
     public static void main(String[] args) {
-        KrPanoUtil krPanoUtil = new KrPanoUtil();
+        KrSceneImageUtil krPanoUtil = new KrSceneImageUtil();
         String path = "/upload/vtour/panos/111.tiles/";
         System.out.println(krPanoUtil.getSceneImage(path));
     }

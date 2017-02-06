@@ -6,7 +6,7 @@ eureka:
     registerWithEureka: false
 # HTTP Server
 server:
-  port: 8080
+  port: 80
   context-path: /
 # Spring properties
 spring:
@@ -21,7 +21,7 @@ spring:
   application:
     name: wu1g-services
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${wu1g.common.fileServer.rootFolder}
+    static-locations: classpath:/static/,file:${wu1g.common.fileServer.rootFolder}
   mvc:
     #表示所有的访问都经过静态资源路径
     static-path-pattern: /**
@@ -79,12 +79,12 @@ wu1g:
   config:
     beetl: classpath:/conf/beetl.properties
   krpano:
-    win: /home/krpano/win/krpanotools64.exe
+    win: d:/home/krpano/win/krpanotools64.exe
     linux: /home/krpano/linux/krpanotools
     config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
   common:
     fileServer:
-      rootFolder: /home/softvan/
+      rootFolder: d:/home/softvan/
       upload: ${wu1g.common.fileServer.rootFolder}upload/
       download: /upload/
       image:

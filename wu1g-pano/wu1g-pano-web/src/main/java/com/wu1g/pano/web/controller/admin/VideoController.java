@@ -83,11 +83,6 @@ public class VideoController extends BaseController {
 	/**
 	 * <p>
 	 * 信息列表 (未删除)。
-	 * <ol>
-	 * [功能概要]
-	 * <li>信息列表。
-	 * 
-	 *
 	 */
 	@RequiresPermissions("video:menu")
 	@RequestMapping(value = acPrefix + "list")
@@ -107,14 +102,7 @@ public class VideoController extends BaseController {
 	}
 
 	/**
-	 * <p>
-	 * 编辑。
-	 *
-	 * <ol>
-	 * [功能概要]
-	 * <li>编辑。
-	 * 
-	 *
+	 * <p>编辑。
 	 */
 	@RequiresPermissions("video:edit")
 	@RequestMapping(value = acPrefix + "edit/{id}")
@@ -155,13 +143,7 @@ public class VideoController extends BaseController {
 	}
 
 	/**
-	 * <p>
-	 * 删除。
-	 * <ol>
-	 * [功能概要]
-	 * <li>逻辑删除。
-	 * 
-	 *
+	 * <p>逻辑删除。
 	 */
 	@RequiresPermissions("video:del")
 	@RequestMapping(value = acPrefix + "del/{id}")
@@ -181,14 +163,7 @@ public class VideoController extends BaseController {
 	}
 
 	/**
-	 * <p>
-	 * 信息保存
-	 * <ol>
-	 * [功能概要]
-	 * <li>新增。
-	 * <li>修改。
-	 * 
-	 *
+	 * <p>信息保存
 	 */
 	@RequiresPermissions(value = { "video:add", "video:edit" }, logical = Logical.OR)
 	@RequestMapping(method = {RequestMethod.POST},value = acPrefix + "save")

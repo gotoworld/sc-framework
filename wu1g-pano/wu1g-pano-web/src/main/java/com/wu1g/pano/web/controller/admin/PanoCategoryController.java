@@ -57,11 +57,7 @@ public class PanoCategoryController extends BaseController {
     private static final String success = "redirect:/h" + acPrefix + "init";
 
     /**
-     * <p>
-     * 初始化处理。
-     * <ol>
-     * [功能概要]
-     * <li>初始化处理。
+     * <p>初始化处理。
      */
     @RequiresPermissions("panoCat:menu")
     @RequestMapping(value = acPrefix + "init")
@@ -73,12 +69,7 @@ public class PanoCategoryController extends BaseController {
     }
 
     /**
-     * <p>
-     * 编辑。
-     * <p>
-     * <ol>
-     * [功能概要]
-     * <li>编辑。
+     * <p>编辑。
      */
     @RequiresPermissions("panoCat:edit")
     @RequestMapping(value = acPrefix + "edit/{id}")
@@ -111,11 +102,7 @@ public class PanoCategoryController extends BaseController {
     }
 
     /**
-     * <p>
-     * 删除。
-     * <ol>
-     * [功能概要]
-     * <li>逻辑删除。
+     * <p>逻辑删除。
      */
     @RequiresPermissions("panoCat:del")
     @RequestMapping(value = acPrefix + "del/{id}")

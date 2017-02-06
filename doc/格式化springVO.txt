@@ -30,7 +30,7 @@ CONCAT(
 (
 CASE 
 WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN 'Date'
-when (t.DATA_TYPE in ('tinyint') or t.code in ('delFlag'))then 'Byte'
+-- when (t.DATA_TYPE in ('tinyint') or t.code in ('delFlag'))then 'Byte'
 when t.DATA_TYPE in ('bigint') then 'Long'
 when t.DATA_TYPE in ('smallint','mediumint','int') then 'Integer'
 when t.DATA_TYPE in ('float','double') then 'Double'

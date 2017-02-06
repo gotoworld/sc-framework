@@ -22,15 +22,15 @@
         <druid.version>1.0.25</druid.version>
         <!--<pagehelper.version>4.1.6</pagehelper.version>-->
         <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
-        <spring-data-releasetrain.version>Hopper-SR4</spring-data-releasetrain.version>
-        <spring-boot-starter-redis.version>1.7.4.RELEASE</spring-boot-starter-redis.version>
+        <!--<spring-data-releasetrain.version>Hopper-SR4</spring-data-releasetrain.version>-->
+        <!--<spring-boot-starter-redis.version>1.7.4.RELEASE</spring-boot-starter-redis.version>-->
 
         <shiro.version>1.4.0-RC2</shiro.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.0.RELEASE</version>
+        <version>${spring.boot.version}</version>
     </parent>
 
     <dependencyManagement>

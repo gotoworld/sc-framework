@@ -27,8 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 /**
- * <p>
- * 全景_评论 ACTION类。
+ * <p>全景_评论 ACTION类。
  */
 @Controller
 @RequestMapping(value = "/h")
@@ -50,8 +49,6 @@ public class PanoCommentsController extends BaseController {
 
     /**
      * <p>初始化处理。
-     * <ol>[功能概要]
-     * <li>初始化处理。
      */
     @RequiresPermissions("panoComment:menu")
     @RequestMapping(value = acPrefix + "init")
@@ -62,8 +59,6 @@ public class PanoCommentsController extends BaseController {
 
     /**
      * <p>信息列表 (未删除)。
-     * <ol>[功能概要]
-     * <li>信息列表。
      */
     @RequiresPermissions("panoComment:menu")
     @RequestMapping(value = acPrefix + "list")
@@ -82,13 +77,11 @@ public class PanoCommentsController extends BaseController {
     }
 
     /**
-     * <p>删除。
-     * <ol>[功能概要]
-     * <li>逻辑删除。
+     * <p>逻辑删除。
      */
     @RequiresPermissions("panoComment:del")
     @RequestMapping(value = acPrefix + "del/{id}")
-    @ALogOperation(type="删除",desc="全景评论信息")
+    @ALogOperation(type = "删除", desc = "全景评论信息")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
         log.info("PanoCommentsController del.........");
         Response result = new Response();
@@ -97,7 +90,7 @@ public class PanoCommentsController extends BaseController {
             bean.setId(id);// id
             result.message = panoCommentsService.deleteDataById(bean);
         } catch (Exception e) {
-            result= Response.error(e.getMessage());
+            result = Response.error(e.getMessage());
         }
         modelMap.addFlashAttribute("msg", result);
         return success;

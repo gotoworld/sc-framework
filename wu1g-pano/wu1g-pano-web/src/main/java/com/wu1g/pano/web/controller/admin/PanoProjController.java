@@ -75,11 +75,7 @@ public class PanoProjController extends BaseController {
     private static final String touredit = "admin/pano/tour_editor";
 
     /**
-     * <p>
-     * 初始化处理。
-     * <ol>
-     * [功能概要]
-     * <li>初始化处理。
+     * <p>初始化处理。
      */
     @RequiresPermissions("panoProj:menu")
     @RequestMapping(value = acPrefix + "init")
@@ -89,11 +85,7 @@ public class PanoProjController extends BaseController {
     }
 
     /**
-     * <p>
-     * 信息列表 (未删除)。
-     * <ol>
-     * [功能概要]
-     * <li>信息列表。
+     * <p>信息列表 (未删除)。
      */
     @RequiresPermissions("panoProj:menu")
     @RequestMapping(value = acPrefix + "list")
@@ -113,12 +105,7 @@ public class PanoProjController extends BaseController {
     }
 
     /**
-     * <p>
-     * 编辑。
-     * <p>
-     * <ol>
-     * [功能概要]
-     * <li>编辑。
+     * <p> 编辑。
      */
     @RequiresPermissions("panoProj:edit")
     @RequestMapping(value = acPrefix + "edit/{id}")
@@ -144,7 +131,7 @@ public class PanoProjController extends BaseController {
                 bean.setScenes(panoSceneService.findDataIsList(scene));
             }
         }
-        if (bean == null||"add".equals(id)) {
+        if (bean == null || "add".equals(id)) {
             bean = new PanoProj();
             bean.setId(IdUtil.createUUID(32));
             bean.setNewFlag("1");
@@ -160,15 +147,11 @@ public class PanoProjController extends BaseController {
     }
 
     /**
-     * <p>
-     * 删除。
-     * <ol>
-     * [功能概要]
-     * <li>逻辑删除。
+     * <p>逻辑删除。
      */
     @RequiresPermissions("panoProj:del")
     @RequestMapping(value = acPrefix + "del/{id}")
-    @ALogOperation(type="删除",desc = "全景项目")
+    @ALogOperation(type = "删除", desc = "全景项目")
     public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
         log.info("PanoProjController del.........");
         Response result = new Response();
@@ -177,25 +160,20 @@ public class PanoProjController extends BaseController {
             bean.setId(id);// id
             result.message = panoProjService.deleteDataById(bean);
         } catch (Exception e) {
-            result=Response.error(e.getMessage());
+            result = Response.error(e.getMessage());
         }
         modelMap.addFlashAttribute("msg", result);
         return success;
     }
 
     /**
-     * <p>
-     * 信息保存
-     * <ol>
-     * [功能概要]
-     * <li>新增。
-     * <li>修改。
+     * <p>信息保存
      */
     @RequiresPermissions(value = {"panoProj:add", "panoProj:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type="修改",desc="全景项目信息")
-    public String save(@Validated PanoProj bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
+    @ALogOperation(type = "修改", desc = "全景项目信息")
+    public String save(@Validated PanoProj bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
         log.info("PanoProjController save.........");
         Response result = new Response();
         if (bean != null) {
@@ -220,7 +198,7 @@ public class PanoProjController extends BaseController {
                                 PanoScene scene = new PanoScene();
                                 scene.setId(scene_id);
                                 scene.setProjId(bean.getId());
-                                scene.setOrderNo(""+i);
+                                scene.setOrderNo("" + i);
                                 scene.setSceneSrc(request.getParameter(scene_id + "_scene_src"));
                                 scene.setKeyword(request.getParameter(scene_id + "_scene_key"));
                                 scene.setSceneTitle(request.getParameter(scene_id + "_scene_tit"));
@@ -262,7 +240,7 @@ public class PanoProjController extends BaseController {
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "xmlsave")
     @ResponseBody
     @RfAccount2Bean
-    @ALogOperation(type="修改",desc="漫游场景信息")
+    @ALogOperation(type = "修改", desc = "漫游场景信息")
     public String xmlsave() {
         log.info("PanoProjController xmlsave.........");
         Map msg = new HashMap();

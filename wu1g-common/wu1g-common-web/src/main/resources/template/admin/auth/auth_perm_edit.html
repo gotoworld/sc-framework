@@ -36,15 +36,15 @@
 						  <div class="col-md-8">
 							  <% var treeIndex=1; %>
 							  <% var _this_self=bean.id; %>
-							  <% var _band_flag=bean.parentid; %>
-							  <select  class="form-control" name="parentid" id="parentid">
+							  <% var _band_flag=bean.parentId; %>
+							  <select  class="form-control" name="parentId" id="parentId">
 								  <option value="">---顶级---</option>
 								  <% if(isNotEmpty(beans) && beans.~size>0){ %>
 									  <% for(b in beans){ %>
 										 <option  value="_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >
 											 - ${b.name}${_this_self==b.id?'-----无效项-------':''}
 										 </option>
-										 <% layout("auth_perm_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentid,_this_self:bean.id}){} %>
+										 <% layout("auth_perm_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentId,_this_self:bean.id}){} %>
 									  <%}%>
 								  <%}%>
 							  </select>

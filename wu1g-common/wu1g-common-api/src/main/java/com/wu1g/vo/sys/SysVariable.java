@@ -102,7 +102,7 @@ public class SysVariable extends BaseVO {
     /**
      * 修改时间
      */
-    private Date dateUpdate;
+    private Date dateUpdated;
     /**
      * 修改者ID
      */

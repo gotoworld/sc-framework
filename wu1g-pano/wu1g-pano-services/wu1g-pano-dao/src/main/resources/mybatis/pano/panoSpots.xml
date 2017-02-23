@@ -19,7 +19,7 @@
 		,t1.is_onclick as "isOnclick"
 		,t1.version as "version"
 		,t1.date_created as "dateCreated"
-		,t1.date_update as "dateUpdate"
+		,t1.date_updated as "dateUpdated"
 	</sql>
 	
 	<!-- 根据主键获取信息详情 -->
@@ -58,7 +58,7 @@
 		,is_onclick
 		,version
 		,date_created
-		,date_update
+		,date_updated
 		) values (
 		#{id}
 		,#{htype}
@@ -76,7 +76,7 @@
 		,#{isOnclick}
 		,0
 		,now()
-		,#{dateUpdate}
+		,#{dateUpdated}
 		)
 	</insert>
 	
@@ -99,7 +99,7 @@
 		,is_onclick
 		,version
 		,date_created
-		,date_update
+		,date_updated
 		) values 
 		<foreach collection="list" item="t" separator=",">
 		(
@@ -119,7 +119,7 @@
 		,#{t.isOnclick}
 		,0
 		,now()
-		,#{t.dateUpdate}
+		,#{t.dateUpdated}
 		)
 		</foreach>
 	</insert>
@@ -141,7 +141,7 @@
 			<if test="rotate!= null" >,rotate=#{rotate}</if>
 			<if test="url!= null" >,url=#{url}</if>
 			<if test="isOnclick!= null" >,is_onclick=#{isOnclick}</if>
-			<if test="dateUpdate!= null" >,date_update=#{dateUpdate}</if>
+			<if test="dateUpdated!= null" >,date_updated=#{dateUpdated}</if>
 		where 
 			id= #{id}
 	</update>

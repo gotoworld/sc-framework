@@ -6,35 +6,29 @@
 		t1.userid as "userid",
 		t1.departmentid as "departmentid",
 		t1.version as "version",
-		t1.date_created as "dateCreated",
-		t1.create_id as "createId",
-		t1.create_ip as "createIp"
+		t1.date_created as "dateCreated"
 	</sql>
 	<!-- 新增 批量数据 -->
 	<insert id="insertBatch">
-		insert into t_org_user_vs_department(
+		insert into org_user_vs_department(
 		userid,
 		departmentid,
 		version,
-		date_created,
-		create_id,
-		create_ip
-		) values 
+		date_created
+		) values
 		<foreach collection="list" item="t" separator=",">
 		(
 		#{t.userid},
 		#{t.departmentid},
 		0,
-		now(),
-		#{t.createId},
-		#{t.createIp}
+		now()
 		)
 		</foreach>
 	</insert>
 	<!-- 根据用户id清空用户关联部门信息-->
 	<delete id="deleteDataByUid" parameterType="orgUserVsDepartment" >
 		delete
-		from t_org_user_vs_department
+		from org_user_vs_department
 		where  userid = #{userId}
 	</delete>
 </mapper>

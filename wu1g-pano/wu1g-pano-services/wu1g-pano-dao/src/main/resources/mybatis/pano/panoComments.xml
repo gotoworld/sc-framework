@@ -20,13 +20,8 @@
 		,t1.order_no as "orderNo"
 		,t1.keyword as "keyword"
 		,t1.del_flag as "delFlag"
-		,t1.invalid_time as "invalidTime"
 		,t1.date_created as "dateCreated"
-		,t1.create_id as "createId"
-		,t1.create_ip as "createIp"
-		,t1.date_update as "dateUpdate"
-		,t1.update_id as "updateId"
-		,t1.update_ip as "updateIp"
+		,t1.date_updated as "dateUpdated"
 	</sql>
 	
 	<!-- 根据主键获取信息详情 -->
@@ -66,13 +61,8 @@
 		,order_no
 		,keyword
 		,del_flag
-		,invalid_time
 		,date_created
-		,create_id
-		,create_ip
-		,date_update
-		,update_id
-		,update_ip
+		,date_updated
 		) values (
 		#{id}
 		,#{sceneId}
@@ -91,13 +81,8 @@
 		,#{orderNo}
 		,#{keyword}
 		,'0'
-		,#{invalidTime}
 		,now()
-		,#{createId}
-		,#{createIp}
-		,#{dateUpdate}
-		,#{updateId}
-		,#{updateIp}
+		,#{dateUpdated}
 		)
 	</insert>
 	
@@ -121,14 +106,9 @@
 		,order_no
 		,keyword
 		,del_flag
-		,invalid_time
 		,date_created
-		,create_id
-		,create_ip
-		,date_update
-		,update_id
-		,update_ip
-		) values 
+		,date_updated
+		) values
 		<foreach collection="list" item="t" separator=",">
 		(
 		#{t.id}
@@ -150,11 +130,7 @@
 		,'0'
 		,#{t.invalidTime}
 		,now()
-		,#{t.createId}
-		,#{t.createIp}
-		,#{t.dateUpdate}
-		,#{t.updateId}
-		,#{t.updateIp}
+		,#{t.dateUpdated}
 		)
 		</foreach>
 	</insert>
@@ -163,9 +139,7 @@
 	<update id="updateByPrimaryKeySelective" parameterType="panoComments" >
 		update t_pano_comments set 
 				 version=version+1
-				,date_update=now()
-				,update_id=#{updateId}
-				,update_ip=#{updateIp}
+				,date_updated=now()
 			<if test="sceneId!= null" >,scene_id=#{sceneId}</if>
 			<if test="sname!= null" >,sname=#{sname}</if>
 			<if test="content!= null" >,content=#{content}</if>
@@ -217,7 +191,7 @@
 		     and t1.del_flag=#{delFlag}
 		 </when>
 		 <otherwise>
-		     and t1.del_flag='0'
+		     and t1.del_flag=0
 		 </otherwise>
 		</choose>
 		<if test="dateBegin!=null and dateBegin!=''">
@@ -240,7 +214,7 @@
 		     and t1.del_flag=#{delFlag}
 		 </when>
 		 <otherwise>
-		     and t1.del_flag='0'
+		     and t1.del_flag=0
 		 </otherwise>
 		</choose>
 		<if test="dateBegin!=null and dateBegin!=''">
@@ -255,9 +229,7 @@
 	<update id="deleteById" parameterType="panoComments" >
 		update t_pano_comments set 
 			version=version+1
-			,update_id=#{updateId}
-			,update_ip=#{updateIp}
-			,del_flag='1'
+			,del_flag=1
 		where  
 			id = #{id}
 	</update>
@@ -266,9 +238,7 @@
 	<update id="recoveryDataById" parameterType="panoComments" >
 		update t_pano_comments set 
 			version=version+1
-			,update_id=#{updateId}
-			,update_ip=#{updateIp}
-			,del_flag='0'
+			,del_flag=0
 		where  
 			id = #{id}
 	</update>

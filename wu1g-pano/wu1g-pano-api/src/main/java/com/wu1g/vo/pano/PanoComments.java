@@ -118,10 +118,6 @@ public class PanoComments extends BaseVO {
      */
     private String delFlag;
     /**
-     * 数据过期时间0:永不过期
-     */
-    private Long invalidTime;
-    /**
      * 创建时间
      */
     private Date dateCreated;
@@ -138,7 +134,7 @@ public class PanoComments extends BaseVO {
     /**
      * 修改时间
      */
-    private Date dateUpdate;
+    private Date dateUpdated;
     /**
      * 修改者ID
      */

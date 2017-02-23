@@ -7,19 +7,12 @@
 		t1.version as "version",
 		t1.name as "name",
 		t1.code as "code",
-		t1.parentid as "parentid",
-		t1.level as "level",
-		t1.p_code as "pCode",
+		t1.parent_id as "parentid",
 		t1.order_no as "orderNo",
 		t1.keyword as "keyword",
 		t1.del_flag as "delFlag",
-		t1.invalid_time as "invalidTime",
 		t1.date_created as "dateCreated",
-		t1.create_id as "createId",
-		t1.create_ip as "createIp",
-		t1.date_update as "dateUpdate",
-		t1.update_id as "updateId",
-		t1.update_ip as "updateIp"
+		t1.date_updated as "dateUpdated"
 	</sql>
 	<!-- 根据主键获取信息详情 -->
 	<select id="selectByPrimaryKey" resultType="sysVariable" parameterType="sysVariable" >
@@ -42,36 +35,22 @@
 		name,
 		code,
 		parentid,
-		level,
-		p_code,
 		order_no,
 		keyword,
 		del_flag,
-		invalid_time,
 		date_created,
-		create_id,
-		create_ip,
-		date_update,
-		update_id,
-		update_ip
+		date_updated
 	) values (
 		#{id},
 		'0',
 		#{name},
 		#{code},
-		#{parentid},
-		#{level},
-		#{pCode},
+		#{parentId},
 		#{orderNo},
 		#{keyword},
 		'0',
-		#{invalidTime},
 		#{dateCreated},
-		#{createId},
-		#{createIp},
-		now(),
-		#{updateId},
-		#{updateIp}
+		now()
 	)
 	</insert>
 	<!-- 新增 批量数据 -->
@@ -87,32 +66,20 @@
 		order_no,
 		keyword,
 		del_flag,
-		invalid_time,
 		date_created,
-		create_id,
-		create_ip,
-		date_update,
-		update_id,
-		update_ip
-		) values 
+		date_updated
+		) values
 		<foreach collection="list" item="t" open="("  close=")"  separator=",">
 		#{t.id},
 		#{t.version},
 		#{t.name},
 		#{t.code},
-		#{t.parentid},
-		#{t.level},
-		#{t.pCode},
+		#{t.parent_id},
 		#{t.orderNo},
 		#{t.keyword},
 		#{t.delFlag},
-		#{t.invalidTime},
 		#{t.dateCreated},
-		#{t.createId},
-		#{t.createIp},
-		#{t.dateUpdate},
-		#{t.updateId},
-		#{t.updateIp}
+		#{t.dateUpdated}
 		</foreach>
 	</insert>
 	<!-- 数据更新 -->
@@ -120,15 +87,10 @@
 		update t_sys_variable set version=version+1
 		<if test="name!= null" >,name=#{name}</if>
 		<if test="code!= null" >,code=#{code}</if>
-		<if test="parentid!= null" >,parentid=#{parentid}</if>
-		<if test="level!= null" >,level=#{level}</if>
-		<if test="pCode!= null" >,p_code=#{pCode}</if>
+		<if test="parentid!= null" >,parent_id=#{parentId}</if>
 		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
 		<if test="keyword!= null" >,keyword=#{keyword}</if>
-		<if test="invalidTime!= null" >,invalid_time=#{invalidTime}</if>
-		<if test="dateUpdate!= null" >,date_update=now()</if>
-		<if test="updateId!= null" >,update_id=#{updateId}</if>
-		<if test="updateIp!= null" >,update_ip=#{updateIp}</if>
+		<if test="dateUpdated!= null" >,date_updated=now()</if>
 		where  id = #{id}
 	</update>
 	<!-- 判断是否存在 -->
@@ -140,15 +102,15 @@
 		select
 		<include refid="Base_Column_List" />,t2.name pname
 		from t_sys_variable t1
-		left join t_sys_variable t2 on t1.parentid = t2.id
+		left join t_sys_variable t2 on t1.parent_id = t2.id
 		where 1=1 
-		<if test="parentid!= null and parentid!= ''" >and t1.parentid=#{parentid}</if>
+		<if test="parentid!= null and parentid!= ''" >and t1.parent_id=#{parentId}</if>
 		<choose>
 	    	<when test="delFlag!=null">
 	    		and t1.del_flag=#{delFlag}
 	    	</when>
 	    	<otherwise>
-	    	    and t1.del_flag='0'
+	    	    and t1.del_flag=0
 	    	</otherwise>
 	    </choose>
 	    order by t1.code
@@ -159,13 +121,13 @@
 		<include refid="Base_Column_List" />
 		from t_sys_variable t1
 		where 1=1 
-		<if test="parentid!= null and parentid!= ''" >and t1.parentid=#{parentid}</if>
+		<if test="parentid!= null and parentid!= ''" >and t1.parent_id=#{parentId}</if>
 		<choose>
 	    	<when test="delFlag!=null">
 	    		and t1.del_flag=#{delFlag}
 	    	</when>
 	    	<otherwise>
-	    	    and t1.del_flag='0'
+	    	    and t1.del_flag=0
 	    	</otherwise>
 	    </choose>
 	     order by t1.code

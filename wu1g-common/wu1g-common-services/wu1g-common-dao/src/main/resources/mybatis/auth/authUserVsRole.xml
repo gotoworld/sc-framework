@@ -6,32 +6,26 @@
 		t1.user_id as "userId",
 		t1.role_id as "roleId",
 		t1.date_created as "dateCreated",
-		t1.create_id as "createId",
-		t1.create_ip as "createIp"
 	</sql>
 	<!-- 新增 批量数据 -->
 	<insert id="insertBatch">
-		insert into t_auth_user_vs_role(
+		insert into auth_user_vs_role(
 		user_id,
 		role_id,
 		date_created,
-		create_id,
-		create_ip
-		) values 
+		) values
 		<foreach collection="list" item="t" separator=",">
 		(
 		#{t.userId},
 		#{t.roleId},
 		now(),
-		#{t.createId},
-		#{t.createIp}
 		)
 		</foreach>
 	</insert>
 	<!-- 根据用户id删除用户关联角色信息 -->
 	<delete id="deleteDataByUid" parameterType="map" >
 		delete
-		from t_auth_user_vs_role
+		from auth_user_vs_role
 		where  user_id = #{userId}
 	</delete>
 </mapper>

@@ -16,11 +16,7 @@
 		,t1.keyword as "keyword"
 		,t1.del_flag as "delFlag"
 		,t1.date_created as "dateCreated"
-		,t1.create_id as "createId"
-		,t1.create_ip as "createIp"
-		,t1.date_update as "dateUpdate"
-		,t1.update_id as "updateId"
-		,t1.update_ip as "updateIp"
+		,t1.date_updated as "dateUpdated"
 	</sql>
 	
 	<!-- 根据主键获取信息详情 -->
@@ -47,39 +43,27 @@
 		,version
 		,name
 		,code
-		,parentid
-		,level
-		,p_code
+		,parent_id
 		,state
 		,memo
 		,order_no
 		,keyword
 		,del_flag
 		,date_created
-		,create_id
-		,create_ip
-		,date_update
-		,update_id
-		,update_ip
+		,date_updated
 		) values (
 		#{id}
 		,0
 		,#{name}
 		,#{code}
-		,#{parentid}
-		,#{level}
-		,#{pCode}
+		,#{parentId}
 		,#{state}
 		,#{memo}
 		,#{orderNo}
 		,#{keyword}
 		,'0'
 		,now()
-		,#{createId}
-		,#{createIp}
-		,#{dateUpdate}
-		,#{updateId}
-		,#{updateIp}
+		,#{dateUpdated}
 		)
 	</insert>
 	
@@ -90,21 +74,15 @@
 		,version
 		,name
 		,code
-		,parentid
-		,level
-		,p_code
+		,parent_id
 		,state
 		,memo
 		,order_no
 		,keyword
 		,del_flag
 		,date_created
-		,create_id
-		,create_ip
-		,date_update
-		,update_id
-		,update_ip
-		) values 
+		,date_updated
+		) values
 		<foreach collection="list" item="t" separator=",">
 		(
 		#{t.id}
@@ -112,19 +90,13 @@
 		,#{t.name}
 		,#{t.code}
 		,#{t.parentid}
-		,#{t.level}
-		,#{t.pCode}
 		,#{t.state}
 		,#{t.memo}
 		,#{t.orderNo}
 		,#{t.keyword}
 		,'0'
 		,now()
-		,#{t.createId}
-		,#{t.createIp}
-		,#{t.dateUpdate}
-		,#{t.updateId}
-		,#{t.updateIp}
+		,#{t.dateUpdated}
 		)
 		</foreach>
 	</insert>
@@ -133,19 +105,15 @@
 	<update id="updateByPrimaryKeySelective" parameterType="panoCategory" >
 		update t_pano_category set 
 				 version=version+1
-				,update_id=#{updateId}
-				,update_ip=#{updateIp}
 			<if test="name!= null" >,name=#{name}</if>
 			<if test="code!= null" >,code=#{code}</if>
-			<if test="parentid!= null" >,parentid=#{parentid}</if>
-			<if test="level!= null" >,level=#{level}</if>
-			<if test="pCode!= null" >,p_code=#{pCode}</if>
+			<if test="parentid!= null" >,parent_id=#{parentId}</if>
 			<if test="state!= null" >,state=#{state}</if>
 			<if test="memo!= null" >,memo=#{memo}</if>
 			<if test="orderNo!= null" >,order_no=#{orderNo}</if>
 			<if test="keyword!= null" >,keyword=#{keyword}</if>
 			<if test="delFlag!= null" >,del_flag=#{delFlag}</if>
-			<if test="dateUpdate!= null" >,date_update=#{dateUpdate}</if>
+			<if test="dateUpdated!= null" >,date_updated=#{dateUpdated}</if>
 		where 
 			id= #{id}
 	</update>
@@ -165,7 +133,7 @@
 				and t1.del_flag=#{delFlag}
 			</when>
 			<otherwise>
-				and t1.del_flag='0'
+				and t1.del_flag=0
 			</otherwise>
 		</choose>
 		<if test="dateBegin!=null and dateBegin!=''">
@@ -197,9 +165,7 @@
 	<update id="deleteById" parameterType="panoCategory" >
 		update t_pano_category set 
 			version=version+1
-			update_id=#{updateId}
-			update_ip=#{updateIp}
-			,del_flag='1'
+			,del_flag=1
 		where  
 			id = #{id}
 	</update>
@@ -208,9 +174,7 @@
 	<update id="recoveryDataById" parameterType="panoCategory" >
 		update t_pano_category set 
 			version=version+1
-			update_id=#{updateId}
-			update_ip=#{updateIp}
-			,del_flag='0'
+			,del_flag=0
 		where  
 			id = #{id}
 	</update>

@@ -74,5 +74,5 @@ public class PanoMap extends BaseVO {
     /**
      * 修改时间
      */
-    private Date dateUpdate;
+    private Date dateUpdated;
 }

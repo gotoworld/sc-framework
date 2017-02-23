@@ -1,4 +1,4 @@
-package org.fox.beetl.resource;
+package com.wu1g.framework.util.resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

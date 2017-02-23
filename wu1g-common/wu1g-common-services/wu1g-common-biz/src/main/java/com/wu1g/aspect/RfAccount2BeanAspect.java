@@ -1,4 +1,4 @@
-package com.wu1g.annotation;
+package com.wu1g.aspect;
 
 import com.wu1g.framework.IVO;
 import com.wu1g.framework.util.CommonConstant;

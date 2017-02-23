@@ -1,4 +1,4 @@
-package com.wu1g.annotation;
+package com.wu1g.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.wu1g.framework.IVO;

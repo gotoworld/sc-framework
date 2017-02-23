@@ -1,4 +1,4 @@
-package com.wu1g.framework;
+package com.wu1g.framework.page;
 
 import lombok.Data;
 

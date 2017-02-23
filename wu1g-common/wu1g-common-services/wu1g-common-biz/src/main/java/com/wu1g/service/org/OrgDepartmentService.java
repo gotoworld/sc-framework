@@ -147,7 +147,7 @@ class OrgDepartmentBeanTree {
     public List<OrgDepartment> buildTree() {
         for (OrgDepartment node : nodes) {
             // String id = node.getCode();
-            if (ValidatorUtil.isNullEmpty(node.getparentId())) {
+            if (ValidatorUtil.isNullEmpty(node.getParentId())) {
                 new_nodes.add(node);
                 build(node);
             }
@@ -173,7 +173,7 @@ class OrgDepartmentBeanTree {
         List<OrgDepartment> children = new ArrayList<OrgDepartment>();
         String id = node.getId();
         for (OrgDepartment child : nodes) {
-            if (id.equals(child.getparentId())) {
+            if (id.equals(child.getParentId())) {
                 children.add(child);
             }
         }

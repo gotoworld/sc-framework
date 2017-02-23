@@ -163,7 +163,7 @@ class PanoCategoryBeanTree {
     public List<PanoCategory> buildTree() {
         for (PanoCategory node : nodes) {
             // String id = node.getCode();
-            if (ValidatorUtil.isNullEmpty(node.getparentId())) {
+            if (ValidatorUtil.isNullEmpty(node.getParentId())) {
                 new_nodes.add(node);
                 build(node);
             }
@@ -189,7 +189,7 @@ class PanoCategoryBeanTree {
         List<PanoCategory> children = new ArrayList<PanoCategory>();
         String id = node.getId();
         for (PanoCategory child : nodes) {
-            if (id.equals(child.getparentId())) {
+            if (id.equals(child.getParentId())) {
                 children.add(child);
             }
         }

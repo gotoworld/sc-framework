@@ -163,7 +163,7 @@ class AuthPermBeanTree {
     public List<AuthPerm> buildTree() {
         for (AuthPerm node : nodes) {
 //            String id = node.getCode();  
-            if (ValidatorUtil.isNullEmpty(node.getparentId())) {
+            if (ValidatorUtil.isNullEmpty(node.getParentId())) {
                 new_nodes.add(node);
                 build(node);
             }
@@ -189,7 +189,7 @@ class AuthPermBeanTree {
         List<AuthPerm> children = new ArrayList<AuthPerm>();
         String id = node.getId();
         for (AuthPerm child : nodes) {
-            if (id.equals(child.getparentId())) {
+            if (id.equals(child.getParentId())) {
                 children.add(child);
             }
         }

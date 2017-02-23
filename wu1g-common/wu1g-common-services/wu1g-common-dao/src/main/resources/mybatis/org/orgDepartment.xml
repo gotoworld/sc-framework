@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wu1g.dao.org.IOrgDepartmentDao" >
-	<!-- 字段列表 -->
-	<sql id="Base_Column_List" >
+<mapper namespace="com.wu1g.dao.org.IOrgDepartmentDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
 		t1.id as "id",
 		t1.version as "version",
 		t1.name as "name",
@@ -16,21 +16,21 @@
 		t1.date_created as "dateCreated",
 		t1.date_updated as "dateUpdated"
 	</sql>
-	<!-- 根据主键获取信息详情 -->
-	<select id="selectByPrimaryKey" resultType="orgDepartment" parameterType="orgDepartment" >
-		select
-		<include refid="Base_Column_List" />
-		from org_department t1
-		where  t1.id = #{id}
-	</select>
-	<!-- 根据主键物理删除信息 -->
-	<delete id="deleteByPrimaryKey" parameterType="orgDepartment" >
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="orgDepartment" parameterType="orgDepartment">
+        select
+        <include refid="Base_Column_List"/>
+        from org_department t1
+        where t1.id = #{id}
+    </select>
+    <!-- 根据主键物理删除信息 -->
+    <delete id="deleteByPrimaryKey" parameterType="orgDepartment">
 		delete
 		from org_department
 		where  id = #{id}
 	</delete>
-	<!-- 新增单条数据 -->
-	<insert id="insert" parameterType="orgDepartment" >
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="orgDepartment">
 		insert into org_department(
 		id,
 		version,
@@ -59,125 +59,110 @@
 		now()
 	)
 	</insert>
-	<!-- 新增 批量数据 -->
-	<insert id="insertBatch">
-		insert into org_department(
-		id,
-		version,
-		name,
-		code,
-		parent_id,
-		state,
-		memo,
-		order_no,
-		keyword,
-		del_flag,
-		date_created,
-		date_updated
-		) values
-		<foreach collection="list" item="t" separator=",">
-		(
-		#{t.id},
-		0,
-		#{t.name},
-		#{t.code},
-		#{t.parent_id},
-		#{t.state},
-		#{t.memo},
-		#{t.orderNo},
-		#{t.keyword},
-		0,
-		now(),
-		now()
-		)
-		</foreach>
-	</insert>
-	<!-- 数据更新 -->
-	<update id="updateByPrimaryKeySelective" parameterType="orgDepartment" >
-		update org_department set
-		version=version+1
-		<if test="name!= null" >,name=#{name}</if>
-		<if test="code!= null" >,code=#{code}</if>
-		<if test="parentId!= null and parentId!='-999'" >,parent_id=#{parentId}</if>
-		<if test="state!= null" >,state=#{state}</if>
-		<if test="memo!= null" >,memo=#{memo}</if>
-		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
-		<if test="keyword!= null" >,keyword=#{keyword}</if>
-		<if test="delFlag!= null" >,del_flag=#{delFlag}</if>
-		<if test="invalidTime!= null" >,invalid_time=#{invalidTime}</if>
-		<if test="dateUpdated!= null" >,date_updated=#{dateUpdated}</if>
-		where  id = #{id}
-	</update>
-	<!-- 判断是否存在 -->
-	<select id="isDataYN" parameterType="orgDepartment" resultType="int">
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch">
+        insert into org_department(
+        id,
+        version,
+        name,
+        code,
+        parent_id,
+        state,
+        memo,
+        order_no,
+        keyword,
+        del_flag,
+        date_created,
+        date_updated
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+            #{t.id},
+            0,
+            #{t.name},
+            #{t.code},
+            #{t.parent_id},
+            #{t.state},
+            #{t.memo},
+            #{t.orderNo},
+            #{t.keyword},
+            0,
+            now(),
+            now()
+            )
+        </foreach>
+    </insert>
+    <!-- 数据更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="orgDepartment">
+        update org_department set
+        version=version+1,date_updated=now()
+        <if test="name!= null">,name=#{name}</if>
+        <if test="code!= null">,code=#{code}</if>
+        <if test="parentId!= null and parentId!='-999'.toString()">,parent_id=#{parentId}</if>
+        <if test="state!= null">,state=#{state}</if>
+        <if test="memo!= null">,memo=#{memo}</if>
+        <if test="orderNo!= null">,order_no=#{orderNo}</if>
+        <if test="keyword!= null">,keyword=#{keyword}</if>
+        <if test="delFlag!= null">,del_flag=#{delFlag}</if>
+        where id = #{id}
+    </update>
+    <!-- 判断是否存在 -->
+    <select id="isDataYN" parameterType="orgDepartment" resultType="int">
 		select count(0) from org_department where  id = #{id}
 	</select>
-	<!--信息列表 分页 -->
-	<select id="findDataIsPage" parameterType="orgDepartment" resultType="orgDepartment">
-		select
-		<include refid="Base_Column_List" />
-		from org_department t1
-		where 1=1 
-		<choose>
-			<when test="delFlag!=null">
-				and t1.del_flag=#{delFlag}
-			</when>
-			<otherwise>
-				and t1.del_flag=0
-			</otherwise>
-		</choose>
-		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
-		</if>
-		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
-		</if>
-	</select>
-	<!--信息列表 -->
-	<select id="findDataIsList" parameterType="orgDepartment" resultType="orgDepartment">
-		select
-		<include refid="Base_Column_List" />
-		from org_department t1
-		where 1=1 
-		<choose>
-			<when test="delFlag!=null">
-				and t1.del_flag=#{delFlag}
-			</when>
-			<otherwise>
-				and t1.del_flag=0
-			</otherwise>
-		</choose>
-		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
-		</if>
-		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
-		</if>
-	</select>
-	<!-- 逻辑删除 -->
-	<update id="deleteById" parameterType="orgDepartment" >
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
+        </if>
+    </sql>
+    <!--信息列表 分页 -->
+    <select id="findDataIsPage" parameterType="orgDepartment" resultType="orgDepartment">
+        select
+        <include refid="Base_Column_List"/>
+        from org_department t1
+        where 1=1
+        <include refid="list_where_sql"/>
+    </select>
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="orgDepartment" resultType="orgDepartment">
+        select
+        <include refid="Base_Column_List"/>
+        from org_department t1
+        where 1=1
+        <include refid="list_where_sql"/>
+    </select>
+    <!-- 逻辑删除 -->
+    <update id="deleteById" parameterType="orgDepartment">
 		update org_department set
-		version=version+1
-		,update_id=#{updateId}
-		,update_ip=#{updateIp}
+		version=version+1,date_updated=now()
 		,del_flag=1
 		where  id = #{id}
 	</update>
-	<!-- 恢复逻辑删除 -->
-	<update id="recoveryDataById" parameterType="orgDepartment" >
+    <!-- 恢复逻辑删除 -->
+    <update id="recoveryDataById" parameterType="orgDepartment">
 		update org_department set
-		version=version+1
-		,update_id=#{updateId}
-		,update_ip=#{updateIp}
+		version=version+1,date_updated=now()
 		,del_flag=0
 		where  id = #{id}
 	</update>
-	<!-- 获取用户所在部门集合>根据用户id -->
-	<select id="getDeptListByUId" parameterType="map" resultType="orgDepartment">
-		select
-		<include refid="Base_Column_List" />
-		from org_department t1
-		left join org_user_vs_department t2 on (t1.id=t2.departmentid)
-		where t1.del_flag=0 and t2.userid=#{uid}
-	</select>
+    <!-- 获取用户所在部门集合>根据用户id -->
+    <select id="getDeptListByUId" parameterType="map" resultType="orgDepartment">
+        select
+        <include refid="Base_Column_List"/>
+        from org_department t1
+        left join org_user_vs_department t2 on (t1.id=t2.departmentid)
+        where t1.del_flag=0 and t2.userid=#{uid}
+    </select>
 </mapper>

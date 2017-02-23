@@ -42,14 +42,14 @@
 		date_updated
 	) values (
 		#{id},
-		'0',
+		0,
 		#{name},
 		#{code},
 		#{parentId},
 		#{orderNo},
 		#{keyword},
 		'0',
-		#{dateCreated},
+		now(),,
 		now()
 	)
 	</insert>
@@ -61,8 +61,6 @@
 		name,
 		code,
 		parentid,
-		level,
-		p_code,
 		order_no,
 		keyword,
 		del_flag,
@@ -74,7 +72,7 @@
 		#{t.version},
 		#{t.name},
 		#{t.code},
-		#{t.parent_id},
+		#{t.parentId},
 		#{t.orderNo},
 		#{t.keyword},
 		#{t.delFlag},
@@ -84,62 +82,57 @@
 	</insert>
 	<!-- 数据更新 -->
 	<update id="updateByPrimaryKeySelective" parameterType="sysVariable" >
-		update t_sys_variable set version=version+1
+		update t_sys_variable set version=version+1,date_updated=now()
 		<if test="name!= null" >,name=#{name}</if>
 		<if test="code!= null" >,code=#{code}</if>
-		<if test="parentid!= null" >,parent_id=#{parentId}</if>
+		<if test="parentId!= null" >,parent_id=#{parentId}</if>
 		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
 		<if test="keyword!= null" >,keyword=#{keyword}</if>
-		<if test="dateUpdated!= null" >,date_updated=now()</if>
 		where  id = #{id}
 	</update>
 	<!-- 判断是否存在 -->
 	<select id="isDataYN" parameterType="sysVariable" resultType="int">
 		select count(0) from t_sys_variable where  id = #{id}
 	</select>
+	<!--列表通用条件-->
+	<sql id="list_where_sql">
+		<choose>
+			<when test="delFlag!=null">
+				and t1.del_flag=#{delFlag}
+			</when>
+			<otherwise>
+				and t1.del_flag=0
+			</otherwise>
+		</choose>
+		<if test="parentId!= null and parentId!= ''" >and t1.parent_id=#{parentId}</if>
+	</sql>
 	<!--信息列表 分页 -->
 	<select id="findDataIsPage" parameterType="sysVariable" resultType="sysVariable">
 		select
 		<include refid="Base_Column_List" />,t2.name pname
 		from t_sys_variable t1
 		left join t_sys_variable t2 on t1.parent_id = t2.id
-		where 1=1 
-		<if test="parentid!= null and parentid!= ''" >and t1.parent_id=#{parentId}</if>
-		<choose>
-	    	<when test="delFlag!=null">
-	    		and t1.del_flag=#{delFlag}
-	    	</when>
-	    	<otherwise>
-	    	    and t1.del_flag=0
-	    	</otherwise>
-	    </choose>
-	    order by t1.code
+		where 1=1
+		<include refid="list_where_sql"/>
+	    order by t1.orderNo desc
 	</select>
 	<!--信息列表 -->
 	<select id="findDataIsList" parameterType="sysVariable" resultType="sysVariable">
 		select
 		<include refid="Base_Column_List" />
 		from t_sys_variable t1
-		where 1=1 
-		<if test="parentid!= null and parentid!= ''" >and t1.parent_id=#{parentId}</if>
-		<choose>
-	    	<when test="delFlag!=null">
-	    		and t1.del_flag=#{delFlag}
-	    	</when>
-	    	<otherwise>
-	    	    and t1.del_flag=0
-	    	</otherwise>
-	    </choose>
-	     order by t1.code
+		where 1=1
+		<include refid="list_where_sql"/>
+	     order by t1.orderNo desc
 	</select>
 	<!-- 逻辑删除 -->
 	<update id="deleteById" parameterType="sysVariable" >
-		update t_sys_variable set del_flag = '1'
+		update t_sys_variable set del_flag = 1
 		where  id = #{id}
 	</update>
 	<!-- 恢复逻辑删除 -->
 	<update id="recoveryDataById" parameterType="sysVariable" >
-		update t_sys_variable set del_flag = '0'
+		update t_sys_variable set del_flag = 0
 		where  id = #{id}
 	</update>
 </mapper>

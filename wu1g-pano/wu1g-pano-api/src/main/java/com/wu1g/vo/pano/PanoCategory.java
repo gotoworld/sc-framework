@@ -59,8 +59,8 @@ public class PanoCategory extends BaseVO {
     /**
      * 父级ID
      */
-    @Size(max = 100, message = "parentid最大100字符")
-    private String parentid;
+    @Size(max = 100, message = "parentId最大100字符")
+    private String parentId;
     /**
      * 级别
      */

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wu1g.dao.org.IOrgUserDao" >
-	<!-- 字段列表 -->
-	<sql id="Base_Column_List" >
+<mapper namespace="com.wu1g.dao.org.IOrgUserDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
 		t1.id as "id",
 		t1.userid as "userid",
 		t1.pwd as "pwd",
@@ -27,29 +27,24 @@
 		t1.version as "version",
 		t1.order_no as "orderNo",
 		t1.del_flag as "delFlag",
-		t1.invalid_time as "invalidTime",
 		t1.date_created as "dateCreated",
-		t1.create_id as "createId",
-		t1.create_ip as "createIp",
-		t1.date_updated as "dateUpdated",
-		t1.update_id as "updateId",
-		t1.update_ip as "updateIp"
+		t1.date_updated as "dateUpdated"
 	</sql>
-	<!-- 根据主键获取信息详情 -->
-	<select id="selectByPrimaryKey" resultType="orgUser" parameterType="orgUser" >
-		select
-		<include refid="Base_Column_List" />
-		from org_user t1
-		where  t1.id = #{id}
-	</select>
-	<!-- 根据主键物理删除信息 -->
-	<delete id="deleteByPrimaryKey" parameterType="orgUser" >
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="orgUser" parameterType="orgUser">
+        select
+        <include refid="Base_Column_List"/>
+        from org_user t1
+        where t1.id = #{id}
+    </select>
+    <!-- 根据主键物理删除信息 -->
+    <delete id="deleteByPrimaryKey" parameterType="orgUser">
 		delete
 		from org_user
 		where  id = #{id}
 	</delete>
-	<!-- 新增单条数据 -->
-	<insert id="insert" parameterType="orgUser" >
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="orgUser">
 		insert into org_user(
 		id,
 		userid,
@@ -75,13 +70,8 @@
 		version,
 		order_no,
 		del_flag,
-		invalid_time,
 		date_created,
-		create_id,
-		create_ip,
-		date_updated,
-		update_id,
-		update_ip
+		date_updated
 	) values (
 		#{id},
 		#{userid},
@@ -106,256 +96,136 @@
 		#{keyword},
 		0,
 		#{orderNo},
-		'0',
-		#{invalidTime},
+		0,
 		now(),
-		#{createId},
-		#{createIp},
-		#{dateUpdated},
-		#{updateId},
-		#{updateIp}
+		now()
 	)
-	 ON DUPLICATE KEY UPDATE 
-		memo=VALUES(memo)
-		,version=version+1
-		,update_id=VALUES(update_id)
-		,update_ip=VALUES(update_ip)
-		<if test="userid!= null" >,userid=VALUES(userid)</if>
-		<if test="pwd!= null" >,pwd=VALUES(pwd)</if>
-		<if test="name!= null" >,name=VALUES(name)</if>
-		<if test="jobNo!= null" >,job_no=VALUES(job_no)</if>
-		<if test="position!= null" >,position=VALUES(position)</if>
-		<if test="gender!= null" >,gender=VALUES(gender)</if>
-		<if test="mobile!= null" >,mobile=VALUES(mobile)</if>
-		<if test="tel!= null" >,tel=VALUES(tel)</if>
-		<if test="enable!= null" >,enable=VALUES(enable)</if>
-		<if test="avatar!= null" >,avatar=VALUES(avatar)</if>
-		<if test="status!= null" >,status=VALUES(status)</if>
-		<if test="email!= null" >,email=VALUES(email)</if>
-		<if test="weixinid!= null" >,weixinid=VALUES(weixinid)</if>
-		<if test="type!= null" >,type=VALUES(type)</if>
-		<if test="lastLogin!= null" >,last_login=VALUES(last_login)</if>
-		<if test="count!= null" >,count=VALUES(count)</if>
-		<if test="state!= null" >,state=VALUES(state)</if>
-		<if test="skin!= null" >,skin=VALUES(skin)</if>
-		<if test="keyword!= null" >,keyword=VALUES(keyword)</if>
-		<if test="orderNo!= null" >,order_no=VALUES(order_no)</if>
-		<if test="delFlag!= null" >,del_flag=VALUES(del_flag)</if>
-		<if test="invalidTime!= null" >,invalid_time=VALUES(invalid_time)</if>
-		<if test="dateUpdated!= null" >,date_updated=VALUES(date_updated)</if>
 	</insert>
-	<!-- 新增 批量数据 -->
-	<insert id="insertBatch">
-		insert into org_user(
-		id,
-		userid,
-		pwd,
-		name,
-		job_no,
-		position,
-		gender,
-		mobile,
-		tel,
-		enable,
-		avatar,
-		status,
-		email,
-		weixinid,
-		type,
-		last_login,
-		count,
-		state,
-		skin,
-		memo,
-		keyword,
-		version,
-		order_no,
-		del_flag,
-		invalid_time,
-		date_created,
-		create_id,
-		create_ip,
-		date_updated,
-		update_id,
-		update_ip
-		) values 
-		<foreach collection="list" item="t" separator=",">
-		(
-		#{t.id},
-		#{t.userid},
-		#{t.pwd},
-		#{t.name},
-		#{t.jobNo},
-		#{t.position},
-		#{t.gender},
-		#{t.mobile},
-		#{t.tel},
-		#{t.enable},
-		#{t.avatar},
-		#{t.status},
-		#{t.email},
-		#{t.weixinid},
-		#{t.type},
-		#{t.lastLogin},
-		0,
-		#{t.state},
-		#{t.skin},
-		#{t.memo},
-		#{t.keyword},
-		0,
-		#{t.orderNo},
-		'0',
-		#{t.invalidTime},
-		now(),
-		#{t.createId},
-		#{t.createIp},
-		#{t.dateUpdated},
-		#{t.updateId},
-		#{t.updateIp}
-		)
-		</foreach>
-	</insert>
-	<!-- 数据更新 -->
-	<update id="updateByPrimaryKeySelective" parameterType="orgUser" >
-		update org_user set
-		version=version+1
-		,update_id=#{updateId}
-		,update_ip=#{updateIp}
-		<if test="pwd!= null and pwd!= ''" >,pwd=#{pwd}</if>
-		<if test="name!= null" >,name=#{name}</if>
-		<if test="jobNo!= null" >,job_no=#{jobNo}</if>
-		<if test="position!= null" >,position=#{position}</if>
-		<if test="gender!= null" >,gender=#{gender}</if>
-		<if test="mobile!= null" >,mobile=#{mobile}</if>
-		<if test="tel!= null" >,tel=#{tel}</if>
-		<if test="enable!= null" >,enable=#{enable}</if>
-		<if test="avatar!= null" >,avatar=#{avatar}</if>
-		<if test="status!= null" >,status=#{status}</if>
-		<if test="email!= null" >,email=#{email}</if>
-		<if test="weixinid!= null" >,weixinid=#{weixinid}</if>
-		<if test="type!= null" >,type=#{type}</if>
-		<if test="lastLogin!= null" >,last_login=#{lastLogin}</if>
-		<if test="count!= null" >,count=#{count}</if>
-		<if test="state!= null" >,state=#{state}</if>
-		<if test="skin!= null" >,skin=#{skin}</if>
-		<if test="memo!= null" >,memo=#{memo}</if>
-		<if test="keyword!= null" >,keyword=#{keyword}</if>
-		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
-		<if test="delFlag!= null" >,del_flag=#{delFlag}</if>
-		<if test="invalidTime!= null" >,invalid_time=#{invalidTime}</if>
-		<if test="dateUpdated!= null" >,date_updated=#{dateUpdated}</if>
-		where  id = #{id}
-	</update>
-	<!-- 判断是否存在 -->
-	<select id="isDataYN" parameterType="orgUser" resultType="int">
+    <!-- 数据更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="orgUser">
+        update org_user set
+        version=version+1,date_updated=now()
+        <if test="pwd!= null and pwd!= ''">,pwd=#{pwd}</if>
+        <if test="name!= null">,name=#{name}</if>
+        <if test="jobNo!= null">,job_no=#{jobNo}</if>
+        <if test="position!= null">,position=#{position}</if>
+        <if test="gender!= null">,gender=#{gender}</if>
+        <if test="mobile!= null">,mobile=#{mobile}</if>
+        <if test="tel!= null">,tel=#{tel}</if>
+        <if test="enable!= null">,enable=#{enable}</if>
+        <if test="avatar!= null">,avatar=#{avatar}</if>
+        <if test="status!= null">,status=#{status}</if>
+        <if test="email!= null">,email=#{email}</if>
+        <if test="weixinid!= null">,weixinid=#{weixinid}</if>
+        <if test="type!= null">,type=#{type}</if>
+        <if test="lastLogin!= null">,last_login=#{lastLogin}</if>
+        <if test="count!= null">,count=#{count}</if>
+        <if test="state!= null">,state=#{state}</if>
+        <if test="skin!= null">,skin=#{skin}</if>
+        <if test="memo!= null">,memo=#{memo}</if>
+        <if test="keyword!= null">,keyword=#{keyword}</if>
+        <if test="orderNo!= null">,order_no=#{orderNo}</if>
+        <if test="delFlag!= null">,del_flag=#{delFlag}</if>
+        where id = #{id}
+    </update>
+    <!-- 判断是否存在 -->
+    <select id="isDataYN" parameterType="orgUser" resultType="int">
 		select count(0) from org_user where  id = #{id}
 	</select>
-	<!--信息列表 分页 -->
-	<select id="findDataIsPage" parameterType="orgUser" resultType="orgUser">
-		select
-		<include refid="Base_Column_List" />
-		,t2.roleNames
-		from org_user t1
-		left join (
-		select GROUP_CONCAT(t1.`name`) as roleNames,t2.user_id from auth_role t1
-		inner join auth_user_vs_role t2 on (t1.id=t2.role_id)
-		group by t2.user_id
-		) t2 on (t1.id=t2.user_id)
-		where 1=1 
-		<choose>
-			<when test="delFlag!=null">
-				and t1.del_flag=#{delFlag}
-			</when>
-			<otherwise>
-				and t1.del_flag=0
-			</otherwise>
-		</choose>
-		<if test="name!=null and name!=''">
-			and t1.name like CONCAT('%',#{name},'%')
-		</if>
-		<if test="roleNames!=null and roleNames!=''">
-			and t2.roleNames like CONCAT('%',#{roleNames},'%')
-		</if>
-		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
-		</if>
-		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
-		</if>
-		order by t1.enable asc,t1.date_created desc
-	</select>
-	<!--信息列表 -->
-	<select id="findDataIsList" parameterType="orgUser" resultType="orgUser">
-		select
-		<include refid="Base_Column_List" />
-		from org_user t1
-		where 1=1 
-		<choose>
-			<when test="delFlag!=null">
-				and t1.del_flag=#{delFlag}
-			</when>
-			<otherwise>
-				and t1.del_flag=0
-			</otherwise>
-		</choose>
-		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
-		</if>
-		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
-		</if>
-		order by t1.enable asc ,t1.date_created desc
-	</select>
-	<!--某一种角色所有用户信息列表 -->
-	<select id="getUserList" parameterType="orgUser" resultType="orgUser">
-		select
-		<include refid="Base_Column_List" />
-		,t3.name as "roleNames"
-		from org_user t1
-    	left join auth_user_vs_role t2 on t1.id=t2.user_id
-		left join auth_role t3 on t3.id = t2.role_id
-		where 1=1 and t3.id=#{type} and t1.enable=#{enable}
-		order by t1.date_created desc
-	</select>
-	<!--某一种角色所有用户信息列表(分页) -->
-	<select id="getUserIsPage" parameterType="orgUser" resultType="orgUser">
-		select
-		<include refid="Base_Column_List" />
-		,t3.name as "roleNames"
-		from org_user t1
-    	left join auth_user_vs_role t2 on t1.id=t2.user_id
-		left join auth_role t3 on t3.id = t2.role_id
-		where 1=1 and t3.id=#{type} and t1.enable=#{enable}
-		order by t1.date_created desc
-	</select>
-	<!-- 获取用户信息>根据用户登录名 -->
-	<select id="findUserByLoginName" parameterType="map" resultType="orgUser">
-		select
-		<include refid="Base_Column_List" />
-		from org_user t1
-		where t1.del_flag=0 and enable='0'
-		and userid=#{userid}
-	</select>
-	<!-- 逻辑删除 -->
-	<update id="deleteById" parameterType="orgUser" >
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
+        <if test="name!=null and name!=''">
+            and t1.name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
+        </if>
+    </sql>
+
+    <!--信息列表 分页 -->
+    <select id="findDataIsPage" parameterType="orgUser" resultType="orgUser">
+        select
+        <include refid="Base_Column_List"/>
+        ,t2.roleNames
+        from org_user t1
+        left join (
+        select GROUP_CONCAT(t1.`name`) as roleNames,t2.user_id from auth_role t1
+        inner join auth_user_vs_role t2 on (t1.id=t2.role_id)
+        group by t2.user_id
+        ) t2 on (t1.id=t2.user_id)
+        where 1=1
+        <include refid="list_where_sql"/>
+        <if test="roleNames!=null and roleNames!=''">
+            and t2.roleNames like CONCAT('%',#{roleNames},'%')
+        </if>
+        order by t1.enable asc,t1.date_created desc
+    </select>
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="orgUser" resultType="orgUser">
+        select
+        <include refid="Base_Column_List"/>
+        from org_user t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.enable asc ,t1.date_created desc
+    </select>
+    <!--某一种角色所有用户信息列表 -->
+    <select id="getUserList" parameterType="orgUser" resultType="orgUser">
+        select
+        <include refid="Base_Column_List"/>
+        ,t3.name as "roleNames"
+        from org_user t1
+        left join auth_user_vs_role t2 on t1.id=t2.user_id
+        left join auth_role t3 on t3.id = t2.role_id
+        where 1=1 and t3.id=#{type} and t1.enable=#{enable}
+        order by t1.date_created desc
+    </select>
+    <!--某一种角色所有用户信息列表(分页) -->
+    <select id="getUserIsPage" parameterType="orgUser" resultType="orgUser">
+        select
+        <include refid="Base_Column_List"/>
+        ,t3.name as "roleNames"
+        from org_user t1
+        left join auth_user_vs_role t2 on t1.id=t2.user_id
+        left join auth_role t3 on t3.id = t2.role_id
+        where 1=1 and t3.id=#{type} and t1.enable=#{enable}
+        order by t1.date_created desc
+    </select>
+    <!-- 获取用户信息>根据用户登录名 -->
+    <select id="findUserByLoginName" parameterType="map" resultType="orgUser">
+        select
+        <include refid="Base_Column_List"/>
+        from org_user t1
+        where t1.del_flag=0 and enable='0'
+        and userid=#{userid}
+    </select>
+    <!-- 逻辑删除 -->
+    <update id="deleteById" parameterType="orgUser">
 		update org_user set
 		version=version+1
-		,update_id=#{updateId}
-		,update_ip=#{updateIp}
 		,del_flag=1
 		where  id = #{id}
 	</update>
-	<!-- 恢复逻辑删除 -->
-	<update id="recoveryDataById" parameterType="orgUser" >
+    <!-- 恢复逻辑删除 -->
+    <update id="recoveryDataById" parameterType="orgUser">
 		update org_user set
 		version=version+1
-		,update_id=#{updateId}
-		,update_ip=#{updateIp}
 		,del_flag=0
 		where  id = #{id}
 	</update>
-	<!-- 判断用户id是否存在 -->
-	<select id="isUidYN" parameterType="java.lang.String" resultType="int">
+    <!-- 判断用户id是否存在 -->
+    <select id="isUidYN" parameterType="java.lang.String" resultType="int">
 		select count(0) from org_user where  userid=#{userid}
 	</select>
 </mapper>

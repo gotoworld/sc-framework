@@ -76,34 +76,14 @@ public class AuthPerm extends BaseVO {
      */
     private Date dateCreated;
     /**
-     * 建立者ID
-     */
-    @Size(max = 50, message = "createId最大50字符")
-    private String createId;
-    /**
-     * 建立者IP
-     */
-    @Size(max = 50, message = "createIp最大50字符")
-    private String createIp;
-    /**
      * 修改时间
      */
     private Date dateUpdated;
     /**
-     * 修改者ID
-     */
-    @Size(max = 50, message = "updateId最大50字符")
-    private String updateId;
-    /**
-     * 修改者IP
-     */
-    @Size(max = 50, message = "updateIp最大50字符")
-    private String updateIp;
-    /**
      * 父级ID
      */
-    @Size(max = 22, message = "parentid最大22字符")
-    private String parentid;
+    @Size(max = 22, message = "parentId最大22字符")
+    private String parentId;
     /**
      * bean类 集合
      */

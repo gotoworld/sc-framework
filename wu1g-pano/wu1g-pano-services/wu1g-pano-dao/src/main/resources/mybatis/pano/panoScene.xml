@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wu1g.dao.pano.IPanoSceneDao" >
-	<!-- 字段列表 -->
-	<sql id="Base_Column_List" >
+<mapper namespace="com.wu1g.dao.pano.IPanoSceneDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
 		t1.id as "id"
 		,t1.proj_id as "projId"
 		,t1.scene_title as "sceneTitle"
@@ -18,33 +18,29 @@
 		,t1.keyword as "keyword"
 		,t1.del_flag as "delFlag"
 		,t1.date_created as "dateCreated"
-		,t1.create_id as "createId"
-		,t1.create_ip as "createIp"
 		,t1.date_updated as "dateUpdated"
-		,t1.update_id as "updateId"
-		,t1.update_ip as "updateIp"
 	</sql>
-	
-	<!-- 根据主键获取信息详情 -->
-	<select id="selectByPrimaryKey" resultType="panoScene" parameterType="panoScene" >
-		select
-		<include refid="Base_Column_List" />
-		from t_pano_scene t1 
-		where  
-		t1.id = #{id}
-	</select>
-	
-	<!-- 根据主键物理删除信息 -->
-	<delete id="deleteByPrimaryKey" parameterType="panoScene" >
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="panoScene" parameterType="panoScene">
+        select
+        <include refid="Base_Column_List"/>
+        from pano_scene t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 根据主键物理删除信息 -->
+    <delete id="deleteByPrimaryKey" parameterType="panoScene">
 		delete
-		from t_pano_scene
+		from pano_scene
 		where  
 		id = #{id}
 	</delete>
-	
-	<!-- 新增单条数据 -->
-	<insert id="insert" parameterType="panoScene" >
-		insert into t_pano_scene(
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="panoScene">
+		insert into pano_scene(
 		id
 		,proj_id
 		,scene_title
@@ -60,11 +56,7 @@
 		,keyword
 		,del_flag
 		,date_created
-		,create_id
-		,create_ip
 		,date_updated
-		,update_id
-		,update_ip
 		) values (
 		#{id}
 		,#{projId}
@@ -79,126 +71,111 @@
 		,#{memo}
 		,#{orderNo}
 		,#{keyword}
-		,'0'
-		,now()
-		,#{createId}
-		,#{createIp}
-		,#{dateUpdated}
-		,#{updateId}
-		,#{updateIp}
-		)
-	</insert>
-	
-	<!-- 新增 批量数据 -->
-	<insert id="insertBatch">
-		insert into t_pano_scene(
-		id
-		,proj_id
-		,scene_title
-		,scene_src
-		,hlookat
-		,vlookat
-		,sound_src
-		,video_src
-		,version
-		,state
-		,memo
-		,order_no
-		,keyword
-		,del_flag
-		,date_created
-		,create_id
-		,create_ip
-		,date_updated
-		,update_id
-		,update_ip
-		) values 
-		<foreach collection="list" item="t" separator=",">
-		(
-		#{t.id}
-		,#{t.projId}
-		,#{t.sceneTitle}
-		,#{t.sceneSrc}
-		,#{t.hlookat}
-		,#{t.vlookat}
-		,#{t.soundSrc}
-		,#{t.videoSrc}
 		,0
-		,#{t.state}
-		,#{t.memo}
-		,#{t.orderNo}
-		,#{t.keyword}
-		,'0'
 		,now()
-		,#{t.createId}
-		,#{t.createIp}
-		,#{t.dateUpdated}
-		,#{t.updateId}
-		,#{t.updateIp}
+		,now()
 		)
-		</foreach>
 	</insert>
-	
-	<!-- 数据更新 -->
-	<update id="updateByPrimaryKeySelective" parameterType="panoScene" >
-		update t_pano_scene set 
-				 version=version+1
-				,date_updated=now()
-				,update_id=#{updateId}
-				,update_ip=#{updateIp}
-				,sound_src=#{soundSrc}
-				,video_src=#{videoSrc}
-			<if test="projId!= null" >,proj_id=#{projId}</if>
-			<if test="sceneTitle!= null" >,scene_title=#{sceneTitle}</if>
-			<if test="sceneSrc!= null" >,scene_src=#{sceneSrc}</if>
-			<if test="hlookat!= null" >,hlookat=#{hlookat}</if>
-			<if test="vlookat!= null" >,vlookat=#{vlookat}</if>
-			<if test="state!= null" >,state=#{state}</if>
-			<if test="memo!= null" >,memo=#{memo}</if>
-			<if test="orderNo!= null" >,order_no=#{orderNo}</if>
-			<if test="keyword!= null" >,keyword=#{keyword}</if>
-			<if test="delFlag!= null" >,del_flag=#{delFlag}</if>
-			<if test="dateUpdated!= null" >,date_updated=#{dateUpdated}</if>
-		where 
-			id= #{id}
-	</update>
-	
-	<!-- 判断是否存在 -->
-	<select id="isDataYN" parameterType="panoScene" resultType="int">
+
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch">
+        insert into pano_scene(
+        id
+        ,proj_id
+        ,scene_title
+        ,scene_src
+        ,hlookat
+        ,vlookat
+        ,sound_src
+        ,video_src
+        ,version
+        ,state
+        ,memo
+        ,order_no
+        ,keyword
+        ,del_flag
+        ,date_created
+        ,date_updated
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+            #{t.id}
+            ,#{t.projId}
+            ,#{t.sceneTitle}
+            ,#{t.sceneSrc}
+            ,#{t.hlookat}
+            ,#{t.vlookat}
+            ,#{t.soundSrc}
+            ,#{t.videoSrc}
+            ,0
+            ,#{t.state}
+            ,#{t.memo}
+            ,#{t.orderNo}
+            ,#{t.keyword}
+            ,'0'
+            ,now()
+            ,now()
+            )
+        </foreach>
+    </insert>
+
+    <!-- 数据更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="panoScene">
+        update pano_scene set
+        version=version+1
+        ,date_updated=now()
+        ,sound_src=#{soundSrc}
+        ,video_src=#{videoSrc}
+        <if test="projId!= null">,proj_id=#{projId}</if>
+        <if test="sceneTitle!= null">,scene_title=#{sceneTitle}</if>
+        <if test="sceneSrc!= null">,scene_src=#{sceneSrc}</if>
+        <if test="hlookat!= null">,hlookat=#{hlookat}</if>
+        <if test="vlookat!= null">,vlookat=#{vlookat}</if>
+        <if test="state!= null">,state=#{state}</if>
+        <if test="memo!= null">,memo=#{memo}</if>
+        <if test="orderNo!= null">,order_no=#{orderNo}</if>
+        <if test="keyword!= null">,keyword=#{keyword}</if>
+        <if test="delFlag!= null">,del_flag=#{delFlag}</if>
+        where
+        id= #{id}
+    </update>
+
+    <!-- 判断是否存在 -->
+    <select id="isDataYN" parameterType="panoScene" resultType="int">
 		select 
 			count(0) 
-		from t_pano_scene
+		from pano_scene
 		where 
 			id = #{id}
 	</select>
-	<!--信息列表 -->
-	<select id="findDataIsList" parameterType="panoScene" resultType="panoScene">
-		select
-		<include refid="Base_Column_List" />
-		from t_pano_scene t1 
-		where proj_id=#{projId}
-		<choose>
-		 <when test="delFlag!=null">
-		     and t1.del_flag=#{delFlag}
-		 </when>
-		 <otherwise>
-		     and t1.del_flag=0
-		 </otherwise>
-		</choose>
-		<if test="dateBegin!=null and dateBegin!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
-		</if>
-		<if test="dateEnd!=null and dateEnd!=''">
-			 <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
-		</if>
-		order by t1.date_created desc
-	</select>
-	
-	<delete id="deleteByProjId" parameterType="panoScene" >
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="panoScene" resultType="panoScene">
+        select
+        <include refid="Base_Column_List"/>
+        from pano_scene t1
+        where proj_id=#{projId}
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
+        </if>
+        order by t1.date_created desc
+    </select>
+
+    <delete id="deleteByProjId" parameterType="panoScene">
 		delete
-		from t_pano_scene
+		from pano_scene
 		where  
 		proj_id=#{projId}
 	</delete>
-	
+
 </mapper>

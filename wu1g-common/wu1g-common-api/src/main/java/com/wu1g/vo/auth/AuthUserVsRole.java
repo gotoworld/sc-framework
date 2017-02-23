@@ -5,7 +5,7 @@
  * -------- ----------- --------------- ------------------------------------------	
  * 1.00     2015.10.01      easycode         程序.发布		
  * -------- ----------- --------------- ------------------------------------------	
- * Copyright 2015 isd System. - All Rights Reserved.		
+ * Copyright 2015 System. - All Rights Reserved.
  *	
  */
 package com.wu1g.vo.auth;

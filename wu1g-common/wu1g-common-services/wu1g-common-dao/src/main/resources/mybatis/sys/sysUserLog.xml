@@ -8,6 +8,7 @@
         ,t1.memo as  "memo"
         ,t1.date_created as  "dateCreated"
         ,t1.create_id as  "createId"
+        ,t1.create_name as  "createName"
         ,t1.create_ip as  "createIp"
 	</sql>
     <!-- 根据主键获取信息详情 -->

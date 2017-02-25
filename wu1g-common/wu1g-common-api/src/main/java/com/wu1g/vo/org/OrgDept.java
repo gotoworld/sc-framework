@@ -28,53 +28,41 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrgDepartment extends BaseVO {
+public class OrgDept extends BaseVO {
 
     private static final long serialVersionUID = -723744788319541400L;
     /**
      * ID
      */
-    @Size(max = 64, message = "id最大64字符")
-    private String id;
+    private Long id;
     /**
-     * 版本号
+     * 编码
      */
-    private Integer version;
+    @Size(max = 32, message = "code最大32字符")
+    private String code;
     /**
      * 名称
      */
     @NotNull(message = "name不能为空")
-    @Size(min=2,max = 50, message = "name最小2个字符,最大50字符")
+    @Size(max = 100, message = "name最大100字符")
     private String name;
-    /**
-     * 编码
-     */
-    @Size(max = 100, message = "code最大20字符")
-    private String code;
     /**
      * 父级ID
      */
-    @Size(max = 100, message = "parentId最大100字符")
-    private String parentId;
-    /**
-     * 级别
-     */
-    private Integer level;
-    /**
-     * 上下级组合编码
-     */
-    @Size(max = 1000, message = "pCode最大1000字符")
-    private String pCode;
+    private Long parentId;
     /**
      * 状态
      */
-    @Size(max = 1, message = "state最大1字符")
-    private String state;
+    private Integer state;
     /**
      * 备注
      */
     @Size(max = 255, message = "memo最大255字符")
     private String memo;
+    /**
+     * 版本号
+     */
+    private Integer version;
     /**
      * 排序
      */
@@ -85,43 +73,23 @@ public class OrgDepartment extends BaseVO {
     @Size(max = 255, message = "keyword最大255字符")
     private String keyword;
     /**
-     * 是否删除(0否1是)
+     * 删除标记(0正常1删除)
      */
-    private String delFlag;
+    private Integer delFlag;
     /**
-     * 数据过期时间0:永不过期
+     * 建立者ID
      */
-    private Long invalidTime;
+    private Long createId;
     /**
      * 创建时间
      */
     private Date dateCreated;
     /**
-     * 建立者ID
-     */
-    @Size(max = 64, message = "createId最大64字符")
-    private String createId;
-    /**
-     * 建立者IP
-     */
-    @Size(max = 64, message = "createIp最大64字符")
-    private String createIp;
-    /**
-     * 修改时间
+     * 更新时间
      */
     private Date dateUpdated;
     /**
-     * 修改者ID
-     */
-    @Size(max = 64, message = "updateId最大64字符")
-    private String updateId;
-    /**
-     * 修改者IP
-     */
-    @Size(max = 64, message = "updateIp最大64字符")
-    private String updateIp;
-    /**
      * 子对象集合
      */
-    private List<OrgDepartment> beans;
+    private List<OrgDept> beans;
 }

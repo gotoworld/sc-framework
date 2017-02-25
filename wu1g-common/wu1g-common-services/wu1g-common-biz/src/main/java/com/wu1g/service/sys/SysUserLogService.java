@@ -3,8 +3,6 @@ package com.wu1g.service.sys;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
-import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.api.sys.ISysUserLogService;
 import com.wu1g.dao.sys.ISysUserLogDao;
 import com.wu1g.vo.sys.SysUserLog;
@@ -31,12 +29,9 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
                 // 判断数据是否存在
                 if (sysUserLogDao.isDataYN(bean) != 0) {
                     // 数据存在
-                    sysUserLogDao.updateByPrimaryKeySelective(bean);
+                    sysUserLogDao.update(bean);
                 } else {
                     // 新增
-                    if (ValidatorUtil.isEmpty(bean.getId())) {
-                        bean.setId(IdUtil.createUUID(32));
-                    }
                     sysUserLogDao.insert(bean);
                 }
             } catch (Exception e) {
@@ -50,20 +45,21 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
     public List<SysUserLog> findDataIsPage(SysUserLog bean) {
         List<SysUserLog> beans = null;
         try {
-            PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
+            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<SysUserLog>) sysUserLogDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);
         }
         return beans;
     }
-    public void info(String type, String memo, String userId, String ip) {
+    public void info(String type, String memo,String detailInfo, Long userId, String userName, String ip) {
         try {
             SysUserLog dto = new SysUserLog();
-            dto.setId(IdUtil.createUUID(32));
             dto.setType(type);// 操作类型(a增d删u改q查)
-            dto.setDescription(memo);// 具体描述
-            dto.setCreateId(userId);// 建立者ID
+            dto.setMemo(memo);// 描述
+            dto.setDetailInfo(detailInfo);// 具体
+            dto.setCreateId(userId);// 操作人id
+            dto.setCreateName(userName);// 操作人姓名
             dto.setCreateIp(ip);// 建立者IP
             // 新增
             sysUserLogDao.insert(dto);

@@ -14,16 +14,15 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.wu1g.api.auth.IAuthRoleService;
+import com.wu1g.api.org.IOrgDeptService;
+import com.wu1g.api.org.IOrgUserService;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.framework.web.controller.BaseController;
-import com.wu1g.api.org.IOrgDepartmentService;
-import com.wu1g.api.org.IOrgUserService;
 import com.wu1g.vo.org.OrgUser;
+import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -35,6 +34,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.io.IOException;
@@ -48,17 +48,12 @@ import java.util.List;
 @RequestMapping(value = "/h")
 @Slf4j
 public class OrgUserController extends BaseController {
-
-	private static final long serialVersionUID = -847589285730427889L;
-	/**组织架构_用户 业务处理*/
 	@Autowired
 	private IOrgUserService orgUserService;
-	/**权限_角色信息 业务处理*/
 	@Autowired
 	private IAuthRoleService authRoleService;
-	/**组织架构_部门 业务处理*/
 	@Autowired
-	private IOrgDepartmentService orgDepartmentService;
+	private IOrgDeptService orgDepartmentService;
 	
 	//组织架构_用户 管理
 	private static final String acPrefix="/org/user/";
@@ -70,33 +65,23 @@ public class OrgUserController extends BaseController {
 	
 	/**
 	 * <p> 初始化处理。
-	 * <ol>
-	 * [功能概要] 
-	 * <li>初始化处理。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("orgUser:menu")
-	@RequestMapping(value=acPrefix+"init")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"init")
 	public String init() {
 		log.info("OrgUserController init.........");
 		return init;
 	}
 	/**
 	 * <p> 信息列表 (未删除)。
-	 * <ol>
-	 * [功能概要] 
-	 * <li>信息列表。
-	 * </ol>
 	 */
 	@RequiresPermissions("orgUser:menu")
-	@RequestMapping(value=acPrefix+"list")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"list")
 	public String list( OrgUser bean) {
 		log.info("OrgUserController list.........");
 		if(bean==null){
 			bean = new OrgUser();
 		}
-		bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
 		//信息列表
 		PageInfo<?> page=new PageInfo<>(orgUserService.findDataIsPage(bean));
 		request.setAttribute( "beans", page.getList() );
@@ -106,26 +91,18 @@ public class OrgUserController extends BaseController {
 	}
 	/**
 	 * <p> 编辑。
-	 * <ol>
-	 * [功能概要] 
-	 * <li>编辑。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("orgUser:edit")
-	@RequestMapping(value=acPrefix+"edit/{id}")
-	public String edit( OrgUser bean,@PathVariable("id") String id) {
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/{id}")
+	public String edit(OrgUser bean, @PathVariable("id") Long id) {
 		log.info("OrgUserController edit.........");
-		int pageNum = 0;
-		if(bean!=null && bean.getPageNum()!=null){
-			pageNum=bean.getPageNum();
-		}
-		if(ValidatorUtil.notEmpty(id)){
+		int pageNum=getPageSize(bean);
+		if(0!=id){
 			OrgUser bean1=new OrgUser();
 			bean1.setId(id);
 			bean=orgUserService.findDataById(bean1);
 			if(bean!=null){
-				if(!"admin".equals(bean.getUserid())){
+				if(!"admin".equals(bean.getAccid())){
 					//获取当前用户的角色集合
 					request.setAttribute("myRoleBeans",orgUserService.findRoleDataIsList(bean));
 				}
@@ -133,14 +110,13 @@ public class OrgUserController extends BaseController {
 				request.setAttribute("deptBeans",orgUserService.findDeptDataIsList(bean));
 			}
 		}
-		if(bean==null||"add".equals(id)){
+		if(bean==null||0==id){
 			bean=new OrgUser();
-			bean.setId(IdUtil.createUUID(32));
-            bean.setNewFlag("1");
+            bean.setNewFlag(1);
 		}
 		bean.setPageNum(pageNum);
 		request.setAttribute( "bean", bean );
-		if(!"admin".equals(bean.getUserid())){
+		if(!"admin".equals(bean.getAccid())){
 			//所有角色集合
 			request.setAttribute("roleBeans", authRoleService.findDataIsList(null));
 		}
@@ -150,16 +126,11 @@ public class OrgUserController extends BaseController {
 	}
 	/**
 	 * <p> 编辑。
-	 * <ol>
-	 * [功能概要] 
-	 * <li>编辑。
-	 * </ol>
-	 * @return 转发字符串
 	 */
-	@RequestMapping(value=acPrefix+"editUser/{id}")
-	public String editUser(@PathVariable("id") String id) {
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"editUser/{id}")
+	public String editUser(@PathVariable("id") Long id) {
 		log.info("OrgUserController editUser.........");
-		if(ValidatorUtil.notEmpty(id)){
+		if(0!=id){
 			OrgUser bean=new OrgUser();
 			bean.setId(id);
 			bean=orgUserService.findDataById(bean);
@@ -168,21 +139,16 @@ public class OrgUserController extends BaseController {
 		return editUser;
 	}
 	/**
-	 * <p> 删除。
-	 * <ol>
-	 * [功能概要] 
 	 * <li>逻辑删除。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("orgUser:del")
-	@RequestMapping(value=acPrefix+"del/{id}")
-	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
+	public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
 		log.info("OrgUserController del.........");
 		Response result = new Response();
 		try {
-			OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-			if(user.getId().equals(id)){
+			OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+			if(orgUser.getId().equals(id)){
 				throw new RuntimeException("不能删除自己!");
 			}
 			OrgUser bean1=new OrgUser();
@@ -196,7 +162,7 @@ public class OrgUserController extends BaseController {
 	}
 	/**判断用户id是否存在
 	 * @throws IOException */
-	@RequestMapping(value=acPrefix+"isUidYN/{uid}")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isUidYN/{uid}")
 	public String isUidYN(@PathVariable("uid") String uid) throws IOException{
 		String msg="true";
 		JSONObject json = new JSONObject();
@@ -223,18 +189,12 @@ public class OrgUserController extends BaseController {
 	
 	/**
 	 * <p> 信息保存
-	 * <ol>
-	 * [功能概要] 
-	 * <li>新增。
-	 * <li>修改。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions(value={"orgUser:add","orgUser:edit"},logical=Logical.OR)
-	@RequestMapping(value=acPrefix+"save")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
-	public String save(@Validated OrgUser bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
+	public String save(@Validated OrgUser bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
 		log.info("OrgUserController save.........");
 		Response result = new Response();
 		if(bean!=null){
@@ -250,10 +210,10 @@ public class OrgUserController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-					if(user!=null){
-						if(ValidatorUtil.isEmpty(bean.getUserid())){
-							bean.setUserid(user.getUserid());
+					OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+					if(orgUser !=null){
+						if(ValidatorUtil.isEmpty(bean.getAccid())){
+							bean.setAccid(orgUser.getAccid());
 						}
 					}
 					result.message=orgUserService.saveOrUpdateData(bean);
@@ -271,17 +231,11 @@ public class OrgUserController extends BaseController {
 	}
 	/**
 	 * <p> 信息保存
-	 * <ol>
-	 * [功能概要] 
-	 * <li>修改。
-	 * </ol>
-	 * @return 转发字符串
-	 * @throws IOException 
 	 */
-	@RequestMapping(value=acPrefix+"update")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="用户信息")
-	public String update(@Validated  OrgUser bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) throws IOException {
+	public String update(@Validated OrgUser bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) throws IOException {
 		log.info("OrgUserController save.........");
 		Response result = new Response();
 		if(bean!=null){
@@ -297,10 +251,10 @@ public class OrgUserController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-					if(user!=null){
-						if(ValidatorUtil.isEmpty(bean.getUserid())){
-							bean.setUserid(user.getUserid());
+					OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+					if(orgUser !=null){
+						if(ValidatorUtil.isEmpty(bean.getAccid())){
+							bean.setAccid(orgUser.getAccid());
 						}
 					}
 					result.message=orgUserService.updateData(bean);

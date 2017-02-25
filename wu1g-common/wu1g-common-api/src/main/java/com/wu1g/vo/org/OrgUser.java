@@ -34,12 +34,13 @@ public class OrgUser extends BaseVO {
     /**
      * ID
      */
-    @Size(max = 32, message = "id最大32字符")
-    private String id;
+    private Long id;
     /**
-     * 员工UserID
+     * 员工账号
      */
-    private String userid;
+    @NotNull(message = "accid不能为空")
+    @Size(max = 55, message = "accid最大55字符")
+    private String accid;
     /**
      * 员工密码
      */
@@ -48,48 +49,41 @@ public class OrgUser extends BaseVO {
     /**
      * 成员名称
      */
-    @Size(max = 100, message = "name最大100字符")
+    @Size(max = 55, message = "name最大55字符")
     private String name;
     /**
      * 工号
      */
-    @Size(max = 64, message = "jobNo最大64字符")
+    @Size(max = 32, message = "jobNo最大32字符")
     private String jobNo;
     /**
      * 职位
      */
-    @Size(max = 64, message = "position最大64字符")
+    @Size(max = 32, message = "position最大32字符")
     private String position;
     /**
-     * 性别[0男1女]
+     * 性别[0男1女3保密]
      */
-    @Size(max = 1, message = "gender最大1字符")
-    private String gender;
+    private Integer gender;
     /**
      * 移动电话
      */
-    @Size(max = 50, message = "mobile最大50字符")
+    @Size(max = 24, message = "mobile最大24字符")
     private String mobile;
     /**
      * 固定电话
      */
-    @Size(max = 50, message = "tel最大50字符")
+    @Size(max = 24, message = "tel最大24字符")
     private String tel;
     /**
-     * 是否启用启用/禁用成员。1表示启用成员，0表示禁用成员
+     * 启用状态1启用0禁用
      */
-    @Size(max = 1, message = "enable最大1字符")
-    private String enable;
+    private Integer enable;
     /**
-     * 头像url。注：小图将url最后的"/0"改成"/64"
+     * 头像url
      */
     @Size(max = 255, message = "avatar最大255字符")
     private String avatar;
-    /**
-     * 关注状态: 1=已关注，2=已冻结，4=未关注
-     */
-    @Size(max = 50, message = "status最大50字符")
-    private String status;
     /**
      * 邮箱
      */
@@ -103,9 +97,7 @@ public class OrgUser extends BaseVO {
     /**
      * 会员类型0管理员1普通用户
      */
-    @NotNull(message = "type不能为空")
-    @Size(max = 1, message = "type最大1字符")
-    private String type;
+    private Integer type;
     /**
      * 最后登录日期
      */
@@ -117,8 +109,7 @@ public class OrgUser extends BaseVO {
     /**
      * 状态
      */
-    @Size(max = 1, message = "state最大1字符")
-    private String state;
+    private Integer state;
     /**
      * 皮肤
      */
@@ -132,7 +123,7 @@ public class OrgUser extends BaseVO {
     /**
      * 关键字
      */
-    @Size(max = 100, message = "keyword最大100字符")
+    @Size(max = 255, message = "keyword最大255字符")
     private String keyword;
     /**
      * 版本号
@@ -143,45 +134,25 @@ public class OrgUser extends BaseVO {
      */
     private Integer orderNo;
     /**
-     * 是否删除(0否1是)
+     * 删除标记(0正常1删除)
      */
-    private String delFlag;
+    private Integer delFlag;
     /**
-     * 数据过期时间0:永不过期
+     * 建立者ID
      */
-    private Long invalidTime;
+    private Long createId;
     /**
      * 创建时间
      */
     private Date dateCreated;
     /**
-     * 建立者ID
-     */
-    @Size(max = 64, message = "createId最大64字符")
-    private String createId;
-    /**
-     * 建立者IP
-     */
-    @Size(max = 64, message = "createIp最大64字符")
-    private String createIp;
-    /**
-     * 修改时间
+     * 更新时间
      */
     private Date dateUpdated;
     /**
-     * 修改者ID
-     */
-    @Size(max = 64, message = "updateId最大64字符")
-    private String updateId;
-    /**
-     * 修改者IP
-     */
-    @Size(max = 64, message = "updateIp最大64字符")
-    private String updateIp;
-    /**
      * 用户角色id集合
      */
-    private List<String> roleIdArray;
+    private List<Long> roleIdArray;
     /**
      * 用户角色名称集合
      */
@@ -189,5 +160,5 @@ public class OrgUser extends BaseVO {
     /**
      * 部门id集合
      */
-    private List<String> deptIdArray;
+    private List<Long> deptIdArray;
 }

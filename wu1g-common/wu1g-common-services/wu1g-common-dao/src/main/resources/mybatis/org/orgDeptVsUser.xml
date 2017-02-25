@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wu1g.dao.org.IOrgUserVsDepartmentDao">
-    <!-- 字段列表 -->
-    <sql id="Base_Column_List">
-		t1.userid as "userid",
-		t1.dept_id as "deptId",
-		t1.version as "version",
-		t1.date_created as "dateCreated"
-	</sql>
+<mapper namespace="com.wu1g.dao.org.IOrgDeptVsUserDao">
     <!-- 新增 批量数据 -->
     <insert id="insertBatch">
-        insert into org_user_vs_department(
-        userid,
+        insert into org_dept_vs_user(
+        user_id,
         dept_id,
         version,
         date_created
         ) values
         <foreach collection="list" item="t" separator=",">
             (
-            #{t.userid},
+            #{t.UserId},
             #{t.deptId},
             0,
             now()
@@ -26,9 +19,9 @@
         </foreach>
     </insert>
     <!-- 根据用户id清空用户关联部门信息-->
-    <delete id="deleteDataByUid" parameterType="orgUserVsDepartment">
+    <delete id="deleteDataByUid" parameterType="orgDeptVsUser">
 		delete
-		from org_user_vs_department
-		where  userid = #{userId}
+		from org_dept_vs_user
+		where  user_id = #{UserId}
 	</delete>
 </mapper>

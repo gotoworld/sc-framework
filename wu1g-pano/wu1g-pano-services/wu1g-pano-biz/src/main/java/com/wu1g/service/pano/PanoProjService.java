@@ -1,18 +1,17 @@
 package com.wu1g.service.pano;
 
 import com.github.pagehelper.PageHelper;
-import com.wu1g.framework.annotation.RfAccount2Bean;
-import com.wu1g.framework.config.AppConfig;
-import com.wu1g.framework.service.BaseService;
-import com.wu1g.framework.util.BeetlUtils;
-import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
-import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.api.pano.IPanoProjService;
 import com.wu1g.dao.pano.IPanoMapDao;
 import com.wu1g.dao.pano.IPanoProjDao;
 import com.wu1g.dao.pano.IPanoSceneDao;
 import com.wu1g.dao.pano.IPanoSpotsDao;
+import com.wu1g.framework.annotation.RfAccount2Bean;
+import com.wu1g.framework.config.AppConfig;
+import com.wu1g.framework.service.BaseService;
+import com.wu1g.framework.util.BeetlUtils;
+import com.wu1g.framework.util.CommonConstant;
+import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.service.utils.cmdprocessor.KrPanoUtil;
 import com.wu1g.vo.pano.PanoMap;
 import com.wu1g.vo.pano.PanoProj;
@@ -52,12 +51,9 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                 //判断数据是否存在
                 if (panoProjDao.isDataYN(bean) != 0) {
                     //数据存在
-                    panoProjDao.updateByPrimaryKeySelective(bean);
+                    panoProjDao.update(bean);
                 } else {
                     //新增
-                    if (ValidatorUtil.isEmpty(bean.getId())) {
-                        bean.setId(IdUtil.createUUID(32));
-                    }
                     panoProjDao.insert(bean);
                 }
 
@@ -115,7 +111,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     public List<PanoProj> findDataIsPage(PanoProj bean) {
         List<PanoProj> beans = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
+            PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
             beans = (List<PanoProj>) panoProjDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);
@@ -173,7 +169,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
 			 * 4.传入项目信息生成xml与html
 			 */
             Map context = new HashMap();
-            bean.setType("0");
+            bean.setType(0);
             PanoProj proj = findDataById(bean);
             if (proj == null) {
                 return;
@@ -190,12 +186,12 @@ public class PanoProjService extends BaseService implements IPanoProjService {
 
                     //--获取场景-跳转热点
                     panoSpots = new PanoSpots();
-                    panoSpots.setHtype("0");
+                    panoSpots.setHtype(0);
                     panoSpots.setProjId(scene.getProjId());
                     panoSpots.setSceneId(scene.getId());
                     scene.setHotSpots((List<PanoSpots>) panoSpotsDao.findDataIsList(panoSpots));
                     //--获取场景-装饰图片热点
-                    panoSpots.setHtype("1");
+                    panoSpots.setHtype(1);
                     scene.setImgSpots((List<PanoSpots>) panoSpotsDao.findDataIsList(panoSpots));
                 }
             }
@@ -236,7 +232,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
         }
     }
 
-    private String getBreakdownImg(String projId, String sceneSrc) {
+    private String getBreakdownImg(Long projId, String sceneSrc) {
         sceneSrc = sceneSrc.substring(sceneSrc.lastIndexOf("/") + 1, sceneSrc.indexOf("."));
         return "/upload/image/n4/" + projId + "/vtour/panos/" + sceneSrc + ".tiles/";
     }
@@ -264,15 +260,15 @@ public class PanoProjService extends BaseService implements IPanoProjService {
 
                         for (PanoScene scene : bean.getScenes()) {
                             //--修改场景初始角度
-                            panoSceneDao.updateByPrimaryKeySelective(scene);
+                            panoSceneDao.update(scene);
                             //--新增跳转热点
                             if (scene.getHotSpots() != null && scene.getHotSpots().size() > 0) {
                                 panoSpotsList.addAll(scene.getHotSpots());
                             }
                             //--新增图片热点
                             if (scene.getImgSpots() != null && scene.getImgSpots().size() > 0) {
-                                scene.getImgSpots().forEach(imgSpots->{
-                                    imgSpots.getUrl().replaceAll("/n1/","/n3/");
+                                scene.getImgSpots().forEach(imgSpots -> {
+                                    imgSpots.getUrl().replaceAll("/n1/", "/n3/");
                                 });
                                 panoSpotsList.addAll(scene.getImgSpots());
                             }
@@ -341,7 +337,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     public void makeVideo(PanoProj bean) {
         try {
             Map context = new HashMap();
-            bean.setType("1");
+            bean.setType(1);
             PanoProj proj = findDataById(bean);
             if (proj == null) {
                 return;

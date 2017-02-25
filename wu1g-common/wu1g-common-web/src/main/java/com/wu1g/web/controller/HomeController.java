@@ -10,10 +10,10 @@
  */
 package com.wu1g.web.controller;
 
-import com.wu1g.framework.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * <p>后台页面首页 action
@@ -35,7 +35,7 @@ public class HomeController extends BaseController {
     /**
      * <p>初始化
      */
-    @RequestMapping(value = "/index")
+    @RequestMapping(method={RequestMethod.GET},value = "/index")
     public String init() throws Exception {
         log.info("HomeController init");
         return "admin/index";
@@ -44,7 +44,7 @@ public class HomeController extends BaseController {
     /**
      * <p>首页
      */
-    @RequestMapping(value = "/home")
+    @RequestMapping(method={RequestMethod.GET},value = "/home")
     public String home() throws Exception {
         log.info("HomeController home");
         return "admin/home";

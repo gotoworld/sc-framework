@@ -12,32 +12,30 @@
 package com.wu1g.pano.web.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.wu1g.api.pano.IPanoCommentsService;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.web.controller.BaseController;
-import com.wu1g.api.pano.IPanoCommentsService;
 import com.wu1g.vo.pano.PanoComments;
+import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 /**
  * <p>全景_评论 ACTION类。
  */
 @Controller
-@RequestMapping(value = "/h")
+@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = "/h")
 @Slf4j
 public class PanoCommentsController extends BaseController {
 
     private static final long serialVersionUID = -893683902158611114L;
-    /**
-     * 全景_评论 业务处理
-     */
     @Autowired
     private IPanoCommentsService panoCommentsService;
 
@@ -51,7 +49,7 @@ public class PanoCommentsController extends BaseController {
      * <p>初始化处理。
      */
     @RequiresPermissions("panoComment:menu")
-    @RequestMapping(value = acPrefix + "init")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "init")
     public String init() {
         log.info("PanoCommentsController init.........");
         return init;
@@ -61,7 +59,7 @@ public class PanoCommentsController extends BaseController {
      * <p>信息列表 (未删除)。
      */
     @RequiresPermissions("panoComment:menu")
-    @RequestMapping(value = acPrefix + "list")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "list")
     public String list(PanoComments bean) {
         log.info("PanoCommentsController list.........");
         if (bean == null) {
@@ -80,14 +78,14 @@ public class PanoCommentsController extends BaseController {
      * <p>逻辑删除。
      */
     @RequiresPermissions("panoComment:del")
-    @RequestMapping(value = acPrefix + "del/{id}")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "全景评论信息")
-    public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
+    public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
         log.info("PanoCommentsController del.........");
         Response result = new Response();
         try {
             PanoComments bean = new PanoComments();
-            bean.setId(id);// id
+            bean.setId(id);
             result.message = panoCommentsService.deleteDataById(bean);
         } catch (Exception e) {
             result = Response.error(e.getMessage());

@@ -11,21 +11,20 @@
 package com.wu1g.service.org;
 
 import com.github.pagehelper.PageHelper;
+import com.wu1g.api.org.IOrgUserService;
 import com.wu1g.dao.auth.IAuthRoleDao;
 import com.wu1g.dao.auth.IAuthUserVsRoleDao;
-import com.wu1g.vo.auth.AuthRole;
-import com.wu1g.vo.auth.AuthUserVsRole;
+import com.wu1g.dao.org.IOrgDeptDao;
+import com.wu1g.dao.org.IOrgUserDao;
+import com.wu1g.dao.org.IOrgDeptVsUserDao;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.api.org.IOrgUserService;
-import com.wu1g.dao.org.IOrgDepartmentDao;
-import com.wu1g.dao.org.IOrgUserDao;
-import com.wu1g.dao.org.IOrgUserVsDepartmentDao;
-import com.wu1g.vo.org.OrgDepartment;
+import com.wu1g.vo.auth.AuthRole;
+import com.wu1g.vo.auth.AuthUserVsRole;
+import com.wu1g.vo.org.OrgDept;
+import com.wu1g.vo.org.OrgDeptVsUser;
 import com.wu1g.vo.org.OrgUser;
-import com.wu1g.vo.org.OrgUserVsDepartment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,9 +47,9 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     @Autowired
     private IAuthUserVsRoleDao authUserVsRoleDao;
     @Autowired
-    private IOrgDepartmentDao orgDepartmentDao;
+    private IOrgDeptDao orgDepartmentDao;
     @Autowired
-    private IOrgUserVsDepartmentDao orgUserVsDepartmentDao;
+    private IOrgDeptVsUserDao orgUserVsDepartmentDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(OrgUser bean) throws Exception {
@@ -60,9 +59,9 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 // 判断数据是否存在
                 if (orgUserDao.isDataYN(bean) != 0) {
                     // 数据存在
-                    orgUserDao.updateByPrimaryKeySelective(bean);
+                    orgUserDao.update(bean);
                     Map xdto = new HashMap();
-                    xdto.put("userId", bean.getId());
+                    xdto.put("UserId", bean.getId());
                     if (getAuth().isPermitted("orgUser:role.edit") && !"4d868ddfd70342b093e3013886e00ea9".equals(bean.getId())) {
                         // 1.根据用户id清空用户角色关联表
                         authUserVsRoleDao.deleteDataByUid(xdto);
@@ -73,21 +72,16 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     }
                 } else {
                     // 新增
-                    if (ValidatorUtil.isEmpty(bean.getId())) {
-                        bean.setId(IdUtil.createUUID(32));
-                    }
                     orgUserDao.insert(bean);
                 }
                 if (getAuth().isPermitted("orgUser:role.edit")) {
                     // 2.新增用户角色关联信息
                     if (bean.getRoleIdArray() != null) {
                         List<AuthUserVsRole> xdtos = new ArrayList<AuthUserVsRole>();
-                        for (String roleId : bean.getRoleIdArray()) {
+                        for (Long roleId : bean.getRoleIdArray()) {
                             AuthUserVsRole authUserVsRoleDto = new AuthUserVsRole();
                             authUserVsRoleDto.setUserId(bean.getId());
                             authUserVsRoleDto.setRoleId(roleId);
-                            authUserVsRoleDto.setCreateId(bean.getCreateId());
-                            authUserVsRoleDto.setCreateIp(bean.getCreateIp());
                             xdtos.add(authUserVsRoleDto);
                         }
                         authUserVsRoleDao.insertBatch(xdtos);
@@ -96,14 +90,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 if (getAuth().isPermitted("orgUser:dept.edit")) {
                     // 2.新增用户部门关联信息
                     if (bean.getDeptIdArray() != null) {
-                        List<OrgUserVsDepartment> xdtos = new ArrayList<OrgUserVsDepartment>();
-                        for (String deptId : bean.getDeptIdArray()) {
-                            OrgUserVsDepartment orgUserVsDepartmentDto = new OrgUserVsDepartment();
-                            orgUserVsDepartmentDto.setUserid(bean.getId());
-                            orgUserVsDepartmentDto.setDepartmentid(deptId);
-                            orgUserVsDepartmentDto.setCreateId(bean.getCreateId());
-                            orgUserVsDepartmentDto.setCreateIp(bean.getCreateIp());
-                            xdtos.add(orgUserVsDepartmentDto);
+                        List<OrgDeptVsUser> xdtos = new ArrayList<OrgDeptVsUser>();
+                        for (Long deptId : bean.getDeptIdArray()) {
+                            OrgDeptVsUser orgDeptVsUserDto = new OrgDeptVsUser();
+                            orgDeptVsUserDto.setUserId(bean.getId());
+                            orgDeptVsUserDto.setDeptId(deptId);
+                            xdtos.add(orgDeptVsUserDto);
                         }
                         orgUserVsDepartmentDao.insertBatch(xdtos);
                     }
@@ -125,7 +117,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 // 判断数据是否存在
                 if (orgUserDao.isDataYN(bean) != 0) {
                     // 数据存在
-                    orgUserDao.updateByPrimaryKeySelective(bean);
+                    orgUserDao.update(bean);
                 }
             } catch (Exception e) {
                 msg = "信息保存失败,数据库处理错误!";
@@ -167,7 +159,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     public List<OrgUser> findDataIsPage(OrgUser bean) {
         List<OrgUser> beans = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
+            PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
             beans = (List<OrgUser>) orgUserDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);
@@ -226,8 +218,8 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return beans;
     }
 
-    public List<OrgDepartment> findDeptDataIsList(OrgUser bean) {
-        List<OrgDepartment> beans = null;
+    public List<OrgDept> findDeptDataIsList(OrgUser bean) {
+        List<OrgDept> beans = null;
         try {
             if (bean != null) {
                 Map dto = new HashMap();
@@ -256,7 +248,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         List<OrgUser> beans = null;
         try {
             if (bean != null) {
-                PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
+                PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
                 beans = orgUserDao.getUserIsPage(bean);
             }
         } catch (Exception e) {

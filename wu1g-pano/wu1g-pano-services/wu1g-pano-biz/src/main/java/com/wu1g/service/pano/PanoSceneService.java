@@ -15,8 +15,6 @@ package com.wu1g.service.pano;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
-import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.api.pano.IPanoSceneService;
 import com.wu1g.dao.pano.IPanoSceneDao;
 import com.wu1g.vo.pano.PanoScene;
@@ -44,12 +42,9 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 				//判断数据是否存在	
 				if(panoSceneDao.isDataYN(bean)!=0){	
 					//数据存在	
-					panoSceneDao.updateByPrimaryKeySelective(bean);	
+					panoSceneDao.update(bean);
 				}else{
 					//新增	
-					if(ValidatorUtil.isEmpty(bean.getId())){
-						bean.setId(IdUtil.createUUID(32));
-					}
 					panoSceneDao.insert(bean);
 				}
 			} catch (Exception e) {	

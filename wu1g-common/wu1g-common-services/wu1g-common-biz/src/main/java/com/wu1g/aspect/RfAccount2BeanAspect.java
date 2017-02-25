@@ -36,24 +36,24 @@ public class RfAccount2BeanAspect {
     public void doBefore(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //读取session中的用户
-        OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
         //请求的IP
         String ip = IpUtils.getIpAddr(request);
         try {
             //*========控制台输出=========*//
             log.debug("=====前置通知开始=====");
             log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-            log.debug("请求人:" + user.getName());
+            log.debug("请求人:" + orgUser.getName());
             log.debug("请求IP:" + ip);
             Object[] objArr=joinPoint.getArgs();
             if(objArr!=null){
                 for(Object obj:objArr){
                     if(obj instanceof IVO){
 //                      System.out.printf(JSON.toJSONString(obj));
-                        ReflectUtil.setValueByFieldName2(obj,"createId",user.getId());//创建者id
-                        ReflectUtil.setValueByFieldName2(obj,"createIp",ip);//创建者ip
-                        ReflectUtil.setValueByFieldName2(obj,"updateId",user.getId());//修改者id
-                        ReflectUtil.setValueByFieldName2(obj,"updateIp",ip);//修改者ip
+                        ReflectUtil.setValueByFieldName2(obj,"createId", orgUser.getId());//创建者id
+//                        ReflectUtil.setValueByFieldName2(obj,"createIp",ip);//创建者ip
+//                        ReflectUtil.setValueByFieldName2(obj,"updateId",orgUser.getId());//修改者id
+//                        ReflectUtil.setValueByFieldName2(obj,"updateIp",ip);//修改者ip
                         break;
                     }
                 }

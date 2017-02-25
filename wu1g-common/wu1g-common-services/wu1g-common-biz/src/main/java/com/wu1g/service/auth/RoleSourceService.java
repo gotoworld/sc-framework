@@ -71,7 +71,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     public OrgUser findUserByLoginName(String loginName) {
         try {
             Map dto = new HashMap();
-            dto.put("userid", loginName);
+            dto.put("accid", loginName);
             return orgUserDao.findUserByLoginName(dto);
         } catch (Exception e) {
             log.error("用户信息>根据用户登录名,数据库处理异常!", e);

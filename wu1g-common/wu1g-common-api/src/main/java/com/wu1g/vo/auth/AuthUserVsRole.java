@@ -9,11 +9,14 @@
  *	
  */
 package com.wu1g.vo.auth;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wu1g.framework.vo.BaseVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * <p>权限_用户vs角色  BEAN类。
@@ -22,17 +25,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AuthUserVsRole extends BaseVO{
+public class AuthUserVsRole extends BaseVO {
 
-	private static final long serialVersionUID = -746905040521582988L;
-	/**用户id */
-	private String userId;
-	/**角色id */
-	private String roleId;
-	/**创建时间  默认值(2000-01-01 00:00:00) */
-	private String dateCreated;
-	/**建立者ID */
-	private String createId;
-	/**建立者IP */
-	private String createIp;
+    private static final long serialVersionUID = -746905040521582988L;
+    /**
+     * 用户id
+     */
+    private Long UserId;
+    /**
+     * 角色id
+     */
+    private Long roleId;
+    /**
+     * 创建时间
+     */
+    private Date dateCreated;
 }

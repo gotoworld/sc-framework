@@ -1,5 +1,5 @@
 /*	
- * 组织架构_用户vs部门  BEAN类	
+ * 权限_角色vs权限  BEAN类	
  *		
  * VERSION      DATE          BY              REASON		
  * -------- ----------- --------------- ------------------------------------------	
@@ -8,33 +8,36 @@
  * Copyright 2015 System. - All Rights Reserved.
  *	
  */
-package com.wu1g.vo.org;
+package com.wu1g.vo.auth;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wu1g.framework.vo.BaseVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
- * <p>组织架构_用户vs部门  BEAN类。
+ * <p>权限_角色vs类目  BEAN类。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrgUserVsDepartment extends BaseVO{
+public class AuthRoleVsCategory extends BaseVO {
 
-	private static final long serialVersionUID = -970983598656672964L;
-	/**用户id */
-	private String userid;
-	/**部门id */
-	private String departmentid;
-	/**版本号  默认值(0) */
-	private String version;
-	/**创建时间  默认值(2000-01-01 00:00:00) */
-	private String dateCreated;
-	/**建立者ID */
-	private String createId;
-	/**建立者IP */
-	private String createIp;
+    private static final long serialVersionUID = -345188437933742640L;
+    /**
+     * 角色id
+     */
+    private Long roleId;
+    /**
+     * 类目id
+     */
+    private Long categoryId;
+    /**
+     * 创建时间
+     */
+    private Date dateCreated;
 }

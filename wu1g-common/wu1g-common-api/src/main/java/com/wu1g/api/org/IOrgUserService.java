@@ -12,7 +12,7 @@ package com.wu1g.api.org;
 
 
 import com.wu1g.vo.auth.AuthRole;
-import com.wu1g.vo.org.OrgDepartment;
+import com.wu1g.vo.org.OrgDept;
 import com.wu1g.vo.org.OrgUser;
 
 import java.util.List;
@@ -70,17 +70,17 @@ public interface IOrgUserService {
     /**
      * <p>获取用户所在部门集合。
      */
-    public List<OrgDepartment> findDeptDataIsList(OrgUser bean);
+    public List<OrgDept> findDeptDataIsList(OrgUser bean);
 
     /**
      * <p>某一种角色所有用户。
      */
-    public List<OrgUser> findUserList(OrgUser userBean);
+    public List<OrgUser> findUserList(OrgUser orgUserBean);
 
     /**
      * <p>某一种角色所有用户。
      */
-    public List<OrgUser> findUserIsPage(OrgUser userBean);
+    public List<OrgUser> findUserIsPage(OrgUser orgUserBean);
 
     /**
      * <p>判断用户id是否存在

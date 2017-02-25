@@ -3,22 +3,22 @@
 <mapper namespace="com.wu1g.dao.pano.IPanoSceneDao">
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
-		t1.id as "id"
-		,t1.proj_id as "projId"
-		,t1.scene_title as "sceneTitle"
-		,t1.scene_src as "sceneSrc"
-		,t1.hlookat as "hlookat"
-		,t1.vlookat as "vlookat"
-		,t1.sound_src as "soundSrc"
-		,t1.video_src as "videoSrc"
-		,t1.version as "version"
-		,t1.state as "state"
-		,t1.memo as "memo"
-		,t1.order_no as "orderNo"
-		,t1.keyword as "keyword"
-		,t1.del_flag as "delFlag"
-		,t1.date_created as "dateCreated"
-		,t1.date_updated as "dateUpdated"
+		 t1.id as  "id"
+        ,t1.proj_id as  "projId"
+        ,t1.scene_title as  "sceneTitle"
+        ,t1.scene_src as  "sceneSrc"
+        ,t1.hlookat as  "hlookat"
+        ,t1.vlookat as  "vlookat"
+        ,t1.ext_cfg_json as  "extCfgJson"
+        ,t1.version as  "version"
+        ,t1.state as  "state"
+        ,t1.memo as  "memo"
+        ,t1.order_no as  "orderNo"
+        ,t1.keyword as  "keyword"
+        ,t1.del_flag as  "delFlag"
+        ,t1.create_id as  "createId"
+        ,t1.date_created as  "dateCreated"
+        ,t1.date_updated as  "dateUpdated"
 	</sql>
 
     <!-- 根据主键获取信息详情 -->
@@ -41,78 +41,78 @@
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="panoScene">
 		insert into pano_scene(
-		id
-		,proj_id
-		,scene_title
-		,scene_src
-		,hlookat
-		,vlookat
-		,sound_src
-		,video_src
-		,version
-		,state
-		,memo
-		,order_no
-		,keyword
-		,del_flag
-		,date_created
-		,date_updated
+		     id
+            ,proj_id
+            ,scene_title
+            ,scene_src
+            ,hlookat
+            ,vlookat
+            ,ext_cfg_json
+            ,version
+            ,state
+            ,memo
+            ,order_no
+            ,keyword
+            ,del_flag
+            ,create_id
+            ,date_created
+            ,date_updated
 		) values (
-		#{id}
-		,#{projId}
-		,#{sceneTitle}
-		,#{sceneSrc}
-		,#{hlookat}
-		,#{vlookat}
-		,#{soundSrc}
-		,#{videoSrc}
-		,0
-		,#{state}
-		,#{memo}
-		,#{orderNo}
-		,#{keyword}
-		,0
-		,now()
-		,now()
+		     #{id}
+            ,#{projId}
+            ,#{sceneTitle}
+            ,#{sceneSrc}
+            ,#{hlookat}
+            ,#{vlookat}
+            ,#{extCfgJson}
+            ,0
+            ,#{state}
+            ,#{memo}
+            ,0
+            ,#{keyword}
+            ,0
+            ,#{createId}
+            ,now()
+            ,now()
 		)
 	</insert>
 
     <!-- 新增 批量数据 -->
     <insert id="insertBatch">
         insert into pano_scene(
-        id
-        ,proj_id
-        ,scene_title
-        ,scene_src
-        ,hlookat
-        ,vlookat
-        ,sound_src
-        ,video_src
-        ,version
-        ,state
-        ,memo
-        ,order_no
-        ,keyword
-        ,del_flag
-        ,date_created
-        ,date_updated
+            ,id
+            ,proj_id
+            ,scene_title
+            ,scene_src
+            ,hlookat
+            ,vlookat
+            ,ext_cfg_json
+            ,version
+            ,state
+            ,memo
+            ,order_no
+            ,keyword
+            ,del_flag
+            ,create_id
+            ,date_created
+            ,date_updated
         ) values
         <foreach collection="list" item="t" separator=",">
             (
-            #{t.id}
+             #{t.id}
             ,#{t.projId}
             ,#{t.sceneTitle}
             ,#{t.sceneSrc}
             ,#{t.hlookat}
             ,#{t.vlookat}
-            ,#{t.soundSrc}
-            ,#{t.videoSrc}
+            ,#{t.extCfgJson}
             ,0
             ,#{t.state}
             ,#{t.memo}
-            ,#{t.orderNo}
+            ,0
             ,#{t.keyword}
-            ,'0'
+            ,0
+            ,#{t.createId}
             ,now()
             ,now()
             )
@@ -120,22 +120,21 @@
     </insert>
 
     <!-- 数据更新 -->
-    <update id="updateByPrimaryKeySelective" parameterType="panoScene">
+    <update id="update" parameterType="panoScene">
         update pano_scene set
         version=version+1
         ,date_updated=now()
-        ,sound_src=#{soundSrc}
-        ,video_src=#{videoSrc}
-        <if test="projId!= null">,proj_id=#{projId}</if>
-        <if test="sceneTitle!= null">,scene_title=#{sceneTitle}</if>
-        <if test="sceneSrc!= null">,scene_src=#{sceneSrc}</if>
-        <if test="hlookat!= null">,hlookat=#{hlookat}</if>
-        <if test="vlookat!= null">,vlookat=#{vlookat}</if>
-        <if test="state!= null">,state=#{state}</if>
-        <if test="memo!= null">,memo=#{memo}</if>
-        <if test="orderNo!= null">,order_no=#{orderNo}</if>
-        <if test="keyword!= null">,keyword=#{keyword}</if>
-        <if test="delFlag!= null">,del_flag=#{delFlag}</if>
+        <if test="projId!= null" >,proj_id=#{projId}</if>
+        <if test="sceneTitle!= null" >,scene_title=#{sceneTitle}</if>
+        <if test="sceneSrc!= null" >,scene_src=#{sceneSrc}</if>
+        <if test="hlookat!= null" >,hlookat=#{hlookat}</if>
+        <if test="vlookat!= null" >,vlookat=#{vlookat}</if>
+        <if test="extCfgJson!= null" >,ext_cfg_json=#{extCfgJson}</if>
+        <if test="version!= null" >,version=#{version}</if>
+        <if test="state!= null" >,state=#{state}</if>
+        <if test="memo!= null" >,memo=#{memo}</if>
+        <if test="orderNo!= null" >,order_no=#{orderNo}</if>
+        <if test="keyword!= null" >,keyword=#{keyword}</if>
         where
         id= #{id}
     </update>

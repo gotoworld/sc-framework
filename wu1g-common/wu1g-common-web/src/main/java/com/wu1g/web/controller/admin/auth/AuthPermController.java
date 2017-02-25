@@ -11,13 +11,13 @@
 package com.wu1g.web.controller.admin.auth;
 
 import com.wu1g.api.auth.IAuthPermService;
-import com.wu1g.vo.auth.AuthPerm;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.framework.web.controller.BaseController;
+import com.wu1g.vo.auth.AuthPerm;
+import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -28,19 +28,13 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.List;
 
 /**
  * <p>权限_权限信息  ACTION类。
- * <ol>[功能概要] 
- * <li>初始化。 
- * <li>信息列表(未删除)。 
- * <li>编辑页面(页面)(新增or修改)。 
- * <li>信息保存(功能)(新增or修改)。 
- *</ol> 
- * @author easycode
  */
 @Controller
 @RequestMapping(value = "/h")
@@ -58,14 +52,9 @@ public class AuthPermController extends BaseController {
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
 	 * <p> 初始化处理。
-	 * <ol>
-	 * [功能概要] 
-	 * <li>初始化处理。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authPerm:menu")
-	@RequestMapping(value=acPrefix+"init")
+	@RequestMapping(method={RequestMethod.GET},value=acPrefix+"init")
 	public String init() {
 		log.info("AuthPermController init.........");
 		//信息列表
@@ -75,14 +64,9 @@ public class AuthPermController extends BaseController {
 	}
 	/**
 	 * <p> 编辑。
-	 * <ol>
-	 * [功能概要] 
-	 * <li>编辑。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authPerm:edit")
-	@RequestMapping(value = acPrefix+"edit/{id}")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix+"edit/{id}")
 	public String edit( AuthPerm bean,@PathVariable("id") String id) {
 		log.info("AuthPermController edit.........");
 		if(ValidatorUtil.notEmpty(id)){
@@ -90,10 +74,10 @@ public class AuthPermController extends BaseController {
 			bean1.setId(id);//权限id
 			bean=authPermService.findDataById(bean1);
 		}
-		if(bean==null||"add".equals(id)){
+		if(bean==null||"0".equals(id)){
 			bean=new AuthPerm();
 			bean.setId(IdUtil.createUUID(22));//权限id
-			bean.setNewFlag("1");
+			bean.setNewFlag(1);
 		}
 		request.setAttribute( "bean", bean );
 		//信息列表
@@ -102,15 +86,10 @@ public class AuthPermController extends BaseController {
 		return edit;
 	}
 	/**
-	 * <p> 删除。
-	 * <ol>
-	 * [功能概要] 
 	 * <li>逻辑删除。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions("authPerm:del")
-	@RequestMapping(value = acPrefix+"del/{id}")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix+"del/{id}")
 	@ALogOperation(type="删除",desc="权限信息")
 	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
 		log.info("AuthPermController del.........");
@@ -128,15 +107,9 @@ public class AuthPermController extends BaseController {
 	}
 	/**
 	 * <p> 信息保存
-	 * <ol>
-	 * [功能概要] 
-	 * <li>新增。
-	 * <li>修改。
-	 * </ol>
-	 * @return 转发字符串
 	 */
 	@RequiresPermissions(value={"authPerm:edit","authPerm:add"},logical=Logical.OR)
-	@RequestMapping(value=acPrefix+"save")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
 	public String save(@Validated  AuthPerm bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {

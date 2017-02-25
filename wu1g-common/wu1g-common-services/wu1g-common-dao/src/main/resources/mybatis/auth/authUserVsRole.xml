@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wu1g.dao.auth.IAuthUserVsRoleDao">
-    <!-- 字段列表 -->
-    <sql id="Base_Column_List">
-		t1.user_id as "userId",
-		t1.role_id as "roleId",
-		t1.date_created as "dateCreated"
-	</sql>
     <!-- 新增 批量数据 -->
     <insert id="insertBatch">
         insert into auth_user_vs_role(

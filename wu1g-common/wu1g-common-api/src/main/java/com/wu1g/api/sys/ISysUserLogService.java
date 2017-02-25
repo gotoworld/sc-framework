@@ -21,15 +21,8 @@ public interface ISysUserLogService {
 
     /**
      * 管理员操作日志记录。
-     *
-     * @param type   操作类型
-     * @param memo   具体描述
-     * @param userId 用户id
-     * @param ip     用户ip
-     * @return
      */
-    public void info(String type, String memo, String userId, String ip);
-
+    public void info(String type, String memo,String detailInfo, Long userId, String userName, String ip);
     /**
      * <p>信息列表 分页。
      */

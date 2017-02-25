@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class BaseVO implements IVO,IEntity {
     String token;
     /**新增标记0否1是*/
-    String newFlag="0";
+    Integer newFlag=0;
     /** 开始时间 */
     String dateBegin;
     /** 结束时间 */
@@ -24,6 +24,7 @@ public class BaseVO implements IVO,IEntity {
     Integer pageNum;
     /** 每页显示条数 */
     Integer pageSize;
+
     String str;
     public String getToken(){
         if(token==null){

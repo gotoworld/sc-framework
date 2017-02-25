@@ -33,7 +33,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/krpano?serverTimezone=UTC&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
 #    password: AES:se0In3/TNQNjnGGt8Ed43g==
-    password: admin
+    password: root
 #    # 下面为连接池的补充设置，应用到上面所有数据源中
 #    # 初始化大小，最小，最大
 #    initialSize: 5
@@ -61,8 +61,9 @@ spring:
 
 logging:
   level:
-    cn.com.softvan: DEBUG
-    cn.com.softvan.dao: TRACE
+    root: info
+    com.wu1g: DEBUG
+    com.wu1g.dao: TRACE
 mybatis:
   type-aliases-package: com.wu1g.vo
   mapper-locations: classpath*:mybatis/**/*.xml

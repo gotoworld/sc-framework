@@ -1,16 +1,4 @@
-/*	
- * 全景_项目 BEAN类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ---------------------------	
- * 1.00     2016.10.02      easycode         程序.发布		
- * -------- ----------- --------------- ---------------------------	
- * Copyright 2016 pano System. - All Rights Reserved.
- *	
- */
-
 package com.wu1g.vo.pano;
-
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wu1g.framework.vo.BaseVO;
@@ -25,8 +13,6 @@ import java.util.List;
 
 /**
  * <p>全景_项目  BEAN类。
- *
- * @author easycode
  */
 @Data
 @NoArgsConstructor
@@ -38,20 +24,15 @@ public class PanoProj extends BaseVO {
     /**
      * id
      */
-    @Size(max = 32, message = "id最大32字符")
-    private String id;
+    private Long id;
     /**
      * 类目id
      */
-    @NotNull(message = "categoryId不能为空")
-    @Size(max = 22, message = "categoryId最大22字符")
-    private String categoryId;
+    private Long categoryId;
     /**
      * 项目类型0图片1视频
      */
-    @NotNull(message = "type不能为空")
-    @Size(max = 1, message = "type最大1字符")
-    private String type;
+    private Integer type;
     /**
      * 名称
      */
@@ -66,18 +47,11 @@ public class PanoProj extends BaseVO {
     /**
      * 开放评论 0否1是
      */
-    @Size(max = 1, message = "isComments最大1字符")
-    private String isComments;
+    private Integer isComments;
     /**
      * 小行星开场 0否1是
      */
-    @Size(max = 1, message = "isPlanetoid最大1字符")
-    private String isPlanetoid;
-    /**
-     * 是否补地 0否1是
-     */
-    @Size(max = 1, message = "isMending最大1字符")
-    private String isMending;
+    private Integer isPlanetoid;
     /**
      * 导览图
      */
@@ -91,41 +65,40 @@ public class PanoProj extends BaseVO {
     /**
      * 全景生成标记0否1是
      */
-    @Size(max = 1, message = "isSeccuss最大1字符")
-    private String isSeccuss;
+    private Integer isSeccuss;
     /**
      * 点赞数量
      */
-    private Integer thumbsUNum;
+    private Integer thumbsUpNum;
     /**
      * 浏览量
      */
     private Integer pvNum;
     /**
-     * XMlDATA
-     */
-    @Size(max = 65535, message = "xmlData最大65535字符")
-    private String xmlData;
-    /**
      * logo图片
      */
-    @Size(max = 255, message = "logoPic最大255字符")
-    private String logoPic;
+    @Size(max = 255, message = "logoPicUrl最大255字符")
+    private String logoPicUrl;
     /**
      * logo链接
      */
-    @Size(max = 255, message = "logoUrl最大255字符")
-    private String logoUrl;
+    @Size(max = 255, message = "logoWebUrl最大255字符")
+    private String logoWebUrl;
     /**
-     * 下雪类型
+     * 访问密码
      */
-    @Size(max = 50, message = "snowType最大50字符")
-    private String snowType;
+    @Size(max = 6, message = "pwd最大6字符")
+    private String pwd;
     /**
-     * 显示fps0否1是
+     * 漫游编辑json
      */
-    @Size(max = 1, message = "isFps最大1字符")
-    private String isFps;
+    @Size(max = 65535, message = "tourEditJson最大65535字符")
+    private String tourEditJson;
+    /**
+     * 扩展配置json
+     */
+    @Size(max = 4000, message = "extCfgJson最大4000字符")
+    private String extCfgJson;
     /**
      * 版本号
      */
@@ -133,8 +106,7 @@ public class PanoProj extends BaseVO {
     /**
      * 状态
      */
-    @Size(max = 1, message = "state最大1字符")
-    private String state;
+    private Integer state;
     /**
      * 备注
      */
@@ -150,38 +122,21 @@ public class PanoProj extends BaseVO {
     @Size(max = 255, message = "keyword最大255字符")
     private String keyword;
     /**
-     * 是否删除(0否1是)
+     * 删除标记(0正常1删除)
      */
-    private String delFlag;
+    private Integer delFlag;
+    /**
+     * 建立者ID
+     */
+    private Long createId;
     /**
      * 创建时间
      */
     private Date dateCreated;
     /**
-     * 建立者ID
-     */
-    @Size(max = 64, message = "createId最大64字符")
-    private String createId;
-    /**
-     * 建立者IP
-     */
-    @Size(max = 64, message = "createIp最大64字符")
-    private String createIp;
-    /**
-     * 修改时间
+     * 更新时间
      */
     private Date dateUpdated;
-    /**
-     * 修改者ID
-     */
-    @Size(max = 64, message = "updateId最大64字符")
-    private String updateId;
-    /**
-     * 修改者IP
-     */
-    @Size(max = 64, message = "updateIp最大64字符")
-    private String updateIp;
-
     /**
      * 场景集合
      */
@@ -194,6 +149,4 @@ public class PanoProj extends BaseVO {
      * 生成全景文件执行标记
      */
     private boolean makePanoFlag;
-
-   private Integer thumbsUpNum;
 }

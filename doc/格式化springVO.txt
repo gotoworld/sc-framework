@@ -30,7 +30,7 @@ CONCAT(
 (
 CASE 
 WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN 'Date'
--- when (t.DATA_TYPE in ('tinyint') or t.code in ('delFlag'))then 'Byte'
+when (t.DATA_TYPE in ('tinyint') or t.code in ('delFlag'))then 'Integer'
 when t.DATA_TYPE in ('bigint') then 'Long'
 when t.DATA_TYPE in ('smallint','mediumint','int') then 'Integer'
 when t.DATA_TYPE in ('float','double') then 'Double'
@@ -84,7 +84,7 @@ from (
 	,t.COLUMN_COMMENT as comment,
   t.DATA_TYPE as DATA_TYPE, t.IS_NULLABLE as isNull,t.CHARACTER_MAXIMUM_LENGTH as len
 	from information_schema.`COLUMNS` t 
-	where t.TABLE_SCHEMA='test' and t.TABLE_NAME='test'
+	where t.TABLE_SCHEMA='krpano' and t.TABLE_NAME='test'
 ) t
 
 )t

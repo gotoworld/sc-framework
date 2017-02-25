@@ -19,6 +19,8 @@
 package com.wu1g.web.controller;
 
 import com.wu1g.api.auth.IRoleSourceService;
+import com.wu1g.framework.util.IpUtils;
+import com.wu1g.framework.util.ReflectUtil;
 import com.wu1g.vo.auth.AuthPerm;
 import com.wu1g.vo.auth.AuthRole;
 import com.wu1g.framework.util.CommonConstant;
@@ -30,8 +32,15 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,19 +67,19 @@ public class ShiroRealm extends AuthorizingRealm {
             return null;
         }
         //1.根据用户登录名获取用户信息
-//		OrgUser userBean=roleSourceService.findUserByLoginName(username);
-        OrgUser userBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-        if (userBean == null) {
+//		OrgUser orgUserBean=roleSourceService.findUserByLoginName(username);
+        OrgUser orgUserBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        if (orgUserBean == null) {
             return null;
         }
 //		//存放用户信息  信息传递.
 //		Subject subject = SecurityUtils.getSubject();
-//		subject.getSession().setAttribute(CommonConstant.SESSION_KEY_USER,userBean);
+//		subject.getSession().setAttribute(CommonConstant.SESSION_KEY_USER,orgUserBean);
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         Map dto = new HashMap();
-        dto.put("uid", userBean.getId());
+        dto.put("uid", orgUserBean.getId());
         if (roleSourceService.isSuperAdmin(dto) > 0) {
             //超级管理员标记
             dto.put("iissuperman", 1);
@@ -141,12 +150,12 @@ public class ShiroRealm extends AuthorizingRealm {
 //		}
         //几种用法 1.缓存所有用户信息 2.使用数据库
         //2.获取根据用户登录名获取用户信息
-        OrgUser userBean = roleSourceService.findUserByLoginName(username);
-        if (userBean != null) {
+        OrgUser orgUserBean = roleSourceService.findUserByLoginName(username);
+        if (orgUserBean != null) {
             //缓存用户信息 减少一步查询数据库
-            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, userBean);
+            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUserBean);
             //创建AuthenticationInfo对象并返回
-            return new SimpleAuthenticationInfo(username, userBean.getPwd(), getName());
+            return new SimpleAuthenticationInfo(username, orgUserBean.getPwd(), getName());
         }
         return null;
     }

@@ -11,7 +11,7 @@ import java.util.Map;
  * 组织架构_用户vs部门 数据库处理接口类。
  */
 @Mapper
-public interface IOrgUserVsDepartmentDao extends IBaseDao {
+public interface IOrgDeptVsUserDao extends IBaseDao {
     /**
      * 根据用户id清空用户关联部门信息
      */

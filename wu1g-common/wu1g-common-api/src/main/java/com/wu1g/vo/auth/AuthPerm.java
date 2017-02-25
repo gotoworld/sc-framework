@@ -34,24 +34,28 @@ public class AuthPerm extends BaseVO {
     /**
      * 权限id
      */
-    @Size(max = 22, message = "id最大22字符")
+    @Size(max = 32, message = "id最大32字符")
     private String id;
     /**
      * 权限名称
      */
     @NotNull(message = "name不能为空")
-    @Size(min=2,max = 50, message = "name最大50字符")
+    @Size(max = 50, message = "name最大50字符")
     private String name;
     /**
      * 权限匹配符
      */
     @NotNull(message = "matchStr不能为空")
-    @Size(min=2,max = 50, message = "matchStr最大50字符")
+    @Size(max = 50, message = "matchStr最大50字符")
     private String matchStr;
+    /**
+     * 父级ID
+     */
+    @Size(max = 32, message = "parentId最大32字符")
+    private String parentId;
     /**
      * 备注
      */
-    @NotNull(message = "memo不能为空")
     @Size(max = 255, message = "memo最大255字符")
     private String memo;
     /**
@@ -70,7 +74,7 @@ public class AuthPerm extends BaseVO {
     /**
      * 是否删除
      */
-    private String delFlag;
+    private Integer delFlag;
     /**
      * 创建时间
      */
@@ -80,12 +84,8 @@ public class AuthPerm extends BaseVO {
      */
     private Date dateUpdated;
     /**
-     * 父级ID
-     */
-    @Size(max = 22, message = "parentId最大22字符")
-    private String parentId;
-    /**
      * bean类 集合
      */
     List<AuthPerm> beans;
+
 }

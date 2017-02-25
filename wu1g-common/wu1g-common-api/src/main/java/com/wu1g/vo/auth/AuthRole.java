@@ -34,8 +34,7 @@ public class AuthRole extends BaseVO {
     /**
      * 角色ID
      */
-    @Size(max = 22, message = "id最大22字符")
-    private String id;
+    private Long id;
     /**
      * 角色名称
      */
@@ -45,8 +44,7 @@ public class AuthRole extends BaseVO {
     /**
      * 超级管理员0否1是
      */
-    @Size(max = 1, message = "isSuper最大1字符")
-    private String isSuper;
+    private Integer isSuper;
     /**
      * 备注
      */
@@ -68,35 +66,15 @@ public class AuthRole extends BaseVO {
     /**
      * 是否删除
      */
-    private String delFlag;
+    private Integer delFlag;
     /**
      * 创建时间
      */
     private Date dateCreated;
     /**
-     * 建立者ID
-     */
-    @Size(max = 50, message = "createId最大50字符")
-    private String createId;
-    /**
-     * 建立者IP
-     */
-    @Size(max = 50, message = "createIp最大50字符")
-    private String createIp;
-    /**
-     * 修改时间
+     * 更新时间
      */
     private Date dateUpdated;
-    /**
-     * 修改者ID
-     */
-    @Size(max = 50, message = "updateId最大50字符")
-    private String updateId;
-    /**
-     * 修改者IP
-     */
-    @Size(max = 50, message = "updateIp最大50字符")
-    private String updateIp;
     /**
      * 权限id集合
      */

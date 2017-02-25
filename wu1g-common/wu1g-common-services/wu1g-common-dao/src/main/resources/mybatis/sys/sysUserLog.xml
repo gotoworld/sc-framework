@@ -1,58 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wu1g.sys.dao.ISysUserLogDao">
+<mapper namespace="com.wu1g.dao.sys.ISysUserLogDao">
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
-		t1.id as "id",
-		t1.type as "type",
-		t1.description as "description",
-		t1.date_created as "dateCreated",
-		t1.create_id as "createId",
-		t1.create_ip as "createIp"
+		 t1.id as  "id"
+        ,t1.type as  "type"
+        ,t1.memo as  "memo"
+        ,t1.date_created as  "dateCreated"
+        ,t1.create_id as  "createId"
+        ,t1.create_ip as  "createIp"
 	</sql>
     <!-- 根据主键获取信息详情 -->
     <select id="selectByPrimaryKey" resultType="sysUserLog" parameterType="sysUserLog">
         select
         <include refid="Base_Column_List"/>
-        from t_sys_user_log t1
+        from sys_user_log t1
         where t1.id = #{id}
     </select>
     <!-- 根据主键物理删除信息 -->
     <delete id="deleteByPrimaryKey" parameterType="sysUserLog">
 		delete
-		from t_sys_user_log
+		from sys_user_log
 		where  id = #{id}
 	</delete>
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="sysUserLog">
-		insert into t_sys_user_log(
-		id,
+    <insert id="insert" parameterType="sysUserLog" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_user_log(
 		type,
-		description,
+		memo,
+		detail_info,
 		date_created,
 		create_id,
+		create_name,
 		create_ip
 		) values (
-		#{id},
 		#{type},
-		#{description},
+		#{memo},
+		#{detailInfo},
 		now(),
 		#{createId},
+		#{createName},
 		#{createIp}
 		)
 	</insert>
-    <!-- 数据更新 -->
-    <update id="updateByPrimaryKeySelective" parameterType="sysUserLog">
-        update t_sys_user_log set
-        <if test="type!= null">,type=#{type}</if>
-        <if test="description!= null">,description=#{description}</if>
-        where id = #{id}
-    </update>
-
     <!--列表通用条件-->
     <sql id="list_where_sql">
-        <if test="description!=null and description!=''">
-            and t1.description like CONCAT('%',#{description},'%')
+        <if test="memo!=null and memo!=''">
+            and t1.memo like CONCAT('%',#{memo},'%')
         </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
@@ -65,7 +59,7 @@
     <select id="findDataIsPage" parameterType="sysUserLog" resultType="sysUserLog">
         select
         <include refid="Base_Column_List"/>
-        from t_sys_user_log t1
+        from sys_user_log t1
         where 1=1
         <include refid="list_where_sql"/>
         order by t1.date_created desc
@@ -74,19 +68,9 @@
     <select id="findDataIsList" parameterType="sysUserLog" resultType="sysUserLog">
         select
         <include refid="Base_Column_List"/>
-        from t_sys_user_log t1
+        from sys_user_log t1
         where 1=1
         <include refid="list_where_sql"/>
         order by t1.date_created desc
     </select>
-    <!--&lt;!&ndash; 逻辑删除 &ndash;&gt;-->
-    <!--<update id="deleteById" parameterType="sysUserLog" >-->
-    <!--update t_sys_user_log set-->
-    <!--where  id = #{id}-->
-    <!--</update>-->
-    <!--&lt;!&ndash; 恢复逻辑删除 &ndash;&gt;-->
-    <!--<update id="recoveryDataById" parameterType="sysUserLog" >-->
-    <!--update t_sys_user_log set-->
-    <!--where  id = #{id}-->
-    <!--</update>-->
 </mapper>

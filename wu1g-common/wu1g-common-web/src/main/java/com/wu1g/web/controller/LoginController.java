@@ -12,7 +12,6 @@ package com.wu1g.web.controller;
 
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.framework.web.controller.BaseController;
 import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -20,6 +19,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.Cookie;
 import java.util.Locale;
@@ -43,7 +43,7 @@ public class LoginController extends BaseController {
     /**
      * <p>init
      */
-    @RequestMapping(value = "/init")
+    @RequestMapping(method = {RequestMethod.GET}, value = "/init")
     public String init() throws Exception {
         log.info("HomeController init");
 
@@ -53,7 +53,7 @@ public class LoginController extends BaseController {
     /**
      * <p>无权限页面
      */
-    @RequestMapping(value = "/noauth")
+    @RequestMapping(method = {RequestMethod.GET}, value = "/noauth")
     public String noauth() throws Exception {
         log.info("HomeController noauth");
 
@@ -63,14 +63,14 @@ public class LoginController extends BaseController {
     /**
      * <p>用户登录
      */
-    @RequestMapping(value = "/login")
+    @RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, value = "/login")
     public String login() throws Exception {
         log.info("HomeController login");
 
-        String userid = request.getParameter("userid");
+        String accid = request.getParameter("accid");
         String password = request.getParameter("password");
 
-        if (ValidatorUtil.isNullEmpty(userid) || ValidatorUtil.isNullEmpty(password)) {
+        if (ValidatorUtil.isNullEmpty(accid) || ValidatorUtil.isNullEmpty(password)) {
             request.setAttribute("msg", "用户名或密码不能为空!");
             return "admin/login";
         }
@@ -79,20 +79,19 @@ public class LoginController extends BaseController {
         // request.setAttribute( "msg", "验证码校验失败!" );
         // return "admin/login";
         // }
-        UsernamePasswordToken token = new UsernamePasswordToken(userid, password);
 
         try {
+            UsernamePasswordToken token = new UsernamePasswordToken(accid, password);
             getAuth().login(token);
-
             String remember = request.getParameter("remember");
             if ("1".equals(remember)) {
-                Cookie cookie = new Cookie("user", userid + "=remember=" + password);
+                Cookie cookie = new Cookie("orgUser", accid + "=remember=" + password);
                 cookie.setMaxAge(7 * 24 * 60 * 60);//7天免登陆
                 response.addCookie(cookie);
             }
-            OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-            // System.out.println(user);
-            session.setAttribute(CommonConstant.SESSION_KEY_USER, user);
+            OrgUser orgUser = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+            // System.out.println(orgUser);
+            session.setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
             session.setAttribute("_language", "zh_CN");
 
             return "redirect:/h/index";
@@ -115,7 +114,7 @@ public class LoginController extends BaseController {
     /**
      * <p>切换界面语言
      */
-    @RequestMapping(value = "/switchlanguage")
+    @RequestMapping(method = {RequestMethod.GET}, value = "/switchlanguage")
     public String switchlanguage() throws Exception {
         log.info("HomeController switchlanguage");
 
@@ -135,7 +134,7 @@ public class LoginController extends BaseController {
     /**
      * <p>用户登出
      */
-    @RequestMapping(value = "/logout")
+    @RequestMapping(method = {RequestMethod.GET}, value = "/logout")
     public String logout() {
         log.info("LoginController logout");
         try {

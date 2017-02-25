@@ -1,16 +1,4 @@
-/*	
- * 全景_热点 BEAN类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ---------------------------	
- * 1.00     2016.10.02      easycode         程序.发布		
- * -------- ----------- --------------- ---------------------------	
- * Copyright 2016 pano System. - All Rights Reserved.
- *	
- */
-
 package com.wu1g.vo.pano;
-
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wu1g.framework.vo.BaseVO;
@@ -24,8 +12,6 @@ import java.util.Date;
 
 /**
  * <p>全景_热点  BEAN类。
- *
- * @author easycode
  */
 @Data
 @NoArgsConstructor
@@ -37,31 +23,28 @@ public class PanoSpots extends BaseVO {
     /**
      * id
      */
-    @Size(max = 32, message = "id最大32字符")
-    private String id;
+    private Long id;
     /**
      * 项目id
      */
-    @NotNull(message = "projId不能为空")
-    @Size(max = 32, message = "projId最大32字符")
-    private String projId;
+    private Long projId;
     /**
      * 场景id
      */
-    @NotNull(message = "sceneId不能为空")
-    @Size(max = 64, message = "sceneId最大64字符")
     private String sceneId;
     /**
-     * 类型0热点1图片
+     * 类型0热点1图片2外部链接3图文介绍4语音热点
      */
-    @NotNull(message = "htype不能为空")
-    @Size(max = 1, message = "htype最大1字符")
-    private String htype;
+    private Integer htype;
     /**
      * 标题
      */
     @Size(max = 50, message = "title最大50字符")
     private String title;
+    /**
+     * 图文详情
+     */
+    private String detailInfo;
     /**
      * 热点编号
      */
@@ -106,21 +89,23 @@ public class PanoSpots extends BaseVO {
     @Size(max = 255, message = "url最大255字符")
     private String url;
     /**
-     * 可否点击0否1是
+     * 可否点击
      */
-    @Size(max = 1, message = "isOnclick最大1字符")
-    private String isOnclick;
+    private Integer isOnclick;
     /**
      * 版本号
      */
     private Integer version;
     /**
+     * 建立者ID
+     */
+    private Long createId;
+    /**
      * 创建时间
      */
     private Date dateCreated;
     /**
-     * 修改时间
+     * 更新时间
      */
     private Date dateUpdated;
-
 }

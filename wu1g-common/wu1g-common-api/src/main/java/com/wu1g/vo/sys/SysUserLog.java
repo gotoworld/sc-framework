@@ -9,11 +9,14 @@
  *	
  */
 package com.wu1g.vo.sys;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wu1g.framework.vo.BaseVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * <p>系统_管理员操作日志  BEAN类。
@@ -22,19 +25,40 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SysUserLog extends BaseVO{
+public class SysUserLog extends BaseVO {
 
-	private static final long serialVersionUID = -687161275861309523L;
-	/**ID */
-	private String id;
-	/**操作类型(a增d删u改q查) */
-	private String type;
-	/**具体描述 */
-	private String description;
-	/**创建时间  默认值(2000-01-01 00:00:00) */
-	private String dateCreated;
-	/**建立者ID */
-	private String createId;
-	/**建立者IP */
-	private String createIp;
+    private static final long serialVersionUID = -687161275861309523L;
+    /**
+     * ID
+     */
+    private Long id;
+    /**
+     * 操作类型
+     */
+    private String type;
+    /**
+     * 描述
+     */
+    private String memo;
+    /**
+     * 对象信息
+     */
+    private String detailInfo;
+    /**
+     * 创建时间
+     */
+    private Date dateCreated;
+    /**
+     * 操作人ID
+     */
+    private Long createId;
+    /**
+     * 操作人名称
+     */
+    private String createName;
+    /**
+     * 操作人IP
+     */
+    private String createIp;
+
 }

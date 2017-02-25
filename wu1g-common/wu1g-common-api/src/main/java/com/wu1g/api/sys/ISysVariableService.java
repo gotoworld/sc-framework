@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * <p>数据字典   业务处理接口类。
  */
-public interface IVariableService {
+public interface ISysVariableService {
 
     /**
      * <p>信息编辑。

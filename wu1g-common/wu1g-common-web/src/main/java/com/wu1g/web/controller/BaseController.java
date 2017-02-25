@@ -1,7 +1,10 @@
-package com.wu1g.framework.web.controller;
+package com.wu1g.web.controller;
 
+
+import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IpUtils;
-import org.apache.commons.lang.StringUtils;
+import com.wu1g.framework.util.ReflectUtil;
+import com.wu1g.vo.org.OrgUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -75,5 +78,15 @@ public class BaseController {
      */
     public Subject getAuth() {
         return SecurityUtils.getSubject();
+    }
+
+
+    public OrgUser getUser(){
+        return (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+    }
+
+    public Integer getPageSize(Object obj){
+        String pageNum = (String) ReflectUtil.getValueByFieldName(obj,"pageNum");
+        return pageNum!=null?Integer.parseInt(pageNum):1;
     }
 }

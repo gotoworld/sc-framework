@@ -35,7 +35,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
                 //判断数据是否存在
                 if (authPermDao.isDataYN(dto) != 0) {
                     //数据存在
-                    authPermDao.updateByPrimaryKeySelective(dto);
+                    authPermDao.update(dto);
                 } else {
                     //新增
                     if (ValidatorUtil.isEmpty(dto.getId())) {
@@ -137,7 +137,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         if (beans == null) {
             return null;
         }
-        AuthPermBeanTree tree = new AuthPermBeanTree(beans);
+        AuthPermTree tree = new AuthPermTree(beans);
         return tree.buildTree();
     }
 
@@ -152,17 +152,16 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     }
 }
 
-class AuthPermBeanTree {
+class AuthPermTree {
     private List<AuthPerm> new_nodes = new ArrayList<AuthPerm>();
     private List<AuthPerm> nodes;
 
-    public AuthPermBeanTree(List<AuthPerm> nodes) {
+    public AuthPermTree(List<AuthPerm> nodes) {
         this.nodes = nodes;
     }
 
     public List<AuthPerm> buildTree() {
         for (AuthPerm node : nodes) {
-//            String id = node.getCode();  
             if (ValidatorUtil.isNullEmpty(node.getParentId())) {
                 new_nodes.add(node);
                 build(node);
@@ -178,7 +177,6 @@ class AuthPermBeanTree {
                 node.setBeans(new ArrayList());
             }
             for (AuthPerm child : children) {
-                String id = child.getId();
                 node.getBeans().add(child);
                 build(child);
             }

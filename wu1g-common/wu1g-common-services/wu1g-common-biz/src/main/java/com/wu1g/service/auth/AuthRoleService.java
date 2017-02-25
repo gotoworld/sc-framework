@@ -4,12 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.wu1g.api.auth.IAuthRoleService;
 import com.wu1g.dao.auth.IAuthRoleDao;
 import com.wu1g.dao.auth.IAuthRoleVsPermDao;
-import com.wu1g.vo.auth.AuthRole;
-import com.wu1g.vo.auth.AuthRoleVsPerm;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
-import com.wu1g.framework.util.ValidatorUtil;
+import com.wu1g.vo.auth.AuthRole;
+import com.wu1g.vo.auth.AuthRoleVsPerm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,14 +34,14 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         if (bean != null) {
             try {
                 if (getAuth().isPermitted("authRole:super")) {
-                    bean.setIsSuper(bean.getIsSuper() == null ? "0" : "1");// 超级管理员0否1是
+                    bean.setIsSuper(bean.getIsSuper() == null ? 0 : 1);// 超级管理员0否1是
                 } else {
-                    bean.setIsSuper("0");// 超级管理员0否1是
+                    bean.setIsSuper(0);// 超级管理员0否1是
                 }
                 // 判断数据是否存在
                 if (authRoleDao.isDataYN(bean) != 0) {
                     // 数据存在
-                    authRoleDao.updateByPrimaryKeySelective(bean);
+                    authRoleDao.update(bean);
                     if (getAuth().isPermitted("authRole:parm")) {
                         // 1.清空当前角色权限关联信息
                         Map xdto = new HashMap();
@@ -52,9 +50,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                     }
                 } else {
                     // 新增
-                    if (ValidatorUtil.isEmpty(bean.getId())) {
-                        bean.setId(IdUtil.createUUID(22));
-                    }
                     authRoleDao.insert(bean);
                 }
                 if (getAuth().isPermitted("authRole:parm")) {
@@ -65,8 +60,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                             AuthRoleVsPerm authRoleVsPerm = new AuthRoleVsPerm();
                             authRoleVsPerm.setRoleId(bean.getId());
                             authRoleVsPerm.setPermId(permId);
-                            authRoleVsPerm.setCreateId(bean.getCreateId());
-                            authRoleVsPerm.setCreateIp(bean.getCreateIp());
                             xdtos.add(authRoleVsPerm);
                         }
                         authRoleVsPermDao.insertBatch(xdtos);
@@ -94,7 +87,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return msg;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(AuthRole bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {

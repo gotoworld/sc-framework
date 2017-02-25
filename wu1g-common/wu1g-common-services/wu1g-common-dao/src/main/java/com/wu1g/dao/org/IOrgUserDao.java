@@ -31,7 +31,7 @@ public interface IOrgUserDao extends IBaseDao {
     /**
      * <p>判断用户id是否存在
      */
-    public int isUidYN(@Param("userid") String uid) throws Exception;
+    public int isUidYN(@Param("UserId") String uid) throws Exception;
 
     List<OrgUser> findTeacherDataIsList(OrgUser dto);
 }

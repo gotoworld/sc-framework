@@ -22,7 +22,7 @@ public interface IBaseDao {
     /**
      * 更新
      */
-    int updateByPrimaryKeySelective(IEntity dto) throws Exception;
+    int update(IEntity dto) throws Exception;
     /**
      * 判断是否存在
      */
@@ -37,18 +37,10 @@ public interface IBaseDao {
     int recoveryDataById(IEntity dto) throws Exception;
     /**
      * <p>信息列表 分页。
-     * <ol>[功能概要]
-     * <li>信息检索。
-     * <li>分页。
-     * </ol>
      */
     public List<?> findDataIsPage(IEntity dto) throws Exception;
     /**
      * <p>信息列表。
-     * <ol>[功能概要]
-     * <li>信息检索。
-     * <li>列表。
-     * </ol>
      */
     public List<?> findDataIsList(IEntity dto) throws Exception;
 

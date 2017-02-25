@@ -3,16 +3,16 @@
 <mapper namespace="com.wu1g.dao.auth.IAuthRoleDao">
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
-		t1.id as "id",
-		t1.name as "name",
-		t1.is_super as "isSuper",
-		t1.memo as "memo",
-		t1.order_no as "orderNo",
-		t1.version as "version",
-		t1.keyword as "keyword",
-		t1.del_flag as "delFlag",
-		t1.date_created as "dateCreated",
-		t1.date_updated as "dateUpdated"
+		 t1.id as  "id"
+        ,t1.name as  "name"
+        ,t1.is_super as  "isSuper"
+        ,t1.memo as  "memo"
+        ,t1.order_no as  "orderNo"
+        ,t1.version as  "version"
+        ,t1.keyword as  "keyword"
+        ,t1.del_flag as  "delFlag"
+        ,t1.date_created as  "dateCreated"
+        ,t1.date_updated as  "dateUpdated"
 	</sql>
     <!-- 根据主键获取信息详情 -->
     <select id="selectByPrimaryKey" resultType="authRole" parameterType="authRole">
@@ -28,41 +28,37 @@
 		where  id = #{id}
 	</delete>
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="authRole">
+    <insert id="insert" parameterType="authRole" useGeneratedKeys="true" keyProperty="id">
 		insert into auth_role(
-		id,
-		name,
-		is_super,
-		memo,
-		order_no,
-		version,
-		keyword,
-		del_flag,
-		date_created,
-		date_updated
-	) values (
-		#{id},
-		#{name},
-		#{isSuper},
-		#{memo},
-		#{orderNo},
-		0,
-		#{keyword},
-		0,
-		now(),
-		now()
-	)
+             name
+            ,is_super
+            ,memo
+            ,order_no
+            ,version
+            ,keyword
+            ,del_flag
+            ,date_created
+            ,date_updated
+        ) values (
+             #{name}
+            ,#{isSuper}
+            ,#{memo}
+            ,0
+            ,0
+            ,#{keyword}
+            ,0
+            ,now()
+            ,now()
+        )
 	</insert>
     <!-- 数据更新 -->
-    <update id="updateByPrimaryKeySelective" parameterType="authRole">
-        update auth_role set
-        version=version+1,date_updated=now()
-        <if test="name!= null">,name=#{name}</if>
-        <if test="isSuper!= null">,is_super=#{isSuper}</if>
-        <if test="memo!= null">,memo=#{memo}</if>
-        <if test="orderNo!= null">,order_no=#{orderNo}</if>
-        <if test="keyword!= null">,keyword=#{keyword}</if>
-        <if test="delFlag!= null">,del_flag=#{delFlag}</if>
+    <update id="update" parameterType="authRole">
+        update auth_role set version=version+1,date_updated=now()
+        <if test="name!= null" >,name=#{name}</if>
+        <if test="isSuper!= null" >,is_super=#{isSuper}</if>
+        <if test="memo!= null" >,memo=#{memo}</if>
+        <if test="orderNo!= null" >,order_no=#{orderNo}</if>
+        <if test="keyword!= null" >,keyword=#{keyword}</if>
         where id = #{id}
     </update>
     <!-- 判断是否存在 -->
@@ -82,8 +78,8 @@
         <if test="name!=null and name!=''">
             and t1.name like CONCAT('%',#{name},'%')
         </if>
-        <if test="isSuper!=null and isSuper=='0'">
-            and t1.is_super!='1'
+        <if test="isSuper!=null and isSuper==0">
+            and t1.is_super!=1
         </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>

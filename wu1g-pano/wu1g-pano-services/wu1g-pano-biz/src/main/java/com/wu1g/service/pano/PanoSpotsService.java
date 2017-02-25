@@ -14,8 +14,6 @@ package com.wu1g.service.pano;
 
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
-import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.api.pano.IPanoSpotsService;
 import com.wu1g.dao.pano.IPanoSpotsDao;
 import com.wu1g.vo.pano.PanoSpots;
@@ -42,12 +40,9 @@ public abstract class PanoSpotsService   extends BaseService implements IPanoSpo
 				//判断数据是否存在	
 				if(panoSpotsDao.isDataYN(bean)!=0){	
 					//数据存在	
-					panoSpotsDao.updateByPrimaryKeySelective(bean);	
+					panoSpotsDao.update(bean);
 				}else{	
 					//新增	
-					if(ValidatorUtil.isEmpty(bean.getId())){
-						bean.setId(IdUtil.createUUID(32));
-					}
 					panoSpotsDao.insert(bean);
 				}	
 			} catch (Exception e) {	

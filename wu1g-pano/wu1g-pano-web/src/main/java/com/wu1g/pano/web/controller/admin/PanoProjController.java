@@ -15,21 +15,19 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.wu1g.api.pano.IPanoMapService;
+import com.wu1g.api.pano.IPanoProjService;
+import com.wu1g.api.pano.IPanoSceneService;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.framework.web.controller.BaseController;
-import com.wu1g.api.pano.IPanoCategoryService;
-import com.wu1g.api.pano.IPanoMapService;
-import com.wu1g.api.pano.IPanoProjService;
-import com.wu1g.api.pano.IPanoSceneService;
 import com.wu1g.vo.pano.PanoMap;
 import com.wu1g.vo.pano.PanoProj;
 import com.wu1g.vo.pano.PanoScene;
 import com.wu1g.vo.pano.PanoSpots;
+import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -60,8 +58,6 @@ public class PanoProjController extends BaseController {
     @Autowired
     private IPanoProjService panoProjService;
     @Autowired
-    private IPanoCategoryService panoCategoryService;
-    @Autowired
     private IPanoMapService panoMapService;
     @Autowired
     private IPanoSceneService panoSceneService;
@@ -77,7 +73,7 @@ public class PanoProjController extends BaseController {
      * <p>初始化处理。
      */
     @RequiresPermissions("panoProj:menu")
-    @RequestMapping(value = acPrefix + "init")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "init")
     public String init() {
         log.info("PanoProjController init.........");
         return init;
@@ -87,13 +83,13 @@ public class PanoProjController extends BaseController {
      * <p>信息列表 (未删除)。
      */
     @RequiresPermissions("panoProj:menu")
-    @RequestMapping(value = acPrefix + "list")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
     public String list(PanoProj bean) {
         log.info("PanoProjController list.........");
         if (bean == null) {
             bean = new PanoProj();
         }
-        bean.setType("0");
+        bean.setType(0);
         bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
         // 信息列表
         PageInfo<?> page = new PageInfo<>(panoProjService.findDataIsPage(bean));
@@ -107,22 +103,15 @@ public class PanoProjController extends BaseController {
      * <p> 编辑。
      */
     @RequiresPermissions("panoProj:edit")
-    @RequestMapping(value = acPrefix + "edit/{id}")
-    public String edit(PanoProj bean, @PathVariable("id") String id) {
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "edit/{id}")
+    public String edit(PanoProj bean, @PathVariable("id") Long id) {
         log.info("PanoProjController edit.........");
-        int pageNum = 1;
-        if (bean != null && bean.getPageNum() != null) {
-            pageNum = bean.getPageNum();
-        }
-        if ("add".equals(id)) {
-            id = null;
-            bean = null;
-        }
-        if (ValidatorUtil.notEmpty(id)) {
+        int pageNum = getPageSize(bean);
+        if (id != 0) {
             if (bean == null) {
                 bean = new PanoProj();
             }
-            bean.setId(id);// id
+            bean.setId(id);
             bean = panoProjService.findDataById(bean);
             if (bean != null) {
                 PanoScene scene = new PanoScene();
@@ -130,17 +119,15 @@ public class PanoProjController extends BaseController {
                 bean.setScenes(panoSceneService.findDataIsList(scene));
             }
         }
-        if (bean == null || "add".equals(id)) {
+        if (bean == null || 0 == id) {
             bean = new PanoProj();
-            bean.setId(IdUtil.createUUID(32));
-            bean.setNewFlag("1");
+            bean.setNewFlag(1);
         }
         bean.setPageNum(pageNum);
-        bean.setToken(IdUtil.createUUID(32));
         request.setAttribute("bean", bean);
-
-        //获取类目列表
-        request.setAttribute("categoryBeans", panoCategoryService.findDataTree(null));
+//
+//        //获取类目列表
+//        request.setAttribute("categoryBeans", panoCategoryService.findDataTree(null));
 
         return edit;
     }
@@ -149,9 +136,9 @@ public class PanoProjController extends BaseController {
      * <p>逻辑删除。
      */
     @RequiresPermissions("panoProj:del")
-    @RequestMapping(value = acPrefix + "del/{id}")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "全景项目")
-    public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
+    public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
         log.info("PanoProjController del.........");
         Response result = new Response();
         try {
@@ -169,7 +156,7 @@ public class PanoProjController extends BaseController {
      * <p>信息保存
      */
     @RequiresPermissions(value = {"panoProj:add", "panoProj:edit"}, logical = Logical.OR)
-    @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "save")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "全景项目信息")
     public String save(@Validated PanoProj bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
@@ -193,20 +180,15 @@ public class PanoProjController extends BaseController {
                         String[] scene_id_arr = request.getParameterValues("scene_id");
                         if (scene_id_arr != null && scene_id_arr.length > 0) {
                             for (int i = 0; i < scene_id_arr.length; i++) {
-                                String scene_id = scene_id_arr[i];
+                                String scene_id = (scene_id_arr[i]);
                                 PanoScene scene = new PanoScene();
                                 scene.setId(scene_id);
                                 scene.setProjId(bean.getId());
-                                scene.setOrderNo("" + i);
+                                scene.setOrderNo(i);
                                 scene.setSceneSrc(request.getParameter(scene_id + "_scene_src"));
                                 scene.setKeyword(request.getParameter(scene_id + "_scene_key"));
                                 scene.setSceneTitle(request.getParameter(scene_id + "_scene_tit"));
-
-//                                scene.setCreateIp(getIpAddr());
-//                                scene.setCreateId(user.getId());
-//                                scene.setUpdateIp(getIpAddr());
-//                                scene.setUpdateId(user.getId());
-
+                                scene.setCreateId(getUser().getId());
                                 scenes.add(scene);
                             }
                         }
@@ -236,7 +218,7 @@ public class PanoProjController extends BaseController {
     }
 
     @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
-    @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "xmlsave")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "xmlsave")
     @ResponseBody
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "漫游场景信息")
@@ -250,10 +232,10 @@ public class PanoProjController extends BaseController {
             String scene_str = request.getParameter("data");//场景信息
             String radars_str = request.getParameter("radars");//导览图信息
             PanoProj bean = new PanoProj();
-            bean.setId(pid);
-            bean.setXmlData(scene_str);
-            bean.setScenes(getScenesByjson(pid, scene_str));
-            bean.setRadars(getRadarsByjson(pid, radars_str));
+            bean.setId(Long.parseLong(pid));
+            bean.setTourEditJson(scene_str);
+            bean.setScenes(getScenesByjson(Long.parseLong(pid), scene_str));
+            bean.setRadars(getRadarsByjson(Long.parseLong(pid), radars_str));
             panoProjService.saveXmlData(bean);
 
             bean.setStr(getBasePath());
@@ -270,7 +252,7 @@ public class PanoProjController extends BaseController {
         return JSON.toJSONString(msg);
     }
 
-    private List<PanoScene> getScenesByjson(String pid, String scene_str) {
+    private List<PanoScene> getScenesByjson(Long pid, String scene_str) {
         List<PanoScene> scenes = new ArrayList<PanoScene>();
         JSONObject dataJson = JSON.parseObject(scene_str);
         if (dataJson != null && dataJson.entrySet() != null && dataJson.entrySet().size() > 0) {
@@ -311,10 +293,10 @@ public class PanoProjController extends BaseController {
                                     JSONObject spotsJson = spotsJsonArr.getJSONObject(i);
                                     if (spotsJson != null && !spotsJson.isEmpty()) {
                                         PanoSpots panoSpots = new PanoSpots();
-                                        panoSpots.setId(IdUtil.createUUID(32));
+//                                        panoSpots.setId(IdUtil.createUUID(32));
                                         panoSpots.setProjId(scene.getProjId());
                                         panoSpots.setSceneId(scene.getId());
-                                        panoSpots.setHtype("0");
+                                        panoSpots.setHtype(0);
                                         panoSpots.setHname(spotsJson.getString("hname"));
                                         panoSpots.setAth(spotsJson.getString("ath"));
                                         panoSpots.setAtv(spotsJson.getString("atv"));
@@ -322,7 +304,7 @@ public class PanoProjController extends BaseController {
                                         panoSpots.setScale(spotsJson.getString("scale"));
                                         panoSpots.setDepth(spotsJson.getString("depth"));
                                         panoSpots.setRotate(spotsJson.getString("rotate"));
-                                        //panoSpots.setUrl( spotsJson.getString( "url" ) );
+//                                        panoSpots.setUrl( spotsJson.getString( "url" ) );
                                         spots.add(panoSpots);
                                     }
                                 }
@@ -343,10 +325,10 @@ public class PanoProjController extends BaseController {
                                     JSONObject spotsJson = spotsJsonArr.getJSONObject(i);
                                     if (spotsJson != null && !spotsJson.isEmpty()) {
                                         PanoSpots panoSpots = new PanoSpots();
-                                        panoSpots.setId(IdUtil.createUUID(32));
+//                                        panoSpots.setId(IdUtil.createUUID(32));
                                         panoSpots.setProjId(scene.getProjId());
                                         panoSpots.setSceneId(scene.getId());
-                                        panoSpots.setHtype("1");
+                                        panoSpots.setHtype(1);
                                         panoSpots.setHname(spotsJson.getString("hname"));
                                         panoSpots.setAth(spotsJson.getString("ath"));
                                         panoSpots.setAtv(spotsJson.getString("atv"));
@@ -355,7 +337,7 @@ public class PanoProjController extends BaseController {
                                         panoSpots.setDepth(spotsJson.getString("depth"));
                                         panoSpots.setRotate(spotsJson.getString("rotate"));
                                         panoSpots.setUrl(spotsJson.getString("url"));
-                                        panoSpots.setIsOnclick(spotsJson.getString("isOnclick"));
+                                        panoSpots.setIsOnclick(spotsJson.getInteger("isOnclick"));
                                         spots.add(panoSpots);
                                     }
                                 }
@@ -370,7 +352,7 @@ public class PanoProjController extends BaseController {
         return scenes;
     }
 
-    private List<PanoMap> getRadarsByjson(String pid, String radars_str) {
+    private List<PanoMap> getRadarsByjson(Long pid, String radars_str) {
         List<PanoMap> radars = new ArrayList<PanoMap>();
         JSONObject radarsJson = JSON.parseObject(radars_str);
         if (radarsJson != null && radarsJson.entrySet() != null && radarsJson.entrySet().size() > 0) {
@@ -401,12 +383,12 @@ public class PanoProjController extends BaseController {
     }
 
     @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
-    @RequestMapping(value = "/h/touredit/{id}")
-    public String touredit(@PathVariable("id") String id) {
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/h/touredit/{id}")
+    public String touredit(@PathVariable("id") Long id) {
         log.info("PanoProjController touredit.........");
         PanoProj bean = new PanoProj();
         bean.setId(id);
-        bean.setType("0");
+        bean.setType(0);
         PanoProj proj = panoProjService.findDataById(bean);
         PanoScene sceneDto = new PanoScene();
         sceneDto.setProjId(proj.getId());
@@ -430,7 +412,7 @@ public class PanoProjController extends BaseController {
         return touredit;
     }
 
-    private String getBreakdownImg(String projId, String sceneSrc) {
+    private String getBreakdownImg(Long projId, String sceneSrc) {
         sceneSrc = sceneSrc.substring(sceneSrc.lastIndexOf("/") + 1, sceneSrc.indexOf("."));
         return "/upload/image/n4/" + projId + "/vtour/panos/" + sceneSrc + ".tiles/";
     }

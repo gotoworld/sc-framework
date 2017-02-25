@@ -1,13 +1,11 @@
 package com.wu1g.web.controller.admin.org;
 
+import com.wu1g.api.org.IOrgDeptService;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
-import com.wu1g.framework.util.IdUtil;
-import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.framework.web.controller.BaseController;
-import com.wu1g.api.org.IOrgDepartmentService;
-import com.wu1g.vo.org.OrgDepartment;
+import com.wu1g.vo.org.OrgDept;
+import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -18,6 +16,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.List;
@@ -28,14 +27,14 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/h")
 @Slf4j
-public class OrgDepartmentController extends BaseController {
+public class OrgDeptController extends BaseController {
 
     private static final long serialVersionUID = -905929872130603565L;
     /**
      * 组织架构_部门 业务处理
      */
     @Autowired
-    private IOrgDepartmentService orgDepartmentService;
+    private IOrgDeptService orgDeptService;
 
     //组织架构_部门 管理
     private static final String acPrefix = "/org/dept/";
@@ -45,18 +44,12 @@ public class OrgDepartmentController extends BaseController {
 
     /**
      * <p> 初始化处理。
-     * <ol>
-     * [功能概要]
-     * <li>初始化处理。
-     * </ol>
-     *
-     * @return 转发字符串
      */
     @RequiresPermissions("orgDept:menu")
-    @RequestMapping(value = acPrefix + "init")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "init")
     public String init() {
         log.info("OrgDepartmentController init.........");
-        Object x = orgDepartmentService.findDataTree(null);
+        Object x = orgDeptService.findDataTree(null);
         request.setAttribute("beans", x);
         return init;
     }
@@ -65,28 +58,23 @@ public class OrgDepartmentController extends BaseController {
      * <p> 编辑。
      */
     @RequiresPermissions("orgDept:edit")
-    @RequestMapping(value = acPrefix + "edit/{id}")
-    public String edit(OrgDepartment bean, @PathVariable("id") String id) {
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "edit/{id}")
+    public String edit(OrgDept bean, @PathVariable("id") Long id) {
         log.info("OrgDepartmentController edit.........");
-        int pageNum = 1;
-        if (bean != null && bean.getPageNum() != null) {
-            pageNum = bean.getPageNum();
-        }
-        if (ValidatorUtil.notEmpty(id)) {
-            OrgDepartment bean1 = new OrgDepartment();
+        int pageNum=getPageSize(bean);
+        if (0!=id) {
+            OrgDept bean1 = new OrgDept();
             bean1.setId(id);
-            bean = orgDepartmentService.findDataById(bean1);
+            bean = orgDeptService.findDataById(bean1);
         }
-        if (bean == null || "add".equals(id)) {
-            bean = new OrgDepartment();
-            bean.setId(IdUtil.createUUID(32));
-            bean.setNewFlag("1");
+        if (bean == null || 0==id) {
+            bean = new OrgDept();
+            bean.setNewFlag(1);
         }
         bean.setPageNum(pageNum);
-        bean.setToken(IdUtil.createUUID(32));
         request.setAttribute("bean", bean);
         //--部门树
-        request.setAttribute("beans", orgDepartmentService.findDataTree(null));
+        request.setAttribute("beans", orgDeptService.findDataTree(null));
         return edit;
     }
 
@@ -94,15 +82,15 @@ public class OrgDepartmentController extends BaseController {
      * <p> 删除。
      */
     @RequiresPermissions("orgDept:del")
-    @RequestMapping(value = acPrefix + "del/{id}")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "部门信息")
-    public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
+    public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
         log.info("OrgDepartmentController del.........");
         Response result = new Response();
         try {
-            OrgDepartment bean1 = new OrgDepartment();
+            OrgDept bean1 = new OrgDept();
             bean1.setId(id);
-            result.message = orgDepartmentService.deleteDataById(bean1);
+            result.message = orgDeptService.deleteDataById(bean1);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -114,10 +102,10 @@ public class OrgDepartmentController extends BaseController {
      * <p> 信息保存
      */
     @RequiresPermissions(value = {"orgDept:add", "orgDept:edit"}, logical = Logical.OR)
-    @RequestMapping(value = acPrefix + "save")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "部门信息")
-    public String save(@Validated OrgDepartment bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
+    public String save(@Validated OrgDept bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
         log.info("OrgDepartmentController save.........");
         Response result = new Response();
         if (bean != null) {
@@ -133,7 +121,7 @@ public class OrgDepartmentController extends BaseController {
                     }
                     result = Response.error(errorMsg);
                 } else {
-                    result.message = orgDepartmentService.saveOrUpdateData(bean);
+                    result.message = orgDeptService.saveOrUpdateData(bean);
                     result.data = bean.getId();
                     request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
                 }

@@ -4,11 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.api.org.IOrgDepartmentService;
-import com.wu1g.dao.org.IOrgDepartmentDao;
-import com.wu1g.vo.org.OrgDepartment;
+import com.wu1g.api.org.IOrgDeptService;
+import com.wu1g.dao.org.IOrgDeptDao;
+import com.wu1g.vo.org.OrgDept;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,25 +20,22 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class OrgDepartmentService extends BaseService implements IOrgDepartmentService {
+public class OrgDeptService extends BaseService implements IOrgDeptService {
     @Autowired
-    private IOrgDepartmentDao orgDepartmentDao;
+    private IOrgDeptDao orgDepartmentDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String saveOrUpdateData(OrgDepartment bean) throws Exception {
+    public String saveOrUpdateData(OrgDept bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
                 if (orgDepartmentDao.isDataYN(bean) != 0) {
                     // 数据存在
-                    orgDepartmentDao.updateByPrimaryKeySelective(bean);
+                    orgDepartmentDao.update(bean);
                 } else {
                     // 新增
-                    if (ValidatorUtil.isEmpty(bean.getId())) {
-                        bean.setId(IdUtil.createUUID(32));
-                    }
                     orgDepartmentDao.insert(bean);
                 }
             } catch (Exception e) {
@@ -52,7 +48,7 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
     }
 
     @RfAccount2Bean
-    public String deleteData(OrgDepartment bean) throws Exception {
+    public String deleteData(OrgDept bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
             try {
@@ -67,7 +63,7 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String deleteDataById(OrgDepartment bean) throws Exception {
+    public String deleteDataById(OrgDept bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
             try {
@@ -81,38 +77,38 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return msg;
     }
 
-    public List<OrgDepartment> findDataIsPage(OrgDepartment bean) {
-        List<OrgDepartment> beans = null;
+    public List<OrgDept> findDataIsPage(OrgDept bean) {
+        List<OrgDept> beans = null;
         try {
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<OrgDepartment>) orgDepartmentDao.findDataIsPage(bean);
+            beans = (List<OrgDept>) orgDepartmentDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);
         }
         return beans;
     }
 
-    public List<OrgDepartment> findDataIsList(OrgDepartment bean) {
-        List<OrgDepartment> beans = null;
+    public List<OrgDept> findDataIsList(OrgDept bean) {
+        List<OrgDept> beans = null;
         try {
-            beans = (List<OrgDepartment>) orgDepartmentDao.findDataIsList(bean);
+            beans = (List<OrgDept>) orgDepartmentDao.findDataIsList(bean);
         } catch (Exception e) {
             log.error("信息查询失败,数据库错误!", e);
         }
         return beans;
     }
 
-    public OrgDepartment findDataById(OrgDepartment bean) {
-        OrgDepartment bean1 = null;
+    public OrgDept findDataById(OrgDept bean) {
+        OrgDept bean1 = null;
         try {
-            bean1 = (OrgDepartment) orgDepartmentDao.selectByPrimaryKey(bean);
+            bean1 = (OrgDept) orgDepartmentDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
             log.error("信息详情查询失败,数据库错误!", e);
         }
         return bean1;
     }
 
-    public String recoveryDataById(OrgDepartment bean) throws Exception {
+    public String recoveryDataById(OrgDept bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
             try {
@@ -126,27 +122,26 @@ public class OrgDepartmentService extends BaseService implements IOrgDepartmentS
         return msg;
     }
 
-    public List<OrgDepartment> findDataTree(OrgDepartment bean) {
-        List<OrgDepartment> beans = findDataIsList(bean);
+    public List<OrgDept> findDataTree(OrgDept bean) {
+        List<OrgDept> beans = findDataIsList(bean);
         if (beans == null) {
             return null;
         }
-        OrgDepartmentBeanTree tree = new OrgDepartmentBeanTree(beans);
+        OrgDeptTree tree = new OrgDeptTree(beans);
         return tree.buildTree();
     }
 }
 
-class OrgDepartmentBeanTree {
-    private List<OrgDepartment> new_nodes = new ArrayList<OrgDepartment>();
-    private List<OrgDepartment> nodes;
+class OrgDeptTree {
+    private List<OrgDept> new_nodes = new ArrayList<OrgDept>();
+    private List<OrgDept> nodes;
 
-    public OrgDepartmentBeanTree(List<OrgDepartment> nodes) {
+    public OrgDeptTree(List<OrgDept> nodes) {
         this.nodes = nodes;
     }
 
-    public List<OrgDepartment> buildTree() {
-        for (OrgDepartment node : nodes) {
-            // String id = node.getCode();
+    public List<OrgDept> buildTree() {
+        for (OrgDept node : nodes) {
             if (ValidatorUtil.isNullEmpty(node.getParentId())) {
                 new_nodes.add(node);
                 build(node);
@@ -155,25 +150,24 @@ class OrgDepartmentBeanTree {
         return new_nodes;
     }
 
-    private void build(OrgDepartment node) {
-        List<OrgDepartment> children = getChildren(node);
+    private void build(OrgDept node) {
+        List<OrgDept> children = getChildren(node);
         if (!children.isEmpty()) {
             if (node.getBeans() == null) {
                 node.setBeans(new ArrayList());
             }
-            for (OrgDepartment child : children) {
-                String id = child.getId();
+            for (OrgDept child : children) {
                 node.getBeans().add(child);
                 build(child);
             }
         }
     }
 
-    private List<OrgDepartment> getChildren(OrgDepartment node) {
-        List<OrgDepartment> children = new ArrayList<OrgDepartment>();
-        String id = node.getId();
-        for (OrgDepartment child : nodes) {
-            if (id.equals(child.getParentId())) {
+    private List<OrgDept> getChildren(OrgDept node) {
+        List<OrgDept> children = new ArrayList<OrgDept>();
+        Long id = node.getId();
+        for (OrgDept child : nodes) {
+            if (id==(child.getParentId())) {
                 children.add(child);
             }
         }

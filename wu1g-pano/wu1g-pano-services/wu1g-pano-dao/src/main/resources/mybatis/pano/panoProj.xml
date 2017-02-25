@@ -3,32 +3,32 @@
 <mapper namespace="com.wu1g.dao.pano.IPanoProjDao">
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
-		t1.id as "id"
-		,t1.category_id as "categoryId"
-		,t1.type as "type"
-		,t1.name as "name"
-		,t1.sound_src as "soundSrc"
-		,t1.video_src as "videoSrc"
-		,t1.is_comments as "isComments"
-		,t1.is_planetoid as "isPlanetoid"
-		,t1.is_mending as "isMending"
-		,t1.map_src as "mapSrc"
-		,t1.is_seccuss as "isSeccuss"
-		,t1.thumbs_up_num as "thumbsUpNum"
-		,t1.pv_num as "pvNum"
-		,t1.xml_data as "xmlData"
-		,t1.logo_pic as "logoPic"
-		,t1.logo_url as "logoUrl"
-		,t1.snow_type as "snowType"
-		,t1.is_fps as "isFps"
-		,t1.version as "version"
-		,t1.state as "state"
-		,t1.memo as "memo"
-		,t1.order_no as "orderNo"
-		,t1.keyword as "keyword"
-		,t1.del_flag as "delFlag"
-		,t1.date_created as "dateCreated"
-		,t1.date_updated as "dateUpdated"
+		 t1.id as  "id"
+		,t1.category_id as  "categoryId"
+		,t1.type as  "type"
+		,t1.name as  "name"
+		,t1.sound_src as  "soundSrc"
+		,t1.is_comments as  "isComments"
+		,t1.is_planetoid as  "isPlanetoid"
+		,t1.map_src as  "mapSrc"
+		,t1.video_src as  "videoSrc"
+		,t1.is_seccuss as  "isSeccuss"
+		,t1.thumbs_up_num as  "thumbsUpNum"
+		,t1.pv_num as  "pvNum"
+		,t1.logo_pic_url as  "logoPicUrl"
+		,t1.logo_web_url as  "logoWebUrl"
+		,t1.pwd as  "pwd"
+		,t1.tour_edit_json as  "tourEditJson"
+		,t1.ext_cfg_json as  "extCfgJson"
+		,t1.version as  "version"
+		,t1.state as  "state"
+		,t1.memo as  "memo"
+		,t1.order_no as  "orderNo"
+		,t1.keyword as  "keyword"
+		,t1.del_flag as  "delFlag"
+		,t1.create_id as  "createId"
+		,t1.date_created as  "dateCreated"
+		,t1.date_updated as  "dateUpdated"
 	</sql>
 
     <!-- 根据主键获取信息详情 -->
@@ -49,86 +49,87 @@
 	</delete>
 
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="panoProj">
+    <insert id="insert" parameterType="panoProj" useGeneratedKeys="true" keyProperty="id">
 		insert into pano_proj(
-		id
-		,category_id
-		,type
-		,name
-		,sound_src
-		,video_src
-		,is_comments
-		,is_planetoid
-		,is_mending
-		,map_src
-		,is_seccuss
-		,thumbs_up_num
-		,xml_data
-		,logo_pic
-		,logo_url
-		,snow_type
-		,is_fps
-		,version
-		,state
-		,memo
-		,order_no
-		,keyword
-		,del_flag
-		,date_created
-		,date_updated
+			 category_id
+			,type
+			,name
+			,sound_src
+			,is_comments
+			,is_planetoid
+			,map_src
+			,video_src
+			,is_seccuss
+			,thumbs_up_num
+			,pv_num
+			,logo_pic_url
+			,logo_web_url
+			,pwd
+			,tour_edit_json
+			,ext_cfg_json
+			,version
+			,state
+			,memo
+			,order_no
+			,keyword
+			,del_flag
+			,create_id
+			,date_created
+			,date_updated
 		) values (
-		#{id}
-		,#{categoryId}
-		,#{type}
-		,#{name}
-		,#{soundSrc}
-		,#{videoSrc}
-		,#{isComments}
-		,#{isPlanetoid}
-		,#{isMending}
-		,#{mapSrc}
-		,#{isSeccuss}
-		,#{thumbsUpNum}
-		,#{xmlData}
-		,#{logoPic}
-		,#{logoUrl}
-		,#{snowType}
-		,#{isFps}
-		,0
-		,#{state}
-		,#{memo}
-		,#{orderNo}
-		,#{keyword}
-		,'0'
-		,now()
-		,now()
+			 #{categoryId}
+			,#{type}
+			,#{name}
+			,#{soundSrc}
+			,#{isComments}
+			,#{isPlanetoid}
+			,#{mapSrc}
+			,#{videoSrc}
+			,#{isSeccuss}
+			,#{thumbsUpNum}
+			,#{pvNum}
+			,#{logoPicUrl}
+			,#{logoWebUrl}
+			,#{pwd}
+			,#{tourEditJson}
+			,#{extCfgJson}
+			,0
+			,#{state}
+			,#{memo}
+			,0
+			,#{keyword}
+			,0
+			,#{createId}
+			,now()
+			,now()
 		)
 	</insert>
     <!-- 数据更新 -->
-    <update id="updateByPrimaryKeySelective" parameterType="panoProj">
+    <update id="update" parameterType="panoProj">
         update pano_proj set
         version=version+1
         ,date_updated=now()
-        <if test="categoryId!= null">,category_id=#{categoryId}</if>
-        <if test="type!= null">,type=#{type}</if>
-        <if test="name!= null">,name=#{name}</if>
         ,sound_src=#{soundSrc}
         ,video_src=#{videoSrc}
-        <if test="isComments!= null">,is_comments=#{isComments}</if>
-        <if test="isPlanetoid!= null">,is_planetoid=#{isPlanetoid}</if>
-        <if test="isMending!= null">,is_mending=#{isMending}</if>
         ,map_src=#{mapSrc}
-        <if test="isSeccuss!= null">,is_seccuss=#{isSeccuss}</if>
-        <if test="logoPic!= null">,logo_pic=#{logoPic}</if>
-        <if test="logoUrl!= null">,logo_url=#{logoUrl}</if>
-        <if test="snowType!= null">,snow_type=#{snowType}</if>
-        <if test="isFps!= null">,is_fps=#{isFps}</if>
-        <if test="state!= null">,state=#{state}</if>
-        <if test="memo!= null">,memo=#{memo}</if>
-        <if test="orderNo!= null">,order_no=#{orderNo}</if>
-        <if test="keyword!= null">,keyword=#{keyword}</if>
-        <if test="delFlag!= null">,del_flag=#{delFlag}</if>
-        where
+		<if test="categoryId!= null" >,category_id=#{categoryId}</if>
+		<if test="type!= null" >,type=#{type}</if>
+		<if test="name!= null" >,name=#{name}</if>
+		<if test="isComments!= null" >,is_comments=#{isComments}</if>
+		<if test="isPlanetoid!= null" >,is_planetoid=#{isPlanetoid}</if>
+		<if test="isSeccuss!= null" >,is_seccuss=#{isSeccuss}</if>
+		<if test="thumbsUpNum!= null" >,thumbs_up_num=#{thumbsUpNum}</if>
+		<if test="pvNum!= null" >,pv_num=#{pvNum}</if>
+		<if test="logoPicUrl!= null" >,logo_pic_url=#{logoPicUrl}</if>
+		<if test="logoWebUrl!= null" >,logo_web_url=#{logoWebUrl}</if>
+		<if test="pwd!= null" >,pwd=#{pwd}</if>
+		<if test="tourEditJson!= null" >,tour_edit_json=#{tourEditJson}</if>
+		<if test="extCfgJson!= null" >,ext_cfg_json=#{extCfgJson}</if>
+		<if test="state!= null" >,state=#{state}</if>
+		<if test="memo!= null" >,memo=#{memo}</if>
+		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
+		<if test="keyword!= null" >,keyword=#{keyword}</if>
+		where
         id= #{id}
     </update>
 
@@ -208,7 +209,7 @@
 		update pano_proj set
 			    version=version+1
 			   ,date_updated=now()
-			   ,xml_data=#{xmlData}
+			   ,tour_edit_json=#{tourEditJson}
 		where 
 			id= #{id}
 	</update>

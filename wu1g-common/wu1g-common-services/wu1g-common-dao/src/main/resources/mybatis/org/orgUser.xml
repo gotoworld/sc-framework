@@ -3,32 +3,32 @@
 <mapper namespace="com.wu1g.dao.org.IOrgUserDao">
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
-		t1.id as "id",
-		t1.userid as "userid",
-		t1.pwd as "pwd",
-		t1.name as "name",
-		t1.job_no as "jobNo",
-		t1.position as "position",
-		t1.gender as "gender",
-		t1.mobile as "mobile",
-		t1.tel as "tel",
-		t1.enable as "enable",
-		t1.avatar as "avatar",
-		t1.status as "status",
-		t1.email as "email",
-		t1.weixinid as "weixinid",
-		t1.type as "type",
-		t1.last_login as "lastLogin",
-		t1.count as "count",
-		t1.state as "state",
-		t1.skin as "skin",
-		t1.memo as "memo",
-		t1.keyword as "keyword",
-		t1.version as "version",
-		t1.order_no as "orderNo",
-		t1.del_flag as "delFlag",
-		t1.date_created as "dateCreated",
-		t1.date_updated as "dateUpdated"
+		 t1.id as  "id"
+        ,t1.accid as  "accid"
+        ,t1.pwd as  "pwd"
+        ,t1.name as  "name"
+        ,t1.job_no as  "jobNo"
+        ,t1.position as  "position"
+        ,t1.gender as  "gender"
+        ,t1.mobile as  "mobile"
+        ,t1.tel as  "tel"
+        ,t1.enable as  "enable"
+        ,t1.avatar as  "avatar"
+        ,t1.email as  "email"
+        ,t1.weixinid as  "weixinid"
+        ,t1.type as  "type"
+        ,t1.last_login as  "lastLogin"
+        ,t1.count as  "count"
+        ,t1.state as  "state"
+        ,t1.skin as  "skin"
+        ,t1.memo as  "memo"
+        ,t1.keyword as  "keyword"
+        ,t1.version as  "version"
+        ,t1.order_no as  "orderNo"
+        ,t1.del_flag as  "delFlag"
+        ,t1.create_id as  "createId"
+        ,t1.date_created as  "dateCreated"
+        ,t1.date_updated as  "dateUpdated"
 	</sql>
     <!-- 根据主键获取信息详情 -->
     <select id="selectByPrimaryKey" resultType="orgUser" parameterType="orgUser">
@@ -44,65 +44,63 @@
 		where  id = #{id}
 	</delete>
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="orgUser">
+    <insert id="insert" parameterType="orgUser" useGeneratedKeys="true" keyProperty="id">
 		insert into org_user(
-		id,
-		userid,
-		pwd,
-		name,
-		job_no,
-		position,
-		gender,
-		mobile,
-		tel,
-		enable,
-		avatar,
-		status,
-		email,
-		weixinid,
-		type,
-		last_login,
-		count,
-		state,
-		skin,
-		memo,
-		keyword,
-		version,
-		order_no,
-		del_flag,
-		date_created,
-		date_updated
-	) values (
-		#{id},
-		#{userid},
-		#{pwd},
-		#{name},
-		#{jobNo},
-		#{position},
-		#{gender},
-		#{mobile},
-		#{tel},
-		#{enable},
-		#{avatar},
-		#{status},
-		#{email},
-		#{weixinid},
-		#{type},
-		null,
-		0,
-		#{state},
-		#{skin},
-		#{memo},
-		#{keyword},
-		0,
-		#{orderNo},
-		0,
-		now(),
-		now()
-	)
+             accid
+            ,pwd
+            ,name
+            ,job_no
+            ,position
+            ,gender
+            ,mobile
+            ,tel
+            ,enable
+            ,avatar
+            ,email
+            ,weixinid
+            ,type
+            ,last_login
+            ,count
+            ,state
+            ,skin
+            ,memo
+            ,keyword
+            ,version
+            ,order_no
+            ,del_flag
+            ,create_id
+            ,date_created
+            ,date_updated
+        ) values (
+             #{accid}
+            ,#{pwd}
+            ,#{name}
+            ,#{jobNo}
+            ,#{position}
+            ,#{gender}
+            ,#{mobile}
+            ,#{tel}
+            ,1
+            ,#{avatar}
+            ,#{email}
+            ,#{weixinid}
+            ,#{type}
+            ,now()
+            ,0
+            ,#{state}
+            ,#{skin}
+            ,#{memo}
+            ,#{keyword}
+            ,0
+            ,0
+            ,0
+            ,#{createId}
+            ,now()
+            ,now()
+        )
 	</insert>
     <!-- 数据更新 -->
-    <update id="updateByPrimaryKeySelective" parameterType="orgUser">
+    <update id="update" parameterType="orgUser">
         update org_user set
         version=version+1,date_updated=now()
         <if test="pwd!= null and pwd!= ''">,pwd=#{pwd}</if>
@@ -125,7 +123,6 @@
         <if test="memo!= null">,memo=#{memo}</if>
         <if test="keyword!= null">,keyword=#{keyword}</if>
         <if test="orderNo!= null">,order_no=#{orderNo}</if>
-        <if test="delFlag!= null">,del_flag=#{delFlag}</if>
         where id = #{id}
     </update>
     <!-- 判断是否存在 -->
@@ -207,8 +204,8 @@
         select
         <include refid="Base_Column_List"/>
         from org_user t1
-        where t1.del_flag=0 and enable='0'
-        and userid=#{userid}
+        where t1.del_flag=0 and enable=1
+        and accid=#{accid}
     </select>
     <!-- 逻辑删除 -->
     <update id="deleteById" parameterType="orgUser">
@@ -226,6 +223,6 @@
 	</update>
     <!-- 判断用户id是否存在 -->
     <select id="isUidYN" parameterType="java.lang.String" resultType="int">
-		select count(0) from org_user where  userid=#{userid}
+		select count(0) from org_user where  accid=#{accid}
 	</select>
 </mapper>

@@ -1,38 +1,16 @@
 select 
-
--- CONCAT('/**',t.comment,'*/') as comment
- /**
-,
-CONCAT(
-CASE 
-WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN ''
-when t.DATA_TYPE in ('tinyint','smallint','mediumint','int','bigint') then ''
-when t.DATA_TYPE in ('float','double') then ''
-when t.DATA_TYPE in ('decimal') then ''
-else 
-	CASE 
-		when t.code!='id' and  t.isNull='NO' then 
-		CONCAT('@NotNull(message="',t.code,'不能为空")',
-			''
-		)
-		else ''
-	end
-end,
+CONCAT(',',
+t.columnName),
 case 
-		when IFNULL(t.len,0)>0 then CONCAT('@Size(max=',t.len,',message="',t.code,'最大',t.len,'字符")')
-		else ''
-end
-)
- */
--- ,
-CONCAT(
-',t1.',
-t.columnName,
-' as ',
-' "',
-t.code
-,'"'
-) as code
+	when t.code  in ('delFlag','orderNo','version')then CONCAT(',',0)
+	when t.code  in ('dateCreated','dateUpdated')then CONCAT(',','now()')
+else
+	CONCAT(
+	',#{',
+	t.code
+	,'}'
+	)
+end as code
  from (
 select 
 CONCAT(
@@ -76,7 +54,7 @@ from (
 	,t.COLUMN_COMMENT as comment,
   t.DATA_TYPE as DATA_TYPE, t.IS_NULLABLE as isNull,t.CHARACTER_MAXIMUM_LENGTH as len,t.COLUMN_NAME as columnName
 	from information_schema.`COLUMNS` t 
-	where t.TABLE_SCHEMA='test' and t.TABLE_NAME='test'
+	where t.TABLE_SCHEMA='krpano' and t.TABLE_NAME='auth_perm'
 ) t
 
 )t

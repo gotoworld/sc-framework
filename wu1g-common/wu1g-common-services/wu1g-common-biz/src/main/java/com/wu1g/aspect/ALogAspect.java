@@ -85,7 +85,7 @@ public class ALogAspect {
                 id="["+objArr[0]+"]";
             }
 //            //*========数据库日志=========*//
-            sysUserLogService.info(logArr[0],logArr[1]+id, user.getName(), ip);
+            sysUserLogService.info(logArr[0],logArr[1],id, user.getId(), user.getName(), ip);
 //            log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -124,7 +124,7 @@ public class ALogAspect {
 //            log.debug("请求人:" + user.getName());
 //            log.debug("请求IP:" + ip);
 //            log.debug("请求参数:" + params);
-            sysUserLogService.info(logArr[0], logArr[1] + e.getMessage(), user.getName(), ip);
+            sysUserLogService.info(logArr[0], logArr[1], e.getMessage(), user.getId(),user.getName(), ip);
 //            log.debug("=====异常通知结束=====");
         } catch (Exception ex) {
             //记录本地异常日志

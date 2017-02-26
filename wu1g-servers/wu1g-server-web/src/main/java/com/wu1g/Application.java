@@ -8,14 +8,14 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @ServletComponentScan
 @SpringBootApplication
-public class AppApplication extends SpringBootServletInitializer {
+public class Application extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(AppApplication.class);
+        return builder.sources(Application.class);
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(AppApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

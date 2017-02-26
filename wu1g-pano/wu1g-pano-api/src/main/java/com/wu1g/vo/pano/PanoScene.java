@@ -36,6 +36,8 @@ public class PanoScene extends BaseVO {
     @NotNull(message = "sceneTitle不能为空")
     @Size(max = 50, message = "sceneTitle最大50字符")
     private String sceneTitle;
+    /**封面*/
+    private String logoUrl;
     /**
      * 场景图/全景视频
      */

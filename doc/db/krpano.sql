@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50610
 File Encoding         : 65001
 
-Date: 2017-02-25 23:51:30
+Date: 2017-02-26 19:05:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,11 +58,11 @@ INSERT INTO `auth_perm` VALUES ('id_org_user_dept_edit', '用户部门更改', '
 INSERT INTO `auth_perm` VALUES ('id_org_user_edit', '编辑', 'orgUser:edit', 'id_org_user', '', null, '0', null, '0', '2015-10-07 14:42:23', null);
 INSERT INTO `auth_perm` VALUES ('id_org_user_role_edit', '用户角色更改', 'orgUser:role.edit', 'id_org_user', '', null, '0', null, '0', '2015-10-07 14:43:42', null);
 INSERT INTO `auth_perm` VALUES ('id_pano', '全景管理', 'pano:menu', null, null, null, '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_category', '全景_类目', 'panoCat:menu', 'id_pano', '系统生成', '0', '0', '', '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_category_add', '全景_类目_新增', 'panoCat:add', 'id_pano_category', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_category_del', '全景_类目_逻辑删除', 'panoCat:del', 'id_pano_category', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_category_edit', '全景_类目_编辑', 'panoCat:edit', 'id_pano_category', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_category_save', '全景_类目_保存', 'panoCat:save', 'id_pano_category', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_pano_category', '全景_类目', 'panoCat:menu', 'id_pano', '系统生成', '0', '1', '', '1', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_pano_category_add', '全景_类目_新增', 'panoCat:add', 'id_pano_category', '系统生成', '0', '1', null, '1', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_pano_category_del', '全景_类目_逻辑删除', 'panoCat:del', 'id_pano_category', '系统生成', '0', '1', null, '1', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_pano_category_edit', '全景_类目_编辑', 'panoCat:edit', 'id_pano_category', '系统生成', '0', '1', null, '1', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_pano_category_save', '全景_类目_保存', 'panoCat:save', 'id_pano_category', '系统生成', '0', '1', null, '1', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 INSERT INTO `auth_perm` VALUES ('id_pano_comment', '全景_评论', 'panoComment:menu', 'id_pano', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 INSERT INTO `auth_perm` VALUES ('id_pano_comment_add', '全景_评论_新增', 'panoComment:add', 'id_pano_comment', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 INSERT INTO `auth_perm` VALUES ('id_pano_comment_del', '全景_评论_逻辑删除', 'panoComment:del', 'id_pano_comment', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
@@ -106,7 +106,7 @@ CREATE TABLE `auth_role` (
 -- ----------------------------
 -- Records of auth_role
 -- ----------------------------
-INSERT INTO `auth_role` VALUES ('1', '超时管理员', '1', null, '0', '3', null, '0', '2000-01-01 00:00:00', '2017-02-25 23:44:56');
+INSERT INTO `auth_role` VALUES ('1', '超时管理员', '1', null, '0', '7', null, '0', '2000-01-01 00:00:00', '2017-02-26 13:29:13');
 
 -- ----------------------------
 -- Table structure for `auth_role_vs_category`
@@ -231,7 +231,6 @@ CREATE TABLE `org_user` (
 -- ----------------------------
 -- Records of org_user
 -- ----------------------------
-INSERT INTO `org_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', null, null, null, null, null, null, '1', null, null, null, '0', '2000-01-01 00:00:00', '0', '0', 'default', null, null, '0', '0', '0', null, '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 
 -- ----------------------------
 -- Table structure for `pano_comments`
@@ -253,7 +252,7 @@ CREATE TABLE `pano_comments` (
   `date_created` datetime DEFAULT '2000-01-01 00:00:00' COMMENT '创建时间',
   `date_updated` datetime DEFAULT '2000-01-01 00:00:00' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全景_场景_评论';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='全景_场景_评论';
 
 -- ----------------------------
 -- Records of pano_comments
@@ -310,12 +309,15 @@ CREATE TABLE `pano_material` (
 DROP TABLE IF EXISTS `pano_proj`;
 CREATE TABLE `pano_proj` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(32) DEFAULT NULL COMMENT '编码',
   `category_id` bigint(20) NOT NULL COMMENT '类目id',
   `type` tinyint(1) NOT NULL COMMENT '项目类型0图片1视频',
   `name` varchar(50) NOT NULL COMMENT '名称',
   `sound_src` varchar(255) DEFAULT NULL COMMENT '背景音乐',
   `is_comments` tinyint(1) DEFAULT '0' COMMENT '开放评论 0否1是',
   `is_planetoid` tinyint(1) DEFAULT '0' COMMENT '小行星开场 0否1是',
+  `is_fps` tinyint(1) DEFAULT '0' COMMENT '显示FPS0否1是',
+  `snow_type` varchar(55) DEFAULT NULL COMMENT '雪景类型',
   `map_src` varchar(255) DEFAULT NULL COMMENT '导览图',
   `video_src` varchar(255) DEFAULT NULL COMMENT '视频解说',
   `is_seccuss` tinyint(1) DEFAULT '0' COMMENT '全景生成标记0否1是',
@@ -336,7 +338,7 @@ CREATE TABLE `pano_proj` (
   `date_created` datetime DEFAULT '2000-01-01 00:00:00' COMMENT '创建时间',
   `date_updated` datetime DEFAULT '2000-01-01 00:00:00' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全景_项目';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='全景_项目';
 
 -- ----------------------------
 -- Records of pano_proj
@@ -350,9 +352,10 @@ CREATE TABLE `pano_scene` (
   `id` varchar(38) NOT NULL COMMENT 'id',
   `proj_id` bigint(20) NOT NULL COMMENT '项目id',
   `scene_title` varchar(50) NOT NULL COMMENT '场景名称',
+  `logo_url` varchar(255) DEFAULT NULL COMMENT '封面',
   `scene_src` varchar(255) NOT NULL COMMENT '场景图/全景视频',
-  `hlookat` varchar(20) DEFAULT NULL COMMENT '水平视角',
-  `vlookat` varchar(20) DEFAULT NULL COMMENT '垂直视角',
+  `hlookat` varchar(55) DEFAULT NULL COMMENT '水平视角',
+  `vlookat` varchar(55) DEFAULT NULL COMMENT '垂直视角',
   `ext_cfg_json` varchar(4000) DEFAULT NULL COMMENT '扩展配置json',
   `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
   `state` tinyint(1) DEFAULT NULL COMMENT '状态',
@@ -375,7 +378,7 @@ CREATE TABLE `pano_scene` (
 -- ----------------------------
 DROP TABLE IF EXISTS `pano_spots`;
 CREATE TABLE `pano_spots` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `proj_id` bigint(20) NOT NULL COMMENT '项目id',
   `scene_id` varchar(38) NOT NULL COMMENT '场景id',
   `htype` tinyint(2) NOT NULL DEFAULT '0' COMMENT '类型0热点1图片2外部链接3图文介绍4语音热点',
@@ -395,7 +398,7 @@ CREATE TABLE `pano_spots` (
   `date_created` datetime DEFAULT '2000-01-01 00:00:00' COMMENT '创建时间',
   `date_updated` datetime DEFAULT '2000-01-01 00:00:00' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全景_场景_热点';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='全景_场景_热点';
 
 -- ----------------------------
 -- Records of pano_spots
@@ -549,7 +552,7 @@ CREATE TABLE `sys_user_log` (
   `create_name` varchar(64) DEFAULT NULL COMMENT '操作人姓名',
   `create_ip` varchar(64) DEFAULT NULL COMMENT '操作人IP',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统_管理员操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='系统_管理员操作日志';
 
 -- ----------------------------
 -- Records of sys_user_log

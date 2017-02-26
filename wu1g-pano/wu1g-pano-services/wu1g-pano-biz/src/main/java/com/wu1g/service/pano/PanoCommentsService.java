@@ -43,21 +43,6 @@ public class PanoCommentsService extends BaseService implements IPanoCommentsSer
         }
         return msg;
     }
-
-    @Override
-    public String deleteData(PanoComments bean) throws Exception {
-        String msg = "seccuss";
-        if (bean != null) {
-            try {
-                panoCommentsDao.deleteByPrimaryKey(bean);
-            } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
-                log.error(msg, e);
-            }
-        }
-        return msg;
-    }
-
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(PanoComments bean) throws Exception {
@@ -95,31 +80,5 @@ public class PanoCommentsService extends BaseService implements IPanoCommentsSer
             log.error("信息查询失败,数据库错误!", e);
         }
         return beans;
-    }
-
-    @Override
-    public PanoComments findDataById(PanoComments bean) {
-        PanoComments bean1 = null;
-        try {
-            bean1 = (PanoComments) panoCommentsDao.selectByPrimaryKey(bean);
-        } catch (Exception e) {
-            log.error("信息详情查询失败,数据库错误!", e);
-        }
-        return bean1;
-    }
-
-    @Override
-    public String recoveryDataById(PanoComments bean) throws Exception {
-        String msg = "seccuss";
-        if (bean != null) {
-            try {
-                panoCommentsDao.recoveryDataById(bean);
-            } catch (Exception e) {
-                msg = "信息恢复失败,数据库处理错误!";
-                log.error(msg, e);
-                throw new Exception(msg);
-            }
-        }
-        return msg;
     }
 }

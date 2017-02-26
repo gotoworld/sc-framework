@@ -6,6 +6,7 @@
 		 t1.id as  "id"
         ,t1.proj_id as  "projId"
         ,t1.scene_title as  "sceneTitle"
+        ,t1.logo_url as  "logoUrl"
         ,t1.scene_src as  "sceneSrc"
         ,t1.hlookat as  "hlookat"
         ,t1.vlookat as  "vlookat"
@@ -34,7 +35,7 @@
     <delete id="deleteByPrimaryKey" parameterType="panoScene">
 		delete
 		from pano_scene
-		where  
+		where
 		id = #{id}
 	</delete>
     <!-- 新增 批量数据 -->
@@ -43,6 +44,7 @@
              id
             ,proj_id
             ,scene_title
+            ,logo_url
             ,scene_src
             ,hlookat
             ,vlookat
@@ -62,6 +64,7 @@
              #{t.id}
             ,#{t.projId}
             ,#{t.sceneTitle}
+            ,#{t.logoUrl}
             ,#{t.sceneSrc}
             ,#{t.hlookat}
             ,#{t.vlookat}
@@ -86,6 +89,7 @@
         ,date_updated=now()
         <if test="projId!= null" >,proj_id=#{projId}</if>
         <if test="sceneTitle!= null" >,scene_title=#{sceneTitle}</if>
+        <if test="logoUrl!= null" >,logo_url=#{logoUrl}</if>
         <if test="sceneSrc!= null" >,scene_src=#{sceneSrc}</if>
         <if test="hlookat!= null" >,hlookat=#{hlookat}</if>
         <if test="vlookat!= null" >,vlookat=#{vlookat}</if>
@@ -101,10 +105,10 @@
 
     <!-- 判断是否存在 -->
     <select id="isDataYN" parameterType="panoScene" resultType="int">
-		select 
-			count(0) 
+		select
+			count(0)
 		from pano_scene
-		where 
+		where
 			id = #{id}
 	</select>
     <!--信息列表 -->

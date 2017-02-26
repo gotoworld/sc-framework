@@ -144,7 +144,7 @@
 		<%if(scene.imgSpots!=null && scene.imgSpots.~size>0){%>
 		<!-- 场景 图片装饰 -->
 		<%for(hot in scene.imgSpots){%>
-		<hotspot name="${hot.hname}" url="${hot.url}"  <%if(hot.isOnclick==1){%> style="flyoutimage" <%}else{%> enabled="false" <%}%> distorted="true" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}"/>
+		<hotspot name="${hot.hname}"  <%if(hot.isOnclick==1){%> style="flyoutimage" url="${strutil.replace(hot.url,'/n1/','/n3/')}" <%}else{%> enabled="false" url="${hot.url}" <%}%> distorted="true" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}"/>
 		<%}}%>
 	</scene>      
 <%}%>

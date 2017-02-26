@@ -148,7 +148,7 @@
 		update pano_comments set
 			version=version+1,date_updated=now()
 			,del_flag=1
-		where  
+		where
 			id = #{id}
 	</update>
 
@@ -157,7 +157,7 @@
 		update pano_comments set
 			version=version+1,date_updated=now()
 			,del_flag=0
-		where  
+		where
 			id = #{id}
 	</update>
 </mapper>

@@ -11,7 +11,7 @@
         ) values
         <foreach collection="list" item="t" separator=",">
             (
-            #{t.UserId},
+            #{t.userId},
             #{t.deptId},
             0,
             now()
@@ -22,6 +22,6 @@
     <delete id="deleteDataByUid" parameterType="orgDeptVsUser">
 		delete
 		from org_dept_vs_user
-		where  user_id = #{UserId}
+		where  user_id = #{userId}
 	</delete>
 </mapper>

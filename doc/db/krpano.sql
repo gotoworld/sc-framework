@@ -184,10 +184,10 @@ CREATE TABLE `org_dept` (
 -- ----------------------------
 DROP TABLE IF EXISTS `org_dept_vs_user`;
 CREATE TABLE `org_dept_vs_user` (
-  `userid` bigint(20) NOT NULL COMMENT '用户id',
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `dept_id` bigint(20) NOT NULL COMMENT '部门id',
   `date_created` datetime DEFAULT '2000-01-01 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`userid`,`dept_id`)
+  PRIMARY KEY (`user_id`,`dept_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织架构_部门vs用户';
 
 -- ----------------------------

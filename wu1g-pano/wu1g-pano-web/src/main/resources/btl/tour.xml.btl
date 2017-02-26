@@ -1,6 +1,6 @@
 ﻿<krpano version="1.19" title="${proj.name}" onstart="startup();">
    <!-- sceneJump(); -->
-	<%if(proj.isComments=='1'){%>
+	<%if(proj.isComments==1){%>
    <!-- 下载动态更新评论 -->
    <events name="loading_comments" 
 	        keep="true"
@@ -9,7 +9,7 @@
 	        />
 	<%}%>
 	<% include("public.xml.btl"){}%>
-	<%if(proj.isPlanetoid=='1'){%>
+	<%if(proj.isPlanetoid==1){%>
 	<!-- 小行星开场 -->
     <skin_settings littleplanetintro="true" />
 	<%}%>

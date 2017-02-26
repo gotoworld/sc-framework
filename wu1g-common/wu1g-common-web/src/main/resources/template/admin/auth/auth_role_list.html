@@ -26,14 +26,14 @@
         <tr>
             <td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
             <td>${bean.name}</td>
-            <td>${bean.isSuper=='1'?'是':'否'}</td>
+            <td>${bean.isSuper==1?'是':'否'}</td>
             <td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
             <td>
                 <%if(shiro.hasPermission("authRole:edit")){%>
                 <a href="javascript:;" onclick="openMyBoxLayer('e','${basePath}h/auth/role/edit/${bean.id}');"
                    class="label label-success"><i class="fa fa-edit"></i> 编辑</a>
                 <%}%>
-                <%if(shiro.hasPermission("authRole:del")){%>
+                <%if(bean.id!=1 && shiro.hasPermission("authRole:del")){%>
                 <a href="javascript:;"
                    onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/auth/role/del/${bean.id}');};"
                    class="label label-danger"><i class="fa fa-trash-o"></i> 删除</a>

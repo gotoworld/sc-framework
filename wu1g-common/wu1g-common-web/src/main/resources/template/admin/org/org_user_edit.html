@@ -25,13 +25,13 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-sm-12">
-				<form id="id_form" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/org/orgUser/save">
+				<form id="id_form" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/org/user/save">
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
                     <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                     <input type="hidden" name="type" id="bean_type" value="0">
-					<%if(bean.UserId!='admin' ){%>
+					<%if(bean.accid!='admin' ){%>
 					<%if(shiro.hasPermission("orgUser:role.edit")){%>
 					<div class="col-md-12 ">
 						<label class="control-label">角色></label>
@@ -57,14 +57,14 @@
 					<%}%>
 					<div class="col-sm-6">
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_UserId">登录名</label>
+							<label class="col-md-2 control-label" for="bean_accid">登录名</label>
 							<div class="col-md-8">
-							<%if(bean.UserId==null){%>
+							<%if(bean.accid==null){%>
 								<input type="text" class="form-control" placeholder="请输入用户登录名"
-									id="bean_UserId" name="UserId" value="" required="" aria-required="true" maxlength="20" aria-invalid="true" />
+									id="bean_accid" name="accid" value="" required="" aria-required="true" maxlength="20" aria-invalid="true" />
 							<%}%>
-							<%if(bean.UserId!=null){%>
-								<input type="text" class="form-control" disabled="disabled" value="${bean.UserId}" />
+							<%if(bean.accid!=null){%>
+								<input type="text" class="form-control" disabled="disabled" value="${bean.accid}" />
 							<%}%>
 								<span class="help-block"></span>
 							</div>
@@ -106,29 +106,31 @@
 								<span class="help-block"></span>
 							</div>
 						</div>
-						<!--<div class="form-group">-->
-							<!--<label class="col-md-2 control-label" for="bean_jobNo">工号</label>-->
-							<!--<div class="col-md-8">-->
-								<!--<input type="text" class="form-control" placeholder="请输入工号"-->
-									<!--id="bean_jobNo" name="jobNo" value="${bean.jobNo}" /> <span-->
-									<!--class="help-block"></span>-->
-							<!--</div>-->
-						<!--</div>-->
-						<!--<div class="form-group">-->
-							<!--<label class="col-md-2 control-label" for="bean_tel">固定电话</label>-->
-							<!--<div class="col-md-8">-->
-								<!--<input type="text" class="form-control" placeholder="请输入固定电话"-->
-									<!--id="bean_tel" name="tel" value="${bean.tel}" /> <span-->
-									<!--class="help-block"></span>-->
-							<!--</div>-->
-						<!--</div>-->
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="bean_jobNo">工号</label>
+							<div class="col-md-8">
+								<input type="text" class="form-control" placeholder="请输入工号"
+									id="bean_jobNo" name="jobNo" value="${bean.jobNo}" /> <span
+									class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="bean_tel">固定电话</label>
+							<div class="col-md-8">
+								<input type="text" class="form-control" placeholder="请输入固定电话"
+									id="bean_tel" name="tel" value="${bean.tel}" /> <span
+									class="help-block"></span>
+							</div>
+						</div>
+						<%if(bean.id!=1){%>
 						<div class="form-group">
 							<div class="col-sm-10" style="text-align: left; margin-left: 5px;">
 								<div class="checkbox">
-									<label><input  class="checkbox" value="0"  ${bean.enable=='0'?'checked="checked"':''} type="checkbox" name="enable" />启用账号</label>
+									<label><input  class="checkbox" value="1"  ${bean.enable==1?'checked="checked"':''} type="checkbox" name="enable" />启用账号</label>
 								</div>
 							</div>
 						</div>
+						<%}%>
 						<%if(shiro.hasPermission("orgUser:dept.edit")){%>
 						<%if(isNotEmpty(deptTree) && deptTree.~size>0){%>
 						<div class="form-group">

@@ -61,8 +61,8 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     // 数据存在
                     orgUserDao.update(bean);
                     Map xdto = new HashMap();
-                    xdto.put("UserId", bean.getId());
-                    if (getAuth().isPermitted("orgUser:role.edit") && !"4d868ddfd70342b093e3013886e00ea9".equals(bean.getId())) {
+                    xdto.put("userId", bean.getId());
+                    if (getAuth().isPermitted("orgUser:role.edit") && 1!=(bean.getId())) {
                         // 1.根据用户id清空用户角色关联表
                         authUserVsRoleDao.deleteDataByUid(xdto);
                     }
@@ -181,9 +181,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         OrgUser bean1 = null;
         try {
             bean1 = (OrgUser) orgUserDao.selectByPrimaryKey(bean);
-            // if(bean1!=null && ValidatorUtil.notEmpty(bean1.getDetailInfo())){
-            // bean1.setDetailInfo(IOHelper.readHtml(bean1.getDetailInfo()));
-            // }
         } catch (Exception e) {
             log.error("信息详情查询失败,数据库错误!", e);
         }

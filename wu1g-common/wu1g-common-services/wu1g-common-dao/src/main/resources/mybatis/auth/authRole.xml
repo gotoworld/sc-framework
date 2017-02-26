@@ -93,7 +93,7 @@
         select
         <include refid="Base_Column_List"/>
         from auth_role t1
-        where 1=1
+        where t1.id!=1
         <include refid="list_where_sql"/>
     </select>
     <!--信息列表 -->
@@ -101,7 +101,7 @@
         select
         <include refid="Base_Column_List"/>
         from auth_role t1
-        where 1=1
+        where t1.id!=1
         <include refid="list_where_sql"/>
     </select>
     <!-- 逻辑删除 -->

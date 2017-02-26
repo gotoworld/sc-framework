@@ -30,7 +30,7 @@ public class OrgDeptVsUser extends BaseVO {
     /**
      * 用户id
      */
-    private Long UserId;
+    private Long userId;
     /**
      * 部门id
      */

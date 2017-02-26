@@ -21,7 +21,6 @@ public class ExceptionAndExecuteTimeFilter implements Filter {
 
     @Override
     public void destroy() {
-        log.info("过滤器销毁");
     }
 
     @Override
@@ -85,7 +84,6 @@ public class ExceptionAndExecuteTimeFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {
-        log.info("...........过滤器初始化................");
     }
 
 }

@@ -29,6 +29,7 @@ public class BeetlUtils {
 			Configuration cfg=Configuration.defaultConfiguration();
 			cfg.addPkg( "com.wu1g" );
 			GroupTemplate gt=new GroupTemplate(resourceLoader,cfg);
+			gt.registerFunctionPackage("krpano", new KrSceneImageUtil());
 			Template template=gt.getTemplate( readTlFileName );
 //			String output=template.render();
 			template.binding( context );

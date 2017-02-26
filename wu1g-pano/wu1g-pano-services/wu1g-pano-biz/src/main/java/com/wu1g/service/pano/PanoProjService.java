@@ -56,17 +56,23 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     //新增
                     panoProjDao.insert(bean);
                 }
-
                 if (bean.getScenes() != null && bean.getScenes().size() > 0) {
                     //--清空当前项目下所有场景信息
                     PanoScene scene = new PanoScene();
                     scene.setProjId(bean.getId());
                     panoSceneDao.deleteByProjId(scene);
+
+                    bean.getScenes().forEach(ascene->{
+                        ascene.setProjId(bean.getId());
+                    });
+
                     //--新增场景信息
                     panoSceneDao.insertBatch(bean.getScenes());
                 }
                 //清除无效热点信息
                 panoSpotsDao.deletePanoSpots(bean);
+                //生成全景图
+                makePano(bean);
             } catch (Exception e) {
                 msg = "信息保存失败,数据库处理错误!";
                 log.error(msg, e);
@@ -182,7 +188,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                 PanoSpots panoSpots = null;
                 for (PanoScene scene : sceneList) {
                     imgappend += AppConfig.getProperty("common.fileServer.upload") + scene.getSceneSrc().replace(AppConfig.getProperty("common.fileServer.download"), "").replace("/n1/", "/n4/") + " ";
-                    scene.setBreakdownImg(getBreakdownImg(proj.getId(), scene.getSceneSrc()));
+                    scene.setBreakdownImg(getBreakdownImg(proj.getCode(), scene.getSceneSrc()));
 
                     //--获取场景-跳转热点
                     panoSpots = new PanoSpots();
@@ -232,9 +238,9 @@ public class PanoProjService extends BaseService implements IPanoProjService {
         }
     }
 
-    private String getBreakdownImg(Long projId, String sceneSrc) {
+    private String getBreakdownImg(String projCode, String sceneSrc) {
         sceneSrc = sceneSrc.substring(sceneSrc.lastIndexOf("/") + 1, sceneSrc.indexOf("."));
-        return "/upload/image/n4/" + projId + "/vtour/panos/" + sceneSrc + ".tiles/";
+        return "/upload/image/n4/" + projCode + "/vtour/panos/" + sceneSrc + ".tiles/";
     }
 
     /**
@@ -369,8 +375,9 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     }
 
     public static void main(String[] args) {
-        String url = "/upload/image/n1/fd0f69dd6dc544c3a46959714783f7e7/20161003171213sr79b.jpg";
-        url = url.substring(url.lastIndexOf("/") + 1, url.indexOf("."));
-        System.out.println(url);
+//        String url = "/upload/image/n1/fd0f69dd6dc544c3a46959714783f7e7/20161003171213sr79b.jpg";
+//        url = url.substring(url.lastIndexOf("/") + 1, url.indexOf("."));
+//        System.out.println(url);
+        System.out.println(2000 * 1024 * 1024);
     }
 }

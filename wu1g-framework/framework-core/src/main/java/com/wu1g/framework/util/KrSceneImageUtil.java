@@ -55,7 +55,7 @@ public class KrSceneImageUtil {
         return result;
     }
 
-    public void getFile(String path, StringBuffer sb, String imgName) {
+    public void getFile(String projDir,String path, StringBuffer sb) {
         java.io.File dir = new File(path);
         if (dir.isDirectory()) {
             File[] dir1 = dir.listFiles();
@@ -69,7 +69,7 @@ public class KrSceneImageUtil {
             int tiledimageheight = 0;
             for (int i = 0; i < dir1.length; i++) {
                 if (dir1[i].isDirectory()) {
-                    getFile(dir1[i].getPath() + "/1", sb, imgName);
+                    getFile(projDir,dir1[i].getPath() + "/1", sb);
                 } else {
                     Dimension dimension = getImageDim(dir1[i].getPath());
                     tiledimagewidth += dimension.getWidth();
@@ -80,7 +80,7 @@ public class KrSceneImageUtil {
                 return;
             }
             sb.append("\t\t\t<level tiledimagewidth=\"" + tiledimagewidth + "\" tiledimageheight=\"" + tiledimageheight + "\">\n" +
-                    "\t\t\t\t<cube url=\"panos/" + imgName + ".tiles/%s/" + dir.getParentFile().getName() + "/%v/" + dir.getParentFile().getName() + "_%s_%v_%h.jpg\" />\n" +
+                    "\t\t\t\t<cube url=\""+projDir+"%s/" + dir.getParentFile().getName() + "/%v/" + dir.getParentFile().getName() + "_%s_%v_%h.jpg\" />\n" +
                     "\t\t\t</level>");
             sb.append("\n");
         }
@@ -94,7 +94,7 @@ public class KrSceneImageUtil {
             tilesize = ((Double) dimension.getWidth()).intValue();
 //        System.out.println(path);
             StringBuffer sb = new StringBuffer("\t\t<image type=\"CUBE\" multires=\"true\" tilesize=\"" + tilesize + "\" if=\"!webvr.isenabled\">\n");
-            getFile(newPath + "/b", sb, (path.substring(path.indexOf("/panos/") + 7, path.indexOf(".tiles/"))));
+            getFile(path,newPath + "/b", sb);
             sb.append("\t\t</image>");
             return sb;
         } catch (Exception e) {

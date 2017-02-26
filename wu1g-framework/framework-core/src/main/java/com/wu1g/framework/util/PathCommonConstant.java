@@ -46,13 +46,13 @@ public class PathCommonConstant extends CommonConstant {
     public final static String UPLOAD_TYPE_TEMPLATE = "ftl";
 
     /**
-     * 上传的最大视频大小 单位 字节
+     * 上传的最大视频大小 单位 M
      */
-    public final static long UPLOAD_VIDEO_MAX_SIZE = 4096 * 1024 * 1024;
+    public final static long UPLOAD_VIDEO_MAX_SIZE = 4*1024;
     /**
-     * 上传的最大图片大小 单位 字节
+     * 上传的最大图片大小 单位 M
      */
-    public final static long UPLOAD_PIC_MAX_SIZE = 4096 * 1024 * 1024;
+    public final static long UPLOAD_PIC_MAX_SIZE = 4*1024;
 
     /**--------------------用到文本编辑器的模块-------------------------*/
     /**

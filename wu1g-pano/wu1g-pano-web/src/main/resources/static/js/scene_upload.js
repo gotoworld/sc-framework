@@ -1,6 +1,6 @@
-function upload_single_pic(btn, divId) {
-    var fileMaxSize = 1;
-    var fileExtensions = 'png';
+function qj_up(btn, divId, projId) {
+    var fileMaxSize = 4096;
+    var fileExtensions = 'jpg,jpeg,tif,tiff,btf,tf8,bigtiff,psd,psb,kro';
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: '' + btn,
@@ -8,11 +8,11 @@ function upload_single_pic(btn, divId) {
         container: document.getElementById('' + divId),
         flash_swf_url: basePath + '/plugins/plupload/js/Moxie.swf',
         silverlight_xap_url: basePath + '/plugins/plupload/js/Moxie.xap',
-        url: basePath + '/fileUpload?dir=image',
-
+        url: basePath + '/fileUpload?dir=image&projId=' + projId,
+        multipart: true,
         filters: {
             mime_types: [ //只允许上传图片
-                {title: "image files", extensions: fileExtensions},
+                {title: "Image files", extensions: "" + fileExtensions},
             ],
             max_file_size: fileMaxSize + 'mb', //最大只能上传mb的文件
             prevent_duplicates: true //不允许选取重复文件
@@ -20,11 +20,13 @@ function upload_single_pic(btn, divId) {
 
         init: {
             PostInit: function () {
+
             },
             FilesAdded: function (up, files) {
                 var file = files[files.length - 1];
-                $("#" + divId).append('<div id="' + file.id + '" class="img-grid-2"><b></b>'
+                $("#" + divId).append('<div id="' + file.id + '" class="img-grid"><b></b>'
                     + '<div class="progress"><div class="progress-bar" style="width: 0%"></div></div>'
+                    + '<a href="javascript:;" onclick="javascript:del_scene_btn(this,' + file.id + ');" class="ico_del"></a>'
                     + '</div>');
                 uploader.start();
                 return false;
@@ -32,7 +34,6 @@ function upload_single_pic(btn, divId) {
             BeforeUpload: function (up, file) {
                 $("#" + btn).css('pointer-events', 'none');
             },
-            //上传进度
             UploadProgress: function (up, file) {
                 var d = document.getElementById(file.id);
                 d.getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
@@ -41,26 +42,35 @@ function upload_single_pic(btn, divId) {
                 progBar.style.width = 2 * file.percent + 'px';
                 progBar.setAttribute('aria-valuenow', file.percent);
             },
-            //文件上传完毕
             FileUploaded: function (up, file, info) {
-                $("#" + divId + " .img-grid-2").remove();
+                //console.info(info);
                 if (info.status == 200) {
                     var infoData = eval('(' + info.response + ')');
                     if (infoData.code != 0) {
-                        $("#" + divId).append(infoData.message);
+                        document.getElementById(file.id).innerHTML = infoData.message;
                     } else {
-                        var html = '<div id="' + file.id + '" class="img-grid-2">';
-                        html += '<input name="mapSrc" value="' + infoData.fileUrl + '" type="hidden">';
-                        html += '<img src="' + infoData.fileUrl + '" style="max-width:264px;max-height:264px">';
-                        html += '</div>';
-                        $("#" + divId).append(html);
+                        var s_key = generateMixed(6);
+                        var html = '';
+                        html += '<input type="hidden" name="scene_id" value="' + file.id + '" />';
+                        html += '<input type="hidden" name="' + file.id + '_scene_src" value="' + infoData.fileUrl + '" />';
+                        html += '<input type="hidden" name="' + file.id + '_scene_key" value="' + s_key + '" />';
+                        html += '<img src="' + infoData.fileUrl + '" >';
+                        html += '<input type="text" name="' + file.id + '_scene_tit" placeholder="请填写场景名称" required="" aria-required="true"   maxlength="20" aria-invalid="true"/>';
+                        html += '<a href="javascript:;" onclick="move_scene(this,\'left\');" class="ico_left" ></a>';
+                        html += '<a href="javascript:;" onclick="javascript:del_scene_btn(this,\'' + file.id + '\');" class="ico_del"></a>';
+                        html += '<a href="javascript:;" onclick="move_scene(this,\'right\');" class="ico_right" /></a>';
+                        document.getElementById(file.id).innerHTML = html;
+
+                        $('#makePanoFlag').attr('checked', 'checked');
                     }
-                } else {
-                    $("#" + divId).append(info.response);
+                }
+                else {
+                    document.getElementById(file.id).innerHTML = info.response;
                 }
                 $("#" + btn).css('pointer-events', '');
+                //--
+                formValidate();
             },
-
             Error: function (up, err) {
                 if (err.code == -600) {
                     layer.msg("选择的文件太大了,不能超过" + fileMaxSize + "M");
@@ -77,6 +87,16 @@ function upload_single_pic(btn, divId) {
             }
         }
     });
+
     uploader.init();
     return uploader;
+}
+var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+function generateMixed(n) {
+    var res = "";
+    for (var i = 0; i < n; i++) {
+        var id = Math.ceil(Math.random() * 9);
+        res += chars[id];
+    }
+    return res;
 }

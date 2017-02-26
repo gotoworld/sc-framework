@@ -128,7 +128,7 @@ function post_xml_data(){
 	var xml_data_str=JSON.stringify(xml_data);
 	var radars_str=JSON.stringify(radars);
 //	console.log('radars_str='+radars_str);
-  $.post(basePath+"h/pano02.xmlsave",{pid:pid,data:''+xml_data_str,radars:''+radars_str},function(data){
+  $.post(basePath+"h/pano/proj/xmlsave",{pid:pid,data:''+xml_data_str,radars:''+radars_str},function(data){
 	    var data = eval('('+data+')');
 		if(data.status==1){
 		    alert('保存成功');

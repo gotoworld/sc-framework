@@ -45,8 +45,8 @@
 <script type="text/javascript">
 //声明相关变量
 var xml_data = new Object();
-<%if(isNotEmpty(proj.xmlData)){%>
-xml_data = ${proj.xmlData};
+<%if(isNotEmpty(proj.tourEditJson)){%>
+xml_data = ${proj.tourEditJson};
 <%}else{%>
 xml_data = {
 <%for(scene in proj.scenes){%>

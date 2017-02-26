@@ -32,6 +32,7 @@
 					<form id="pano02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/pano/proj/save">
 						<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}">
 			            <input type="hidden" name="id" value="${bean.id}" />
+			            <input type="hidden" name="code" value="${bean.code}" />
 						<input type="hidden" name="token" value="${bean.token}" />
                         <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                         <input type="hidden" name="type" value="0" />
@@ -41,7 +42,7 @@
 								<div class="col-sm-8">
 <!-- 								value="${bean.categoryId}" -->
 									<select id="bean_categoryId" name="categoryId"  class="form-control" aria-describedby="bean_categoryId-error"   aria-invalid="true">
-										<option value="testCategoryId">测试类目1</option>
+										<option value="1">测试类目1</option>
 									</select>
 									<span id="bean_categoryId-error" class="help-block m-b-none"></span>
 								 </div>
@@ -49,9 +50,6 @@
 							 <div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
 	                                    <div class="checkbox">
-<!-- 	                                        <label> -->
-<!-- 	                                            <input type="checkbox" class="checkbox" id="bean_isMending" <%if(bean.isMending==1){%> checked="checked" <%}%> name="isMending" value="1">补地 -->
-<!-- 	                                        </label> -->
 	                                        <label>
 	                                            <input type="checkbox" class="checkbox" id="bean_isComments" <%if(bean.isComments==1){%> checked="checked" <%}%> name="isComments" value="1">开放评论
 	                                        </label>
@@ -130,11 +128,11 @@
 							 </div>
 													
 <!-- 							<div class="form-group"> -->
-<!-- 								<label class="col-sm-3 control-label"  for="bean_logoPic">logo图片：</label> -->
+<!-- 								<label class="col-sm-3 control-label"  for="bean_logoPicUrl">logo图片：</label> -->
 <!-- 								<div class="col-sm-8"> -->
-<!-- 									<input id="bean_logoPic" name="logoPic" value="${bean.logoPic}" class="form-control" type="text"  placeholder="logo图片" aria-describedby="bean_logoPic-error"  maxlength="255"   aria-invalid="true"> -->
-<!-- 									<span id="bean_logoPic-error" class="help-block m-b-none">可不上传</span> -->
-<!-- 									<input id="bean_logoUrl" name="logoUrl" value="${bean.logoUrl}" class="form-control" type="text"  placeholder="logo链接" aria-describedby="bean_logoUrl-error"  maxlength="255"   aria-invalid="true"> -->
+<!-- 									<input id="bean_logoPicUrl" name="logoPicUrl" value="${bean.logoPicUrl}" class="form-control" type="text"  placeholder="logo图片" aria-describedby="bean_logoPicUrl-error"  maxlength="255"   aria-invalid="true"> -->
+<!-- 									<span id="bean_logoPicUrl-error" class="help-block m-b-none">可不上传</span> -->
+<!-- 									<input id="bean_logoWebUrl" name="logoWebUrl" value="${bean.logoWebUrl}" class="form-control" type="text"  placeholder="logo链接" aria-describedby="bean_logoWebUrl-error"  maxlength="255"   aria-invalid="true"> -->
 <!-- 									<div id="upload_logo_file" class="fl" style=""> -->
 <!-- 										<a href="javascript:;" id="upload_logo_src"><img src="${basePath}img/add_pic_btn.png" style="border: solid 4px #ddd"></a> -->
 <!-- 									</div> -->
@@ -188,7 +186,7 @@
 	<% include("../include/public_last_js_css.html"){} %>
 	<script src="${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
 	<script src="${basePath}plugins/plupload/js/plupload.min.js"></script>
-	<script type="text/javascript" src="${basePath}js/upload.js"></script>
+	<script type="text/javascript" src="${basePath}js/scene_upload.js"></script>
 	<script type="text/javascript" src="${basePath}js/bgmsc_upload.js"></script>
 	<script type="text/javascript" src="${basePath}js/upload_single_pic.js"></script>
 	<script type="text/javascript">
@@ -200,7 +198,7 @@
 			$("#pano02_01").validate();
 		},1000);
 	}
-	var uploader = qj_up('upload_scene_btn','upload_scene_div','${bean.id}');
+	var uploader = qj_up('upload_scene_btn','upload_scene_div','${bean.code}');
 	bgm_up('upload_sound_btn','upload_sound_div');
 	upload_single_pic('upload_map_btn','upload_map_div');
 	//删除上传的场景

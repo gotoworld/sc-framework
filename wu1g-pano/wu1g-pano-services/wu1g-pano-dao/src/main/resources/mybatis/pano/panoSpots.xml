@@ -16,6 +16,7 @@
         ,t1.scale as  "scale"
         ,t1.depth as  "depth"
         ,t1.rotate as  "rotate"
+        ,t1.is_onclick as  "isOnclick"
         ,t1.url as  "url"
         ,t1.version as  "version"
         ,t1.create_id as  "createId"

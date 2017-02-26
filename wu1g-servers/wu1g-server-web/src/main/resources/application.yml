@@ -85,7 +85,7 @@ wu1g:
     config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
   common:
     fileServer:
-      rootFolder: d:/home/softvan/
+      rootFolder: d:/home/file/
       upload: ${wu1g.common.fileServer.rootFolder}upload/
       download: /upload/
       image:

@@ -4,11 +4,14 @@
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
 		 t1.id as  "id"
+		,t1.code as  "code"
 		,t1.category_id as  "categoryId"
 		,t1.type as  "type"
 		,t1.name as  "name"
 		,t1.sound_src as  "soundSrc"
 		,t1.is_comments as  "isComments"
+		,t1.is_fps as  "isFps"
+		,t1.snow_type as  "snowType"
 		,t1.is_planetoid as  "isPlanetoid"
 		,t1.map_src as  "mapSrc"
 		,t1.video_src as  "videoSrc"
@@ -51,12 +54,15 @@
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="panoProj" useGeneratedKeys="true" keyProperty="id">
 		insert into pano_proj(
-			 category_id
+			 code
+			,category_id
 			,type
 			,name
 			,sound_src
 			,is_comments
 			,is_planetoid
+			,is_fps
+			,snow_type
 			,map_src
 			,video_src
 			,is_seccuss
@@ -77,17 +83,20 @@
 			,date_created
 			,date_updated
 		) values (
-			 #{categoryId}
+			 #{code}
+			,#{categoryId}
 			,#{type}
 			,#{name}
 			,#{soundSrc}
 			,#{isComments}
 			,#{isPlanetoid}
+			,#{isFps}
+			,#{snowType}
 			,#{mapSrc}
 			,#{videoSrc}
 			,#{isSeccuss}
-			,#{thumbsUpNum}
-			,#{pvNum}
+			,0
+			,0
 			,#{logoPicUrl}
 			,#{logoWebUrl}
 			,#{pwd}
@@ -118,6 +127,8 @@
 		<if test="isComments!= null" >,is_comments=#{isComments}</if>
 		<if test="isPlanetoid!= null" >,is_planetoid=#{isPlanetoid}</if>
 		<if test="isSeccuss!= null" >,is_seccuss=#{isSeccuss}</if>
+		<if test="isFps!= null" >,is_fps=#{isFps}</if>
+		<if test="snowType!= null" >,snow_type=#{snowType}</if>
 		<if test="thumbsUpNum!= null" >,thumbs_up_num=#{thumbsUpNum}</if>
 		<if test="pvNum!= null" >,pv_num=#{pvNum}</if>
 		<if test="logoPicUrl!= null" >,logo_pic_url=#{logoPicUrl}</if>

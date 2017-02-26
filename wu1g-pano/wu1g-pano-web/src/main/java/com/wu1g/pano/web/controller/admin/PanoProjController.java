@@ -22,6 +22,8 @@ import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
+import com.wu1g.framework.util.DateUtil;
+import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.vo.pano.PanoMap;
 import com.wu1g.vo.pano.PanoProj;
@@ -42,10 +44,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
@@ -121,6 +120,7 @@ public class PanoProjController extends BaseController {
         }
         if (bean == null || 0 == id) {
             bean = new PanoProj();
+            bean.setCode(""+System.currentTimeMillis()+ (int)(Math.random()*1000000+100000));
             bean.setNewFlag(1);
         }
         bean.setPageNum(pageNum);
@@ -183,7 +183,6 @@ public class PanoProjController extends BaseController {
                                 String scene_id = (scene_id_arr[i]);
                                 PanoScene scene = new PanoScene();
                                 scene.setId(scene_id);
-                                scene.setProjId(bean.getId());
                                 scene.setOrderNo(i);
                                 scene.setSceneSrc(request.getParameter(scene_id + "_scene_src"));
                                 scene.setKeyword(request.getParameter(scene_id + "_scene_key"));
@@ -202,9 +201,6 @@ public class PanoProjController extends BaseController {
                     result.data = bean.getId();
 
                     bean.setStr(getBasePath());
-                    //生成全景图
-                    panoProjService.makePano(bean);
-
                     request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
                 }
             } catch (Exception e) {

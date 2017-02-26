@@ -264,7 +264,7 @@ public class UploadServlet extends HttpServlet{
                 }
 
                 Map<String, Object> obj = new HashMap<String, Object>();
-                obj.put("error", 0);
+                obj.put("code", 0);
                 obj.put("fileUrl", (saveUrl + newFileName));
                 obj.put("fileName", name);
                 response.getWriter().write(JSON.toJSONString(obj));
@@ -282,11 +282,11 @@ public class UploadServlet extends HttpServlet{
     private boolean checkFileSize(long size, String type) {
         boolean flag = true;
         if (PathCommonConstant.UPLOAD_CATAGORY_IMAGE.equals(type)) {
-            if (size > PathCommonConstant.UPLOAD_PIC_MAX_SIZE) {
+            if (size/1024/1024 > PathCommonConstant.UPLOAD_PIC_MAX_SIZE) {
                 flag = false;
             }
         } else if (PathCommonConstant.UPLOAD_CATAGORY_FLASH.equals(type) || PathCommonConstant.UPLOAD_CATAGORY_MEDIA.equals(type)) {
-            if (size > PathCommonConstant.UPLOAD_VIDEO_MAX_SIZE) {
+            if (size/1024/1024 > PathCommonConstant.UPLOAD_VIDEO_MAX_SIZE) {
                 flag = false;
             }
         }
@@ -303,7 +303,7 @@ public class UploadServlet extends HttpServlet{
      */
     private String getError(String message) {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("error", 1);
+        obj.put("code", 1);
         obj.put("message", message);
         return JSON.toJSONString(obj);
     }

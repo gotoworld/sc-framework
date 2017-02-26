@@ -26,6 +26,10 @@ public class PanoProj extends BaseVO {
      */
     private Long id;
     /**
+     * 编码
+     */
+    private String code;
+    /**
      * 类目id
      */
     private Long categoryId;
@@ -52,6 +56,14 @@ public class PanoProj extends BaseVO {
      * 小行星开场 0否1是
      */
     private Integer isPlanetoid;
+    /**
+     * 显示FPS 0否1是
+     */
+    private Integer isFps;
+    /**
+     * 雪景类型
+     */
+    private String snowType;
     /**
      * 导览图
      */

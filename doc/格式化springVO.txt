@@ -3,41 +3,42 @@ select
 CONCAT('/**',t.comment,'*/') as comment
 ,
 CONCAT(
-CASE 
-WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN ''
-when t.DATA_TYPE in ('tinyint','smallint','mediumint','int','bigint') then ''
-when t.DATA_TYPE in ('float','double') then ''
-when t.DATA_TYPE in ('decimal') then ''
-else 
-	CASE 
-		when t.code!='id' and  t.isNull='NO' then 
-		CONCAT('@NotNull(message="',t.code,'不能为空")',
-			''
-		)
-		else ''
-	end
-end,
-case
-		when IFNULL(t.len,0)>0 then CONCAT('@Size(max=',t.len,',message="',t.code,'最大',t.len,'字符")')
-		else ''
-end
+    CASE
+        WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN ''
+        when t.DATA_TYPE in ('tinyint','smallint','mediumint','int','bigint') then ''
+        when t.DATA_TYPE in ('float','double') then ''
+        when t.DATA_TYPE in ('decimal') then ''
+    else
+        CASE
+            when t.code!='id' and  t.isNull='NO' then
+            CONCAT('@NotNull(message="',t.code,'不能为空")',
+                ''
+            )
+            else ''
+        end
+    end,
+    case
+        when IFNULL(t.len,0)>0 then CONCAT('@Size(max=',t.len,',message="',t.code,'最大',t.len,'字符")')
+        else ''
+    end
 ) as JSR303
 ,
 CONCAT(
-'private ',
-(
-CASE 
-WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN 'Date'
-when (t.DATA_TYPE in ('tinyint') or t.code in ('delFlag'))then 'Integer'
-when t.DATA_TYPE in ('bigint') then 'Long'
-when t.DATA_TYPE in ('smallint','mediumint','int') then 'Integer'
-when t.DATA_TYPE in ('float','double') then 'Double'
-when t.DATA_TYPE in ('decimal') then 'BigDecimal'
-else 'String'
-end),
-' ',
-t.code
-,';'
+    'private ',
+    (
+    CASE
+        WHEN t.DATA_TYPE  in ('date' , 'time' , 'datetime' , 'timestamp' , 'year')  THEN 'Date'
+        when (t.DATA_TYPE in ('tinyint') or t.code in ('delFlag'))then 'Integer'
+        when t.DATA_TYPE in ('bigint') then 'Long'
+        when t.DATA_TYPE in ('smallint','mediumint','int') then 'Integer'
+        when t.DATA_TYPE in ('float','double') then 'Double'
+        when t.DATA_TYPE in ('decimal') then 'BigDecimal'
+    else
+        'String'
+    end),
+    ' ',
+    t.code
+    ,';'
 ) as propertyField
 FROM ( SELECT CONCAT(  IF ( position('_' IN t. CODE) = 0, SUBSTR( t. CODE, 1, CHAR_LENGTH(t. CODE) ), SUBSTR( t. CODE, 1, position('_' IN t. CODE) - 1 ) ),  IF ( position('_' IN t. CODE) != 0, UPPER( SUBSTR( t. CODE, position('_' IN t. CODE) + 1, 1 ) ), '' ),  IF ( position('_' IN t. CODE) != 0, SUBSTR( t. CODE, position('_' IN t. CODE) + 2, CHAR_LENGTH(t. CODE) ), '' ) ) AS CODE, t. COMMENT, t.DATA_TYPE AS DATA_TYPE, t.isNull AS isNull, t.len AS len, t.columnName AS columnName
 	FROM ( SELECT CONCAT(  IF ( position('_' IN t. CODE) = 0, SUBSTR( t. CODE, 1, CHAR_LENGTH(t. CODE) ), SUBSTR( t. CODE, 1, position('_' IN t. CODE) - 1 ) ),  IF ( position('_' IN t. CODE) != 0, UPPER( SUBSTR( t. CODE, position('_' IN t. CODE) + 1, 1 ) ), '' ),  IF ( position('_' IN t. CODE) != 0, SUBSTR( t. CODE, position('_' IN t. CODE) + 2, CHAR_LENGTH(t. CODE) ), '' ) ) AS CODE, t. COMMENT, t.DATA_TYPE AS DATA_TYPE, t.isNull AS isNull, t.len AS len, t.columnName AS columnName

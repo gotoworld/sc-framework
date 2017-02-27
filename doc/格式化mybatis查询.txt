@@ -11,50 +11,13 @@ else
 	,'}'
 	)
 end as code
- from (
-select 
-CONCAT(
-	if(
-		position('_' in t.code)=0,
-		SUBSTR(t.code,1,CHAR_LENGTH(t.code)),
-		SUBSTR(t.code,1,position('_' in t.code)-1)
-	),
-	if(
-		position('_' in t.code)!=0,
-		UPPER(SUBSTR(t.code,position('_' in t.code)+1,1)),
-		''
-	),
-	if(
-		position('_' in t.code)!=0,
-		SUBSTR(t.code,position('_' in t.code)+2,CHAR_LENGTH(t.code)),
-		''
-	)
-)as code
-,t.comment,t.DATA_TYPE as DATA_TYPE, t.isNull as isNull,t.len as len,t.columnName as columnName
-from (
-	select 
-	CONCAT(
-		SUBSTR(t.COLUMN_NAME,1,1),
-		if(
-			position('_' in t.COLUMN_NAME)=0,
-			SUBSTR(t.COLUMN_NAME,2,CHAR_LENGTH(t.COLUMN_NAME)),
-			SUBSTR(t.COLUMN_NAME,2,position('_' in t.COLUMN_NAME)-2)
-		),
-		if(
-			position('_' in t.COLUMN_NAME)!=0,
-			UPPER(SUBSTR(t.COLUMN_NAME,position('_' in t.COLUMN_NAME)+1,1)),
-			''
-		),
-		if(
-			position('_' in t.COLUMN_NAME)!=0,
-			SUBSTR(t.COLUMN_NAME,position('_' in t.COLUMN_NAME)+2,CHAR_LENGTH(t.COLUMN_NAME)),
-			''
-		)
-	) as code
-	,t.COLUMN_COMMENT as comment,
-  t.DATA_TYPE as DATA_TYPE, t.IS_NULLABLE as isNull,t.CHARACTER_MAXIMUM_LENGTH as len,t.COLUMN_NAME as columnName
-	from information_schema.`COLUMNS` t 
-	where t.TABLE_SCHEMA='krpano' and t.TABLE_NAME='auth_perm'
+FROM ( SELECT CONCAT(  IF ( position('_' IN t. CODE) = 0, SUBSTR( t. CODE, 1, CHAR_LENGTH(t. CODE) ), SUBSTR( t. CODE, 1, position('_' IN t. CODE) - 1 ) ),  IF ( position('_' IN t. CODE) != 0, UPPER( SUBSTR( t. CODE, position('_' IN t. CODE) + 1, 1 ) ), '' ),  IF ( position('_' IN t. CODE) != 0, SUBSTR( t. CODE, position('_' IN t. CODE) + 2, CHAR_LENGTH(t. CODE) ), '' ) ) AS CODE, t. COMMENT, t.DATA_TYPE AS DATA_TYPE, t.isNull AS isNull, t.len AS len, t.columnName AS columnName
+	FROM ( SELECT CONCAT(  IF ( position('_' IN t. CODE) = 0, SUBSTR( t. CODE, 1, CHAR_LENGTH(t. CODE) ), SUBSTR( t. CODE, 1, position('_' IN t. CODE) - 1 ) ),  IF ( position('_' IN t. CODE) != 0, UPPER( SUBSTR( t. CODE, position('_' IN t. CODE) + 1, 1 ) ), '' ),  IF ( position('_' IN t. CODE) != 0, SUBSTR( t. CODE, position('_' IN t. CODE) + 2, CHAR_LENGTH(t. CODE) ), '' ) ) AS CODE, t. COMMENT, t.DATA_TYPE AS DATA_TYPE, t.isNull AS isNull, t.len AS len, t.columnName AS columnName
+		FROM ( SELECT CONCAT(  IF ( position('_' IN t. CODE) = 0, SUBSTR( t. CODE, 1, CHAR_LENGTH(t. CODE) ), SUBSTR( t. CODE, 1, position('_' IN t. CODE) - 1 ) ),  IF ( position('_' IN t. CODE) != 0, UPPER( SUBSTR( t. CODE, position('_' IN t. CODE) + 1, 1 ) ), '' ),  IF ( position('_' IN t. CODE) != 0, SUBSTR( t. CODE, position('_' IN t. CODE) + 2, CHAR_LENGTH(t. CODE) ), '' ) ) AS CODE, t. COMMENT, t.DATA_TYPE AS DATA_TYPE, t.isNull AS isNull, t.len AS len, t.columnName AS columnName
+			FROM (
+			SELECT CONCAT( SUBSTR(t.COLUMN_NAME, 1, 1),  IF ( position('_' IN t.COLUMN_NAME) = 0, SUBSTR( t.COLUMN_NAME, 2, CHAR_LENGTH(t.COLUMN_NAME) ), SUBSTR( t.COLUMN_NAME, 2, position('_' IN t.COLUMN_NAME) - 2 ) ),  IF ( position('_' IN t.COLUMN_NAME) != 0, UPPER( SUBSTR( t.COLUMN_NAME, position('_' IN t.COLUMN_NAME) + 1, 1 ) ), '' ),  IF ( position('_' IN t.COLUMN_NAME) != 0, SUBSTR( t.COLUMN_NAME, position('_' IN t.COLUMN_NAME) + 2, CHAR_LENGTH(t.COLUMN_NAME) ), '' ) ) AS CODE, t.COLUMN_COMMENT AS COMMENT, t.DATA_TYPE AS DATA_TYPE, t.IS_NULLABLE AS isNull, t.CHARACTER_MAXIMUM_LENGTH AS len, t.COLUMN_NAME AS columnName
+			FROM information_schema.`COLUMNS` t WHERE t.TABLE_SCHEMA = 'krpano' AND t.TABLE_NAME = 'pano_proj'
+			) t
+		) t
+	) t
 ) t
-
-)t

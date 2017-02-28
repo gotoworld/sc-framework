@@ -12,7 +12,7 @@ import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.BeetlUtils;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.service.utils.cmdprocessor.KrPanoUtil;
+import com.wu1g.service.utils.cmdprocessor.KrpanoUtil;
 import com.wu1g.vo.pano.PanoMap;
 import com.wu1g.vo.pano.PanoProj;
 import com.wu1g.vo.pano.PanoScene;
@@ -201,36 +201,21 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     scene.setImgSpots((List<PanoSpots>) panoSpotsDao.findDataIsList(panoSpots));
                 }
             }
-            if (bean.isMakePanoFlag() && ValidatorUtil.notEmpty(imgappend)) {
-                KrPanoUtil.runShell(imgappend);//生成图片
-            }
             //--获取导览图坐标信息
             if (ValidatorUtil.notEmpty(proj.getMapSrc())) {
                 PanoMap panoMap = new PanoMap();
                 panoMap.setProjId(proj.getId());
                 proj.setRadars((List<PanoMap>) panoMapDao.findDataIsList(panoMap));
             }
-
             proj.setScenes(sceneList);
             context.put("proj", proj);
             context.put("basePath", bean.getStr());
             context.put("panoPath", bean.getStr() + "/plugins/krpano/");
-
             String saveDir = AppConfig.getProperty("common.fileServer.upload") + "pano/";
-
-//			创建文件夹
-            File saveDirFile = new File(saveDir);
-            if (!saveDirFile.exists()) {
-                saveDirFile.mkdirs();
+            if (bean.isMakePanoFlag() && ValidatorUtil.notEmpty(imgappend)) {
+                KrpanoUtil.runShell(imgappend,context,saveDir,bean);//生成图片
             }
-
-            BeetlUtils.renderToFile("/btl/tour.xml.btl", context, saveDir + bean.getId() + ".xml");
-
-            BeetlUtils.renderToFile("/btl/tour.html.btl", context, saveDir + bean.getId() + ".html");
-
-            BeetlUtils.renderToFile("/btl/tour_editor.xml.btl", context, saveDir + bean.getId() + ".editor.xml");
-
-            BeetlUtils.renderToFile("/btl/tour_editor.html.btl", context, saveDir + bean.getId() + ".editor.html");
+            KrpanoUtil.makeTourXml(context,saveDir,bean);
         } catch (Exception e) {
             String msg = "全景图生成失败!" + bean.getId() + "," + bean.getName();
             log.error(msg, e);
@@ -366,7 +351,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
 
             BeetlUtils.renderToFile("/btl/video.xml.btl", context, saveDir + bean.getId() + ".xml");
 
-            BeetlUtils.renderToFile("/btl/video.html.btl", context, saveDir + bean.getId() + ".html");
+//            BeetlUtils.renderToFile("/btl/video.html.btl", context, saveDir + bean.getId() + ".html");
         } catch (Exception e) {
             String msg = "全景视频文件生成失败!" + bean.getId() + "," + bean.getName();
             log.error(msg, e);

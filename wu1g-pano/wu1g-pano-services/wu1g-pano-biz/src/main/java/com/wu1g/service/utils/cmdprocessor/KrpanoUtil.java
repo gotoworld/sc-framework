@@ -1,17 +1,36 @@
 package com.wu1g.service.utils.cmdprocessor;
 
 import com.wu1g.framework.config.AppConfig;
+import com.wu1g.framework.util.BeetlUtils;
+import com.wu1g.framework.util.ValidatorUtil;
+import com.wu1g.vo.pano.PanoMap;
+import com.wu1g.vo.pano.PanoProj;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class KrPanoUtil {
+public class KrpanoUtil {
     private static ThreadPoolExecutor executor = new ThreadPoolExecutor(5, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
 
     private static String shellCommand = null;
+
+    public static void makeTourXml(Map context,String saveDir,PanoProj bean){
+//			创建文件夹
+        File saveDirFile = new File(saveDir);
+        if (!saveDirFile.exists()) {
+            saveDirFile.mkdirs();
+        }
+        BeetlUtils.renderToFile("/btl/tour.xml.btl", context, saveDir + bean.getId() + ".xml");
+//        BeetlUtils.renderToFile("/btl/tour.html.btl", context, saveDir + bean.getId() + ".html");
+        BeetlUtils.renderToFile("/btl/tour_editor.xml.btl", context, saveDir + bean.getId() + ".editor.xml");
+//        BeetlUtils.renderToFile("/btl/tour_editor.html.btl", context, saveDir + bean.getId() + ".editor.html");
+    }
 
     private static String getShellCommand() {
         try {
@@ -30,7 +49,7 @@ public class KrPanoUtil {
         return shellCommand;
     }
 
-    public static void runShell(final String fileUrl) {
+    public static void runShell(final String fileUrl,Map context,String saveDir,PanoProj bean) {
         final String finalShellCommand = getShellCommand();
         executor.execute(new Thread(() -> {
             try {
@@ -58,6 +77,9 @@ public class KrPanoUtil {
                 err.join();
                 log.debug("Errthread finished");
                 log.info(fileUrl + "============end=============用时:" + (System.currentTimeMillis() - stime));
+
+                //重新计算全景场景图,且刷新xml
+                KrpanoUtil.makeTourXml(context,saveDir,bean);
             } catch (Exception e) {
                 log.error("全景图生成异常!" + fileUrl, e);
             }

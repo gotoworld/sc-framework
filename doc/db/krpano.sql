@@ -660,5 +660,6 @@ CREATE TABLE `vip_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='VIP_用户信息';
 
 -- ----------------------------
--- Records of vip_user
+-- Records of org_user
 -- ----------------------------
+INSERT INTO `org_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '超级管理员', null, null, null, null, null, '1', null, null, null, '0', '2000-01-01 00:00:00', '0', '0', 'default', null, null, '0', '0', '0', null, '2000-01-01 00:00:00', '2000-01-01 00:00:00');

@@ -9,7 +9,7 @@
  *	
  */
 
-package com.wu1g.pano.web.controller.admin;
+package com.wu1g.web.controller.admin.pano;
 
 import com.github.pagehelper.PageInfo;
 import com.wu1g.api.pano.IPanoProjService;

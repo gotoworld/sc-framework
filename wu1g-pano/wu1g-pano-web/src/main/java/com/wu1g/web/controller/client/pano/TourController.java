@@ -1,4 +1,4 @@
-package com.wu1g.pano.web.controller.client;
+package com.wu1g.web.controller.client.pano;
 
 import com.alibaba.fastjson.JSON;
 import com.wu1g.api.pano.IPanoCommentsService;

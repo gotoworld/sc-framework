@@ -9,7 +9,7 @@
  *	
  */
 
-package com.wu1g.pano.web.controller.admin;
+package com.wu1g.web.controller.admin.pano;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;

@@ -9,22 +9,11 @@
     <version>1.0</version>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>wu1g-framework</module>
+        <module>wu1g-common</module>
+        <module>wu1g-pano</module>
+        <module>wu1g-member</module>
+    </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.wu1g.pano</groupId>
-            <artifactId>wu1g-pano</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.wu1g.framework</groupId>
-            <artifactId>wu1g-framework-starter</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.wu1g.common</groupId>
-            <artifactId>wu1g-common</artifactId>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
 </project>

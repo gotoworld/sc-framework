@@ -26,35 +26,16 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-sm-12">
 				<form id="id_form" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/org/user/save">
+					<div class="col-sm-12">
+						<div style="float:right;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
 					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
                     <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                     <input type="hidden" name="type" id="bean_type" value="0">
-					<%if(bean.accid!='admin' ){%>
-					<%if(shiro.hasPermission("orgUser:role.edit")){%>
-					<div class="col-md-12 ">
-						<label class="control-label">角色></label>
-						<div class="form-group ">
-								<%if(isNotEmpty(roleBeans)){
-									for(role in roleBeans){
-										var myrolex='';
-										if(isNotEmpty(myRoleBeans)){
-											for(myrole in myRoleBeans){
-												if(role.id==myrole.id){
-													myrolex='checked="checked"';
-												}
-											}
-										}%>
-										<label class="checkbox-inline"> <input id="${role.id}" value="${role.id}" ${myrolex} type="checkbox" name="roleIdArray">
-											${role.name}
-										</label>
-									<%}%>
-								<%}%>
-						</div>
-					</div>
-					<%}%>
-					<%}%>
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="bean_accid">登录名</label>
@@ -96,7 +77,37 @@
 									class="help-block"></span>
 							</div>
 						</div>
-					</div>
+                        <%if(!(session['SESSION_KEY_USER'].id==bean.id)){%>
+                        <%if(shiro.hasPermission("orgUser:role.edit")){%>
+                        <div class="col-md-6">
+                            <div class="col-md-12 ">
+                                <label class="control-label">角色:</label>
+                                <div class="form-group ">
+                                    <%if(isNotEmpty(roleBeans)){
+                                        for(role in roleBeans){
+                                            var myrolex='';
+                                            if(isNotEmpty(myRoleBeans)){
+                                                for(myrole in myRoleBeans){
+                                                    if(role.id==myrole.id){
+                                                         myrolex='checked="checked"';
+                                                     }
+                                                }
+                                            }
+                                            if(role.isSuper==1&&session['isSuper']!='1'){continue;}
+                                    %>
+                                        <p>
+                                            <label class="checkbox-inline"> <input id="${role.id}" value="${role.id}" ${myrolex} type="checkbox" name="roleIdArray">
+                                                -	${role.name}
+                                            </label>
+                                        </p>
+                                        <%}%>
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                        <%}%>
+                    </div>
 					<div class="col-sm-6 ">
 						<div class="form-group">
 							<label class="col-md-2 control-label">登录密码</label>
@@ -134,49 +145,50 @@
 						<%if(shiro.hasPermission("orgUser:dept.edit")){%>
 						<%if(isNotEmpty(deptTree) && deptTree.~size>0){%>
 						<div class="form-group">
-							<label class="col-md-2 control-label">部门列表</label>
-							<div class="col-md-8">
-									<%
-									var deptBeansCopy=null;
-									var dcode="";
-									var checkBoxX="";
-									if(isNotEmpty(deptBeans) && deptBeans.~size>0 ){
-										deptBeansCopy=deptBeans;
-									}
-									for(b in deptTree!){
-										dcode=b.id;
-										checkBoxX="";
-										checkLabel="";
-										for(dept in deptBeans!){
-											if(dept.id==b.id){
-												checkBoxX='oldc="1" checked="checked"';
-												checkLabel=' style="color:#1c84c6;"';
-											}
-										}
-									%>
-									<p>
-										<label ${checkLabel}>
-											-
-											<input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="deptIdArray">
-											${b.name}
-										</label>
-									</p>
-									<%if(isNotEmpty(b.beans) && b.beans.~size>0){
-										layout("org_user_tree_checkbox.html",{beans:b.beans,deptBeansCopy:deptBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
-										dcode="";
-									}%>
-								<%}%>
-							</div>
+							<div class="col-md-6">
+                                <label class="col-md-2 control-label">部门列表</label>
+                                <div class="col-md-8">
+                                        <%
+                                        var deptBeansCopy=null;
+                                        var dcode="";
+                                        var checkBoxX="";
+                                        if(isNotEmpty(deptBeans) && deptBeans.~size>0 ){
+                                            deptBeansCopy=deptBeans;
+                                        }
+                                        for(b in deptTree!){
+                                            dcode=b.id;
+                                            checkBoxX="";
+                                            checkLabel="";
+                                            for(dept in deptBeans!){
+                                                if(dept.id==b.id){
+                                                    checkBoxX='oldc="1" checked="checked"';
+                                                    checkLabel=' style="color:#1c84c6;"';
+                                                }
+                                            }
+                                        %>
+                                        <p>
+                                            <label ${checkLabel}>
+                                                -
+                                                <input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="deptIdArray">
+                                                ${b.name}
+                                            </label>
+                                        </p>
+                                        <%if(isNotEmpty(b.beans) && b.beans.~size>0){
+                                            layout("org_user_tree_checkbox.html",{beans:b.beans,deptBeansCopy:deptBeansCopy,numx:1,dcode:dcode}){} ;
+                                            dcode="";
+                                        }%>
+                                    <%}%>
+                                </div>
+                            </div>
 						</div>
 						<%}%>
 						<%}%>
 					</div>
-
-					<div class="col-sm-12">
-						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
+                    <div class="col-sm-12">
+                        <div style="width: 200px;margin: 0 auto;">
+                            <input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+                        </div>
+                    </div>
 				</form>
 			</div>
 		</div>

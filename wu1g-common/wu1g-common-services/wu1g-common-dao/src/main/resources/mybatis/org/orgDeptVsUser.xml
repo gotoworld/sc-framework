@@ -6,14 +6,12 @@
         insert into org_dept_vs_user(
         user_id,
         dept_id,
-        version,
         date_created
         ) values
         <foreach collection="list" item="t" separator=",">
             (
             #{t.userId},
             #{t.deptId},
-            0,
             now()
             )
         </foreach>

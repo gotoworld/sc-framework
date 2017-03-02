@@ -159,7 +159,7 @@ function openMyBoxLayer(mytitle, myurl) {
 				'background:#eee; height:40px; color:#333; border:none;' //自定义标题样式
 		],
 		border : [ 0 ],
-		area : [ '70%', '90%' ],
+		area : [ '70%', '70%' ],
 		content: myurl
 	});
 	$('body').css("overflow", "hidden");

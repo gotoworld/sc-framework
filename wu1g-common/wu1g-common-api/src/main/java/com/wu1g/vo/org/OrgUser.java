@@ -38,7 +38,6 @@ public class OrgUser extends BaseVO {
     /**
      * 员工账号
      */
-    @NotNull(message = "accid不能为空")
     @Size(max = 55, message = "accid最大55字符")
     private String accid;
     /**

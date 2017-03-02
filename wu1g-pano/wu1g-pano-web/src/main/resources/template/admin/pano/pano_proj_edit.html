@@ -30,6 +30,11 @@
 			<div class="ibox float-e-margins">
 				<div class="ibox-content col-sm-12">
 					<form id="pano02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/pano/proj/save">
+						<div class="col-sm-12">
+							<div style="float:right;">
+								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							</div>
+						</div>
 						<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}">
 			            <input type="hidden" name="id" value="${bean.id}" />
 			            <input type="hidden" name="code" value="${bean.code}" />

@@ -6,9 +6,9 @@ function qj_up(btn, divId, projId) {
         browse_button: '' + btn,
         multi_selection: false,
         container: document.getElementById('' + divId),
-        flash_swf_url: basePath + '/plugins/plupload/js/Moxie.swf',
-        silverlight_xap_url: basePath + '/plugins/plupload/js/Moxie.xap',
-        url: basePath + '/fileUpload?dir=image&projId=' + projId,
+        flash_swf_url: basePath + 'plugins/plupload/js/Moxie.swf',
+        silverlight_xap_url: basePath + 'plugins/plupload/js/Moxie.xap',
+        url: basePath + 'fileUpload?dir=image&projId=' + projId,
         multipart: true,
         filters: {
             mime_types: [ //只允许上传图片

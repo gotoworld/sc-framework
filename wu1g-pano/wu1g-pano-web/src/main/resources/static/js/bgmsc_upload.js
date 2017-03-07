@@ -6,9 +6,9 @@ function bgm_up(btn,divId){
 	    browse_button : ''+btn, 
 	    multi_selection: false, 
 	    container: document.getElementById(''+divId),
-	    flash_swf_url : basePath+'/plugins/plupload/js/Moxie.swf',
-		silverlight_xap_url : basePath+'/plugins/plupload/js/Moxie.xap',
-		url : basePath+'/fileUpload?dir=file',
+	    flash_swf_url : basePath+'plugins/plupload/js/Moxie.swf',
+		silverlight_xap_url : basePath+'plugins/plupload/js/Moxie.xap',
+		url : basePath+'fileUpload?dir=file',
 	
 	    filters: {
 	        mime_types : [ //只允许上传图片

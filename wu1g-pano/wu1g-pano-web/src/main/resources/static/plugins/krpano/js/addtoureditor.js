@@ -151,9 +151,9 @@ function up_pic_func(){
 		browse_button : 'upload_pichots_btn', 
 		multi_selection: false,
 		container: document.getElementById('container'),
-		flash_swf_url : basePath+'/plugins/plupload/js/Moxie.swf',
-		silverlight_xap_url : basePath+'/plugins/plupload/js/Moxie.xap',
-		url : basePath+'/fileUpload?dir=image',
+		flash_swf_url : basePath+'plugins/plupload/js/Moxie.swf',
+		silverlight_xap_url : basePath+'plugins/plupload/js/Moxie.xap',
+		url : basePath+'fileUpload?dir=image',
 	
 		filters: {
 			mime_types : [ //只允许上传图片

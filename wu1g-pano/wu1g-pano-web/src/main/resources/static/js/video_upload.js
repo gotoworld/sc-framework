@@ -6,9 +6,9 @@ function video_upload(btn, divId) {
         browse_button: '' + btn,
         multi_selection: false,
         container: document.getElementById('' + divId),
-        flash_swf_url: basePath + '/plugins/plupload/js/Moxie.swf',
-        silverlight_xap_url: basePath + '/plugins/plupload/js/Moxie.xap',
-        url: basePath + '/fileUpload?dir=media',
+        flash_swf_url: basePath + 'plugins/plupload/js/Moxie.swf',
+        silverlight_xap_url: basePath + 'plugins/plupload/js/Moxie.xap',
+        url: basePath + 'fileUpload?dir=media',
 
         filters: {
             mime_types: [ //只允许上传图片
@@ -54,7 +54,7 @@ function video_upload(btn, divId) {
                         var html = '';
                         html += '<input type="hidden" name="scene_id" value="' + file.id + '" />';
                         html += '<input type="hidden" name="' + file.id + '_scene_src" value="' + infoData.fileUrl + '" />';
-                        html += '<img src="' + basePath + '/img/vuped.png" >';
+                        html += '<img src="' + basePath + 'img/vuped.png" >';
                         html += '<input type="text" name="' + file.id + '_scene_tit" placeholder="请填写清晰度,比如:标清" required="" aria-required="true"   maxlength="5" aria-invalid="true"/>';
                         html += '<a href="javascript:;" onclick="move_scene(this,\'left\');" class="ico_left" ></a>';
                         html += '<a href="javascript:;" onclick="javascript:del_scene_btn(this,\'' + file.id + '\');" class="ico_del"></a>';

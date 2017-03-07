@@ -58,7 +58,7 @@ public class KrpanoUtil {
                 final Process p = Runtime.getRuntime().exec(finalShellCommand + " " + fileUrl);
                 // WATCHDOG
                 Watchdog wd = null;
-                final Long timeout = 20 * 60 * 1000L;// 20分钟
+                final Long timeout = 20 * 60 * 1000L;// N分钟
                 log.info(String.format("timeout is '%s' -> start watchdog", timeout));
                 wd = new Watchdog(timeout);
                 wd.addListener(() -> {

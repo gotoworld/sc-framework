@@ -1,0 +1,23 @@
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.8.235:3999/eureka/
+    registerWithEureka: false
+#  instance:   #状态页面和健康监控
+#    statusPageUrlPath: ${management.contextPath}/info
+#    healthCheckUrlPath: ${management.contextPath}/health
+  metadataMap:
+    instanceId: ${spring.application.name}:${server.port}
+# HTTP Server
+server:
+  port: 3101
+
+# Spring properties
+spring:
+  application:
+     name: wu1g-services
+
+wu1g:
+  common:
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

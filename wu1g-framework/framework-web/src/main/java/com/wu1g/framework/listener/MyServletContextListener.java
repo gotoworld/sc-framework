@@ -10,20 +10,18 @@
  */
 package com.wu1g.framework.listener;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * <p>类功能说明待补充
  */
+@Slf4j
 @WebListener
 public class MyServletContextListener implements ServletContextListener {
-    private static final Log log = LogFactory.getLog(MyServletContextListener.class);
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         log.info("ServletContex初始化");

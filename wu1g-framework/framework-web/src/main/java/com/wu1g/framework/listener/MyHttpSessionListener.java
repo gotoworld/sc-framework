@@ -10,21 +10,18 @@
  */
 package com.wu1g.framework.listener;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * <p> 监听Session的创建与销毁
  */
+@Slf4j
 @WebListener
 public class MyHttpSessionListener implements HttpSessionListener {
-    private static final Log log = LogFactory.getLog(MyHttpSessionListener.class);
-
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         log.info("createSession....." + se.getSession().getId());

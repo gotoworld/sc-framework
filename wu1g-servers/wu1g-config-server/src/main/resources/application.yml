@@ -1,0 +1,10 @@
+server:
+  port: 3999
+
+# Spring properties
+spring:
+  application:
+     name: config-server
+  cloud:
+    config:
+      uri: svn://192.168.8.2/kaifa/projects/servers/wu1g-configs

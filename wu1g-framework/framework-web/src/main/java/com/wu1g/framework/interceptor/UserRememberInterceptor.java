@@ -12,8 +12,6 @@ package com.wu1g.framework.interceptor;
 
 import com.wu1g.framework.util.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -201,6 +201,10 @@ public class UploadServlet extends HttpServlet{
         } catch (FileUploadException e1) {
             e1.printStackTrace();
         }
+
+        Map<String, Object> obj = new HashMap<String, Object>();
+        obj.put("code", 0);
+
         Iterator<?> itr = items.iterator();
         while (itr.hasNext()) {
             FileItem item = (FileItem) itr.next();
@@ -248,12 +252,16 @@ public class UploadServlet extends HttpServlet{
 
                     // 对于图片,存储n0,n1,n2,n3
                     if (PathCommonConstant.UPLOAD_CATAGORY_IMAGE.equals(dirName)) {
-                        ImageUtil.resizeNx(savePath, savePathN1, newFileName, newFileName, imageN1Width, imageN1Height, false);
-                        if (!ValidatorUtil.notEmpty(projId)) {
-                            ImageUtil.resizeNx(savePath, savePathN0, newFileName, newFileName, imageN0Width, imageN0Height, true);
-                            ImageUtil.resizeNx(savePath, savePathN2, newFileName, newFileName, imageN2Width, imageN2Height, false);
-                            ImageUtil.resizeNx(savePath, savePathN3, newFileName, newFileName, imageN3Width, imageN3Height, false);
+                        if(item.getSize()<2*1024*1024){//图片小于2M生成3张小图
+                            ImageUtil.resizeNx(savePath, savePathN1, newFileName, newFileName, imageN1Width, imageN1Height, false);
+                            if (!ValidatorUtil.notEmpty(projId)) {
+                                ImageUtil.resizeNx(savePath, savePathN0, newFileName, newFileName, imageN0Width, imageN0Height, true);
+                                ImageUtil.resizeNx(savePath, savePathN2, newFileName, newFileName, imageN2Width, imageN2Height, false);
+                                ImageUtil.resizeNx(savePath, savePathN3, newFileName, newFileName, imageN3Width, imageN3Height, false);
 
+                            }
+                        }else{
+                            obj.put("defaultBigPicUrl", (request.getContextPath()+"/img/default_big_pic.png"));
                         }
                     }
 
@@ -262,11 +270,9 @@ public class UploadServlet extends HttpServlet{
                     log.error(PathCommonConstant.LOG_ERROR_TITLE, e);
                     return;
                 }
-
-                Map<String, Object> obj = new HashMap<String, Object>();
-                obj.put("code", 0);
                 obj.put("fileUrl", (saveUrl + newFileName));
                 obj.put("fileName", name);
+
                 response.getWriter().write(JSON.toJSONString(obj));
             }
         }

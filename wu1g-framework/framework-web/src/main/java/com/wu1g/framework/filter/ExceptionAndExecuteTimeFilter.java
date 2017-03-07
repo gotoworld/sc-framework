@@ -1,7 +1,7 @@
 package com.wu1g.framework.filter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -11,10 +11,9 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
+@Slf4j
 @WebFilter(filterName = "exceptionAndExecuteTimeFilter", urlPatterns = {"/h/*", "/admin/*"})
 public class ExceptionAndExecuteTimeFilter implements Filter {
-    private static final Log log = LogFactory.getLog(ExceptionAndExecuteTimeFilter.class);
     private static final String EQUAL_SIGN = "=";
     private static final String PLUS_SIGN = "+";
     private static final String AND = "&";

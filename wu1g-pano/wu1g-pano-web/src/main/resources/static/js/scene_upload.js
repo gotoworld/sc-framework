@@ -54,7 +54,7 @@ function qj_up(btn, divId, projId) {
                         html += '<input type="hidden" name="scene_id" value="' + file.id + '" />';
                         html += '<input type="hidden" name="' + file.id + '_scene_src" value="' + infoData.fileUrl + '" />';
                         html += '<input type="hidden" name="' + file.id + '_scene_key" value="' + s_key + '" />';
-                        html += '<img src="' + infoData.fileUrl + '" >';
+                        html += '<img src="' + (infoData.defaultBigPicUrl?infoData.defaultBigPicUrl:infoData.fileUrl) + '" >';
                         html += '<input type="text" name="' + file.id + '_scene_tit" placeholder="请填写场景名称" required="" aria-required="true"   maxlength="20" aria-invalid="true"/>';
                         html += '<a href="javascript:;" onclick="move_scene(this,\'left\');" class="ico_left" ></a>';
                         html += '<a href="javascript:;" onclick="javascript:del_scene_btn(this,\'' + file.id + '\');" class="ico_del"></a>';

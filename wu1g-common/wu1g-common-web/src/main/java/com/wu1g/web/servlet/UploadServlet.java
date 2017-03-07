@@ -252,7 +252,7 @@ public class UploadServlet extends HttpServlet{
 
                     // 对于图片,存储n0,n1,n2,n3
                     if (PathCommonConstant.UPLOAD_CATAGORY_IMAGE.equals(dirName)) {
-                        if(item.getSize()<2*1024*1024){//图片小于2M生成3张小图
+                        if(item.getSize()<6*1024*1024){//图片小于n M生成3张小图
                             ImageUtil.resizeNx(savePath, savePathN1, newFileName, newFileName, imageN1Width, imageN1Height, false);
                             if (!ValidatorUtil.notEmpty(projId)) {
                                 ImageUtil.resizeNx(savePath, savePathN0, newFileName, newFileName, imageN0Width, imageN0Height, true);

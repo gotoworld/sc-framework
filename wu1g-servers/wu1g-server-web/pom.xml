@@ -29,5 +29,10 @@
             <artifactId>wu1g-pano-web</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.wu1g.member</groupId>
+            <artifactId>wu1g-member-web</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

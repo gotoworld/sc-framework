@@ -2,13 +2,10 @@ package com.wu1g.service.utils.cmdprocessor;
 
 import com.wu1g.framework.config.AppConfig;
 import com.wu1g.framework.util.BeetlUtils;
-import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.vo.pano.PanoMap;
 import com.wu1g.vo.pano.PanoProj;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -40,7 +37,9 @@ public class KrpanoUtil {
             String os = System.getProperty("os.name");
             if (os.toLowerCase().startsWith("win")) {
                 shellCommand = AppConfig.getProperty("krpano.win") + " " + AppConfig.getProperty("krpano.config");
-            } else {
+            } else if (os.toLowerCase().startsWith("mac")){
+                shellCommand = AppConfig.getProperty("krpano.mac") + " " + AppConfig.getProperty("krpano.config");
+            }else {
                 shellCommand = AppConfig.getProperty("krpano.linux") + " " + AppConfig.getProperty("krpano.config");
             }
         } catch (Exception e) {

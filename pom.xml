@@ -14,6 +14,7 @@
         <module>wu1g-common</module>
         <module>wu1g-pano</module>
         <module>wu1g-member</module>
+        <module>wu1g-portal</module>
         <module>wu1g-servers</module>
     </modules>
 

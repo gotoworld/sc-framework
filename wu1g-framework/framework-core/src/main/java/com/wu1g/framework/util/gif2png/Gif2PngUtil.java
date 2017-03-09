@@ -123,16 +123,18 @@ public class Gif2PngUtil {
 			System.out.println("error!srcImgList.size()==0");
 			return null;
 		}
-		int width=srcImgList.get(0).getWidth();
-		int height=srcImgList.get(0).getHeight();
-		resultImage = new BufferedImage(width*num,
-				height, BufferedImage.TYPE_INT_ARGB);
+		int width=128;//srcImgList.get(0).getWidth();
+		int height=128;//srcImgList.get(0).getHeight();
+		resultImage = new BufferedImage(width,height*num, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = resultImage.createGraphics();
 		resultImage = g2d.getDeviceConfiguration().createCompatibleImage(width, height*num, Transparency.TRANSLUCENT);
 		g2d.dispose();
 		g2d = resultImage.createGraphics();
 		for(int i=0;i<num;i++){
-			g2d.drawImage(srcImgList.get(i), 0, i*height, null);
+			/*新生成结果图片*/
+			BufferedImage newImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			newImg.getGraphics().drawImage(srcImgList.get(i).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH), 0, 0, null);
+			g2d.drawImage(newImg, 0, i*height, null);
 		}
 		g2d.dispose();
 		return resultImage;

@@ -127,14 +127,14 @@ public class Gif2PngUtil {
 		int height=128;//srcImgList.get(0).getHeight();
 		resultImage = new BufferedImage(width,height*num, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = resultImage.createGraphics();
-		resultImage = g2d.getDeviceConfiguration().createCompatibleImage(width, height*num, Transparency.TRANSLUCENT);
+		resultImage = g2d.getDeviceConfiguration().createCompatibleImage(width*num, height, Transparency.TRANSLUCENT);
 		g2d.dispose();
 		g2d = resultImage.createGraphics();
 		for(int i=0;i<num;i++){
 			/*新生成结果图片*/
 			BufferedImage newImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 			newImg.getGraphics().drawImage(srcImgList.get(i).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH), 0, 0, null);
-			g2d.drawImage(newImg, 0, i*height, null);
+			g2d.drawImage(newImg, i*width,0 , null);
 		}
 		g2d.dispose();
 		return resultImage;

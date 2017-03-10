@@ -14,7 +14,7 @@ public class Gif2PngTest extends JFrame {
     public static void main(String[] args) {
         mainM = new Gif2PngUtil();
         String defaultUrl = "d:/Pictures/";//System.getProperty("user.dir");
-        File srcF = new File(defaultUrl + "QQ图片20170116144437.gif");
+        File srcF = new File(defaultUrl + "psb.gif");
         File desF = new File(defaultUrl + "");
         mainM.transGifToPng(srcF, desF);
     }

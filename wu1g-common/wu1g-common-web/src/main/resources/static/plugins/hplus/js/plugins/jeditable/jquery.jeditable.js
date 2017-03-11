@@ -139,7 +139,7 @@
                     return;
                 }
 
-                /* prevent default controller and bubbling */
+                /* prevent default action and bubbling */
                 e.preventDefault();
                 e.stopPropagation();
 

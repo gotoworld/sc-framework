@@ -3803,7 +3803,7 @@
   }
 
   // When an operation has its scrollToPos property set, and another
-  // scroll controller is applied before the end of the operation, this
+  // scroll action is applied before the end of the operation, this
   // 'simulates' scrolling that position into view in a cheap way, so
   // that the effect of intermediate scroll commands is not ignored.
   function resolveScrollToPos(cm) {
@@ -4579,8 +4579,8 @@
     mimeModes[mime] = spec;
   };
 
-  // Given a MIME type, a {name, ...options} shiro object, or a name
-  // string, return a mode shiro object.
+  // Given a MIME type, a {name, ...options} config object, or a name
+  // string, return a mode config object.
   CodeMirror.resolveMode = function(spec) {
     if (typeof spec == "string" && mimeModes.hasOwnProperty(spec)) {
       spec = mimeModes[spec];

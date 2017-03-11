@@ -801,7 +801,7 @@
 				coming.padding = [padding, padding, padding, padding];
 			}
 
-			// 'entity' propery is just a shortcut
+			// 'modal' propery is just a shortcut
 			if (coming.modal) {
 				$.extend(true, coming, {
 					closeBtn   : false,

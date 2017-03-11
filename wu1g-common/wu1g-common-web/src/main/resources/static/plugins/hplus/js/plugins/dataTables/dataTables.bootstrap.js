@@ -227,7 +227,7 @@ if ($.fn.DataTable.TableTools) {
             }
         },
         "print": {
-            "info": "DTTT_print_info entity"
+            "info": "DTTT_print_info modal"
         },
         "select": {
             "row": "active"

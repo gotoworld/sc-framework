@@ -845,7 +845,7 @@
                     fieldsString += "<input type=\"file\" name=\"" + this.options.paramName + (this.options.uploadMultiple ? "[]" : "") + "\" " + (this.options.uploadMultiple ? 'multiple="multiple"' : void 0) + " /><input type=\"submit\" value=\"Upload!\"></div>";
                     fields = Dropzone.createElement(fieldsString);
                     if (this.element.tagName !== "FORM") {
-                        form = Dropzone.createElement("<form controller=\"" + this.options.url + "\" enctype=\"multipart/form-data\" method=\"" + this.options.method + "\"></form>");
+                        form = Dropzone.createElement("<form action=\"" + this.options.url + "\" enctype=\"multipart/form-data\" method=\"" + this.options.method + "\"></form>");
                         form.appendChild(fields);
                     } else {
                         this.element.setAttribute("enctype", "multipart/form-data");

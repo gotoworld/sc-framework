@@ -7,4 +7,4 @@ spring:
      name: config-server
   cloud:
     config:
-      uri: svn://192.168.8.2/kaifa/projects/servers/wu1g-configs
+      uri: svn://git.oschina.net/wu1g119/servers/trunk/doc/wu1g-configs

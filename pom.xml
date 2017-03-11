@@ -12,6 +12,7 @@
     <modules>
         <module>wu1g-framework</module>
         <module>wu1g-common</module>
+        <module>wu1g-admin</module>
         <module>wu1g-pano</module>
         <module>wu1g-member</module>
         <module>wu1g-portal</module>

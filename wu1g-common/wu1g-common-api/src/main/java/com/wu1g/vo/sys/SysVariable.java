@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>数据字典  BEAN类。
@@ -79,4 +80,14 @@ public class SysVariable extends BaseVO {
      * 更新时间
      */
     private Date dateUpdated;
+
+    private List<SysVariable> nodes;
+    private String text;
+    private Integer[] tags;
+    public String getText(){
+        return name;
+    }
+    public Integer[] getTags(){
+        return new Integer[]{nodes!=null?nodes.size():0};
+    }
 }

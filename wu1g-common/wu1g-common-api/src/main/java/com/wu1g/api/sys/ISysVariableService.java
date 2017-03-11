@@ -43,4 +43,9 @@ public interface ISysVariableService {
      * <p>信息详情。
      */
     public SysVariable findDataById(SysVariable bean);
+
+    /**
+     * <p>字典树
+     */
+    public List<SysVariable> findDataTree(SysVariable bean);
 }

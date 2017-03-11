@@ -15,8 +15,9 @@
 				<thead>
 					<tr>
 						<th style="width: 20px"></th>
-						<th class="col-md-2">id</th>
-						<th class="col-md-2">name</th>
+						<th class="col-md-2">编码</th>
+						<th class="col-md-2">名称</th>
+						<th class="col-md-2">创建时间</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -25,9 +26,10 @@
 				for(bean in beans!){
 				%>
 					<tr>
-						<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
-						<td>${bean.id!}</td>
+						<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index}</td>
+						<td>${bean.code!}</td>
 						<td>${bean.name!}</td>
+						<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 						<td>
 						<a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/sys/dic/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 						<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/sys/dic/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>

@@ -47,7 +47,20 @@
 			,#{parentId}
 			,#{memo}
 			,0
-			,0
+			,(
+			   select t.num from (
+				  select (IFNULL(max(order_no),0)+1) as num from sys_variable
+				  where
+				<choose>
+					<when test="parentId!=null">
+						parent_id=#{parentId}
+					</when>
+					<otherwise>
+						parent_id is null or parent_id =''
+					</otherwise>
+				</choose>
+			   ) t
+			)
 			,0
 			,#{createId}
 			,now()
@@ -61,7 +74,6 @@
 		<if test="code!= null" >,code=#{code}</if>
 		<if test="parentId!= null" >,parent_id=#{parentId}</if>
 		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
-		<if test="keyword!= null" >,keyword=#{keyword}</if>
 		where  id = #{id}
 	</update>
 	<!-- 判断是否存在 -->
@@ -88,7 +100,7 @@
 		left join sys_variable t2 on t1.parent_id = t2.id
 		where 1=1
 		<include refid="list_where_sql"/>
-	    order by t1.order_no desc
+	    order by t1.parent_id asc,t1.order_no asc
 	</select>
 	<!--信息列表 -->
 	<select id="findDataIsList" parameterType="sysVariable" resultType="sysVariable">
@@ -97,7 +109,7 @@
 		from sys_variable t1
 		where 1=1
 		<include refid="list_where_sql"/>
-	     order by t1.order_no desc
+		order by t1.parent_id asc,t1.order_no asc
 	</select>
 	<!-- 逻辑删除 -->
 	<update id="deleteById" parameterType="sysVariable" >

@@ -29,8 +29,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -47,6 +50,7 @@ public class SysVariableController extends BaseController {
 	private static final String init = "admin/sys/sys_dic";
 	private static final String edit = "admin/sys/sys_dic_edit";
 	private static final String list = "admin/sys/sys_dic_list";
+	private static final String list1 = "admin/sys/sys_dic_list1";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**
@@ -56,19 +60,39 @@ public class SysVariableController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"init")
 	public String init() {
 		log.info("VariableController init.........");
+
+
+
 		return init;
+	}
+	/**
+	 * <p> 初始化处理。
+	 */
+	@RequiresPermissions("sysDic:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")
+	@ResponseBody
+	public Response jsonTree() {
+		log.info("VariableController jsonTree.........");
+		Response result=new Response();
+		try {
+			result.data=variableService.findDataTree(null);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
 	}
 	/**
 	 * <p> 信息列表 (未删除)。
 	 */
 	@RequiresPermissions("sysDic:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"list")
-	public String list(SysVariable bean) {
+	public String list(HttpServletRequest request, HttpServletResponse response,SysVariable bean) {
 		log.info("VariableController list.........");
 		if(bean==null){
 			bean = new SysVariable();
 		}
 		PageInfo<?> page=new PageInfo<>(variableService.findDataIsPage(bean));
+		System.out.println(page);
 		request.setAttribute( "beans", page.getList() );
 		//分页对象
 		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
@@ -93,6 +117,7 @@ public class SysVariableController extends BaseController {
 		}
 		bean.setPageNum( pageNum );
 		request.setAttribute("bean",bean);
+		request.setAttribute("beans",variableService.findDataTree(null));
 		return edit;
 	}
 	/**

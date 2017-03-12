@@ -2,5 +2,9 @@ server:
   port: 28889
 
 spring:
-  profiles:
-    active: native
+#  profiles:
+#    active: native
+  cloud:
+    config:
+      server:
+        git.uri: http://git.oschina.net/wu1g119/servers/tree/master/doc/yml-config

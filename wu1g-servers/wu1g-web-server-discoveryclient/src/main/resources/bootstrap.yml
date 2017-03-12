@@ -5,4 +5,4 @@ spring:
     config:
       uri: http://localhost:28889
       profile: dev
-      label: trunk
+#      label: trunk #分支版本

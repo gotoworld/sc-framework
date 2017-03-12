@@ -1,8 +1,7 @@
 spring:
   application:
-    name: wu1g-server-web
+    name: wu1g-proxy-server
   cloud:
     config:
       uri: http://localhost:28889
       profile: dev
-      label: trunk

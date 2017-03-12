@@ -2,15 +2,13 @@ eureka:
   instance:
     preferIpAddress: true
     leaseRenewalIntervalInSeconds: 10
-    lease-expiration-duration-in-seconds: 30 # 续约更新时间间隔（默认30秒）
-    lease-renewal-interval-in-seconds: 10 # 续约到期时间（默认90秒）
+    #metadataMap:
+    #  instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://localhost:28888/eureka/
-    healthcheck:
-      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
 hystrix:
   stream:
@@ -20,6 +18,6 @@ hystrix:
 
 ---
 logging:
-  file: logs/wu1g-server-web.log
+  file: logs/wu1g-proxy-server.log
   level:
     ROOT: INFO

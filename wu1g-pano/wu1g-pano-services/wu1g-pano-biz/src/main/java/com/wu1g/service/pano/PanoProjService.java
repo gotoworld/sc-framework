@@ -74,7 +74,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                 //生成全景图
                 makePano(bean);
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -89,7 +89,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             try {
                 panoProjDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
             }
         }
@@ -105,7 +105,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             try {
                 panoProjDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -155,7 +155,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             try {
                 panoProjDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败,数据库处理错误!";
+                msg = "信息恢复失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -280,7 +280,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     }
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -297,7 +297,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     panoProjDao.thumbsUpNum(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -314,7 +314,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     panoProjDao.pvNum(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }

@@ -48,7 +48,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 //					panoSceneDao.insert(bean);
 //				}
 //			} catch (Exception e) {
-//				msg="信息保存失败,数据库处理错误!";
+//				msg="信息保存失败!";
 //				log.error(msg, e);
 //				throw new Exception(msg);
 //			}
@@ -62,7 +62,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 //			try {
 //				panoSceneDao.deleteByPrimaryKey(bean);
 //			} catch (Exception e) {
-//				msg="信息删除失败,数据库处理错误!";
+//				msg="信息删除失败!";
 //				log.error(msg, e);
 //			}
 //		}
@@ -77,7 +77,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 //			try {
 //				panoSceneDao.deleteById(bean);
 //			} catch (Exception e) {
-//				msg="信息删除失败,数据库处理错误!";
+//				msg="信息删除失败!";
 //				log.error(msg, e);
 //				throw new Exception(msg);
 //			}
@@ -122,7 +122,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 //			try {
 //				panoSceneDao.recoveryDataById(bean);
 //			} catch (Exception e) {
-//				msg="信息恢复失败,数据库处理错误!";
+//				msg="信息恢复失败!";
 //				log.error(msg, e);
 //				throw new Exception(msg);
 //			}

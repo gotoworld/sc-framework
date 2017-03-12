@@ -66,7 +66,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                     }
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -80,7 +80,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             try {
                 authRoleDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
             }
         }
@@ -93,7 +93,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             try {
                 authRoleDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -138,7 +138,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             try {
                 authRoleDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败,数据库处理错误!";
+                msg = "信息恢复失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }

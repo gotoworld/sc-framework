@@ -39,7 +39,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
                     orgDepartmentDao.insert(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -54,7 +54,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
             try {
                 orgDepartmentDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
             }
         }
@@ -69,7 +69,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
             try {
                 orgDepartmentDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -114,7 +114,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
             try {
                 orgDepartmentDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败,数据库处理错误!";
+                msg = "信息恢复失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }

@@ -35,7 +35,7 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
                     sysUserLogDao.insert(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -64,7 +64,7 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
             // 新增
             sysUserLogDao.insert(dto);
         } catch (Exception e) {
-            log.error("操作日志信息保存失败,数据库处理错误!", e);
+            log.error("操作日志信息保存失败!", e);
         }
     }
 }

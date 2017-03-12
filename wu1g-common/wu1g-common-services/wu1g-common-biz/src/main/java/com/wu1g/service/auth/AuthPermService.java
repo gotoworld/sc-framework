@@ -44,7 +44,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
                     authPermDao.insert(dto);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -60,7 +60,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
                 dto.setId(bean.getId());//权限id
                 authPermDao.deleteByPrimaryKey(dto);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
             }
         }
@@ -77,7 +77,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
                 dto.setId(bean.getId());//权限id
                 authPermDao.deleteById(dto);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -124,7 +124,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
                 dto.setId(bean.getId());//权限id
                 authPermDao.recoveryDataById(dto);
             } catch (Exception e) {
-                msg = "信息恢复失败,数据库处理错误!";
+                msg = "信息恢复失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }

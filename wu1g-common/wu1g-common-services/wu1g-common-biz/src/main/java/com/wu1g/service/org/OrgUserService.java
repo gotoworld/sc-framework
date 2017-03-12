@@ -101,7 +101,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     }
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -120,7 +120,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     orgUserDao.update(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败,数据库处理错误!";
+                msg = "信息保存失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -134,7 +134,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             try {
                 orgUserDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
             }
         }
@@ -148,7 +148,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             try {
                 orgUserDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败,数据库处理错误!";
+                msg = "信息删除失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }
@@ -193,7 +193,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             try {
                 orgUserDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败,数据库处理错误!";
+                msg = "信息恢复失败!";
                 log.error(msg, e);
                 throw new Exception(msg);
             }

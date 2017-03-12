@@ -43,11 +43,6 @@
             <artifactId>mapper-spring-boot-starter</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <!--tx-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

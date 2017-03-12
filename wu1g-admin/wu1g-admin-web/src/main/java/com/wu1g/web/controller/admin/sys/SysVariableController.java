@@ -117,7 +117,7 @@ public class SysVariableController extends BaseController {
 		}
 		bean.setPageNum( pageNum );
 		request.setAttribute("bean",bean);
-		request.setAttribute("beans",variableService.findDataTree(null));
+		request.setAttribute("nodes",variableService.findDataTree(null));
 		return edit;
 	}
 	/**

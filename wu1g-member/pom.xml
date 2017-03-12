@@ -20,12 +20,4 @@
         <module>wu1g-member-services</module>
         <module>wu1g-member-web</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.wu1g.framework</groupId>
-            <artifactId>wu1g-framework-service</artifactId>
-            <version>${wu1g.framework.version}</version>
-        </dependency>
-    </dependencies>
 </project>

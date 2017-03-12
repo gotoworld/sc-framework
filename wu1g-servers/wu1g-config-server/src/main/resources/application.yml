@@ -4,11 +4,11 @@ server:
 spring:
   application:
     name: config-server
-#  profiles:
-#    active: native
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://git.oschina.net/wu1g119/servers.git
-          searchPaths: doc/yml-config/
+  profiles:
+    active: native
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://git.oschina.net/wu1g119/servers.git
+#          searchPaths: doc/yml-config/

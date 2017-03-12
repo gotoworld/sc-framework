@@ -4,6 +4,8 @@ server:
   context-path: /
 # Spring properties
 spring:
+  application:
+    name: wu1g-server-web
   profiles:
     active: dev
   http:
@@ -14,8 +16,6 @@ spring:
   aop:
     auto: true
     proxy-target-class: true
-  application:
-    name: wu1g-server-web
   resources:
     static-locations: classpath:/static/,file:${wu1g.common.fileServer.rootFolder}
   mvc:

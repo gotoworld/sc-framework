@@ -28,8 +28,10 @@ import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -47,6 +49,10 @@ import java.util.Map;
 
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
+    public ShiroRealm() {}
+    public ShiroRealm(CacheManager cacheManager, CredentialsMatcher matcher) {
+        super(cacheManager, matcher);
+    }
     /**
      * 角色资源 业务处理。
      */

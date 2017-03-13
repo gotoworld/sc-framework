@@ -6,6 +6,7 @@
     <groupId>com.wu1g.servers</groupId>
     <artifactId>wu1g-servers</artifactId>
     <packaging>pom</packaging>
+    <version>1.0</version>
 
     <modules>
         <module>wu1g-config-server</module>

@@ -1,11 +1,11 @@
-package com.wu1g.server;
+package com.wu1g;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CodeServer {
+public class CodeApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CodeServer.class, args);
+        SpringApplication.run(CodeApplication.class, args);
     }
 }

@@ -83,7 +83,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<OrgDept>) orgDepartmentDao.findDataIsPage(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -93,7 +93,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
         try {
             beans = (List<OrgDept>) orgDepartmentDao.findDataIsList(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -103,7 +103,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
         try {
             bean1 = (OrgDept) orgDepartmentDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
-            log.error("信息详情查询失败,数据库错误!", e);
+            log.error("信息详情查询失败!", e);
         }
         return bean1;
     }

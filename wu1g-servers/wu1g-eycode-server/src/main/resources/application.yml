@@ -55,13 +55,12 @@ spring:
     useGlobalDataSourceStat: true
 
 logging:
-  config: classpath:logback.xml
-#  level:
-#    root: INFO
-#    com.wu1g: DEBUG
-#    com.wu1g.dao: TRACE
+  level:
+    root: INFO
+    com.wu1g: DEBUG
+    com.wu1g.dao: TRACE
 mybatis:
-  type-aliases-package: com.wu1g.vo
+  type-aliases-package: com.wu1g.domain
   mapper-locations: classpath*:mybatis/**/*.xml
 mapper:
   not-empty: false

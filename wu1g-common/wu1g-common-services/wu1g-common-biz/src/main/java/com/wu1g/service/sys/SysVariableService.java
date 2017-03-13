@@ -85,7 +85,7 @@ public class SysVariableService extends BaseService implements ISysVariableServi
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<SysVariable>) sysVariableDao.findDataIsPage(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -95,7 +95,7 @@ public class SysVariableService extends BaseService implements ISysVariableServi
         try {
             beans = (List<SysVariable>) sysVariableDao.findDataIsList(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -105,7 +105,7 @@ public class SysVariableService extends BaseService implements ISysVariableServi
         try {
             bean1 = (SysVariable) sysVariableDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
-            log.error("信息详情查询失败,数据库错误!", e);
+            log.error("信息详情查询失败!", e);
         }
         return bean1;
     }

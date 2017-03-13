@@ -1,0 +1,46 @@
+<form id="table_form"
+      role="form" class="form-inline"
+      method="post"  accept-charset="UTF-8"
+      action="javascript:void(0);"
+      data-action="${basePath}column">
+    <%
+        for(db in dbs!){
+    %>
+        <input type="hidden" name="dbs" value="${db}">
+    <%}%>
+    <table class="table table-bordered table-striped  table-hover">
+        <thead>
+        <tr>
+            <th class="">表名</th>
+            <th class=""></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%
+        for(bean in result.data!){
+        %>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" name="tables" value="${bean.tableName!}">
+                    ${beanLP.index}.${bean.dbName!}.${bean.tableName!}
+                </label>
+            </td>
+            <td>
+                ${bean.tableComment!}
+            </td>
+        </tr>
+        <%
+        }elsefor{
+        %>
+        <tr>
+            <td colspan="2">
+                <div class="alert"><strong>暂无数据!</strong></div>
+            </td>
+        </tr>
+        <%}%>
+        </tbody>
+    </table>
+</form>
+<a href="javascript:void(0);" onclick="submitForm('table_form','column_list');" class="btn btn-xs btn-success">
+    <i class="fa fa-edit"></i> NEXT</a>

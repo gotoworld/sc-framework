@@ -35,8 +35,9 @@
                         <table class="table table-bordered table-striped  table-hover">
                             <thead>
                             <tr>
-                                <th class="">数据库</th>
-                                <th class="">编码</th>
+                                <th class="col-md-2">数据库</th>
+                                <th class="col-md-2">编码</th>
+                                <th class=""></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -52,6 +53,8 @@
                                 </td>
                                 <td>
                                     ${bean.dbCharset!}
+                                </td>
+                                <td>
                                 </td>
                             </tr>
                             <%
@@ -106,9 +109,9 @@
         border: 1px solid #ddd;
     }
     .table {
-        width: 400px;
+        /*width: 400px;*/
         max-width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
     }
 </style>
 <script>

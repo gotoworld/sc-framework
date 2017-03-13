@@ -8,10 +8,12 @@
     %>
         <input type="hidden" name="dbs" value="${db}">
     <%}%>
+
     <table class="table table-bordered table-striped  table-hover">
         <thead>
         <tr>
-            <th class="">表名</th>
+            <th class="col-md-2">表名</th>
+            <th class="col-md-1">注释</th>
             <th class=""></th>
         </tr>
         </thead>
@@ -28,6 +30,22 @@
             </td>
             <td>
                 ${bean.tableComment!}
+            </td>
+            <td>
+                <label><input type="checkbox" name="${bean.tableName!}_domain" value="1">domain</label>
+                <label><input type="checkbox" name="${bean.tableName!}_mybatis" value="1">mybatis</label>
+                <label><input type="checkbox" name="${bean.tableName!}_dao" value="1">dao</label>
+                <label><input type="checkbox" name="${bean.tableName!}_service" value="1">service</label>
+                <label><input type="checkbox" name="${bean.tableName!}_api" value="1">api</label>
+                <label><input type="checkbox" name="${bean.tableName!}_web_rest" value="1">web.rest</label>
+                <label><input type="checkbox" name="${bean.tableName!}_web_ctrl" value="1">web.ctrl</label>
+                <label><input type="checkbox" name="${bean.tableName!}_view_ng" value="1">view.ng</label>
+                <label><input type="checkbox" name="${bean.tableName!}_view_btl" value="1">view.btl</label>
+                <label><input type="checkbox" name="${bean.tableName!}_insert" value="1">增</label>
+                <label><input type="checkbox" name="${bean.tableName!}_insertBatch" value="1">增批</label>
+                <label><input type="checkbox" name="${bean.tableName!}_del" value="1">删</label>
+                <label><input type="checkbox" name="${bean.tableName!}_update" value="1">改</label>
+                <label><input type="checkbox" name="${bean.tableName!}_query" value="1">查</label>
             </td>
         </tr>
         <%

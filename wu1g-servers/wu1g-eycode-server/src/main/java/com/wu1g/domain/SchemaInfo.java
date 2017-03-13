@@ -19,6 +19,7 @@ public class SchemaInfo extends BaseVO {
     private String dataType;
     private String dataLength;
     private String pk;
+    private String autoIncrement;
 
     private List<String> dbs;
     private List<String> tables;

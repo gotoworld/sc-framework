@@ -28,7 +28,8 @@
 			IS_NULLABLE AS isNullable,
 			DATA_TYPE AS dataType,
 			CHARACTER_MAXIMUM_LENGTH AS dataLength,
-			COLUMN_KEY AS pk
+			COLUMN_KEY AS pk,
+			EXTRA AS autoIncrement
 		FROM
 			information_schema.`COLUMNS`
 		WHERE 1=1

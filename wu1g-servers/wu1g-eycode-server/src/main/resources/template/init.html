@@ -29,7 +29,7 @@
                 <div class="table-responsive table-scrollable">
                     <form id="db_form"
                           role="form" class="form-inline"
-                          method="post"  accept-charset="UTF-8"
+                          method="post" accept-charset="UTF-8"
                           action="javascript:void(0);"
                           data-action="${basePath}table">
                         <table class="table table-bordered table-striped  table-hover">
@@ -69,7 +69,8 @@
                             </tbody>
                         </table>
                     </form>
-                    <a href="javascript:void(0);" onclick="submitForm('db_form','table_list');" class="btn btn-xs btn-success">
+                    <a href="javascript:void(0);" onclick="submitForm('db_form','table_list');"
+                       class="btn btn-xs btn-success">
                         <i class="fa fa-edit"></i> NEXT</a>
                     <div id="table_list"></div>
                     <div id="column_list"></div>
@@ -94,20 +95,24 @@
         border: 0px solid #dddddd;
         margin: 5px 0 !important;
     }
+
     .table thead {
         background: #eee;
     }
-    .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-         padding: 0px;
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 0px;
         line-height: 1.42857143;
         vertical-align: top;
         border-top: 1px solid #ddd;
     }
+
     .clients-list table tr td {
         height: 16px;
         vertical-align: middle;
         border: 1px solid #ddd;
     }
+
     .table {
         /*width: 400px;*/
         max-width: 100%;
@@ -115,7 +120,17 @@
     }
 </style>
 <script>
-    //初始加载..
+    function checkTable(tableName) {
+        var table_flag = $('.checked_' + tableName).prop('checked');
+        $('.checked_' + tableName).parent().css("color", table_flag ? 'red' : '#000');
+        $('.input_' + tableName).each(function () {
+            $(this)[0].checked=table_flag;
+            $(this).parent().css("color", table_flag ? 'red' : '#000');
+        })
+    }
+    function checkPerm(perm) {
+        $(perm).parent().css("color", $(perm).prop('checked') ? 'red' : '#000');
+    }
 </script>
 
 

@@ -15,6 +15,7 @@
         <module>wu1g-service-server</module>
         <module>wu1g-web-server</module>
         <module>wu1g-web-server-discoveryclient</module>
+        <module>wu1g-eycode-server</module>
     </modules>
 
 </project>

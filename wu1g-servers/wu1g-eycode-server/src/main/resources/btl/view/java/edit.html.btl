@@ -1,0 +1,78 @@
+\<%
+ /*	
+ * ${tableConf.tableComment} 后台管理 (信息编辑页面)
+ *
+ * VERSION      DATE          BY              REASON
+ * -------- ----------- --------------- ---------------------------
+ * 1.00     ${date}      easycode         程序.发布
+ * -------- ----------- --------------- ---------------------------
+ * Copyright ${year} System. - All Rights Reserved.
+ */
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+\<% include("../include/meta.html"){} %>
+\<% include("../include/public_init_js_css.html"){} %>
+<link href="\${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
+<link href="\${basePath}css/upload.css" rel="stylesheet">
+
+<style type="text/css">
+#upload_scene_btn{width: 220px;height: 164px;float: left;} 
+</style>
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content col-sm-12">
+					<form id="${tableNameL}_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="\${basePath}h/ec/${tableNameL}/save">
+						<div class="col-sm-12">
+							<div style="float:right;">
+								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							</div>
+						</div>
+						<input type="hidden" name="pageNum" id="bean_pageNum" value="\${bean.pageNum}">
+			            <%for(t in pks){%>
+                            <input type="hidden" name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" />
+                        <%}%>
+						<input type="hidden" name="token" value="\${bean.token}" />
+                        <input type="hidden" name="newFlag" value="\${bean.newFlag}" />
+
+                        <%for(t in columns){%>
+					    <div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label"  for="bean_${t.columnNameFormat}">${t.columnComment}：</label>
+								<div class="col-sm-8">
+									<input id="bean_${t.columnNameFormat}" name="name" value="\${bean.${t.columnNameFormat}}" class="form-control" type="text"  placeholder="${t.columnComment}" <%if(t.isNullable=='YES'){%> required="" aria-required="true" <%}%> aria-describedby="bean_${t.columnNameFormat}-error" <%if(t.dataLength!=null){%> maxlength="${t.dataLength}" <%}%>  aria-invalid="true">
+									<span id="bean_${t.columnNameFormat}-error" class="help-block m-b-none"></span>
+								 </div>
+							 </div>
+						</div>
+						<%}%>
+						<div class="col-sm-12">
+							<div style="width: 200px; margin: 0 auto;">
+								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	\<% include("../include/public_last_js_css.html"){} %>
+	<script type="text/javascript">
+	$().ready(function(){
+		formValidate();
+	});
+	function formValidate(){
+		setTimeout(function(){
+			$("#${tableNameL}_01").validate();
+		},1000);
+	}
+	</script>
+</body>
+</html>
+

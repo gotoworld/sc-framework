@@ -1,0 +1,166 @@
+/*	
+ * 系统_${tableConf.tableComment}  ACTION类	
+ *		
+ * VERSION      DATE          BY              REASON		
+ * -------- ----------- --------------- ------------------------------------------	
+ * 1.00     2015.10.01      easycode         程序.发布		
+ * -------- ----------- --------------- ------------------------------------------	
+ * Copyright 2015 System. - All Rights Reserved.
+ *	
+ */
+package com.wu1g.web.controller.admin.sys;
+
+import com.github.pagehelper.PageInfo;
+import com.wu1g.api.sys.I${tableConf.tableNameFormat!}Service;
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
+import com.wu1g.framework.util.CommonConstant;
+import com.wu1g.vo.sys.${tableConf.tableNameFormat!};
+import com.wu1g.web.controller.BaseController;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.dtos.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.Path${tableConf.tableNameFormat!};
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+/**
+ * <p>${tableConf.tableComment}  ACTION类。
+ */
+@Controller
+@Slf4j
+public class ${tableConf.tableNameFormat!}Controller extends BaseController {
+	@Autowired
+	protected I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
+	
+	private static final String acPrefix="/h/ec/${tableNameL}";
+	private static final String init = "admin/ec/${tableConf.tableName}";
+	private static final String edit = "admin/ec/${tableConf.tableName}_edit";
+	private static final String list = "admin/ec/${tableConf.tableName}_list";
+	private static final String success = "redirect:"+acPrefix+"init";
+	
+	/**
+	 * <p> 初始化处理。
+	 */
+	@RequiresPermissions("${tableNameL}:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"init")
+	public String init() {
+		log.info("${tableConf.tableNameFormat!}Controller init.........");
+		return init;
+	}
+	 <%if ("1"==tableConf.schemaConf._page) {%>
+	/**
+	 * <p> 信息分页 (未删除)。
+	 */
+	@RequiresPermissions("${tableNameL}:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
+	public String page(HttpServletRequest request, HttpServletResponse response,${tableConf.tableNameFormat!} dto) {
+		log.info("${tableConf.tableNameFormat!}Controller page.........");
+		if(dto==null){
+			dto = new ${tableConf.tableNameFormat!}();
+		}
+		PageInfo<?> page=new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
+		request.setAttribute( "dtos", page.getList() );
+		//分页对象
+		request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
+		return list;
+	}
+	<%}%>
+
+    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+	/**
+	 * <p> 编辑。
+	 */
+	@RequiresPermissions("${tableNameL}:edit")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/{id}")
+	public String edit(${tableConf.tableNameFormat!} dto,@Path${tableConf.tableNameFormat!}("id") Long id) {
+		log.info("${tableConf.tableNameFormat!}Controller edit.........");
+		int pageNum=getPageSize(dto);
+		if(0!=id){
+			${tableConf.tableNameFormat!} dto1=new ${tableConf.tableNameFormat!}();
+			dto1.setId(id);
+			dto=${tableNameL}Service.findDataById(dto1);
+		}
+		if(dto==null||0==id){
+			dto=new ${tableConf.tableNameFormat!}();
+            dto.setNewFlag(1);
+		}
+		dto.setPageNum( pageNum );
+		request.setAttribute("dto",dto);
+		return edit;
+	}
+	<%}%>
+
+    <%if ("1"==tableConf.schemaConf._delLogic) {%>
+	/**
+	 * <li>逻辑删除。
+	 */
+	@RequiresPermissions("${tableNameL}:del")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
+	@ALogOperation(type="删除",desc="${tableConf.tableComment}")
+	public String del(@Path${tableConf.tableNameFormat!}("id") Long id, RedirectAttributesModelMap modelMap) {
+		log.info("${tableConf.tableNameFormat!}Controller del.........");
+		Response result = new Response();
+		try {
+			${tableConf.tableNameFormat!} dto1=new ${tableConf.tableNameFormat!}();
+			dto1.setId(id);
+			result.message=${tableNameL}Service.deleteDataById(dto1);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		modelMap.addFlashAttribute("msg", result);
+		return success;
+	}
+	<%}%>
+
+	<%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+	/**
+	 * <p> 信息保存
+	 */
+	@RequiresPermissions(value={"${tableNameL}:add","${tableNameL}:edit"},logical=Logical.OR)
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="${tableConf.tableComment}")
+	public String save(@Validated ${tableConf.tableNameFormat!} dto,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
+		log.info("${tableConf.tableNameFormat!}Controller save.........");
+		Response result = new Response();
+		if(dto!=null){
+			try {
+				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
+					throw new RuntimeException("请不要重复提交!");
+				}
+				if (bindingResult.hasErrors()) {
+					String errorMsg = "";
+					List<ObjectError> errorList = bindingResult.getAllErrors();
+					for (ObjectError error : errorList) {
+						errorMsg += (error.getDefaultMessage()) + ";";
+					}
+					result = Response.error(errorMsg);
+				}else{
+					result.message=${tableNameL}Service.saveOrUpdateData(dto);
+					result.data = dto.getId();
+					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
+				}
+			} catch (Exception e) {
+				result = Response.error(e.getMessage());
+			}
+		} else {
+			result = Response.error("信息保存失败!");
+		}
+		modelMap.addFlashAttribute("msg", result);
+		return success;
+	}
+	<%}%>
+}

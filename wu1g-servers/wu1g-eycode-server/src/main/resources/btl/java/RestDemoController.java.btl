@@ -1,7 +1,7 @@
 package com.wu1g.web.controller;
 
-import com.wu1g.api.IDemoService;
-import com.wu1g.domain.Demo;
+import com.wu1g.api.I${tableConf.tableNameFormat!}Service;
+import com.wu1g.domain.${tableConf.tableNameFormat!};
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.web.controller.BaseController;
@@ -18,95 +18,102 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * <p>示例 ACTION类。
+ * <p>${tableConf.tableComment} ACTION类。
  */
-@Api(description = "示例 ACTION类")
+@Api(description = "${tableConf.tableComment} ACTION类")
 @RestController
 @Slf4j
-public class DemoController extends BaseController {
+public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
-    private IDemoService demoService;
-    private static final String acPrefix = "/demo/";
+    private I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
+    private static final String acPrefix = "/${tableNameL}/";
 
+    <%if ("1"==tableConf.schemaConf._page) {%>
     /**
      * <p>信息分页 (未删除)。
      */
-//    @RequiresPermissions("demo:menu")
+    @RequiresPermissions("${tableNameL}:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
-    public Response page(@ModelAttribute  Demo dto, @PathVariable("pageNum") Integer pageNum) {//@RequestBody 只接收 json(application/json) 普通表单(application/x-www-form-urlencoded)请不要加
-        log.info("DemoController list.........");
+    public Response page(@ModelAttribute  ${tableConf.tableNameFormat!} dto, @PathVariable("pageNum") Integer pageNum) {
+        log.info("${tableConf.tableNameFormat!}Controller page.........");
         Response result = new Response();
         if (dto == null) {
-            dto = new Demo();
+            dto = new ${tableConf.tableNameFormat!}();
         }
         try {
             dto.setPageNum(pageNum);
             dto.setDelFlag(0);
             // 信息列表
-            PageInfo<?> page = new PageInfo<>(demoService.findDataIsPage(dto));
+            PageInfo<?> page = new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
             result.data = page;
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
+    <%}%>
 
+    <%if ("1"==tableConf.schemaConf._detail) {%>
     /**
      * <p> 信息详情。
      */
-//    @RequiresPermissions("demo:edit")
+    @RequiresPermissions("${tableNameL}:edit")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
-        log.info("DemoController info.........");
+        log.info("${tableConf.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
-            Demo dto = new Demo();
+            ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
             if (id == 0) {
                 dto.setId(0L);
-                result.data = new Demo();
+                result.data = new ${tableConf.tableNameFormat!}();
             } else {
                 dto.setId(id);
-                result.data = demoService.findDataById(dto);
+                result.data = ${tableNameL}Service.findDataById(dto);
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
+    <%}%>
 
+    <%if ("1"==tableConf.schemaConf._delLogic) {%>
     /**
      * <p>逻辑删除。
      */
-//    @RequiresPermissions("demo:del")
+   @RequiresPermissions("${tableNameL}:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
-//    @ALogOperation(type = "删除", desc = "示例")
+    @ALogOperation(type = "删除", desc = "${tableConf.tableComment}")
     @ApiOperation(value = "信息编辑")
     public Response del(@PathVariable("id") Long id) {
-        log.info("DemoController del.........");
+        log.info("${tableConf.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            Demo dto = new Demo();
+            ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
             dto.setId(id);// id
-            result.message = demoService.deleteDataById(dto);
+            result.message = ${tableNameL}Service.deleteDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
+    <%}%>
 
+    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
     /**
      * <p> 信息保存
      */
-//    @RequiresPermissions(value = {"demo:add", "demo:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"${tableNameL}:add", "${tableNameL}:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-//    @ALogOperation(type = "修改", desc = "示例")
+    @ALogOperation(type = "修改", desc = "${tableConf.tableComment}")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated @ModelAttribute Demo dto, BindingResult bindingResult) {
-        log.info("DemoController save.........");
+    public Response save(@Validated @ModelAttribute ${tableConf.tableNameFormat!} dto, BindingResult bindingResult) {
+        log.info("${tableConf.tableNameFormat!}Controller save.........");
         Response result = new Response();
         if (dto != null) {
             try {
@@ -121,7 +128,7 @@ public class DemoController extends BaseController {
                     }
                     result = Response.error(errorMsg);
                 } else {
-                    result.message = demoService.saveOrUpdateData(dto);
+                    result.message = ${tableNameL}Service.saveOrUpdateData(dto);
                     result.data = dto.getId();
                     request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
                 }
@@ -133,4 +140,5 @@ public class DemoController extends BaseController {
         }
         return result;
     }
+    <%}%>
 }

@@ -1,21 +1,20 @@
-<%
+\<%
  /*	
- * 全景_项目 后台管理 (初始化页面)
+ * ${tableConf.tableComment} 后台管理 (初始化页面)
  *		
  * VERSION      DATE          BY              REASON		
  * -------- ----------- --------------- ---------------------------	
- * 1.00     2016.10.02      easycode         程序.发布		
+ * 1.00     ${date}      easycode         程序.发布
  * -------- ----------- --------------- ---------------------------	
- * Copyright 2016 pano System. - All Rights Reserved.
- *	
+ * Copyright ${year} System. - All Rights Reserved.
  */
 %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<% layout("../include/meta.html"){}%>
-	<% layout("../include/public_init_js_css.html"){}%>
+	\<% layout("../include/meta.html"){}%>
+	\<% layout("../include/public_init_js_css.html"){}%>
 	<style type="text/css">
 	.qrcode{
 	position:relative;
@@ -42,7 +41,7 @@
 						<div id="tab-1" class="tab-pane active">
 							<div class="ibox float-e-margins">
 								<div class="ibox-content">
-									<% layout("../include/notifications.html"){}%>
+									\<% layout("../include/notifications.html"){}%>
 									<table class="table">
 										<tr>
 											<td>
@@ -50,8 +49,8 @@
 													role="form" class="form-inline" 
 													method="post"  accept-charset="UTF-8" 
 													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
-													data-action="${basePath}h/pano/proj/list">
-													<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum!}">
+													data-action="\${basePath}h/ec/${tableNameL}/page">
+													<input type="hidden" name="pageNum" id="pageNumA" value="\${bean.pageNum==null?1:bean.pageNum}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
@@ -70,8 +69,10 @@
 											</td>
 										</tr>
 									</table>
-									<% if(shiro.hasPermission("panoProj:add")){ %>
-									<a href="#" onclick="openMyBoxLayer('a','${basePath}h/pano/proj/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<%if ("1"==tableConf.schemaConf._insert){%>
+									\<% if(shiro.hasPermission("${tableNameL}:add")){ %>
+									<a href="#" onclick="openMyBoxLayer('a','\${basePath}h/ec/${tableNameL}/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									\<%}%>
 									<%}%>
 									<div id="info_list_div">
 										<div class="alert alert-warning mt10">
@@ -87,12 +88,8 @@
 
 		</div>
 	</div>
-	<% layout("../include/public_last_js_css.html"){}%>
+	\<% layout("../include/public_last_js_css.html"){}%>
 	<script>
-		//打开不同尺寸的二维码
-		function get_qrcode(pid,size,version){
-		    window.open('http://qr.liantu.com/api.php?w='+size+'&m=10&text=${basePath}tour/'+pid);
-		}
 		$("#data_5 .input-daterange").datepicker({
 			keyboardNavigation : !1,
 			forceParse : !1,

@@ -1,8 +1,8 @@
 package com.wu1g.service;
 
-import com.wu1g.api.IDemoService;
-import com.wu1g.dao.IDemoDao;
-import com.wu1g.domain.Demo;
+import com.wu1g.api.I${tableConf.tableNameFormat!}Service;
+import com.wu1g.dao.I${tableConf.tableNameFormat!}Dao;
+import com.wu1g.domain.${tableConf.tableNameFormat!};
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
@@ -18,23 +18,24 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class DemoService extends BaseService implements IDemoService {
+public class ${tableConf.tableNameFormat!}Service extends BaseService implements I${tableConf.tableNameFormat!}Service {
     @Autowired
-    private IDemoDao demoDao;
+    private I${tableConf.tableNameFormat!}Dao ${tableNameL}Dao;
 
+    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(Demo dto) throws Exception {
+    public String saveOrUpdateData(${tableConf.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
-                if (dto.getId() != null && demoDao.isDataYN(dto) != 0) {
+                if (dto.getId() != null && ${tableNameL}Dao.isDataYN(dto) != 0) {
                     //数据存在
-                    demoDao.updateByPrimaryKeySelective(dto);
+                    <%if ("1"==tableConf.schemaConf._update){%>${tableNameL}Dao.update(dto);<%}%>
                 } else {
                     //新增
-                    demoDao.insert(dto);
+                     <%if ("1"==tableConf.schemaConf._insert){%>${tableNameL}Dao.insert(dto);<%}%>
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
@@ -43,13 +44,15 @@ public class DemoService extends BaseService implements IDemoService {
         }
         return msg;
     }
+    <%}%>
 
+    <%if ("1"==tableConf.schemaConf._del) {%>
     @Override
-    public String deleteData(Demo dto) throws Exception {
+    public String deleteData(${tableConf.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(demoDao.deleteByPrimaryKey(dto)==0){
+                if(${tableNameL}Dao.deleteByPrimaryKey(dto)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -59,14 +62,16 @@ public class DemoService extends BaseService implements IDemoService {
         }
         return msg;
     }
+    <%}%>
 
+    <%if ("1"==tableConf.schemaConf._delLogic) {%>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(Demo dto) throws Exception {
+    public String deleteDataById(${tableConf.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(demoDao.deleteById(dto)==0){
+                if(${tableNameL}Dao.deleteById(dto)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -76,51 +81,59 @@ public class DemoService extends BaseService implements IDemoService {
         }
         return msg;
     }
+    <%}%>
 
+    <%if ("1"==tableConf.schemaConf._page) {%>
     @Override
-    public List<Demo> findDataIsPage(Demo dto) throws Exception {
-        List<Demo> dtos = null;
+    public List<${tableConf.tableNameFormat!}> findDataIsPage(${tableConf.tableNameFormat!} dto) throws Exception {
+        List<${tableConf.tableNameFormat!}> dtos = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<Demo>) demoDao.findDataIsPage(dto);
+            dtos = (List<${tableConf.tableNameFormat!}>) ${tableNameL}Dao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
         }
         return dtos;
     }
+    <%}%>
 
+    <%if ("1"==tableConf.schemaConf._list) {%>
     @Override
-    public List<Demo> findDataIsList(Demo dto) throws Exception {
-        List<Demo> dtos = null;
+    public List<${tableConf.tableNameFormat!}> findDataIsList(${tableConf.tableNameFormat!} dto) throws Exception {
+        List<${tableConf.tableNameFormat!}> dtos = null;
         try {
-            dtos = (List<Demo>) demoDao.findDataIsList(dto);
+            dtos = (List<${tableConf.tableNameFormat!}>) ${tableNameL}Dao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
         }
         return dtos;
     }
+     <%}%>
 
+    <%if ("1"==tableConf.schemaConf._detail) {%>
     @Override
     @RfAccount2Bean
-    public Demo findDataById(Demo dto) throws Exception {
-        Demo dto1 = null;
+    public ${tableConf.tableNameFormat!} findDataById(${tableConf.tableNameFormat!} dto) throws Exception {
+        ${tableConf.tableNameFormat!} dto1 = null;
         try {
-            dto1 = (Demo) demoDao.selectByPrimaryKey(dto);
+            dto1 = (${tableConf.tableNameFormat!}) ${tableNameL}Dao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
         }
         return dto1;
     }
+    <%}%>
 
+     <%if ("1"==tableConf.schemaConf._recovery) {%>
     @Override
-    public String recoveryDataById(Demo dto) throws Exception {
+    public String recoveryDataById(${tableConf.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(demoDao.recoveryDataById(dto)==0){
+                if(${tableNameL}Dao.recoveryDataById(dto)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -130,4 +143,5 @@ public class DemoService extends BaseService implements IDemoService {
         }
         return msg;
     }
+    <%}%>
 }

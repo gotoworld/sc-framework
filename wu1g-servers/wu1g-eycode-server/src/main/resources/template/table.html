@@ -2,7 +2,7 @@
       role="form" class="form-inline"
       method="post"  accept-charset="UTF-8"
       action="javascript:void(0);"
-      data-action="${basePath}column">
+      data-action="${basePath}templateRender">
     <%
         for(db in dbs!){
     %>
@@ -29,6 +29,8 @@
                 </label>
             </td>
             <td>
+                <input type="hidden" name="${bean.tableName!}_comment" value="${bean.tableComment!}">
+                <input type="hidden" name="${bean.tableName!}_db" value="${bean.dbName!}">
                 ${bean.tableComment!}
             </td>
             <td>

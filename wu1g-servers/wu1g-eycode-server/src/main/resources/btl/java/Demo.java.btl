@@ -1,5 +1,3 @@
-package com.wu1g.domain;
-
 import com.wu1g.framework.BaseVO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -15,42 +13,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Demo extends BaseVO {
-    /**
-     * id
-     */
-    private Long id;
-    /**
-     * 姓名
-     */
-    @NotNull(message = "name不能为空")
-    @Size(min = 2,max = 55, message = "姓名2-55字符")
-    private String name;
-    /**
-     * 年龄
-     */
-    @Max(value = 150, message = "年龄最大不能超过150")
-    private Integer age;
-    /**
-     * 版本号
-     */
-    private Integer version;
-    /**
-     * 备注
-     */
-    @Size(max = 255, message = "memo最大255字符")
-    private String memo;
-    /**
-     * 是否删除(0否1是)
-     */
-    private Integer delFlag;
-    /**
-     * 创建时间
-     */
-    private String dateCreated;
-    /**
-     * 修改时间
-     */
-    private String dateUpdate;
+public class ${tableConf.tableNameFormat!} extends BaseVO {
+<%for( t in beanVo!){%>
 
+    ${t.comment!} ${validator.notEmpty(t.JSR303)?'\n\t'+t.JSR303:''}
+    ${t.propertyField!}
+<%}%>
 }

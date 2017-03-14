@@ -91,7 +91,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 //			PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
 //			beans=(List<PanoScene>) panoSceneDao.findDataIsPage(bean);
 //		} catch (Exception e) {
-//			log.error("信息查询失败,数据库错误!", e);
+//			log.error("信息查询失败!", e);
 //		}
 //		return beans;
 //	}
@@ -101,7 +101,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 		try {	
 			beans=(List<PanoScene>) panoSceneDao.findDataIsList(bean);	
 		} catch (Exception e) {	
-			log.error("信息查询失败,数据库错误!", e);	
+			log.error("信息查询失败!", e);
 		}	
 		return beans;	
 	}	
@@ -111,7 +111,7 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 //	   try {
 //			bean1=(PanoScene) panoSceneDao.selectByPrimaryKey(bean);
 //		} catch (Exception e) {
-//			log.error("信息详情查询失败,数据库错误!", e);
+//			log.error("信息详情查询失败!", e);
 //		}
 //		return bean1;
 //	}

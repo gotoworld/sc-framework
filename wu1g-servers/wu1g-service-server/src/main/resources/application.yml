@@ -20,6 +20,6 @@ hystrix:
 
 ---
 logging:
-  file: logs/wu1g-server-web.log
+#  file: logs/wu1g-service-server.log
   level:
     ROOT: INFO

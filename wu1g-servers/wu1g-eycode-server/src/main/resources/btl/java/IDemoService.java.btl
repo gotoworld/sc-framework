@@ -1,0 +1,46 @@
+package com.wu1g.api;
+
+import com.wu1g.domain.Demo;
+
+import java.util.List;
+
+/**
+ * <p>demo 业务处理接口类。
+ */
+public interface IDemoService {
+
+    /**
+     * <p>信息编辑。
+     */
+    public String saveOrUpdateData(Demo bean) throws Exception;
+
+    /**
+     * <p>物理删除。
+     */
+    public String deleteData(Demo bean) throws Exception;
+
+    /**
+     * <li>恢复逻辑删除的数据。
+     */
+    public String recoveryDataById(Demo bean) throws Exception;
+
+    /**
+     * <li>逻辑删除。
+     */
+    public String deleteDataById(Demo bean) throws Exception;
+
+    /**
+     * <p>信息列表 分页。
+     */
+    public List<Demo> findDataIsPage(Demo bean) throws Exception;
+
+    /**
+     * <p>信息列表。
+     */
+    public List<Demo> findDataIsList(Demo bean) throws Exception;
+
+    /**
+     * <p>信息详情。
+     */
+    public Demo findDataById(Demo bean) throws Exception;
+}

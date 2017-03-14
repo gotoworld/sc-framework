@@ -44,6 +44,10 @@ public class SysCategory extends BaseVO {
      */
     private Integer state;
     /**
+     * 类型1新闻栏目2全景类目
+     */
+    private Integer type;
+    /**
      * 备注
      */
     @Size(max = 255, message = "memo最大255字符")

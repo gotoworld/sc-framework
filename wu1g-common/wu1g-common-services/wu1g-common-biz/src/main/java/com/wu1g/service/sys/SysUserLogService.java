@@ -48,7 +48,7 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<SysUserLog>) sysUserLogDao.findDataIsPage(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }

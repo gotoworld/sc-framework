@@ -1,0 +1,73 @@
+<form id="column_form"
+      role="form" class="form-inline"
+      method="post"  accept-charset="UTF-8"
+      action="javascript:void(0);"
+      data-action="${basePath}templateRender">
+    <%
+    for(db in dbs!){
+    %>
+    <input type="hidden" name="dbs" value="${db}">
+    <%}%>
+    <%
+    for(table in tables!){
+    %>
+    <input type="hidden" name="tables" value="${table}">
+    <%}%>
+    <table class="table table-bordered table-striped  table-hover" style="width: 100%">
+        <thead>
+        <tr>
+            <th class="">表名</th>
+            <th class="">字段名</th>
+            <th class="">字段备注</th>
+            <th class="">必填</th>
+            <th class="">类型</th>
+            <th class="">长度</th>
+            <th class="">主键</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%
+        for(bean in result.data!){
+        %>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" name="columns" checked value="${bean.columnName!}">
+                    ${beanLP.index}.${bean.dbName!}.${bean.tableName!}
+                </label>
+            </td>
+            <td>
+                <label>
+                    ${bean.columnName!}
+                </label>
+            </td>
+            <td>
+                ${bean.columnComment!}
+            </td>
+            <td>
+                ${bean.isNullable!}
+            </td>
+            <td>
+                ${bean.dataType!}
+            </td>
+            <td>
+                ${bean.dataLength!}
+            </td>
+            <td>
+                ${bean.pk!}
+            </td>
+        </tr>
+        <%
+        }elsefor{
+        %>
+        <tr>
+            <td colspan="2">
+                <div class="alert"><strong>暂无数据!</strong></div>
+            </td>
+        </tr>
+        <%}%>
+        </tbody>
+    </table>
+</form>
+<a href="javascript:void(0);" onclick="submitForm('column_form','templateRender');" class="btn btn-xs btn-success">
+    <i class="fa fa-edit"></i> NEXT</a>

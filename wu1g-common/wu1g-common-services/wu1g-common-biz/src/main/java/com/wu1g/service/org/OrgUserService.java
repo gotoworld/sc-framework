@@ -162,7 +162,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
             beans = (List<OrgUser>) orgUserDao.findDataIsPage(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -172,7 +172,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         try {
             beans = (List<OrgUser>) orgUserDao.findDataIsList(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -182,7 +182,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         try {
             bean1 = (OrgUser) orgUserDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
-            log.error("信息详情查询失败,数据库错误!", e);
+            log.error("信息详情查询失败!", e);
         }
         return bean1;
     }

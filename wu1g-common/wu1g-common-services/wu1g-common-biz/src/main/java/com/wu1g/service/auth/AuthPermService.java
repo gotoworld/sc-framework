@@ -91,7 +91,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<AuthPerm>) authPermDao.findDataIsPage(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -101,7 +101,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         try {
             beans = (List<AuthPerm>) authPermDao.findDataIsList(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -111,7 +111,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         try {
             bean1 = (AuthPerm) authPermDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
-            log.error("信息详情查询失败,数据库错误!", e);
+            log.error("信息详情查询失败!", e);
         }
         return bean1;
     }
@@ -146,7 +146,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         try {
             beans = (List<AuthPerm>) authPermDao.findPermDataIsListByRoleId(dto);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }

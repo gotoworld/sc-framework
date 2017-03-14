@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>demo info</title>
+    <link rel="stylesheet" href="css/weui.min.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+</head>
+<style type="text/css">
+</style>
+
+<body ng-controller="app-ctrl" class="ng-cloak" ng-cloak>
+<div class="page">
+    <div class="hd">
+        <h1 class="page_title">示例 {{userName}}</h1>
+    </div>
+    <div class="bd" ng-show="infoError" ng-bind="message">
+    </div>
+    <div class="bd" ng-show="infoSuccess">
+        <article class="weui_article">
+            <section>
+                <p>ID:{{item.id}}</p>
+                <p>姓名:{{item.name}}</p>
+                <p>年龄:{{item.age}}</p>
+                <p>创建时间:{{item.dateCreated}}</p>
+            </section>
+        </article>
+        <a href="index.html.btl">返回</a>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+    angular.module("app", []).controller("app-ctrl", ['$scope', function ($scope) {
+        $data = $scope;
+        user.info();
+    }]);
+    $(function () {
+        demo.info(sessionStorage.getItem(site.demo.info));
+    });
+</script>
+</body>
+</html>

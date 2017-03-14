@@ -26,7 +26,6 @@ import java.util.Observable;
  * [提供机能]
  * <li>taskExecutor 线程池
  * <li>jedisHelper 缓存服务
- * <li>alog 系统_管理员操作日志
  * <li>Subject 权限验证
  * </ol>
  */

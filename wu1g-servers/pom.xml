@@ -6,6 +6,7 @@
     <groupId>com.wu1g.servers</groupId>
     <artifactId>wu1g-servers</artifactId>
     <packaging>pom</packaging>
+    <version>1.0</version>
 
     <modules>
         <module>wu1g-config-server</module>
@@ -14,6 +15,7 @@
         <module>wu1g-service-server</module>
         <module>wu1g-web-server</module>
         <module>wu1g-web-server-discoveryclient</module>
+        <module>wu1g-eycode-server</module>
     </modules>
 
 </project>

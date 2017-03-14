@@ -19,25 +19,12 @@
         <wu1g.framework.version>1.0</wu1g.framework.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <spring.cloud.version>Camden.SR2</spring.cloud.version>
+
         <mysql.version>6.0.5</mysql.version>
         <druid.version>1.0.25</druid.version>
         <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
         <shiro.version>1.4.0-RC2</shiro.version>
-        <!--<docker.image.prefix>wu1g</docker.image.prefix>-->
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <modules>
         <module>framework-cache</module>
@@ -48,25 +35,6 @@
     </modules>
 
     <dependencies>
-
-        <!-- spring-cloud begin -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
-        </dependency>
-        <!-- spring-cloud end -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,16 +47,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter</artifactId>
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.springframework.boot</groupId>-->
-                    <!--<artifactId>spring-boot-starter-logging</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -103,10 +61,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-aop</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -133,9 +91,9 @@
             <version>${shiro.version}</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.apache.shiro</groupId>-->
-            <!--<artifactId>shiro-guice</artifactId>-->
-            <!--<version>${shiro.version}</version>1-->
+        <!--<groupId>org.apache.shiro</groupId>-->
+        <!--<artifactId>shiro-guice</artifactId>-->
+        <!--<version>${shiro.version}</version>1-->
         <!--</dependency>-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -150,6 +108,11 @@
         </dependency>
 
         <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
@@ -160,17 +123,17 @@
             <artifactId>beetl</artifactId>
             <version>2.7.1</version>
         </dependency>
-        <!-- 图片 -->
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
-            <version>0.4.8</version>
-        </dependency>
         <!--pagehelper-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.1.0</version>
+        </dependency>
+        <!-- 图片 -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
         </dependency>
     </dependencies>
     <build>
@@ -184,22 +147,6 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>com.spotify</groupId>-->
-            <!--<artifactId>docker-maven-plugin</artifactId>-->
-            <!--<version>0.4.3</version>-->
-            <!--<configuration>-->
-            <!--<imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
-            <!--<dockerDirectory>src/main/docker</dockerDirectory>-->
-            <!--<resources>-->
-            <!--<resource>-->
-            <!--<targetPath>/</targetPath>-->
-            <!--<directory>${project.build.directory}</directory>-->
-            <!--<include>${project.build.finalName}.jar</include>-->
-            <!--</resource>-->
-            <!--</resources>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
     <distributionManagement>

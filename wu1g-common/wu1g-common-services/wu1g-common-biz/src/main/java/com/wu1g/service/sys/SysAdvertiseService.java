@@ -77,7 +77,7 @@ public class SysAdvertiseService extends BaseService implements ISysAdvertiseSer
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
             beans = (List<SysAdvertise>) sysAdvertiseDao.findDataIsPage(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -87,7 +87,7 @@ public class SysAdvertiseService extends BaseService implements ISysAdvertiseSer
         try {
             beans = (List<SysAdvertise>) sysAdvertiseDao.findDataIsList(bean);
         } catch (Exception e) {
-            log.error("信息查询失败,数据库错误!", e);
+            log.error("信息查询失败!", e);
         }
         return beans;
     }
@@ -97,7 +97,7 @@ public class SysAdvertiseService extends BaseService implements ISysAdvertiseSer
         try {
             bean1 = (SysAdvertise) sysAdvertiseDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
-            log.error("信息详情查询失败,数据库错误!", e);
+            log.error("信息详情查询失败!", e);
         }
         return bean1;
     }

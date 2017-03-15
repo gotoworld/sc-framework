@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.wu1g.web.controller;
+package com.wu1g.web;
 
 import com.wu1g.api.auth.IRoleSourceService;
 import com.wu1g.framework.util.IpUtils;

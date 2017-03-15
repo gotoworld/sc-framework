@@ -433,6 +433,12 @@ public class StrUtil {
     }
 
     /**
+     * 小驼峰格式化字符串
+     */
+    public static String fmtStr(String str, String regex){
+        return toLowerCaseFirstOne(toUpperCase(str,regex));
+    }
+    /**
      * 将服务器相对地址转为物理地址
      *
      * @param url

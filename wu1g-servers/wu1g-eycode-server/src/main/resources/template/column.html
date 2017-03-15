@@ -29,8 +29,8 @@
                         <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_insert" value="1">增</label>
                         <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_insertBatch" value="1">批增</label>
                         <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_delLogic" value="1">逻辑删</label>
-                        <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_recovery" value="1">逻辑恢</label>
-                        <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_del" value="1">物理删</label>
+                        <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)"  name="${table}_recovery" value="1">逻辑恢</label>
+                        <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)"  name="${table}_del" value="1">物理删</label>
                         <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_update" value="1">改</label>
                         <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_page" value="1">分页</label>
                         <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_list" value="1">列表</label>
@@ -57,9 +57,9 @@
                                 ${beanLP.index<10?'0'+beanLP.index:beanLP.index}#
                                 <label><input type="checkbox" name="${table}_col_show" onclick="clickCheck2(this)" value="${bean.columnName}">展示</label>
                                 <label style="color: #5bb75b;"><input type="checkbox" onclick="clickCheck2(this)" name="${table}_col_edit" checked value="${bean.columnName}">编辑</label>
-                                <label><input type="radio" name="${table}_col_created" onclick="clickRadio2(this)"  value="${bean.columnName}">创建时间</label>
-                                <label><input type="radio" name="${table}_col_updated" onclick="clickRadio2(this)"  value="${bean.columnName}">修改时间</label>
-                                <label><input type="radio" name="${table}_col_del" onclick="clickRadio2(this)"  value="${bean.columnName}">删除标记</label>
+                                <label ${bean.columnName=='date_created'?'style="color: #5bb75b;"':''}><input type="radio" name="${table}_col_created" onclick="clickRadio2(this)" ${bean.columnName=='date_created'?'checked':''}  value="${bean.columnName}">创建时间</label>
+                                <label ${bean.columnName=='date_updated'?'style="color: #5bb75b;"':''}><input type="radio" name="${table}_col_updated" onclick="clickRadio2(this)"  ${bean.columnName=='date_updated'?'checked':''} value="${bean.columnName}">修改时间</label>
+                                <label ${bean.columnName=='del_flag'?'style="color: #5bb75b;"':''}><input type="radio" name="${table}_col_del" onclick="clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnName}">删除标记</label>
 
                                 <select name="${bean.columnName}_edit_type">
                                     <option value="1" ${bean.pk!='PRI'?'selected':''}>--单行文本--</option>
@@ -114,5 +114,5 @@
             </div>
         </form>
     <a href="javascript:void(0);" onclick="$('#example-vertical-t-1').click();" class="btn btn-xs btn-info"> <i class="glyphicon glyphicon-chevron-left"></i> PREVIOUS</a>
-    <a href="javascript:void(0);" onclick="submitForm('column_form','templateRender');" class="btn btn-xs btn-success">NEXT <i class="glyphicon glyphicon-chevron-right"></i> </a>
+    <a href="javascript:void(0);" onclick="submitForm('column_form','templateRender');$('#example-vertical-t-3').click();" class="btn btn-xs btn-success">NEXT <i class="glyphicon glyphicon-chevron-right"></i> </a>
 </div>

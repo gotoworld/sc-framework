@@ -135,6 +135,6 @@ public class SchemaInfoController extends BaseController {
         request.setAttribute("result", result);
         request.setAttribute("dbs", dto.getDbs());
         request.setAttribute("tables", dto.getTables());
-        return "column";
+        return "show";
     }
 }

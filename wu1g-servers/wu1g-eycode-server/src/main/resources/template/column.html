@@ -17,11 +17,26 @@
                 <%for(table in tables!){%>
                 <div id="tab-${table}" class="tab-pane ${tableLP.index==1?'active':''}">
                     <div class="td_${table}">
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_domain" value="1">domain</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_mybatis" value="1">mybatis</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_dao" value="1">dao</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_service" value="1">service</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_api" value="1">api</label>
+                        <p>
+                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_domain" value="1">domain</label>
+                            包:<input type="text" name="${table}_domain_pkg" value="com.wu1g.domain">
+                        </p>
+                        <p>
+                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_mybatis" value="1">mybatis</label>
+                            包:<input type="text" name="${table}_mybatis_pkg" value="mybatis">
+                        </p>
+                        <p>
+                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_dao" value="1">dao</label>
+                            包:<input type="text" name="${table}_dao_pkg" value="com.wu1g.dao">
+                        </p>
+                        <p>
+                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_service" value="1">service</label>
+                            包:<input type="text" name="${table}_service_pkg" value="com.wu1g.biz">
+                        </p>
+                        <p>
+                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_api" value="1">api</label>
+                            包:<input type="text" name="${table}_api_pkg" value="com.wu1g.api">
+                        </p>
                         <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_web_rest" value="1">web.rest</label>
                         <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_web_ctrl" value="1">web.ctrl</label>
                         <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>

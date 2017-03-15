@@ -3,6 +3,8 @@ package com.wu1g.domain;
 import com.wu1g.framework.vo.BaseVO;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class SchemaConf extends BaseVO {
     private static final long serialVersionUID = -762636592679599049L;
@@ -24,7 +26,13 @@ public class SchemaConf extends BaseVO {
     private String _page;//分页
     private String _list;//列表
     private String _detail;//详情
-    private String _del_flag;//删除字段名称
-    private String _date_created;//创建时间字段名称
-    private String _date_updated;//修改时间字段名称
+
+
+    private String[] _col_show;
+    private String[] _col_edit;
+    private String _col_created;
+    private String _col_updated;
+    private String _col_del;
+    private String _edit_type;
+    private String _col_autopk;
 }

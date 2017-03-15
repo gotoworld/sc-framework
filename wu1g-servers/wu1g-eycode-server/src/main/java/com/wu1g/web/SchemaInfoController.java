@@ -117,9 +117,13 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_list(request.getParameter(tableName+"_list"));//
                     schemaConf.set_detail(request.getParameter(tableName+"_detail"));//
 
-                    schemaConf.set_del_flag(request.getParameter(tableName+"_del_flag"));
-                    schemaConf.set_date_created(request.getParameter(tableName+"_date_created"));
-                    schemaConf.set_date_updated(request.getParameter(tableName+"_date_updated"));
+                    schemaConf.set_col_show(request.getParameterValues(tableName+"_col_show"));
+                    schemaConf.set_col_edit(request.getParameterValues(tableName+"_col_edit"));
+                    schemaConf.set_col_created(request.getParameter(tableName+"_col_created"));
+                    schemaConf.set_col_updated(request.getParameter(tableName+"_col_updated"));
+                    schemaConf.set_col_del(request.getParameter(tableName+"_col_del"));
+                    schemaConf.set_edit_type(request.getParameter(tableName+"_edit_type"));
+                    schemaConf.set_col_autopk(request.getParameter(tableName+"_col_autopk"));
 
                     tableSchemaInfo.setSchemaConf(schemaConf);
                     tablesConf.add(tableSchemaInfo);

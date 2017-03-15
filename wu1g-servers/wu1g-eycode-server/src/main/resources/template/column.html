@@ -15,41 +15,38 @@
               data-action="${basePath}templateRender">
             <div class="tab-content">
                 <%for(table in tables!){%>
+                <input type="hidden" name="tables" value="${table}">
                 <div id="tab-${table}" class="tab-pane ${tableLP.index==1?'active':''}">
                     <div class="td_${table}">
                         <p>
-                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_domain" value="1">domain</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_domain" value="1">domain</label>
                             包:<input type="text" name="${table}_domain_pkg" value="com.wu1g.domain">
-                        </p>
-                        <p>
-                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_mybatis" value="1">mybatis</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_mybatis" value="1">mybatis</label>
                             包:<input type="text" name="${table}_mybatis_pkg" value="mybatis">
-                        </p>
-                        <p>
-                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_dao" value="1">dao</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_dao" value="1">dao</label>
                             包:<input type="text" name="${table}_dao_pkg" value="com.wu1g.dao">
                         </p>
                         <p>
-                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_service" value="1">service</label>
-                            包:<input type="text" name="${table}_service_pkg" value="com.wu1g.biz">
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_insert" value="1">增</label>
+                            <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_insertBatch" value="1">批增</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_delLogic" value="1">逻辑删</label>
+                            <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)"  name="${table}_recovery" value="1">逻辑恢</label>
+                            <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)"  name="${table}_del" value="1">物理删</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_update" value="1">改</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_page" value="1">分页</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_list" value="1">列表</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_detail" value="1">详情</label>
                         </p>
                         <p>
-                            <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_api" value="1">api</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_api" value="1">api</label>
                             包:<input type="text" name="${table}_api_pkg" value="com.wu1g.api">
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_service" value="1">service</label>
+                            包:<input type="text" name="${table}_service_pkg" value="com.wu1g.biz">
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_web_ctrl" value="1">web.ctrl</label>
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_view_btl" value="1">view.btl</label>
+                            <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_web_rest" value="1">web.rest</label>
+                            <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>
                         </p>
-                        <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_web_rest" value="1">web.rest</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_web_ctrl" value="1">web.ctrl</label>
-                        <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_view_btl" value="1">view.btl</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_insert" value="1">增</label>
-                        <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_insertBatch" value="1">批增</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_delLogic" value="1">逻辑删</label>
-                        <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)"  name="${table}_recovery" value="1">逻辑恢</label>
-                        <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)"  name="${table}_del" value="1">物理删</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_update" value="1">改</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_page" value="1">分页</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_list" value="1">列表</label>
-                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_detail" value="1">详情</label>
                     </div>
                     <table class="table table-bordered table-striped  table-hover" style="width: 100%">
                         <thead>
@@ -58,9 +55,9 @@
                             <th class="col-md-2">字段名</th>
                             <th class="col-md-2">字段备注</th>
                             <th class="" style="width: 50px;">必填</th>
-                            <th class="" style="width: 50px;">类型</th>
-                            <th class="" style="width: 50px;">长度</th>
-                            <th class="" style="width: 50px;">主键</th>
+                            <th class="" style="width: 40px;">类型</th>
+                            <th class="" style="width: 40px;">长度</th>
+                            <th class="" style="width: 40px;">主键</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,12 +68,13 @@
                             <td>
                                 ${beanLP.index<10?'0'+beanLP.index:beanLP.index}#
                                 <label><input type="checkbox" name="${table}_col_show" onclick="clickCheck2(this)" value="${bean.columnName}">展示</label>
-                                <label style="color: #5bb75b;"><input type="checkbox" onclick="clickCheck2(this)" name="${table}_col_edit" checked value="${bean.columnName}">编辑</label>
-                                <label ${bean.columnName=='date_created'?'style="color: #5bb75b;"':''}><input type="radio" name="${table}_col_created" onclick="clickRadio2(this)" ${bean.columnName=='date_created'?'checked':''}  value="${bean.columnName}">创建时间</label>
-                                <label ${bean.columnName=='date_updated'?'style="color: #5bb75b;"':''}><input type="radio" name="${table}_col_updated" onclick="clickRadio2(this)"  ${bean.columnName=='date_updated'?'checked':''} value="${bean.columnName}">修改时间</label>
-                                <label ${bean.columnName=='del_flag'?'style="color: #5bb75b;"':''}><input type="radio" name="${table}_col_del" onclick="clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnName}">删除标记</label>
-
-                                <select name="${bean.columnName}_edit_type">
+                                <label style="color: red;"><input type="checkbox" onclick="clickCheck2(this)" name="${table}_col_edit" checked value="${bean.columnName}">编辑</label>
+                                <%if(bean.pk!='PRI'){%>
+                                <label ${bean.columnName=='date_created'?'style="color: red;"':''}><input type="radio" name="${table}_col_created" onclick="clickRadio2(this)" ${bean.columnName=='date_created'?'checked':''}  value="${bean.columnName}">创建时间</label>
+                                <label ${bean.columnName=='date_updated'?'style="color: red;"':''}><input type="radio" name="${table}_col_updated" onclick="clickRadio2(this)"  ${bean.columnName=='date_updated'?'checked':''} value="${bean.columnName}">修改时间</label>
+                                <label ${bean.columnName=='del_flag'?'style="color: red;"':''}><input type="radio" name="${table}_col_del" onclick="clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnName}">删除标记</label>
+                                <%}%>
+                                <select name="${bean.columnName}_edit_type" style="width: 100px;">
                                     <option value="1" ${bean.pk!='PRI'?'selected':''}>--单行文本--</option>
                                     <option value="0" ${bean.pk=='PRI'?'selected':''}>--隐藏文本域--</option>
                                     <option value="2">--多行文本--</option>
@@ -129,5 +127,5 @@
             </div>
         </form>
     <a href="javascript:void(0);" onclick="$('#example-vertical-t-1').click();" class="btn btn-xs btn-info"> <i class="glyphicon glyphicon-chevron-left"></i> PREVIOUS</a>
-    <a href="javascript:void(0);" onclick="submitForm('column_form','templateRender');$('#example-vertical-t-3').click();" class="btn btn-xs btn-success">NEXT <i class="glyphicon glyphicon-chevron-right"></i> </a>
+    <a href="javascript:void(0);" onclick="submitForm('column_form','finish_msg');$('#example-vertical-t-3').click();" class="btn btn-xs btn-success">NEXT <i class="glyphicon glyphicon-chevron-right"></i> </a>
 </div>

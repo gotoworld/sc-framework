@@ -135,20 +135,20 @@
 <script>
     function checkTable(tableName) {
         var table_flag = $('.checked_' + tableName).prop('checked');
-        $('.checked_' + tableName).parent().css("color", table_flag ? '#5bb75b' : '#000');
+        $('.checked_' + tableName).parent().css("color", table_flag ? 'red' : '#000');
         table_flag ? $('.td_' + tableName).show() : $('.td_' + tableName).hide();
         $('.input_' + tableName).each(function () {
             $(this)[0].checked = table_flag;
-            $(this).parent().css("color", table_flag ? '#5bb75b' : '#000');
+            $(this).parent().css("color", table_flag ? 'red' : '#000');
         })
     }
     function clickCheck2(obj) {
-        $(obj).parent().css("color", $(obj).prop('checked') ? '#5bb75b' : '#000');
+        $(obj).parent().css("color", $(obj).prop('checked') ? 'red' : '#000');
     }
     var clickRadio2Flag = true;
     function clickRadio2(obj) {
         $(obj)[0].checked = clickRadio2Flag;
-        $(obj).parent().css("color", clickRadio2Flag ? '#5bb75b' : '#000');
+        $(obj).parent().css("color", clickRadio2Flag ? 'red' : '#000');
         clickRadio2Flag=!clickRadio2Flag;
     }
     $("#example-vertical").steps({

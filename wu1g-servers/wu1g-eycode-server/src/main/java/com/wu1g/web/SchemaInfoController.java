@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -58,12 +60,25 @@ public class SchemaInfoController extends BaseController {
         log.info("SchemaInfoController column.........");
         Response result = new Response();
         try {
-            result.data = schemaInfoService.findColumnIsList(dto);
+            Map<String,List> resultMap=new HashMap<>();
+            if(dto.getTables()!=null){
+                dto.getTables().forEach(tableName->{
+                    SchemaInfo tableSchemaInfo=new SchemaInfo();
+                    tableSchemaInfo.setDbName(request.getParameter(tableName+"_db"));
+                    tableSchemaInfo.setTableName(tableName);
+                    try {
+                        resultMap.put(tableName,schemaInfoService.findColumnIsList(tableSchemaInfo));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            result.data = resultMap;
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         request.setAttribute("result", result);
-        request.setAttribute("dbs", dto.getDbs());
+//        request.setAttribute("dbs", dto.getDbs());
         request.setAttribute("tables", dto.getTables());
         return "column";
     }

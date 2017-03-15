@@ -2,7 +2,7 @@
       role="form" class="form-inline"
       method="post"  accept-charset="UTF-8"
       action="javascript:void(0);"
-      data-action="${basePath}templateRender">
+      data-action="${basePath}column">
     <%
         for(db in dbs!){
     %>
@@ -34,26 +34,7 @@
                 ${bean.tableComment!}
             </td>
             <td>
-                <div class="td_${bean.tableName!}" style="display: none;">
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_domain" value="1">domain</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_mybatis" value="1">mybatis</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_dao" value="1">dao</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_service" value="1">service</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_api" value="1">api</label>
-                    <label><input type="checkbox" class="input " onclick="checkPerm(this)" name="${bean.tableName!}_web_rest" value="1">web.rest</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_web_ctrl" value="1">web.ctrl</label>
-                    <label><input type="checkbox" class="input " onclick="checkPerm(this)" name="${bean.tableName!}_view_ng" value="1">view.ng</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_view_btl" value="1">view.btl</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_insert" value="1">增</label>
-                    <label><input type="checkbox" class="input " onclick="checkPerm(this)" name="${bean.tableName!}_insertBatch" value="1">批增</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_delLogic" value="1">逻辑删</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_recovery" value="1">逻辑恢</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_del" value="1">物理删</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_update" value="1">改</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_page" value="1">分页</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_list" value="1">列表</label>
-                    <label><input type="checkbox" class="input input_${bean.tableName!}" onclick="checkPerm(this)" name="${bean.tableName!}_detail" value="1">详情</label>
-                </div>
+
             </td>
         </tr>
         <%
@@ -68,5 +49,5 @@
         </tbody>
     </table>
 </form>
-<a href="javascript:void(0);" onclick="$('#example-vertical-t-0').click();" class="btn btn-xs btn-info"> <i class="fa fa-edit"></i> PREVIOUS</a>
-<a href="javascript:void(0);" onclick="submitForm('table_form','column_list');$('#example-vertical-t-2').click();" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> NEXT</a>
+<a href="javascript:void(0);" onclick="$('#example-vertical-t-0').click();" class="btn btn-xs btn-info"> <i class="glyphicon glyphicon-chevron-left"></i> PREVIOUS</a>
+<a href="javascript:void(0);" onclick="submitForm('table_form','column_list');$('#example-vertical-t-2').click();" class="btn btn-xs btn-success">NEXT <i class="glyphicon glyphicon-chevron-right"></i> </a>

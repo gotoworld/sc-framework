@@ -25,7 +25,7 @@
                 </ul>
                 <div class="col-md-12">
                     <div id="example-vertical">
-                        <h3>库</h3>
+                        <h3>选择数据库</h3>
                         <section>
                             <div class="text-center m-t-md">
                                 <div class="table-responsive table-scrollable">
@@ -71,19 +71,21 @@
                                             </tbody>
                                         </table>
                                     </form>
-                                    <a href="#next" onclick="submitForm('db_form','table_list');$('#example-vertical-t-1').click();"
-                                       class="btn btn-xs btn-success actions">
-                                        <i class="fa fa-edit"></i> NEXT</a>
+                                    <a href="#next" onclick="submitForm('db_form','table_list');$('#example-vertical-t-1').click();"  class="btn btn-xs btn-success actions"><i class="glyphicon glyphicon-chevron-right"></i> NEXT</a>
                                 </div>
                             </div>
                         </section>
-                        <h3>表</h3>
+                        <h3>选择数据表</h3>
                         <section>
                             <div id="table_list"></div>
                         </section>
-                        <h3>功能</h3>
+                        <h3>具体参数配置</h3>
                         <section>
                             <div id="column_list"></div>
+                        </section>
+                        <h3>执行结果</h3>
+                        <section>
+                            <div id="finish_msg"></div>
                         </section>
                     </div>
                 </div>
@@ -128,19 +130,26 @@
         max-width: 100%;
         margin-bottom: 0px;
     }
+    .table td {text-align: left;}
 </style>
 <script>
     function checkTable(tableName) {
         var table_flag = $('.checked_' + tableName).prop('checked');
-        $('.checked_' + tableName).parent().css("color", table_flag ? 'red' : '#000');
+        $('.checked_' + tableName).parent().css("color", table_flag ? '#5bb75b' : '#000');
         table_flag ? $('.td_' + tableName).show() : $('.td_' + tableName).hide();
         $('.input_' + tableName).each(function () {
             $(this)[0].checked = table_flag;
-            $(this).parent().css("color", table_flag ? 'red' : '#000');
+            $(this).parent().css("color", table_flag ? '#5bb75b' : '#000');
         })
     }
-    function checkPerm(perm) {
-        $(perm).parent().css("color", $(perm).prop('checked') ? 'red' : '#000');
+    function clickCheck2(obj) {
+        $(obj).parent().css("color", $(obj).prop('checked') ? '#5bb75b' : '#000');
+    }
+    var clickRadio2Flag = true;
+    function clickRadio2(obj) {
+        $(obj)[0].checked = clickRadio2Flag;
+        $(obj).parent().css("color", clickRadio2Flag ? '#5bb75b' : '#000');
+        clickRadio2Flag=!clickRadio2Flag;
     }
     $("#example-vertical").steps({
         headerTag: "h3",

@@ -1,74 +1,118 @@
-<form id="column_form"
-      role="form" class="form-inline"
-      method="post"  accept-charset="UTF-8"
-      action="javascript:void(0);"
-      data-action="${basePath}templateRender">
-    <%
-    for(db in dbs!){
-    %>
-    <input type="hidden" name="dbs" value="${db}">
-    <%}%>
-    <%
-    for(table in tables!){
-    %>
-    <input type="hidden" name="tables" value="${table}">
-    <%}%>
-    <table class="table table-bordered table-striped  table-hover" style="width: 100%">
-        <thead>
-        <tr>
-            <th class="">表名</th>
-            <th class="">字段名</th>
-            <th class="">字段备注</th>
-            <th class="">必填</th>
-            <th class="">类型</th>
-            <th class="">长度</th>
-            <th class="">主键</th>
-        </tr>
-        </thead>
-        <tbody>
+<div class="tabs-container">
+    <ul class="nav nav-tabs">
         <%
-        for(bean in result.data!){
+        for(table in tables!){
         %>
-        <tr>
-            <td>
-                <label>
-                    <input type="checkbox" name="columns" checked value="${bean.columnName!}">
-                    ${beanLP.index}.${bean.dbName!}.${bean.tableName!}
-                </label>
-            </td>
-            <td>
-                <label>
-                    ${bean.columnName!}
-                </label>
-            </td>
-            <td>
-                ${bean.columnComment!}
-            </td>
-            <td>
-                ${bean.isNullable!}
-            </td>
-            <td>
-                ${bean.dataType!}
-            </td>
-            <td>
-                ${bean.dataLength!}
-            </td>
-            <td>
-                ${bean.pk!}
-            </td>
-        </tr>
-        <%
-        }elsefor{
-        %>
-        <tr>
-            <td colspan="7">
-                <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
-            </td>
-        </tr>
+        <li class="${tableLP.index==1?'active':''}">
+            <a data-toggle="tab" href="#tab-${table}" aria-expanded="true">${table}配置</a>
+        </li>
         <%}%>
-        </tbody>
-    </table>
-</form>
-<a href="javascript:void(0);" onclick="$('#example-vertical-t-1').click();" class="btn btn-xs btn-info"> <i class="fa fa-edit"></i> PREVIOUS</a>
-<a href="javascript:void(0);" onclick="submitForm('column_form','templateRender');" class="btn btn-xs btn-success">
-    <i class="fa fa-edit"></i> NEXT</a>
+    </ul>
+        <form id="column_form"
+              role="form" class="form-inline"
+              method="post"  accept-charset="UTF-8"
+              action="javascript:void(0);"
+              data-action="${basePath}templateRender">
+            <div class="tab-content">
+                <%for(table in tables!){%>
+                <div id="tab-${table}" class="tab-pane ${tableLP.index==1?'active':''}">
+                    <div class="td_${table}">
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_domain" value="1">domain</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_mybatis" value="1">mybatis</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_dao" value="1">dao</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_service" value="1">service</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_api" value="1">api</label>
+                        <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_web_rest" value="1">web.rest</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_web_ctrl" value="1">web.ctrl</label>
+                        <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_view_btl" value="1">view.btl</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_insert" value="1">增</label>
+                        <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_insertBatch" value="1">批增</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_delLogic" value="1">逻辑删</label>
+                        <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_recovery" value="1">逻辑恢</label>
+                        <label><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_del" value="1">物理删</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_update" value="1">改</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_page" value="1">分页</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_list" value="1">列表</label>
+                        <label style="color: #5bb75b;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_detail" value="1">详情</label>
+                    </div>
+                    <table class="table table-bordered table-striped  table-hover" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th class=""></th>
+                            <th class="col-md-2">字段名</th>
+                            <th class="col-md-2">字段备注</th>
+                            <th class="" style="width: 50px;">必填</th>
+                            <th class="" style="width: 50px;">类型</th>
+                            <th class="" style="width: 50px;">长度</th>
+                            <th class="" style="width: 50px;">主键</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        for(bean in result.data[table]!){
+                        %>
+                        <tr>
+                            <td>
+                                ${beanLP.index<10?'0'+beanLP.index:beanLP.index}#
+                                <label><input type="checkbox" name="${table}_col_show" onclick="clickCheck2(this)" value="${bean.columnName}">展示</label>
+                                <label style="color: #5bb75b;"><input type="checkbox" onclick="clickCheck2(this)" name="${table}_col_edit" checked value="${bean.columnName}">编辑</label>
+                                <label><input type="radio" name="${table}_col_created" onclick="clickRadio2(this)"  value="${bean.columnName}">创建时间</label>
+                                <label><input type="radio" name="${table}_col_updated" onclick="clickRadio2(this)"  value="${bean.columnName}">修改时间</label>
+                                <label><input type="radio" name="${table}_col_del" onclick="clickRadio2(this)"  value="${bean.columnName}">删除标记</label>
+
+                                <select name="${bean.columnName}_edit_type">
+                                    <option value="1" ${bean.pk!='PRI'?'selected':''}>--单行文本--</option>
+                                    <option value="0" ${bean.pk=='PRI'?'selected':''}>--隐藏文本域--</option>
+                                    <option value="2">--多行文本--</option>
+                                    <option value="3">--日期控件--</option>
+                                    <option value="4">--单项下拉选择框--</option>
+                                    <option value="5">--多项下拉选择框--</option>
+                                    <option value="6">--单项项--</option>
+                                    <option value="7">--多选项--</option>
+                                    <option value="8">--图片上传--</option>
+                                    <option value="9">--富文本编辑器(简单)--</option>
+                                    <option value="10">--富文本编辑器(完整)--</option>
+                                    <option value="11">--文件上传--</option>
+                                </select>
+                                <%if(bean.pk=='PRI'){%><label><input type="radio" name="${table}_col_autopk" onclick="clickRadio2(this)" checked value="${bean.columnName}">自增主键</label><%}%>
+                            </td>
+                            <td>
+                                <label>
+                                    ${bean.columnName!}
+                                </label>
+                            </td>
+                            <td>
+                                ${bean.columnComment!}
+                            </td>
+                            <td>
+                                ${bean.isNullable!}
+                            </td>
+                            <td>
+                                ${bean.dataType!}
+                            </td>
+                            <td>
+                                ${bean.dataLength!}
+                            </td>
+                            <td>
+                                ${bean.pk!}
+                            </td>
+                        </tr>
+                        <%
+                        }elsefor{
+                        %>
+                        <tr>
+                            <td colspan="7">
+                                <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
+                            </td>
+                        </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
+                </div>
+                <%}%>
+            </div>
+        </form>
+    <a href="javascript:void(0);" onclick="$('#example-vertical-t-1').click();" class="btn btn-xs btn-info"> <i class="glyphicon glyphicon-chevron-left"></i> PREVIOUS</a>
+    <a href="javascript:void(0);" onclick="submitForm('column_form','templateRender');" class="btn btn-xs btn-success">NEXT <i class="glyphicon glyphicon-chevron-right"></i> </a>
+</div>

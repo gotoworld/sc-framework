@@ -32,21 +32,7 @@
 		EXTRA AS autoIncrement
 		FROM
 		information_schema.`COLUMNS`
-		WHERE 1=1
-		<if test="dbs!=null">
-			AND TABLE_SCHEMA IN (
-			<foreach collection="dbs" item="t" separator=",">
-				#{t}
-			</foreach>
-			)
-		</if>
-		<if test="tables!=null">
-			AND	TABLE_NAME IN (
-			<foreach collection="tables" item="t" separator=",">
-				#{t}
-			</foreach>
-			)
-		</if>
+		WHERE TABLE_SCHEMA=#{dbName} AND TABLE_NAME =#{tableName}
 	</select>
     <select id="findColumnIsList2" parameterType="map" resultType="schemaInfo">
 		<![CDATA[

@@ -103,7 +103,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 }
                 //web.ctrl
                 if ("1".equals(tableConf.getSchemaConf().get_web_ctrl())) {
-                    BeetlUtils.renderToFile("/btl/java/WebDemoController.java.btl.btl", context, saveDir + "/web/" + tableConf.getTableNameFormat() + "Controller.java");
+                    BeetlUtils.renderToFile("/btl/java/WebDemoController.java.btl", context, saveDir + "/web/" + tableConf.getTableNameFormat() + "Controller.java");
                 }
                 //view.ng
                 if ("1".equals(tableConf.getSchemaConf().get_view_ng())) {

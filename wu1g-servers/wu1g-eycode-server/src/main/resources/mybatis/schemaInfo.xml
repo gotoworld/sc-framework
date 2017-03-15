@@ -63,7 +63,7 @@
 		EXTRA AS autoIncrement
 		FROM
 		information_schema.`COLUMNS`
-		WHERE TABLE_SCHEMA = #{db} AND TABLE_NAME = #{table}  and t.COLUMN_NAME not in ('del_flag','date_created','create_id')
+		WHERE TABLE_SCHEMA = #{db} AND TABLE_NAME = #{table}  and COLUMN_NAME not in ('del_flag','date_created','create_id')
 		]]>
 	</select>
     <select id="findColumnPks" parameterType="map" resultType="schemaInfo">

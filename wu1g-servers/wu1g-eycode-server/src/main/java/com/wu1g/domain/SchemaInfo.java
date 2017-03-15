@@ -32,7 +32,7 @@ public class SchemaInfo extends BaseVO {
     /**字段类型*/
     private String dataType;
     /**字段长度*/
-    private Integer dataLength;
+    private Long dataLength;
     /**是否主键*/
     private String pk;
     /**是否自增*/

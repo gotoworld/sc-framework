@@ -78,7 +78,7 @@ public class SchemaInfoController extends BaseController {
             result = Response.error(e.getMessage());
         }
         request.setAttribute("result", result);
-//        request.setAttribute("dbs", dto.getDbs());
+        request.setAttribute("dbs", dto.getDbs());
         request.setAttribute("tables", dto.getTables());
         return "column";
     }
@@ -117,13 +117,30 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_list(request.getParameter(tableName+"_list"));//
                     schemaConf.set_detail(request.getParameter(tableName+"_detail"));//
 
-                    schemaConf.set_col_show(request.getParameterValues(tableName+"_col_show"));
-                    schemaConf.set_col_edit(request.getParameterValues(tableName+"_col_edit"));
-                    schemaConf.set_col_created(request.getParameter(tableName+"_col_created"));
-                    schemaConf.set_col_updated(request.getParameter(tableName+"_col_updated"));
-                    schemaConf.set_col_del(request.getParameter(tableName+"_col_del"));
-                    schemaConf.set_edit_type(request.getParameter(tableName+"_edit_type"));
-                    schemaConf.set_col_autopk(request.getParameter(tableName+"_col_autopk"));
+                    Map<String,String> _col_show=new HashMap<>();
+                    String[] _col_show_arr=request.getParameterValues("t123_"+tableName+"_col_show");
+                    if(_col_show_arr!=null && _col_show_arr.length>0){
+                        for (String s : _col_show_arr) {
+                            _col_show.put(s,request.getParameter("t123_"+tableName+"_"+s+"_comment"));
+                        }
+                    }
+                    schemaConf.set_col_show(_col_show);
+
+                    Map<String,String> _col_edit=new HashMap<>();
+                    Map<String,String> _edit_type=new HashMap<>();
+                    String[] _col_edit_arr=request.getParameterValues("t123_"+tableName+"_col_edit");
+                    if(_col_edit_arr!=null && _col_edit_arr.length>0){
+                        for (String s : _col_edit_arr) {
+                            _col_edit.put(s,request.getParameter("t123_"+tableName+"_"+s+"_comment"));
+                            _edit_type.put(s,request.getParameter("t123_"+tableName+"_"+s+"_edit_type"));
+                        }
+                    }
+                    schemaConf.set_col_edit(_col_edit);
+
+                    schemaConf.set_col_created(request.getParameter("t123_"+tableName+"_col_created"));
+                    schemaConf.set_col_updated(request.getParameter("t123_"+tableName+"_col_updated"));
+                    schemaConf.set_col_del(request.getParameter("t123_"+tableName+"_col_del"));
+                    schemaConf.set_col_autopk(request.getParameter("t123_"+tableName+"_col_autopk"));
 
                     tableSchemaInfo.setSchemaConf(schemaConf);
                     tablesConf.add(tableSchemaInfo);

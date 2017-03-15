@@ -71,6 +71,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
 
                 //3.获取生成配置
                 context.put("tableConf", tableConf);
+                context.put("schemaConf", tableConf.getSchemaConf());
                 context.put("tableNameL", StrUtil.toLowerCaseFirstOne(tableConf.getTableNameFormat()));
                 context.put("beanVo", schemaInfoDao.findSpringVO(dtoMap));
                 context.put("xmlInsert", schemaInfoDao.findMybatisInsert(dtoMap));

@@ -4,6 +4,7 @@ import com.wu1g.framework.vo.BaseVO;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class SchemaConf extends BaseVO {
@@ -28,11 +29,11 @@ public class SchemaConf extends BaseVO {
     private String _detail;//详情
 
 
-    private String[] _col_show;
-    private String[] _col_edit;
+    private Map<String,String> _col_show;
+    private Map<String,String> _col_edit;
     private String _col_created;
     private String _col_updated;
     private String _col_del;
-    private String _edit_type;
+    private Map<String,String> _edit_type;
     private String _col_autopk;
 }

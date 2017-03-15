@@ -28,9 +28,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
 			<div class="ibox float-e-margins">
-				<div class="ibox-content col-sm-12">
+				<div class="ibox-content col-md-12">
 					<form id="pano02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/pano/proj/save">
-						<div class="col-sm-12">
+						<div class="col-md-12">
 							<div style="float:right;">
 								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 							</div>
@@ -41,10 +41,10 @@
 						<input type="hidden" name="token" value="${bean.token}" />
                         <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                         <input type="hidden" name="type" value="0" />
-					    <div class="col-sm-6">						
+					    <div class="col-md-6">
 							<div class="form-group">
-								<label class="col-sm-3 control-label"  for="bean_categoryId">类目：</label>
-								<div class="col-sm-8">
+								<label class="col-md-3 control-label"  for="bean_categoryId">类目：</label>
+								<div class="col-md-8">
 <!-- 								value="${bean.categoryId}" -->
 									<select id="bean_categoryId" name="categoryId"  class="form-control" aria-describedby="bean_categoryId-error"   aria-invalid="true">
 										<option value="1">测试类目1</option>
@@ -53,7 +53,7 @@
 								 </div>
 							 </div>
 							 <div class="form-group">
-								<div class="col-sm-8 col-sm-offset-3">
+								<div class="col-md-8 col-md-offset-3">
 	                                    <div class="checkbox">
 	                                        <label>
 	                                            <input type="checkbox" class="checkbox" id="bean_isComments" <%if(bean.isComments==1){%> checked="checked" <%}%> name="isComments" value="1">开放评论
@@ -70,15 +70,15 @@
 								 </div>
 							 </div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"  for="bean_name">名称：</label>
-								<div class="col-sm-8">
+								<label class="col-md-3 control-label"  for="bean_name">名称：</label>
+								<div class="col-md-8">
 									<input id="bean_name" name="name" value="${bean.name}" class="form-control" type="text"  placeholder="名称"  required="" aria-required="true" aria-describedby="bean_name-error"  maxlength="50"   aria-invalid="true">
 									<span id="bean_name-error" class="help-block m-b-none"></span>
 								 </div>
 							 </div>
 							 <div class="form-group">
-								<label class="col-sm-3 control-label" >雪景类型：</label>
-								<div class="col-sm-8">
+								<label class="col-md-3 control-label" >雪景类型：</label>
+								<div class="col-md-8">
 									<select name="snowType" class="form-control m-b">
 										<option value="">--不显示--</option>
 										<option value="defaultsnow" ${bean.snowType=='defaultsnow'?'selected="selected"':''} >默认</option>
@@ -91,8 +91,8 @@
 								 </div>
 							 </div>
 							 <div class="form-group">
-								<label class="col-sm-3 control-label">背景音乐：</label>
-								<div class="col-sm-8">
+								<label class="col-md-3 control-label">背景音乐：</label>
+								<div class="col-md-8">
 									<span  class="help-block m-b-none">
 									<button type="button" id="upload_sound_btn">点击上传</button>(可以不添加,)必须为mp3</span>
 								 	<div id="upload_sound_div" style="">
@@ -109,17 +109,17 @@
 								 </div>
 							 </div>
 						</div>
-						<div class="col-sm-6">	
+						<div class="col-md-6">
 							 <div class="form-group">
-								<label class="col-sm-3 control-label"  for="bean_memo">备注：</label>
-								<div class="col-sm-8">
+								<label class="col-md-3 control-label"  for="bean_memo">备注：</label>
+								<div class="col-md-8">
 									<input id="bean_memo" name="memo" value="${bean.memo}" class="form-control" type="text"  placeholder="备注" aria-describedby="bean_memo-error"  maxlength="255"   aria-invalid="true">
 									<span id="bean_memo-error" class="help-block m-b-none"></span>
 								 </div>
 							 </div>					
 							<div class="form-group">
-								<label class="col-sm-3 control-label">导览图：</label>
-								<div class="col-sm-8">
+								<label class="col-md-3 control-label">导览图：</label>
+								<div class="col-md-8">
 									<span  class="help-block m-b-none"><button type="button" id="upload_map_btn">点击上传</button>(可以不添加,)建议尺寸264*264</span>
 									<div id="upload_map_div" style="">
 										<% if(isNotEmpty(bean.mapSrc)){%>
@@ -133,8 +133,8 @@
 							 </div>
 													
 <!-- 							<div class="form-group"> -->
-<!-- 								<label class="col-sm-3 control-label"  for="bean_logoPicUrl">logo图片：</label> -->
-<!-- 								<div class="col-sm-8"> -->
+<!-- 								<label class="col-md-3 control-label"  for="bean_logoPicUrl">logo图片：</label> -->
+<!-- 								<div class="col-md-8"> -->
 <!-- 									<input id="bean_logoPicUrl" name="logoPicUrl" value="${bean.logoPicUrl}" class="form-control" type="text"  placeholder="logo图片" aria-describedby="bean_logoPicUrl-error"  maxlength="255"   aria-invalid="true"> -->
 <!-- 									<span id="bean_logoPicUrl-error" class="help-block m-b-none">可不上传</span> -->
 <!-- 									<input id="bean_logoWebUrl" name="logoWebUrl" value="${bean.logoWebUrl}" class="form-control" type="text"  placeholder="logo链接" aria-describedby="bean_logoWebUrl-error"  maxlength="255"   aria-invalid="true"> -->
@@ -145,9 +145,9 @@
 <!-- 							 </div> -->
 						</div>
 						
-						<div class="col-sm-12 form-group">
-							<label class="col-sm-1 control-label"></label>
-							<div class="col-sm-11">
+						<div class="col-md-12 form-group">
+							<label class="col-md-1 control-label"></label>
+							<div class="col-md-11">
 								<p>场景上传：<span class="red s12">全景图宽高比须为2:1，格式为jpg；</span> <span class="c00 s12">单次只能上传1张全景图，多个场景请分次上传</span></p>
 								<div class="img-input red" id="upload_scene_div" style="">
 								<%if(bean.scenes!=null && bean.scenes.~size>0){
@@ -173,7 +173,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-12">
+						<div class="col-md-12">
 							<div class="checkbox">
 								 <label>
 		                           <input type="checkbox" class="checkbox"  name="makePanoFlag" id="makePanoFlag" value="1">重新生成场景分解图

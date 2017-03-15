@@ -66,15 +66,19 @@
                         %>
                         <tr>
                             <td>
+                               <%if(beanLP.index==1){%> <input type="hidden" name="${bean.tableName!}_db" value="${bean.dbName!}"><%}%>
                                 ${beanLP.index<10?'0'+beanLP.index:beanLP.index}#
-                                <label><input type="checkbox" name="${table}_col_show" onclick="clickCheck2(this)" value="${bean.columnName}">展示</label>
-                                <label style="color: red;"><input type="checkbox" onclick="clickCheck2(this)" name="${table}_col_edit" checked value="${bean.columnName}">编辑</label>
+                                <input type="hidden" name="t123_${table}_${bean.columnNameFormat}_comment" value="${bean.columnComment!}">
+                                <label>
+                                    <input type="checkbox" name="t123_${table}_col_show" onclick="clickCheck2(this)" value="${bean.columnNameFormat}">展示
+                                </label>
+                                <label style="color: red;"><input type="checkbox" onclick="clickCheck2(this)" name="t123_${table}_col_edit" checked value="${bean.columnNameFormat}">编辑</label>
                                 <%if(bean.pk!='PRI'){%>
-                                <label ${bean.columnName=='date_created'?'style="color: red;"':''}><input type="radio" name="${table}_col_created" onclick="clickRadio2(this)" ${bean.columnName=='date_created'?'checked':''}  value="${bean.columnName}">创建时间</label>
-                                <label ${bean.columnName=='date_updated'?'style="color: red;"':''}><input type="radio" name="${table}_col_updated" onclick="clickRadio2(this)"  ${bean.columnName=='date_updated'?'checked':''} value="${bean.columnName}">修改时间</label>
-                                <label ${bean.columnName=='del_flag'?'style="color: red;"':''}><input type="radio" name="${table}_col_del" onclick="clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnName}">删除标记</label>
+                                <label ${bean.columnName=='date_created'?'style="color: red;"':''}><input type="radio" name="t123_${table}_col_created" onclick="clickRadio2(this)" ${bean.columnName=='date_created'?'checked':''}  value="${bean.columnNameFormat}">创建时间</label>
+                                <label ${bean.columnName=='date_updated'?'style="color: red;"':''}><input type="radio" name="t123_${table}_col_updated" onclick="clickRadio2(this)"  ${bean.columnName=='date_updated'?'checked':''} value="${bean.columnNameFormat}">修改时间</label>
+                                <label ${bean.columnName=='del_flag'?'style="color: red;"':''}><input type="radio" name="t123_${table}_col_del" onclick="clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnNameFormat}">删除标记</label>
                                 <%}%>
-                                <select name="${bean.columnName}_edit_type" style="width: 100px;">
+                                <select name="t123_${table}_${bean.columnNameFormat}_edit_type" style="width: 100px;">
                                     <option value="1" ${bean.pk!='PRI'?'selected':''}>--单行文本--</option>
                                     <option value="0" ${bean.pk=='PRI'?'selected':''}>--隐藏文本域--</option>
                                     <option value="2">--多行文本--</option>
@@ -88,12 +92,10 @@
                                     <option value="10">--富文本编辑器(完整)--</option>
                                     <option value="11">--文件上传--</option>
                                 </select>
-                                <%if(bean.pk=='PRI'){%><label><input type="radio" name="${table}_col_autopk" onclick="clickRadio2(this)" checked value="${bean.columnName}">自增主键</label><%}%>
+                                <%if(bean.pk=='PRI'){%><label><input type="radio" name="t123_${table}_col_autopk" onclick="clickRadio2(this)" checked value="${bean.columnNameFormat}">自增主键</label><%}%>
                             </td>
                             <td>
-                                <label>
-                                    ${bean.columnName!}
-                                </label>
+                                ${bean.columnName!}
                             </td>
                             <td>
                                 ${bean.columnComment!}

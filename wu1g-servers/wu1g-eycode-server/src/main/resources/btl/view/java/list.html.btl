@@ -14,40 +14,21 @@
 		<thead>
 			<tr>
 				<th style="width:20px;">#</th>
-				<th style="width:20px;">version</th>
-				<th>名称</th>
-				<th style="width:100px;">二维码</th>
-				<th class="col-md-2">引用链接</th>
-				<th style="width:150px;">创建时间</th>
-				<th style="width:390px;">操作</th>
+				<%for(t in schemaConf._col_show){%>
+				<th>${t.value}</th>
+				<%}%>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			\<%
-			if(beans!=null && beans.~size>0){
-				for(bean in beans){
+				for(bean in beans!){
 			%>
 			<tr>
 				<td>\${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
-				<td>\${bean.version}</td>
-				<td>\${bean.name}</td>
-				<td>
-					<img style="" src='http://qr.liantu.com/api.php?w=100&m=10&text=\${basePath}tour/\${bean.id}'/>
-					<div class="qrcode">
-						 <div class="sizes">
-							 <a  href="#" class="blue line" onClick="get_qrcode('\${bean.id}',100,\${bean.version})">100px*100px</a>
-							 <a  href="#" class="blue line" onClick="get_qrcode('\${bean.id}',200,\${bean.version})">200px*200px</a>
-							 <a  href="#" class="blue line" onClick="get_qrcode('\${bean.id}',300,\${bean.version})">300px*300px</a>
-							 <a  href="#" class="blue line" onClick="get_qrcode('\${bean.id}',500,\${bean.version})">500px*500px</a>
-						 </div>
-						 <a href="javascript:;" class="blue line">更多尺寸</a>
-					 </div>
-					
-				</td>
-				<td>
-				<span>\${basePath}tour/\${bean.id}</span>
-				</td>
-				<td>\${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+				<%for(t in schemaConf._col_show){%>
+				<td>\${bean.${t.key}!}</td>
+				<%}%>
 				<td>
 				    \<% if(shiro.hasPermission("${tableNameL}:edit")){ %>
 	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','\${basePath}h/ec/${tableNameL}/edit/\${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
@@ -55,18 +36,13 @@
  	               \<% if(shiro.hasPermission("${tableNameL}:del")){ %>
  	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('\${basePath}h/ec/${tableNameL}/del/\${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
  	               \<%}%>
-	               <a href="\${basePath}tour/\${bean.id}" target="_blank" class="label label-primary" ><i class="fa fa-desktop"></i> 预览</a>
-					\<% if(shiro.hasPermission("${tableNameL}:edit")){ %>
-				  		<a href="\${basePath}h/touredit/\${bean.id}"  target="_blank" class="label label-info" ><i class="fa fa-edit"></i> 漫游编辑</a>
-					\<%}%>
                 </td>
 			</tr>
 			\<%
-				}
-			}else{
+			}forelse{
 			%>
 			<tr>
-				<td colspan="7">
+				<td colspan="${schemaConf._col_show.~size+2}">
 				<div class="alert"><strong>暂无数据!</strong></div>
 				</td>
 			</tr>

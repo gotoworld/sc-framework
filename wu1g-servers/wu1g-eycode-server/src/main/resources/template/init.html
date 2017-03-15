@@ -6,15 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <script type="text/javascript">var basePath = '${basePath==""?"/":basePath}';</script>
-    <link href="bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome.css" rel="stylesheet">
-    <link href="animate.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-
-    <link href="custom.css" rel="stylesheet">
-    <link href="datepicker3.css" rel="stylesheet">
-    <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
-    <link rel="stylesheet" href="layer.css" id="layui_layer_skinlayercss">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery.steps.css" rel="stylesheet">
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -23,73 +20,86 @@
             <div class="clients-list">
                 <ul class="nav nav-tabs">
                     <li class="active">
-                        <a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a>
+                        <a data-toggle="tab" href="#tab-1" aria-expanded="true">EC配置</a>
                     </li>
                 </ul>
-                <div class="table-responsive table-scrollable">
-                    <form id="db_form"
-                          role="form" class="form-inline"
-                          method="post" accept-charset="UTF-8"
-                          action="javascript:void(0);"
-                          data-action="${basePath}table">
-                        <table class="table table-bordered table-striped  table-hover">
-                            <thead>
-                            <tr>
-                                <th class="col-md-2">数据库</th>
-                                <th class="col-md-2">编码</th>
-                                <th class=""></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <%
-                            for(bean in result.data!){
-                            %>
-                            <tr>
-                                <td>
-                                    <label>
-                                        <input type="radio" name="dbs" value="${bean.dbName!}">
-                                        ${beanLP.index}.${bean.dbName!}
-                                    </label>
-                                </td>
-                                <td>
-                                    ${bean.dbCharset!}
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                            <%
-                            }elsefor{
-                            %>
-                            <tr>
-                                <td colspan="2">
-                                    <div class="alert"><strong>暂无数据!</strong></div>
-                                </td>
-                            </tr>
-                            <%}%>
-                            </tbody>
-                        </table>
-                    </form>
-                    <a href="javascript:void(0);" onclick="submitForm('db_form','table_list');"
-                       class="btn btn-xs btn-success">
-                        <i class="fa fa-edit"></i> NEXT</a>
-                    <div id="table_list"></div>
-                    <div id="column_list"></div>
+                <div class="col-md-12">
+                    <div id="example-vertical">
+                        <h3>库</h3>
+                        <section>
+                            <div class="text-center m-t-md">
+                                <div class="table-responsive table-scrollable">
+                                    <form id="db_form"
+                                          role="form" class="form-inline"
+                                          method="post" accept-charset="UTF-8"
+                                          action="javascript:void(0);"
+                                          data-action="${basePath}table">
+                                        <table class="table table-bordered table-striped  table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-3">数据库</th>
+                                                <th class="col-md-3">编码</th>
+                                                <th class=""></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <%
+                                            for(bean in result.data!){
+                                            %>
+                                            <tr>
+                                                <td>
+                                                    <label>
+                                                        <input type="radio" name="dbs" value="${bean.dbName!}">
+                                                        ${beanLP.index}.${bean.dbName!}
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    ${bean.dbCharset!}
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                            <%
+                                            }elsefor{
+                                            %>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                    <a href="#next" onclick="submitForm('db_form','table_list');$('#example-vertical-t-1').click();"
+                                       class="btn btn-xs btn-success actions">
+                                        <i class="fa fa-edit"></i> NEXT</a>
+                                </div>
+                            </div>
+                        </section>
+                        <h3>表</h3>
+                        <section>
+                            <div id="table_list"></div>
+                        </section>
+                        <h3>功能</h3>
+                        <section>
+                            <div id="column_list"></div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="jquery.min.js"></script>
-<script src="bootstrap.min.js"></script>
-<script src="jquery.peity.min.js"></script>
-<script src="content.js"></script>
-<script src="jquery.validate.min.js"></script>
-<script src="messages_zh.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/content.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/messages_zh.min.js"></script>
+<script src="js/jquery.steps.min.js"></script>
 
-<script src="bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="jquery.form.js"></script>
-<script src="layer.js" type="text/javascript"></script>
-<script type="text/javascript" src="global.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/global.js"></script>
 <style type="text/css">
     .table-scrollable {
         border: 0px solid #dddddd;
@@ -123,15 +133,23 @@
     function checkTable(tableName) {
         var table_flag = $('.checked_' + tableName).prop('checked');
         $('.checked_' + tableName).parent().css("color", table_flag ? 'red' : '#000');
-        table_flag?$('.td_'+tableName).show():$('.td_'+tableName).hide();
+        table_flag ? $('.td_' + tableName).show() : $('.td_' + tableName).hide();
         $('.input_' + tableName).each(function () {
-            $(this)[0].checked=table_flag;
+            $(this)[0].checked = table_flag;
             $(this).parent().css("color", table_flag ? 'red' : '#000');
         })
     }
     function checkPerm(perm) {
         $(perm).parent().css("color", $(perm).prop('checked') ? 'red' : '#000');
     }
+    $("#example-vertical").steps({
+        headerTag: "h3",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        stepsOrientation: "vertical",
+        enableAllSteps: true,
+        enablePagination: false,
+    });
 </script>
 
 

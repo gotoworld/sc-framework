@@ -62,12 +62,13 @@
         %>
         <tr>
             <td colspan="2">
-                <div class="alert"><strong>暂无数据!</strong></div>
+                <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
             </td>
         </tr>
         <%}%>
         </tbody>
     </table>
 </form>
+<a href="javascript:void(0);" onclick="$('#example-vertical-t-1').click();" class="btn btn-xs btn-info"> <i class="fa fa-edit"></i> PREVIOUS</a>
 <a href="javascript:void(0);" onclick="submitForm('column_form','templateRender');" class="btn btn-xs btn-success">
     <i class="fa fa-edit"></i> NEXT</a>

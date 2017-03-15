@@ -34,7 +34,6 @@ $('.close-link').click(function () {
     var content = $(this).closest('div.ibox');
     content.remove();
 });
-
 //animation.css
 function animationHover(element, animation) {
     element = $(element);

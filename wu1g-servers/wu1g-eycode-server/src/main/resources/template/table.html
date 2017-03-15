@@ -12,8 +12,8 @@
     <table class="table table-bordered table-striped  table-hover">
         <thead>
         <tr>
-            <th class="col-md-2">表名</th>
-            <th class="col-md-1">注释</th>
+            <th class="col-md-3">表名</th>
+            <th class="col-md-3">注释</th>
             <th class=""></th>
         </tr>
         </thead>
@@ -61,12 +61,12 @@
         %>
         <tr>
             <td colspan="3">
-                <div class="alert"><strong>暂无数据!</strong></div>
+                <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
             </td>
         </tr>
         <%}%>
         </tbody>
     </table>
 </form>
-<a href="javascript:void(0);" onclick="submitForm('table_form','column_list');" class="btn btn-xs btn-success">
-    <i class="fa fa-edit"></i> NEXT</a>
+<a href="javascript:void(0);" onclick="$('#example-vertical-t-0').click();" class="btn btn-xs btn-info"> <i class="fa fa-edit"></i> PREVIOUS</a>
+<a href="javascript:void(0);" onclick="submitForm('table_form','column_list');$('#example-vertical-t-2').click();" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> NEXT</a>

@@ -1,8 +1,8 @@
-package com.wu1g.service;
+package ${schemaConf._biz_pkg};
 
-import com.wu1g.api.I${tableConf.tableNameFormat!}Service;
-import com.wu1g.dao.I${tableConf.tableNameFormat!}Dao;
-import com.wu1g.domain.${tableConf.tableNameFormat!};
+import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
+import ${schemaConf._dao_pkg}.I${tableConf.tableNameFormat!}Dao;
+import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;

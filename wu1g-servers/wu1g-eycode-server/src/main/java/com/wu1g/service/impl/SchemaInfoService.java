@@ -1,6 +1,7 @@
 package com.wu1g.service.impl;
 
 import com.wu1g.dao.ISchemaInfoDao;
+import com.wu1g.domain.SchemaConf;
 import com.wu1g.domain.SchemaInfo;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.BeetlUtils;
@@ -53,7 +54,8 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
 
     public String templateRender(SchemaInfo dto) throws Exception {
         String msg = "success";
-        String saveDir = "d:/schema_make_file";
+        String srcDir = "d:/schema_make_file/src/main/java/";
+        String resouseDir = "d:/schema_make_file/src/main/resources/";
         //1.遍历表配置集合
         dto.getTablesConf().forEach(tableConf -> {
             try {
@@ -69,9 +71,10 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 context.put("columns", schemaInfoDao.findColumnIsList2(dtoMap));
                 context.put("pks", schemaInfoDao.findColumnPks(dtoMap));
 
+                SchemaConf schemaConf=tableConf.getSchemaConf();
                 //3.获取生成配置
                 context.put("tableConf", tableConf);
-                context.put("schemaConf", tableConf.getSchemaConf());
+                context.put("schemaConf", schemaConf);
                 context.put("tableNameL", StrUtil.toLowerCaseFirstOne(tableConf.getTableNameFormat()));
                 context.put("beanVo", schemaInfoDao.findSpringVO(dtoMap));
                 context.put("xmlInsert", schemaInfoDao.findMybatisInsert(dtoMap));
@@ -80,50 +83,50 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 //4.生成
                 //domain
                 if ("1".equals(tableConf.getSchemaConf().get_domain())) {
-                    BeetlUtils.renderToFile("/btl/java/Demo.java.btl", context, saveDir + "/vo/" + tableConf.getTableNameFormat() + ".java");
+                    BeetlUtils.renderToFile("/btl/java/Demo.java.btl", context, srcDir + getDir(schemaConf.get_domain_pkg())+"/" + tableConf.getTableNameFormat() + ".java");
                 }
                 //mybatis
                 if ("1".equals(tableConf.getSchemaConf().get_mybatis())) {
-                    BeetlUtils.renderToFile("/btl/java/Demo.xml.btl", context, saveDir + "/mybatis/" + StrUtil.toLowerCaseFirstOne(tableConf.getTableNameFormat()) + ".xml");
+                    BeetlUtils.renderToFile("/btl/java/Demo.xml.btl", context, srcDir + getDir(schemaConf.get_mybatis_pkg()) + "/" + StrUtil.toLowerCaseFirstOne(tableConf.getTableNameFormat()) + ".xml");
                 }
                 //dao
                 if ("1".equals(tableConf.getSchemaConf().get_dao())) {
-                    BeetlUtils.renderToFile("/btl/java/IDemoDao.java.btl", context, saveDir + "/dao/" + "I" + tableConf.getTableNameFormat() + "Dao.java");
+                    BeetlUtils.renderToFile("/btl/java/IDemoDao.java.btl", context, srcDir + getDir(schemaConf.get_dao_pkg()) + "/" + "I" + tableConf.getTableNameFormat() + "Dao.java");
                 }
                 //service
                 if ("1".equals(tableConf.getSchemaConf().get_service())) {
-                    BeetlUtils.renderToFile("/btl/java/DemoService.java.btl", context, saveDir + "/biz/" + tableConf.getTableNameFormat() + "Service.java");
+                    BeetlUtils.renderToFile("/btl/java/DemoService.java.btl", context, srcDir + getDir(schemaConf.get_service_pkg()) + "/" + tableConf.getTableNameFormat() + "Service.java");
                 }
                 //api
                 if ("1".equals(tableConf.getSchemaConf().get_api())) {
-                    BeetlUtils.renderToFile("/btl/java/IDemoService.java.btl", context, saveDir + "/api/" + "I" + tableConf.getTableNameFormat() + "Service.java");
+                    BeetlUtils.renderToFile("/btl/java/IDemoService.java.btl", context, srcDir + getDir(schemaConf.get_api_pkg()) + "/" + "I" + tableConf.getTableNameFormat() + "Service.java");
                 }
                 //web.rest
                 if ("1".equals(tableConf.getSchemaConf().get_web_rest())) {
-                    BeetlUtils.renderToFile("/btl/java/RestDemoController.java.btl", context, saveDir + "/web/" + tableConf.getTableNameFormat() + "Controller.java");
+                    BeetlUtils.renderToFile("/btl/java/RestDemoController.java.btl", context, srcDir + getDir(schemaConf.get_web_pkg()) + "/" + tableConf.getTableNameFormat() + "Controller.java");
                 }
                 //web.ctrl
                 if ("1".equals(tableConf.getSchemaConf().get_web_ctrl())) {
-                    BeetlUtils.renderToFile("/btl/java/WebDemoController.java.btl", context, saveDir + "/web/" + tableConf.getTableNameFormat() + "Controller.java");
+                    BeetlUtils.renderToFile("/btl/java/WebDemoController.java.btl", context, srcDir + getDir(schemaConf.get_web_pkg()) + "/" + tableConf.getTableNameFormat() + "Controller.java");
                 }
                 //view.ng
                 if ("1".equals(tableConf.getSchemaConf().get_view_ng())) {
-                    BeetlUtils.renderToFile("/btl/view/angularjs/init.html.btl", context, saveDir + "/view/angularjs/" + tableConf.getTableName() + ".html");
+                    BeetlUtils.renderToFile("/btl/view/angularjs/init.html.btl", context, resouseDir + getDir(schemaConf.get_view_pkg()) + "/ng/" + tableConf.getTableName() + ".html");
                     if ("1".equals(tableConf.getSchemaConf().get_insert()) || "1".equals(tableConf.getSchemaConf().get_update())) {
-                        BeetlUtils.renderToFile("/btl/view/angularjs/edit.html.btl", context, saveDir + "/view/angularjs/" + tableConf.getTableName() + "_edit.html");
+                        BeetlUtils.renderToFile("/btl/view/angularjs/edit.html.btl", context, resouseDir + getDir(schemaConf.get_view_pkg()) + "/ng/" + tableConf.getTableName() + "_edit.html");
                     }
                     if ("1".equals(tableConf.getSchemaConf().get_page())) {
-                        BeetlUtils.renderToFile("/btl/view/angularjs/info.html.btl", context, saveDir + "/view/angularjs/" + tableConf.getTableName() + "_info.html");
+                        BeetlUtils.renderToFile("/btl/view/angularjs/info.html.btl", context, resouseDir + getDir(schemaConf.get_view_pkg()) + "/ng/" + tableConf.getTableName() + "_info.html");
                     }
                 }
                 //view.btl
                 if ("1".equals(tableConf.getSchemaConf().get_view_btl())) {
-                    BeetlUtils.renderToFile("/btl/view/java/init.html.btl", context, saveDir + "/view/java/" + tableConf.getTableName() + ".html");
+                    BeetlUtils.renderToFile("/btl/view/java/init.html.btl", context, resouseDir + getDir(schemaConf.get_view_pkg()) + "/btl/" + tableConf.getTableName() + ".html");
                     if ("1".equals(tableConf.getSchemaConf().get_insert()) || "1".equals(tableConf.getSchemaConf().get_update())) {
-                        BeetlUtils.renderToFile("/btl/view/java/edit.html.btl", context, saveDir + "/view/java/" + tableConf.getTableName() + "_edit.html");
+                        BeetlUtils.renderToFile("/btl/view/java/edit.html.btl", context, resouseDir + getDir(schemaConf.get_view_pkg()) + "/btl/" + tableConf.getTableName() + "_edit.html");
                     }
                     if ("1".equals(tableConf.getSchemaConf().get_page())) {
-                        BeetlUtils.renderToFile("/btl/view/java/list.html.btl", context, saveDir + "/view/java/" + tableConf.getTableName() + "_list.html");
+                        BeetlUtils.renderToFile("/btl/view/java/list.html.btl", context, resouseDir + getDir(schemaConf.get_view_pkg()) + "/btl/" + tableConf.getTableName() + "_list.html");
                     }
                 }
             } catch (Exception e) {
@@ -131,6 +134,13 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
             }
         });
         return msg;
+    }
+    private static String getDir(String str){
+        String dir=str;
+        if(dir!=null){
+            dir=dir.replaceAll("\\.","/");
+        }
+        return dir;
     }
 }
 

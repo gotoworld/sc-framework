@@ -1,7 +1,7 @@
-package com.wu1g.web.controller;
+package ${schemaConf._web_pkg};
 
-import com.wu1g.api.I${tableConf.tableNameFormat!}Service;
-import com.wu1g.domain.${tableConf.tableNameFormat!};
+import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
+import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.web.controller.BaseController;

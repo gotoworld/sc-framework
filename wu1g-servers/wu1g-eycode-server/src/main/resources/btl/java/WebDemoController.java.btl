@@ -1,22 +1,12 @@
-/*	
- * 系统_${tableConf.tableComment}  ACTION类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ------------------------------------------	
- * 1.00     2015.10.01      easycode         程序.发布		
- * -------- ----------- --------------- ------------------------------------------	
- * Copyright 2015 System. - All Rights Reserved.
- *	
- */
-package com.wu1g.web.controller.admin.sys;
+package ${schemaConf._web_pkg};
 
 import com.github.pagehelper.PageInfo;
-import com.wu1g.api.sys.I${tableConf.tableNameFormat!}Service;
+import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.vo.sys.${tableConf.tableNameFormat!};
+import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
 import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
@@ -37,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * <p>${tableConf.tableComment}  ACTION类。
+ * <p>${tableConf.tableComment}。
  */
 @Controller
 @Slf4j

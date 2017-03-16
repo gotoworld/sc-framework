@@ -117,6 +117,14 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_list(request.getParameter(tableName+"_list"));//
                     schemaConf.set_detail(request.getParameter(tableName+"_detail"));//
 
+                    schemaConf.set_domain_pkg(request.getParameter(tableName+"_domain_pkg"));//
+                    schemaConf.set_mybatis_pkg(request.getParameter(tableName+"_mybatis_pkg"));//
+                    schemaConf.set_dao_pkg(request.getParameter(tableName+"_dao_pkg"));//
+                    schemaConf.set_api_pkg(request.getParameter(tableName+"_api_pkg"));//
+                    schemaConf.set_service_pkg(request.getParameter(tableName+"_service_pkg"));//
+                    schemaConf.set_web_pkg(request.getParameter(tableName+"_web_pkg"));//
+                    schemaConf.set_view_pkg(request.getParameter(tableName+"_view_pkg"));//
+
                     Map<String,String> _col_show=new HashMap<>();
                     String[] _col_show_arr=request.getParameterValues("t123_"+tableName+"_col_show");
                     if(_col_show_arr!=null && _col_show_arr.length>0){
@@ -141,6 +149,9 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_col_updated(request.getParameter("t123_"+tableName+"_col_updated"));
                     schemaConf.set_col_del(request.getParameter("t123_"+tableName+"_col_del"));
                     schemaConf.set_col_autopk(request.getParameter("t123_"+tableName+"_col_autopk"));
+
+
+
 
                     tableSchemaInfo.setSchemaConf(schemaConf);
                     tablesConf.add(tableSchemaInfo);

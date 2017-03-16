@@ -1,3 +1,5 @@
+package ${schemaConf._domain_pkg};
+
 import com.wu1g.framework.BaseVO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

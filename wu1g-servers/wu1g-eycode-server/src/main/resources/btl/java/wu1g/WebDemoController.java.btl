@@ -35,7 +35,7 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 	@Autowired
 	protected I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
 	
-	private static final String acPrefix="/${schemaConf._web_http}/";
+	private static final String acPrefix="${schemaConf._web_http}/";
 	private static final String init = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}";
 	private static final String edit = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}_edit";
 	private static final String list = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}_list";
@@ -80,7 +80,9 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 		int pageNum=getPageSize(dto);
 		if(0!=id){
 			${tableConf.tableNameFormat!} dto1=new ${tableConf.tableNameFormat!}();
-			dto1.setId(id);
+			<%for(t in pks){%>
+            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            <%}%>
 			dto=${tableNameL}Service.findDataById(dto1);
 		}
 		if(dto==null||0==id){
@@ -93,9 +95,8 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 	}
 	<%}%>
 
-    <%if ("1"==tableConf.schemaConf._delLogic) {%>
 	/**
-	 * <li>逻辑删除。
+	 * <li>删除。
 	 */
 	@RequiresPermissions("${tableNameL}:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
@@ -104,16 +105,21 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 		log.info("${tableConf.tableNameFormat!}Controller del.........");
 		Response result = new Response();
 		try {
-			${tableConf.tableNameFormat!} dto1=new ${tableConf.tableNameFormat!}();
-			dto1.setId(id);
-			result.message=${tableNameL}Service.deleteDataById(dto1);
+			${tableConf.tableNameFormat!} dto=new ${tableConf.tableNameFormat!}();
+			<%for(t in pks){%>
+            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            <%}%>
+            <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
+            result.message = ${tableNameL}Service.deleteDataById(dto);
+            <%}else{%>
+            result.message = ${tableNameL}Service.deleteData(dto);
+            <%}%>
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
 		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-	<%}%>
 
 	<%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
 	/**

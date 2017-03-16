@@ -72,19 +72,25 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._delLogic) {%>
+    <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
     /**
-     * <p>逻辑删除。
+     * <p>删除。
      */
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
-    @ApiOperation(value = "信息编辑")
-    public Response del(@PathVariable("id") Long id) {
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
+    @ApiOperation(value = "删除")
+    public Response del(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
         log.info("${tableConf.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
             ${tableConf.tableNameFormat!}Dto dto = new ${tableConf.tableNameFormat!}Dto();
-            dto.setId(id);// id
+            <%for(t in pks){%>
+            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            <%}%>
+            <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
             result.message = ${tableNameL}Service.deleteDataById(dto);
+            <%}else{%>
+            result.message = ${tableNameL}Service.deleteData(dto);
+            <%}%>
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

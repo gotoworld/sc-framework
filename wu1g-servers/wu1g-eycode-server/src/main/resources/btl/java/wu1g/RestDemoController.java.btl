@@ -17,17 +17,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * <p>${tableConf.tableComment} ACTION类。
- */
-@Api(description = "${tableConf.tableComment} ACTION类")
+@Api(description = "${tableConf.tableComment}")
 @RestController
 @Slf4j
 public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
-    private static final String acPrefix = "/${tableNameL}/";
+    private static final String acPrefix = "${schemaConf._web_http}/";
 
     <%if ("1"==tableConf.schemaConf._page) {%>
     /**
@@ -71,7 +68,9 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
                 dto.setId(0L);
                 result.data = new ${tableConf.tableNameFormat!}();
             } else {
-                dto.setId(id);
+                <%for(t in pks){%>
+                dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+                <%}%>
                 result.data = ${tableNameL}Service.findDataById(dto);
             }
         } catch (Exception e) {
@@ -81,27 +80,31 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._delLogic) {%>
     /**
-     * <p>逻辑删除。
+     * <p>删除。
      */
    @RequiresPermissions("${tableNameL}:del")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
     @ALogOperation(type = "删除", desc = "${tableConf.tableComment}")
-    @ApiOperation(value = "信息编辑")
-    public Response del(@PathVariable("id") Long id) {
+    @ApiOperation(value = "信息删除")
+    public Response del(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
         log.info("${tableConf.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
             ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
-            dto.setId(id);// id
+            <%for(t in pks){%>
+            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            <%}%>
+            <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
             result.message = ${tableNameL}Service.deleteDataById(dto);
+            <%}else{%>
+            result.message = ${tableNameL}Service.deleteData(dto);
+            <%}%>
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
-    <%}%>
 
     <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
     /**

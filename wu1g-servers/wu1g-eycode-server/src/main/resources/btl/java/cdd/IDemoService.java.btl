@@ -27,7 +27,7 @@ public interface I${tableConf.tableNameFormat!}Service {
     public String deleteData(${tableConf.tableNameFormat!}Dto dto) throws Exception;
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._recovery) {%>
+    <%if ("1"==tableConf.schemaConf._recovery||null!=schemaConf._col_del) {%>
     /**
      * <li>恢复逻辑删除的数据。
      */
@@ -35,7 +35,7 @@ public interface I${tableConf.tableNameFormat!}Service {
     public String recoveryDataById(${tableConf.tableNameFormat!}Dto dto) throws Exception;
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._delLogic) {%>
+    <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
     /**
      * <li>逻辑删除。
      */

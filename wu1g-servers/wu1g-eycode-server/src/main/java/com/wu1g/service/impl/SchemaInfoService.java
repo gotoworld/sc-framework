@@ -87,7 +87,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 context.put("xmlUpdate", schemaInfoDao.findMybatisUpdate(dtoMap));
                 //4.生成
 
-                String verDir="cdd";
+                String verDir=schemaConf.get_template_dir();
 
                 //domain
                 if ("1".equals(tableConf.getSchemaConf().get_domain())) {

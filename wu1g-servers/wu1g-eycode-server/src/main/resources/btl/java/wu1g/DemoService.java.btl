@@ -64,7 +64,7 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._delLogic) {%>
+    <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(${tableConf.tableNameFormat!} dto) throws Exception {
@@ -127,7 +127,7 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-     <%if ("1"==tableConf.schemaConf._recovery) {%>
+     <%if ("1"==tableConf.schemaConf._recovery||null!=schemaConf._col_del) {%>
     @Override
     public String recoveryDataById(${tableConf.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";

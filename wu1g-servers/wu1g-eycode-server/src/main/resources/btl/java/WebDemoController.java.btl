@@ -35,10 +35,10 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 	@Autowired
 	protected I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
 	
-	private static final String acPrefix="/h/ec/${tableNameL}";
-	private static final String init = "admin/ec/${tableConf.tableName}";
-	private static final String edit = "admin/ec/${tableConf.tableName}_edit";
-	private static final String list = "admin/ec/${tableConf.tableName}_list";
+	private static final String acPrefix="/${schemaConf._web_http}/";
+	private static final String init = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}";
+	private static final String edit = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}_edit";
+	private static final String list = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}_list";
 	private static final String success = "redirect:"+acPrefix+"init";
 	
 	/**

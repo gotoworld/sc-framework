@@ -121,8 +121,9 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_mybatis_pkg(request.getParameter(tableName+"_mybatis_pkg"));//
                     schemaConf.set_dao_pkg(request.getParameter(tableName+"_dao_pkg"));//
                     schemaConf.set_api_pkg(request.getParameter(tableName+"_api_pkg"));//
-                    schemaConf.set_service_pkg(request.getParameter(tableName+"_service_pkg"));//
+                    schemaConf.set_biz_pkg(request.getParameter(tableName+"_biz_pkg"));//
                     schemaConf.set_web_pkg(request.getParameter(tableName+"_web_pkg"));//
+                    schemaConf.set_web_http(request.getParameter(tableName+"_web_http"));//
                     schemaConf.set_view_pkg(request.getParameter(tableName+"_view_pkg"));//
 
                     Map<String,String> _col_show=new HashMap<>();

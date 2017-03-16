@@ -24,7 +24,7 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
-    private static final String acPrefix = "${schemaConf._web_http}";
+    private static final String acPrefix = "${schemaConf._web_http}/";
 
     <%if ("1"==tableConf.schemaConf._page) {%>
     /**

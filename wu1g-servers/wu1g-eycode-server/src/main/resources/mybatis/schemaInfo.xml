@@ -161,7 +161,7 @@
 		when t.code in ('delFlag','dateCreated','createId') then ''
 		when t.code in ('dateUpdated') then CONCAT(',',t.columnName,'=now()')
 		else
-		CONCAT('<if test="',t.code,'!= null" >,',t.columnName,'={',t.code,'}</if>')
+		CONCAT('<if test="',t.code,'!= null" >,',t.columnName,'=\#{',t.code,'}</if>')
 		end as mybatisUpdateXml
 		FROM ( SELECT t.PK,CONCAT(  IF ( position('_' IN t. CODE) = 0, SUBSTR( t. CODE, 1, CHAR_LENGTH(t. CODE) ), SUBSTR( t. CODE, 1, position('_' IN t. CODE) - 1 ) ),  IF ( position('_' IN t. CODE) != 0, UPPER( SUBSTR( t. CODE, position('_' IN t. CODE) + 1, 1 ) ), '' ),  IF ( position('_' IN t. CODE) != 0, SUBSTR( t. CODE, position('_' IN t. CODE) + 2, CHAR_LENGTH(t. CODE) ), '' ) ) AS CODE, t. COMMENT, t.DATA_TYPE AS DATA_TYPE, t.isNull AS isNull, t.len AS len, t.columnName AS columnName
 			FROM ( SELECT t.PK,CONCAT(  IF ( position('_' IN t. CODE) = 0, SUBSTR( t. CODE, 1, CHAR_LENGTH(t. CODE) ), SUBSTR( t. CODE, 1, position('_' IN t. CODE) - 1 ) ),  IF ( position('_' IN t. CODE) != 0, UPPER( SUBSTR( t. CODE, position('_' IN t. CODE) + 1, 1 ) ), '' ),  IF ( position('_' IN t. CODE) != 0, SUBSTR( t. CODE, position('_' IN t. CODE) + 2, CHAR_LENGTH(t. CODE) ), '' ) ) AS CODE, t. COMMENT, t.DATA_TYPE AS DATA_TYPE, t.isNull AS isNull, t.len AS len, t.columnName AS columnName

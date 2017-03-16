@@ -151,11 +151,23 @@
     function clickCheck2(obj) {
         $(obj).parent().css("color", $(obj).prop('checked') ? 'red' : '#000');
     }
-    var clickRadio2Flag = true;
+    var clickRadio2FlagMap = {};
+    var clickRadio2key={};
     function clickRadio2(obj) {
-        $(obj)[0].checked = clickRadio2Flag;
-        $(obj).parent().css("color", clickRadio2Flag ? 'red' : '#000');
-        clickRadio2Flag=!clickRadio2Flag;
+//        console.info("=clickRadio2FlagMap[obj.name+obj.value]="+clickRadio2FlagMap[obj.name+obj.value]);
+        if(clickRadio2FlagMap[obj.name+obj.value]==undefined){
+            clickRadio2FlagMap[obj.name+obj.value]=true;
+        }
+        $('input[name=\''+obj.name+'\']').parent().css("color",'#000');
+        if(clickRadio2key[obj.name]==obj.name+obj.value){
+            $(obj)[0].checked = clickRadio2FlagMap[obj.name+obj.value];
+            $(obj).parent().css("color", clickRadio2FlagMap[obj.name+obj.value] ? 'red' : '#000');
+        }else{
+            $(obj)[0].checked=true;
+            $(obj).parent().css("color", 'red');
+        }
+        clickRadio2FlagMap[obj.name+obj.value]=!clickRadio2FlagMap[obj.name+obj.value];
+        clickRadio2key[obj.name]=obj.name+obj.value;
     }
     $("#example-vertical").steps({
         headerTag: "h3",

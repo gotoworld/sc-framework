@@ -83,12 +83,12 @@
             </otherwise>
         </choose>
         <%}%>
-        <%if("1"==schemaConf._col_created){%>
+        <%if(null!=schemaConf._col_created){%>
         <if test="dateBegin!=null and dateBegin!=''">
-            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
+            <![CDATA[ and DATE_FORMAT(t1.${schemaConf._col_created},'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
         </if>
         <if test="dateEnd!=null and dateEnd!=''">
-            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
+            <![CDATA[ and DATE_FORMAT(t1.${schemaConf._col_created},'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
         </if>
         <%}%>
     </sql>
@@ -102,7 +102,7 @@
         from ${tableConf.tableName} t1
         where 1=1
         <include refid="list_where_sql"/>
-        <%if("1"==schemaConf._col_created){%>order by t1.${schemaConf._col_created} desc<%}%>
+        <%if(null!=schemaConf._col_created){%>order by t1.${schemaConf._col_created} desc<%}%>
     </select>
     <%}%>
 
@@ -114,7 +114,7 @@
         from ${tableConf.tableName} t1
         where 1=1
         <include refid="list_where_sql"/>
-        <%if("1"==schemaConf._col_created){%>order by t1.${schemaConf._col_created} desc<%}%>
+        <%if(null!=schemaConf._col_created){%>order by t1.${schemaConf._col_created} desc<%}%>
     </select>
     <%}%>
 </mapper>

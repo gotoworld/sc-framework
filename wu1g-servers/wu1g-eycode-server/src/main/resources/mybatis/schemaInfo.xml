@@ -18,6 +18,14 @@
 			)
 		</if>
 	</select>
+    <select id="findTable2" parameterType="map" resultType="schemaInfo">
+		select
+		TABLE_SCHEMA as dbName,
+		TABLE_NAME as tableName,
+		TABLE_COMMENT as tableComment
+		from information_schema.`TABLES`
+		WHERE TABLE_SCHEMA = #{db} AND TABLE_NAME = #{table}
+	</select>
     <select id="findColumnIsList" parameterType="schemaInfo" resultType="schemaInfo">
 		SELECT
 		TABLE_SCHEMA AS dbName,

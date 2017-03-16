@@ -11,6 +11,7 @@ public interface ISchemaInfoDao{
 
     public List<?> findDbIsList(IEntity dto) throws Exception;
     public List<?> findTableIsList(IEntity dto) throws Exception;
+    public Object findTable2(HashMap map) throws Exception;
     public List<?> findColumnIsList(IEntity dto) throws Exception;
 
     public List<?> findColumnIsList2(HashMap map) throws Exception;

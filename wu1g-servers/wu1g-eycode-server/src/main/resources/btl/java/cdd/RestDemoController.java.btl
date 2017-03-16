@@ -1,10 +1,9 @@
 package ${schemaConf._web_pkg};
 
 import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
-import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
-import com.wu1g.framework.Response;
-import com.wu1g.framework.annotation.RfAccount2Bean;
-import com.wu1g.framework.web.controller.BaseController;
+import ${schemaConf._dto_pkg}.${tableConf.tableNameFormat!}Dto;
+import com.cddang.common.constant.PortalConstant;
+import com.cddang.framework.Response;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,15 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import com.cddang.activity.web.controller.BaseController;
+import com.cddang.activity.web.utils.PageUtil;
 import java.util.List;
 
-/**
- * <p>${tableConf.tableComment} ACTION类。
- */
 @RestController
-@Api(description = "${tableConf.tableComment} ACTION类")
-@Api("活动管理")
+@Api(description = "${tableConf.tableComment}")
 @Slf4j
 public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
@@ -36,18 +32,16 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page")
     @ApiOperation(value = "信息分页")
-    public Response page(@ModelAttribute  ${tableConf.tableNameFormat!} dto) {
+    public Response page(@ModelAttribute  ${tableConf.tableNameFormat!}Dto dto) {
         log.info("${tableConf.tableNameFormat!}Controller page.........");
         Response result = new Response();
        if (dto == null) {
-           dto = new ${tableConf.tableNameFormat!}();
+           dto = new ${tableConf.tableNameFormat!}Dto();
            dto.setPageSize(PortalConstant.PAGEROW_DEFAULT_COUNT);
        }
         try {
-            dto.setDelFlag(0);
-            // 信息列表
-            PageInfo<?> page = new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
-            result.data = PageUtil.copy(page);
+            dto.setDelFlag(new Byte("0"));
+            result.data = PageUtil.copy(${tableNameL}Service.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -65,7 +59,7 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
         log.info("${tableConf.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
-            ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
+            ${tableConf.tableNameFormat!}Dto dto = new ${tableConf.tableNameFormat!}Dto();
             if (id != null) {
                 dto.setId(id);
                 dto.setDelFlag(new Byte("0"));
@@ -88,7 +82,7 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
         log.info("${tableConf.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
+            ${tableConf.tableNameFormat!}Dto dto = new ${tableConf.tableNameFormat!}Dto();
             dto.setId(id);// id
             result.message = ${tableNameL}Service.deleteDataById(dto);
         } catch (Exception e) {
@@ -104,7 +98,7 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated @ModelAttribute ${tableConf.tableNameFormat!} dto, BindingResult bindingResult) {
+    public Response save(@Validated @ModelAttribute ${tableConf.tableNameFormat!}Dto dto, BindingResult bindingResult) {
         log.info("${tableConf.tableNameFormat!}Controller save.........");
         Response result = new Response();
         if (dto != null) {

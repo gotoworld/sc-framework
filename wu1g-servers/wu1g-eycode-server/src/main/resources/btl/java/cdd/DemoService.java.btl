@@ -111,7 +111,7 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
         List<${tableConf.tableNameFormat!}Dto> dtos = null;
         try {
             ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
-            dtos = copyTo(${tableNameL}Mapper.findDataIsList(dto), ${tableConf.tableNameFormat!}Dto.class);
+            dtos = copyTo(${tableNameL}Mapper.findDataIsList(entity), ${tableConf.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -126,7 +126,7 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
         ${tableConf.tableNameFormat!}Dto dto1 = null;
         try {
             ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
-            dto1 = copyTo(${tableNameL}Mapper.selectByPrimaryKey(dto),${tableConf.tableNameFormat!}Dto.class);
+            dto1 = copyTo(${tableNameL}Mapper.selectByPrimaryKey(entity),${tableConf.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -141,8 +141,8 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
         String msg = "seccuss";
         if (dto != null) {
             try {
-                ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
-                if(${tableNameL}Mapper.recoveryDataById(dto)==0){
+                ${tableConf.tableNameFormat!} entity = copyTo(entity, ${tableConf.tableNameFormat!}.class);
+                if(${tableNameL}Mapper.recoveryDataById(entity)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {

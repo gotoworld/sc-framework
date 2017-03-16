@@ -65,7 +65,7 @@
          <%}%>
         where
         <%for(t in pks){%>
-        ${tLP.index==1?'':' and '}t1.${t.columnName} = #{${t.columnNameFormat}}
+        ${tLP.index==1?'':' and '}${t.columnName} = #{${t.columnNameFormat}}
         <%}%>
     </update>
     <%}%>

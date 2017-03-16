@@ -1,7 +1,6 @@
 package ${schemaConf._dao_pkg};
 
-import com.wu1g.framework.IBaseDao;
-import com.wu1g.framework.IEntity;
+import com.cddang.activity.modal.IEntity;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

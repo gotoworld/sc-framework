@@ -67,6 +67,11 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
 
                 dtoMap.put("db", tableConf.getDbName());
                 dtoMap.put("table", tableConf.getTableName());
+
+                SchemaInfo tableObj= (SchemaInfo) schemaInfoDao.findTable2(dtoMap);
+
+                tableConf.setTableComment(tableObj.getTableComment());
+
                 //2.获取表字段详情
                 context.put("columns", schemaInfoDao.findColumnIsList2(dtoMap));
                 context.put("pks", schemaInfoDao.findColumnPks(dtoMap));
@@ -82,7 +87,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 context.put("xmlUpdate", schemaInfoDao.findMybatisUpdate(dtoMap));
                 //4.生成
 
-                String verDir="cdd/";
+                String verDir="cdd";
 
                 //domain
                 if ("1".equals(tableConf.getSchemaConf().get_domain())) {
@@ -98,7 +103,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 }
                 //dao
                 if ("1".equals(tableConf.getSchemaConf().get_dao())) {
-                    BeetlUtils.renderToFile("/btl/java/"+verDir+"/IDemoDao.java.btl", context, srcDir + StrUtil.getDir(schemaConf.get_dao_pkg()) + "/" + "I" + tableConf.getTableNameFormat() + "Dao.java");
+                    BeetlUtils.renderToFile("/btl/java/"+verDir+"/IDemoDao.java.btl", context, srcDir + StrUtil.getDir(schemaConf.get_dao_pkg()) + "/" + "I" + tableConf.getTableNameFormat() + "Mapper.java");
                 }
                 //service
                 if ("1".equals(tableConf.getSchemaConf().get_biz())) {

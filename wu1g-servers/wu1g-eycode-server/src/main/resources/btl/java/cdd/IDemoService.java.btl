@@ -1,6 +1,6 @@
 package ${schemaConf._api_pkg};
 
-import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}Dto;
+import ${schemaConf._dto_pkg}.${tableConf.tableNameFormat!}Dto;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;

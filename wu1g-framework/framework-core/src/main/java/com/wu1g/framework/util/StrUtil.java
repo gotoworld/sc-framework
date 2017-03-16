@@ -107,7 +107,13 @@ public class StrUtil {
         // 各种样式
         return htmlStr;
     }
-
+    public static String getDir(String str){
+        String dir=str;
+        if(dir!=null){
+            dir=dir.replaceAll("\\.","/");
+        }
+        return dir;
+    }
     /**
      * 字符串替换
      *

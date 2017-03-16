@@ -32,6 +32,7 @@ public class BeetlUtils {
 			GroupTemplate gt=new GroupTemplate(resourceLoader,cfg);
 			gt.registerFunctionPackage("krpano", new KrSceneImageUtil());
 			gt.registerFunctionPackage("validator", new ValidatorUtil());
+			gt.registerFunctionPackage("strUtil", new StrUtil());
 			Template template=gt.getTemplate( readTlFileName );
 //			String output=template.render();
 			template.binding( context );

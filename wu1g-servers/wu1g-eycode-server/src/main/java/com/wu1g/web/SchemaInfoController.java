@@ -150,9 +150,6 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_col_del(request.getParameter("t123_"+tableName+"_col_del"));
                     schemaConf.set_col_autopk(request.getParameter("t123_"+tableName+"_col_autopk"));
 
-
-
-
                     tableSchemaInfo.setSchemaConf(schemaConf);
                     tablesConf.add(tableSchemaInfo);
                 });

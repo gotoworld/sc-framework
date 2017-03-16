@@ -10,9 +10,10 @@ import java.util.Map;
 public class SchemaConf extends BaseVO {
     private static final long serialVersionUID = -762636592679599049L;
     private String _domain;//domain
+    private String _dto;//dto
     private String _mybatis;//mybatis
     private String _dao;//dao
-    private String _service;//service
+    private String _biz;//service
     private String _api;//api
     private String _web_rest;//web.rest
     private String _web_ctrl;//web.ctrl
@@ -29,6 +30,7 @@ public class SchemaConf extends BaseVO {
     private String _detail;//详情
 
     private String _domain_pkg;
+    private String _dto_pkg;
     private String _mybatis_pkg;
     private String _dao_pkg;
     private String _api_pkg;

@@ -99,9 +99,10 @@ public class SchemaInfoController extends BaseController {
                     tableSchemaInfo.setTableComment(request.getParameter(tableName+"_comment"));
                     SchemaConf schemaConf=new SchemaConf();
                     schemaConf.set_domain(request.getParameter(tableName+"_domain"));//
+                    schemaConf.set_dto(request.getParameter(tableName+"_dto"));//
                     schemaConf.set_mybatis(request.getParameter(tableName+"_mybatis"));//
                     schemaConf.set_dao(request.getParameter(tableName+"_dao"));//
-                    schemaConf.set_service(request.getParameter(tableName+"_service"));//
+                    schemaConf.set_biz(request.getParameter(tableName+"_biz"));//
                     schemaConf.set_api(request.getParameter(tableName+"_api"));//
                     schemaConf.set_web_rest(request.getParameter(tableName+"_web_rest"));//
                     schemaConf.set_web_ctrl(request.getParameter(tableName+"_web_ctrl"));//
@@ -118,6 +119,7 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_detail(request.getParameter(tableName+"_detail"));//
 
                     schemaConf.set_domain_pkg(request.getParameter(tableName+"_domain_pkg"));//
+                    schemaConf.set_dto_pkg(request.getParameter(tableName+"_dto_pkg"));//
                     schemaConf.set_mybatis_pkg(request.getParameter(tableName+"_mybatis_pkg"));//
                     schemaConf.set_dao_pkg(request.getParameter(tableName+"_dao_pkg"));//
                     schemaConf.set_api_pkg(request.getParameter(tableName+"_api_pkg"));//

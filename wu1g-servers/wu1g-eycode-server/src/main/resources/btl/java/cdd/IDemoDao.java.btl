@@ -1,0 +1,45 @@
+package ${schemaConf._dao_pkg};
+
+import com.wu1g.framework.IBaseDao;
+import com.wu1g.framework.IEntity;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+/**
+ * <p>${tableConf.tableComment} 数据库处理接口类。
+ */
+@Mapper
+public interface I${tableConf.tableNameFormat!}Mapper extends IBaseMapper {
+
+    /**
+     * 判断是否存在
+     */
+    @Select("select IFNULL(count(0),0) as count from ${tableConf.tableName} where    <%for(t in pks){%>${tLP.index==1?'':' and '} ${t.columnName} = #{${t.columnNameFormat}}<%}%> ")
+    int isDataYN(IEntity dto) throws Exception;
+
+    <%if ("1"==tableConf.schemaConf._delLogic) {%>
+    /**
+     * 逻辑删除
+     */
+    @Update("update ${tableConf.tableName} set version=version+1 ,date_update=now() ,del_flag=1 where   <%for(t in pks){%>${tLP.index==1?'':' and '} ${t.columnName} = #{${t.columnNameFormat}}<%}%> ")
+    int deleteById(IEntity dto) throws Exception;
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._recovery) {%>
+    /**
+     * 恢复逻辑删除的数据
+     */
+    @Update("update ${tableConf.tableName} set version=version+1 ,date_update=now() ,del_flag=0 where  <%for(t in pks){%>${tLP.index==1?'':' and '} ${t.columnName} = #{${t.columnNameFormat}}<%}%> ")
+    int recoveryDataById(IEntity dto) throws Exception;
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._del) {%>
+    /**
+     * 根据主键 物理删除
+     */
+    @Delete("delete ftom ${tableConf.tableName} where <%for(t in pks){%>${tLP.index==1?'':' and '} ${t.columnName} = #{${t.columnNameFormat}}<%}%> ")
+    int deleteByPrimaryKey(IEntity dto) throws Exception;
+    <%}%>
+}

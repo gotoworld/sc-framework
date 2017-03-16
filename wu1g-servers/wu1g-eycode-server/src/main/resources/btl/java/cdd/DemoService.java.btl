@@ -1,0 +1,156 @@
+package ${schemaConf._biz_pkg};
+
+import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
+import ${schemaConf._dao_pkg}.I${tableConf.tableNameFormat!}Mapper;
+import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
+import ${schemaConf._dto_pkg}.${tableConf.tableNameFormat!}Dto;
+import com.cddang.common.constant.PortalConstant;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Slf4j
+public class ${tableConf.tableNameFormat!}Service extends BaseService implements I${tableConf.tableNameFormat!}Service {
+    @Autowired
+    private I${tableConf.tableNameFormat!}Mapper ${tableNameL}Mapper;
+
+    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public String saveOrUpdateData(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+        String msg = "seccuss";
+        if (dto != null) {
+            try {
+                ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+                //判断数据是否存在
+                if (${tableNameL}Mapper.isDataYN(entity) != 0) {
+                    //数据存在
+                    <%if ("1"==tableConf.schemaConf._update){%>${tableNameL}Mapper.update(entity);<%}%>
+                } else {
+                    //新增
+                     <%if ("1"==tableConf.schemaConf._insert){%>${tableNameL}Mapper.insert(entity);<%}%>
+                     dto.setId(entity.getId());
+                }
+            } catch (Exception e) {
+                log.error("信息保存失败!", e);
+                throw new Exception("信息保存失败!");
+            }
+        }
+        return msg;
+    }
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._del) {%>
+    @Override
+    public String deleteData(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+        String msg = "seccuss";
+        if (dto != null) {
+            try {
+                ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+                if(${tableNameL}Mapper.deleteByPrimaryKey(entity)==0){
+					throw new RuntimeException("数据不存在!");
+                }
+            } catch (Exception e) {
+                log.error("物理删除失败!", e);
+                throw new Exception(e.getMessage());
+            }
+        }
+        return msg;
+    }
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._delLogic) {%>
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public String deleteDataById(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+        String msg = "seccuss";
+        if (dto != null) {
+            try {
+                ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+                if(${tableNameL}Mapper.deleteById(entity)==0){
+					throw new RuntimeException("数据不存在!");
+                }
+            } catch (Exception e) {
+                log.error("逻辑删除失败!", e);
+                throw new Exception(e.getMessage());
+            }
+        }
+        return msg;
+    }
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._page) {%>
+    @Override
+    public PageInfo findDataIsPage(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+       PageInfo pageInfo=null;
+       try {
+           ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+           PageHelper.startPage(PN(dto.getPageIndex()), PS(dto.getPageSize()));
+           List list = ${tableNameL}Mapper.findDataIsPage(entity);
+           pageInfo=new PageInfo(list);
+           pageInfo.setList(copyTo(pageInfo.getList(), ${tableConf.tableNameFormat!}Dto.class));
+       } catch (Exception e) {
+           log.error("信息查询失败!", e);
+           throw new RuntimeException("信息查询失败!");
+       }
+       return pageInfo;
+    }
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._list) {%>
+    @Override
+    public List<${tableConf.tableNameFormat!}Dto> findDataIsList(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+        List<${tableConf.tableNameFormat!}Dto> dtos = null;
+        try {
+            ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+            dtos = copyTo(${tableNameL}Mapper.findDataIsList(dto), ${tableConf.tableNameFormat!}Dto.class);
+        } catch (Exception e) {
+            log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
+        }
+        return dtos;
+    }
+     <%}%>
+
+    <%if ("1"==tableConf.schemaConf._detail) {%>
+    @Override
+    public ${tableConf.tableNameFormat!}Dto findDataById(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+        ${tableConf.tableNameFormat!}Dto dto1 = null;
+        try {
+            ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+            dto1 = copyTo(${tableNameL}Mapper.selectByPrimaryKey(dto),${tableConf.tableNameFormat!}Dto.class);
+        } catch (Exception e) {
+            log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
+        }
+        return dto1;
+    }
+    <%}%>
+
+     <%if ("1"==tableConf.schemaConf._recovery) {%>
+    @Override
+    public String recoveryDataById(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+        String msg = "seccuss";
+        if (dto != null) {
+            try {
+                ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+                if(${tableNameL}Mapper.recoveryDataById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
+            } catch (Exception e) {
+                log.error("数据恢复失败!", e);
+                throw new Exception(e.getMessage());
+            }
+        }
+        return msg;
+    }
+    <%}%>
+}

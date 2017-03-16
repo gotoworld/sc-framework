@@ -20,11 +20,13 @@
                     <div class="td_${table}">
                         <p>
                             <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_domain" value="1">domain</label>
-                            包:<input type="text" name="${table}_domain_pkg" value="com.wu1g.domain">
+                            包:<input type="text" name="${table}_domain_pkg" value="com.cddang.activity.modal">
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_dto" value="1">dto</label>
+                            包:<input type="text" name="${table}_dto_pkg" value="com.cddang.activity.dto">
                             <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_mybatis" value="1">mybatis</label>
-                            包:<input type="text" name="${table}_mybatis_pkg" value="mybatis">
+                            包:<input type="text" name="${table}_mybatis_pkg" value="mappers.activity">
                             <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_dao" value="1">dao</label>
-                            包:<input type="text" name="${table}_dao_pkg" value="com.wu1g.dao">
+                            包:<input type="text" name="${table}_dao_pkg" value="com.cddang.activity.mapper">
                         </p>
                         <p>
                             <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_insert" value="1">增</label>
@@ -39,15 +41,15 @@
                         </p>
                         <p>
                             <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_api" value="1">api</label>
-                            包:<input type="text" name="${table}_api_pkg" value="com.wu1g.api">
-                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_service" value="1">service</label>
-                            包:<input type="text" name="${table}_service_pkg" value="com.wu1g.biz">
+                            包:<input type="text" name="${table}_api_pkg" value="com.cddang.activity.api">
+                            <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_service" value="1">biz</label>
+                            包:<input type="text" name="${table}_biz_pkg" value="com.cddang.activity.service">
                         </p>
                         <p>
                             <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_web_ctrl" value="1">web.ctrl</label>
                             <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_web_rest" value="1">web.rest</label>
-                            controller包:<input type="text" name="${table}_web_pkg" value="com.wu1g.web.controller">
-                            http目录路径:<input type="text" name="${table}_web_http" value="/h/${table}">
+                            controller包:<input type="text" name="${table}_web_pkg" value="com.cddang.activity.web.controller.admin">
+                            http目录路径:<input type="text" name="${table}_web_http" value="/boss/act/${strUtil.fmtStr(table,'_')}">
                         <p>
                             <label style="color: red;" ><input type="checkbox" class="input input_${table}" onclick="clickCheck2(this)" checked name="${table}_view_btl" value="1">view.btl</label>
                             <label><input type="checkbox" class="input " onclick="clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>

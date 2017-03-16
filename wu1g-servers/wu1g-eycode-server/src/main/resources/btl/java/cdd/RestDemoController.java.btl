@@ -1,0 +1,136 @@
+package ${schemaConf._web_pkg};
+
+import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
+import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.RfAccount2Bean;
+import com.wu1g.framework.web.controller.BaseController;
+import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * <p>${tableConf.tableComment} ACTION类。
+ */
+@RestController
+@Api(description = "${tableConf.tableComment} ACTION类")
+@Api("活动管理")
+@Slf4j
+public class ${tableConf.tableNameFormat!}Controller extends BaseController {
+    private static final long serialVersionUID = -528422099490438672L;
+    @Autowired
+    private I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
+    private static final String acPrefix = "${schemaConf._web_http}";
+
+    <%if ("1"==tableConf.schemaConf._page) {%>
+    /**
+     * <p>信息分页 (未删除)。
+     */
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page")
+    @ApiOperation(value = "信息分页")
+    public Response page(@ModelAttribute  ${tableConf.tableNameFormat!} dto) {
+        log.info("${tableConf.tableNameFormat!}Controller page.........");
+        Response result = new Response();
+       if (dto == null) {
+           dto = new ${tableConf.tableNameFormat!}();
+           dto.setPageSize(PortalConstant.PAGEROW_DEFAULT_COUNT);
+       }
+        try {
+            dto.setDelFlag(0);
+            // 信息列表
+            PageInfo<?> page = new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
+            result.data = PageUtil.copy(page);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._detail) {%>
+    /**
+     * <p> 信息详情。
+     */
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
+    @ApiOperation(value = "信息详情")
+    public Response info(@PathVariable("id") Long id) {
+        log.info("${tableConf.tableNameFormat!}Controller info.........");
+        Response result = new Response();
+        try {
+            ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
+            if (id != null) {
+                dto.setId(id);
+                dto.setDelFlag(new Byte("0"));
+                result.data = ${tableNameL}Service.findDataById(dto);
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._delLogic) {%>
+    /**
+     * <p>逻辑删除。
+     */
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
+    @ApiOperation(value = "信息编辑")
+    public Response del(@PathVariable("id") Long id) {
+        log.info("${tableConf.tableNameFormat!}Controller del.........");
+        Response result = new Response();
+        try {
+            ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
+            dto.setId(id);// id
+            result.message = ${tableNameL}Service.deleteDataById(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    <%}%>
+
+    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+    /**
+     * <p> 信息保存
+     */
+    @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
+    @ApiOperation(value = "信息保存")
+    public Response save(@Validated @ModelAttribute ${tableConf.tableNameFormat!} dto, BindingResult bindingResult) {
+        log.info("${tableConf.tableNameFormat!}Controller save.........");
+        Response result = new Response();
+        if (dto != null) {
+            try {
+                if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
+                    throw new RuntimeException("请不要重复提交!");
+                }
+                if (bindingResult.hasErrors()) {
+                    String errorMsg = "";
+                    List<ObjectError> errorList = bindingResult.getAllErrors();
+                    for (ObjectError error : errorList) {
+                        errorMsg += (error.getDefaultMessage()) + ";";
+                    }
+                    result = Response.error(errorMsg);
+                } else {
+                    result.message = ${tableNameL}Service.saveOrUpdateData(dto);
+                    result.data = dto.getId();
+                    request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
+                }
+            } catch (Exception e) {
+                result = Response.error(e.getMessage());
+            }
+        } else {
+            result = Response.error("参数获取失败!");
+        }
+        return result;
+    }
+    <%}%>
+}

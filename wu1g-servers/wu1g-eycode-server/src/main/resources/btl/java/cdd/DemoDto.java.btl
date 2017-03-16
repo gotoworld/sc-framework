@@ -1,6 +1,5 @@
 package ${schemaConf._domain_pkg};
 
-import com.wu1g.framework.BaseVO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ${tableConf.tableNameFormat!} extends BaseVO {
+public class ${tableConf.tableNameFormat!}Dto extends BaseDto {
 <%for( t in beanVo!){%>
 
     ${t.comment!} ${validator.notEmpty(t.JSR303)?'\n\t'+t.JSR303:''}

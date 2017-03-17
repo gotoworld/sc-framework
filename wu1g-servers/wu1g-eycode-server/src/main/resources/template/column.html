@@ -115,6 +115,9 @@
                             <%if(strUtil.containsStr(' smallint mediumint int tinyint char ',bean.dataType)){%>
                             <label ${bean.columnName=='del_flag'?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_del" onclick="ec.clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnName}">删除标记</label>
                             <%}%>
+                            <%if(strUtil.containsStr(' int bigint ',bean.dataType)  && bean.columnName=='version'){%>
+                            <label style="color: red;"><input type="radio" name="tsuffix_${table}_col_version" onclick="ec.clickRadio2(this)" checked value="${bean.columnName}">自增版本号</label>
+                            <%}%>
                             <%}%>
                             <%if(bean.pk=='PRI' && strUtil.containsStr(' int bigint ',bean.dataType)){%><label><input type="radio" name="tsuffix_${table}_col_autopk" onclick="ec.clickRadio2(this)" checked value="${bean.columnNameFormat}">自增主键</label><%}%>
                         </td>

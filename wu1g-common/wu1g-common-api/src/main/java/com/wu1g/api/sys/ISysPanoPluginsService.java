@@ -1,46 +1,52 @@
 package com.wu1g.api.sys;
 
 import com.wu1g.vo.sys.SysPanoPlugins;
-
 import java.util.List;
 
 /**
- * <p>全景插件   业务处理接口类。
+ * <p>系统_全景插件 业务处理接口类。
  */
+//@FeignClient(value = "${spring.application.name}")
 public interface ISysPanoPluginsService {
-
     /**
      * <p>信息编辑。
      */
-    public String saveOrUpdateData(SysPanoPlugins bean) throws Exception;
+    //@RequestMapping(value = "/saveOrUpdateData")
+    public String saveOrUpdateData(SysPanoPlugins dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
-    public String deleteData(SysPanoPlugins bean) throws Exception;
+    //@RequestMapping(value = "/deleteData")
+    public String deleteData(SysPanoPlugins dto) throws Exception;
 
     /**
-     * <p>恢复逻辑删除的数据 单条。
+     * <li>恢复逻辑删除的数据。
      */
-    public String recoveryDataById(SysPanoPlugins bean) throws Exception;
+    //@RequestMapping(value = "/recoveryDataById")
+    public String recoveryDataById(SysPanoPlugins dto) throws Exception;
 
     /**
-     * <p>逻辑删除 单条。
+     * <li>逻辑删除。
      */
-    public String deleteDataById(SysPanoPlugins bean) throws Exception;
+    //@RequestMapping(value = "/deleteDataById")
+    public String deleteDataById(SysPanoPlugins dto) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    public List<SysPanoPlugins> findDataIsPage(SysPanoPlugins bean);
+    //@RequestMapping(value = "/findDataIsPage")
+    public List<SysPanoPlugins> findDataIsPage(SysPanoPlugins dto) throws Exception;
 
     /**
      * <p>信息列表。
      */
-    public List<SysPanoPlugins> findDataIsList(SysPanoPlugins bean);
+    //@RequestMapping(value = "/findDataIsList")
+    public List<SysPanoPlugins> findDataIsList(SysPanoPlugins dto) throws Exception;
 
     /**
      * <p>信息详情。
      */
-    public SysPanoPlugins findDataById(SysPanoPlugins bean);
+    //@RequestMapping(value = "/findDataById")
+    public SysPanoPlugins findDataById(SysPanoPlugins dto) throws Exception;
 }

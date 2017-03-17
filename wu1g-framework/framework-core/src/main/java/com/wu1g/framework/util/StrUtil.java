@@ -481,7 +481,9 @@ public class StrUtil {
         }
         return remote_url;
     }
-
+    public static boolean containsStr(String a,String b){
+        return a.contains(b);
+    }
     // test
     public static void main(String[] args) {
 

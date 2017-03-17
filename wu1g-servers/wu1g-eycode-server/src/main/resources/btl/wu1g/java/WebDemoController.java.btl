@@ -95,6 +95,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	}
 	<%}%>
 
+    <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
 	/**
 	 * <li>删除。
 	 */
@@ -109,7 +110,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 			<%for(t in pks){%>
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             <%}%>
-            <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
+            <%if ("1"==scfg._delLogic) {%>
             result.message = ${tableNameL}Service.deleteDataById(dto);
             <%}else{%>
             result.message = ${tableNameL}Service.deleteData(dto);
@@ -120,7 +121,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 		modelMap.addFlashAttribute("msg", result);
 		return success;
 	}
-
+    <%}%>
 	<%if ("1"==scfg._insert||"1"==scfg._update) {%>
 	/**
 	 * <p> 信息保存

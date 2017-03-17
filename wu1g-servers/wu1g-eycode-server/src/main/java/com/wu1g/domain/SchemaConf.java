@@ -47,5 +47,6 @@ public class SchemaConf extends BaseVO {
     private String _col_updated;
     private String _col_del;
     private String _col_autopk;
+    private String _col_version;
     private String _template_dir;
 }

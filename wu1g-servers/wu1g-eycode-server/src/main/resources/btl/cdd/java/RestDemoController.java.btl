@@ -88,7 +88,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
             <%for(t in pks){%>
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             <%}%>
-            <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
+            <%if ("1"==scfg._delLogic) {%>
             result.message = ${tableNameL}Service.deleteDataById(dto);
             <%}else{%>
             result.message = ${tableNameL}Service.deleteData(dto);

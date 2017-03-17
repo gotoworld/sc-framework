@@ -153,6 +153,7 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_col_updated(request.getParameter("tsuffix_"+tableName+"_col_updated"));
                     schemaConf.set_col_del(request.getParameter("tsuffix_"+tableName+"_col_del"));
                     schemaConf.set_col_autopk(request.getParameter("tsuffix_"+tableName+"_col_autopk"));
+                    schemaConf.set_col_version(request.getParameter("tsuffix_"+tableName+"_col_version"));
                     schemaConf.set_template_dir(request.getParameter("_template_dir"));
 
                     tableSchemaInfo.setSchemaConf(schemaConf);

@@ -1,46 +1,52 @@
 package com.wu1g.api.sys;
 
 import com.wu1g.vo.sys.SysAdvertise;
-
 import java.util.List;
 
 /**
- * <p>系统广告   业务处理接口类。
+ * <p>广告管理 业务处理接口类。
  */
+//@FeignClient(value = "${spring.application.name}")
 public interface ISysAdvertiseService {
-
     /**
      * <p>信息编辑。
      */
-    public String saveOrUpdateData(SysAdvertise bean) throws Exception;
+    //@RequestMapping(value = "/saveOrUpdateData")
+    public String saveOrUpdateData(SysAdvertise dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
-    public String deleteData(SysAdvertise bean) throws Exception;
+    //@RequestMapping(value = "/deleteData")
+    public String deleteData(SysAdvertise dto) throws Exception;
 
     /**
-     * <p>恢复逻辑删除的数据 单条。
+     * <li>恢复逻辑删除的数据。
      */
-    public String recoveryDataById(SysAdvertise bean) throws Exception;
+    //@RequestMapping(value = "/recoveryDataById")
+    public String recoveryDataById(SysAdvertise dto) throws Exception;
 
     /**
-     * <p>逻辑删除 单条。
+     * <li>逻辑删除。
      */
-    public String deleteDataById(SysAdvertise bean) throws Exception;
+    //@RequestMapping(value = "/deleteDataById")
+    public String deleteDataById(SysAdvertise dto) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    public List<SysAdvertise> findDataIsPage(SysAdvertise bean);
+    //@RequestMapping(value = "/findDataIsPage")
+    public List<SysAdvertise> findDataIsPage(SysAdvertise dto) throws Exception;
 
     /**
      * <p>信息列表。
      */
-    public List<SysAdvertise> findDataIsList(SysAdvertise bean);
+    //@RequestMapping(value = "/findDataIsList")
+    public List<SysAdvertise> findDataIsList(SysAdvertise dto) throws Exception;
 
     /**
      * <p>信息详情。
      */
-    public SysAdvertise findDataById(SysAdvertise bean);
+    //@RequestMapping(value = "/findDataById")
+    public SysAdvertise findDataById(SysAdvertise dto) throws Exception;
 }

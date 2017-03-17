@@ -6,10 +6,12 @@
     <p>
         代码模板:
         <select name="_template_dir" id="_template_dir" style="width: 100px;" onchange="ec.templateSwitch(this.value)">
+            <option value="">--请选择代码模板--</option>
             <option value="wu1g">--wu1g--</option>
             <option value="cdd">--cdd--</option>
         </select>
-        代码包目录:<input type="text" id="_my_pkg" onkeyup="ec.setCodePkg2()">
+        代码包目录:<input type="text" id="_my_pkg" onkeyup="ec.setCodePkg2()" placeholder="请录入代码生成子目录名称">
+        dao后缀:<input type="text" name="_dao_suffix" id="_dao_suffix" value=""  placeholder="Dao类后缀">
     </p>
     <div class="tabs-container">
         <ul class="nav nav-tabs">
@@ -84,9 +86,9 @@
                         <td>
                            <%if(beanLP.index==1){%> <input type="hidden" name="${bean.tableName!}_db" value="${bean.dbName!}"><%}%>
                             ${beanLP.index<10?'0'+beanLP.index:beanLP.index}#
-                            <input type="hidden" name="t123_${table}_${bean.columnNameFormat}_comment" value="${bean.columnComment!}">
-                            <label style="color: red;"><input type="checkbox" onclick="ec.clickCheck2(this)" name="t123_${table}_col_edit" checked value="${bean.columnNameFormat}">编辑</label>
-                            <select name="t123_${table}_${bean.columnNameFormat}_edit_type" style="width: 180px;">
+                            <input type="hidden" name="tsuffix_${table}_${bean.columnNameFormat}_comment" value="${bean.columnComment!}">
+                            <label style="color: red;"><input type="checkbox" onclick="ec.clickCheck2(this)" name="tsuffix_${table}_col_edit" checked value="${bean.columnNameFormat}">编辑</label>
+                            <select name="tsuffix_${table}_${bean.columnNameFormat}_edit_type" style="width: 180px;">
                                 <option value="1" ${bean.pk!='PRI'?'selected':''}>--单行文本--</option>
                                 <option value="0" ${bean.pk=='PRI'?'selected':''}>--隐藏文本域--</option>
                                 <option value="2" ${bean.dataLength !=null && bean.dataLength>255 && bean.dataLength<=1000?'selected':''}>--多行文本--</option>
@@ -102,19 +104,19 @@
                             </select>
                             <%if(bean.dataLength ==null || bean.dataLength<=300){%>
                             <label>
-                                <input type="checkbox" name="t123_${table}_col_show" onclick="ec.clickCheck2(this)" value="${bean.columnNameFormat}">列表展示
+                                <input type="checkbox" name="tsuffix_${table}_col_show" onclick="ec.clickCheck2(this)" value="${bean.columnNameFormat}">列表展示
                             </label>
                             <%}%>
                             <%if(bean.pk!='PRI'){%>
                             <%if(strUtil.containsStr(' datetime timestamp ',bean.dataType)){%>
-                            <label ${strUtil.containsStr(' datetime timestamp ',bean.dataType) && strUtil.containsStr(bean.columnName,'create')?'style="color: red;"':''}><input type="radio" name="t123_${table}_col_created" onclick="ec.clickRadio2(this)" <%if(strUtil.containsStr(bean.columnName,'create')){%>checked<%}%>  value="${bean.columnName}">创建时间</label>
-                            <label ${strUtil.containsStr(' datetime timestamp ',bean.dataType) && strUtil.containsStr(bean.columnName,'update')?'style="color: red;"':''}><input type="radio" name="t123_${table}_col_updated" onclick="ec.clickRadio2(this)" <%if(strUtil.containsStr(bean.columnName,'update')){%>checked<%}%>  value="${bean.columnName}">修改时间</label>
+                            <label ${strUtil.containsStr(' datetime timestamp ',bean.dataType) && strUtil.containsStr(bean.columnName,'create')?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_created" onclick="ec.clickRadio2(this)" <%if(strUtil.containsStr(bean.columnName,'create')){%>checked<%}%>  value="${bean.columnName}">创建时间</label>
+                            <label ${strUtil.containsStr(' datetime timestamp ',bean.dataType) && strUtil.containsStr(bean.columnName,'update')?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_updated" onclick="ec.clickRadio2(this)" <%if(strUtil.containsStr(bean.columnName,'update')){%>checked<%}%>  value="${bean.columnName}">修改时间</label>
                             <%}%>
                             <%if(strUtil.containsStr(' smallint mediumint int tinyint char ',bean.dataType)){%>
-                            <label ${bean.columnName=='del_flag'?'style="color: red;"':''}><input type="radio" name="t123_${table}_col_del" onclick="ec.clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnName}">删除标记</label>
+                            <label ${bean.columnName=='del_flag'?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_del" onclick="ec.clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnName}">删除标记</label>
                             <%}%>
                             <%}%>
-                            <%if(bean.pk=='PRI' && strUtil.containsStr(' int bigint ',bean.dataType)){%><label><input type="radio" name="t123_${table}_col_autopk" onclick="ec.clickRadio2(this)" checked value="${bean.columnNameFormat}">自增主键</label><%}%>
+                            <%if(bean.pk=='PRI' && strUtil.containsStr(' int bigint ',bean.dataType)){%><label><input type="radio" name="tsuffix_${table}_col_autopk" onclick="ec.clickRadio2(this)" checked value="${bean.columnNameFormat}">自增主键</label><%}%>
                         </td>
                         <td>
                             ${bean.columnName!}

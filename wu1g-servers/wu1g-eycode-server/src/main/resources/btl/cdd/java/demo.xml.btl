@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="${scfg._dao_pkg}.I${tcfg.tableNameFormat!}Mapper">
+<mapper namespace="${scfg._dao_pkg}.I${tcfg.tableNameFormat!}${ccfg._dao_suffix!}">
     <% var count=1;%>
     <%if ("1"==scfg._detail||"1"==scfg._page||"1"==scfg._list) {%>
     <!-- 字段列表 -->

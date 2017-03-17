@@ -13,6 +13,7 @@ public class SchemaConf extends BaseVO {
     private String _dto;//dto
     private String _mybatis;//mybatis
     private String _dao;//dao
+    private String _dao_suffix;//dao后缀
     private String _biz;//service
     private String _api;//api
     private String _web_rest;//web.rest

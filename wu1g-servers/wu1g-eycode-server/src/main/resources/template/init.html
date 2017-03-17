@@ -212,6 +212,7 @@
         templateSwitch: function (tempName) {
             switch(tempName){
                 case 'wu1g':{
+                    $('#_dao_suffix').val('Dao');
                     $('._domain').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
                     $('._dto').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
                     $('._mybatis').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
@@ -235,6 +236,7 @@
                     break;
                 }
                 case 'cdd':{
+                    $('#_dao_suffix').val('Mapper');
                     $('._domain').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
                     $('._dto').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
                     $('._mybatis').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});

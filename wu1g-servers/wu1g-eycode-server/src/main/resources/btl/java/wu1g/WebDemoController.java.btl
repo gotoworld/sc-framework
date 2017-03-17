@@ -74,11 +74,11 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	 * <p> 编辑。
 	 */
 	@RequiresPermissions("${tableNameL}:edit")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/{id}")
-	public String edit(${tcfg.tableNameFormat!} dto,@Path${tcfg.tableNameFormat!}("id") Long id) {
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
+	public String edit(${tcfg.tableNameFormat!} dto,<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
 		log.info("${tcfg.tableNameFormat!}Controller edit.........");
 		int pageNum=getPageSize(dto);
-		if(0!=id){
+		if (<%for(t in pks){%>${tLP.index==1?'':' && '}${t.columnNameFormat}!=null<%}%>) {
 			${tcfg.tableNameFormat!} dto1=new ${tcfg.tableNameFormat!}();
 			<%for(t in pks){%>
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
@@ -99,9 +99,9 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	 * <li>删除。
 	 */
 	@RequiresPermissions("${tableNameL}:del")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
 	@ALogOperation(type="删除",desc="${tcfg.tableComment}")
-	public String del(@Path${tcfg.tableNameFormat!}("id") Long id, RedirectAttributesModelMap modelMap) {
+	public String del(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>, RedirectAttributesModelMap modelMap) {
 		log.info("${tcfg.tableNameFormat!}Controller del.........");
 		Response result = new Response();
 		try {

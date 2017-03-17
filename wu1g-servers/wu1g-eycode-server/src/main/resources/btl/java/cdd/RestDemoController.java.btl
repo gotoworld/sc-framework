@@ -53,15 +53,17 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
     @ApiOperation(value = "信息详情")
-    public Response info(@PathVariable("id") Long id) {
+    public Response info(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
         log.info("${tcfg.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
             ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
-            if (id != null) {
-                dto.setId(id);
+            if (<%for(t in pks){%>${tLP.index==1?'':' && '}${t.columnNameFormat}!=null<%}%>) {
+                <%for(t in pks){%>
+                dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+                <%}%>
                 dto.set${strUtil.fmtStr(scfg._col_del,'_')}(new Byte("0"));
                 result.data = ${tableNameL}Service.findDataById(dto);
             }

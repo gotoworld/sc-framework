@@ -41,10 +41,10 @@ public class SchemaConf extends BaseVO {
 
     private Map<String,String> _col_show;
     private Map<String,String> _col_edit;
+    private Map<String,String> _edit_type;
     private String _col_created;
     private String _col_updated;
     private String _col_del;
-    private Map<String,String> _edit_type;
     private String _col_autopk;
     private String _template_dir;
 }

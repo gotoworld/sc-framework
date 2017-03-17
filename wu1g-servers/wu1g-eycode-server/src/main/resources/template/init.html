@@ -71,7 +71,10 @@
                                             </tbody>
                                         </table>
                                     </form>
-                                    <a href="#next" onclick="submitForm('db_form','table_list');$('#example-vertical-t-1').click();"  class="btn btn-xs btn-success actions"><i class="glyphicon glyphicon-chevron-right"></i> NEXT</a>
+                                    <a href="#next"
+                                       onclick="submitForm('db_form','table_list');$('#example-vertical-t-1').click();"
+                                       class="btn btn-xs btn-success actions"><i
+                                            class="glyphicon glyphicon-chevron-right"></i> NEXT</a>
                                 </div>
                             </div>
                         </section>
@@ -136,39 +139,128 @@
         max-width: 100%;
         margin-bottom: 0px;
     }
-    .table td {text-align: left;}
+
+    .table td {
+        text-align: left;
+    }
 </style>
 <script>
-    function checkTable(tableName) {
-        var table_flag = $('.checked_' + tableName).prop('checked');
-        $('.checked_' + tableName).parent().css("color", table_flag ? 'red' : '#000');
-        table_flag ? $('.td_' + tableName).show() : $('.td_' + tableName).hide();
-        $('.input_' + tableName).each(function () {
-            $(this)[0].checked = table_flag;
-            $(this).parent().css("color", table_flag ? 'red' : '#000');
-        })
-    }
-    function clickCheck2(obj) {
-        $(obj).parent().css("color", $(obj).prop('checked') ? 'red' : '#000');
-    }
-    var clickRadio2FlagMap = {};
-    var clickRadio2key={};
-    function clickRadio2(obj) {
-//        console.info("=clickRadio2FlagMap[obj.name+obj.value]="+clickRadio2FlagMap[obj.name+obj.value]);
-        if(clickRadio2FlagMap[obj.name+obj.value]==undefined){
-            clickRadio2FlagMap[obj.name+obj.value]=true;
+    var ec = {
+        radioFlagJson: {},
+        radioKeyJson: {},
+        clickCheck1: function (obj) {
+            //$(obj).css("background", $(obj).prop('checked') ? 'red' : '#000');
+            ec.clickCheck2(obj);
+        },
+        clickCheck2: function (obj) {
+            $(obj).parent().css("color", $(obj).prop('checked') ? 'red' : '#000');
+        },
+        clickRadio2:function (obj) {
+            //console.info("=radioFlagJson[obj.name+obj.value]="+radioFlagJson[obj.name+obj.value]);
+            if (ec.radioFlagJson[obj.name + obj.value] == undefined) {
+                ec.radioFlagJson[obj.name + obj.value] = true;
+            }
+            $('input[name=\'' + obj.name + '\']').parent().css("color", '#000');
+            if (ec.radioKeyJson[obj.name] == obj.name + obj.value) {
+                $(obj)[0].checked = ec.radioFlagJson[obj.name + obj.value];
+                $(obj).parent().css("color", ec.radioFlagJson[obj.name + obj.value] ? 'red' : '#000');
+            } else {
+                $(obj)[0].checked = true;
+                $(obj).parent().css("color", 'red');
+            }
+            ec.radioFlagJson[obj.name + obj.value] = !ec.radioFlagJson[obj.name + obj.value];
+            ec.radioKeyJson[obj.name] = obj.name + obj.value;
+        },
+        setCodePkg2:function(){
+            ec.setCodePkg($("#_template_dir").val());
         }
-        $('input[name=\''+obj.name+'\']').parent().css("color",'#000');
-        if(clickRadio2key[obj.name]==obj.name+obj.value){
-            $(obj)[0].checked = clickRadio2FlagMap[obj.name+obj.value];
-            $(obj).parent().css("color", clickRadio2FlagMap[obj.name+obj.value] ? 'red' : '#000');
-        }else{
-            $(obj)[0].checked=true;
-            $(obj).parent().css("color", 'red');
+        ,
+        setCodePkg:function(tempName){
+            var _my_pkg=$('#_my_pkg').val();
+            switch(tempName){
+                case 'wu1g':{
+                    $('._domain_pkg').val('com.wu1g.vo.'+_my_pkg);
+                    $('._dto_pkg').val('');
+                    $('._mybatis_pkg').val('mybatis.'+_my_pkg);
+                    $('._dao_pkg').val('com.wu1g.dao.'+_my_pkg);
+                    $('._api_pkg').val('com.wu1g.api.'+_my_pkg);
+                    $('._biz_pkg').val('com.wu1g.service.'+_my_pkg);
+                    $('._web_pkg').val('com.wu1g.web.controller.admin.'+_my_pkg);
+                    $('._view_pkg').val('template.admin.'+_my_pkg);
+                    $('._web_http').each(function(){
+                        $(this).val('/h/'+_my_pkg+'/'+$(this).attr('data'));
+                    });
+                    break;
+                }
+                case 'cdd':{
+                    $('._domain_pkg').val('com.cddang.'+_my_pkg+'.modal');
+                    $('._dto_pkg').val('com.cddang.'+_my_pkg+'.dto');
+                    $('._mybatis_pkg').val('mappers.'+_my_pkg+'');
+                    $('._dao_pkg').val('com.cddang.'+_my_pkg+'.mapper');
+                    $('._api_pkg').val('com.cddang.'+_my_pkg+'.api');
+                    $('._biz_pkg').val('com.cddang.'+_my_pkg+'.service');
+                    $('._web_pkg').val('com.cddang.'+_my_pkg+'.web.controller.admin');
+                    $('._view_pkg').val('');
+                    $('._web_http').each(function(){
+                        $(this).val('/boss/'+_my_pkg+'/'+$(this).attr('data'));
+                    });
+                    break;
+                }
+            }
         }
-        clickRadio2FlagMap[obj.name+obj.value]=!clickRadio2FlagMap[obj.name+obj.value];
-        clickRadio2key[obj.name]=obj.name+obj.value;
-    }
+        ,
+        templateSwitch: function (tempName) {
+            switch(tempName){
+                case 'wu1g':{
+                    $('._domain').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._dto').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._mybatis').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._dao').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._biz').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._api').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._web_rest').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._web_ctrl').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._view_btl').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._insert').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._insertBatch').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._delLogic').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._recovery').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._del').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._update').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._page').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._list').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._detail').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+
+                    break;
+                }
+                case 'cdd':{
+                    $('._domain').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._dto').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._mybatis').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._dao').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._biz').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._api').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._web_rest').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._web_ctrl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._view_btl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._insert').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._insertBatch').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._delLogic').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._recovery').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._del').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._update').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._page').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._list').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._detail').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+
+                    break;
+                }
+            }
+            ec.setCodePkg(tempName);
+        }
+    };
     $("#example-vertical").steps({
         headerTag: "h3",
         bodyTag: "section",

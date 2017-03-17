@@ -41,20 +41,24 @@
 						<input type="hidden" name="token" value="\${bean.token}" />
                         <input type="hidden" name="newFlag" value="\${bean.newFlag}" />
 
-                        <%for(t in columns){
-                        if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
-                        %>
-					    <div class="col-md-6">
-							<div class="form-group">
-								<label class="col-md-3 control-label"  for="bean_${t.columnNameFormat}">${t.columnComment}：</label>
-								<div class="col-md-8">
-									<input id="bean_${t.columnNameFormat}" name="name" value="\${bean.${t.columnNameFormat}}" class="form-control" type="text"  placeholder="${t.columnComment}" <%if(t.isNullable=='YES'){%> required="" aria-required="true" <%}%> aria-describedby="bean_${t.columnNameFormat}-error" <%if(t.dataLength!=null){%> maxlength="${t.dataLength}" <%}%>  aria-invalid="true">
-									<span id="bean_${t.columnNameFormat}-error" class="help-block m-b-none"></span>
-								 </div>
-							 </div>
-						</div>
-						<%}
-						}%>
+				<%for(t in columns){
+					if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+						switch(scfg._edit_type[t.columnNameFormat]){
+						case "0":{ layout("input/0_input[hidden].btl",{t:t}){};break;}
+						case "1":{ layout("input/1_input[text].btl",{t:t}){};break;}
+						case "2":{ layout("input/2_textarea.btl",{t:t}){};break;}
+						case "3":{ layout("input/3_input[date].btl",{t:t}){};break;}
+						case "4":{ layout("input/4_select.btl",{t:t}){};break;}
+						case "5":{ layout("input/5_select[multiple].btl",{t:t}){};break;}
+						case "6":{ layout("input/6_input[radio].btl",{t:t}){};break;}
+						case "7":{ layout("input/7_input[checkbox].btl",{t:t}){};break;}
+						case "8":{ layout("input/8_upload[image].btl",{t:t}){};break;}
+						case "9":{ layout("input/9_upload[file].btl",{t:t}){};break;}
+						case "10":{ layout("input/10_editor[simple].btl",{t:t}){};break;}
+						case "11":{ layout("input/11_editor[full].btl",{t:t}){};break;}
+						}
+					}
+				}%>
 						<div class="col-md-12">
 							<div style="width: 200px; margin: 0 auto;">
 								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>

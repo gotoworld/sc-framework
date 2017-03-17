@@ -148,6 +148,7 @@ public class SchemaInfoController extends BaseController {
                         }
                     }
                     schemaConf.set_col_edit(_col_edit);
+                    schemaConf.set_edit_type(_edit_type);
 
                     schemaConf.set_col_created(request.getParameter("tsuffix_"+tableName+"_col_created"));
                     schemaConf.set_col_updated(request.getParameter("tsuffix_"+tableName+"_col_updated"));

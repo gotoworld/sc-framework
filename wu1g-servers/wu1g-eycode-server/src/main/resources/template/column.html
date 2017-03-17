@@ -5,7 +5,7 @@
       data-action="${basePath}templateRender">
     <p>
         代码模板:
-        <select name="_template_dir" id="_template_dir" style="width: 100px;" onchange="ec.templateSwitch(this.value)">
+        <select name="_template_dir" id="_template_dir" style="width: 200px;" onchange="ec.templateSwitch(this.value)">
             <option value="">--请选择代码模板--</option>
             <option value="wu1g">--wu1g--</option>
             <option value="cdd">--cdd--</option>
@@ -33,6 +33,8 @@
                         包:<input type="text" name="${table}_domain_pkg" class="_domain_pkg" value="">
                         <label style="color: red;" ><input type="checkbox" class="input input_${table} _dto" onclick="ec.clickCheck2(this)" checked name="${table}_dto" value="1">dto</label>
                         包:<input type="text" name="${table}_dto_pkg" class="_dto_pkg" value="">
+                    </p>
+                    <p>
                         <label style="color: red;" ><input type="checkbox" class="input input_${table} _mybatis" onclick="ec.clickCheck2(this)" checked name="${table}_mybatis" value="1">mybatis</label>
                         包:<input type="text" name="${table}_mybatis_pkg" class="_mybatis_pkg" value="">
                         <label style="color: red;" ><input type="checkbox" class="input input_${table} _dao" onclick="ec.clickCheck2(this)" checked name="${table}_dao" value="1">dao</label>
@@ -56,12 +58,13 @@
                         包:<input type="text" name="${table}_biz_pkg" class="_biz_pkg" value="">
                     </p>
                     <p>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _web_ctrl" onclick="ec.clickCheck2(this)" checked name="${table}_web_ctrl" value="1">web.ctrl</label>
+                        <label ${!strUtil.containsStr(table,'_vs_')?'style="color: red;"':''} ><input type="checkbox" class="input input_${table} _web_ctrl" onclick="ec.clickCheck2(this)" ${!strUtil.containsStr(table,'_vs_')?'checked':''} name="${table}_web_ctrl" value="1">web.ctrl</label>
                         <label><input type="checkbox" class="input _web_rest" onclick="ec.clickCheck2(this)" name="${table}_web_rest" value="1" >web.rest</label>
                         controller包:<input type="text" name="${table}_web_pkg" class="_web_pkg" value="" style="width: 350px;">
                         http目录路径:<input type="text" name="${table}_web_http" class="_web_http" data="${strUtil.fmtStr(table,'_')}" value="">
+                    </p>
                     <p>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _view_btl" onclick="ec.clickCheck2(this)" checked name="${table}_view_btl" value="1">view.btl</label>
+                        <label ${!strUtil.containsStr(table,'_vs_')?'style="color: red;"':''} ><input type="checkbox" class="input input_${table} _view_btl" onclick="ec.clickCheck2(this)" ${!strUtil.containsStr(table,'_vs_')?'checked':''} name="${table}_view_btl" value="1">view.btl</label>
                         <label><input type="checkbox" class="input _view_ng" onclick="ec.clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>
                         页面目录:<input type="text" name="${table}_view_pkg" class="_view_pkg" value="">
                     </p>
@@ -69,7 +72,7 @@
                 <table class="table table-bordered table-striped  table-hover" style="width: 100%">
                     <thead>
                     <tr>
-                        <th class=""></th>
+                        <th class="">可配参数</th>
                         <th class="col-md-2">字段名</th>
                         <th class="col-md-2">字段备注</th>
                         <th class="" style="width: 50px;">必填</th>
@@ -87,21 +90,23 @@
                            <%if(beanLP.index==1){%> <input type="hidden" name="${bean.tableName!}_db" value="${bean.dbName!}"><%}%>
                             ${beanLP.index<10?'0'+beanLP.index:beanLP.index}#
                             <input type="hidden" name="tsuffix_${table}_${bean.columnNameFormat}_comment" value="${bean.columnComment!}">
+                            <%if(bean.pk!='PRI'){%>
                             <label style="color: red;"><input type="checkbox" onclick="ec.clickCheck2(this)" name="tsuffix_${table}_col_edit" checked value="${bean.columnNameFormat}">编辑</label>
-                            <select name="tsuffix_${table}_${bean.columnNameFormat}_edit_type" style="width: 180px;">
-                                <option value="1" ${bean.pk!='PRI'?'selected':''}>--单行文本--</option>
-                                <option value="0" ${bean.pk=='PRI'?'selected':''}>--隐藏文本域--</option>
-                                <option value="2" ${bean.dataLength !=null && bean.dataLength>255 && bean.dataLength<=1000?'selected':''}>--多行文本--</option>
+                            <select name="tsuffix_${table}_${bean.columnNameFormat}_edit_type" style="width: 130px;">
+                                <option value="1"}>--input[text]--</option>
+                                <option value="0">--input[hidden]--</option>
+                                <option value="2" ${bean.dataLength !=null && bean.dataLength>255 && bean.dataLength<=1000?'selected':''}>--textarea--</option>
                                 <option value="3" ${strUtil.containsStr(' datetime timestamp ',bean.dataType)?'selected':''}>--日期控件--</option>
-                                <option value="4">--单项下拉选择框--</option>
-                                <option value="5">--多项下拉选择框--</option>
-                                <option value="6">--单项项--</option>
-                                <option value="7">--多选项--</option>
+                                <option value="4">--select--</option>
+                                <option value="5">--select[multiple]--</option>
+                                <option value="6">--input[radio]--</option>
+                                <option value="7">--input[checkbox]--</option>
                                 <option value="8">--图片上传--</option>
-                                <option value="9" ${bean.dataLength !=null && bean.dataLength>1000 && bean.dataLength<=4000?'selected':''}>--富文本编辑器(简单)--</option>
-                                <option value="10" ${bean.dataLength !=null && bean.dataLength>4000?'selected':''}>--富文本编辑器(完整)--</option>
-                                <option value="11">--文件上传--</option>
+                                <option value="9">--文件上传--</option>
+                                <option value="10" ${bean.dataLength !=null && bean.dataLength>1000 && bean.dataLength<=4000?'selected':''}>--富文本(简单)--</option>
+                                <option value="11" ${bean.dataLength !=null && bean.dataLength>4000?'selected':''}>--富文本(完整)--</option>
                             </select>
+                            <%}%>
                             <%if(bean.dataLength ==null || bean.dataLength<=300){%>
                             <label>
                                 <input type="checkbox" name="tsuffix_${table}_col_show" onclick="ec.clickCheck2(this)" value="${bean.columnNameFormat}">列表展示

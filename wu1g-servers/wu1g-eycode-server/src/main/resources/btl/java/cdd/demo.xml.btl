@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="${schemaConf._dao_pkg}.I${tableConf.tableNameFormat!}Mapper">
-    <%if ("1"==tableConf.schemaConf._detail||"1"==tableConf.schemaConf._page||"1"==tableConf.schemaConf._list) {%>
+<mapper namespace="${scfg._dao_pkg}.I${tcfg.tableNameFormat!}Mapper">
+    <% var count=1;%>
+    <%if ("1"==scfg._detail||"1"==scfg._page||"1"==scfg._list) {%>
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
         <%for(t in xmlSelect){%>
-		${tLP.index==1?' '+t.mybatisEl:','+t.mybatisEl}
+		${tLP.index==1?' ':','}${t.columnName} as t1.${t.columnNameFormat}
         <%}%>
 	</sql>
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._detail) {%>
+    <%if ("1"==scfg._detail) {%>
     <!-- 根据主键获取信息详情 -->
-    <select id="selectByPrimaryKey" resultType="${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}" parameterType="${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}">
+    <select id="selectByPrimaryKey" resultType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}">
         select
         <include refid="Base_Column_List"/>
-        from ${tableConf.tableName} t1
+        from ${tcfg.tableName} t1
         where
         <%for(t in pks){%>
         ${tLP.index==1?'':' and '}t1.${t.columnName} = #{${t.columnNameFormat}}
@@ -23,45 +24,54 @@
     </select>
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._insert) {%>
+    <%if ("1"==scfg._insert) {%>
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}" useGeneratedKeys="true" keyProperty="id">
-		insert into ${tableConf.tableName}(
-		 <%for(t in xmlInsert){%>
-         ${tLP.index==1?' '+t.tableCoumnName:','+t.tableCoumnName}
+    <insert id="insert" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}" <%if(null!=scfg._col_autopk){%> useGeneratedKeys="true" keyProperty="${scfg._col_autopk}" <%}%>>
+		insert into ${tcfg.tableName}(
+		 <%
+		 count=1;
+		 for(t in xmlInsert){%>
+         <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}${t.columnName} <%}%>
          <%}%>
 		) values (
-		 <%for(t in xmlInsert){%>
-         ${tLP.index==1?' ':','}#{${t.mybatisEL}}
+		 <%
+		 count=1;
+		 for(t in xmlInsert){%>
+         <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}#{${t.columnNameFormat}} <%}%>
          <%}%>
 		)
 	</insert>
 	<%}%>
 
-	<%if ("1"==tableConf.schemaConf._insertBatch) {%>
+	<%if ("1"==scfg._insertBatch) {%>
     <!-- 新增 批量数据 -->
-    <insert id="insertBatch">
-        insert into ${tableConf.tableName}(
-         <%for(t in xmlInsert){%>
-         ${tLP.index==1?' '+t.tableCoumnName:','+t.tableCoumnName}
+    <insert id="insertBatch" <%if(null!=scfg._col_autopk){%> useGeneratedKeys="true" keyProperty="${scfg._col_autopk}" <%}%>>
+        insert into ${tcfg.tableName}(
+         <%
+		 count=1;
+		 for(t in xmlInsert){%>
+         <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}${t.columnName} <%}%>
          <%}%>
         ) values
         <foreach collection="list" item="t" separator=",">
             (
-            <%for(t in xmlInsert){%>
-            ${tLP.index==1?' ':','}#{t.${t.mybatisEL}}
+            <%
+             count=1;
+             for(t in xmlInsert){%>
+             <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}#{t.${t.columnNameFormat}} <%}%>
             <%}%>
             )
         </foreach>
     </insert>
 	<%}%>
 
-	<%if ("1"==tableConf.schemaConf._update) {%>
+	<%if ("1"==scfg._update) {%>
     <!-- 数据更新 -->
-    <update id="update" parameterType="${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}">
-        update ${tableConf.tableName} set
+    <update id="update" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}">
+        update ${tcfg.tableName} set ${null!=scfg._col_updated?scfg._col_updated+'=now()':''}
          <%for(t in xmlUpdate){%>
-         ${t.mybatisUpdateXml}
+         <%if(scfg._col_updated!=t.columnName && scfg._col_created!=t.columnName && scfg._col_del!=t.columnName && (pks==null||pks[t.columnName]==null)){%>
+             <if test="${t.columnNameFormat}!=null">,${t.columnName} = #{${t.columnNameFormat}}</if>
          <%}%>
         where
         <%for(t in pks){%>
@@ -70,51 +80,51 @@
     </update>
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._page||"1"==tableConf.schemaConf._list) {%>
+    <%if ("1"==scfg._page||"1"==scfg._list) {%>
     <!--列表通用条件-->
     <sql id="list_where_sql">
-        <%if(null!=schemaConf._col_del){%>
+        <%if(null!=scfg._col_del){%>
         <choose>
-            <when test="delFlag!=null">
-                and t1.del_flag=#{delFlag}
+            <when test="${strUtil.fmtStr(scfg._col_del,'_')}!=null">
+                and t1.${scfg._col_del}=#{${strUtil.fmtStr(scfg._col_del,'_')}}
             </when>
             <otherwise>
-                and t1.del_flag=0
+                and t1.${scfg._col_del}=0
             </otherwise>
         </choose>
         <%}%>
-        <%if(null!=schemaConf._col_created){%>
+        <%if(null!=scfg._col_created){%>
         <if test="dateBegin!=null and dateBegin!=''">
-            <![CDATA[ and DATE_FORMAT(t1.${schemaConf._col_created},'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
+            <![CDATA[ and DATE_FORMAT(t1.${scfg._col_created},'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
         </if>
         <if test="dateEnd!=null and dateEnd!=''">
-            <![CDATA[ and DATE_FORMAT(t1.${schemaConf._col_created},'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
+            <![CDATA[ and DATE_FORMAT(t1.${scfg._col_created},'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
         </if>
         <%}%>
     </sql>
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._page) {%>
+    <%if ("1"==scfg._page) {%>
     <!--信息列表 分页 -->
-    <select id="findDataIsPage" parameterType="${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}" resultType="${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}">
+    <select id="findDataIsPage" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}" resultType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}">
         select
         <include refid="Base_Column_List"/>
-        from ${tableConf.tableName} t1
+        from ${tcfg.tableName} t1
         where 1=1
         <include refid="list_where_sql"/>
-        <%if(null!=schemaConf._col_created){%>order by t1.${schemaConf._col_created} desc<%}%>
+        <%if(null!=scfg._col_created){%>order by t1.${scfg._col_created} desc<%}%>
     </select>
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._list) {%>
+    <%if ("1"==scfg._list) {%>
     <!--信息列表 -->
-    <select id="findDataIsList" parameterType="${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}" resultType="${schemaConf._domain_pkg}.${tableConf.tableNameFormat!}">
+    <select id="findDataIsList" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}" resultType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}">
         select
         <include refid="Base_Column_List"/>
-        from ${tableConf.tableName} t1
+        from ${tcfg.tableName} t1
         where 1=1
         <include refid="list_where_sql"/>
-        <%if(null!=schemaConf._col_created){%>order by t1.${schemaConf._col_created} desc<%}%>
+        <%if(null!=scfg._col_created){%>order by t1.${scfg._col_created} desc<%}%>
     </select>
     <%}%>
 </mapper>

@@ -1,6 +1,6 @@
 \<%
  /*	
- * ${tableConf.tableComment} 后台管理 (信息列表)
+ * ${tcfg.tableComment} 后台管理 (信息列表)
  *
  * VERSION      DATE          BY              REASON
  * -------- ----------- --------------- ---------------------------
@@ -14,7 +14,7 @@
 		<thead>
 			<tr>
 				<th style="width:20px;">#</th>
-				<%for(t in schemaConf._col_show){%>
+				<%for(t in scfg._col_show){%>
 				<th>${t.value}</th>
 				<%}%>
 				<th>操作</th>
@@ -26,15 +26,15 @@
 			%>
 			<tr>
 				<td>\${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
-				<%for(t in schemaConf._col_show){%>
+				<%for(t in scfg._col_show){%>
 				<td>\${bean.${t.key}!}</td>
 				<%}%>
 				<td>
 				    \<% if(shiro.hasPermission("${tableNameL}:edit")){ %>
-	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','\${basePath}${schemaConf._web_http}/edit/\${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','\${basePath}${scfg._web_http}/edit/\${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 	               \<%}%>
  	               \<% if(shiro.hasPermission("${tableNameL}:del")){ %>
- 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('\${basePath}${schemaConf._web_http}/del/\${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+ 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('\${basePath}${scfg._web_http}/del/\${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
  	               \<%}%>
                 </td>
 			</tr>
@@ -42,7 +42,7 @@
 			}forelse{
 			%>
 			<tr>
-				<td colspan="${schemaConf._col_show.~size+2}">
+				<td colspan="${scfg._col_show.~size+2}">
 				<div class="alert"><strong>暂无数据!</strong></div>
 				</td>
 			</tr>

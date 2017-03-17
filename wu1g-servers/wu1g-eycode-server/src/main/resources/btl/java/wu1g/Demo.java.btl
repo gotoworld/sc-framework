@@ -1,4 +1,4 @@
-package ${schemaConf._domain_pkg};
+package ${scfg._domain_pkg};
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -14,10 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ${tableConf.tableNameFormat!} extends BaseVO {
+public class ${tcfg.tableNameFormat!} extends BaseVO {
 <%for( t in beanVo!){%>
-
-    ${t.comment!} ${validator.notEmpty(t.JSR303)?'\n\t'+t.JSR303:''}
-    ${t.propertyField!}
+     /**${t.columnComment!}*/${validator.notEmpty(t.JSR303)?'\n\t'+t.JSR303:''}
+     private ${t.javaType} ${t.columnNameFormat};
 <%}%>
 }

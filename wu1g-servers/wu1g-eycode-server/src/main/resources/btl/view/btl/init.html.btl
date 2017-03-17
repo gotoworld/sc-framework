@@ -1,6 +1,6 @@
 \<%
  /*	
- * ${tableConf.tableComment} 后台管理 (初始化页面)
+ * ${tcfg.tableComment} 后台管理 (初始化页面)
  *		
  * VERSION      DATE          BY              REASON		
  * -------- ----------- --------------- ---------------------------	
@@ -49,7 +49,7 @@
 													role="form" class="form-inline" 
 													method="post"  accept-charset="UTF-8" 
 													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
-													data-action="\${basePath}${schemaConf._web_http}/page">
+													data-action="\${basePath}${scfg._web_http}/page">
 													<input type="hidden" name="pageNum" id="pageNumA" value="\${bean.pageNum==null?1:bean.pageNum}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
@@ -69,9 +69,9 @@
 											</td>
 										</tr>
 									</table>
-									<%if ("1"==tableConf.schemaConf._insert){%>
+									<%if ("1"==scfg._insert){%>
 									\<% if(shiro.hasPermission("${tableNameL}:add")){ %>
-									<a href="#" onclick="openMyBoxLayer('a','\${basePath}${schemaConf._web_http}/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="#" onclick="openMyBoxLayer('a','\${basePath}${scfg._web_http}/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									\<%}%>
 									<%}%>
 									<div id="info_list_div">

@@ -1,8 +1,8 @@
-package ${schemaConf._biz_pkg};
+package ${scfg._biz_pkg};
 
-import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
-import ${schemaConf._dao_pkg}.I${tableConf.tableNameFormat!}Dao;
-import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
+import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
+import ${scfg._dao_pkg}.I${tcfg.tableNameFormat!}Dao;
+import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
@@ -18,24 +18,24 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class ${tableConf.tableNameFormat!}Service extends BaseService implements I${tableConf.tableNameFormat!}Service {
+public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${tcfg.tableNameFormat!}Service {
     @Autowired
-    private I${tableConf.tableNameFormat!}Dao ${tableNameL}Dao;
+    private I${tcfg.tableNameFormat!}Dao ${tableNameL}Dao;
 
-    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(${tableConf.tableNameFormat!} dto) throws Exception {
+    public String saveOrUpdateData(${tcfg.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
                 if (dto.getId() != null && ${tableNameL}Dao.isDataYN(dto) != 0) {
                     //数据存在
-                    <%if ("1"==tableConf.schemaConf._update){%>${tableNameL}Dao.update(dto);<%}%>
+                    <%if ("1"==scfg._update){%>${tableNameL}Dao.update(dto);<%}%>
                 } else {
                     //新增
-                     <%if ("1"==tableConf.schemaConf._insert){%>${tableNameL}Dao.insert(dto);<%}%>
+                     <%if ("1"==scfg._insert){%>${tableNameL}Dao.insert(dto);<%}%>
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
@@ -46,9 +46,9 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._del) {%>
+    <%if ("1"==scfg._del) {%>
     @Override
-    public String deleteData(${tableConf.tableNameFormat!} dto) throws Exception {
+    public String deleteData(${tcfg.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
@@ -64,10 +64,10 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
+    <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(${tableConf.tableNameFormat!} dto) throws Exception {
+    public String deleteDataById(${tcfg.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
@@ -83,13 +83,13 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._page) {%>
+    <%if ("1"==scfg._page) {%>
     @Override
-    public List<${tableConf.tableNameFormat!}> findDataIsPage(${tableConf.tableNameFormat!} dto) throws Exception {
-        List<${tableConf.tableNameFormat!}> dtos = null;
+    public List<${tcfg.tableNameFormat!}> findDataIsPage(${tcfg.tableNameFormat!} dto) throws Exception {
+        List<${tcfg.tableNameFormat!}> dtos = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<${tableConf.tableNameFormat!}>) ${tableNameL}Dao.findDataIsPage(dto);
+            dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}Dao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -98,12 +98,12 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._list) {%>
+    <%if ("1"==scfg._list) {%>
     @Override
-    public List<${tableConf.tableNameFormat!}> findDataIsList(${tableConf.tableNameFormat!} dto) throws Exception {
-        List<${tableConf.tableNameFormat!}> dtos = null;
+    public List<${tcfg.tableNameFormat!}> findDataIsList(${tcfg.tableNameFormat!} dto) throws Exception {
+        List<${tcfg.tableNameFormat!}> dtos = null;
         try {
-            dtos = (List<${tableConf.tableNameFormat!}>) ${tableNameL}Dao.findDataIsList(dto);
+            dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}Dao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -112,13 +112,13 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
      <%}%>
 
-    <%if ("1"==tableConf.schemaConf._detail) {%>
+    <%if ("1"==scfg._detail) {%>
     @Override
     @RfAccount2Bean
-    public ${tableConf.tableNameFormat!} findDataById(${tableConf.tableNameFormat!} dto) throws Exception {
-        ${tableConf.tableNameFormat!} dto1 = null;
+    public ${tcfg.tableNameFormat!} findDataById(${tcfg.tableNameFormat!} dto) throws Exception {
+        ${tcfg.tableNameFormat!} dto1 = null;
         try {
-            dto1 = (${tableConf.tableNameFormat!}) ${tableNameL}Dao.selectByPrimaryKey(dto);
+            dto1 = (${tcfg.tableNameFormat!}) ${tableNameL}Dao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -127,9 +127,9 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-     <%if ("1"==tableConf.schemaConf._recovery||null!=schemaConf._col_del) {%>
+     <%if ("1"==scfg._recovery||null!=scfg._col_del) {%>
     @Override
-    public String recoveryDataById(${tableConf.tableNameFormat!} dto) throws Exception {
+    public String recoveryDataById(${tcfg.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {

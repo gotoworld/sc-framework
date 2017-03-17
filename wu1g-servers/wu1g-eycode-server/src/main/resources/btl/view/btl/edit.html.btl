@@ -1,6 +1,6 @@
 \<%
  /*	
- * ${tableConf.tableComment} 后台管理 (信息编辑页面)
+ * ${tcfg.tableComment} 后台管理 (信息编辑页面)
  *
  * VERSION      DATE          BY              REASON
  * -------- ----------- --------------- ---------------------------
@@ -28,7 +28,7 @@
 		<div class="row">
 			<div class="ibox float-e-margins">
 				<div class="ibox-content col-md-12">
-					<form id="${tableNameL}_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="\${basePath}${schemaConf._web_http}/save">
+					<form id="${tableNameL}_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="\${basePath}${scfg._web_http}/save">
 						<div class="col-md-12">
 							<div style="float:right;">
 								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
@@ -42,7 +42,7 @@
                         <input type="hidden" name="newFlag" value="\${bean.newFlag}" />
 
                         <%for(t in columns){
-                        if(schemaConf._col_edit!=null && schemaConf._col_edit[t.columnNameFormat]!=null){
+                        if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
                         %>
 					    <div class="col-md-6">
 							<div class="form-group">

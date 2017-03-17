@@ -1,12 +1,12 @@
-package ${schemaConf._web_pkg};
+package ${scfg._web_pkg};
 
 import com.github.pagehelper.PageInfo;
-import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
+import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
-import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
+import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
 import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.Path${tableConf.tableNameFormat!};
+import org.springframework.web.bind.annotation.Path${tcfg.tableNameFormat!};
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,18 +27,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * <p>${tableConf.tableComment}。
+ * <p>${tcfg.tableComment}。
  */
 @Controller
 @Slf4j
-public class ${tableConf.tableNameFormat!}Controller extends BaseController {
+public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	@Autowired
-	protected I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
+	protected I${tcfg.tableNameFormat!}Service ${tableNameL}Service;
 	
-	private static final String acPrefix="${schemaConf._web_http}/";
-	private static final String init = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}";
-	private static final String edit = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}_edit";
-	private static final String list = "${strUtil.getDir(schemaConf._view_pkg)}/${tableConf.tableName}_list";
+	private static final String acPrefix="${scfg._web_http}/";
+	private static final String init = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}";
+	private static final String edit = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}_edit";
+	private static final String list = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}_list";
 	private static final String success = "redirect:"+acPrefix+"init";
 	
 	/**
@@ -47,19 +47,19 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 	@RequiresPermissions("${tableNameL}:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"init")
 	public String init() {
-		log.info("${tableConf.tableNameFormat!}Controller init.........");
+		log.info("${tcfg.tableNameFormat!}Controller init.........");
 		return init;
 	}
-	 <%if ("1"==tableConf.schemaConf._page) {%>
+	 <%if ("1"==scfg._page) {%>
 	/**
 	 * <p> 信息分页 (未删除)。
 	 */
 	@RequiresPermissions("${tableNameL}:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
-	public String page(HttpServletRequest request, HttpServletResponse response,${tableConf.tableNameFormat!} dto) {
-		log.info("${tableConf.tableNameFormat!}Controller page.........");
+	public String page(HttpServletRequest request, HttpServletResponse response,${tcfg.tableNameFormat!} dto) {
+		log.info("${tcfg.tableNameFormat!}Controller page.........");
 		if(dto==null){
-			dto = new ${tableConf.tableNameFormat!}();
+			dto = new ${tcfg.tableNameFormat!}();
 		}
 		PageInfo<?> page=new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
 		request.setAttribute( "dtos", page.getList() );
@@ -69,24 +69,24 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 	}
 	<%}%>
 
-    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
 	/**
 	 * <p> 编辑。
 	 */
 	@RequiresPermissions("${tableNameL}:edit")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/{id}")
-	public String edit(${tableConf.tableNameFormat!} dto,@Path${tableConf.tableNameFormat!}("id") Long id) {
-		log.info("${tableConf.tableNameFormat!}Controller edit.........");
+	public String edit(${tcfg.tableNameFormat!} dto,@Path${tcfg.tableNameFormat!}("id") Long id) {
+		log.info("${tcfg.tableNameFormat!}Controller edit.........");
 		int pageNum=getPageSize(dto);
 		if(0!=id){
-			${tableConf.tableNameFormat!} dto1=new ${tableConf.tableNameFormat!}();
+			${tcfg.tableNameFormat!} dto1=new ${tcfg.tableNameFormat!}();
 			<%for(t in pks){%>
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             <%}%>
 			dto=${tableNameL}Service.findDataById(dto1);
 		}
 		if(dto==null||0==id){
-			dto=new ${tableConf.tableNameFormat!}();
+			dto=new ${tcfg.tableNameFormat!}();
             dto.setNewFlag(1);
 		}
 		dto.setPageNum( pageNum );
@@ -100,16 +100,16 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 	 */
 	@RequiresPermissions("${tableNameL}:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
-	@ALogOperation(type="删除",desc="${tableConf.tableComment}")
-	public String del(@Path${tableConf.tableNameFormat!}("id") Long id, RedirectAttributesModelMap modelMap) {
-		log.info("${tableConf.tableNameFormat!}Controller del.........");
+	@ALogOperation(type="删除",desc="${tcfg.tableComment}")
+	public String del(@Path${tcfg.tableNameFormat!}("id") Long id, RedirectAttributesModelMap modelMap) {
+		log.info("${tcfg.tableNameFormat!}Controller del.........");
 		Response result = new Response();
 		try {
-			${tableConf.tableNameFormat!} dto=new ${tableConf.tableNameFormat!}();
+			${tcfg.tableNameFormat!} dto=new ${tcfg.tableNameFormat!}();
 			<%for(t in pks){%>
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             <%}%>
-            <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
+            <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
             result.message = ${tableNameL}Service.deleteDataById(dto);
             <%}else{%>
             result.message = ${tableNameL}Service.deleteData(dto);
@@ -121,16 +121,16 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
 		return success;
 	}
 
-	<%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+	<%if ("1"==scfg._insert||"1"==scfg._update) {%>
 	/**
 	 * <p> 信息保存
 	 */
 	@RequiresPermissions(value={"${tableNameL}:add","${tableNameL}:edit"},logical=Logical.OR)
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
-	@ALogOperation(type="修改",desc="${tableConf.tableComment}")
-	public String save(@Validated ${tableConf.tableNameFormat!} dto,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
-		log.info("${tableConf.tableNameFormat!}Controller save.........");
+	@ALogOperation(type="修改",desc="${tcfg.tableComment}")
+	public String save(@Validated ${tcfg.tableNameFormat!} dto,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
+		log.info("${tcfg.tableNameFormat!}Controller save.........");
 		Response result = new Response();
 		if(dto!=null){
 			try {

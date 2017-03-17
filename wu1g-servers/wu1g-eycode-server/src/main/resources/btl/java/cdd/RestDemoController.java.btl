@@ -1,7 +1,7 @@
-package ${schemaConf._web_pkg};
+package ${scfg._web_pkg};
 
-import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
-import ${schemaConf._dto_pkg}.${tableConf.tableNameFormat!}Dto;
+import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
+import ${scfg._dto_pkg}.${tcfg.tableNameFormat!}Dto;
 import com.cddang.common.constant.PortalConstant;
 import com.cddang.framework.Response;
 import com.github.pagehelper.PageInfo;
@@ -18,29 +18,29 @@ import com.cddang.activity.web.utils.PageUtil;
 import java.util.List;
 
 @RestController
-@Api(description = "${tableConf.tableComment}")
+@Api(description = "${tcfg.tableComment}")
 @Slf4j
-public class ${tableConf.tableNameFormat!}Controller extends BaseController {
+public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
-    private I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
-    private static final String acPrefix = "${schemaConf._web_http}/";
+    private I${tcfg.tableNameFormat!}Service ${tableNameL}Service;
+    private static final String acPrefix = "${scfg._web_http}/";
 
-    <%if ("1"==tableConf.schemaConf._page) {%>
+    <%if ("1"==scfg._page) {%>
     /**
      * <p>信息分页 (未删除)。
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page")
     @ApiOperation(value = "信息分页")
-    public Response page(@ModelAttribute  ${tableConf.tableNameFormat!}Dto dto) {
-        log.info("${tableConf.tableNameFormat!}Controller page.........");
+    public Response page(@ModelAttribute  ${tcfg.tableNameFormat!}Dto dto) {
+        log.info("${tcfg.tableNameFormat!}Controller page.........");
         Response result = new Response();
        if (dto == null) {
-           dto = new ${tableConf.tableNameFormat!}Dto();
+           dto = new ${tcfg.tableNameFormat!}Dto();
            dto.setPageSize(PortalConstant.PAGEROW_DEFAULT_COUNT);
        }
         try {
-            dto.setDelFlag(new Byte("0"));
+            dto.set${strUtil.fmtStr(scfg._col_del,'_')}(new Byte("0"));
             result.data = PageUtil.copy(${tableNameL}Service.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -49,20 +49,20 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._detail) {%>
+    <%if ("1"==scfg._detail) {%>
     /**
      * <p> 信息详情。
      */
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
-        log.info("${tableConf.tableNameFormat!}Controller info.........");
+        log.info("${tcfg.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
-            ${tableConf.tableNameFormat!}Dto dto = new ${tableConf.tableNameFormat!}Dto();
+            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
             if (id != null) {
                 dto.setId(id);
-                dto.setDelFlag(new Byte("0"));
+                dto.set${strUtil.fmtStr(scfg._col_del,'_')}(new Byte("0"));
                 result.data = ${tableNameL}Service.findDataById(dto);
             }
         } catch (Exception e) {
@@ -72,21 +72,21 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
+    <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
     /**
      * <p>删除。
      */
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
     @ApiOperation(value = "删除")
     public Response del(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
-        log.info("${tableConf.tableNameFormat!}Controller del.........");
+        log.info("${tcfg.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            ${tableConf.tableNameFormat!}Dto dto = new ${tableConf.tableNameFormat!}Dto();
+            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
             <%for(t in pks){%>
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             <%}%>
-            <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
+            <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
             result.message = ${tableNameL}Service.deleteDataById(dto);
             <%}else{%>
             result.message = ${tableNameL}Service.deleteData(dto);
@@ -98,14 +98,14 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
     /**
      * <p> 信息保存
      */
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated @ModelAttribute ${tableConf.tableNameFormat!}Dto dto, BindingResult bindingResult) {
-        log.info("${tableConf.tableNameFormat!}Controller save.........");
+    public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!}Dto dto, BindingResult bindingResult) {
+        log.info("${tcfg.tableNameFormat!}Controller save.........");
         Response result = new Response();
         if (dto != null) {
             try {

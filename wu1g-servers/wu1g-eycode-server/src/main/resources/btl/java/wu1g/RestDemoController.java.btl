@@ -1,7 +1,7 @@
-package ${schemaConf._web_pkg};
+package ${scfg._web_pkg};
 
-import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
-import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
+import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
+import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.web.controller.BaseController;
@@ -17,31 +17,31 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "${tableConf.tableComment}")
+@Api(description = "${tcfg.tableComment}")
 @RestController
 @Slf4j
-public class ${tableConf.tableNameFormat!}Controller extends BaseController {
+public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
-    private I${tableConf.tableNameFormat!}Service ${tableNameL}Service;
-    private static final String acPrefix = "${schemaConf._web_http}/";
+    private I${tcfg.tableNameFormat!}Service ${tableNameL}Service;
+    private static final String acPrefix = "${scfg._web_http}/";
 
-    <%if ("1"==tableConf.schemaConf._page) {%>
+    <%if ("1"==scfg._page) {%>
     /**
      * <p>信息分页 (未删除)。
      */
     @RequiresPermissions("${tableNameL}:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
-    public Response page(@ModelAttribute  ${tableConf.tableNameFormat!} dto, @PathVariable("pageNum") Integer pageNum) {
-        log.info("${tableConf.tableNameFormat!}Controller page.........");
+    public Response page(@ModelAttribute  ${tcfg.tableNameFormat!} dto, @PathVariable("pageNum") Integer pageNum) {
+        log.info("${tcfg.tableNameFormat!}Controller page.........");
         Response result = new Response();
         if (dto == null) {
-            dto = new ${tableConf.tableNameFormat!}();
+            dto = new ${tcfg.tableNameFormat!}();
         }
         try {
             dto.setPageNum(pageNum);
-            dto.setDelFlag(0);
+            dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);
             // 信息列表
             PageInfo<?> page = new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
             result.data = page;
@@ -52,21 +52,23 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._detail) {%>
+    <%if ("1"==scfg._detail) {%>
     /**
      * <p> 信息详情。
      */
     @RequiresPermissions("${tableNameL}:edit")
-    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
     @ApiOperation(value = "信息详情")
-    public Response info(@PathVariable("id") Long id) {
-        log.info("${tableConf.tableNameFormat!}Controller info.........");
+    public Response info(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
+        log.info("${tcfg.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
-            ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
-            if (id == 0) {
-                dto.setId(0L);
-                result.data = new ${tableConf.tableNameFormat!}();
+            ${tcfg.tableNameFormat!} dto = new ${tcfg.tableNameFormat!}();
+            if (<%for(t in pks){%>${tLP.index==1?'':' && '} ${t.columnNameFormat}==0<%}%>) {
+                <%for(t in pks){%>
+                dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(0L);
+                <%}%>
+                result.data = new ${tcfg.tableNameFormat!}();
             } else {
                 <%for(t in pks){%>
                 dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
@@ -85,17 +87,17 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
      */
    @RequiresPermissions("${tableNameL}:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
-    @ALogOperation(type = "删除", desc = "${tableConf.tableComment}")
+    @ALogOperation(type = "删除", desc = "${tcfg.tableComment}")
     @ApiOperation(value = "信息删除")
     public Response del(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
-        log.info("${tableConf.tableNameFormat!}Controller del.........");
+        log.info("${tcfg.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            ${tableConf.tableNameFormat!} dto = new ${tableConf.tableNameFormat!}();
+            ${tcfg.tableNameFormat!} dto = new ${tcfg.tableNameFormat!}();
             <%for(t in pks){%>
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             <%}%>
-            <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
+            <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
             result.message = ${tableNameL}Service.deleteDataById(dto);
             <%}else{%>
             result.message = ${tableNameL}Service.deleteData(dto);
@@ -106,17 +108,17 @@ public class ${tableConf.tableNameFormat!}Controller extends BaseController {
         return result;
     }
 
-    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
     /**
      * <p> 信息保存
      */
     @RequiresPermissions(value = {"${tableNameL}:add", "${tableNameL}:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "${tableConf.tableComment}")
+    @ALogOperation(type = "修改", desc = "${tcfg.tableComment}")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated @ModelAttribute ${tableConf.tableNameFormat!} dto, BindingResult bindingResult) {
-        log.info("${tableConf.tableNameFormat!}Controller save.........");
+    public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!} dto, BindingResult bindingResult) {
+        log.info("${tcfg.tableNameFormat!}Controller save.........");
         Response result = new Response();
         if (dto != null) {
             try {

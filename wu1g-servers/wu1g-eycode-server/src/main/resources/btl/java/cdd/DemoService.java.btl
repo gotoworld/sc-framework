@@ -1,9 +1,9 @@
-package ${schemaConf._biz_pkg};
+package ${scfg._biz_pkg};
 
-import ${schemaConf._api_pkg}.I${tableConf.tableNameFormat!}Service;
-import ${schemaConf._dao_pkg}.I${tableConf.tableNameFormat!}Mapper;
-import ${schemaConf._domain_pkg}.${tableConf.tableNameFormat!};
-import ${schemaConf._dto_pkg}.${tableConf.tableNameFormat!}Dto;
+import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
+import ${scfg._dao_pkg}.I${tcfg.tableNameFormat!}Mapper;
+import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
+import ${scfg._dto_pkg}.${tcfg.tableNameFormat!}Dto;
 import com.cddang.common.constant.PortalConstant;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,25 +18,25 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class ${tableConf.tableNameFormat!}Service extends BaseService implements I${tableConf.tableNameFormat!}Service {
+public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${tcfg.tableNameFormat!}Service {
     @Autowired
-    private I${tableConf.tableNameFormat!}Mapper ${tableNameL}Mapper;
+    private I${tcfg.tableNameFormat!}Mapper ${tableNameL}Mapper;
 
-    <%if ("1"==tableConf.schemaConf._insert||"1"==tableConf.schemaConf._update) {%>
+    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+    public String saveOrUpdateData(${tcfg.tableNameFormat!}Dto dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+                ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
                 //判断数据是否存在
                 if (${tableNameL}Mapper.isDataYN(entity) != 0) {
                     //数据存在
-                    <%if ("1"==tableConf.schemaConf._update){%>${tableNameL}Mapper.update(entity);<%}%>
+                    <%if ("1"==scfg._update){%>${tableNameL}Mapper.update(entity);<%}%>
                 } else {
                     //新增
-                     <%if ("1"==tableConf.schemaConf._insert){%>${tableNameL}Mapper.insert(entity);<%}%>
+                     <%if ("1"==scfg._insert){%>${tableNameL}Mapper.insert(entity);<%}%>
                      dto.setId(entity.getId());
                 }
             } catch (Exception e) {
@@ -48,13 +48,13 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._del) {%>
+    <%if ("1"==scfg._del) {%>
     @Override
-    public String deleteData(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+    public String deleteData(${tcfg.tableNameFormat!}Dto dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+                ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
                 if(${tableNameL}Mapper.deleteByPrimaryKey(entity)==0){
 					throw new RuntimeException("数据不存在!");
                 }
@@ -67,14 +67,14 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._delLogic||null!=schemaConf._col_del) {%>
+    <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+    public String deleteDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+                ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
                 if(${tableNameL}Mapper.deleteById(entity)==0){
 					throw new RuntimeException("数据不存在!");
                 }
@@ -87,16 +87,16 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._page) {%>
+    <%if ("1"==scfg._page) {%>
     @Override
-    public PageInfo findDataIsPage(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+    public PageInfo findDataIsPage(${tcfg.tableNameFormat!}Dto dto) throws Exception {
        PageInfo pageInfo=null;
        try {
-           ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
+           ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
            PageHelper.startPage(PN(dto.getPageIndex()), PS(dto.getPageSize()));
            List list = ${tableNameL}Mapper.findDataIsPage(entity);
            pageInfo=new PageInfo(list);
-           pageInfo.setList(copyTo(pageInfo.getList(), ${tableConf.tableNameFormat!}Dto.class));
+           pageInfo.setList(copyTo(pageInfo.getList(), ${tcfg.tableNameFormat!}Dto.class));
        } catch (Exception e) {
            log.error("信息查询失败!", e);
            throw new RuntimeException("信息查询失败!");
@@ -105,13 +105,13 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-    <%if ("1"==tableConf.schemaConf._list) {%>
+    <%if ("1"==scfg._list) {%>
     @Override
-    public List<${tableConf.tableNameFormat!}Dto> findDataIsList(${tableConf.tableNameFormat!}Dto dto) throws Exception {
-        List<${tableConf.tableNameFormat!}Dto> dtos = null;
+    public List<${tcfg.tableNameFormat!}Dto> findDataIsList(${tcfg.tableNameFormat!}Dto dto) throws Exception {
+        List<${tcfg.tableNameFormat!}Dto> dtos = null;
         try {
-            ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
-            dtos = copyTo(${tableNameL}Mapper.findDataIsList(entity), ${tableConf.tableNameFormat!}Dto.class);
+            ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
+            dtos = copyTo(${tableNameL}Mapper.findDataIsList(entity), ${tcfg.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -120,13 +120,13 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
      <%}%>
 
-    <%if ("1"==tableConf.schemaConf._detail) {%>
+    <%if ("1"==scfg._detail) {%>
     @Override
-    public ${tableConf.tableNameFormat!}Dto findDataById(${tableConf.tableNameFormat!}Dto dto) throws Exception {
-        ${tableConf.tableNameFormat!}Dto dto1 = null;
+    public ${tcfg.tableNameFormat!}Dto findDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
+        ${tcfg.tableNameFormat!}Dto dto1 = null;
         try {
-            ${tableConf.tableNameFormat!} entity = copyTo(dto, ${tableConf.tableNameFormat!}.class);
-            dto1 = copyTo(${tableNameL}Mapper.selectByPrimaryKey(entity),${tableConf.tableNameFormat!}Dto.class);
+            ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
+            dto1 = copyTo(${tableNameL}Mapper.selectByPrimaryKey(entity),${tcfg.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -135,13 +135,13 @@ public class ${tableConf.tableNameFormat!}Service extends BaseService implements
     }
     <%}%>
 
-     <%if ("1"==tableConf.schemaConf._recovery||null!=schemaConf._col_del) {%>
+     <%if ("1"==scfg._recovery||null!=scfg._col_del) {%>
     @Override
-    public String recoveryDataById(${tableConf.tableNameFormat!}Dto dto) throws Exception {
+    public String recoveryDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                ${tableConf.tableNameFormat!} entity = copyTo(entity, ${tableConf.tableNameFormat!}.class);
+                ${tcfg.tableNameFormat!} entity = copyTo(entity, ${tcfg.tableNameFormat!}.class);
                 if(${tableNameL}Mapper.recoveryDataById(entity)==0){
 					throw new RuntimeException("数据不存在!");
                 }

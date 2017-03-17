@@ -79,6 +79,24 @@
 			$("#${tableNameL}_01").validate();
 		},1000);
 	}
+    <%for(t in columns){
+        if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+            switch(scfg._edit_type[t.columnNameFormat]){
+                case "0":{ layout("js/0_input[hidden].btl",{t:t}){};break;}
+                case "1":{ layout("js/1_input[text].btl",{t:t}){};break;}
+                case "2":{ layout("js/2_textarea.btl",{t:t}){};break;}
+                case "3":{ layout("js/3_input[date].btl",{t:t}){};break;}
+                case "4":{ layout("js/4_select.btl",{t:t}){};break;}
+                case "5":{ layout("js/5_select[multiple].btl",{t:t}){};break;}
+                case "6":{ layout("js/6_input[radio].btl",{t:t}){};break;}
+                case "7":{ layout("js/7_input[checkbox].btl",{t:t}){};break;}
+                case "8":{ layout("js/8_upload[image].btl",{t:t}){};break;}
+                case "9":{ layout("js/9_upload[file].btl",{t:t}){};break;}
+                case "10":{ layout("js/10_editor[simple].btl",{t:t}){};break;}
+                case "11":{ layout("js/11_editor[full].btl",{t:t}){};break;}
+            }
+        }
+    }%>
 	</script>
 </body>
 </html>

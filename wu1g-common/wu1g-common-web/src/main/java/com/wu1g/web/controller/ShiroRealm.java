@@ -49,10 +49,9 @@ import java.util.Map;
 
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
-    public ShiroRealm() {}
-    public ShiroRealm(CacheManager cacheManager, CredentialsMatcher matcher) {
-        super(cacheManager, matcher);
-    }
+//    public ShiroRealm(CacheManager cacheManager, CredentialsMatcher matcher) {
+//        super(cacheManager, matcher);
+//    }
     /**
      * 角色资源 业务处理。
      */
@@ -67,24 +66,23 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         log.info(" 由于加入了缓存, 此处只会load一次：doGetAuthorizationInfo.................");
 //		得到 doGetAuthenticationInfo 方法中传入的凭证
-        String username = (String) principals.fromRealm(getName()).iterator().next();
+        String accid = (String) principals.fromRealm(getName()).iterator().next();
 //		ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();  
-        if (username == null) {
+        if (accid == null) {
             return null;
         }
         //1.根据用户登录名获取用户信息
-//		OrgUser orgUserBean=roleSourceService.findUserByLoginName(username);
+//		OrgUser orgUserBean=roleSourceService.findUserByLoginName(accid);
         OrgUser orgUserBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
         if (orgUserBean == null) {
             return null;
         }
 //		//存放用户信息  信息传递.
-//		Subject subject = SecurityUtils.getSubject();
-//		subject.getSession().setAttribute(CommonConstant.SESSION_KEY_USER,orgUserBean);
+//		SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER,orgUserBean);
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-        Map dto = new HashMap();
+        Map<String,Object> dto = new HashMap();
         dto.put("uid", orgUserBean.getId());
         if (roleSourceService.isSuperAdmin(dto) > 0) {
             //超级管理员标记
@@ -109,31 +107,6 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         //4.返回SimpleAuthorizationInfo对象
         return info;
-
-//		if (StringUtils.equals("admin", username)) {
-//			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//			// 这个确定页面中<shiro:hasRole>标签的name的值
-//			info.addRole("admin");
-//			// 这个就是页面中 <shiro:hasPermission> 标签的name的值
-//			info.addStringPermission("user:add");  
-//            info.addStringPermission("user:edit");  
-//            info.addStringPermission("user:update");  
-//            info.addStringPermission("user:delete");  
-//            info.addStringPermission("user:query");  
-//
-//			return info;
-//		} else if (StringUtils.equals("test", username)) {
-//			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//
-//			// 这个确定页面中<shiro:hasRole>标签的name的值
-//			info.addRole("test");
-//			// 这个就是页面中 <shiro:hasPermission> 标签的name的值, 这个串 随便的,不过我还是认为 白衣的好。
-//			info.addStringPermission("user:query");  
-//
-//			return info;
-//		} else {
-//			return null;
-//		}
     }
 
     /**
@@ -143,25 +116,16 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken anthToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) anthToken;
-
-        String username = token.getUsername();
-
-        log.info("====================doGetAuthenticationInfo begin ==========================");
-        log.info("username: " + username);
-//		log.info("password: "+token.getPassword());
-        log.info("principal: " + token.getPrincipal());
-        log.info("======================doGetAuthenticationInfo end ========================");
-//		if (StringUtils.equals("admin", username)) {
-//			return new SimpleAuthenticationInfo("admin", "e10adc3949ba59abbe56e057f20f883e", getName());
-//		}
+        String accid = token.getUsername();
+        log.info("accid: " + accid);
         //几种用法 1.缓存所有用户信息 2.使用数据库
         //2.获取根据用户登录名获取用户信息
-        OrgUser orgUserBean = roleSourceService.findUserByLoginName(username);
-        if (orgUserBean != null) {
+        OrgUser orgUser = roleSourceService.findUserByLoginName(accid);
+        if (orgUser != null) {
             //缓存用户信息 减少一步查询数据库
-            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUserBean);
+            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
             //创建AuthenticationInfo对象并返回
-            return new SimpleAuthenticationInfo(username, orgUserBean.getPwd(), getName());
+            return new SimpleAuthenticationInfo(accid, orgUser.getPwd(), getName());
         }
         return null;
     }

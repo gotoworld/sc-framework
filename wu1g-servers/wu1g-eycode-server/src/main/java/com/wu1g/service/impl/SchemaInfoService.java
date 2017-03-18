@@ -56,6 +56,8 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
         String msg = "success";
         String srcDir = "d:/schema_make_file/src/main/java/";
         String resouseDir = "d:/schema_make_file/src/main/resources/";
+        final int[] menunum = {0};
+        final int[] sqlnum = { 0 };
         //1.遍历表配置集合
         //2.获取表字段详情
         //3.获取生成配置
@@ -144,6 +146,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                         BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/info.html.btl", context, resouseDir + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_info.html");
                     }
                 }
+
                 //view.btl
                 if ("1".equals(tableConf.getSchemaConf().get_view_btl())) {
                     BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/init.html.btl", context, resouseDir +"/template/"+ StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + ".html");
@@ -153,9 +156,11 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                     if ("1".equals(tableConf.getSchemaConf().get_page())) {
                         BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/list.html.btl", context, resouseDir +"/template/"+ StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_list.html");
                     }
+                    if(menunum[0]++==0)
                     BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/menu.html.btl", context, resouseDir+"/"+ schemaConf.get_my_pkg()+".menu.html");
                 }
                 //auth.sql
+                if(sqlnum[0]++==0)
                 BeetlUtils.renderToFile("/btl/" + verDir + "/java/auth.sql.btl", context, resouseDir+"/"+ schemaConf.get_my_pkg()+"_auth.sql");
             } catch (Exception e) {
                 e.printStackTrace();

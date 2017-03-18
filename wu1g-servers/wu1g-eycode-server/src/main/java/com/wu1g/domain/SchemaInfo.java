@@ -93,7 +93,7 @@ public class SchemaInfo extends BaseVO {
 
     public String getJSR303() {
         String _jsr303 = "";
-        if (!(" date time datetime timestamp year tinyint smallint mediumint int bigint float double decimal ".contains(" " + dataType + " "))) {
+        if (!("#date#time#datetime#timestamp#year#tinyint#smallint#mediumint#int#bigint#float#double#decimal#".contains("#" + dataType + "#"))) {
             if (!columnName.equals("id") && isNullable.equals("NO")) {
                 _jsr303 += "@NotNull(message=\"" + columnName + "不能为空\"";
             }
@@ -105,22 +105,22 @@ public class SchemaInfo extends BaseVO {
     }
     public String getJavaType() {
         String _javaType = "String";
-        if (!(" date time datetime timestamp year ".contains(" " + dataType + " "))) {
+        if (("#date#time#datetime#timestamp#year#".contains("#" + dataType + "#"))) {
             _javaType="Date";
         }else
-        if (!(" tinyint ".contains(" " + dataType + " "))) {
+        if (("#tinyint#".contains("#" + dataType + "#"))) {
             _javaType="Integer";
         }else
-        if (!(" smallint mediumint int  ".contains(" " + dataType + " "))) {
+        if (("#smallint#mediumint#int#".contains("#" + dataType + " "))) {
             _javaType="Integer";
         }else
-        if (!(" bigint ".contains(" " + dataType + " "))) {
+        if (("#bigint#".contains("#" + dataType + "#"))) {
             _javaType="Long";
         }else
-        if (!(" float double ".contains(" " + dataType + " "))) {
+        if (("#float#double#".contains("#" + dataType + "#"))) {
             _javaType="Double";
         }else
-        if (!(" decimal ".contains(" " + dataType + " "))) {
+        if (("#decimal#".contains("#" + dataType + "#"))) {
             _javaType="BigDecimal";
         }
         return _javaType;

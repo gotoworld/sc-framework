@@ -11,12 +11,39 @@
 %>
 <!DOCTYPE html>
 <html>
+<%
+var isRichFlag=0;
+var isDateFlag=0;
+var isImgFlag=0;
+var isFileFlag=0;
+var isBGMFlag=0;
+for(t in columns){
+	if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+		switch(scfg._edit_type[t.columnNameFormat]){
+			case "3":{ isDateFlag=1;break;}
+			case "8":{isImgFlag=1;break;}
+			case "9":{isFileFlag=1;break;}
+			case "10":{isRichFlag=1;break;}
+			case "11":{isRichFlag=1;break;}
+			case "12":{isBGMFlag=1;break;}
+		}
+	}
+}
+%>
 <head>
 <meta charset="utf-8" />
 \<% include("../include/meta.html"){} %>
 \<% include("../include/public_init_js_css.html"){} %>
+<%if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){%>
 <link href="\${basePath}css/upload.css" rel="stylesheet">
-
+<%}%>
+<%if(isBGMFlag==1){%>
+<link href="\${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
+<%}%>
+<%if(isRichFlag==1){%>
+<link rel="stylesheet" href="\${basePath}/plugins/editor/themes/default/default.css" />
+<link rel="stylesheet" href="\${basePath}/plugins/editor/plugins/code/prettify.css" />
+<%}%>
 </head>
 
 <body class="gray-bg">
@@ -40,71 +67,94 @@
 				<%for(t in columns){
 					if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
 						switch(scfg._edit_type[t.columnNameFormat]){
-						case "0":{ layout("input/0_input[hidden].btl",{t:t}){};break;}
-						case "1":{ layout("input/1_input[text].btl",{t:t}){};break;}
-						case "2":{ layout("input/2_textarea.btl",{t:t}){};break;}
-						case "3":{ layout("input/3_input[date].btl",{t:t}){};break;}
-						case "4":{ layout("input/4_select.btl",{t:t}){};break;}
-						case "5":{ layout("input/5_select[multiple].btl",{t:t}){};break;}
-						case "6":{ layout("input/6_input[radio].btl",{t:t}){};break;}
-						case "7":{ layout("input/7_input[checkbox].btl",{t:t}){};break;}
-						case "8":{ layout("input/8_upload[image].btl",{t:t}){};break;}
-						case "9":{ layout("input/9_upload[file].btl",{t:t}){};break;}
-						case "10":{ layout("input/10_editor[simple].btl",{t:t}){};break;}
-						case "11":{ layout("input/11_editor[full].btl",{t:t}){};break;}
+							case "0":{ layout("input/0_input[hidden].btl",{t:t}){};break;}
+							case "1":{ layout("input/1_input[text].btl",{t:t}){};break;}
+							case "2":{ layout("input/2_textarea.btl",{t:t}){};break;}
+							case "3":{ layout("input/3_input[date].btl",{t:t}){};break;}
+							case "4":{ layout("input/4_select.btl",{t:t}){};break;}
+							case "5":{ layout("input/5_select[multiple].btl",{t:t}){};break;}
+							case "6":{ layout("input/6_input[radio].btl",{t:t}){};break;}
+							case "7":{ layout("input/7_input[checkbox].btl",{t:t}){};break;}
+							case "8":{ layout("input/8_upload[image].btl",{t:t}){};break;}
+							case "9":{ layout("input/9_upload[file].btl",{t:t}){};break;}
+							case "10":{ layout("input/10_editor[simple].btl",{t:t}){};break;}
+							case "11":{ layout("input/11_editor[full].btl",{t:t}){};break;}
+							case "12":{ layout("input/12_upload[BGM].btl",{t:t}){};break;}
 						}
 					}
 				}%>
-						<div class="col-md-12">
-							<div style="width: 200px; margin: 0 auto;">
-								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-							</div>
+					<div class="col-md-12">
+						<div style="width: 200px; margin: 0 auto;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
-	\<% include("../include/public_last_js_css.html"){} %>
-	<script src="\${basePath}plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
-	<script type="text/javascript">
-    KindEditor.ready(function(K) {
-        <%for(t in columns){
-            if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
-                switch(scfg._edit_type[t.columnNameFormat]){
-                    case "10":{ layout("js/10_editor[simple].btl",{t:t}){};break;}
-                    case "11":{ layout("js/11_editor[full].btl",{t:t}){};break;}
-                }
-            }
-        }%>
-    });
+</div>
+\<% include("../include/public_last_js_css.html"){} %>
+<%if(isDateFlag==1){%>
+<script src="\${basePath}plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
+<%}%>
+<%if(isRichFlag==1){%>
+<script charset="utf-8" src="\${basePath}/plugins/editor/kindeditor.js"></script>
+<script charset="utf-8" src="\${basePath}/plugins/editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="\${basePath}/plugins/editor/plugins/code/prettify.js"></script>
+<%}%>
+<%if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){%>
+<script type="text/javascript" src="\${basePath}plugins/plupload/js/plupload.min.js"></script>
+<%}%>
+<%if(isBGMFlag==1){%>
+<script type="text/javascript" src="\${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
+<script type="text/javascript" src="\${basePath}js/upload_single_bgm.js"></script>
+<%}%>
+<%if(isImgFlag==1){%>
+<script type="text/javascript" src="\${basePath}js/upload_single_pic.js"></script>
+<%}%>
+<%if(isFileFlag==1){%>
+<script type="text/javascript" src="\${basePath}js/upload_single_file.js"></script>
+<%}%>
+<script type="text/javascript">
+<%if(isRichFlag==1){%>
+KindEditor.ready(function(K) {
+	<%for(t in columns){
+		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+			switch(scfg._edit_type[t.columnNameFormat]){
+				case "10":{ layout("js/10_editor[simple].btl",{t:t}){};break;}
+				case "11":{ layout("js/11_editor[full].btl",{t:t}){};break;}
+			}
+		}
+	}%>
+});
+<%}%>
+$(document).ready(function(){
+	formValidate();
+});
+function formValidate(){
+	setTimeout(function(){
+		$("#${tableNameL}_01").validate();
+	},1000);
+}
+<% for(t in columns){
+	if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+		switch(scfg._edit_type[t.columnNameFormat]){
+			case "0":{ layout("js/0_input[hidden].btl",{t:t}){};break;}
+			case "1":{ layout("js/1_input[text].btl",{t:t}){};break;}
+			case "2":{ layout("js/2_textarea.btl",{t:t}){};break;}
+			case "3":{ layout("js/3_input[date].btl",{t:t}){};break;}
+			case "4":{ layout("js/4_select.btl",{t:t}){};break;}
+			case "5":{ layout("js/5_select[multiple].btl",{t:t}){};break;}
+			case "6":{ layout("js/6_input[radio].btl",{t:t}){};break;}
+			case "7":{ layout("js/7_input[checkbox].btl",{t:t}){};break;}
+			case "8":{ layout("js/8_upload[image].btl",{t:t}){};break;}
+			case "9":{ layout("js/9_upload[file].btl",{t:t}){};break;}
+			case "12":{layout("js/12_upload[BGM].btl",{t:t}){};break;}
 
-    $().ready(function(){
-		formValidate();
-	});
-	function formValidate(){
-		setTimeout(function(){
-			$("#${tableNameL}_01").validate();
-		},1000);
+		}
 	}
-    <%for(t in columns){
-        if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
-            switch(scfg._edit_type[t.columnNameFormat]){
-                case "0":{ layout("js/0_input[hidden].btl",{t:t}){};break;}
-                case "1":{ layout("js/1_input[text].btl",{t:t}){};break;}
-                case "2":{ layout("js/2_textarea.btl",{t:t}){};break;}
-                case "3":{ layout("js/3_input[date].btl",{t:t}){};break;}
-                case "4":{ layout("js/4_select.btl",{t:t}){};break;}
-                case "5":{ layout("js/5_select[multiple].btl",{t:t}){};break;}
-                case "6":{ layout("js/6_input[radio].btl",{t:t}){};break;}
-                case "7":{ layout("js/7_input[checkbox].btl",{t:t}){};break;}
-                case "8":{ layout("js/8_upload[image].btl",{t:t}){};break;}
-                case "9":{ layout("js/9_upload[file].btl",{t:t}){};break;}
-
-            }
-        }
-    }%>
-	</script>
+} %>
+</script>
 </body>
 </html>
 

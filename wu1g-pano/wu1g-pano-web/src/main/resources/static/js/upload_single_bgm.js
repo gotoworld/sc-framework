@@ -1,6 +1,6 @@
-function bgm_up(btn,divId){
-	var fileMaxSize=15;
-	var fileExtensions='mp3';
+function updte_single_bgm(btn, divId,_fileExt,name) {
+    var fileMaxSize=10;
+	var fileExtensions=_fileExt||'mp3';
 	var uploader = new plupload.Uploader({
 	    runtimes : 'html5,flash,silverlight,html4',
 	    browse_button : ''+btn, 
@@ -44,7 +44,7 @@ function bgm_up(btn,divId){
 	            {   
 	            	var infoData=eval('('+info.response+')');
 	            	var html='<div id="' + file.id + '" class="music-upload">';
-	            	html+='<input name="soundSrc" value="'+infoData.fileUrl+'" type="hidden">';
+	            	html+='<input name="'+name+'" value="'+infoData.fileUrl+'" type="hidden">';
 	            	html+='<audio controls>';
 	            	html+='<source src="'+infoData.fileUrl+'" type="audio/mp3">';
 	            	html+='您的浏览器不支持在线播放';

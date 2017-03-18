@@ -102,16 +102,19 @@
                             <select name="tsuffix_${table}_${bean.columnNameFormat}_edit_type" style="width: 130px;">
                                 <option value="1"}>--input[text]--</option>
                                 <option value="0">--input[hidden]--</option>
-                                <option value="2" ${bean.dataLength !=null && bean.dataLength>255 && bean.dataLength<=1000?'selected':''}>--textarea--</option>
                                 <option value="3" ${strUtil.containsStr(' datetime timestamp ',bean.dataType)?'selected':''}>--日期控件--</option>
                                 <option value="4">--select--</option>
                                 <option value="5">--select[multiple]--</option>
                                 <option value="6">--input[radio]--</option>
                                 <option value="7">--input[checkbox]--</option>
-                                <option value="8">--图片上传--</option>
-                                <option value="9">--文件上传--</option>
+                                <%if(bean.javaType=='String'){%>
+                                <option value="2" ${bean.dataLength !=null && bean.dataLength>255 && bean.dataLength<=1000?'selected':''}>--textarea--</option>
+                                <option value="8">--上传[图片]--</option>
+                                <option value="9">--上传[文件]--</option>
+                                <option value="12">--上传[音乐]--</option>
                                 <option value="10" ${bean.dataLength !=null && bean.dataLength>1000 && bean.dataLength<=4000?'selected':''}>--富文本(简单)--</option>
                                 <option value="11" ${bean.dataLength !=null && bean.dataLength>4000?'selected':''}>--富文本(完整)--</option>
+                                <%}%>
                             </select>
                             <%}%>
                             <%if(bean.dataLength ==null || bean.dataLength<=300){%>

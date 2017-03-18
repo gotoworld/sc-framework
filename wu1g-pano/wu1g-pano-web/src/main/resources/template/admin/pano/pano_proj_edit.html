@@ -191,8 +191,8 @@
 	<% include("../include/public_last_js_css.html"){} %>
 	<script src="${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
 	<script src="${basePath}plugins/plupload/js/plupload.min.js"></script>
-	<script type="text/javascript" src="${basePath}js/scene_upload.js"></script>
-	<script type="text/javascript" src="${basePath}js/bgmsc_upload.js"></script>
+	<script type="text/javascript" src="${basePath}js/upload_scene.js"></script>
+	<script type="text/javascript" src="${basePath}js/upload_single_bgm.js"></script>
 	<script type="text/javascript" src="${basePath}js/upload_single_pic.js"></script>
 	<script type="text/javascript">
 	$().ready(function(){
@@ -203,8 +203,8 @@
 			$("#pano02_01").validate();
 		},1000);
 	}
-	var uploader = qj_up('upload_scene_btn','upload_scene_div','${bean.code}');
-	bgm_up('upload_sound_btn','upload_sound_div');
+	var uploader = upload_scene('upload_scene_btn','upload_scene_div','${bean.code}');
+	updte_single_bgm('upload_sound_btn','upload_sound_div','mp3','soundSrc');
 	upload_single_pic('upload_map_btn','upload_map_div','png','mapSrc');
 	//删除上传的场景
 	function del_scene_btn(ele, file) {

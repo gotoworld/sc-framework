@@ -1,0 +1,19 @@
+
+    <div class="form-group">
+        <label class="col-md-3 control-label">${t.columnComment}：</label>
+        <div class="col-md-8">
+            <span  class="help-block m-b-none">
+            <button type="button" id="upload_btn_${t.columnNameFormat}">点击上传</button>mp3</span>
+            <div id="upload_div_${t.columnNameFormat}" style="">
+                \<% if(isNotEmpty(bean.${t.columnNameFormat})){%>
+                <div class="music-upload">
+                    <input name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" type="hidden">
+                    <audio controls>
+                        <source src="\${bean.${t.columnNameFormat}}" type="audio/mp3">
+                        您的浏览器不支持在线播放
+                    </audio>
+                </div>
+                \<%}%>
+            </div>
+        </div>
+    </div>

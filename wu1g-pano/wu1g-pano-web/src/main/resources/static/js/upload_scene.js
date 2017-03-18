@@ -1,4 +1,4 @@
-function qj_up(btn, divId, projId) {
+function upload_scene(btn, divId, projId) {
     var fileMaxSize = 4096;
     var fileExtensions = 'jpg,jpeg,tif,tiff,btf,tf8,bigtiff,psd,psb,kro';
     var uploader = new plupload.Uploader({

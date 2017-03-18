@@ -29,43 +29,43 @@
             <div id="tab-${table}" class="tab-pane ${tableLP.index==1?'active':''}">
                 <div class="td_${table}">
                     <p>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _domain" onclick="ec.clickCheck2(this)" checked name="${table}_domain" value="1">domain</label>
+                        <label ><input type="checkbox" class="input input_${table} _domain" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_domain" value="1">domain</label>
                         包:<input type="text" name="${table}_domain_pkg" class="_domain_pkg" value="">
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _dto" onclick="ec.clickCheck2(this)" checked name="${table}_dto" value="1">dto</label>
+                        <label ><input type="checkbox" class="input input_${table} _dto" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_dto" value="1">dto</label>
                         包:<input type="text" name="${table}_dto_pkg" class="_dto_pkg" value="">
                     </p>
                     <p>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _mybatis" onclick="ec.clickCheck2(this)" checked name="${table}_mybatis" value="1">mybatis</label>
+                        <label ><input type="checkbox" class="input input_${table} _mybatis" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_mybatis" value="1">mybatis</label>
                         包:<input type="text" name="${table}_mybatis_pkg" class="_mybatis_pkg" value="">
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _dao" onclick="ec.clickCheck2(this)" checked name="${table}_dao" value="1">dao</label>
+                        <label ><input type="checkbox" class="input input_${table} _dao" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_dao" value="1">dao</label>
                         包:<input type="text" name="${table}_dao_pkg" class="_dao_pkg" value="">
                     </p>
                     <p>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _insert" onclick="ec.clickCheck2(this)" checked name="${table}_insert" value="1">增</label>
-                        <label><input type="checkbox" class="input _insertBatch" onclick="ec.clickCheck2(this)" name="${table}_insertBatch" value="1">批增</label>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _delLogic" onclick="ec.clickCheck2(this)" checked name="${table}_delLogic" value="1">逻辑删</label>
-                        <label><input type="checkbox" class="input input_${table}" onclick="ec.clickCheck2(this)"  name="${table}_recovery" value="1">逻辑恢</label>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _del" onclick="ec.clickCheck2(this)" checked name="${table}_del" value="1">物理删</label>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _update" onclick="ec.clickCheck2(this)" checked name="${table}_update" value="1">改</label>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _page" onclick="ec.clickCheck2(this)" checked name="${table}_page" value="1">分页</label>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _list" onclick="ec.clickCheck2(this)" checked name="${table}_list" value="1">列表</label>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _detail" onclick="ec.clickCheck2(this)" checked name="${table}_detail" value="1">详情</label>
+                        <label ><input type="checkbox" class="input input_${table} _insert" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_insert" value="1">增</label>
+                        <label><input type="checkbox" class="input _insertBatch" onclick="ec.clickCheck2(this)" data="${table}" name="${table}_insertBatch" value="1">批增</label>
+                        <label ><input type="checkbox" class="input input_${table} _delLogic" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_delLogic" value="1">逻辑删</label>
+                        <label><input type="checkbox" class="input input_${table}" onclick="ec.clickCheck2(this)"  data="${table}" name="${table}_recovery" value="1">逻辑恢</label>
+                        <label ><input type="checkbox" class="input input_${table} _del" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_del" value="1">物理删</label>
+                        <label ><input type="checkbox" class="input input_${table} _update" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_update" value="1">改</label>
+                        <label ><input type="checkbox" class="input input_${table} _page" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_page" value="1">分页</label>
+                        <label ><input type="checkbox" class="input input_${table} _list" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_list" value="1">列表</label>
+                        <label ><input type="checkbox" class="input input_${table} _detail" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_detail" value="1">详情</label>
                     </p>
                     <p>
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _api" onclick="ec.clickCheck2(this)" checked name="${table}_api" value="1">api</label>
+                        <label ><input type="checkbox" class="input input_${table} _api" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_api" value="1">api</label>
                         包:<input type="text" name="${table}_api_pkg" class="_api_pkg" value="">
-                        <label style="color: red;" ><input type="checkbox" class="input input_${table} _biz" onclick="ec.clickCheck2(this)" checked name="${table}_biz" value="1">biz</label>
+                        <label ><input type="checkbox" class="input input_${table} _biz" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_biz" value="1">biz</label>
                         包:<input type="text" name="${table}_biz_pkg" class="_biz_pkg" value="">
                     </p>
                     <p>
-                        <label ${!strUtil.containsStr(table,'_vs_')?'style="color: red;"':''} ><input type="checkbox" class="input input_${table} _web_ctrl" onclick="ec.clickCheck2(this)" ${!strUtil.containsStr(table,'_vs_')?'checked':''} name="${table}_web_ctrl" value="1">web.ctrl</label>
-                        <label><input type="checkbox" class="input _web_rest" onclick="ec.clickCheck2(this)" name="${table}_web_rest" value="1" >web.rest</label>
+                        <label ${!strUtil.containsStr(table,'_vs_')?'style="color: red;"':''} ><input type="checkbox" class="input input_${table} _web_ctrl" data="${table}" onclick="ec.clickCheck2(this)" ${!strUtil.containsStr(table,'_vs_')?'checked':''} name="${table}_web_ctrl" value="1">web.ctrl</label>
+                        <label><input type="checkbox" class="input _web_rest" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_web_rest" value="1" >web.rest</label>
                         controller包:<input type="text" name="${table}_web_pkg" class="_web_pkg" value="" style="width: 350px;">
                         http目录路径:<input type="text" name="${table}_web_http" class="_web_http" data="${strUtil.fmtStr(table,'_')}" value="">
                     </p>
                     <p>
-                        <label ${!strUtil.containsStr(table,'_vs_')?'style="color: red;"':''} ><input type="checkbox" class="input input_${table} _view_btl" onclick="ec.clickCheck2(this)" ${!strUtil.containsStr(table,'_vs_')?'checked':''} name="${table}_view_btl" value="1">view.btl</label>
-                        <label><input type="checkbox" class="input _view_ng" onclick="ec.clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>
+                        <label ${!strUtil.containsStr(table,'_vs_')?'style="color: red;"':''} ><input type="checkbox" class="input input_${table} _view_btl" data="${table}" onclick="ec.clickCheck2(this)" ${!strUtil.containsStr(table,'_vs_')?'checked':''} name="${table}_view_btl" value="1">view.btl</label>
+                        <label><input type="checkbox" class="input _view_ng" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>
                         页面目录:<input type="text" name="${table}_view_pkg" class="_view_pkg" value="">
                     </p>
                 </div>
@@ -83,6 +83,13 @@
                     </thead>
                     <tbody>
                     <%
+                    //是否存在自增主键
+                    var isAutoPk=0;
+                    for(bean in result.data[table]!){
+                        if(bean.autoIncrement=='auto_increment'){
+                            isAutoPk=1;
+                        }
+                    }
                     for(bean in result.data[table]!){
                     %>
                     <tr>
@@ -124,7 +131,7 @@
                             <label style="color: red;"><input type="radio" name="tsuffix_${table}_col_version" onclick="ec.clickRadio2(this)" checked value="${bean.columnName}">自增版本号</label>
                             <%}%>
                             <%}%>
-                            <%if(bean.pk=='PRI' && strUtil.containsStr(' int bigint ',bean.dataType)){%><label><input type="radio" name="tsuffix_${table}_col_autopk" onclick="ec.clickRadio2(this)" checked value="${bean.columnNameFormat}">自增主键</label><%}%>
+                            <%if(isAutoPk==1 && bean.pk=='PRI' && strUtil.containsStr(' int bigint ',bean.dataType)){%><label ${bean.autoIncrement=='auto_increment'?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_autopk" onclick="ec.clickRadio2(this)" ${bean.autoIncrement=='auto_increment'?'checked':''} value="${bean.columnNameFormat}">自增主键</label><%}%>
                         </td>
                         <td>
                             ${bean.columnName!}

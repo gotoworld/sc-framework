@@ -176,7 +176,7 @@
         }
         ,
         setCodePkg:function(tempName){
-            var _my_pkg=$('#_my_pkg').val();
+            var _my_pkg=$('#_my_pkg').val()||'目录';
             switch(tempName){
                 case 'wu1g':{
                     $('._domain_pkg').val('com.wu1g.vo.'+_my_pkg);
@@ -210,57 +210,93 @@
         }
         ,
         templateSwitch: function (tempName) {
+            $('._domain').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+            $('._mybatis').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+            $('._dao').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+            $('._biz').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._api').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._insert').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._insertBatch').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?true:false;
+                ec.clickCheck1(this);
+            });
+            $('._delLogic').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._recovery').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._del').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+            $('._update').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._page').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._list').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._detail').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
             switch(tempName){
                 case 'wu1g':{
                     $('#_dao_suffix').val('Dao');
-                    $('._domain').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
                     $('._dto').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._mybatis').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._dao').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._biz').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._api').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._web_rest').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._web_ctrl').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._web_rest').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);
+                    });
+                    $('._web_ctrl').each(function(){
+                        var table=$(this).attr('data');
+                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                        ec.clickCheck1(this);
+                    });
                     $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._view_btl').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._insert').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._insertBatch').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._delLogic').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._recovery').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._del').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._update').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._page').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._list').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._detail').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-
+                    $('._view_btl').each(function(){ var table=$(this).attr('data');
+                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                        ec.clickCheck1(this);
+                    });
                     break;
                 }
                 case 'cdd':{
                     $('#_dao_suffix').val('Mapper');
-                    $('._domain').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
                     $('._dto').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._mybatis').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._dao').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._biz').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._api').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._web_rest').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._web_rest').each(function(){var table=$(this).attr('data');
+                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                        ec.clickCheck1(this);
+                    });
                     $('._web_ctrl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
                     $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
                     $('._view_btl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._insert').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._insertBatch').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._delLogic').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._recovery').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._del').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._update').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._page').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._list').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._detail').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
 
                     break;
                 }
             }
-            ec.setCodePkg(tempName);
+            ec.setCodePkg2();
         }
     };
     $("#example-vertical").steps({

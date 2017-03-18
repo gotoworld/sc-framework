@@ -31,18 +31,18 @@
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
-					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
+					<input type="hidden" name="pageNum" id="bean-pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
                     <input type="hidden" name="newFlag" value="${bean.newFlag}" />
-                    <input type="hidden" name="type" id="bean_type" value="0">
+                    <input type="hidden" name="type" id="bean-type" value="0">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_accid">登录名</label>
+							<label class="col-md-2 control-label" for="bean-accid">登录名</label>
 							<div class="col-md-8">
 							<%if(bean.accid==null){%>
 								<input type="text" class="form-control" placeholder="请输入用户登录名"
-									id="bean_accid" name="accid" value="" required="" aria-required="true" maxlength="20" aria-invalid="true" />
+									id="bean-accid" name="accid" value="" required="" aria-required="true" maxlength="20" aria-invalid="true" />
 							<%}%>
 							<%if(bean.accid!=null){%>
 								<input type="text" class="form-control" disabled="disabled" value="${bean.accid}" />
@@ -52,28 +52,28 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_name">成员名称</label>
+							<label class="col-md-2 control-label" for="bean-name">成员名称</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入成员名称"
-									id="bean_name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" /> <span
+									id="bean-name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" /> <span
 									class="help-block"></span>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_mobile">移动电话</label>
+							<label class="col-md-2 control-label" for="bean-mobile">移动电话</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入移动电话"
-									id="bean_mobile" name="mobile" value="${bean.mobile}" />
+									id="bean-mobile" name="mobile" value="${bean.mobile}" />
 								<span class="help-block"></span>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_email">邮箱</label>
+							<label class="col-md-2 control-label" for="bean-email">邮箱</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入邮箱"
-									id="bean_email" name="email" value="${bean.email}" /> <span
+									id="bean-email" name="email" value="${bean.email}" /> <span
 									class="help-block"></span>
 							</div>
 						</div>
@@ -112,24 +112,24 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">登录密码</label>
 							<div class="col-md-8">
-								<input type="hidden" name="pwd"  id="bean_pwd" value="" />
+								<input type="hidden" name="pwd"  id="bean-pwd" value="" />
 								<input type="password" class="form-control" name="pwd_x" onchange="cPwd(this.value)"  onblur="cPwd(this.value)" placeholder="不修改请留空" value="" />
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_jobNo">工号</label>
+							<label class="col-md-2 control-label" for="bean-jobNo">工号</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入工号"
-									id="bean_jobNo" name="jobNo" value="${bean.jobNo}" /> <span
+									id="bean-jobNo" name="jobNo" value="${bean.jobNo}" /> <span
 									class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_tel">固定电话</label>
+							<label class="col-md-2 control-label" for="bean-tel">固定电话</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入固定电话"
-									id="bean_tel" name="tel" value="${bean.tel}" /> <span
+									id="bean-tel" name="tel" value="${bean.tel}" /> <span
 									class="help-block"></span>
 							</div>
 						</div>
@@ -202,9 +202,9 @@
         });
         function cPwd(val){
             if(val){
-                $('#bean_pwd').val($.md5($.trim(val)));
+                $('#bean-pwd').val($.md5($.trim(val)));
             }else{
-                $('#bean_pwd').val('');
+                $('#bean-pwd').val('');
             }
         }
         function formValidate(){

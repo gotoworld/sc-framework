@@ -34,7 +34,7 @@
 								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 							</div>
 						</div>
-						<input type="hidden" name="pageNum" id="bean_pageNum" value="\${bean.pageNum}">
+						<input type="hidden" name="pageNum" id="bean-pageNum" value="\${bean.pageNum}">
 			            <%for(t in pks){%>
                             <input type="hidden" name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" />
                         <%}%>

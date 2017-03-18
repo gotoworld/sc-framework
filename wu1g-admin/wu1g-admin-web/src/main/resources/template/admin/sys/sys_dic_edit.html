@@ -26,22 +26,22 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
 				<form id="id_formid" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/sys/dic/save">
-					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}">
+					<input type="hidden" name="pageNum" id="bean-pageNum" value="${bean.pageNum}">
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
                     <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                     <div class="col-md-6">
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_code">编码</label>
+							<label class="col-md-2 control-label" for="bean-code">编码</label>
 						  <div class="col-md-8">
-							  <input type="text" class="form-control" placeholder="请输入编码" id="bean_code" name="code" value="${bean.code}" required="" aria-required="true" maxlength="20" aria-invalid="true"/>
+							  <input type="text" class="form-control" placeholder="请输入编码" id="bean-code" name="code" value="${bean.code}" required="" aria-required="true" maxlength="20" aria-invalid="true"/>
 								<span class="help-block"></span>
 						  </div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_name">名称</label>
+							<label class="col-md-2 control-label" for="bean-name">名称</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" placeholder="请输入名称" id="bean_name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true"/>
+								<input type="text" class="form-control" placeholder="请输入名称" id="bean-name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true"/>
 								<span class="help-block"></span>
 							</div>
 						</div>
@@ -65,17 +65,17 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean_memo">备注</label>
+							<label class="col-md-2 control-label" for="bean-memo">备注</label>
 						   <div class="col-md-8">
-							 <input id="bean_memo" name="memo" value="${bean.memo}" class="form-control" type="text"  placeholder="备注"   maxlength="255"   aria-invalid="true">
+							 <input id="bean-memo" name="memo" value="${bean.memo}" class="form-control" type="text"  placeholder="备注"   maxlength="255"   aria-invalid="true">
 								<span class="help-block"></span>
 						   </div>
 						</div>
 					</div>
 					<!--<div class="form-group">-->
-						<!--<label class="col-md-2 control-label" for="bean_orderNo">排序</label>-->
+						<!--<label class="col-md-2 control-label" for="bean-orderNo">排序</label>-->
 					  <!--<div class="col-md-8">-->
-					      <!--<input type="number" class="form-control" placeholder="请输入排序" id="bean_orderNo" name="orderNo" value="${bean.orderNo==null?0:bean.orderNo}"/>-->
+					      <!--<input type="number" class="form-control" placeholder="请输入排序" id="bean-orderNo" name="orderNo" value="${bean.orderNo==null?0:bean.orderNo}"/>-->
 							<!--<span class="help-block"></span>-->
 					  <!--</div>-->
 					<!--</div>-->

@@ -1,6 +1,6 @@
-function upload_single_pic(btn, divId) {
+function upload_single_pic(btn, divId,_fileExt,name) {
     var fileMaxSize = 1;
-    var fileExtensions = 'png';
+    var fileExtensions = _fileExt||'png';
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: '' + btn,
@@ -50,7 +50,7 @@ function upload_single_pic(btn, divId) {
                         $("#" + divId).append(infoData.message);
                     } else {
                         var html = '<div id="' + file.id + '" class="img-grid-2">';
-                        html += '<input name="mapSrc" value="' + infoData.fileUrl + '" type="hidden">';
+                        html += '<input name="'+name+'" value="' + infoData.fileUrl + '" type="hidden">';
                         html += '<img src="' + infoData.fileUrl + '" style="max-width:264px;max-height:264px">';
                         html += '</div>';
                         $("#" + divId).append(html);

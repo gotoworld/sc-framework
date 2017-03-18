@@ -1,9 +1,9 @@
 <div class="col-md-6">
     <div class="form-group">
-        <label class="col-md-3 control-label"  for="bean-${t.columnNameFormat}">${t.columnComment}：</label>
+        <label class="col-md-3 control-label">${t.columnComment}：</label>
         <div class="col-md-8">
-            <select id="bean-${t.columnNameFormat}" name="${t.columnNameFormat}" class="form-control"  <%if(t.isNullable=='YES'){%> required="" aria-required="true" <%}%> aria-describedby="bean-${t.columnNameFormat}-error" <%if(t.dataLength!=null){%> maxlength="${t.dataLength}" <%}%>  aria-invalid="true">
-            <option value="6">--请选择${t.columnComment}--</option>
+            <select data-placeholder="选择${t.columnComment}" id="bean-${t.columnNameFormat}" name="${t.columnNameFormat}" class="form-control"  <%if(t.isNullable=='YES'){%> required="" aria-required="true" <%}%> aria-describedby="bean-${t.columnNameFormat}-error" <%if(t.dataLength!=null){%> maxlength="${t.dataLength}" <%}%>  aria-invalid="true">
+                <option value="">--请选择${t.columnComment}--</option>
             </select>
             <span id="bean-${t.columnNameFormat}-error" class="help-block m-b-none"></span>
         </div>

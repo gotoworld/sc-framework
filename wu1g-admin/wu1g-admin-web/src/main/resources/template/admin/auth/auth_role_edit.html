@@ -31,15 +31,15 @@
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
-					<input type="hidden" name="pageNum" id="bean_pageNum" value="${bean.pageNum}"/>
+					<input type="hidden" name="pageNum" id="bean-pageNum" value="${bean.pageNum}"/>
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
                     <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                     <div class="col-md-6">
 						<div class="form-group">
-						  <label class="col-md-2 control-label" for="bean_name">角色名称</label>
+						  <label class="col-md-2 control-label" for="bean-name">角色名称</label>
 						  <div class="col-md-4">
-							  <input type="text" class="form-control" placeholder="请输入角色名称" id="bean_name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
+							  <input type="text" class="form-control" placeholder="请输入角色名称" id="bean-name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
 								<span class="help-block"></span>
 						  </div>
 						</div>
@@ -47,7 +47,7 @@
 							<div class="form-group">
 								<div class="checkbox" style="margin-left: 10px;">
 									<label >
-										<input class="checkbox" id="bean_isSuper" ${bean.isSuper==1?'checked="checked"':''} name="isSuper" value="1" type="checkbox"> 超级管理员
+										<input class="checkbox" id="bean-isSuper" ${bean.isSuper==1?'checked="checked"':''} name="isSuper" value="1" type="checkbox"> 超级管理员
 									</label>
 								</div>
 							</div>

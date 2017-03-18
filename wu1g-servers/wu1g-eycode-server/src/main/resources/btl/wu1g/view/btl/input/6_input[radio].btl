@@ -1,1 +1,12 @@
-6
+<div class="col-md-6">
+    <div class="form-group">
+        <label class="col-md-3 control-label"  for="bean-${t.columnNameFormat}">${t.columnComment}：</label>
+        <div class="col-sm-9">
+            <label class="radio-inline">
+                <input type="radio" checked="" value="option1" id="optionsRadios1" name="optionsRadios">选项1</label>
+            <label class="radio-inline">
+                <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">选项2</label>
+            <span id="bean-${t.columnNameFormat}-error" class="help-block m-b-none"></span>
+        </div>
+    </div>
+</div>

@@ -49,7 +49,7 @@
 			\<%}%>
 		</tbody>
 	</table>
-	<#pageTag func="loadUrlPage" params="'info_search_form','info_list_div'" />
+	<${'#pageTag'} func="loadUrlPage" params="'info_search_form','info_list_div'" />
 	</div>
 	<script type="text/javascript">
 	 //判断是否尾页

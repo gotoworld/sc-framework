@@ -39,7 +39,7 @@
                 </td>
 			</tr>
 			\<%
-			}forelse{
+			}elsefor{
 			%>
 			<tr>
 				<td colspan="${scfg._col_show.~size+2}">

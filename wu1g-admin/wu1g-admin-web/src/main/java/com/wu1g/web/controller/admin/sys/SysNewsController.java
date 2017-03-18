@@ -1,4 +1,4 @@
-package ${scfg._web_pkg};
+package com.wu1g.web.controller.admin.sys;
 
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -24,47 +24,46 @@ import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.web.controller.BaseController;
-import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
-import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
+import com.wu1g.api.sys.ISysNewsService;
+import com.wu1g.vo.sys.SysNews;
 
 /**
- * <p>${tcfg.tableComment}。
+ * <p>系统_资讯。
  */
 @Controller
 @Slf4j
-public class ${tcfg.tableNameFormat!}Controller extends BaseController {
+public class SysNewsController extends BaseController {
 	@Autowired
-	protected I${tcfg.tableNameFormat!}Service ${tableNameL}Service;
+	protected ISysNewsService sysNewsService;
 	
-	private static final String acPrefix="${scfg._web_http}/";
-	private static final String init = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}";
-	private static final String edit = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}_edit";
-	private static final String list = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}_list";
+	private static final String acPrefix="/h/sys/sysNews/";
+	private static final String init = "admin/sys/sys_news";
+	private static final String edit = "admin/sys/sys_news_edit";
+	private static final String list = "admin/sys/sys_news_list";
 	private static final String success = "redirect:"+acPrefix+"init";
 	
 	/**
 	 * <p> 初始化处理。
 	 */
-	@RequiresPermissions("${tableNameL}:menu")
+	@RequiresPermissions("sysNews:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"init")
 	public String init() {
-		log.info("${tcfg.tableNameFormat!}Controller init.........");
+		log.info("SysNewsController init.........");
 		return init;
 	}
-	 <%if ("1"==scfg._page) {%>
 	/**
 	 * <p> 信息分页 (未删除)。
 	 */
-	@RequiresPermissions("${tableNameL}:menu")
+	@RequiresPermissions("sysNews:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
-	public String page(HttpServletRequest request, HttpServletResponse response,${tcfg.tableNameFormat!} dto) {
-		log.info("${tcfg.tableNameFormat!}Controller page.........");
+	public String page(HttpServletRequest request, HttpServletResponse response,SysNews dto) {
+		log.info("SysNewsController page.........");
         Response result = new Response();
 		try {
             if(dto==null){
-                dto = new ${tcfg.tableNameFormat!}();
+                dto = new SysNews();
             }
-            PageInfo<?> page=new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
+            PageInfo<?> page=new PageInfo<>(sysNewsService.findDataIsPage(dto));
             request.setAttribute( "beans", page.getList() );
             //分页对象
             request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
@@ -74,28 +73,24 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
          request.setAttribute("result",result);
 		return list;
 	}
-	<%}%>
 
-    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
 	/**
 	 * <p> 编辑。
 	 */
-	@RequiresPermissions("${tableNameL}:edit")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
-	public String edit(${tcfg.tableNameFormat!} dto,<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
-		log.info("${tcfg.tableNameFormat!}Controller edit.........");
+	@RequiresPermissions("sysNews:edit")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/{id}")
+	public String edit(SysNews dto,@PathVariable("id") Long id) {
+		log.info("SysNewsController edit.........");
 		Response result = new Response();
 		try {
             int pageNum=getPageSize(dto);
-            if (<%for(t in pks){%>${tLP.index==1?'':' && '}${t.columnNameFormat}!=null<%}%>) {
-                ${tcfg.tableNameFormat!} dto1=new ${tcfg.tableNameFormat!}();
-                <%for(t in pks){%>
-                dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
-                <%}%>
-                dto=${tableNameL}Service.findDataById(dto1);
+            if (id!=null) {
+                SysNews dto1=new SysNews();
+                dto.setId(id);
+                dto=sysNewsService.findDataById(dto1);
             }
             if(dto==null||0==id){
-                dto=new ${tcfg.tableNameFormat!}();
+                dto=new SysNews();
                 dto.setNewFlag(1);
             }
             dto.setPageNum( pageNum );
@@ -106,45 +101,35 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
          request.setAttribute("result",result);
 		return edit;
 	}
-	<%}%>
 
-    <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
 	/**
 	 * <li>删除。
 	 */
-	@RequiresPermissions("${tableNameL}:del")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
-	@ALogOperation(type="删除",desc="${tcfg.tableComment}")
-	public String del(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>, RedirectAttributesModelMap modelMap) {
-		log.info("${tcfg.tableNameFormat!}Controller del.........");
+	@RequiresPermissions("sysNews:del")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
+	@ALogOperation(type="删除",desc="系统_资讯")
+	public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
+		log.info("SysNewsController del.........");
 		Response result = new Response();
 		try {
-			${tcfg.tableNameFormat!} dto=new ${tcfg.tableNameFormat!}();
-			<%for(t in pks){%>
-            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
-            <%}%>
-            <%if ("1"==scfg._delLogic) {%>
-            result.message = ${tableNameL}Service.deleteDataById(dto);
-            <%}else{%>
-            result.message = ${tableNameL}Service.deleteData(dto);
-            <%}%>
+			SysNews dto=new SysNews();
+            dto.setId(id);
+            result.message = sysNewsService.deleteDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
 		modelMap.addFlashAttribute("result", result);
 		return success;
 	}
-    <%}%>
-	<%if ("1"==scfg._insert||"1"==scfg._update) {%>
 	/**
 	 * <p> 信息保存
 	 */
-	@RequiresPermissions(value={"${tableNameL}:add","${tableNameL}:edit"},logical=Logical.OR)
+	@RequiresPermissions(value={"sysNews:add","sysNews:edit"},logical=Logical.OR)
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
-	@ALogOperation(type="修改",desc="${tcfg.tableComment}")
-	public String save(@Validated ${tcfg.tableNameFormat!} dto,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
-		log.info("${tcfg.tableNameFormat!}Controller save.........");
+	@ALogOperation(type="修改",desc="系统_资讯")
+	public String save(@Validated SysNews dto,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
+		log.info("SysNewsController save.........");
 		Response result = new Response();
 		if(dto!=null){
 			try {
@@ -159,7 +144,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					result.message=${tableNameL}Service.saveOrUpdateData(dto);
+					result.message=sysNewsService.saveOrUpdateData(dto);
 					result.data = dto.getId();
 					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 				}
@@ -172,5 +157,4 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 		modelMap.addFlashAttribute("result", result);
 		return success;
 	}
-	<%}%>
 }

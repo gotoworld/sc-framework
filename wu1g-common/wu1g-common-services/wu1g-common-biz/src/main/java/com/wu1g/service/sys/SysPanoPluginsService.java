@@ -1,11 +1,12 @@
 package com.wu1g.service.sys;
 
-import com.github.pagehelper.PageHelper;
 import com.wu1g.api.sys.ISysPanoPluginsService;
 import com.wu1g.dao.sys.ISysPanoPluginsDao;
+import com.wu1g.vo.sys.SysPanoPlugins;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.vo.sys.SysPanoPlugins;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,98 +22,112 @@ public class SysPanoPluginsService extends BaseService implements ISysPanoPlugin
     @Autowired
     private ISysPanoPluginsDao sysPanoPluginsDao;
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(SysPanoPlugins bean) throws Exception {
+    public String saveOrUpdateData(SysPanoPlugins dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                // 判断数据是否存在
-                if (sysPanoPluginsDao.isDataYN(bean) != 0) {
-                    // 数据存在
-                    sysPanoPluginsDao.update(bean);
+                //判断数据是否存在
+                if (dto.getId() != null && sysPanoPluginsDao.isDataYN(dto) != 0) {
+                    //数据存在
+                    sysPanoPluginsDao.update(dto);
                 } else {
-                    sysPanoPluginsDao.insert(bean);
+                    //新增
+                     sysPanoPluginsDao.insert(dto);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("信息保存失败!", e);
+                throw new Exception("信息保存失败!");
             }
         }
         return msg;
     }
 
-    public String deleteData(SysPanoPlugins bean) throws Exception {
+    @Override
+    public String deleteData(SysPanoPlugins dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysPanoPluginsDao.deleteByPrimaryKey(bean);
+                if(sysPanoPluginsDao.deleteByPrimaryKey(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                log.error("物理删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(SysPanoPlugins bean) throws Exception {
+    public String deleteDataById(SysPanoPlugins dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysPanoPluginsDao.deleteById(bean);
+                if(sysPanoPluginsDao.deleteById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("逻辑删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
-    public List<SysPanoPlugins> findDataIsPage(SysPanoPlugins bean) {
-        List<SysPanoPlugins> beans = null;
+    @Override
+    public List<SysPanoPlugins> findDataIsPage(SysPanoPlugins dto) throws Exception {
+        List<SysPanoPlugins> dtos = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<SysPanoPlugins>) sysPanoPluginsDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            dtos = (List<SysPanoPlugins>) sysPanoPluginsDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public List<SysPanoPlugins> findDataIsList(SysPanoPlugins bean) {
-        List<SysPanoPlugins> beans = null;
+    @Override
+    public List<SysPanoPlugins> findDataIsList(SysPanoPlugins dto) throws Exception {
+        List<SysPanoPlugins> dtos = null;
         try {
-            beans = (List<SysPanoPlugins>) sysPanoPluginsDao.findDataIsList(bean);
+            dtos = (List<SysPanoPlugins>) sysPanoPluginsDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public SysPanoPlugins findDataById(SysPanoPlugins bean) {
-        SysPanoPlugins bean1 = null;
+    @Override
+    @RfAccount2Bean
+    public SysPanoPlugins findDataById(SysPanoPlugins dto) throws Exception {
+        SysPanoPlugins dto1 = null;
         try {
-            bean1 = (SysPanoPlugins) sysPanoPluginsDao.selectByPrimaryKey(bean);
+            dto1 = (SysPanoPlugins) sysPanoPluginsDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
-            log.error("信息详情查询失败!", e);
+            log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return bean1;
+        return dto1;
     }
 
-    public String recoveryDataById(SysPanoPlugins bean) throws Exception {
+    @Override
+    public String recoveryDataById(SysPanoPlugins dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysPanoPluginsDao.recoveryDataById(bean);
+                if(sysPanoPluginsDao.recoveryDataById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("数据恢复失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 }
-

@@ -16,9 +16,14 @@ public interface ISysNewsVsCategoryDao extends IBaseDao {
     /**
      * 判断是否存在
      */
-    @Select("select IFNULL(count(0),0) as count from sys_news_vs_category where     news_id = #{newsId} and  category_id = #{categoryId} ")
+    @Select("select IFNULL(count(0),0) as count from sys_news_vs_category where  news_id = #{newsId} and  category_id = #{categoryId} ")
     int isDataYN(IEntity dto) throws Exception;
 
 
 
+    /**
+     * 根据主键 物理删除
+     */
+    @Delete("delete ftom sys_news_vs_category where  news_id = #{newsId} and  category_id = #{categoryId} ")
+    int deleteByPrimaryKey(IEntity dto) throws Exception;
 }

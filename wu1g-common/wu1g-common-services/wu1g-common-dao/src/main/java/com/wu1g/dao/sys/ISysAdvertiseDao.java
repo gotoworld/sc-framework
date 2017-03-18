@@ -16,19 +16,19 @@ public interface ISysAdvertiseDao extends IBaseDao {
     /**
      * 判断是否存在
      */
-    @Select("select IFNULL(count(0),0) as count from sys_advertise where     id = #{id} ")
+    @Select("select IFNULL(count(0),0) as count from sys_advertise where  id = #{id} ")
     int isDataYN(IEntity dto) throws Exception;
 
     /**
      * 逻辑删除
      */
-    @Update("update sys_advertise set  date_updated=now(), del_flag=1 where    id = #{id} ")
+    @Update("update sys_advertise set  date_updated=now(), del_flag=1 where  id = #{id} ")
     int deleteById(IEntity dto) throws Exception;
 
     /**
      * 恢复逻辑删除的数据
      */
-    @Update("update sys_advertise set   date_updated=now(), del_flag=0 where   id = #{id} ")
+    @Update("update sys_advertise set   date_updated=now(), del_flag=0 where  id = #{id} ")
     int recoveryDataById(IEntity dto) throws Exception;
 
     /**

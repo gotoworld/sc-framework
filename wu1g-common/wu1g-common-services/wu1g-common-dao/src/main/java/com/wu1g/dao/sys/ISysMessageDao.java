@@ -16,13 +16,13 @@ public interface ISysMessageDao extends IBaseDao {
     /**
      * 判断是否存在
      */
-    @Select("select IFNULL(count(0),0) as count from sys_message where     id = #{id} ")
+    @Select("select IFNULL(count(0),0) as count from sys_message where  id = #{id} ")
     int isDataYN(IEntity dto) throws Exception;
 
     /**
      * 逻辑删除
      */
-    @Update("update sys_message set  date_updated=now(), =1 where    id = #{id} ")
+    @Update("update sys_message set  date_updated=now(), =1 where  id = #{id} ")
     int deleteById(IEntity dto) throws Exception;
 
 

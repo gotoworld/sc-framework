@@ -6,7 +6,7 @@
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
         <%for(t in xmlSelect){%>
-        ${tLP.index==1?' ':','}${t.columnName} as t1.${t.columnNameFormat}
+        ${tLP.index==1?' ':','}t1.${t.columnName} as "${t.columnNameFormat}"
         <%}%>
     </sql>
     <%}%>

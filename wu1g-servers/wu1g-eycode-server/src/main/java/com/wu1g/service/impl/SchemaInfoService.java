@@ -69,6 +69,8 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 tableConf.setTableComment(tableObj.getTableComment());
                 SchemaConf schemaConf = tableConf.getSchemaConf();
 
+                context.put("tcfgs", dto.getTablesConf());
+
                 context.put("year", DateUtil.getCurDateStr("yyyy"));
                 context.put("date", DateUtil.getCurDateStr("yyyy-MM-dd"));
 
@@ -80,6 +82,13 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                         pkMap.put(pk.getColumnName(),"1");
                     });
                     context.put("pkMap", pkMap);
+                }
+                if(columns!=null && columns.size()>0){
+                    Map<String,String> columnMap=new HashMap<>();
+                    columns.forEach(column->{
+                        columnMap.put(column.getColumnNameFormat(),column.getJavaType());
+                    });
+                    context.put("columnMap", columnMap);
                 }
                 context.put("columns", columns);
                 context.put("pks", pkcolumns);
@@ -137,14 +146,17 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 }
                 //view.btl
                 if ("1".equals(tableConf.getSchemaConf().get_view_btl())) {
-                    BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/init.html.btl", context, resouseDir + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + ".html");
+                    BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/init.html.btl", context, resouseDir +"/template/"+ StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + ".html");
                     if ("1".equals(tableConf.getSchemaConf().get_insert()) || "1".equals(tableConf.getSchemaConf().get_update())) {
-                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/edit.html.btl", context, resouseDir + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_edit.html");
+                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/edit.html.btl", context, resouseDir +"/template/"+ StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_edit.html");
                     }
                     if ("1".equals(tableConf.getSchemaConf().get_page())) {
-                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/list.html.btl", context, resouseDir + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_list.html");
+                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/list.html.btl", context, resouseDir +"/template/"+ StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_list.html");
                     }
+                    BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/menu.html.btl", context, resouseDir+"/"+ schemaConf.get_my_pkg()+".menu.html");
                 }
+                //auth.sql
+                BeetlUtils.renderToFile("/btl/" + verDir + "/java/auth.sql.btl", context, resouseDir+"/"+ schemaConf.get_my_pkg()+"_auth.sql");
             } catch (Exception e) {
                 e.printStackTrace();
             }

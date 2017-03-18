@@ -1,114 +1,108 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wu1g.dao.sys.ISysAdvertiseDao" >
-	<!-- 字段列表 -->
-	<sql id="Base_Column_List" >
-		 t1.id as  "id"
-		,t1.code as  "code"
-		,t1.name as  "name"
-		,t1.parent_id as  "parentId"
-		,t1.memo as  "memo"
-		,t1.version as  "version"
-		,t1.order_no as  "orderNo"
-		,t1.del_flag as  "delFlag"
-		,t1.create_id as  "createId"
-		,t1.date_created as  "dateCreated"
-		,t1.date_updated as  "dateUpdated"
-	</sql>
-	<!-- 根据主键获取信息详情 -->
-	<select id="selectByPrimaryKey" resultType="sysAdvertise" parameterType="sysAdvertise" >
-		select
-		<include refid="Base_Column_List" />
-		from sys_advertise t1
-		where  t1.id = #{id}
-	</select>
-	<!-- 根据主键物理删除信息 -->
-	<delete id="deleteByPrimaryKey" parameterType="sysAdvertise" >
-		delete
-		from sys_advertise
-		where  id = #{id}
-	</delete>
-	<!-- 新增单条数据 -->
-	<insert id="insert" parameterType="sysAdvertise"  useGeneratedKeys="true" keyProperty="id">
-		insert into sys_advertise(
-			 code
-			,name
-			,parent_id
-			,memo
-			,version
-			,order_no
-			,del_flag
-			,create_id
-			,date_created
-			,date_updated
-		) values (
-			 #{code}
-			,#{name}
-			,#{parentId}
-			,#{memo}
-			,0
-			,(
-			   select t.num from (
-				  select (IFNULL(max(order_no),0)+1) as num from sys_advertise
-			   ) t
-			)
-			,0
-			,#{createId}
-			,now()
-			,now()
-		)
-	</insert>
-	<!-- 数据更新 -->
-	<update id="update" parameterType="sysAdvertise" >
-		update sys_advertise set version=version+1,date_updated=now()
-		<if test="name!= null" >,name=#{name}</if>
-		<if test="code!= null" >,code=#{code}</if>
-		<if test="parentId!= null" >,parent_id=#{parentId}</if>
-		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
-		where  id = #{id}
-	</update>
-	<!-- 判断是否存在 -->
-	<select id="isDataYN" parameterType="sysAdvertise" resultType="int">
-		select count(0) from sys_advertise where  id = #{id}
-	</select>
-	<!--列表通用条件-->
-	<sql id="list_where_sql">
-		<choose>
-			<when test="delFlag!=null">
-				and t1.del_flag=#{delFlag}
-			</when>
-			<otherwise>
-				and t1.del_flag=0
-			</otherwise>
-		</choose>
-	</sql>
-	<!--信息列表 分页 -->
-	<select id="findDataIsPage" parameterType="sysAdvertise" resultType="sysAdvertise">
-		select
-		<include refid="Base_Column_List" />,t2.name pname
-		from sys_advertise t1
-		left join sys_advertise t2 on t1.parent_id = t2.id
-		where 1=1
-		<include refid="list_where_sql"/>
-	    order by  t1.order_no asc
-	</select>
-	<!--信息列表 -->
-	<select id="findDataIsList" parameterType="sysAdvertise" resultType="sysAdvertise">
-		select
-		<include refid="Base_Column_List" />
-		from sys_advertise t1
-		where 1=1
-		<include refid="list_where_sql"/>
-		order by t1.order_no asc
-	</select>
-	<!-- 逻辑删除 -->
-	<update id="deleteById" parameterType="sysAdvertise" >
-		update sys_advertise set del_flag = 1
-		where  id = #{id}
-	</update>
-	<!-- 恢复逻辑删除 -->
-	<update id="recoveryDataById" parameterType="sysAdvertise" >
-		update sys_advertise set del_flag = 0
-		where  id = #{id}
-	</update>
+<mapper namespace="com.wu1g.dao.sys.ISysAdvertiseDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.name as "name"
+        ,t1.img_url as "imgUrl"
+        ,t1.link_url as "linkUrl"
+        ,t1.state as "state"
+        ,t1.position as "position"
+        ,t1.memo as "memo"
+        ,t1.del_flag as "delFlag"
+        ,t1.create_id as "createId"
+        ,t1.date_created as "dateCreated"
+        ,t1.date_updated as "dateUpdated"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.wu1g.vo.sys.SysAdvertise" parameterType="com.wu1g.vo.sys.SysAdvertise">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_advertise t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.wu1g.vo.sys.SysAdvertise"  useGeneratedKeys="true" keyProperty="id"  >
+        insert into sys_advertise(
+         
+            name 
+           ,img_url 
+           ,link_url 
+           ,state 
+           ,position 
+           ,memo 
+           ,del_flag 
+           ,create_id 
+           ,date_created 
+           ,date_updated 
+        ) values (
+         
+            #{name} 
+           ,#{imgUrl} 
+           ,#{linkUrl} 
+           ,#{state} 
+           ,#{position} 
+           ,#{memo} 
+           ,0
+           ,#{createId} 
+           ,now()
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.wu1g.vo.sys.SysAdvertise">
+        update sys_advertise set date_updated=now() 
+             <if test="name!=null">,name = #{name}</if>
+             <if test="imgUrl!=null">,img_url = #{imgUrl}</if>
+             <if test="linkUrl!=null">,link_url = #{linkUrl}</if>
+             <if test="state!=null">,state = #{state}</if>
+             <if test="position!=null">,position = #{position}</if>
+             <if test="memo!=null">,memo = #{memo}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
+        </if>
+    </sql>
+
+    <!--信息列表 分页 -->
+    <select id="findDataIsPage" parameterType="com.wu1g.vo.sys.SysAdvertise" resultType="com.wu1g.vo.sys.SysAdvertise">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_advertise t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.wu1g.vo.sys.SysAdvertise" resultType="com.wu1g.vo.sys.SysAdvertise">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_advertise t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
 </mapper>

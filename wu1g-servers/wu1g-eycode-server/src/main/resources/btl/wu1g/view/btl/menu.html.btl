@@ -1,0 +1,10 @@
+<%
+for(t in tcfgs){
+if(!strUtil.containsStr(t.tableName,'_vs_')){
+%>
+    \<% if(shiro.hasPermission("${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:menu")){ %>
+        <li><a class="J_menuItem" href="\${basePath }${scfg._web_http}/${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}/init">${t.tableComment}</a></li>
+    \<%}%>
+<%
+}}
+%>

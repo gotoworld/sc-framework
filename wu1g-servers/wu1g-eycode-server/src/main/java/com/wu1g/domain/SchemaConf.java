@@ -30,6 +30,7 @@ public class SchemaConf extends BaseVO {
     private String _list;//列表
     private String _detail;//详情
 
+    private String _my_pkg;
     private String _domain_pkg;
     private String _dto_pkg;
     private String _mybatis_pkg;

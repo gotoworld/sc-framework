@@ -1,124 +1,123 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wu1g.dao.sys.ISysCategoryDao" >
-	<!-- 字段列表 -->
-	<sql id="Base_Column_List" >
-		 t1.id as  "id"
-		,t1.code as  "code"
-		,t1.name as  "name"
-		,t1.parent_id as  "parentId"
-		,t1.memo as  "memo"
-		,t1.version as  "version"
-		,t1.order_no as  "orderNo"
-		,t1.del_flag as  "delFlag"
-		,t1.create_id as  "createId"
-		,t1.date_created as  "dateCreated"
-		,t1.date_updated as  "dateUpdated"
-	</sql>
-	<!-- 根据主键获取信息详情 -->
-	<select id="selectByPrimaryKey" resultType="sysCategory" parameterType="sysCategory" >
-		select
-		<include refid="Base_Column_List" />
-		from sys_category t1
-		where  t1.id = #{id}
-	</select>
-	<!-- 根据主键物理删除信息 -->
-	<delete id="deleteByPrimaryKey" parameterType="sysCategory" >
-		delete
-		from sys_category
-		where  id = #{id}
-	</delete>
-	<!-- 新增单条数据 -->
-	<insert id="insert" parameterType="sysCategory"  useGeneratedKeys="true" keyProperty="id">
-		insert into sys_category(
-			 code
-			,name
-			,parent_id
-			,memo
-			,version
-			,order_no
-			,del_flag
-			,create_id
-			,date_created
-			,date_updated
-		) values (
-			 #{code}
-			,#{name}
-			,#{parentId}
-			,#{memo}
-			,0
-			,(
-			   select t.num from (
-				  select (IFNULL(max(order_no),0)+1) as num from sys_category
-				  where
-				<choose>
-					<when test="parentId!=null">
-						parent_id=#{parentId}
-					</when>
-					<otherwise>
-						parent_id is null or parent_id =''
-					</otherwise>
-				</choose>
-			   ) t
-			)
-			,0
-			,#{createId}
-			,now()
-			,now()
-		)
-	</insert>
-	<!-- 数据更新 -->
-	<update id="update" parameterType="sysCategory" >
-		update sys_category set version=version+1,date_updated=now()
-		<if test="name!= null" >,name=#{name}</if>
-		<if test="code!= null" >,code=#{code}</if>
-		<if test="parentId!= null" >,parent_id=#{parentId}</if>
-		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
-		where  id = #{id}
-	</update>
-	<!-- 判断是否存在 -->
-	<select id="isDataYN" parameterType="sysCategory" resultType="int">
-		select count(0) from sys_category where  id = #{id}
-	</select>
-	<!--列表通用条件-->
-	<sql id="list_where_sql">
-		<choose>
-			<when test="delFlag!=null">
-				and t1.del_flag=#{delFlag}
-			</when>
-			<otherwise>
-				and t1.del_flag=0
-			</otherwise>
-		</choose>
-		<if test="parentId!= null and parentId!= ''" >and t1.parent_id=#{parentId}</if>
-	</sql>
-	<!--信息列表 分页 -->
-	<select id="findDataIsPage" parameterType="sysCategory" resultType="sysCategory">
-		select
-		<include refid="Base_Column_List" />,t2.name pname
-		from sys_category t1
-		left join sys_category t2 on t1.parent_id = t2.id
-		where 1=1
-		<include refid="list_where_sql"/>
-	    order by t1.parent_id asc,t1.order_no asc
-	</select>
-	<!--信息列表 -->
-	<select id="findDataIsList" parameterType="sysCategory" resultType="sysCategory">
-		select
-		<include refid="Base_Column_List" />
-		from sys_category t1
-		where 1=1
-		<include refid="list_where_sql"/>
-		order by t1.parent_id asc,t1.order_no asc
-	</select>
-	<!-- 逻辑删除 -->
-	<update id="deleteById" parameterType="sysCategory" >
-		update sys_category set del_flag = 1
-		where  id = #{id}
-	</update>
-	<!-- 恢复逻辑删除 -->
-	<update id="recoveryDataById" parameterType="sysCategory" >
-		update sys_category set del_flag = 0
-		where  id = #{id}
-	</update>
+<mapper namespace="com.wu1g.dao.sys.ISysCategoryDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.name as "name"
+        ,t1.code as "code"
+        ,t1.parent_id as "parentId"
+        ,t1.type as "type"
+        ,t1.detail_info as "detailInfo"
+        ,t1.state as "state"
+        ,t1.memo as "memo"
+        ,t1.version as "version"
+        ,t1.order_no as "orderNo"
+        ,t1.keyword as "keyword"
+        ,t1.del_flag as "delFlag"
+        ,t1.create_id as "createId"
+        ,t1.date_created as "dateCreated"
+        ,t1.date_updated as "dateUpdated"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.wu1g.vo.sys.SysCategory" parameterType="com.wu1g.vo.sys.SysCategory">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_category t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.wu1g.vo.sys.SysCategory"  useGeneratedKeys="true" keyProperty="id"  >
+        insert into sys_category(
+         
+            name 
+           ,code 
+           ,parent_id 
+           ,type 
+           ,detail_info 
+           ,state 
+           ,memo 
+           ,version 
+           ,order_no 
+           ,keyword 
+           ,del_flag 
+           ,create_id 
+           ,date_created 
+           ,date_updated 
+        ) values (
+         
+            #{name} 
+           ,#{code} 
+           ,#{parentId} 
+           ,#{type} 
+           ,#{detailInfo} 
+           ,#{state} 
+           ,#{memo} 
+           ,0
+           ,#{orderNo} 
+           ,#{keyword} 
+           ,0
+           ,#{createId} 
+           ,now()
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.wu1g.vo.sys.SysCategory">
+        update sys_category set date_updated=now() ,version=version+1
+             <if test="name!=null">,name = #{name}</if>
+             <if test="code!=null">,code = #{code}</if>
+             <if test="parentId!=null">,parent_id = #{parentId}</if>
+             <if test="type!=null">,type = #{type}</if>
+             <if test="detailInfo!=null">,detail_info = #{detailInfo}</if>
+             <if test="state!=null">,state = #{state}</if>
+             <if test="memo!=null">,memo = #{memo}</if>
+             <if test="orderNo!=null">,order_no = #{orderNo}</if>
+             <if test="keyword!=null">,keyword = #{keyword}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
+        </if>
+    </sql>
+
+    <!--信息列表 分页 -->
+    <select id="findDataIsPage" parameterType="com.wu1g.vo.sys.SysCategory" resultType="com.wu1g.vo.sys.SysCategory">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_category t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.wu1g.vo.sys.SysCategory" resultType="com.wu1g.vo.sys.SysCategory">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_category t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
 </mapper>

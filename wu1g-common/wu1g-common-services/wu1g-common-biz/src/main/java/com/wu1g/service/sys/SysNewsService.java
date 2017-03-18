@@ -1,11 +1,12 @@
 package com.wu1g.service.sys;
 
-import com.github.pagehelper.PageHelper;
 import com.wu1g.api.sys.ISysNewsService;
 import com.wu1g.dao.sys.ISysNewsDao;
+import com.wu1g.vo.sys.SysNews;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.vo.sys.SysNews;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,98 +22,112 @@ public class SysNewsService extends BaseService implements ISysNewsService {
     @Autowired
     private ISysNewsDao sysNewsDao;
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(SysNews bean) throws Exception {
+    public String saveOrUpdateData(SysNews dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                // 判断数据是否存在
-                if (sysNewsDao.isDataYN(bean) != 0) {
-                    // 数据存在
-                    sysNewsDao.update(bean);
+                //判断数据是否存在
+                if (dto.getId() != null && sysNewsDao.isDataYN(dto) != 0) {
+                    //数据存在
+                    sysNewsDao.update(dto);
                 } else {
-                    sysNewsDao.insert(bean);
+                    //新增
+                     sysNewsDao.insert(dto);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("信息保存失败!", e);
+                throw new Exception("信息保存失败!");
             }
         }
         return msg;
     }
 
-    public String deleteData(SysNews bean) throws Exception {
+    @Override
+    public String deleteData(SysNews dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysNewsDao.deleteByPrimaryKey(bean);
+                if(sysNewsDao.deleteByPrimaryKey(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                log.error("物理删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(SysNews bean) throws Exception {
+    public String deleteDataById(SysNews dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysNewsDao.deleteById(bean);
+                if(sysNewsDao.deleteById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("逻辑删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
-    public List<SysNews> findDataIsPage(SysNews bean) {
-        List<SysNews> beans = null;
+    @Override
+    public List<SysNews> findDataIsPage(SysNews dto) throws Exception {
+        List<SysNews> dtos = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<SysNews>) sysNewsDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            dtos = (List<SysNews>) sysNewsDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public List<SysNews> findDataIsList(SysNews bean) {
-        List<SysNews> beans = null;
+    @Override
+    public List<SysNews> findDataIsList(SysNews dto) throws Exception {
+        List<SysNews> dtos = null;
         try {
-            beans = (List<SysNews>) sysNewsDao.findDataIsList(bean);
+            dtos = (List<SysNews>) sysNewsDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public SysNews findDataById(SysNews bean) {
-        SysNews bean1 = null;
+    @Override
+    @RfAccount2Bean
+    public SysNews findDataById(SysNews dto) throws Exception {
+        SysNews dto1 = null;
         try {
-            bean1 = (SysNews) sysNewsDao.selectByPrimaryKey(bean);
+            dto1 = (SysNews) sysNewsDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
-            log.error("信息详情查询失败!", e);
+            log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return bean1;
+        return dto1;
     }
 
-    public String recoveryDataById(SysNews bean) throws Exception {
+    @Override
+    public String recoveryDataById(SysNews dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysNewsDao.recoveryDataById(bean);
+                if(sysNewsDao.recoveryDataById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("数据恢复失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 }
-

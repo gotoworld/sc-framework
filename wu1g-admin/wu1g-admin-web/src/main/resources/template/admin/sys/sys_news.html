@@ -1,20 +1,20 @@
-\<%
+<%
  /*	
- * ${tcfg.tableComment} 后台管理 (初始化页面)
+ * 系统_资讯 后台管理 (初始化页面)
  *		
  * VERSION      DATE          BY              REASON		
  * -------- ----------- --------------- ---------------------------	
- * 1.00     ${date}      easycode         程序.发布
+ * 1.00     2017-03-18      easycode         程序.发布
  * -------- ----------- --------------- ---------------------------	
- * Copyright ${year} System. - All Rights Reserved.
+ * Copyright 2017 System. - All Rights Reserved.
  */
 %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	\<% layout("../include/meta.html"){}%>
-	\<% layout("../include/public_init_js_css.html"){}%>
+	<% layout("../include/meta.html"){}%>
+	<% layout("../include/public_init_js_css.html"){}%>
 	<style type="text/css">
 	.qrcode{
 	position:relative;
@@ -41,7 +41,7 @@
 						<div id="tab-1" class="tab-pane active">
 							<div class="ibox float-e-margins">
 								<div class="ibox-content">
-									\<% layout("../include/notifications.html"){}%>
+									<% layout("../include/notifications.html"){}%>
 									<table class="table">
 										<tr>
 											<td>
@@ -49,8 +49,8 @@
 													role="form" class="form-inline" 
 													method="post"  accept-charset="UTF-8" 
 													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
-													data-action="\${basePath}${scfg._web_http}/page">
-													<input type="hidden" name="pageNum" id="pageNumA" value="\${bean.pageNum==null?1:bean.pageNum}">
+													data-action="${basePath}/h/sys/sysNews/page">
+													<input type="hidden" name="pageNum" id="pageNumA" value="${bean.pageNum==null?1:bean.pageNum}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
@@ -69,10 +69,8 @@
 											</td>
 										</tr>
 									</table>
-									<%if ("1"==scfg._insert){%>
-									\<% if(shiro.hasPermission("${tableNameL}:add")){ %>
-									<a href="#" onclick="openMyBoxLayer('a','\${basePath}${scfg._web_http}/edit/<%for(t in pks){%>${tLP.index==1?'':'/'}0<%}%>');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									\<%}%>
+									<% if(shiro.hasPermission("sysNews:add")){ %>
+									<a href="#" onclick="openMyBoxLayer('a','${basePath}/h/sys/sysNews/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<%}%>
 									<div id="info_list_div">
 										<div class="alert alert-warning mt10">
@@ -88,7 +86,7 @@
 
 		</div>
 	</div>
-	\<% layout("../include/public_last_js_css.html"){}%>
+	<% layout("../include/public_last_js_css.html"){}%>
 	<script>
 		$("#data_5 .input-daterange").datepicker({
 			keyboardNavigation : !1,

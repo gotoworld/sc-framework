@@ -1,11 +1,12 @@
 package com.wu1g.service.sys;
 
-import com.github.pagehelper.PageHelper;
 import com.wu1g.api.sys.ISysCategoryService;
 import com.wu1g.dao.sys.ISysCategoryDao;
+import com.wu1g.vo.sys.SysCategory;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.vo.sys.SysCategory;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,105 +16,118 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Service
 @Slf4j
 public class SysCategoryService extends BaseService implements ISysCategoryService {
     @Autowired
     private ISysCategoryDao sysCategoryDao;
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(SysCategory bean) throws Exception {
+    public String saveOrUpdateData(SysCategory dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                // 判断数据是否存在
-                if (sysCategoryDao.isDataYN(bean) != 0) {
-                    // 数据存在
-                    sysCategoryDao.update(bean);
+                //判断数据是否存在
+                if (dto.getId() != null && sysCategoryDao.isDataYN(dto) != 0) {
+                    //数据存在
+                    sysCategoryDao.update(dto);
                 } else {
-                    sysCategoryDao.insert(bean);
+                    //新增
+                     sysCategoryDao.insert(dto);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("信息保存失败!", e);
+                throw new Exception("信息保存失败!");
             }
         }
         return msg;
     }
 
-    public String deleteData(SysCategory bean) throws Exception {
+    @Override
+    public String deleteData(SysCategory dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysCategoryDao.deleteByPrimaryKey(bean);
+                if(sysCategoryDao.deleteByPrimaryKey(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                log.error("物理删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(SysCategory bean) throws Exception {
+    public String deleteDataById(SysCategory dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysCategoryDao.deleteById(bean);
+                if(sysCategoryDao.deleteById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("逻辑删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
-    public List<SysCategory> findDataIsPage(SysCategory bean) {
-        List<SysCategory> beans = null;
+    @Override
+    public List<SysCategory> findDataIsPage(SysCategory dto) throws Exception {
+        List<SysCategory> dtos = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<SysCategory>) sysCategoryDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            dtos = (List<SysCategory>) sysCategoryDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public List<SysCategory> findDataIsList(SysCategory bean) {
-        List<SysCategory> beans = null;
+    @Override
+    public List<SysCategory> findDataIsList(SysCategory dto) throws Exception {
+        List<SysCategory> dtos = null;
         try {
-            beans = (List<SysCategory>) sysCategoryDao.findDataIsList(bean);
+            dtos = (List<SysCategory>) sysCategoryDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public SysCategory findDataById(SysCategory bean) {
-        SysCategory bean1 = null;
+    @Override
+    @RfAccount2Bean
+    public SysCategory findDataById(SysCategory dto) throws Exception {
+        SysCategory dto1 = null;
         try {
-            bean1 = (SysCategory) sysCategoryDao.selectByPrimaryKey(bean);
+            dto1 = (SysCategory) sysCategoryDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
-            log.error("信息详情查询失败!", e);
+            log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return bean1;
+        return dto1;
     }
 
-    public String recoveryDataById(SysCategory bean) throws Exception {
+    @Override
+    public String recoveryDataById(SysCategory dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysCategoryDao.recoveryDataById(bean);
+                if(sysCategoryDao.recoveryDataById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("数据恢复失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 }
-

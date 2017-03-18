@@ -1,11 +1,12 @@
 package com.wu1g.service.sys;
 
-import com.github.pagehelper.PageHelper;
 import com.wu1g.api.sys.ISysMessageService;
 import com.wu1g.dao.sys.ISysMessageDao;
+import com.wu1g.vo.sys.SysMessage;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.vo.sys.SysMessage;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,98 +22,97 @@ public class SysMessageService extends BaseService implements ISysMessageService
     @Autowired
     private ISysMessageDao sysMessageDao;
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(SysMessage bean) throws Exception {
+    public String saveOrUpdateData(SysMessage dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                // 判断数据是否存在
-                if (sysMessageDao.isDataYN(bean) != 0) {
-                    // 数据存在
-                    sysMessageDao.update(bean);
+                //判断数据是否存在
+                if (dto.getId() != null && sysMessageDao.isDataYN(dto) != 0) {
+                    //数据存在
+                    sysMessageDao.update(dto);
                 } else {
-                    sysMessageDao.insert(bean);
+                    //新增
+                     sysMessageDao.insert(dto);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("信息保存失败!", e);
+                throw new Exception("信息保存失败!");
             }
         }
         return msg;
     }
 
-    public String deleteData(SysMessage bean) throws Exception {
+    @Override
+    public String deleteData(SysMessage dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysMessageDao.deleteByPrimaryKey(bean);
+                if(sysMessageDao.deleteByPrimaryKey(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                log.error("物理删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(SysMessage bean) throws Exception {
+    public String deleteDataById(SysMessage dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysMessageDao.deleteById(bean);
+                if(sysMessageDao.deleteById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("逻辑删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
-    public List<SysMessage> findDataIsPage(SysMessage bean) {
-        List<SysMessage> beans = null;
+    @Override
+    public List<SysMessage> findDataIsPage(SysMessage dto) throws Exception {
+        List<SysMessage> dtos = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<SysMessage>) sysMessageDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            dtos = (List<SysMessage>) sysMessageDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public List<SysMessage> findDataIsList(SysMessage bean) {
-        List<SysMessage> beans = null;
+    @Override
+    public List<SysMessage> findDataIsList(SysMessage dto) throws Exception {
+        List<SysMessage> dtos = null;
         try {
-            beans = (List<SysMessage>) sysMessageDao.findDataIsList(bean);
+            dtos = (List<SysMessage>) sysMessageDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public SysMessage findDataById(SysMessage bean) {
-        SysMessage bean1 = null;
+    @Override
+    @RfAccount2Bean
+    public SysMessage findDataById(SysMessage dto) throws Exception {
+        SysMessage dto1 = null;
         try {
-            bean1 = (SysMessage) sysMessageDao.selectByPrimaryKey(bean);
+            dto1 = (SysMessage) sysMessageDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
-            log.error("信息详情查询失败!", e);
+            log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return bean1;
+        return dto1;
     }
 
-    public String recoveryDataById(SysMessage bean) throws Exception {
-        String msg = "seccuss";
-        if (bean != null) {
-            try {
-                sysMessageDao.recoveryDataById(bean);
-            } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
-            }
-        }
-        return msg;
-    }
 }
-

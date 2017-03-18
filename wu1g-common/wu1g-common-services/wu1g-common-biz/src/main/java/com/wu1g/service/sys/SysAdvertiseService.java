@@ -1,11 +1,12 @@
 package com.wu1g.service.sys;
 
-import com.github.pagehelper.PageHelper;
 import com.wu1g.api.sys.ISysAdvertiseService;
 import com.wu1g.dao.sys.ISysAdvertiseDao;
+import com.wu1g.vo.sys.SysAdvertise;
+import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.vo.sys.SysAdvertise;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,105 +16,118 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Service
 @Slf4j
 public class SysAdvertiseService extends BaseService implements ISysAdvertiseService {
     @Autowired
     private ISysAdvertiseDao sysAdvertiseDao;
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(SysAdvertise bean) throws Exception {
+    public String saveOrUpdateData(SysAdvertise dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                // 判断数据是否存在
-                if (sysAdvertiseDao.isDataYN(bean) != 0) {
-                    // 数据存在
-                    sysAdvertiseDao.update(bean);
+                //判断数据是否存在
+                if (dto.getId() != null && sysAdvertiseDao.isDataYN(dto) != 0) {
+                    //数据存在
+                    sysAdvertiseDao.update(dto);
                 } else {
-                    sysAdvertiseDao.insert(bean);
+                    //新增
+                     sysAdvertiseDao.insert(dto);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("信息保存失败!", e);
+                throw new Exception("信息保存失败!");
             }
         }
         return msg;
     }
 
-    public String deleteData(SysAdvertise bean) throws Exception {
+    @Override
+    public String deleteData(SysAdvertise dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysAdvertiseDao.deleteByPrimaryKey(bean);
+                if(sysAdvertiseDao.deleteByPrimaryKey(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                log.error("物理删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(SysAdvertise bean) throws Exception {
+    public String deleteDataById(SysAdvertise dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysAdvertiseDao.deleteById(bean);
+                if(sysAdvertiseDao.deleteById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("逻辑删除失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 
-    public List<SysAdvertise> findDataIsPage(SysAdvertise bean) {
-        List<SysAdvertise> beans = null;
+    @Override
+    public List<SysAdvertise> findDataIsPage(SysAdvertise dto) throws Exception {
+        List<SysAdvertise> dtos = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<SysAdvertise>) sysAdvertiseDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            dtos = (List<SysAdvertise>) sysAdvertiseDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public List<SysAdvertise> findDataIsList(SysAdvertise bean) {
-        List<SysAdvertise> beans = null;
+    @Override
+    public List<SysAdvertise> findDataIsList(SysAdvertise dto) throws Exception {
+        List<SysAdvertise> dtos = null;
         try {
-            beans = (List<SysAdvertise>) sysAdvertiseDao.findDataIsList(bean);
+            dtos = (List<SysAdvertise>) sysAdvertiseDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return beans;
+        return dtos;
     }
 
-    public SysAdvertise findDataById(SysAdvertise bean) {
-        SysAdvertise bean1 = null;
+    @Override
+    @RfAccount2Bean
+    public SysAdvertise findDataById(SysAdvertise dto) throws Exception {
+        SysAdvertise dto1 = null;
         try {
-            bean1 = (SysAdvertise) sysAdvertiseDao.selectByPrimaryKey(bean);
+            dto1 = (SysAdvertise) sysAdvertiseDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
-            log.error("信息详情查询失败!", e);
+            log.error("信息查询失败!", e);
+            throw new Exception("信息查询失败!");
         }
-        return bean1;
+        return dto1;
     }
 
-    public String recoveryDataById(SysAdvertise bean) throws Exception {
+    @Override
+    public String recoveryDataById(SysAdvertise dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                sysAdvertiseDao.recoveryDataById(bean);
+                if(sysAdvertiseDao.recoveryDataById(dto)==0){
+					throw new RuntimeException("数据不存在!");
+                }
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                log.error("数据恢复失败!", e);
+                throw new Exception(e.getMessage());
             }
         }
         return msg;
     }
 }
-

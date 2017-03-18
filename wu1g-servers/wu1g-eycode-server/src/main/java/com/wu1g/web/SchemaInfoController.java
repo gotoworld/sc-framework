@@ -119,6 +119,7 @@ public class SchemaInfoController extends BaseController {
                     schemaConf.set_list(request.getParameter(tableName+"_list"));//
                     schemaConf.set_detail(request.getParameter(tableName+"_detail"));//
 
+                    schemaConf.set_my_pkg(request.getParameter("_my_pkg"));//
                     schemaConf.set_domain_pkg(request.getParameter(tableName+"_domain_pkg"));//
                     schemaConf.set_dto_pkg(request.getParameter(tableName+"_dto_pkg"));//
                     schemaConf.set_mybatis_pkg(request.getParameter(tableName+"_mybatis_pkg"));//

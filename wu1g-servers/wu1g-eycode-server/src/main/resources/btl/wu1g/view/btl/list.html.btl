@@ -27,7 +27,7 @@
 			<tr>
 				<td>\${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
 				<%for(t in scfg._col_show){%>
-				<td>\${bean.${t.key}${columnMap[t.key]=='Date'?',dateFormat="yyyy-MM-dd HH:mm:ss"':''}!}</td>
+				<td>\${bean.${t.key}${columnMap[t.key]=='Date'?',dateFormat="yyyy-MM-dd HH:mm:ss"':''}}</td>
 				<%}%>
 				<td>
 				    \<% if(shiro.hasPermission("${tableNameL}:edit")){ %>

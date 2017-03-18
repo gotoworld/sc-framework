@@ -1,16 +1,17 @@
-<div class="col-md-6">
-    <div class="form-group">
-        <label class="col-md-3 control-label">${t.columnComment}：</label>
-        <div class="col-md-8">
-            <span  class="help-block m-b-none"><button type="button" id="upload_btn_${t.columnNameFormat}">点击上传</button></span>
-            <div id="upload_div_${t.columnNameFormat}" style="">
-                \<% if(isNotEmpty(bean.${t.columnNameFormat})){%>
-                <div class="img-grid-2">
-                    <input name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" type="hidden">
-                    <img src="\${bean.${t.columnNameFormat}}" style="max-width:264px;max-height:264px">
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-md-3 control-label">${t.columnComment}：</label>
+            <div class="col-md-8">
+                <span  class="help-block m-b-none"><button type="button" id="upload_btn_${t.columnNameFormat}">点击上传</button></span>
+                <div id="upload_div_${t.columnNameFormat}" style="">
+                    \<% if(isNotEmpty(bean.${t.columnNameFormat})){%>
+                    <div class="img-grid-2">
+                        <input name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" type="hidden">
+                        <img src="\${bean.${t.columnNameFormat}}" style="max-width:264px;max-height:264px">
+                    </div>
+                    \<%}%>
                 </div>
-                \<%}%>
             </div>
         </div>
     </div>
-</div>

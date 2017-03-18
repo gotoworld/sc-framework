@@ -15,31 +15,27 @@
 <meta charset="utf-8" />
 \<% include("../include/meta.html"){} %>
 \<% include("../include/public_init_js_css.html"){} %>
-<link href="\${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
 <link href="\${basePath}css/upload.css" rel="stylesheet">
 
-<style type="text/css">
-#upload_scene_btn{width: 220px;height: 164px;float: left;} 
-</style>
 </head>
 
 <body class="gray-bg">
-	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="row">
-			<div class="ibox float-e-margins">
-				<div class="ibox-content col-md-12">
-					<form id="${tableNameL}_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="\${basePath}${scfg._web_http}/save">
-						<div class="col-md-12">
-							<div style="float:right;">
-								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-							</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-md-12">
+				<form id="${tableNameL}_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="\${basePath}${scfg._web_http}/save">
+					<div class="col-md-12">
+						<div style="float:right;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
-						<input type="hidden" name="pageNum" id="bean-pageNum" value="\${bean.pageNum}">
-			            <%for(t in pks){%>
-                            <input type="hidden" name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" />
-                        <%}%>
-						<input type="hidden" name="token" value="\${bean.token}" />
-                        <input type="hidden" name="newFlag" value="\${bean.newFlag}" />
+					</div>
+					<input type="hidden" name="pageNum" id="bean-pageNum" value="\${bean.pageNum}">
+					<%for(t in pks){%>
+					<input type="hidden" name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" />
+					<%}%>
+					<input type="hidden" name="token" value="\${bean.token}" />
+					<input type="hidden" name="newFlag" value="\${bean.newFlag}" />
 
 				<%for(t in columns){
 					if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
@@ -70,8 +66,20 @@
 		</div>
 	</div>
 	\<% include("../include/public_last_js_css.html"){} %>
+	<script src="\${basePath}plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
 	<script type="text/javascript">
-	$().ready(function(){
+    KindEditor.ready(function(K) {
+        <%for(t in columns){
+            if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+                switch(scfg._edit_type[t.columnNameFormat]){
+                    case "10":{ layout("js/10_editor[simple].btl",{t:t}){};break;}
+                    case "11":{ layout("js/11_editor[full].btl",{t:t}){};break;}
+                }
+            }
+        }%>
+    });
+
+    $().ready(function(){
 		formValidate();
 	});
 	function formValidate(){
@@ -92,8 +100,7 @@
                 case "7":{ layout("js/7_input[checkbox].btl",{t:t}){};break;}
                 case "8":{ layout("js/8_upload[image].btl",{t:t}){};break;}
                 case "9":{ layout("js/9_upload[file].btl",{t:t}){};break;}
-                case "10":{ layout("js/10_editor[simple].btl",{t:t}){};break;}
-                case "11":{ layout("js/11_editor[full].btl",{t:t}){};break;}
+
             }
         }
     }%>

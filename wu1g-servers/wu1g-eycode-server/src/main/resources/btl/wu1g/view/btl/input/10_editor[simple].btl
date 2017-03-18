@@ -1,11 +1,12 @@
-<div class="col-md-6">
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="bean-${t.columnNameFormat}">${t.columnComment}：</label>
-        <div class="col-md-8">
-            <textarea id="bean-${t.columnNameFormat}" name="${t.columnNameFormat}" style="height: 300px;width: 100%;" class="form-control"  placeholder="请输入${t.columnComment}" <%if(t.isNullable=='YES'){%> required="" aria-required="true" <%}%> aria-describedby="bean-${t.columnNameFormat}-error" <%if(t.dataLength!=null){%> maxlength="${t.dataLength}" <%}%>  aria-invalid="true">
-            \${bean.${t.columnNameFormat}}
-            </textarea>
-            <span id="bean-${t.columnNameFormat}-error" class="help-block m-b-none"></span>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-md-3 control-label"  for="bean-${t.columnNameFormat}">${t.columnComment}：</label>
+            <div class="col-md-8">
+                <textarea id="bean-${t.columnNameFormat}" name="${t.columnNameFormat}" style="height: 300px;width: 100%;" class="form-control"  placeholder="请输入${t.columnComment}" <%if(t.isNullable=='YES'){%> required="" aria-required="true" <%}%> aria-describedby="bean-${t.columnNameFormat}-error" <%if(t.dataLength!=null){%> maxlength="${t.dataLength}" <%}%>  aria-invalid="true">
+                \${bean.${t.columnNameFormat}}
+                </textarea>
+                <span id="bean-${t.columnNameFormat}-error" class="help-block m-b-none"></span>
+            </div>
         </div>
     </div>
-</div>

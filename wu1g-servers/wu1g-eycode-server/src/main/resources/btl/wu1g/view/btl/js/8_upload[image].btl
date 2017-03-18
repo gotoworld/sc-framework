@@ -1,1 +1,1 @@
-upload_single_pic('upload_btn_${t.columnNameFormat}','upload_div_${t.columnNameFormat}','png,jpg,gif,bmp','${t.columnNameFormat}');
+        upload_single_pic('upload_btn_${t.columnNameFormat}','upload_div_${t.columnNameFormat}','png,jpg,gif,bmp','${t.columnNameFormat}');

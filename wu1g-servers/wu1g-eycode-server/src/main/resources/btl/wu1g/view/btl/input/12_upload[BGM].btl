@@ -1,5 +1,4 @@
 
-    <div class="form-group">
         <label class="col-md-3 control-label">${t.columnComment}：</label>
         <div class="col-md-8">
             <span  class="help-block m-b-none">
@@ -16,4 +15,3 @@
                 \<%}%>
             </div>
         </div>
-    </div>

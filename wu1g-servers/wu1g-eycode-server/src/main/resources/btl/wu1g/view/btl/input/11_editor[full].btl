@@ -1,5 +1,4 @@
 
-    <div class="col-md-6">
         <div class="form-group">
             <label class="col-md-3 control-label"  for="bean-${t.columnNameFormat}">${t.columnComment}：</label>
             <div class="col-md-8">
@@ -9,4 +8,3 @@
                 <span id="bean-${t.columnNameFormat}-error" class="help-block m-b-none"></span>
             </div>
         </div>
-    </div>

@@ -35,10 +35,10 @@
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
                     <input type="hidden" name="newFlag" value="${bean.newFlag}" />
-                    <div class="col-sm-8">
+                    <div class="col-md-8">
 						<div class="form-group">
-						  <label class="col-sm-2 control-label">父级权限</label>
-						  <div class="col-sm-8">
+						  <label class="col-md-2 control-label">父级权限</label>
+						  <div class="col-md-8">
 							  <% var treeIndex=1; %>
 							  <% var _this_self=bean.id; %>
 							  <% var _band_flag=bean.parentId; %>
@@ -57,24 +57,24 @@
 						  </div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label" for="bean-name">权限名称</label>
-						  <div class="col-sm-8">
+							<label class="col-md-2 control-label" for="bean-name">权限名称</label>
+						  <div class="col-md-8">
 							  <input type="text" class="form-control" placeholder="请输入权限名称" id="bean-name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
 								<span class="help-block"></span>
 						  </div>
 						</div>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-md-8">
 						<div class="form-group">
-							<label class="col-sm-2 control-label" for="bean-matchStr">权限匹配符</label>
-						  <div class="col-sm-8">
+							<label class="col-md-2 control-label" for="bean-matchStr">权限匹配符</label>
+						  <div class="col-md-8">
 							  <input type="text" class="form-control" placeholder="请输入权限匹配符" id="bean-matchStr" name="matchStr" value="${bean.matchStr}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
 								<span class="help-block"></span>
 						  </div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label" for="bean-memo">备注</label>
-						   <div class="col-sm-8">
+							<label class="col-md-2 control-label" for="bean-memo">备注</label>
+						   <div class="col-md-8">
 							   <input type="text" class="form-control" placeholder="请输入备注" id="bean-memo" name="memo" value="${bean.memo}"/>
 								<span class="help-block"></span>
 						   </div>

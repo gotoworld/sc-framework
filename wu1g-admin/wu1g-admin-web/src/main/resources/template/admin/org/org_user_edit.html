@@ -24,9 +24,9 @@
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="ibox float-e-margins">
-			<div class="ibox-content col-md-12">
+			<div class="ibox-content col-sm-12">
 				<form id="id_form" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/org/user/save">
-					<div class="col-md-12">
+					<div class="col-sm-12">
 						<div style="float:right;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
@@ -36,10 +36,10 @@
 					<input type="hidden" name="token" value="${bean.token}" />
                     <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                     <input type="hidden" name="type" id="bean-type" value="0">
-					<div class="col-md-6">
+					<div class="col-sm-6 b-r">
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean-accid">登录名</label>
-							<div class="col-md-8">
+							<label class="col-sm-2 control-label" for="bean-accid">登录名</label>
+							<div class="col-sm-8">
 							<%if(bean.accid==null){%>
 								<input type="text" class="form-control" placeholder="请输入用户登录名"
 									id="bean-accid" name="accid" value="" required="" aria-required="true" maxlength="20" aria-invalid="true" />
@@ -52,8 +52,8 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean-name">成员名称</label>
-							<div class="col-md-8">
+							<label class="col-sm-2 control-label" for="bean-name">成员名称</label>
+							<div class="col-sm-8">
 								<input type="text" class="form-control" placeholder="请输入成员名称"
 									id="bean-name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" /> <span
 									class="help-block"></span>
@@ -61,8 +61,8 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean-mobile">移动电话</label>
-							<div class="col-md-8">
+							<label class="col-sm-2 control-label" for="bean-mobile">移动电话</label>
+							<div class="col-sm-8">
 								<input type="text" class="form-control" placeholder="请输入移动电话"
 									id="bean-mobile" name="mobile" value="${bean.mobile}" />
 								<span class="help-block"></span>
@@ -70,8 +70,8 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean-email">邮箱</label>
-							<div class="col-md-8">
+							<label class="col-sm-2 control-label" for="bean-email">邮箱</label>
+							<div class="col-sm-8">
 								<input type="text" class="form-control" placeholder="请输入邮箱"
 									id="bean-email" name="email" value="${bean.email}" /> <span
 									class="help-block"></span>
@@ -79,8 +79,8 @@
 						</div>
                         <%if(!(session['SESSION_KEY_USER'].id==bean.id)){%>
                         <%if(shiro.hasPermission("orgUser:role.edit")){%>
-                        <div class="col-md-6">
-                            <div class="col-md-12 ">
+                        <div class="col-sm-6 b-r">
+                            <div class="col-sm-12 ">
                                 <label class="control-label">角色:</label>
                                 <div class="form-group ">
                                     <%if(isNotEmpty(roleBeans)){
@@ -108,26 +108,26 @@
                         <%}%>
                         <%}%>
                     </div>
-					<div class="col-md-6 ">
+					<div class="col-sm-6 b-r ">
 						<div class="form-group">
-							<label class="col-md-2 control-label">登录密码</label>
-							<div class="col-md-8">
+							<label class="col-sm-2 control-label">登录密码</label>
+							<div class="col-sm-8">
 								<input type="hidden" name="pwd"  id="bean-pwd" value="" />
 								<input type="password" class="form-control" name="pwd_x" onchange="cPwd(this.value)"  onblur="cPwd(this.value)" placeholder="不修改请留空" value="" />
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean-jobNo">工号</label>
-							<div class="col-md-8">
+							<label class="col-sm-2 control-label" for="bean-jobNo">工号</label>
+							<div class="col-sm-8">
 								<input type="text" class="form-control" placeholder="请输入工号"
 									id="bean-jobNo" name="jobNo" value="${bean.jobNo}" /> <span
 									class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="bean-tel">固定电话</label>
-							<div class="col-md-8">
+							<label class="col-sm-2 control-label" for="bean-tel">固定电话</label>
+							<div class="col-sm-8">
 								<input type="text" class="form-control" placeholder="请输入固定电话"
 									id="bean-tel" name="tel" value="${bean.tel}" /> <span
 									class="help-block"></span>
@@ -135,7 +135,7 @@
 						</div>
 						<%if(bean.id!=1){%>
 						<div class="form-group">
-							<div class="col-md-10" style="text-align: left; margin-left: 5px;">
+							<div class="col-sm-10" style="text-align: left; margin-left: 5px;">
 								<div class="checkbox">
 									<label><input  class="checkbox" value="1"  ${bean.enable==1?'checked="checked"':''} type="checkbox" name="enable" />启用账号</label>
 								</div>
@@ -145,9 +145,9 @@
 						<%if(shiro.hasPermission("orgUser:dept.edit")){%>
 						<%if(isNotEmpty(deptTree) && deptTree.~size>0){%>
 						<div class="form-group">
-							<div class="col-md-6">
-                                <label class="col-md-2 control-label">部门列表</label>
-                                <div class="col-md-8">
+							<div class="col-sm-6 b-r">
+                                <label class="col-sm-2 control-label">部门列表</label>
+                                <div class="col-sm-8">
                                         <%
                                         var deptBeansCopy=null;
                                         var dcode="";
@@ -184,7 +184,7 @@
 						<%}%>
 						<%}%>
 					</div>
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <div style="width: 200px;margin: 0 auto;">
                             <input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
                         </div>

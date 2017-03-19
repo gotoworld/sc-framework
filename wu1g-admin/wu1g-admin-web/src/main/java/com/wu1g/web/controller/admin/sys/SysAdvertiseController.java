@@ -85,9 +85,9 @@ public class SysAdvertiseController extends BaseController {
 		try {
             int pageNum=getPageSize(dto);
             if (id!=null) {
-                SysAdvertise dto1=new SysAdvertise();
+                if(dto==null)dto=new SysAdvertise();
                 dto.setId(id);
-                dto=sysAdvertiseService.findDataById(dto1);
+                dto=sysAdvertiseService.findDataById(dto);
             }
             if(dto==null||0==id){
                 dto=new SysAdvertise();

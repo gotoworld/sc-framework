@@ -85,9 +85,9 @@ public class SysPanoPluginsController extends BaseController {
 		try {
             int pageNum=getPageSize(dto);
             if (id!=null) {
-                SysPanoPlugins dto1=new SysPanoPlugins();
+                if(dto==null)dto=new SysPanoPlugins();
                 dto.setId(id);
-                dto=sysPanoPluginsService.findDataById(dto1);
+                dto=sysPanoPluginsService.findDataById(dto);
             }
             if(dto==null||0==id){
                 dto=new SysPanoPlugins();

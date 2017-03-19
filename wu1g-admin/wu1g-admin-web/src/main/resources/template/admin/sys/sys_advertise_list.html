@@ -4,7 +4,7 @@
  *
  * VERSION      DATE          BY              REASON
  * -------- ----------- --------------- ---------------------------
- * 1.00     2017-03-18      easycode         程序.发布
+ * 1.00     2017-03-19      easycode         程序.发布
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
@@ -17,7 +17,6 @@
 				<th>图片地址</th>
 				<th>创建时间</th>
 				<th>广告名称</th>
-				<th>广告链接地址</th>
 				<th>状态0下架1上架</th>
 				<th>广告位置</th>
 				<th>操作</th>
@@ -29,18 +28,17 @@
 			%>
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
-				<td>${bean.imgUrl!}</td>
+				<td>${bean.imgUrl}</td>
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
-				<td>${bean.name!}</td>
-				<td>${bean.linkUrl!}</td>
-				<td>${bean.state!}</td>
-				<td>${bean.position!}</td>
+				<td>${bean.name}</td>
+				<td>${bean.state}</td>
+				<td>${bean.position}</td>
 				<td>
 				    <% if(shiro.hasPermission("sysAdvertise:edit")){ %>
-	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/sys/sysAdvertise/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/sys/sysAdvertise/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 	               <%}%>
  	               <% if(shiro.hasPermission("sysAdvertise:del")){ %>
- 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/sys/sysAdvertise/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+ 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/sys/sysAdvertise/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
  	               <%}%>
                 </td>
 			</tr>
@@ -48,7 +46,7 @@
 			}elsefor{
 			%>
 			<tr>
-				<td colspan="8">
+				<td colspan="7">
 				<div class="alert"><strong>暂无数据!</strong></div>
 				</td>
 			</tr>

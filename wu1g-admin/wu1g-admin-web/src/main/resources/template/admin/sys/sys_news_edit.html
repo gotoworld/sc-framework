@@ -4,7 +4,7 @@
  *
  * VERSION      DATE          BY              REASON
  * -------- ----------- --------------- ---------------------------
- * 1.00     2017-03-18      easycode         程序.发布
+ * 1.00     2017-03-19      easycode         程序.发布
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
@@ -25,8 +25,8 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
-				<form id="sysNews_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/sys/sysNews/save">
-					<div class="col-md-12">
+				<form id="sysNews_01" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/sys/sysNews/save">
+					<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
@@ -35,99 +35,89 @@
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
 					<input type="hidden" name="newFlag" value="${bean.newFlag}" />
+					<div class="clearfix "></div>
+					<div class="col-sm-6 b-r">
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">标题：</label>
+                            <div class="col-sm-8">
+                                <input id="bean-title" name="title" value="${bean.title}" class="form-control" type="text"  placeholder="请输入标题"  aria-describedby="bean-title-error"  maxlength="55"   aria-invalid="true">
+                                <span id="bean-title-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
 
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="col-md-3 control-label"  for="bean-title">标题：</label>
-            <div class="col-md-8">
-                <input id="bean-title" name="title" value="${bean.title}" class="form-control" type="text"  placeholder="请输入标题"  aria-describedby="bean-title-error"  maxlength="55"   aria-invalid="true">
-                <span id="bean-title-error" class="help-block m-b-none"></span>
-            </div>
-        </div>
-    </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">副标题：</label>
+                            <div class="col-sm-8">
+                                <input id="bean-secondTitle" name="secondTitle" value="${bean.secondTitle}" class="form-control" type="text"  placeholder="请输入副标题"  required="" aria-required="true"  aria-describedby="bean-secondTitle-error"  maxlength="255"   aria-invalid="true">
+                                <span id="bean-secondTitle-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
 
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="col-md-3 control-label"  for="bean-secondTitle">副标题：</label>
-            <div class="col-md-8">
-                <input id="bean-secondTitle" name="secondTitle" value="${bean.secondTitle}" class="form-control" type="text"  placeholder="请输入副标题"  required="" aria-required="true"  aria-describedby="bean-secondTitle-error"  maxlength="255"   aria-invalid="true">
-                <span id="bean-secondTitle-error" class="help-block m-b-none"></span>
-            </div>
-        </div>
-    </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">标题图：</label>
+                            <div class="col-sm-8">
+                                <span  class="help-block m-b-none"><button type="button" id="upload_btn_coverPic">点击上传</button></span>
+                                <div id="upload_div_coverPic" style="">
+                                    <% if(isNotEmpty(bean.coverPic)){%>
+                                    <div class="img-grid-2">
+                                        <input name="coverPic" value="${bean.coverPic}" type="hidden">
+                                        <img src="${bean.coverPic}" style="max-width:264px;max-height:264px">
+                                    </div>
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">简介：</label>
+                            <div class="col-sm-8">
+                                <textarea id="bean-briefInfo" name="briefInfo" class="form-control"  placeholder="请输入简介"  required="" aria-required="true"  aria-describedby="bean-briefInfo-error"  maxlength="255"   aria-invalid="true">${bean.briefInfo}</textarea>
+                                <span id="bean-briefInfo-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-sm-6">
 
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="col-md-3 control-label">标题图：</label>
-            <div class="col-md-8">
-                <span  class="help-block m-b-none"><button type="button" id="upload_btn_coverPic">点击上传</button></span>
-                <div id="upload_div_coverPic" style="">
-                    <% if(isNotEmpty(bean.coverPic)){%>
-                    <div class="img-grid-2">
-                        <input name="coverPic" value="${bean.coverPic}" type="hidden">
-                        <img src="${bean.coverPic}" style="max-width:264px;max-height:264px">
-                    </div>
-                    <%}%>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="col-md-3 control-label"  for="bean-briefInfo">简介：</label>
-            <div class="col-md-8">
-                <textarea id="bean-briefInfo" name="briefInfo" class="form-control"  placeholder="请输入简介"  required="" aria-required="true"  aria-describedby="bean-briefInfo-error"  maxlength="255"   aria-invalid="true">
-                ${bean.briefInfo}
-                 </textarea>
-                <span id="bean-briefInfo-error" class="help-block m-b-none"></span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="col-md-3 control-label"  for="bean-detailInfo">详情：</label>
-            <div class="col-md-8">
-                <textarea id="bean-detailInfo" name="detailInfo" style="height: 300px;width: 100%;" class="form-control"  placeholder="请输入详情"  required="" aria-required="true"  aria-describedby="bean-detailInfo-error"  maxlength="4294967295"   aria-invalid="true">
-                ${bean.detailInfo}
-                </textarea>
-                <span id="bean-detailInfo-error" class="help-block m-b-none"></span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="col-md-3 control-label">置顶：</label>
-            <div class="col-sm-9">
-                <label class="checkbox-inline">
-                    <input type="checkbox" name="isOntop" value="option1">启用置顶</label>
-                <span id="bean-isOntop-error" class="help-block m-b-none"></span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="col-md-3 control-label">状态：</label>
-            <div class="col-sm-9">
-                <label class="radio-inline">
-                    <input type="radio" checked="" value="option1" name="state">选项1</label>
-                <label class="radio-inline">
-                    <input type="radio" value="option2" name="state">选项2</label>
-                <span id="bean-state-error" class="help-block m-b-none"></span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="col-md-3 control-label"  for="bean-memo">备注：</label>
-            <div class="col-md-8">
-                <textarea id="bean-memo" name="memo" class="form-control"  placeholder="请输入备注"  required="" aria-required="true"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
-                ${bean.memo}
-                 </textarea>
-                <span id="bean-memo-error" class="help-block m-b-none"></span>
-            </div>
-        </div>
-    </div>					<div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">置顶：</label>
+                            <div class="col-sm-9">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="isOntop" value="option1">启用置顶</label>
+                                <span id="bean-isOntop-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态：</label>
+                            <div class="col-sm-9">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="state" value="option1">启用状态</label>
+                                <span id="bean-state-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注：</label>
+                            <div class="col-sm-8">
+                                <textarea id="bean-memo" name="memo" class="form-control"  placeholder="请输入备注"  required="" aria-required="true"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">${bean.memo}</textarea>
+                                <span id="bean-memo-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+					</div>
+
+					<div class="clearfix "></div>
+					<div class="col-md-12">
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">详情：</label>
+                            <div class="col-md-12">
+                                <textarea id="bean-detailInfo" name="detailInfo" style="height: 300px;width: 100%;" class="form-control"  placeholder="请输入详情"  required="" aria-required="true"  aria-describedby="bean-detailInfo-error"  maxlength="4294967295"   aria-invalid="true">
+                                ${bean.detailInfo}
+                                </textarea>
+                                <span id="bean-detailInfo-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+					</div>
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>

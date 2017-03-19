@@ -88,11 +88,11 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 		try {
             int pageNum=getPageSize(dto);
             if (<%for(t in pks){%>${tLP.index==1?'':' && '}${t.columnNameFormat}!=null<%}%>) {
-                ${tcfg.tableNameFormat!} dto1=new ${tcfg.tableNameFormat!}();
+                if(dto==null)dto=new ${tcfg.tableNameFormat!}();
                 <%for(t in pks){%>
                 dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
                 <%}%>
-                dto=${tableNameL}Service.findDataById(dto1);
+                dto=${tableNameL}Service.findDataById(dto);
             }
             if(dto==null||0==id){
                 dto=new ${tcfg.tableNameFormat!}();

@@ -85,9 +85,9 @@ public class SysNewsController extends BaseController {
 		try {
             int pageNum=getPageSize(dto);
             if (id!=null) {
-                SysNews dto1=new SysNews();
+                if(dto==null)dto=new SysNews();
                 dto.setId(id);
-                dto=sysNewsService.findDataById(dto1);
+                dto=sysNewsService.findDataById(dto);
             }
             if(dto==null||0==id){
                 dto=new SysNews();

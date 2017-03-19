@@ -4,7 +4,7 @@
  *
  * VERSION      DATE          BY              REASON
  * -------- ----------- --------------- ---------------------------
- * 1.00     2017-03-18      easycode         程序.发布
+ * 1.00     2017-03-19      easycode         程序.发布
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
@@ -29,18 +29,18 @@
 			%>
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
-				<td>${bean.clickCount!}</td>
+				<td>${bean.clickCount}</td>
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
-				<td>${bean.isOntop!}</td>
-				<td>${bean.coverPic!}</td>
-				<td>${bean.state!}</td>
-				<td>${bean.title!}</td>
+				<td>${bean.isOntop}</td>
+				<td>${bean.coverPic}</td>
+				<td>${bean.state}</td>
+				<td>${bean.title}</td>
 				<td>
 				    <% if(shiro.hasPermission("sysNews:edit")){ %>
-	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/sys/sysNews/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}/h/sys/sysNews/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 	               <%}%>
  	               <% if(shiro.hasPermission("sysNews:del")){ %>
- 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/sys/sysNews/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+ 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}/h/sys/sysNews/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
  	               <%}%>
                 </td>
 			</tr>

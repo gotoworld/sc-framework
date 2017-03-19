@@ -28,9 +28,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
 			<div class="ibox float-e-margins">
-				<div class="ibox-content col-md-12">
+				<div class="ibox-content col-sm-12">
 					<form id="video_editor" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/video/save">
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<div style="float:right;">
 								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 							</div>
@@ -40,10 +40,10 @@
 						<input type="hidden" name="token" value="${bean.token}" />
                         <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                         <input type="hidden" name="type" value="1" />
-					    <div class="col-md-12">
+					    <div class="col-sm-12">
 							<div class="form-group">
-								<label class="col-md-1 control-label"  for="bean-categoryId">类目:</label>
-								<div class="col-md-5">
+								<label class="col-sm-1 control-label"  for="bean-categoryId">类目:</label>
+								<div class="col-sm-5">
 <!-- 								value="${bean.categoryId}" -->
 									<select id="bean-categoryId" name="categoryId"  class="form-control" aria-describedby="bean-categoryId-error"   aria-invalid="true">
 										<option value="testCategoryId">测试类目1</option>
@@ -52,23 +52,23 @@
 								 </div>
 							 </div>
 							<div class="form-group">
-								<label class="col-md-1 control-label"  for="bean-name">名称:</label>
-								<div class="col-md-5">
+								<label class="col-sm-1 control-label"  for="bean-name">名称:</label>
+								<div class="col-sm-5">
 									<input id="bean-name" name="name" value="${bean.name}" class="form-control" type="text"  placeholder="名称"  required="" aria-required="true" aria-describedby="bean-name-error"  maxlength="50"   aria-invalid="true">
 									<span id="bean-name-error" class="help-block m-b-none"></span>
 								 </div>
 							 </div>
 							 <div class="form-group">
-								<label class="col-md-1 control-label"  for="bean-memo">备注:</label>
-								<div class="col-md-5">
+								<label class="col-sm-1 control-label"  for="bean-memo">备注:</label>
+								<div class="col-sm-5">
 									<input id="bean-memo" name="memo" value="${bean.memo}" class="form-control" type="text"  placeholder="备注" aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
 									<span id="bean-memo-error" class="help-block m-b-none"></span>
 								 </div>
 							 </div>
 						</div>
-						<div class="col-md-12 form-group">
-							<label class="col-md-1 control-label"></label>
-							<div class="col-md-11">
+						<div class="col-sm-12 form-group">
+							<label class="col-sm-1 control-label"></label>
+							<div class="col-sm-11">
 								<p>视频上传:<span class="red s12">全景视频的格式为 mp4;</span></p>
 								<div class="img-input red" id="upload_scene_div" style="">
 								<%if(bean.scenes!=null && bean.scenes.~size>0){
@@ -93,7 +93,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<div style="width: 200px;margin: 0 auto;">
 								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 							</div>

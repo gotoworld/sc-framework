@@ -85,9 +85,9 @@ public class SysCategoryController extends BaseController {
 		try {
             int pageNum=getPageSize(dto);
             if (id!=null) {
-                SysCategory dto1=new SysCategory();
+                if(dto==null)dto=new SysCategory();
                 dto.setId(id);
-                dto=sysCategoryService.findDataById(dto1);
+                dto=sysCategoryService.findDataById(dto);
             }
             if(dto==null||0==id){
                 dto=new SysCategory();

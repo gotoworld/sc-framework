@@ -101,6 +101,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 context.put("xmlInsert", columns);// schemaInfoDao.findMybatisInsert(dtoMap));
                 context.put("xmlSelect", columns);// schemaInfoDao.findMybatisSelect(dtoMap));
                 context.put("xmlUpdate", columns);// schemaInfoDao.findMybatisUpdate(dtoMap));
+                context.put("pageTag", "#pageTag");// btl分页标签
                 //4.生成
                 String verDir = schemaConf.get_template_dir();
 

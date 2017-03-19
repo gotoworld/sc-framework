@@ -85,9 +85,9 @@ public class SysMessageController extends BaseController {
 		try {
             int pageNum=getPageSize(dto);
             if (id!=null) {
-                SysMessage dto1=new SysMessage();
+                if(dto==null)dto=new SysMessage();
                 dto.setId(id);
-                dto=sysMessageService.findDataById(dto1);
+                dto=sysMessageService.findDataById(dto);
             }
             if(dto==null||0==id){
                 dto=new SysMessage();

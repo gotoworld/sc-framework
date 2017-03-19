@@ -51,8 +51,8 @@ for(t in columns){
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
-				<form id="${tableNameL}_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="\${basePath}${scfg._web_http}/save">
-					<div class="col-md-12">
+				<form id="${tableNameL}_01" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="\${basePath}${scfg._web_http}/save">
+					<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
@@ -63,35 +63,73 @@ for(t in columns){
 					<%}%>
 					<input type="hidden" name="token" value="\${bean.token}" />
 					<input type="hidden" name="newFlag" value="\${bean.newFlag}" />
-				<div class="col-md-6">
-				<%
-					for(t in columns){
-					if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
-						switch(scfg._edit_type[t.columnNameFormat]){
-							case "0":{ layout("input/0_input[hidden].btl",{t:t}){};break;}
-							case "1":{ layout("input/1_input[text].btl",{t:t}){};break;}
-							case "2":{ layout("input/2_textarea.btl",{t:t}){};break;}
-							case "3":{ layout("input/3_input[date].btl",{t:t}){};break;}
-							case "4":{ layout("input/4_select.btl",{t:t}){};break;}
-							case "5":{ layout("input/5_select[multiple].btl",{t:t}){};break;}
-							case "6":{ layout("input/6_input[radio].btl",{t:t}){};break;}
-							case "7":{ layout("input/7_input[checkbox].btl",{t:t}){};break;}
-							case "8":{ layout("input/8_upload[image].btl",{t:t}){};break;}
-							case "9":{ layout("input/9_upload[file].btl",{t:t}){};break;}
-							case "10":{ layout("input/10_editor[simple].btl",{t:t}){};break;}
-							case "11":{ layout("input/11_editor[full].btl",{t:t}){};break;}
-							case "12":{ layout("input/12_upload[BGM].btl",{t:t}){};break;}
-						}
-					   if(tLP.index==columns.~size/2){
-				%>
-				</div>
-				<div class="col-md-6">
-				<%
-						}
+					<div class="clearfix "></div>
+					<div class="col-sm-6 b-r">
+	<%
+		var _col_edit_count=0;
+		for(t in columns){
+		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+			_col_edit_count++;
+			switch(scfg._edit_type[t.columnNameFormat]){
+				case "0":{ layout("input/0_input[hidden].btl",{t:t}){};break;}
+				case "1":{ layout("input/1_input[text].btl",{t:t}){};break;}
+				case "2":{ layout("input/2_textarea.btl",{t:t}){};break;}
+				case "3":{ layout("input/3_input[date].btl",{t:t}){};break;}
+				case "4":{ layout("input/4_select.btl",{t:t}){};break;}
+				case "5":{ layout("input/5_select[multiple].btl",{t:t}){};break;}
+				case "6":{ layout("input/6_input[radio].btl",{t:t}){};break;}
+				case "7":{ layout("input/7_input[checkbox].btl",{t:t}){};break;}
+				case "8":{ layout("input/8_upload[image].btl",{t:t}){};break;}
+				case "9":{ layout("input/9_upload[file].btl",{t:t}){};break;}
+				case "12":{ layout("input/12_upload[BGM].btl",{t:t}){};break;}
+			}
+		   if(_col_edit_count==scfg._col_edit.~size/2){
+	%>
+
+					</div>
+					<div class="col-sm-6">
+			<%
 					}
-				}%>
-				</div>
+				}
+			}%>
+
+					</div>
+	<%
+	for(t in columns){
+		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+			switch(scfg._edit_type[t.columnNameFormat]){
+				case "10":{
+					%>
+
+					<div class="clearfix "></div>
 					<div class="col-md-12">
+					<%
+					layout("input/10_editor[simple].btl",{t:t}){};
+					%>
+
+					</div>
+					<%
+					break;
+				}
+				case "11":{
+					%>
+
+					<div class="clearfix "></div>
+					<div class="col-md-12">
+					<%
+					layout("input/11_editor[full].btl",{t:t}){};
+					%>
+
+					</div>
+					<%
+					break;
+				}
+			}
+		}
+	}
+	%>
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>

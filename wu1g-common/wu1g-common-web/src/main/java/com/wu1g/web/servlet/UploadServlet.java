@@ -269,6 +269,10 @@ public class UploadServlet extends HttpServlet{
                     log.error(PathCommonConstant.LOG_ERROR_TITLE, e);
                     return;
                 }
+
+                obj.put("error", 0);
+                obj.put("url", saveUrl + newFileName);
+
                 obj.put("fileUrl", (saveUrl + newFileName));
                 obj.put("fileName", name);
 
@@ -309,6 +313,7 @@ public class UploadServlet extends HttpServlet{
     private String getError(String message) {
         Map<String, Object> obj = new HashMap<String, Object>();
         obj.put("code", 1);
+        obj.put("error", 1);
         obj.put("message", message);
         return JSON.toJSONString(obj);
     }

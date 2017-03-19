@@ -1,6 +1,6 @@
-function upload_single_pic(btn, divId,_fileExt,name) {
+function upload_single_file(btn, divId,_fileExt,name) {
     var fileMaxSize = 50;
-    var fileExtensions = _fileExt||'zip';
+    var fileExtensions = _fileExt||'xml';
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: '' + btn,

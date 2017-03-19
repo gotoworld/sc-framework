@@ -23,7 +23,7 @@ function upload_single_file(btn, divId,_fileExt,name) {
             },
             FilesAdded: function (up, files) {
                 var file = files[files.length - 1];
-                $("#" + divId).append('<div id="' + file.id + '" class="img-grid-2"><b></b>'
+                $("#" + divId).append('<div id="' + file.id + '" class="file-grid-2"><b></b>'
                     + '<div class="progress"><div class="progress-bar" style="width: 0%"></div></div>'
                     + '</div>');
                 uploader.start();

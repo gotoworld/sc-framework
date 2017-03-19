@@ -41,8 +41,8 @@ for(t in columns){
 <link href="\${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
 <%}%>
 <%if(isRichFlag==1){%>
-<link rel="stylesheet" href="\${basePath}/plugins/editor/themes/default/default.css" />
-<link rel="stylesheet" href="\${basePath}/plugins/editor/plugins/code/prettify.css" />
+<link rel="stylesheet" href="\${basePath}plugins/editor/themes/default/default.css" />
+<link rel="stylesheet" href="\${basePath}plugins/editor/plugins/code/prettify.css" />
 <%}%>
 </head>
 
@@ -144,9 +144,9 @@ for(t in columns){
 <script src="\${basePath}plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <%}%>
 <%if(isRichFlag==1){%>
-<script charset="utf-8" src="\${basePath}/plugins/editor/kindeditor.js"></script>
-<script charset="utf-8" src="\${basePath}/plugins/editor/lang/zh_CN.js"></script>
-<script charset="utf-8" src="\${basePath}/plugins/editor/plugins/code/prettify.js"></script>
+<script charset="utf-8" src="\${basePath}plugins/editor/kindeditor.js"></script>
+<script charset="utf-8" src="\${basePath}plugins/editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="\${basePath}plugins/editor/plugins/code/prettify.js"></script>
 <%}%>
 <%if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){%>
 <script type="text/javascript" src="\${basePath}plugins/plupload/js/plupload.min.js"></script>

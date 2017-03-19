@@ -83,13 +83,12 @@ public class UploadServlet extends HttpServlet{
             this.imageN3Height = Integer.parseInt(AppConfig.getProperty("common.fileServer.image.n3.height"));
         }
     }
-
-    /**
-     * @throws IOException
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.info("UploadServlet doGet...");
+        doPost(request, response);
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.info("UploadAction init");
+        log.info("UploadServlet init");
         response.reset();
         response.setContentType("text/plain;charset=" + PathCommonConstant.DEFAULT_ENCODE);
         setAppConfig();

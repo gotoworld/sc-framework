@@ -3,6 +3,6 @@
     K.create('#bean-${t.columnNameFormat}', {
         resizeType : 2,
         uploadJson : '\${basePath}fileUpload?isrich=1',
-        fileManagerJson : '\${basePath}plugins/editor/jsp/file_manager_json.jsp',
+        fileManagerJson : '\${basePath}fileManagerServlet',
         allowFileManager : true
     });

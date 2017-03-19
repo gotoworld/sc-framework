@@ -128,9 +128,7 @@
 	</div>
 </div>
 <% include("../include/public_last_js_css.html"){} %>
-<script charset="utf-8" src="${basePath}plugins/editor/kindeditor.js"></script>
-<script charset="utf-8" src="${basePath}plugins/editor/lang/zh_CN.js"></script>
-<script charset="utf-8" src="${basePath}plugins/editor/plugins/code/prettify.js"></script>
+<script charset="utf-8" src="${basePath}plugins/editor/kindeditor-all-min.js"></script>
 <script type="text/javascript" src="${basePath}plugins/plupload/js/plupload.min.js"></script>
 <script type="text/javascript" src="${basePath}js/upload_single_pic.js"></script>
 <script type="text/javascript">
@@ -140,7 +138,7 @@ KindEditor.ready(function(K) {
     K.create('#bean-detailInfo', {
         resizeType : 2,
         uploadJson : '${basePath}fileUpload?isrich=1',
-        fileManagerJson : '${basePath}plugins/editor/jsp/file_manager_json.jsp',
+        fileManagerJson : '${basePath}fileManagerServlet',
         allowFileManager : true
     });
 });

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="${scfg._dao_pkg}.I${tcfg.tableNameFormat!}${ccfg._dao_suffix!}">
+<mapper namespace="${scfg._dao_pkg}.I${tcfg.tableNameFormat!}${scfg._dao_suffix!}">
     <% var count=1;%>
     <%if ("1"==scfg._detail||"1"==scfg._page||"1"==scfg._list) {%>
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
         <%for(t in xmlSelect){%>
-		${tLP.index==1?' ':','}${t.columnName} as t1.${t.columnNameFormat}
+        ${tLP.index==1?' ':','}t1.${t.columnName} as "${t.columnNameFormat}"
         <%}%>
-	</sql>
+    </sql>
     <%}%>
 
     <%if ("1"==scfg._detail) {%>
@@ -26,30 +26,30 @@
 
     <%if ("1"==scfg._insert) {%>
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}" <%if(null!=scfg._col_autopk){%> useGeneratedKeys="true" keyProperty="${scfg._col_autopk}" <%}%>>
-		insert into ${tcfg.tableName}(
-		 <%
-		 count=1;
-		 for(t in xmlInsert){%>
-         <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}${t.columnName} <%}%>
-         <%}%>
-		) values (
-		 <%
-		 count=1;
-		 for(t in xmlInsert){%>
-         <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}<%if(scfg._col_updated==t.columnName || scfg._col_created==t.columnName){%>now()<%}else if(scfg._col_del==t.columnName || scfg._col_version==t.columnName){%>0<%}else{%>#{${t.columnNameFormat}} <%}}%>
-         <%}%>
-		)
-	</insert>
-	<%}%>
-
-	<%if ("1"==scfg._insertBatch) {%>
-    <!-- 新增 批量数据 -->
-    <insert id="insertBatch" <%if(null!=scfg._col_autopk){%> useGeneratedKeys="true" keyProperty="${scfg._col_autopk}" <%}%>>
+    <insert id="insert" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}" <%if(null!=scfg._col_autopk){%> useGeneratedKeys="true" keyProperty="${scfg._col_autopk}" <%}%> >
         insert into ${tcfg.tableName}(
          <%
-		 count=1;
-		 for(t in xmlInsert){%>
+         count=1;
+         for(t in xmlInsert){%>
+         <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}${t.columnName} <%}%>
+         <%}%>
+        ) values (
+         <%
+         count=1;
+         for(t in xmlInsert){%>
+         <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}<%if(scfg._col_updated==t.columnName || scfg._col_created==t.columnName){%>now()<%}else if(scfg._col_del==t.columnName || scfg._col_version==t.columnName){%>0<%}else{%>#{${t.columnNameFormat}} <%}}%>
+         <%}%>
+        )
+    </insert>
+    <%}%>
+
+    <%if ("1"==scfg._insertBatch) {%>
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch" <%if(null!=scfg._col_autopk){%> useGeneratedKeys="true" keyProperty="${scfg._col_autopk}" <%}%> >
+        insert into ${tcfg.tableName}(
+         <%
+         count=1;
+         for(t in xmlInsert){%>
          <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}${t.columnName} <%}%>
          <%}%>
         ) values
@@ -58,17 +58,17 @@
             <%
              count=1;
              for(t in xmlInsert){%>
-             <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}<%if(scfg._col_updated==t.columnName || scfg._col_created==t.columnName){%>now()<%}else if(scfg._col_del==t.columnName || scfg._col_version==t.columnName){%>0<%}else{%>#{t.${t.columnNameFormat}} <%}}%>
+                <%if(t.columnNameFormat!=scfg._col_autopk){%>  ${count++==1?' ':','}<%if(scfg._col_updated==t.columnName || scfg._col_created==t.columnName){%>now()<%}else if(scfg._col_del==t.columnName || scfg._col_version==t.columnName){%>0<%}else{%>#{t.${t.columnNameFormat}} <%}}%>
             <%}%>
             )
         </foreach>
     </insert>
-	<%}%>
+    <%}%>
 
-	<%if ("1"==scfg._update) {%>
+    <%if ("1"==scfg._update) {%>
     <!-- 数据更新 -->
     <update id="update" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}">
-         update ${tcfg.tableName} set ${null!=scfg._col_updated?scfg._col_updated+'=now()':''} ${null!=scfg._col_version?','+scfg._col_version+'='+scfg._col_version+'+1':''}
+        update ${tcfg.tableName} set ${null!=scfg._col_updated?scfg._col_updated+'=now()':''} ${null!=scfg._col_version?','+scfg._col_version+'='+scfg._col_version+'+1':''}
          <%for(t in xmlUpdate){
             if(scfg._col_updated!=t.columnName
             && scfg._col_created!=t.columnName

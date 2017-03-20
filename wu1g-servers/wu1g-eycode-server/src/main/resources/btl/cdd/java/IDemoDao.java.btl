@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Update;
  * <p>${tcfg.tableComment} 数据库处理接口类。
  */
 @Mapper
-public interface I${tcfg.tableNameFormat!}${ccfg._dao_suffix!} extends IBaseMapper {
+public interface I${tcfg.tableNameFormat!}${scfg._dao_suffix!} extends IBaseMapper {
 
 
     /**

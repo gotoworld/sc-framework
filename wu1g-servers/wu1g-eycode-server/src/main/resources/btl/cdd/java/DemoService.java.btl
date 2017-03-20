@@ -1,7 +1,7 @@
 package ${scfg._biz_pkg};
 
 import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
-import ${scfg._dao_pkg}.I${tcfg.tableNameFormat!}${ccfg._dao_suffix!};
+import ${scfg._dao_pkg}.I${tcfg.tableNameFormat!}${scfg._dao_suffix!};
 import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
 import ${scfg._dto_pkg}.${tcfg.tableNameFormat!}Dto;
 import com.cddang.common.constant.PortalConstant;
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${tcfg.tableNameFormat!}Service {
     @Autowired
-    private I${tcfg.tableNameFormat!}${ccfg._dao_suffix!} ${tableNameL}${ccfg._dao_suffix!};
+    private I${tcfg.tableNameFormat!}${scfg._dao_suffix!} ${tableNameL}${scfg._dao_suffix!};
 
     <%if ("1"==scfg._insert||"1"==scfg._update) {%>
     @Override
@@ -31,12 +31,12 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
                 //判断数据是否存在
-                if (${tableNameL}${ccfg._dao_suffix!}.isDataYN(entity) != 0) {
+                if (${tableNameL}${scfg._dao_suffix!}.isDataYN(entity) != 0) {
                     //数据存在
-                    <%if ("1"==scfg._update){%>${tableNameL}${ccfg._dao_suffix!}.update(entity);<%}%>
+                    <%if ("1"==scfg._update){%>${tableNameL}${scfg._dao_suffix!}.update(entity);<%}%>
                 } else {
                     //新增
-                     <%if ("1"==scfg._insert){%>${tableNameL}${ccfg._dao_suffix!}.insert(entity);<%}%>
+                     <%if ("1"==scfg._insert){%>${tableNameL}${scfg._dao_suffix!}.insert(entity);<%}%>
                      dto.setId(entity.getId());
                 }
             } catch (Exception e) {
@@ -55,7 +55,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         if (dto != null) {
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
-                if(${tableNameL}${ccfg._dao_suffix!}.deleteByPrimaryKey(entity)==0){
+                if(${tableNameL}${scfg._dao_suffix!}.deleteByPrimaryKey(entity)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -75,7 +75,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         if (dto != null) {
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
-                if(${tableNameL}${ccfg._dao_suffix!}.deleteById(entity)==0){
+                if(${tableNameL}${scfg._dao_suffix!}.deleteById(entity)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -94,7 +94,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
        try {
            ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
            PageHelper.startPage(PN(dto.getPageIndex()), PS(dto.getPageSize()));
-           List list = ${tableNameL}${ccfg._dao_suffix!}.findDataIsPage(entity);
+           List list = ${tableNameL}${scfg._dao_suffix!}.findDataIsPage(entity);
            pageInfo=new PageInfo(list);
            pageInfo.setList(copyTo(pageInfo.getList(), ${tcfg.tableNameFormat!}Dto.class));
        } catch (Exception e) {
@@ -111,7 +111,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         List<${tcfg.tableNameFormat!}Dto> dtos = null;
         try {
             ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
-            dtos = copyTo(${tableNameL}${ccfg._dao_suffix!}.findDataIsList(entity), ${tcfg.tableNameFormat!}Dto.class);
+            dtos = copyTo(${tableNameL}${scfg._dao_suffix!}.findDataIsList(entity), ${tcfg.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -126,7 +126,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         ${tcfg.tableNameFormat!}Dto dto1 = null;
         try {
             ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
-            dto1 = copyTo(${tableNameL}${ccfg._dao_suffix!}.selectByPrimaryKey(entity),${tcfg.tableNameFormat!}Dto.class);
+            dto1 = copyTo(${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(entity),${tcfg.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -142,7 +142,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         if (dto != null) {
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(entity, ${tcfg.tableNameFormat!}.class);
-                if(${tableNameL}${ccfg._dao_suffix!}.recoveryDataById(entity)==0){
+                if(${tableNameL}${scfg._dao_suffix!}.recoveryDataById(entity)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {

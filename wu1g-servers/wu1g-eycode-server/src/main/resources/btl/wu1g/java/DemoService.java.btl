@@ -1,7 +1,7 @@
 package ${scfg._biz_pkg};
 
 import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
-import ${scfg._dao_pkg}.I${tcfg.tableNameFormat!}Dao;
+import ${scfg._dao_pkg}.I${tcfg.tableNameFormat!}${scfg._dao_suffix!};
 import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${tcfg.tableNameFormat!}Service {
     @Autowired
-    private I${tcfg.tableNameFormat!}Dao ${tableNameL}Dao;
+    private I${tcfg.tableNameFormat!}${scfg._dao_suffix!} ${tableNameL}${scfg._dao_suffix!};
 
     <%if ("1"==scfg._insert||"1"==scfg._update) {%>
     @Override
@@ -30,12 +30,12 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         if (dto != null) {
             try {
                 //判断数据是否存在
-                if (dto.getId() != null && ${tableNameL}Dao.isDataYN(dto) != 0) {
+                if (dto.getId() != null && ${tableNameL}${scfg._dao_suffix!}.isDataYN(dto) != 0) {
                     //数据存在
-                    <%if ("1"==scfg._update){%>${tableNameL}Dao.update(dto);<%}%>
+                    <%if ("1"==scfg._update){%>${tableNameL}${scfg._dao_suffix!}.update(dto);<%}%>
                 } else {
                     //新增
-                     <%if ("1"==scfg._insert){%>${tableNameL}Dao.insert(dto);<%}%>
+                     <%if ("1"==scfg._insert){%>${tableNameL}${scfg._dao_suffix!}.insert(dto);<%}%>
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
@@ -52,7 +52,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(${tableNameL}Dao.deleteByPrimaryKey(dto)==0){
+                if(${tableNameL}${scfg._dao_suffix!}.deleteByPrimaryKey(dto)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -71,7 +71,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(${tableNameL}Dao.deleteById(dto)==0){
+                if(${tableNameL}${scfg._dao_suffix!}.deleteById(dto)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -89,7 +89,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         List<${tcfg.tableNameFormat!}> dtos = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}Dao.findDataIsPage(dto);
+            dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}${scfg._dao_suffix!}.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -103,7 +103,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     public List<${tcfg.tableNameFormat!}> findDataIsList(${tcfg.tableNameFormat!} dto) throws Exception {
         List<${tcfg.tableNameFormat!}> dtos = null;
         try {
-            dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}Dao.findDataIsList(dto);
+            dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}${scfg._dao_suffix!}.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -118,7 +118,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     public ${tcfg.tableNameFormat!} findDataById(${tcfg.tableNameFormat!} dto) throws Exception {
         ${tcfg.tableNameFormat!} dto1 = null;
         try {
-            dto1 = (${tcfg.tableNameFormat!}) ${tableNameL}Dao.selectByPrimaryKey(dto);
+            dto1 = (${tcfg.tableNameFormat!}) ${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new Exception("信息查询失败!");
@@ -133,7 +133,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(${tableNameL}Dao.recoveryDataById(dto)==0){
+                if(${tableNameL}${scfg._dao_suffix!}.recoveryDataById(dto)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {

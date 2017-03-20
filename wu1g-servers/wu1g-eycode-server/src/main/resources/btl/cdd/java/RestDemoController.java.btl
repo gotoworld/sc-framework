@@ -40,7 +40,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
            dto.setPageSize(PortalConstant.PAGEROW_DEFAULT_COUNT);
        }
         try {
-            dto.set${strUtil.fmtStr(scfg._col_del,'_')}(new Byte("0"));
+            dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(new Byte("0"));
             result.data = PageUtil.copy(${tableNameL}Service.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -64,7 +64,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
                 <%for(t in pks){%>
                 dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
                 <%}%>
-                dto.set${strUtil.fmtStr(scfg._col_del,'_')}(new Byte("0"));
+                dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(new Byte("0"));
                 result.data = ${tableNameL}Service.findDataById(dto);
             }
         } catch (Exception e) {

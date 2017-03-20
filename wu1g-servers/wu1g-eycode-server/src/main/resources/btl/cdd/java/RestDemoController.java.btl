@@ -104,7 +104,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     /**
      * <p> 信息保存
      */
-    @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
+    @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "save")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!}Dto dto, BindingResult bindingResult) {
         log.info("${tcfg.tableNameFormat!}Controller save.........");

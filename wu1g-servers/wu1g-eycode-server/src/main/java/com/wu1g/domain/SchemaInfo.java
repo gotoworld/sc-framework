@@ -111,7 +111,7 @@ public class SchemaInfo extends BaseVO {
         if (("#tinyint#".contains("#" + dataType + "#"))) {
             _javaType="Integer";
         }else
-        if (("#smallint#mediumint#int#".contains("#" + dataType + " "))) {
+        if (("#smallint#mediumint#int#".contains("#" + dataType + "#"))) {
             _javaType="Integer";
         }else
         if (("#bigint#".contains("#" + dataType + "#"))) {
@@ -124,5 +124,9 @@ public class SchemaInfo extends BaseVO {
             _javaType="BigDecimal";
         }
         return _javaType;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(("#smallint#mediumint#int#".contains("#" + "int" + " ")));
     }
 }

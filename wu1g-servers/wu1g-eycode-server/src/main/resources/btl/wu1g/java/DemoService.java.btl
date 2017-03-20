@@ -38,8 +38,8 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                      <%if ("1"==scfg._insert){%>${tableNameL}${scfg._dao_suffix!}.insert(dto);<%}%>
                 }
             } catch (Exception e) {
-                log.error("信息保存失败!", e);
-                throw new Exception("信息保存失败!");
+                log.error("信息保存异常!", e);
+                throw new Exception("信息保存异常!");
             }
         }
         return msg;
@@ -56,7 +56,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
-                log.error("物理删除失败!", e);
+                log.error("物理删除异常!", e);
                 throw new Exception(e.getMessage());
             }
         }
@@ -75,7 +75,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
-                log.error("逻辑删除失败!", e);
+                log.error("逻辑删除异常!", e);
                 throw new Exception(e.getMessage());
             }
         }
@@ -91,8 +91,8 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
             dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}${scfg._dao_suffix!}.findDataIsPage(dto);
         } catch (Exception e) {
-            log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            log.error("信息查询异常!", e);
+            throw new Exception("信息查询异常!");
         }
         return dtos;
     }
@@ -105,8 +105,8 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         try {
             dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}${scfg._dao_suffix!}.findDataIsList(dto);
         } catch (Exception e) {
-            log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            log.error("信息查询异常!", e);
+            throw new Exception("信息查询异常!");
         }
         return dtos;
     }
@@ -120,8 +120,8 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         try {
             dto1 = (${tcfg.tableNameFormat!}) ${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(dto);
         } catch (Exception e) {
-            log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            log.error("信息查询异常!", e);
+            throw new Exception("信息查询异常!");
         }
         return dto1;
     }
@@ -137,7 +137,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
-                log.error("数据恢复失败!", e);
+                log.error("数据恢复异常!", e);
                 throw new Exception(e.getMessage());
             }
         }

@@ -130,7 +130,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
                 result = Response.error(e.getMessage());
             }
         } else {
-            result = Response.error("参数获取失败!");
+            result = Response.error("参数获取异常!");
         }
         return result;
     }

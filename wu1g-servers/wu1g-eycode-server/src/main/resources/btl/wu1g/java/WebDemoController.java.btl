@@ -167,7 +167,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 				result = Response.error(e.getMessage());
 			}
 		} else {
-			result = Response.error("信息保存失败!");
+			result = Response.error("信息保存异常!");
 		}
 		modelMap.addFlashAttribute("result", result);
 		return success;

@@ -17,7 +17,7 @@
         </foreach>
     </insert>
     <!-- 根据用户id清空用户关联部门信息-->
-    <delete id="deleteDataByUid" parameterType="orgDeptVsUser">
+    <delete id="deleteDataByUid" parameterType="com.wu1g.vo.org.OrgDeptVsUser">
 		delete
 		from org_dept_vs_user
 		where  user_id = #{userId}

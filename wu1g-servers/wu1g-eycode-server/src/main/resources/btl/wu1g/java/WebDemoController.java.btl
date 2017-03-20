@@ -108,7 +108,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	}
 	<%}%>
 
-    <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
+    <%if ("1"==scfg._delLogic && null!=scfg._col_del) {%>
 	/**
 	 * <li>删除。
 	 */

@@ -37,7 +37,7 @@
     </insert>
 
     <!--信息列表 -->
-    <select id="findDataIsList" parameterType="panoMap" resultType="panoMap">
+    <select id="findDataIsList" parameterType="com.wu1g.vo.pano.PanoMap" resultType="com.wu1g.vo.pano.PanoMap">
         select
         <include refid="Base_Column_List"/>
         from pano_map t1
@@ -46,7 +46,7 @@
         order by t1.date_created desc
     </select>
 
-    <delete id="deleteByProjId" parameterType="panoMap">
+    <delete id="deleteByProjId" parameterType="com.wu1g.vo.pano.PanoMap">
 		delete
 		from pano_map
 		where  

@@ -27,7 +27,7 @@ public interface I${tcfg.tableNameFormat!}Service {
     public String deleteData(${tcfg.tableNameFormat!}Dto dto) throws Exception;
     <%}%>
 
-    <%if ("1"==scfg._recovery||null!=scfg._col_del) {%>
+    <%if ("1"==scfg._recovery && null!=scfg._col_del) {%>
     /**
      * <li>恢复逻辑删除的数据。
      */
@@ -35,7 +35,7 @@ public interface I${tcfg.tableNameFormat!}Service {
     public String recoveryDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception;
     <%}%>
 
-    <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
+    <%if ("1"==scfg._delLogic && null!=scfg._col_del) {%>
     /**
      * <li>逻辑删除。
      */

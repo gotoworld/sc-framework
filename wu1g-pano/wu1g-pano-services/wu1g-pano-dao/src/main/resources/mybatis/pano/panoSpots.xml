@@ -71,7 +71,7 @@
     </insert>
 
     <!--信息列表 -->
-    <select id="findDataIsList" parameterType="panoSpots" resultType="panoSpots">
+    <select id="findDataIsList" parameterType="com.wu1g.vo.pano.PanoSpots" resultType="com.wu1g.vo.pano.PanoSpots">
         select
         <include refid="Base_Column_List"/>
         from pano_spots t1
@@ -88,14 +88,14 @@
         order by t1.date_created desc
     </select>
     <!-- 删除全景项目下雷达坐标 -->
-    <delete id="deleteByProjId" parameterType="panoSpots">
+    <delete id="deleteByProjId" parameterType="com.wu1g.vo.pano.PanoSpots">
 		delete
 		from pano_spots
 		where  
 		proj_id=#{projId}
 	</delete>
     <!--删除废弃雷达坐标-->
-    <delete id="deletePanoSpots" parameterType="panoSpots">
+    <delete id="deletePanoSpots" parameterType="com.wu1g.vo.pano.PanoSpots">
 		delete
 		from pano_spots
 		where

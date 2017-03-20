@@ -19,7 +19,7 @@ public interface I${tcfg.tableNameFormat!}${scfg._dao_suffix!} extends IBaseMapp
     @Select("select IFNULL(count(0),0) as count from ${tcfg.tableName} where <%for(t in pks){%>${tLP.index==1?'':' and '} ${t.columnName} = #{${t.columnNameFormat}}<%}%> ")
     int isDataYN(IEntity dto) throws Exception;
 
-    <%if ("1"==scfg._delLogic||null!=scfg._col_del) {%>
+    <%if ("1"==scfg._delLogic && null!=scfg._col_del) {%>
     /**
      * 逻辑删除
      */
@@ -27,7 +27,7 @@ public interface I${tcfg.tableNameFormat!}${scfg._dao_suffix!} extends IBaseMapp
     int deleteById(IEntity dto) throws Exception;
     <%}%>
 
-    <%if ("1"==scfg._recovery||null!=scfg._col_del) {%>
+    <%if ("1"==scfg._recovery && null!=scfg._col_del) {%>
     /**
      * 恢复逻辑删除的数据
      */

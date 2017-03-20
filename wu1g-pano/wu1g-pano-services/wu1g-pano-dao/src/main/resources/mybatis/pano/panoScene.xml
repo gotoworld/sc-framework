@@ -23,7 +23,7 @@
 	</sql>
 
     <!-- 根据主键获取信息详情 -->
-    <select id="selectByPrimaryKey" resultType="panoScene" parameterType="panoScene">
+    <select id="selectByPrimaryKey" resultType="com.wu1g.vo.pano.PanoScene" parameterType="com.wu1g.vo.pano.PanoScene">
         select
         <include refid="Base_Column_List"/>
         from pano_scene t1
@@ -32,7 +32,7 @@
     </select>
 
     <!-- 根据主键物理删除信息 -->
-    <delete id="deleteByPrimaryKey" parameterType="panoScene">
+    <delete id="deleteByPrimaryKey" parameterType="com.wu1g.vo.pano.PanoScene">
 		delete
 		from pano_scene
 		where
@@ -83,7 +83,7 @@
     </insert>
 
     <!-- 数据更新 -->
-    <update id="update" parameterType="panoScene">
+    <update id="update" parameterType="com.wu1g.vo.pano.PanoScene">
         update pano_scene set
         version=version+1
         ,date_updated=now()
@@ -104,7 +104,7 @@
     </update>
 
     <!-- 判断是否存在 -->
-    <select id="isDataYN" parameterType="panoScene" resultType="int">
+    <select id="isDataYN" parameterType="com.wu1g.vo.pano.PanoScene" resultType="int">
 		select
 			count(0)
 		from pano_scene
@@ -112,7 +112,7 @@
 			id = #{id}
 	</select>
     <!--信息列表 -->
-    <select id="findDataIsList" parameterType="panoScene" resultType="panoScene">
+    <select id="findDataIsList" parameterType="com.wu1g.vo.pano.PanoScene" resultType="com.wu1g.vo.pano.PanoScene">
         select
         <include refid="Base_Column_List"/>
         from pano_scene t1
@@ -134,7 +134,7 @@
         order by t1.date_created desc
     </select>
 
-    <delete id="deleteByProjId" parameterType="panoScene">
+    <delete id="deleteByProjId" parameterType="com.wu1g.vo.pano.PanoScene">
 		delete
 		from pano_scene
 		where  

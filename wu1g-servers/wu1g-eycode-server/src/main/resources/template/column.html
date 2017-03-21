@@ -100,7 +100,7 @@
                             <%if(bean.pk!='PRI'){%>
                             <label style="color: red;"><input type="checkbox" onclick="ec.clickCheck2(this)" name="tsuffix_${table}_col_edit" checked value="${bean.columnNameFormat}">编辑</label>
                             <select name="tsuffix_${table}_${bean.columnNameFormat}_edit_type" style="width: 130px;">
-                                <option value="1"}>--input[text]--</option>
+                                <option value="1">--input[text]--</option>
                                 <option value="0">--input[hidden]--</option>
                                 <option value="3" ${strUtil.containsStr(' datetime timestamp ',bean.dataType)?'selected':''}>--日期控件--</option>
                                 <option value="4">--select--</option>
@@ -115,6 +115,8 @@
                                 <option value="10" ${bean.dataLength !=null && bean.dataLength>1000 && bean.dataLength<=4000?'selected':''}>--富文本(简单)--</option>
                                 <option value="11" ${bean.dataLength !=null && bean.dataLength>4000?'selected':''}>--富文本(完整)--</option>
                                 <%}%>
+                                <option value="13">--显示[纯文本]--</option>
+                                <option value="14">--显示[富文本]--</option>
                             </select>
                             <%}%>
                             <%if(bean.dataLength ==null || bean.dataLength<=300){%>

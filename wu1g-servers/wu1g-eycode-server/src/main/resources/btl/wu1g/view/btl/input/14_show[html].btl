@@ -1,0 +1,7 @@
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">${t.columnComment}：</label>
+                            <div class="col-md-8">
+                            \${bean.${t.columnNameFormat}}
+                            </div>
+                        </div>

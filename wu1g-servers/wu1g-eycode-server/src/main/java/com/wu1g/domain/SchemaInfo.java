@@ -95,10 +95,10 @@ public class SchemaInfo extends BaseVO {
         String _jsr303 = "";
         if (!("#date#time#datetime#timestamp#year#tinyint#smallint#mediumint#int#bigint#float#double#decimal#".contains("#" + dataType + "#"))) {
             if (!columnName.equals("id") && isNullable.equals("NO")) {
-                _jsr303 += "@NotNull(message=\"" + columnName + "不能为空\"";
+                _jsr303 += "@NotNull(message=\"" + columnName + "不能为空\")";
             }
             if (dataLength > 0) {
-                _jsr303 += "@Size(max=" + dataLength + ",message=\"" + columnName + "最大" + dataLength + "字符\"";
+                _jsr303 += "@Size(max=" + dataLength + ",message=\"" + columnName + "最大" + dataLength + "字符\")";
             }
         }
         return _jsr303;

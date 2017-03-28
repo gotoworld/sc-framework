@@ -29,8 +29,8 @@ import java.util.Locale;
 /**
  * <p>登录登出action
  */
-@Controller
-@RequestMapping(value = "/admin")
+@Controller("AdminLoginController")
+@RequestMapping(value = "/h")
 @Slf4j
 public class LoginController extends BaseController {
     private static final long serialVersionUID = -6103432072290645133L;

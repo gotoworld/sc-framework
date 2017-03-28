@@ -28,7 +28,7 @@ import javax.servlet.http.Cookie;
 /**
  * <p>登录登出action
  */
-@Controller
+@Controller("MemberLoginController")
 @RequestMapping(value = "/m")
 @Slf4j
 public class LoginController extends BaseController {

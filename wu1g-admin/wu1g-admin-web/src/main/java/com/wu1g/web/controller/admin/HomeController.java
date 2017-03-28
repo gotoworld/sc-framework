@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * <p>后台页面首页 action
  */
-@Controller
+@Controller("AdminHomeController")
 @RequestMapping(value = "/h")
 @Slf4j
 public class HomeController extends BaseController {

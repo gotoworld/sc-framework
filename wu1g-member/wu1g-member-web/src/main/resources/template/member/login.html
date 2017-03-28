@@ -66,10 +66,10 @@ padding: 30px;">
             <form method="post" action="${basePath!}m/login">
                 <h4 class="no-margins">会员登录：</h4>
                 <h4 class="text-danger">${msg!}</h4>
-                <input type="text" value="admin" name="accid" class="form-control uname" placeholder="用户名"/>
-                <input type="hidden" value="21232f297a57a5a743894a0e4a801fc3" autocomplete="off" id="passwordA"
+                <input type="text" value="pano" name="accid" class="form-control uname" placeholder="用户名"/>
+                <input type="hidden" value="7af88f1d651067943c4aff4d7023ef55" autocomplete="off" id="passwordA"
                        name="password"/>
-                <input type="password" value="admin"
+                <input type="password" value="pano"
                        onkeydown="$('#passwordA').val($.md5($(this).val()));"
                        onchange="$('#passwordA').val($.md5($(this).val()));" class="form-control pword m-b"
                        placeholder="密码"/>

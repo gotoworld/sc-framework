@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * <p>会员页面首页 action
  */
-@Controller
+@Controller("MemberHomeController")
 @RequestMapping(value = "/m")
 @Slf4j
 public class HomeController extends BaseController {

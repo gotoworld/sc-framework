@@ -1,4 +1,4 @@
-package com.wu1g.web.controller;
+package com.wu1g.shiro;
 
 import com.wu1g.api.auth.IRoleSourceService;
 import com.wu1g.framework.util.CommonConstant;
@@ -6,10 +6,17 @@ import com.wu1g.vo.auth.AuthPerm;
 import com.wu1g.vo.auth.AuthRole;
 import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,40 +27,36 @@ import java.util.Map;
 
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
-//    public ShiroRealm(CacheManager cacheManager, CredentialsMatcher matcher) {
-//        super(cacheManager, matcher);
-//    }
-    /**
-     * 角色资源 业务处理。
-     */
+    public ShiroRealm(CacheManager cacheManager, CredentialsMatcher matcher) {
+        super(cacheManager, matcher);
+    }
+
+    public ShiroRealm(CacheManager cacheManager) {
+        super(cacheManager);
+    }
+
+    public ShiroRealm() {
+        super();
+    }
+
     @Autowired
     private IRoleSourceService roleSourceService;
 
-    /**
-     * 这里编写授权代码
-     * 认证回调函数,登录时调用. 是判断用户是否有权限执行某操作
-     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         log.info(" 由于加入了缓存, 此处只会load一次：doGetAuthorizationInfo.................");
 //		得到 doGetAuthenticationInfo 方法中传入的凭证
-        String accid = (String) principals.fromRealm(getName()).iterator().next();
-//		ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();  
+        String accid = (String) super.getAvailablePrincipal(principals);//(String) principals.fromRealm(getName()).iterator().next();
         if (accid == null) {
             return null;
         }
         //1.根据用户登录名获取用户信息
-//		OrgUser orgUserBean=roleSourceService.findUserByLoginName(accid);
         OrgUser orgUserBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
         if (orgUserBean == null) {
             return null;
         }
-//		//存放用户信息  信息传递.
-//		SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER,orgUserBean);
-
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-
-        Map<String,Object> dto = new HashMap<>();
+        Map<String, Object> dto = new HashMap<>();
         dto.put("uid", orgUserBean.getId());
         if (roleSourceService.isSuperAdmin(dto) > 0) {
             //超级管理员标记
@@ -76,28 +79,25 @@ public class ShiroRealm extends AuthorizingRealm {
                 }
             }
         }
-        //4.返回SimpleAuthorizationInfo对象
         return info;
     }
 
-    /**
-     * 这里编写认证代码
-     * 授权查询回调函数, 进行鉴权但缓存中无用户的授权信息时调用.
-     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken anthToken) throws AuthenticationException {
-        UsernamePasswordToken token = (UsernamePasswordToken) anthToken;
+        MyShiroUserToken token = (MyShiroUserToken) anthToken;
         String accid = token.getUsername();
-        log.info("accid: " + accid);
-        //几种用法 1.缓存所有用户信息 2.使用数据库
-        //2.获取根据用户登录名获取用户信息
-        OrgUser orgUser = roleSourceService.findUserByLoginName(accid);
-        if (orgUser != null) {
-            //缓存用户信息 减少一步查询数据库
-            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
-            //创建AuthenticationInfo对象并返回
-            return new SimpleAuthenticationInfo(accid, orgUser.getPwd(), getName());
+        log.info("用户[" + accid + "],类型:" + token.getUserType().name());
+        OrgUser orgUser = null;
+        AuthenticationInfo info = null;
+        if (token.getUserType() == MyShiroUserToken.UserType.admin) {
+            orgUser = roleSourceService.findUserByLoginName(accid);
+        } else {
+
         }
-        return null;
+        if (orgUser != null) {
+            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
+            info = new SimpleAuthenticationInfo(accid, orgUser.getPwd(), getName());
+        }
+        return info;
     }
 }

@@ -24,10 +24,9 @@
 
 package com.wu1g.config;
 
-import com.wu1g.web.controller.ShiroRealm;
+import com.wu1g.shiro.ShiroRealm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -54,8 +53,6 @@ import java.util.Map;
 @Slf4j
 public class ShiroConfig {
 
-    private static Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-
     @Bean(name = "cacheShiroManager")
     public CacheManager getCacheManage() {
         EhCacheManager cacheManager = new EhCacheManager();
@@ -74,15 +71,15 @@ public class ShiroConfig {
         scheduler.setInterval(900000);
         return scheduler;
     }
-
-    @Bean(name = "hashedCredentialsMatcher")
-    public HashedCredentialsMatcher getHashedCredentialsMatcher() {
-        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-        credentialsMatcher.setHashAlgorithmName("MD5");
-        credentialsMatcher.setHashIterations(1);
-        credentialsMatcher.setStoredCredentialsHexEncoded(true);
-        return credentialsMatcher;
-    }
+//  密码加密算法 必须与数据库一致
+//    @Bean(name = "hashedCredentialsMatcher")
+//    public HashedCredentialsMatcher getHashedCredentialsMatcher() {
+//        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+//        credentialsMatcher.setHashAlgorithmName("MD5");
+//        credentialsMatcher.setHashIterations(1);
+//        credentialsMatcher.setStoredCredentialsHexEncoded(true);
+//        return credentialsMatcher;
+//    }
 
     @Bean(name = "sessionIdCookie")
     public SimpleCookie getSessionIdCookie() {
@@ -101,7 +98,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public CookieRememberMeManager getRememberManager(){
+    public CookieRememberMeManager getRememberManager() {
         CookieRememberMeManager meManager = new CookieRememberMeManager();
         meManager.setCipherKey(Base64.decode("jhkjs&&*^)(DIUYT&ikd=="));
         meManager.setCookie(getRememberMeCookie());
@@ -111,7 +108,7 @@ public class ShiroConfig {
     @Bean(name = "sessionManager")
     public DefaultWebSessionManager getSessionManage() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setGlobalSessionTimeout(6*60*60*1000);
+        sessionManager.setGlobalSessionTimeout(6 * 60 * 60 * 1000);
         sessionManager.setSessionValidationScheduler(getExecutorServiceSessionValidationScheduler());
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setDeleteInvalidSessions(true);
@@ -125,10 +122,9 @@ public class ShiroConfig {
         return sessionManager;
     }
 
-    @Bean(name = "myRealm")
+    @Bean(name = "shiroRealm")
     public AuthorizingRealm getShiroRealm() {
-//        AuthorizingRealm realm = new ShiroRealm(getCacheManage(),getHashedCredentialsMatcher());
-        AuthorizingRealm realm = new ShiroRealm();
+        AuthorizingRealm realm = new ShiroRealm(getCacheManage());//, getHashedCredentialsMatcher());
         realm.setName("shiro_auth_cache");
         realm.setAuthenticationCache(getCacheManage().getCache(realm.getName()));
         realm.setAuthenticationTokenClass(UsernamePasswordToken.class);
@@ -141,12 +137,13 @@ public class ShiroConfig {
         securityManager.setCacheManager(getCacheManage());
         securityManager.setSessionManager(getSessionManage());
         securityManager.setRememberMeManager(getRememberManager());
+
         securityManager.setRealm(getShiroRealm());
         return securityManager;
     }
 
     @Bean
-    public MethodInvokingFactoryBean getMethodInvokingFactoryBean(){
+    public MethodInvokingFactoryBean getMethodInvokingFactoryBean() {
         MethodInvokingFactoryBean factoryBean = new MethodInvokingFactoryBean();
         factoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
         factoryBean.setArguments(new Object[]{getSecurityManager()});
@@ -155,21 +152,21 @@ public class ShiroConfig {
 
     @Bean
     @DependsOn("lifecycleBeanPostProcessor")
-    public DefaultAdvisorAutoProxyCreator getAutoProxyCreator(){
+    public DefaultAdvisorAutoProxyCreator getAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
         creator.setProxyTargetClass(true);
         return creator;
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(){
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor() {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(getSecurityManager());
         return advisor;
     }
 
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(){
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean() {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(getSecurityManager());
 
@@ -177,6 +174,7 @@ public class ShiroConfig {
         bean.setSuccessUrl("/h/index");
         bean.setUnauthorizedUrl("/error/noauth");
 
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");

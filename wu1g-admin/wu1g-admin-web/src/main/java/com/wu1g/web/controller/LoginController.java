@@ -12,6 +12,7 @@ package com.wu1g.web.controller;
 
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
+import com.wu1g.shiro.MyShiroUserToken;
 import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -63,7 +64,7 @@ public class LoginController extends BaseController {
     /**
      * <p>用户登录
      */
-    @RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, value = "/login")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/login")
     public String login() throws Exception {
         log.info("HomeController login");
 
@@ -81,7 +82,7 @@ public class LoginController extends BaseController {
         // }
 
         try {
-            UsernamePasswordToken token = new UsernamePasswordToken(accid, password);
+            UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.admin);
             getAuth().login(token);
             String remember = request.getParameter("remember");
             if ("1".equals(remember)) {
@@ -97,13 +98,13 @@ public class LoginController extends BaseController {
             return "redirect:/h/index";
         } catch (UnknownAccountException ex) {
             // username provided was not found
-            request.setAttribute("msg", "登录失败,用户名或密码错误!");
+            request.setAttribute("msg", "登录失败,用户名或密码错误1!");
         } catch (IncorrectCredentialsException ex) {
             // for the username provided
-            request.setAttribute("msg", "登录失败,用户名或密码错误!");
+            request.setAttribute("msg", "登录失败,用户名或密码错误2!");
         } catch (Exception ex) {
             log.error("登录失败,原因未知", ex);
-            request.setAttribute("msg", "登录失败,服务器异常!");
+            request.setAttribute("msg", "登录失败,服务器异常3!");
         }
 
         getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, null);

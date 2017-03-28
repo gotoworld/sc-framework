@@ -6,8 +6,6 @@ import com.wu1g.vo.auth.AuthPerm;
 import com.wu1g.vo.auth.AuthRole;
 import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -51,7 +49,7 @@ public class ShiroRealm extends AuthorizingRealm {
             return null;
         }
         //1.根据用户登录名获取用户信息
-        OrgUser orgUserBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        OrgUser orgUserBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
         if (orgUserBean == null) {
             return null;
         }
@@ -95,7 +93,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         }
         if (orgUser != null) {
-            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
+            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, orgUser);
             info = new SimpleAuthenticationInfo(accid, orgUser.getPwd(), getName());
         }
         return info;

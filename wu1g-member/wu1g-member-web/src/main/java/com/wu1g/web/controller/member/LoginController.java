@@ -1,5 +1,5 @@
 /*
- * 后台登陆总入口
+ * 会员登陆总入口
  *
  * VERSION  DATE        BY              REASON
  * -------- ----------- --------------- ------------------------------------------
@@ -8,7 +8,7 @@
  * Copyright 2015 baseos System. - All Rights Reserved.
  *
  */
-package com.wu1g.web.controller.admin;
+package com.wu1g.web.controller.member;
 
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -24,13 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.Cookie;
-import java.util.Locale;
 
 /**
  * <p>登录登出action
  */
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/m")
 @Slf4j
 public class LoginController extends BaseController {
     private static final long serialVersionUID = -6103432072290645133L;
@@ -49,7 +48,7 @@ public class LoginController extends BaseController {
     public String init() throws Exception {
         log.info("LoginController init");
 
-        return "admin/login";
+        return "member/login";
     }
 
     /**
@@ -74,16 +73,16 @@ public class LoginController extends BaseController {
 
         if (ValidatorUtil.isNullEmpty(accid) || ValidatorUtil.isNullEmpty(password)) {
             request.setAttribute("msg", "用户名或密码不能为空!");
-            return "admin/login";
+            return "member/login";
         }
 
         // if (!VerifyUtil.checkVeifyCode( request, "authCode" )) {
         // request.setAttribute( "msg", "验证码校验失败!" );
-        // return "admin/login";
+        // return "member/login";
         // }
 
         try {
-            UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.admin);
+            UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.member);
             getAuth().login(token);
             String remember = request.getParameter("remember");
             if ("1".equals(remember)) {
@@ -96,7 +95,7 @@ public class LoginController extends BaseController {
             session.setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, orgUser);
             session.setAttribute("_language", "zh_CN");
 
-            return "redirect:/h/index";
+            return "redirect:/m/index";
         } catch (UnknownAccountException ex) {
             // username provided was not found
             request.setAttribute("msg", "登录失败,用户名或密码错误1!");
@@ -110,7 +109,7 @@ public class LoginController extends BaseController {
 
         getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, null);
 
-        return "admin/login";
+        return "member/login";
     }
 
     /**
@@ -147,17 +146,6 @@ public class LoginController extends BaseController {
         } catch (Exception e) {
             log.error("清空登录缓存异常!", e);
         }
-        return "admin/login";
-    }
-
-    // test
-    public static void main(String[] args) {
-        Locale[] locales = Locale.getAvailableLocales();
-
-        // 获得所有已安装语言环境的数组
-        for (int i = 0; i < locales.length; i++) {
-            // 使用for循环进行遍历
-            System.out.println(locales[i]); // 输出语言环境及对应的国家/地区代码
-        }
+        return "member/login";
     }
 }

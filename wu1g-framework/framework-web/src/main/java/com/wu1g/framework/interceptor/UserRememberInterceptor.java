@@ -31,7 +31,7 @@ public class UserRememberInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.debug("==>UserRememberInterceptor>>preHandle");
-        if (SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER) == null) {
+        if (SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN) == null) {
             log.info("用户登录信息获取失败,尝试获取免登陆信息登录!");
             Cookie[] cookies = request.getCookies();
             String[] cooks = null;
@@ -46,7 +46,7 @@ public class UserRememberInterceptor implements HandlerInterceptor {
                     } catch (Exception ex) {
                         log.error("登录失败,原因未知", ex);
                         request.setAttribute("msg", "登录失败," + ex.getMessage());
-                        response.sendRedirect("/admin/login");
+                        response.sendRedirect("/h/login");
                         return false;
                     }
                 }

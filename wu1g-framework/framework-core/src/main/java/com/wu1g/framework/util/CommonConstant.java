@@ -20,12 +20,10 @@ public class CommonConstant {
 	public static final int PAGEROW_CURR_NENT_COUNT = 15;
 	/** SESSION里面存放认证码 */
 	public static final String SESSION_VERIFY_CODE = "SESSION_VERIFY_CODE";
-	/** SESSION里面存放 用户信息 */
-	public static final String SESSION_KEY_USER = "SESSION_KEY_USER";
-	/** SESSION里面存放系统 用户信息 */
-	public static final String SESSION_SYS_KEY_USER = "SESSION_SYS_KEY_USER";
-	/** SESSION里面存放 用户信息 */
-	public static final String SESSION_SYS_KEY_USER_PERMS = "SESSION_SYS_KEY_USER_PERMS";
+	/** SESSION里面存放 系统用户信息 */
+	public static final String SESSION_KEY_USER_ADMIN = "SESSION_KEY_USER_ADMIN";
+	/** SESSION里面存放 会员用户信息 */
+	public static final String SESSION_KEY_USER_MEMBER = "SESSION_KEY_USER_MEMBER";
 	/** 路径分隔符 */
 	public static final String PATH_SEPARATOR = "/";
 	/** 系统默认编码 */
@@ -36,7 +34,7 @@ public class CommonConstant {
 	public static final String BLANK_STRING = " ";
 	/** 异常信息 */
 	public static final String LOG_ERROR_TITLE = "异常信息";
-	
+
 
 
 

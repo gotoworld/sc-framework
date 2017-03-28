@@ -170,7 +170,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(getSecurityManager());
 
-        bean.setLoginUrl("/admin/init");
+        bean.setLoginUrl("/h/init");
         bean.setSuccessUrl("/h/index");
         bean.setUnauthorizedUrl("/error/noauth");
 
@@ -179,12 +179,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/plugins/**", "anon");
-
         filterChainDefinitionMap.put("/error/noauth", "anon");
-        filterChainDefinitionMap.put("/admin/init", "anon");
-        filterChainDefinitionMap.put("/admin/logout", "anon");
-        filterChainDefinitionMap.put("/admin/login", "anon");
-
+        filterChainDefinitionMap.put("/h/init", "anon");
+        filterChainDefinitionMap.put("/h/logout", "anon");
+        filterChainDefinitionMap.put("/h/login", "anon");
         filterChainDefinitionMap.put("/h/**", "authc");
 
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);

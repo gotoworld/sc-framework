@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 @Slf4j
-@WebFilter(filterName = "exceptionAndExecuteTimeFilter", urlPatterns = {"/h/*", "/admin/*"})
+@WebFilter(filterName = "exceptionAndExecuteTimeFilter", urlPatterns = {"/h/*", "/member/*"})
 public class ExceptionAndExecuteTimeFilter implements Filter {
     private static final String EQUAL_SIGN = "=";
     private static final String PLUS_SIGN = "+";

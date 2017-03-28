@@ -82,7 +82,7 @@ public class BaseController {
 
 
     public OrgUser getUser(){
-        return (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        return (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
     }
 
     public Integer getPageSize(Object obj){

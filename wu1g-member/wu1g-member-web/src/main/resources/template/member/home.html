@@ -1,23 +1,30 @@
+<%
+/*
+* 首页
+*
+* VERSION  DATE        BY           REASON
+* -------- ----------- ------------ ------------------------------------------
+* 1.00     2016-09-23  wuxiaogang   程序・发布
+* -------- ----------- ------------ ------------------------------------------
+* Copyright 2016 baseos System. - All Rights Reserved.
+*
+*/
+%>
 <!DOCTYPE html>
 <html>
 <head>
 
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="description" content="memo of your site" />
-    <meta name="author" content="author of the site" />
-    <link rel="shortcut icon" href="favicon.ico">
-    <script type="text/javascript">var basePath='/';</script>
+    <% include("include/meta.html"){}%>
 
-    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="${basePath}plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${basePath}plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
 
     <!-- Morris -->
-    <link href="/plugins/hplus/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="${basePath}plugins/hplus/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
 
-    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
-    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="${basePath}plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="${basePath}plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
 
 </head>
 
@@ -57,8 +64,8 @@
         </div>
     </div>
 </div>
-<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
-<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+<script src="${basePath}plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
+<script src="${basePath}plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="${basePath}plugins/hplus/js/content.js?v=1.0.0"></script>
 </body>
 </html>

@@ -147,7 +147,7 @@ public class OrgUserController extends BaseController {
 		log.info("OrgUserController del.........");
 		Response result = new Response();
 		try {
-			OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+			OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 			if(orgUser.getId().equals(id)){
 				throw new RuntimeException("不能删除自己!");
 			}
@@ -210,7 +210,7 @@ public class OrgUserController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+					OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 					if(orgUser !=null){
 						if(ValidatorUtil.isEmpty(bean.getAccid())){
 							bean.setAccid(orgUser.getAccid());
@@ -251,7 +251,7 @@ public class OrgUserController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+					OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 					if(orgUser !=null){
 						if(ValidatorUtil.isEmpty(bean.getAccid())){
 							bean.setAccid(orgUser.getAccid());

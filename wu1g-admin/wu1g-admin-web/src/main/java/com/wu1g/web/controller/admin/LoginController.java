@@ -85,12 +85,12 @@ public class LoginController extends BaseController {
         try {
             UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.admin);
             getAuth().login(token);
-            String remember = request.getParameter("remember");
-            if ("1".equals(remember)) {
-                Cookie cookie = new Cookie("orgUser", accid + "=remember=" + password);
-                cookie.setMaxAge(7 * 24 * 60 * 60);//7天免登陆
-                response.addCookie(cookie);
-            }
+//            String remember = request.getParameter("remember");
+//            if ("1".equals(remember)) {
+//                Cookie cookie = new Cookie("orgUser", accid + "=remember=" + password);
+//                cookie.setMaxAge(7 * 24 * 60 * 60);//7天免登陆
+//                response.addCookie(cookie);
+//            }
             OrgUser orgUser = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
             // System.out.println(orgUser);
             session.setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, orgUser);
@@ -140,14 +140,14 @@ public class LoginController extends BaseController {
     public String logout() {
         log.info("LoginController logout");
         try {
+            log.debug(getAuth().getPrincipal() + "准备退出!");
             // 清空用户登录信息
             request.getSession().invalidate();
             getAuth().logout();
-            log.debug(getAuth().getPrincipal() + "你已安全退出!");
         } catch (Exception e) {
             log.error("清空登录缓存异常!", e);
         }
-        return "admin/login";
+        return "redirect:/h/init";
     }
 
     // test

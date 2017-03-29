@@ -84,17 +84,12 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken anthToken) throws AuthenticationException {
         MyShiroUserToken token = (MyShiroUserToken) anthToken;
         String accid = token.getUsername();
-        log.info("用户[" + accid + "],类型:" + token.getUserType().name());
-        OrgUser orgUser = null;
+        log.info("用户[" + accid + "],类型:" + token.getUserType().getName());
         AuthenticationInfo info = null;
-        if (token.getUserType() == MyShiroUserToken.UserType.admin) {
-            orgUser = roleSourceService.findUserByLoginName(accid);
-        } else {
-
-        }
+        OrgUser orgUser = roleSourceService.findUserByLoginName(accid,token.getUserType().getId());
         if (orgUser != null) {
-            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, orgUser);
             info = new SimpleAuthenticationInfo(accid, orgUser.getPwd(), getName());
+            SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
         }
         return info;
     }

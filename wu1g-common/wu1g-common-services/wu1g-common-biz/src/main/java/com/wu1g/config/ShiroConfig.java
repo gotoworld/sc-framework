@@ -165,26 +165,50 @@ public class ShiroConfig {
         return advisor;
     }
 
+//    @Bean(name = "adminUser")
+//    public org.apache.shiro.web.filter.authc.UserFilter getAdminUser() {
+//        UserFilter filter = new UserFilter();
+//        filter.setLoginUrl("/h/init");
+//        return filter;
+//    }
+//
+//    @Bean(name = "membersUser")
+//    public org.apache.shiro.web.filter.authc.UserFilter getMembersUser() {
+//        UserFilter filter = new MemberUserFilter();
+//        filter.setLoginUrl("/m/init");
+//        return filter;
+//    }
+
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean() {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(getSecurityManager());
-
         bean.setLoginUrl("/h/init");
         bean.setSuccessUrl("/h/index");
         bean.setUnauthorizedUrl("/error/noauth");
 
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/css/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/img/**", "anon");
-        filterChainDefinitionMap.put("/plugins/**", "anon");
-        filterChainDefinitionMap.put("/error/noauth", "anon");
+//        Map<String, Filter> filterMap = new HashMap<>();
+//        filterMap.put("adminUser", getAdminUser());
+//        filterMap.put("membersUser", getMembersUser());
+//        bean.setFilters(filterMap);
+
+
+        Map filterChainDefinitionMap = new LinkedHashMap<>();
+//        filterChainDefinitionMap.put("/css/**", "anon");
+//        filterChainDefinitionMap.put("/js/**", "anon");
+//        filterChainDefinitionMap.put("/img/**", "anon");
+//        filterChainDefinitionMap.put("/plugins/**", "anon");
+//        filterChainDefinitionMap.put("/error/noauth", "anon");
+
         filterChainDefinitionMap.put("/h/init", "anon");
-        filterChainDefinitionMap.put("/h/logout", "anon");
+        filterChainDefinitionMap.put("/h/logout", "logout");
         filterChainDefinitionMap.put("/h/login", "anon");
         filterChainDefinitionMap.put("/h/**", "authc");
 
+        filterChainDefinitionMap.put("/m/init", "anon");
+        filterChainDefinitionMap.put("/m/logout", "logout");
+        filterChainDefinitionMap.put("/m/login", "anon");
+        filterChainDefinitionMap.put("/m/**", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
     }

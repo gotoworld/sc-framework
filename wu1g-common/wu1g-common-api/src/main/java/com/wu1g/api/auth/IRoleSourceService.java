@@ -40,5 +40,5 @@ public interface IRoleSourceService {
     /**
      * <p>用户信息。
      */
-    public OrgUser findUserByLoginName(String loginName);
+    public OrgUser findUserByLoginName(String accid,Integer userType);
 }

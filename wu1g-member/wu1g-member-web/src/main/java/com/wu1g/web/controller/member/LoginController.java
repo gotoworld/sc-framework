@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,17 +85,15 @@ public class LoginController extends BaseController {
         try {
             UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.member);
             getAuth().login(token);
-            String remember = request.getParameter("remember");
-            if ("1".equals(remember)) {
-                Cookie cookie = new Cookie("orgUser", accid + "=remember=" + password);
-                cookie.setMaxAge(7 * 24 * 60 * 60);//7天免登陆
-                response.addCookie(cookie);
-            }
-            OrgUser orgUser = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
-            // System.out.println(orgUser);
-            session.setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, orgUser);
+//            String remember = request.getParameter("remember");
+//            if ("1".equals(remember)) {
+//                Cookie cookie = new Cookie("orgUser", accid + "=remember=" + password);
+//                cookie.setMaxAge(7 * 24 * 60 * 60);//7天免登陆
+//                response.addCookie(cookie);
+//            }
+            OrgUser orgUser = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
+            session.setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, orgUser);
             session.setAttribute("_language", "zh_CN");
-
             return "redirect:/m/index";
         } catch (UnknownAccountException ex) {
             // username provided was not found
@@ -107,8 +106,7 @@ public class LoginController extends BaseController {
             request.setAttribute("msg", "登录失败,服务器异常3!");
         }
 
-        getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, null);
-
+        getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, null);
         return "member/login";
     }
 
@@ -139,13 +137,13 @@ public class LoginController extends BaseController {
     public String logout() {
         log.info("LoginController logout");
         try {
+            log.debug(getAuth().getPrincipal() + "准备退出!");
             // 清空用户登录信息
             request.getSession().invalidate();
             getAuth().logout();
-            log.debug(getAuth().getPrincipal() + "你已安全退出!");
         } catch (Exception e) {
             log.error("清空登录缓存异常!", e);
         }
-        return "member/login";
+        return "redirect:/m/init";
     }
 }

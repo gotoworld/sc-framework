@@ -29,9 +29,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        log.info("==拦截器注册==");
-        registry.addInterceptor(new UserRememberInterceptor()).addPathPatterns("/h/**");
-
+//        log.info("==拦截器注册==");
+//        registry.addInterceptor(new UserRememberInterceptor()).addPathPatterns("/h/**");
         super.addInterceptors(registry);
     }
 }

@@ -68,10 +68,11 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public OrgUser findUserByLoginName(String loginName) {
+    public OrgUser findUserByLoginName(String accid,Integer userType) {
         try {
             Map dto = new HashMap();
-            dto.put("accid", loginName);
+            dto.put("accid", accid);
+            dto.put("userType", userType);
             return orgUserDao.findUserByLoginName(dto);
         } catch (Exception e) {
             log.error("用户信息>根据用户登录名,数据库处理异常!", e);

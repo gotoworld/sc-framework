@@ -192,7 +192,6 @@ public class ShiroConfig {
 //        filterMap.put("membersUser", getMembersUser());
 //        bean.setFilters(filterMap);
 
-
         Map filterChainDefinitionMap = new LinkedHashMap<>();
 //        filterChainDefinitionMap.put("/css/**", "anon");
 //        filterChainDefinitionMap.put("/js/**", "anon");

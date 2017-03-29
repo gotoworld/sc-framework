@@ -18,14 +18,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer(){
-        return new MyCustomizer();
-    }
-    private static class MyCustomizer implements EmbeddedServletContainerCustomizer {
-        @Override
-        public void customize(ConfigurableEmbeddedServletContainer container) {
+        return (container -> {
+//            ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/401.html");
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
-            container.addErrorPages(new ErrorPage(HttpStatus.EXPECTATION_FAILED, "/error/500"));
-        }
+            container.addErrorPages( new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500"));
+        });
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

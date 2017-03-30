@@ -53,6 +53,10 @@ public class SysCategory extends BaseVO {
     @Size(max = 255, message = "memo最大255字符")
     private String memo;
     /**
+     * 详情
+     */
+    private String detailInfo;
+    /**
      * 版本号
      */
     private Integer version;

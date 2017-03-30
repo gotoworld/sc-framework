@@ -1,41 +1,41 @@
 <%
- /*	
- * 系统_类目 后台管理 (信息编辑页面)
- *
- * VERSION      DATE          BY              REASON
- * -------- ----------- --------------- ---------------------------
- * 1.00     2017-03-30      easycode         程序.发布
- * -------- ----------- --------------- ---------------------------
- * Copyright 2017 System. - All Rights Reserved.
- */
+/*
+* 系统_类目 后台管理 (信息编辑页面)
+*
+* VERSION      DATE          BY              REASON
+* -------- ----------- --------------- ---------------------------
+* 1.00     2017-03-30      easycode         程序.发布
+* -------- ----------- --------------- ---------------------------
+* Copyright 2017 System. - All Rights Reserved.
+*/
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<% include("../include/meta.html"){} %>
-<% include("../include/public_init_js_css.html"){} %>
-<link rel="stylesheet" href="${basePath}plugins/editor/themes/default/default.css" />
-<link rel="stylesheet" href="${basePath}plugins/editor/plugins/code/prettify.css" />
+    <meta charset="utf-8" />
+    <% include("../include/meta.html"){} %>
+    <% include("../include/public_init_js_css.html"){} %>
+    <link rel="stylesheet" href="${basePath}plugins/editor/themes/default/default.css" />
+    <link rel="stylesheet" href="${basePath}plugins/editor/plugins/code/prettify.css" />
 </head>
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="ibox float-e-margins">
-			<div class="ibox-content col-md-12">
-				<form id="sysCategory_01" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/sys/sysCategory/save">
-					<div class="col-md-12" style="height: 50px;">
-						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
-					<input type="hidden" name="pageNum" id="bean-pageNum" value="${bean.pageNum}">
-					<input type="hidden" name="id" value="${bean.id}" />
-					<input type="hidden" name="token" value="${bean.token}" />
-					<input type="hidden" name="newFlag" value="${bean.newFlag}" />
-					<div class="clearfix "></div>
-					<div class="col-sm-6 b-r">
+    <div class="row">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content col-md-12">
+                <form id="sysNewsCategory_01" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="${basePath}/h/sys/sysNewsCategory/save">
+                    <div class="col-md-12" style="height: 50px;">
+                        <div style="float:right;">
+                            <input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+                        </div>
+                    </div>
+                    <input type="hidden" name="pageNum" id="bean-pageNum" value="${bean.pageNum}">
+                    <input type="hidden" name="id" value="${bean.id}" />
+                    <input type="hidden" name="token" value="${bean.token}" />
+                    <input type="hidden" name="newFlag" value="${bean.newFlag}" />
+                    <div class="clearfix "></div>
+                    <div class="col-sm-6 b-r">
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">名称：</label>
@@ -61,8 +61,8 @@
                                 <span id="bean-parentId-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-					</div>
-					<div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">状态：</label>
@@ -79,10 +79,10 @@
                                 <span id="bean-memo-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-					</div>
+                    </div>
 
-					<div class="clearfix "></div>
-					<div class="col-md-12">
+                    <div class="clearfix "></div>
+                    <div class="col-md-12">
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">内容：</label>
@@ -93,39 +93,39 @@
                                 <span id="bean-detailInfo-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-					</div>
-					<div class="clearfix "></div>
-					<div class="col-md-12" style="height: 50px;">
-						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                    </div>
+                    <div class="clearfix "></div>
+                    <div class="col-md-12" style="height: 50px;">
+                        <div style="width: 200px; margin: 0 auto;">
+                            <input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <% include("../include/public_last_js_css.html"){} %>
 <script charset="utf-8" src="${basePath}plugins/editor/kindeditor-all-min.js"></script>
 <script type="text/javascript">
-KindEditor.ready(function(K) {
+    KindEditor.ready(function(K) {
 
-    //--编辑框(完整)[内容]
-    K.create('#bean-detailInfo', {
-        resizeType : 2,
-        uploadJson : '${basePath}fileUpload?isrich=1',
-        fileManagerJson : '${basePath}fileManagerServlet',
-        allowFileManager : true
+        //--编辑框(完整)[内容]
+        K.create('#bean-detailInfo', {
+            resizeType : 2,
+            uploadJson : '${basePath}fileUpload?isrich=1',
+            fileManagerJson : '${basePath}fileManagerServlet',
+            allowFileManager : true
+        });
     });
-});
-$(document).ready(function(){
-	formValidate();
-});
-function formValidate(){
-	setTimeout(function(){
-		$("#sysCategory_01").validate();
-	},1000);
-}
+    $(document).ready(function(){
+        formValidate();
+    });
+    function formValidate(){
+        setTimeout(function(){
+            $("#sysNewsCategory_01").validate();
+        },1000);
+    }
 </script>
 </body>
 </html>

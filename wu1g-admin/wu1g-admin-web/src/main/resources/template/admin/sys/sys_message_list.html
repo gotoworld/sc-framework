@@ -14,11 +14,11 @@
 		<thead>
 			<tr>
 				<th style="width:20px;">#</th>
-				<th>发件人id[0代表管理员]</th>
-				<th>创建时间</th>
-				<th>是否已读0未读1已读</th>
 				<th>消息标题</th>
+				<th>发件人id[0代表管理员]</th>
+				<th>是否已读0未读1已读</th>
 				<th>收件人id[0代表所有人]</th>
+				<th>创建时间</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -28,11 +28,11 @@
 			%>
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
-				<td>${bean.sendId}</td>
-				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
-				<td>${bean.state}</td>
 				<td>${bean.title}</td>
+				<td>${bean.sendId}</td>
+				<td>${bean.state}</td>
 				<td>${bean.acceptId}</td>
+				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
 				    <% if(shiro.hasPermission("sysMessage:edit")){ %>
 	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/sys/sysMessage/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>

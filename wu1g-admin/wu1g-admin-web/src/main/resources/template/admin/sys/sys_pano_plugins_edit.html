@@ -50,10 +50,7 @@
                                 <span  class="help-block m-b-none"><button type="button" id="upload_btn_pluginSrc">点击上传</button></span>
                                 <div id="upload_div_pluginSrc" style="">
                                     <% if(isNotEmpty(bean.pluginSrc)){%>
-                                    <div class="img-grid-2">
-                                        <input name="pluginSrc" value="${bean.pluginSrc}" type="hidden">
-                                        <img src="${bean.pluginSrc}" style="max-width:264px;max-height:264px">
-                                    </div>
+                                        <input name="pluginSrc" value="${bean.pluginSrc}" class="form-control" type="text">
                                     <%}%>
                                 </div>
                             </div>
@@ -100,7 +97,7 @@ function formValidate(){
 		$("#sysPanoPlugins_01").validate();
 	},1000);
 }
-upload_single_file('upload_btn_pluginSrc','upload_div_pluginSrc','png,jpg,gif,bmp','pluginSrc');
+upload_single_file('upload_btn_pluginSrc','upload_div_pluginSrc','*','pluginSrc');
 </script>
 </body>
 </html>

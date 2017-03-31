@@ -14,11 +14,11 @@
 		<thead>
 			<tr>
 				<th style="width:20px;">#</th>
-				<th>图片地址</th>
-				<th>创建时间</th>
 				<th>广告名称</th>
-				<th>状态0下架1上架</th>
+				<th>图片地址</th>
 				<th>广告位置</th>
+				<th>状态0下架1上架</th>
+				<th>创建时间</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -28,11 +28,11 @@
 			%>
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
-				<td>${bean.imgUrl}</td>
-				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>${bean.name}</td>
-				<td>${bean.state}</td>
+				<td>${bean.imgUrl}</td>
 				<td>${bean.position}</td>
+				<td>${bean.state}</td>
+				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
 				    <% if(shiro.hasPermission("sysAdvertise:edit")){ %>
 	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/sys/sysAdvertise/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>

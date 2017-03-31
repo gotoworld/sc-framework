@@ -23,7 +23,7 @@ function updte_single_bgm(btn, divId,_fileExt,name) {
 	        },
 	        FilesAdded: function(up, files) {
 				var file= files[files.length-1];
-				$("#"+divId).append('<div id="' + file.id + '" class="music-upload"><b></b>'
+				$("#"+divId).html('<div id="' + file.id + '" class="music-upload"><b></b>'
 									+'<div class="progress"><div class="progress-bar" style="width: 0%"></div></div>'
 									+'</div>');
 				uploader.start();
@@ -50,13 +50,13 @@ function updte_single_bgm(btn, divId,_fileExt,name) {
 	            	html+='您的浏览器不支持在线播放';
 	            	html+='</audio>';
 	            	html+='</div>';
-	            	$("#"+divId).append(html);
+	            	$("#"+divId).html(html);
 	            	
 	            	plyr.setup();
 	            }
 	            else
 	            {
-	            	$("#"+divId).append(info.response);
+	            	$("#"+divId).html(info.response);
 	            } 
 	        },
 	

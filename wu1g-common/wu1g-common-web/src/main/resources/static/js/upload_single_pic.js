@@ -23,7 +23,7 @@ function upload_single_pic(btn, divId,_fileExt,name) {
             },
             FilesAdded: function (up, files) {
                 var file = files[files.length - 1];
-                $("#" + divId).append('<div id="' + file.id + '" class="img-grid-2"><b></b>'
+                $("#" + divId).html('<div id="' + file.id + '" class="img-grid-2"><b></b>'
                     + '<div class="progress"><div class="progress-bar" style="width: 0%"></div></div>'
                     + '</div>');
                 uploader.start();
@@ -47,16 +47,16 @@ function upload_single_pic(btn, divId,_fileExt,name) {
                 if (info.status == 200) {
                     var infoData = eval('(' + info.response + ')');
                     if (infoData.code != 0) {
-                        $("#" + divId).append(infoData.message);
+                        $("#" + divId).html(infoData.message);
                     } else {
                         var html = '<div id="' + file.id + '" class="img-grid-2">';
                         html += '<input name="'+name+'" value="' + infoData.fileUrl + '" type="hidden">';
                         html += '<img src="' + infoData.fileUrl + '" style="max-width:264px;max-height:264px">';
                         html += '</div>';
-                        $("#" + divId).append(html);
+                        $("#" + divId).html(html);
                     }
                 } else {
-                    $("#" + divId).append(info.response);
+                    $("#" + divId).html(info.response);
                 }
                 $("#" + btn).css('pointer-events', '');
             },

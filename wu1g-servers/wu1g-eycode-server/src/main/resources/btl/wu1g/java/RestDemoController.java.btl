@@ -24,7 +24,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private I${tcfg.tableNameFormat!}Service ${tableNameL}Service;
-    private static final String acPrefix = "${scfg._web_http}/";
+    private static final String acPrefix = "/${scfg._web_http}/";
 
     <%if ("1"==scfg._page) {%>
     /**

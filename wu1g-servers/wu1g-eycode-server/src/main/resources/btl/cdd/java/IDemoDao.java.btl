@@ -39,7 +39,7 @@ public interface I${tcfg.tableNameFormat!}${scfg._dao_suffix!} extends IBaseMapp
     /**
      * 根据主键 物理删除
      */
-    @Delete("delete ftom ${tcfg.tableName} where <%for(t in pks){%>${tLP.index==1?'':' and '} ${t.columnName} = #{${t.columnNameFormat}}<%}%> ")
+    @Delete("delete from ${tcfg.tableName} where <%for(t in pks){%>${tLP.index==1?'':' and '} ${t.columnName} = #{${t.columnNameFormat}}<%}%> ")
     int deleteByPrimaryKey(IEntity dto) throws Exception;
     <%}%>
 }

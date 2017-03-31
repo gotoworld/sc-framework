@@ -20,7 +20,9 @@
         <% if(shiro.hasPermission("sysDic:menu")){ %>
         <li><a class="J_menuItem" href="${basePath }h/sys/dic/init">系统_数据字典</a></li>
         <%}%>
-        <li><a class="J_menuItem" href="/indevelopment.html?v=a1">敏感词管理</a></li>
+        <% if(shiro.hasPermission("sysSensitiveWords:menu")){ %>
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysSensitiveWords/init">敏感词管理</a></li>
+        <%}%>
         <li><a class="J_menuItem" href="/indevelopment.html?v=a2">系统设置</a></li>
         <% if(shiro.hasPermission("sysPanoPlugins:menu")){ %>
         <li><a class="J_menuItem" href="${basePath }h/sys/sysPanoPlugins/init">系统_全景插件</a></li>

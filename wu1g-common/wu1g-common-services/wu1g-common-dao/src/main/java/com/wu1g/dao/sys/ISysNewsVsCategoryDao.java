@@ -24,6 +24,6 @@ public interface ISysNewsVsCategoryDao extends IBaseDao {
     /**
      * 根据主键 物理删除
      */
-    @Delete("delete ftom sys_news_vs_category where  news_id = #{newsId} and  category_id = #{categoryId} ")
+    @Delete("delete from sys_news_vs_category where  news_id = #{newsId} and  category_id = #{categoryId} ")
     int deleteByPrimaryKey(IEntity dto) throws Exception;
 }

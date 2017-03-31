@@ -36,7 +36,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	@Autowired
 	protected I${tcfg.tableNameFormat!}Service ${tableNameL}Service;
 	
-	private static final String acPrefix="${scfg._web_http}/";
+	private static final String acPrefix="/${scfg._web_http}/";
 	private static final String init = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}";
 	private static final String edit = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}_edit";
 	private static final String list = "${strUtil.getDir(scfg._view_pkg)}/${tcfg.tableName}_list";

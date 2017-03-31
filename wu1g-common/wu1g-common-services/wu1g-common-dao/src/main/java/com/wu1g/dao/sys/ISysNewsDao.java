@@ -34,6 +34,6 @@ public interface ISysNewsDao extends IBaseDao {
     /**
      * 根据主键 物理删除
      */
-    @Delete("delete ftom sys_news where  id = #{id} ")
+    @Delete("delete from sys_news where  id = #{id} ")
     int deleteByPrimaryKey(IEntity dto) throws Exception;
 }

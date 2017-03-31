@@ -34,6 +34,6 @@ public interface ISysPanoPluginsDao extends IBaseDao {
     /**
      * 根据主键 物理删除
      */
-    @Delete("delete ftom sys_pano_plugins where  id = #{id} ")
+    @Delete("delete from sys_pano_plugins where  id = #{id} ")
     int deleteByPrimaryKey(IEntity dto) throws Exception;
 }

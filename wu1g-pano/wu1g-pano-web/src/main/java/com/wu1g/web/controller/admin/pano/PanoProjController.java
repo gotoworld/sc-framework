@@ -22,8 +22,6 @@ import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.DateUtil;
-import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.vo.pano.PanoMap;
 import com.wu1g.vo.pano.PanoProj;

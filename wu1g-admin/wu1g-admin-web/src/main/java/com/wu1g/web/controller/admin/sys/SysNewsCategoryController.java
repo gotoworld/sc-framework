@@ -86,16 +86,16 @@ public class SysNewsCategoryController extends BaseController {
             if (id!=null) {
                 if(dto==null)dto=new SysCategory();
                 dto.setId(id);
-				dto.setType(1);
                 dto=sysCategoryService.findDataById(dto);
-            }
-            if(dto==null||0==id){
-                dto=new SysCategory();
-                dto.setNewFlag(1);
-            }
-            dto.setPageNum( pageNum );
+			}
+			if(dto==null||0==id){
+				dto=new SysCategory();
+				dto.setNewFlag(1);
+			}
+			dto.setType(1);
+			dto.setPageNum( pageNum );
             request.setAttribute("bean",dto);
-			request.setAttribute("nodes",sysCategoryService.findDataTree(null));
+			request.setAttribute("nodes",sysCategoryService.findDataTree(dto));
 		} catch (Exception e) {
            result = Response.error(e.getMessage());
         }

@@ -20,10 +20,11 @@
 <script type="text/javascript" src="${basePath}assets/plugins/hover-dropdown.js"></script>
 <script type="text/javascript" src="${basePath}assets/plugins/back-to-top.js"></script>
 <!-- END CORE PLUGINS -->
-
 <!-- BEGIN PAGE LEVEL JAVASCRIPTS(REQUIRED ONLY FOR CURRENT PAGE) -->
 <script type="text/javascript" src="${basePath}assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
-<script type="text/javascript" src="${basePath}assets/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
-<script type="text/javascript" src="${basePath}assets/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-<script type="text/javascript" src="${basePath}assets/plugins/bxslider/jquery.bxslider.min.js"></script>
 <script src="${basePath}assets/scripts/app.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        App.init();
+    });
+</script>

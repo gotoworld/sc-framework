@@ -1,104 +1,104 @@
 <!-- BEGIN STYLE CUSTOMIZER -->
 <div class="color-panel hidden-sm">
- <div class="color-mode-icons icon-color"></div>
- <div class="color-mode-icons icon-color-close"></div>
- <div class="color-mode">
-  <p>样式</p>
-  <ul class="inline">
-   <li class="color-blue current color-default" data-style="blue"></li>
-   <li class="color-red" data-style="red"></li>
-   <li class="color-green" data-style="green"></li>
-   <li class="color-orange" data-style="orange"></li>
-  </ul>
-  <label>
-   <span>Header</span>
-   <select class="header-option form-control input-small">
-    <option value="default" selected>Default</option>
-    <option value="fixed">Fixed</option>
-   </select>
-  </label>
- </div>
+    <div class="color-mode-icons icon-color"></div>
+    <div class="color-mode-icons icon-color-close"></div>
+    <div class="color-mode">
+        <p>样式</p>
+        <ul class="inline">
+            <li class="color-blue current color-default" data-style="blue"></li>
+            <li class="color-red" data-style="red"></li>
+            <li class="color-green" data-style="green"></li>
+            <li class="color-orange" data-style="orange"></li>
+        </ul>
+        <label>
+            <span>Header</span>
+            <select class="header-option form-control input-small">
+                <option value="default" selected>Default</option>
+                <option value="fixed">Fixed</option>
+            </select>
+        </label>
+    </div>
 </div>
 <!-- END BEGIN STYLE CUSTOMIZER -->
 
 <!-- BEGIN HEADER -->
 <div class="header navbar navbar-default navbar-static-top">
- <!-- BEGIN TOP BAR -->
- <div class="front-topbar">
-  <div class="container">
-   <div class="row">
-    <div class="col-sm-9 col-sm-9">
-     <ul class="list-unstyle inline">
-      <li><i class="fa fa-phone topbar-info-icon top-2"></i>Call us: <span>(1) 123 456</span></li>
-      <li class="sep"><span>|</span></li>
-      <li><i class="fa fa-envelope-o topbar-info-icon top-2"></i>Email: <span>wu1g@163.com</span></li>
-     </ul>
+    <!-- BEGIN TOP BAR -->
+    <div class="front-topbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-sm-9">
+                    <ul class="list-unstyle inline">
+                        <li><i class="fa fa-phone topbar-info-icon top-2"></i>Call us: <span>(1) 123 456</span></li>
+                        <li class="sep"><span>|</span></li>
+                        <li><i class="fa fa-envelope-o topbar-info-icon top-2"></i>Email: <span>wu1g@163.com</span></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 col-sm-3 login-reg-links">
+                    <ul class="list-unstyled inline">
+                        <li><a href="${basePath}m/init">登录</a></li>
+                        <li class="sep"><span>|</span></li>
+                        <li><a href="${basePath}page_signup.html">注册</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-3 col-sm-3 login-reg-links">
-     <ul class="list-unstyled inline">
-      <li><a href="/m/init">登录</a></li>
-      <li class="sep"><span>|</span></li>
-      <li><a href="${basePath}page_signup.html">注册</a></li>
-     </ul>
+    <!-- END TOP BAR -->
+
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand logo-v1" href="${basePath}">
+                <img src="${basePath}assets/img/logo_blue.png" id="logoimg" alt="">
+            </a>
+        </div>
+
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown ${navKey=='index'?'active':''}">
+                    <a href="${basePath}">
+                        首页
+                    </a>
+                </li>
+                <li class="dropdown ${navKey=='news'?'active':''}">
+                    <a href="${basePath}/channel">
+                        新闻资讯
+                    </a>
+                </li>
+                <li class="dropdown ${navKey=='tour'?'active':''}">
+                    <a href="${basePath}tour">
+                        全景摄影
+                    </a>
+                </li>
+                <li class="dropdown ${navKey=='video'?'active':''}">
+                    <a href="${basePath}video">
+                        全景视频
+                    </a>
+                </li>
+                <li class="dropdown ${navKey=='about'?'active':''}">
+                    <a href="${basePath}page_about.html">
+                        关于我们
+                    </a>
+                </li>
+                <li class="menu-search">
+                    <span class="sep"></span>
+                    <i class="fa fa-search search-btn"></i>
+
+                    <div class="search-box">
+                        <form action="#">
+                            <div class="input-group input-large">
+                                <input class="form-control" type="text" placeholder="Search">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn theme-btn">Go</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- BEGIN TOP NAVIGATION MENU -->
     </div>
-   </div>
-  </div>
- </div>
- <!-- END TOP BAR -->
-
- <div class="container">
-  <div class="navbar-header">
-   <a class="navbar-brand logo-v1" href="index.html">
-    <img src="${basePath}assets/img/logo_blue.png" id="logoimg" alt="">
-   </a>
-  </div>
-
-  <!-- BEGIN TOP NAVIGATION MENU -->
-  <div class="navbar-collapse collapse">
-   <ul class="nav navbar-nav">
-    <li class="dropdown active">
-     <a href="#">
-      首页
-     </a>
-    </li>
-    <li class="dropdown">
-     <a  href="${basePath}news.html">
-      新闻资讯
-     </a>
-    </li>
-    <li class="dropdown">
-     <a href="${basePath}portfolio_4.html">
-      全景摄影
-     </a>
-    </li>
-    <li class="dropdown">
-     <a href="${basePath}viedo.html">
-      全景视频
-     </a>
-    </li>
-    <li class="dropdown">
-     <a href="${basePath}page_about.html">
-      关于我们
-     </a>
-    </li>
-    <li class="menu-search">
-     <span class="sep"></span>
-     <i class="fa fa-search search-btn"></i>
-
-     <div class="search-box">
-      <form action="#">
-       <div class="input-group input-large">
-        <input class="form-control" type="text" placeholder="Search">
-        <span class="input-group-btn">
-                                        <button type="submit" class="btn theme-btn">Go</button>
-                                    </span>
-       </div>
-      </form>
-     </div>
-    </li>
-   </ul>
-  </div>
-  <!-- BEGIN TOP NAVIGATION MENU -->
- </div>
 </div>
 <!-- END HEADER -->

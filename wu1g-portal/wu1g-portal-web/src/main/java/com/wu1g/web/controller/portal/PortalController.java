@@ -32,6 +32,7 @@ public class PortalController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET},value="/")
 	public String index() {
 		log.info("SysNewsController index.........");
+		request.setAttribute("navKey","index");
 		return index;
 	}
 	/**
@@ -40,6 +41,7 @@ public class PortalController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET},value=acPrefix+"channel")
 	public String channel() {
 		log.info("SysNewsController channel.........");
+		request.setAttribute("navKey","news");
 		return channel;
 	}
 	/**
@@ -48,6 +50,7 @@ public class PortalController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET},value=acPrefix+"news")
 	public String news() {
 		log.info("SysNewsController news.........");
+		request.setAttribute("navKey","news");
 		return news;
 	}
 	/**
@@ -56,6 +59,7 @@ public class PortalController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET},value=acPrefix+"tour")
 	public String tour() {
 		log.info("SysNewsController tour.........");
+		request.setAttribute("navKey","tour");
 		return tour;
 	}
 	/**
@@ -64,6 +68,7 @@ public class PortalController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET},value=acPrefix+"video")
 	public String video() {
 		log.info("SysNewsController video.........");
+		request.setAttribute("navKey","video");
 		return video;
 	}
 }

@@ -16,15 +16,15 @@
     <% layout("include/header.html"){}%>
     <!-- BEGIN PAGE CONTAINER -->
     <div class="page-container">
+        <%if(false){%>
         <!-- BEGIN REVOLUTION SLIDER -->
         <div class="fullwidthbanner-container slider-main">
             <div class="fullwidthabnner">
                 <ul id="revolutionul" style="display:none;">
                         <!-- THE NEW SLIDE -->
-                        <li data-transition="fade" data-slotamount="8" data-masterspeed="700" data-delay="9400" data-thumb="assets/img/sliders/revolution/thumbs/thumb2.jpg">
+                        <li data-transition="fade" data-slotamount="8" data-masterspeed="700" data-delay="9400" data-thumb="${basePath}assets/img/sliders/revolution/thumbs/thumb2.jpg">
                             <!-- THE MAIN IMAGE IN THE FIRST SLIDE -->
                             <img src="${basePath}assets/img/sliders/revolution/bg9.jpg" alt="">
-
                             <div class="caption lft slide_title_white slide_item_left"
                                  data-x="30"
                                  data-y="90"
@@ -63,7 +63,7 @@
             </div>
         </div>
         <!-- END REVOLUTION SLIDER -->
-
+        <%}%>
         <!-- BEGIN CONTAINER -->
         <div class="container">
 
@@ -269,10 +269,12 @@
     </div>
     <!-- END COPYRIGHT -->
     <% layout("include/public_last_js_css.html"){}%>
+    <script type="text/javascript" src="${basePath}assets/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="${basePath}assets/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="${basePath}assets/plugins/bxslider/jquery.bxslider.min.js"></script>
     <script src="${basePath}assets/scripts/index.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function() {
-            App.init();    
             App.initBxSlider();
             Index.initRevolutionSlider();                    
         });

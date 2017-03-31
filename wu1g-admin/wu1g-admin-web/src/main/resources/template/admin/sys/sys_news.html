@@ -39,42 +39,60 @@
 					</ul>
 					<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
-							<div class="ibox float-e-margins">
-								<div class="ibox-content">
-									<% layout("../include/notifications.html"){}%>
-									<table class="table">
-										<tr>
-											<td>
-												<form id="info_search_form" 
-													role="form" class="form-inline" 
-													method="post"  accept-charset="UTF-8" 
-													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
-													data-action="${basePath}h/sys/sysNews/page">
-													<input type="hidden" name="pageNum" id="pageNumA" value="1">
-													<div class="form-group" id="data_5">
-														<label class="font-noraml">创建时间</label>
-														<div class="input-daterange input-group" id="datepicker">
-															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
-															<span class="input-group-addon">到</span> 
-															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+							<div class="col-sm-2">
+								<div class="ibox float-e-margins">
+									<div class="ibox-content mailbox-content">
+										<div class="file-manager">
+												<div class="space-25"></div>
+												<h5>资讯栏目</h5>
+												<ul class="folder-list m-b-md" style="padding: 0">
+													<li>
+														<a href="mailbox.html"> <i class="fa fa-certificate"></i> 重要</a>
+													</li>
+												</ul>
+												<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-10">
+								<div class="ibox float-e-margins panel panel-default">
+									<div class="ibox-content">
+										<% layout("../include/notifications.html"){}%>
+										<table class="table">
+											<tr>
+												<td>
+													<form id="info_search_form"
+														role="form" class="form-inline"
+														method="post"  accept-charset="UTF-8"
+														action="javascript:loadUrlPage(null,'info_search_form','info_list_div');"
+														data-action="${basePath}h/sys/sysNews/page">
+														<input type="hidden" name="pageNum" id="pageNumA" value="1">
+														<div class="form-group" id="data_5">
+															<label class="font-noraml">创建时间</label>
+															<div class="input-daterange input-group" id="datepicker">
+																<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+																<span class="input-group-addon">到</span>
+																<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+															</div>
 														</div>
-													</div>
-													<div class="input-group">
-														<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
-															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
-															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
-														</span>
-													</div>
-												</form>
-											</td>
-										</tr>
-									</table>
-									<% if(shiro.hasPermission("sysNews:add")){ %>
-									<a href="#" onclick="openMyBoxLayer('a','${basePath}h/sys/sysNews/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									<%}%>
-									<div id="info_list_div">
-										<div class="alert alert-warning mt10">
-											<strong>数据加载中!</strong>data loading...
+														<div class="input-group">
+															<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+																<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+																<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+															</span>
+														</div>
+													</form>
+												</td>
+											</tr>
+										</table>
+										<% if(shiro.hasPermission("sysNews:add")){ %>
+										<a href="#" onclick="openMyBoxLayer('a','${basePath}h/sys/sysNews/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+										<%}%>
+										<div id="info_list_div">
+											<div class="alert alert-warning mt10">
+												<strong>数据加载中!</strong>data loading...
+											</div>
 										</div>
 									</div>
 								</div>

@@ -3,11 +3,12 @@ package com.wu1g.service.auth;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.api.auth.IAuthPermService;
 import com.wu1g.dao.auth.IAuthPermDao;
-import com.wu1g.vo.auth.AuthPerm;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
 import com.wu1g.framework.util.ValidatorUtil;
+import com.wu1g.vo.NodeTree;
+import com.wu1g.vo.auth.AuthPerm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -137,7 +137,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         if (beans == null) {
             return null;
         }
-        AuthPermTree tree = new AuthPermTree(beans);
+        NodeTree<AuthPerm> tree = new NodeTree(beans,"id","parentId","beans");
         return tree.buildTree();
     }
 
@@ -149,48 +149,5 @@ public class AuthPermService extends BaseService implements IAuthPermService {
             log.error("信息查询失败!", e);
         }
         return beans;
-    }
-}
-
-class AuthPermTree {
-    private List<AuthPerm> new_nodes = new ArrayList<AuthPerm>();
-    private List<AuthPerm> nodes;
-
-    public AuthPermTree(List<AuthPerm> nodes) {
-        this.nodes = nodes;
-    }
-
-    public List<AuthPerm> buildTree() {
-        for (AuthPerm node : nodes) {
-            if (ValidatorUtil.isNullEmpty(node.getParentId())) {
-                new_nodes.add(node);
-                build(node);
-            }
-        }
-        return new_nodes;
-    }
-
-    private void build(AuthPerm node) {
-        List<AuthPerm> children = getChildren(node);
-        if (!children.isEmpty()) {
-            if (node.getBeans() == null) {
-                node.setBeans(new ArrayList());
-            }
-            for (AuthPerm child : children) {
-                node.getBeans().add(child);
-                build(child);
-            }
-        }
-    }
-
-    private List<AuthPerm> getChildren(AuthPerm node) {
-        List<AuthPerm> children = new ArrayList<AuthPerm>();
-        String id = node.getId();
-        for (AuthPerm child : nodes) {
-            if (id.equals(child.getParentId())) {
-                children.add(child);
-            }
-        }
-        return children;
     }
 }

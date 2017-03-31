@@ -49,4 +49,10 @@ public interface ISysCategoryService {
      */
     //@RequestMapping(value = "/findDataById")
     public SysCategory findDataById(SysCategory dto) throws Exception;
+
+    /**
+     * <p>栏目树
+     */
+    //@RequestMapping(value = "/findDataTree")
+    public List<SysCategory> findDataTree(SysCategory bean);
 }

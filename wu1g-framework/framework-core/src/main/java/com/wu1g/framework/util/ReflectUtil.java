@@ -63,7 +63,7 @@ public class ReflectUtil {
     public static void setValueByFieldName(Object obj, String fieldName, Object value) {
         for (Class<?> superClass = obj.getClass(); superClass != Object.class; superClass = superClass.getSuperclass()) {
             try {
-                Field field = superClass.getClass().getDeclaredField(fieldName);
+                Field field = superClass.getDeclaredField(fieldName);
                 if (field != null) {
                     if (field.isAccessible()) {
                         field.set(obj, value);

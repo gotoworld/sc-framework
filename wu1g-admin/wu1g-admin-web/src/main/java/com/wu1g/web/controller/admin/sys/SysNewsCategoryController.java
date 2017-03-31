@@ -95,6 +95,7 @@ public class SysNewsCategoryController extends BaseController {
             }
             dto.setPageNum( pageNum );
             request.setAttribute("bean",dto);
+			request.setAttribute("nodes",sysCategoryService.findDataTree(null));
 		} catch (Exception e) {
            result = Response.error(e.getMessage());
         }

@@ -32,7 +32,7 @@ import com.wu1g.vo.sys.SysCategory;
  */
 @Controller
 @Slf4j
-public class SysCategoryController extends BaseController {
+public class SysPanoCategoryController extends BaseController {
 	@Autowired
 	protected ISysCategoryService sysCategoryService;
 	
@@ -63,6 +63,7 @@ public class SysCategoryController extends BaseController {
             if(dto==null){
                 dto = new SysCategory();
             }
+			dto.setType(2);
             PageInfo<?> page=new PageInfo<>(sysCategoryService.findDataIsPage(dto));
             request.setAttribute( "beans", page.getList() );
             //分页对象
@@ -87,6 +88,7 @@ public class SysCategoryController extends BaseController {
             if (id!=null) {
                 if(dto==null)dto=new SysCategory();
                 dto.setId(id);
+				dto.setType(2);
                 dto=sysCategoryService.findDataById(dto);
             }
             if(dto==null||0==id){
@@ -114,6 +116,7 @@ public class SysCategoryController extends BaseController {
 		try {
 			SysCategory dto=new SysCategory();
             dto.setId(id);
+			dto.setType(2);
             result.message = sysCategoryService.deleteDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
@@ -144,6 +147,7 @@ public class SysCategoryController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
+					dto.setType(2);
 					result.message=sysCategoryService.saveOrUpdateData(dto);
 					result.data = dto.getId();
 					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");

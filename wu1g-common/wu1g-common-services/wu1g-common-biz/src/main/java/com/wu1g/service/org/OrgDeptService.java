@@ -1,12 +1,12 @@
 package com.wu1g.service.org;
 
 import com.github.pagehelper.PageHelper;
+import com.wu1g.api.org.IOrgDeptService;
+import com.wu1g.dao.org.IOrgDeptDao;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.api.org.IOrgDeptService;
-import com.wu1g.dao.org.IOrgDeptDao;
+import com.wu1g.vo.NodeTree;
 import com.wu1g.vo.org.OrgDept;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -127,50 +126,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
         if (beans == null) {
             return null;
         }
-        OrgDeptTree tree = new OrgDeptTree(beans);
+        NodeTree<OrgDept> tree = new NodeTree(beans, "id", "parentId", "beans");
         return tree.buildTree();
-    }
-}
-
-class OrgDeptTree {
-    private List<OrgDept> new_nodes = new ArrayList<OrgDept>();
-    private List<OrgDept> nodes;
-
-    public OrgDeptTree(List<OrgDept> nodes) {
-        this.nodes = nodes;
-    }
-
-    public List<OrgDept> buildTree() {
-        for (OrgDept node : nodes) {
-            if (ValidatorUtil.isNullEmpty(node.getParentId())) {
-                new_nodes.add(node);
-                build(node);
-            }
-        }
-        return new_nodes;
-    }
-
-    private void build(OrgDept node) {
-        List<OrgDept> children = getChildren(node);
-        if (!children.isEmpty()) {
-            if (node.getBeans() == null) {
-                node.setBeans(new ArrayList());
-            }
-            for (OrgDept child : children) {
-                node.getBeans().add(child);
-                build(child);
-            }
-        }
-    }
-
-    private List<OrgDept> getChildren(OrgDept node) {
-        List<OrgDept> children = new ArrayList<OrgDept>();
-        Long id = node.getId();
-        for (OrgDept child : nodes) {
-            if (id==(child.getParentId())) {
-                children.add(child);
-            }
-        }
-        return children;
     }
 }

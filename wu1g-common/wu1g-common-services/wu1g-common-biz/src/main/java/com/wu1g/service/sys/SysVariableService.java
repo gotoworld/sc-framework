@@ -5,7 +5,7 @@ import com.wu1g.api.sys.ISysVariableService;
 import com.wu1g.dao.sys.ISysVariableDao;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.framework.util.ValidatorUtil;
+import com.wu1g.vo.NodeTree;
 import com.wu1g.vo.sys.SysVariable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -82,7 +81,7 @@ public class SysVariableService extends BaseService implements ISysVariableServi
     public List<SysVariable> findDataIsPage(SysVariable bean) {
         List<SysVariable> beans = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
+            PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
             beans = (List<SysVariable>) sysVariableDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
@@ -123,55 +122,13 @@ public class SysVariableService extends BaseService implements ISysVariableServi
         }
         return msg;
     }
+
     public List<SysVariable> findDataTree(SysVariable bean) {
         List<SysVariable> beans = findDataIsList(bean);
         if (beans == null) {
             return null;
         }
-        SysVariableTree tree = new SysVariableTree(beans);
+        NodeTree<SysVariable> tree = new NodeTree(beans, "id", "parentId", "nodes");
         return tree.buildTree();
-    }
-}
-
-class SysVariableTree {
-    private List<SysVariable> new_nodes = new ArrayList<SysVariable>();
-    private List<SysVariable> nodes;
-
-    public SysVariableTree(List<SysVariable> nodes) {
-        this.nodes = nodes;
-    }
-
-    public List<SysVariable> buildTree() {
-        for (SysVariable node : nodes) {
-            if (ValidatorUtil.isNullEmpty(node.getParentId())) {
-                new_nodes.add(node);
-                build(node);
-            }
-        }
-        return new_nodes;
-    }
-
-    private void build(SysVariable node) {
-        List<SysVariable> children = getChildren(node);
-        if (!children.isEmpty()) {
-            if (node.getNodes() == null) {
-                node.setNodes(new ArrayList());
-            }
-            for (SysVariable child : children) {
-                node.getNodes().add(child);
-                build(child);
-            }
-        }
-    }
-
-    private List<SysVariable> getChildren(SysVariable node) {
-        List<SysVariable> children = new ArrayList<SysVariable>();
-        Long id = node.getId();
-        for (SysVariable child : nodes) {
-            if (id==(child.getParentId())) {
-                children.add(child);
-            }
-        }
-        return children;
     }
 }

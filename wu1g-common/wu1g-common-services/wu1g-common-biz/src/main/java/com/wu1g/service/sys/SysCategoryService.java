@@ -1,12 +1,15 @@
 package com.wu1g.service.sys;
 
+import com.github.pagehelper.PageHelper;
 import com.wu1g.api.sys.ISysCategoryService;
 import com.wu1g.dao.sys.ISysCategoryDao;
-import com.wu1g.vo.sys.SysCategory;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.github.pagehelper.PageHelper;
+import com.wu1g.framework.util.ReflectUtil;
+import com.wu1g.framework.util.ValidatorUtil;
+import com.wu1g.vo.NodeTree;
+import com.wu1g.vo.sys.SysCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +38,7 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
                     sysCategoryDao.update(dto);
                 } else {
                     //新增
-                     sysCategoryDao.insert(dto);
+                    sysCategoryDao.insert(dto);
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
@@ -49,8 +53,8 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(sysCategoryDao.deleteByPrimaryKey(dto)==0){
-					throw new RuntimeException("数据不存在!");
+                if (sysCategoryDao.deleteByPrimaryKey(dto) == 0) {
+                    throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
                 log.error("物理删除失败!", e);
@@ -66,8 +70,8 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(sysCategoryDao.deleteById(dto)==0){
-					throw new RuntimeException("数据不存在!");
+                if (sysCategoryDao.deleteById(dto) == 0) {
+                    throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
                 log.error("逻辑删除失败!", e);
@@ -120,8 +124,8 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(sysCategoryDao.recoveryDataById(dto)==0){
-					throw new RuntimeException("数据不存在!");
+                if (sysCategoryDao.recoveryDataById(dto) == 0) {
+                    throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
                 log.error("数据恢复失败!", e);
@@ -129,5 +133,18 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
             }
         }
         return msg;
+    }
+
+    public List<SysCategory> findDataTree(SysCategory bean) {
+        try {
+            List<SysCategory> beans = findDataIsList(bean);
+            if (beans == null) {
+                return null;
+            }
+            NodeTree<SysCategory> tree = new NodeTree<>(beans,"id","parentId","nodes");
+            return tree.buildTree();
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

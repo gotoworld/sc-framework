@@ -14,6 +14,6 @@
 			${bean.name}${_this_self==bean.id?'-----无效项-------':''}
 		</option>
 <% 		if(isNotEmpty(bean.nodes) && bean.nodes.~size>0){
-			 include("sys_dic_tree_select.html",{treeIndex:treeIndex+1,nodes:bean.nodes}){}
+			 include("sys_news_category_tree_select.html",{treeIndex:treeIndex+1,nodes:bean.nodes}){}
 		}
 }%>

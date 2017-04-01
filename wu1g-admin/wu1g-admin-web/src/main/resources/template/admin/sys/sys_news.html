@@ -39,16 +39,19 @@
 					</ul>
 					<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
-							<div class="col-sm-2">
-								<div class="ibox float-e-margins">
+							<div class="col-sm-2  b-r">
+								<div class="ibox float-e-margins ">
 									<div class="ibox-content mailbox-content">
 										<div class="file-manager">
 												<div class="space-25"></div>
 												<h5>资讯栏目</h5>
 												<ul class="folder-list m-b-md" style="padding: 0">
-													<li>
-														<a href="mailbox.html"> <i class="fa fa-certificate"></i> 重要</a>
-													</li>
+													<% for(b in nodes !){ %>
+														<li  class="">
+															<a href="javascript:loadUrlPage(null, 'info_search_form', 'info_list_div');"> <i class="fa fa-certificate"></i> ${b.name}</a>
+														</li>
+														<% layout("sys_news_category_tree_li.html",{treeIndex:1,nodes:b.nodes,_band_flag:b.parentId,_this_self:b.id}){} %>
+													<%}%>
 												</ul>
 												<div class="clearfix"></div>
 										</div>
@@ -56,7 +59,7 @@
 								</div>
 							</div>
 							<div class="col-sm-10">
-								<div class="ibox float-e-margins panel panel-default">
+								<div class="ibox float-e-margins ">
 									<div class="ibox-content">
 										<% layout("../include/notifications.html"){}%>
 										<table class="table">

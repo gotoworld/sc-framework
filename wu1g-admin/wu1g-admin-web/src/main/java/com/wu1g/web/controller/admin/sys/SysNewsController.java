@@ -1,6 +1,8 @@
 package com.wu1g.web.controller.admin.sys;
 
 import com.github.pagehelper.PageInfo;
+import com.wu1g.api.sys.ISysCategoryService;
+import com.wu1g.vo.sys.SysCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -35,6 +37,8 @@ import com.wu1g.vo.sys.SysNews;
 public class SysNewsController extends BaseController {
 	@Autowired
 	protected ISysNewsService sysNewsService;
+	@Autowired
+	protected ISysCategoryService sysCategoryService;
 	
 	private static final String acPrefix="/h/sys/sysNews/";
 	private static final String init = "admin/sys/sys_news";
@@ -49,6 +53,9 @@ public class SysNewsController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"init")
 	public String init() {
 		log.info("SysNewsController init.........");
+		SysCategory dto = new SysCategory();
+		dto.setType(1);
+		request.setAttribute("nodes", sysCategoryService.findDataTree(dto));
 		return init;
 	}
 	/**

@@ -95,5 +95,9 @@ public class SysNews extends BaseVO {
      * 更新时间
      */
     private Date dateUpdated;
+    /**
+     * 栏目id
+     */
+    private Long categoryId;
 
 }

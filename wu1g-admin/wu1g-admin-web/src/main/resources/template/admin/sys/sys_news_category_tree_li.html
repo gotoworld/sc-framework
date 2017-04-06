@@ -6,13 +6,14 @@
 <%
 	for(bean in nodes!){
 %>
-<li class="${_band_flag==bean.id?'active':''}">
-	<a href="javascript:loadUrlPage(null, 'info_search_form', 'info_list_div');"> <i class="fa fa-certificate"></i>
+<li class="" data-id="${bean.id}">
+	<a href="#">
 			-
-			<% for(var i=1;i<=treeIndex;i++){ %>
-			|-
-			<%}%>
-			${bean.name}
+		<% for(var i=1;i<=treeIndex;i++){ %>
+		|-
+		<%}%>
+		${bean.name}
+		<i class=""></i>
 	</a>
 </li>
 <% 		if(isNotEmpty(bean.nodes) && bean.nodes.~size>0){

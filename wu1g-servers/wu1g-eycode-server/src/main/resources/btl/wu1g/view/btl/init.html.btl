@@ -16,17 +16,6 @@
 	\<% layout("../include/meta.html"){}%>
 	\<% layout("../include/public_init_js_css.html"){}%>
 	<style type="text/css">
-	.qrcode{
-	position:relative;
-	width: 100px;
-	}
-	.qrcode .sizes{
-	position:absolute;top:-78px;padding:5px;background:#fff;border:1px solid #ddd;display:none;
-	}
-	.qrcode:hover .sizes{
-	display:block;
-	}
-	.qrcode .line{display:block;width: 100px;text-align: center;}
 	</style>
 </head>
 <body class="gray-bg">

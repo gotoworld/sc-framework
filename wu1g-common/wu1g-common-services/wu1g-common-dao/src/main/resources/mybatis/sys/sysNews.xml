@@ -101,6 +101,12 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
+        <if test="keyword!=null and keyword!=''">
+            <![CDATA[ and t1.title like concat('%',#{keyword},'%') ]]>
+        </if>
+        <if test="categoryId!=null and categoryId!=0">
+            <![CDATA[ and t2.category_id=#{categoryId} ]]>
+        </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
         </if>
@@ -114,9 +120,10 @@
         select
         <include refid="Base_Column_List"/>
         from sys_news t1
+        left join sys_news_vs_category t2 on (t2.news_id=t1.id)
         where 1=1
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
+        order by t1.is_ontop,t1.date_created desc
     </select>
 
     <!--信息列表 -->
@@ -124,8 +131,9 @@
         select
         <include refid="Base_Column_List"/>
         from sys_news t1
+        left join sys_news_vs_category t2 on (t2.news_id=t1.id)
         where 1=1
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
+        order by t1.is_ontop,t1.date_created desc
     </select>
 </mapper>

@@ -19,6 +19,10 @@ hystrix:
       enabled: true
 
 ---
+# HTTP Server
+server:
+  port: 6060
+  context-path: /
 logging:
 #  file: logs/wu1g-server-web.log
   level:

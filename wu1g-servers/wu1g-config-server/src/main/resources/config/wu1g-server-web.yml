@@ -1,7 +1,7 @@
-# HTTP Server
-server:
-  port: 6060
-  context-path: /
+## HTTP Server
+#server:
+#  port: 6060
+#  context-path: /
 # Spring properties
 spring:
   application:

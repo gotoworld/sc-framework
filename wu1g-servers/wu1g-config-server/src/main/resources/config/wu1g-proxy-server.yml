@@ -65,7 +65,7 @@ server:
 
 ---
 server:
-  port: 26004
+#  port: 26004
   ssl:
     enabled: false
 spring:

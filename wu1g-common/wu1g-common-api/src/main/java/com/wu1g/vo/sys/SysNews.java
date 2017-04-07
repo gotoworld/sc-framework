@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>新闻资讯  BEAN类。
@@ -100,4 +101,6 @@ public class SysNews extends BaseVO {
      */
     private Long categoryId;
 
+    /**栏目id*/
+    private List<Long> categorys;
 }

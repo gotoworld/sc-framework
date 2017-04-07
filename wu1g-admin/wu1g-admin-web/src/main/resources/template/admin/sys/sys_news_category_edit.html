@@ -61,11 +61,9 @@
                                     <% var _band_flag=bean.parentId; %>
                                     <select  class="form-control" name="parentId" id="parentId">
                                         <option value="">---顶级---</option>
-                                        <% if(isNotEmpty(nodes) && nodes.~size>0){ %>
-                                        <% for(b in nodes){ %>
+                                        <% for(b in nodes !){ %>
                                         <option  value="${_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
                                         <% layout("sys_dic_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.parentId,_this_self:bean.id}){} %>
-                                        <%}%>
                                         <%}%>
                                     </select>
                             </div>

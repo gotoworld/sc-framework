@@ -23,7 +23,7 @@ function upload_single_file(btn, divId,_fileExt,name) {
             },
             FilesAdded: function (up, files) {
                 var file = files[files.length - 1];
-                $("#" + divId).html('<div id="' + file.id + '" class="file-grid-2"><b></b>'
+                $("#" + divId).append('<div id="' + file.id + '" class="file-grid-2"><b></b>'
                     + '<div class="progress"><div class="progress-bar" style="width: 0%"></div></div>'
                     + '</div>');
                 uploader.start();
@@ -47,13 +47,13 @@ function upload_single_file(btn, divId,_fileExt,name) {
                 if (info.status == 200) {
                     var infoData = eval('(' + info.response + ')');
                     if (infoData.code != 0) {
-                        $("#" + divId).html(infoData.message);
+                        $("#" + divId).append(infoData.message);
                     } else {
                         var html = '<input name="'+name+'" value="' + infoData.fileUrl + '" class="form-control" type="text">';
-                        $("#" + divId).html(html);
+                        $("#" + divId).append(html);
                     }
                 } else {
-                    $("#" + divId).html(info.response);
+                    $("#" + divId).append(info.response);
                 }
                 $("#" + btn).css('pointer-events', '');
             },

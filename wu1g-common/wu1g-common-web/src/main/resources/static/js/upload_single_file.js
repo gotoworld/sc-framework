@@ -49,7 +49,9 @@ function upload_single_file(btn, divId,_fileExt,name) {
                     if (infoData.code != 0) {
                         $("#" + divId).append(infoData.message);
                     } else {
-                        var html = '<input name="'+name+'" value="' + infoData.fileUrl + '" class="form-control" type="text">';
+                        var html ='<div id="' + file.id + '" class="file-grid-2">';
+                            html+='<input name="'+name+'" value="' + infoData.fileUrl + '" class="form-control" type="text">';
+                            html+='</div>'
                         $("#" + divId).append(html);
                     }
                 } else {

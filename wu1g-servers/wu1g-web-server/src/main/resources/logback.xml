@@ -140,9 +140,9 @@
         </encoder>
     </appender>
 
-    <logger name="java.sql" value="DEBUG" />
-    <logger name="org.springframework" value="INFO" />
-    <logger name="com.ibatis" value="DEBUG" />
+    <logger name="java.sql" level="DEBUG" />
+    <logger name="org.springframework" level="INFO" />
+    <logger name="com.ibatis" level="DEBUG" />
     <!-- root级别   DEBUG -->
     <root level="debug">
         <!-- 控制台输出 -->

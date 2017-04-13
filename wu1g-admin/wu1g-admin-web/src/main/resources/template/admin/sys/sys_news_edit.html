@@ -18,6 +18,7 @@
 <link href="${basePath}css/upload.css" rel="stylesheet">
 <link rel="stylesheet" href="${basePath}plugins/editor/themes/default/default.css" />
 <link rel="stylesheet" href="${basePath}plugins/editor/plugins/code/prettify.css" />
+<link href="\${basePath}plugins/hplus/css/plugins/chosen/chosen.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -45,7 +46,7 @@
                                     <option value="">---顶级---</option>
                                     <% var _theself=bean.categorys;%>
                                     <% for(b in nodes !){ %>
-                                    <option  value="${b.id}" ${array.contain(_theself,b.id)?'selected="selected"':''} >-${b.name}</option>
+                                    <option  value="${b.id}" ${array.contain(_theself,b.id)?'selected':''} >-${b.name}</option>
                                     <% layout("sys_news_edit_create_tree_select.html",{treeIndex:1,nodes:b.nodes,_theself:_theself}){} %>
                                     <%}%>
                                 </select>
@@ -119,27 +120,29 @@
 <script charset="utf-8" src="${basePath}plugins/editor/kindeditor-all-min.js"></script>
 <script type="text/javascript" src="${basePath}plugins/plupload/js/plupload.min.js"></script>
 <script type="text/javascript" src="${basePath}js/upload_single_pic.js"></script>
-<script type="text/javascript">
-KindEditor.ready(function(K) {
-
-    //--编辑框(完整)[详情]
-    K.create('#bean-detailInfo', {
-        resizeType : 2,
-        uploadJson : '${basePath}fileUpload?isrich=1',
-        fileManagerJson : '${basePath}fileManagerServlet',
-        allowFileManager : true
-    });
-});
-$(document).ready(function(){
-	formValidate();
-});
-function formValidate(){
-	setTimeout(function(){
-		$("#sysNews_01").validate();
-	},1000);
-}
-upload_single_pic('upload_btn_coverPic','upload_div_coverPic','png,jpg,gif,bmp','coverPic');
-</script>
+<script type="text/javascript" src="${basePath}plugins/hplus/js/plugins/chosen/chosen.jquery.js"></script>
 </body>
+<script type="text/javascript">
+    KindEditor.ready(function(K) {
+
+        //--编辑框(完整)[详情]
+        K.create('#bean-detailInfo', {
+            resizeType : 2,
+            uploadJson : '${basePath}fileUpload?isrich=1',
+            fileManagerJson : '${basePath}fileManagerServlet',
+            allowFileManager : true
+        });
+    });
+    function formValidate(){
+        setTimeout(function(){
+            $("#sysNews_01").validate();
+        },1000);
+    }
+    $(document).ready(function(){
+        formValidate();
+        $(".chosen-select").chosen({});
+        upload_single_pic('upload_btn_coverPic','upload_div_coverPic','png,jpg,gif,bmp','coverPic');
+    });
+</script>
 </html>
 

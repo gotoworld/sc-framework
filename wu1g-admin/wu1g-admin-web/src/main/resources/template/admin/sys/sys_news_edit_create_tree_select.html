@@ -6,7 +6,7 @@
 <%
 	for(bean in nodes!){
 %>
-		<option value="${bean.id}" ${array.contain(_theself,bean.id)?'selected="selected"':''}>
+		<option value="${bean.id}" ${array.contain(_theself,bean.id)?'selected':''}>
 			-
 			<% for(var i=1;i<=treeIndex;i++){ %>
 			|-

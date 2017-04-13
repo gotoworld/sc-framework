@@ -2,12 +2,18 @@ package com.wu1g.web.controller.portal;
 
 import com.wu1g.api.sys.ISysCategoryService;
 import com.wu1g.api.sys.ISysNewsService;
+import com.wu1g.vo.sys.SysCategory;
 import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * <p>门户首页。
@@ -26,6 +32,14 @@ public class PortalController extends BaseController {
 	private static final String news = "client/news";
 	private static final String tour = "client/tour";
 	private static final String video = "client/video";
+
+	private void setSysCategoryService(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+		SysCategory sysCategory=new SysCategory();
+		sysCategory.setType(1);
+		request.setAttribute("newsCategorys",sysCategoryService.findDataTree(sysCategory));
+		sysCategory.setType(2);
+		request.setAttribute("panoCategorys",sysCategoryService.findDataTree(sysCategory));
+	}
 	/**
 	 * <p> 首页。
 	 */
@@ -33,6 +47,7 @@ public class PortalController extends BaseController {
 	public String index() {
 		log.info("SysNewsController index.........");
 		request.setAttribute("navKey","index");
+		setSysCategoryService(request, response, session);
 		return index;
 	}
 	/**
@@ -42,6 +57,7 @@ public class PortalController extends BaseController {
 	public String channel() {
 		log.info("SysNewsController channel.........");
 		request.setAttribute("navKey","news");
+		setSysCategoryService(request, response, session);
 		return channel;
 	}
 	/**
@@ -51,6 +67,7 @@ public class PortalController extends BaseController {
 	public String news() {
 		log.info("SysNewsController news.........");
 		request.setAttribute("navKey","news");
+		setSysCategoryService(request, response, session);
 		return news;
 	}
 	/**
@@ -60,6 +77,7 @@ public class PortalController extends BaseController {
 	public String tour() {
 		log.info("SysNewsController tour.........");
 		request.setAttribute("navKey","tour");
+		setSysCategoryService(request, response, session);
 		return tour;
 	}
 	/**
@@ -69,6 +87,7 @@ public class PortalController extends BaseController {
 	public String video() {
 		log.info("SysNewsController video.........");
 		request.setAttribute("navKey","video");
+		setSysCategoryService(request, response, session);
 		return video;
 	}
 }

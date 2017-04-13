@@ -40,27 +40,25 @@
 						<!-- CATEGORIES START -->
 						<h2>Categories</h2>
 						<ul class="nav sidebar-categories margin-bottom-40">
-							<li><a  href="newsDetail.html">London (18)</a></li>
-							<li><a  href="newsDetail.html">Moscow (5)</a></li>
-							<li class="active"><a  href="newsDetail.html">Paris (12)</a></li>
-							<li><a  href="newsDetail.html">Berlin (7)</a></li>
-							<li><a  href="newsDetail.html">Instanbul (3)</a></li>
+                            <%for(category in newsCategorys!){%>
+							<li><a  href="${basePath}news/${category.id}">${category.name}</a></li>
+                            <%}%>
 						</ul>
 						<!-- CATEGORIES END -->
 						<!-- BEGIN BLOG TAGS -->
-						<div class="blog-tags margin-bottom-20">
-							<h2>Tags</h2>
-							<ul>
-								<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>OS</a></li>
-								<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Metronic</a></li>
-								<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Dell</a></li>
-								<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Conquer</a></li>
-								<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>MS</a></li>
-								<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Google</a></li>
-								<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Keenthemes</a></li>
-								<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Twitter</a></li>
-							</ul>
-						</div>
+						<!--<div class="blog-tags margin-bottom-20">-->
+							<!--<h2>Tags</h2>-->
+							<!--<ul>-->
+								<!--<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>OS</a></li>-->
+								<!--<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Metronic</a></li>-->
+								<!--<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Dell</a></li>-->
+								<!--<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Conquer</a></li>-->
+								<!--<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>MS</a></li>-->
+								<!--<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Google</a></li>-->
+								<!--<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Keenthemes</a></li>-->
+								<!--<li><a  href="newsDetail.html"><i class="fa fa-tags"></i>Twitter</a></li>-->
+							<!--</ul>-->
+						<!--</div>-->
 						<!-- END BLOG TAGS -->
 					</div>
                     <div class="col-sm-9 col-sm-9">

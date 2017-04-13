@@ -17,10 +17,12 @@ var isDateFlag=0;
 var isImgFlag=0;
 var isFileFlag=0;
 var isBGMFlag=0;
+var isSelectFlag=0;
 for(t in columns){
 	if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
 		switch(scfg._edit_type[t.columnNameFormat]){
 			case "3":{ isDateFlag=1;break;}
+			case "5":{isSelectFlag=1;break;}
 			case "8":{isImgFlag=1;break;}
 			case "9":{isFileFlag=1;break;}
 			case "10":{isRichFlag=1;break;}
@@ -39,6 +41,9 @@ for(t in columns){
 <%}%>
 <%if(isBGMFlag==1){%>
 <link href="\${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
+<%}%>
+<%if(isSelectFlag==1){%>
+<link href="\${basePath}plugins/hplus/css/plugins/chosen/chosen.css" rel="stylesheet">
 <%}%>
 <%if(isRichFlag==1){%>
 <link rel="stylesheet" href="\${basePath}plugins/editor/themes/default/default.css" />
@@ -155,6 +160,9 @@ for(t in columns){
 <script type="text/javascript" src="\${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
 <script type="text/javascript" src="\${basePath}js/upload_single_bgm.js"></script>
 <%}%>
+<%if(isSelectFlag==1){%>
+<script type="text/javascript" src="\${basePath}plugins/hplus/js/plugins/chosen/chosen.jquery.js"></script>
+<%}%>
 <%if(isImgFlag==1){%>
 <script type="text/javascript" src="\${basePath}js/upload_single_pic.js"></script>
 <%}%>
@@ -174,32 +182,35 @@ KindEditor.ready(function(K) {
 	}%>
 });
 <%}%>
-$(document).ready(function(){
-	formValidate();
-});
 function formValidate(){
 	setTimeout(function(){
 		$("#${tableNameL}_01").validate();
 	},1000);
 }
-<% for(t in columns){
-	if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
-		switch(scfg._edit_type[t.columnNameFormat]){
-			case "0":{ layout("js/0_input[hidden].btl",{t:t}){};break;}
-			case "1":{ layout("js/1_input[text].btl",{t:t}){};break;}
-			case "2":{ layout("js/2_textarea.btl",{t:t}){};break;}
-			case "3":{ layout("js/3_input[date].btl",{t:t}){};break;}
-			case "4":{ layout("js/4_select.btl",{t:t}){};break;}
-			case "5":{ layout("js/5_select[multiple].btl",{t:t}){};break;}
-			case "6":{ layout("js/6_input[radio].btl",{t:t}){};break;}
-			case "7":{ layout("js/7_input[checkbox].btl",{t:t}){};break;}
-			case "8":{ layout("js/8_upload[image].btl",{t:t}){};break;}
-			case "9":{ layout("js/9_upload[file].btl",{t:t}){};break;}
-			case "12":{layout("js/12_upload[BGM].btl",{t:t}){};break;}
+$(document).ready(function(){
+	formValidate();
+	<% for(t in columns){
+    	if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+    		switch(scfg._edit_type[t.columnNameFormat]){
+    			case "0":{ layout("js/0_input[hidden].btl",{t:t}){};break;}
+    			case "1":{ layout("js/1_input[text].btl",{t:t}){};break;}
+    			case "2":{ layout("js/2_textarea.btl",{t:t}){};break;}
+    			case "3":{ layout("js/3_input[date].btl",{t:t}){};break;}
+    			case "4":{ layout("js/4_select.btl",{t:t}){};break;}
+    			case "5":{ layout("js/5_select[multiple].btl",{t:t}){};break;}
+    			case "6":{ layout("js/6_input[radio].btl",{t:t}){};break;}
+    			case "7":{ layout("js/7_input[checkbox].btl",{t:t}){};break;}
+    			case "8":{ layout("js/8_upload[image].btl",{t:t}){};break;}
+    			case "9":{ layout("js/9_upload[file].btl",{t:t}){};break;}
 
-		}
-	}
-} %>
+
+    			case "12":{layout("js/12_upload[BGM].btl",{t:t}){};break;}
+    			case "13":{layout("js/input/13_show[text].btl",{t:t}){};break;}
+                case "14":{layout("js/input/14_show[html].btl",{t:t}){};break;}
+    		}
+    	}
+    } %>
+});
 </script>
 </body>
 </html>

@@ -1,2 +1,2 @@
 
-<input type="hidden" name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}">
+					<input type="hidden" name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}">

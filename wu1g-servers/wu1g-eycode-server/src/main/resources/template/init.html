@@ -143,6 +143,9 @@
     .table td {
         text-align: left;
     }
+    .wizard.vertical > .content {
+        width: 74%;
+    }
 </style>
 <script>
     var ec = {
@@ -176,33 +179,38 @@
         }
         ,
         setCodePkg:function(tempName){
-            var _my_pkg=$('#_my_pkg').val()||'目录';
+            var _my_pkg=$('#_my_pkg').val();
+            var httpMyPkg='';
+            if(_my_pkg){
+                _my_pkg='.'+_my_pkg;
+                httpMyPkg=_my_pkg;
+            }
             switch(tempName){
                 case 'wu1g':{
-                    $('._domain_pkg').val('com.wu1g.vo.'+_my_pkg);
+                    $('._domain_pkg').val('com.wu1g.vo'+_my_pkg);
                     $('._dto_pkg').val('');
-                    $('._mybatis_pkg').val('mybatis.'+_my_pkg);
-                    $('._dao_pkg').val('com.wu1g.dao.'+_my_pkg);
-                    $('._api_pkg').val('com.wu1g.api.'+_my_pkg);
-                    $('._biz_pkg').val('com.wu1g.service.'+_my_pkg);
-                    $('._web_pkg').val('com.wu1g.web.controller.admin.'+_my_pkg);
-                    $('._view_pkg').val('admin.'+_my_pkg);
+                    $('._mybatis_pkg').val('mybatis'+_my_pkg);
+                    $('._dao_pkg').val('com.wu1g.dao'+_my_pkg);
+                    $('._api_pkg').val('com.wu1g.api'+_my_pkg);
+                    $('._biz_pkg').val('com.wu1g.service'+_my_pkg);
+                    $('._web_pkg').val('com.wu1g.web.controller.admin'+_my_pkg);
+                    $('._view_pkg').val('admin'+_my_pkg);
                     $('._web_http').each(function(){
-                        $(this).val('h/'+_my_pkg+'/'+$(this).attr('data'));
+                        $(this).val('h/'+httpMyPkg+'/'+$(this).attr('data'));
                     });
                     break;
                 }
                 case 'cdd':{
-                    $('._domain_pkg').val('com.cddang.'+_my_pkg+'.modal');
-                    $('._dto_pkg').val('com.cddang.'+_my_pkg+'.dto');
-                    $('._mybatis_pkg').val('mappers.'+_my_pkg+'');
-                    $('._dao_pkg').val('com.cddang.'+_my_pkg+'.mapper');
-                    $('._api_pkg').val('com.cddang.'+_my_pkg+'.api');
-                    $('._biz_pkg').val('com.cddang.'+_my_pkg+'.service');
-                    $('._web_pkg').val('com.cddang.'+_my_pkg+'.web.controller.admin');
+                    $('._domain_pkg').val('com.cddang'+_my_pkg+'.modal');
+                    $('._dto_pkg').val('com.cddang'+_my_pkg+'.dto');
+                    $('._mybatis_pkg').val('mappers'+_my_pkg+'');
+                    $('._dao_pkg').val('com.cddang'+_my_pkg+'.mapper');
+                    $('._api_pkg').val('com.cddang'+_my_pkg+'.api');
+                    $('._biz_pkg').val('com.cddang'+_my_pkg+'.service');
+                    $('._web_pkg').val('com.cddang'+_my_pkg+'.web.controller.admin');
                     $('._view_pkg').val('');
                     $('._web_http').each(function(){
-                        $(this).val('/boss/'+_my_pkg+'/'+$(this).attr('data'));
+                        $(this).val('/boss/'+httpMyPkg+'/'+$(this).attr('data'));
                     });
                     break;
                 }

@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 广告管理 后台管理 (信息列表)
  *
@@ -8,7 +8,7 @@
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
-%>
+ /]
 <div class="table-responsive table-scrollable">
 	<table class="table table-bordered table-striped  table-hover">
 		<thead>
@@ -23,9 +23,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<%
+			@[
 				for(bean in beans!){
-			%>
+			 /]
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
 				<td>${bean.name}</td>
@@ -34,23 +34,23 @@
 				<td>${bean.state}</td>
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
-				    <% if(shiro.hasPermission("sysAdvertise:edit")){ %>
+				    @[ if(shiro.hasPermission("sysAdvertise:edit")){ /]
 	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/sys/sysAdvertise/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-	               <%}%>
- 	               <% if(shiro.hasPermission("sysAdvertise:del")){ %>
+	               @[ } /]
+ 	               @[ if(shiro.hasPermission("sysAdvertise:del")){ /]
  	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/sys/sysAdvertise/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
- 	               <%}%>
+ 	               @[ } /]
                 </td>
 			</tr>
-			<%
+			@[
 			}elsefor{
-			%>
+			 /]
 			<tr>
 				<td colspan="7">
 				<div class="alert"><strong>暂无数据!</strong></div>
 				</td>
 			</tr>
-			<%}%>
+			@[ } /]
 		</tbody>
 	</table>
 	<#pageTag func="loadUrlPage" params="'info_search_form','info_list_div'" />

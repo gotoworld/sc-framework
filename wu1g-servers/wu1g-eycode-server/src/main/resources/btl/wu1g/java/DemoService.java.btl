@@ -22,7 +22,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @Autowired
     private I${tcfg.tableNameFormat!}${scfg._dao_suffix!} ${tableNameL}${scfg._dao_suffix!};
 
-    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
+    @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(${tcfg.tableNameFormat!} dto) throws Exception {
@@ -32,10 +32,10 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 //判断数据是否存在
                 if (dto.getId() != null && ${tableNameL}${scfg._dao_suffix!}.isDataYN(dto) != 0) {
                     //数据存在
-                    <%if ("1"==scfg._update){%>${tableNameL}${scfg._dao_suffix!}.update(dto);<%}%>
+                    @[ if ("1"==scfg._update){ /]${tableNameL}${scfg._dao_suffix!}.update(dto);@[ } /]
                 } else {
                     //新增
-                     <%if ("1"==scfg._insert){%>${tableNameL}${scfg._dao_suffix!}.insert(dto);<%}%>
+                     @[ if ("1"==scfg._insert){ /]${tableNameL}${scfg._dao_suffix!}.insert(dto);@[ } /]
                 }
             } catch (Exception e) {
                 log.error("信息保存异常!", e);
@@ -44,9 +44,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return msg;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._del) {%>
+    @[ if ("1"==scfg._del) { /]
     @Override
     public String deleteData(${tcfg.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
@@ -62,9 +62,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return msg;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._delLogic && null!=scfg._col_del) {%>
+    @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(${tcfg.tableNameFormat!} dto) throws Exception {
@@ -81,9 +81,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return msg;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._page) {%>
+    @[ if ("1"==scfg._page) { /]
     @Override
     public List<${tcfg.tableNameFormat!}> findDataIsPage(${tcfg.tableNameFormat!} dto) throws Exception {
         List<${tcfg.tableNameFormat!}> dtos = null;
@@ -96,9 +96,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return dtos;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._list) {%>
+    @[ if ("1"==scfg._list) { /]
     @Override
     public List<${tcfg.tableNameFormat!}> findDataIsList(${tcfg.tableNameFormat!} dto) throws Exception {
         List<${tcfg.tableNameFormat!}> dtos = null;
@@ -110,9 +110,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return dtos;
     }
-     <%}%>
+     @[ } /]
 
-    <%if ("1"==scfg._detail) {%>
+    @[ if ("1"==scfg._detail) { /]
     @Override
     @RfAccount2Bean
     public ${tcfg.tableNameFormat!} findDataById(${tcfg.tableNameFormat!} dto) throws Exception {
@@ -125,9 +125,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return dto1;
     }
-    <%}%>
+    @[ } /]
 
-     <%if ("1"==scfg._recovery && null!=scfg._col_del) {%>
+     @[ if ("1"==scfg._recovery && null!=scfg._col_del) { /]
     @Override
     public String recoveryDataById(${tcfg.tableNameFormat!} dto) throws Exception {
         String msg = "seccuss";
@@ -143,5 +143,5 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return msg;
     }
-    <%}%>
+    @[ } /]
 }

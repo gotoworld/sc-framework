@@ -34,10 +34,10 @@
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
-    angular.module("app", []).controller("app-ctrl", ['$scope', function ($scope) {
+    angular.module("app", [ /]).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
         user.info();
-    }]);
+    } /]);
     $(function () {
         demo.info(sessionStorage.getItem(site.demo.info));
     });

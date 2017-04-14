@@ -1,4 +1,4 @@
-<%
+@[
 /*
  * 权限_权限信息 后台管理 (信息编辑页面)
  *
@@ -9,13 +9,13 @@
  * Copyright 2015 isd System. - All Rights Reserved.
  *
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
-	<% include("../include/meta.html"){} %>
-	<% include("../include/public_init_js_css.html"){} %>
+	@[ include("../include/meta.html"){} /]
+	@[ include("../include/public_init_js_css.html"){} /]
 	<style type="text/css">
 	</style>
 </head>
@@ -39,19 +39,19 @@
 						<div class="form-group">
 						  <label class="col-md-2 control-label">父级权限</label>
 						  <div class="col-md-8">
-							  <% var treeIndex=1; %>
-							  <% var _this_self=bean.id; %>
-							  <% var _band_flag=bean.parentId; %>
+							  @[ var treeIndex=1; /]
+							  @[ var _this_self=bean.id; /]
+							  @[ var _band_flag=bean.parentId; /]
 							  <select  class="form-control" name="parentId" id="parentId">
 								  <option value="">---顶级---</option>
-								  <% if(isNotEmpty(beans) && beans.~size>0){ %>
-									  <% for(b in beans){ %>
+								  @[ if(isNotEmpty(beans) && beans.~size>0){ /]
+									  @[ for(b in beans){ /]
 										 <option  value="_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >
 											 - ${b.name}${_this_self==b.id?'-----无效项-------':''}
 										 </option>
-										 <% layout("auth_perm_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentId,_this_self:bean.id}){} %>
-									  <%}%>
-								  <%}%>
+										 @[ layout("auth_perm_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentId,_this_self:bean.id}){} /]
+									  @[ } /]
+								  @[ } /]
 							  </select>
 								<span class="help-block"></span>
 						  </div>
@@ -90,7 +90,7 @@
 		</div>
 	</div>
 	</div>
-	<% include("../include/public_last_js_css.html"){} %>
+	@[ include("../include/public_last_js_css.html"){} /]
 	<script type="text/javascript">
         $().ready(function(){
             formValidate();

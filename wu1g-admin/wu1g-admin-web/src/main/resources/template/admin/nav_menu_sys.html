@@ -1,69 +1,69 @@
-<% if(shiro.hasPermission("sys:menu")){ %>
+@[ if(shiro.hasPermission("sys:menu")){ /]
 <li><a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">系统管理 </span><span
         class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
-        <% if(shiro.hasPermission("orgDept:menu")){ %>
+        @[ if(shiro.hasPermission("orgDept:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/org/dept/init">组织架构_部门</a></li>
-        <%}%>
-        <% if(shiro.hasPermission("orgUser:menu")){ %>
+        @[ } /]
+        @[ if(shiro.hasPermission("orgUser:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/org/user/init">组织架构_用户</a></li>
-        <%}%>
-        <% if(shiro.hasPermission("authPerm:menu")){ %>
+        @[ } /]
+        @[ if(shiro.hasPermission("authPerm:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/auth/perm/init">权限_权限信息</a></li>
-        <%}%>
-        <% if(shiro.hasPermission("authRole:menu")){ %>
+        @[ } /]
+        @[ if(shiro.hasPermission("authRole:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/auth/role/init">权限_角色信息</a></li>
-        <%}%>
-        <% if(shiro.hasPermission("sysLog:menu")){ %>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysLog:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/alog/init">系统_操作日志</a></li>
-        <%}%>
-        <% if(shiro.hasPermission("sysDic:menu")){ %>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysDic:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/dic/init">系统_数据字典</a></li>
-        <%}%>
-        <% if(shiro.hasPermission("sysSensitiveWords:menu")){ %>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysSensitiveWords:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysSensitiveWords/init">敏感词管理</a></li>
-        <%}%>
+        @[ } /]
         <li><a class="J_menuItem" href="/indevelopment.html?v=a2">系统设置</a></li>
-        <% if(shiro.hasPermission("sysPanoPlugins:menu")){ %>
+        @[ if(shiro.hasPermission("sysPanoPlugins:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysPanoPlugins/init">系统_全景插件</a></li>
-        <%}%>
+        @[ } /]
         <!--<li><a class="J_menuItem" href="/file_manager.html">素材管理</a></li>-->
-        <% if(shiro.hasPermission("panoMaterial:menu")){ %>
+        @[ if(shiro.hasPermission("panoMaterial:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/pano/panoMaterial/init">全景_素材</a></li>
-        <%}%>
+        @[ } /]
         <li><a class="J_menuItem" href="/contacts.html">广告管理</a></li>
-        <% if(shiro.hasPermission("sysAdvertise:menu")){ %>
+        @[ if(shiro.hasPermission("sysAdvertise:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysAdvertise/init">广告管理</a></li>
-        <%}%>
+        @[ } /]
         <li><a class="J_menuItem" href="/indevelopment.html?v=a4">VR脚本管理</a></li>
         <li><a class="J_menuItem" href="/graph_metrics.html">数据统计</a></li>
     </ul>
 </li>
-<%}%>
+@[ } /]
 
 <li><a href="#"><i class="glyphicon glyphicon-th-list"></i> <span class="nav-label">系统类目管理 </span><span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
-        <% if(shiro.hasPermission("sysCategory:menu")){ %>
+        @[ if(shiro.hasPermission("sysCategory:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysCategory/init">全景类目管理</a></li>
-        <%}%>
+        @[ } /]
         <li><a class="J_menuItem" href="/indevelopment.html?v=a6">作品类别标签</a></li>
     </ul>
 </li>
-<% if(shiro.hasPermission("newsManager:menu")){ %>
+@[ if(shiro.hasPermission("newsManager:menu")){ /]
 <li><a href="/file_manager.html"><i class="glyphicon glyphicon-text-background"></i> <span class="nav-label">资讯管理 </span><span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
-        <% if(shiro.hasPermission("sysNewsCategory:menu")){ %>
+        @[ if(shiro.hasPermission("sysNewsCategory:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysNewsCategory/init">资讯栏目</a></li>
-        <%}%>
-        <% if(shiro.hasPermission("sysNews:menu")){ %>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysNews:menu")){ /]
         <li><a class="J_menuItem" href="/file_manager.html">新闻资讯</a></li>
-        <%}%>
-        <% if(shiro.hasPermission("sysNews:menu")){ %>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysNews:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysNews/init">系统_资讯</a></li>
-        <%}%>
+        @[ } /]
     </ul>
 </li>
-<%}%>
+@[ } /]
 <li><a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">会员管理 </span><span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
         <li><a class="J_menuItem" href="/indevelopment.html?v=a8">级别设置</a></li>
@@ -87,8 +87,8 @@
         </li>
         <li><a class="J_menuItem" href="/mail_compose.html">写信</a>
         </li>
-        <% if(shiro.hasPermission("sysMessage:menu")){ %>
+        @[ if(shiro.hasPermission("sysMessage:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysMessage/init">系统_站内信</a></li>
-        <%}%>
+        @[ } /]
     </ul>
 </li>

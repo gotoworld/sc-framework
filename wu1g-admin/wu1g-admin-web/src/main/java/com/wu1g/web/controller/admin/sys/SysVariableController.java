@@ -66,7 +66,7 @@ public class SysVariableController extends BaseController {
 		return init;
 	}
 	/**
-	 * <p> 初始化处理。
+	 * <p> 信息树json。
 	 */
 	@RequiresPermissions("sysDic:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")

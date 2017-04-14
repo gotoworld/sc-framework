@@ -28,8 +28,8 @@
       chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
 
       var polygone = map.drawRoute({
-        origin: [-12.044012922866312, -77.02470665341184],
-        destination: [-12.090814532191756, -77.02271108990476],
+        origin: @[ 12.044012922866312, -77.02470665341184],
+        destination: @[ 12.090814532191756, -77.02271108990476],
         travelMode: 'walking',
         strokeColor: '#131540',
         strokeOpacity: 0.6,
@@ -91,7 +91,7 @@
     <div class="span6">
       <p>With GMaps.js you can calculate the elevation for a route like this:</p>
       <pre>map.getElevations({
-  locations : [[-12.040397656836609,-77.03373871559225], [-12.040248585302038,-77.03993927003302], [-12.050047116528843,-77.02448169303511],  [-12.044804866577001,-77.02154422636042]],
+  locations : [@[ 12.040397656836609,-77.03373871559225], @[ 12.040248585302038,-77.03993927003302], @[ 12.050047116528843,-77.02448169303511],  @[ 12.044804866577001,-77.02154422636042]],
   path: true, 
     callback : function (result, status){
     if (status == google.maps.ElevationStatus.OK) {

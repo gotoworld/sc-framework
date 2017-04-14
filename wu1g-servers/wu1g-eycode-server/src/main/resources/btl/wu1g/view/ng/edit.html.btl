@@ -54,7 +54,7 @@
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
     var $data;
-    angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
+    angular.module("app", [ /]).controller("app-ctrl", function ($scope, $http) {
         $data = $scope;
         user.info();
         $scope.save = function () {

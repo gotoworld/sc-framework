@@ -41,7 +41,7 @@
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
-    angular.module("app", []).controller("app-ctrl", ['$scope', function ($scope) {
+    angular.module("app", [ /]).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
         $scope.edit = function (id) {
             sessionStorage.setItem(site.demo.info,id);
@@ -62,7 +62,7 @@
                 }
             });
         }
-    }]);
+    } /]);
     $(function () {
         user.init(function(){
             demo.page(1);

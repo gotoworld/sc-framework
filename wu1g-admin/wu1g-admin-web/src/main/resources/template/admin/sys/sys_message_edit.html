@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 系统_站内信 后台管理 (信息编辑页面)
  *
@@ -8,13 +8,13 @@
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<% include("../include/meta.html"){} %>
-<% include("../include/public_init_js_css.html"){} %>
+@[ include("../include/meta.html"){} /]
+@[ include("../include/public_init_js_css.html"){} /]
 </head>
 
 <body class="gray-bg">
@@ -36,14 +36,14 @@
 					<div class="col-sm-6 b-r">
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">发件人id[0代表管理员]：</label>
+                            <label class="col-md-3 control-label">发件人id[0代表管理员 /]：</label>
                             <div class="col-md-8">
                             ${bean.sendId}
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">收件人id[0代表所有人]：</label>
+                            <label class="col-md-3 control-label">收件人id[0代表所有人 /]：</label>
                             <div class="col-md-8">
                             ${bean.acceptId}
                             </div>

@@ -51,7 +51,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 		log.info("${tcfg.tableNameFormat!}Controller init.........");
 		return init;
 	}
-	 <%if ("1"==scfg._page) {%>
+	 @[ if ("1"==scfg._page) { /]
 	/**
 	 * <p> 信息分页 (未删除)。
 	 */
@@ -74,24 +74,24 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
          request.setAttribute("result",result);
 		return list;
 	}
-	<%}%>
+	@[ } /]
 
-    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
+    @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
 	/**
 	 * <p> 编辑。
 	 */
 	@RequiresPermissions("${tableNameL}:edit")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
-	public String edit(${tcfg.tableNameFormat!} dto,<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
+	public String edit(${tcfg.tableNameFormat!} dto,@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
 		log.info("${tcfg.tableNameFormat!}Controller edit.........");
 		Response result = new Response();
 		try {
             int pageNum=getPageSize(dto);
-            if (<%for(t in pks){%>${tLP.index==1?'':' && '}${t.columnNameFormat}!=null<%}%>) {
+            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {
                 if(dto==null)dto=new ${tcfg.tableNameFormat!}();
-                <%for(t in pks){%>
+                @[ for(t in pks){ /]
                 dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
-                <%}%>
+                @[ } /]
                 dto=${tableNameL}Service.findDataById(dto);
             }
             if(dto==null||0==id){
@@ -106,36 +106,36 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
          request.setAttribute("result",result);
 		return edit;
 	}
-	<%}%>
+	@[ } /]
 
-    <%if ("1"==scfg._delLogic && null!=scfg._col_del) {%>
+    @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
 	/**
 	 * <li>删除。
 	 */
 	@RequiresPermissions("${tableNameL}:del")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
 	@ALogOperation(type="删除",desc="${tcfg.tableComment}")
-	public String del(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>, RedirectAttributesModelMap modelMap) {
+	public String del(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /], RedirectAttributesModelMap modelMap) {
 		log.info("${tcfg.tableNameFormat!}Controller del.........");
 		Response result = new Response();
 		try {
 			${tcfg.tableNameFormat!} dto=new ${tcfg.tableNameFormat!}();
-			<%for(t in pks){%>
+			@[ for(t in pks){ /]
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
-            <%}%>
-            <%if ("1"==scfg._delLogic) {%>
+            @[ } /]
+            @[ if ("1"==scfg._delLogic) { /]
             result.message = ${tableNameL}Service.deleteDataById(dto);
-            <%}else{%>
+            @[ }else{ /]
             result.message = ${tableNameL}Service.deleteData(dto);
-            <%}%>
+            @[ } /]
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
 		modelMap.addFlashAttribute("result", result);
 		return success;
 	}
-    <%}%>
-	<%if ("1"==scfg._insert||"1"==scfg._update) {%>
+    @[ } /]
+	@[ if ("1"==scfg._insert||"1"==scfg._update) { /]
 	/**
 	 * <p> 信息保存
 	 */
@@ -172,5 +172,5 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 		modelMap.addFlashAttribute("result", result);
 		return success;
 	}
-	<%}%>
+	@[ } /]
 }

@@ -1,4 +1,4 @@
-<%
+@[
 /*
 * 系统_类目 后台管理 (信息编辑页面)
 *
@@ -8,13 +8,13 @@
 * -------- ----------- --------------- ---------------------------
 * Copyright 2017 System. - All Rights Reserved.
 */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <% include("../include/meta.html"){} %>
-    <% include("../include/public_init_js_css.html"){} %>
+    @[ include("../include/meta.html"){} /]
+    @[ include("../include/public_init_js_css.html"){} /]
     <link rel="stylesheet" href="${basePath}plugins/editor/themes/default/default.css" />
     <link rel="stylesheet" href="${basePath}plugins/editor/plugins/code/prettify.css" />
 </head>
@@ -53,36 +53,28 @@
                             </div>
                         </div>
 
+
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">父级ID：</label>
                             <div class="col-sm-8">
-                                    <% var treeIndex=1; %>
-                                    <% var _this_self=bean.id; %>
-                                    <% var _band_flag=bean.parentId; %>
-                                    <select  class="form-control" name="parentId" id="parentId">
-                                        <option value="">---顶级---</option>
-                                        <% for(b in nodes !){ %>
-                                        <option  value="${_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
-                                        <% layout("sys_dic_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.parentId,_this_self:bean.id}){} %>
-                                        <%}%>
-                                    </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">状态：</label>
-                            <div class="col-sm-9">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="state" value="option1">启用状态</label>
-                                <span id="bean-state-error" class="help-block m-b-none"></span>
+                                @[ var treeIndex=1; /]
+                                @[ var _this_self=bean.id; /]
+                                @[ var _band_flag=bean.parentId; /]
+                                <select  class="form-control" name="parentId" id="parentId">
+                                    <option value="">---顶级---</option>
+                                    @[ for(b in nodes !){ /]
+                                    <option  value="${_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
+                                    @[ layout("sys_category_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.parentId,_this_self:bean.id}){} /]
+                                    @[ } /]
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">备注：</label>
                             <div class="col-md-8">
-                                <textarea id="bean-memo" name="memo" class="form-control"  placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">${bean.memo}</textarea>
+                                <input  id="bean-memo" name="memo" value="${bean.memo}" class="form-control"  placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
                                 <span id="bean-memo-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -112,7 +104,7 @@
         </div>
     </div>
 </div>
-<% include("../include/public_last_js_css.html"){} %>
+@[ include("../include/public_last_js_css.html"){} /]
 <script charset="utf-8" src="${basePath}plugins/editor/kindeditor-all-min.js"></script>
 <script type="text/javascript">
     KindEditor.ready(function(K) {

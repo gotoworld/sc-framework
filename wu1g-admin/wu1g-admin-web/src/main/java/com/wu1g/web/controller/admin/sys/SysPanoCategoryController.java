@@ -52,6 +52,24 @@ public class SysPanoCategoryController extends BaseController {
 		return init;
 	}
 	/**
+	 * <p> 信息树json。
+	 */
+	@RequiresPermissions("sysCategory:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")
+	@ResponseBody
+	public Response jsonTree() {
+		log.info("SysCategoryController jsonTree.........");
+		Response result=new Response();
+		try {
+			SysCategory sysCategory=new SysCategory();
+			sysCategory.setType(2);
+			result.data=sysCategoryService.findDataTree(sysCategory);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**
 	 * <p> 信息分页 (未删除)。
 	 */
 	@RequiresPermissions("sysCategory:menu")

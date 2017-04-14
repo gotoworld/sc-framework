@@ -22,7 +22,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @Autowired
     private I${tcfg.tableNameFormat!}${scfg._dao_suffix!} ${tableNameL}${scfg._dao_suffix!};
 
-    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
+    @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(${tcfg.tableNameFormat!}Dto dto) throws Exception {
@@ -33,10 +33,10 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 //判断数据是否存在
                 if (${tableNameL}${scfg._dao_suffix!}.isDataYN(entity) != 0) {
                     //数据存在
-                    <%if ("1"==scfg._update){%>${tableNameL}${scfg._dao_suffix!}.update(entity);<%}%>
+                    @[ if ("1"==scfg._update){ /]${tableNameL}${scfg._dao_suffix!}.update(entity);@[ } /]
                 } else {
                     //新增
-                     <%if ("1"==scfg._insert){%>${tableNameL}${scfg._dao_suffix!}.insert(entity);<%}%>
+                     @[ if ("1"==scfg._insert){ /]${tableNameL}${scfg._dao_suffix!}.insert(entity);@[ } /]
                      dto.setId(entity.getId());
                 }
             } catch (Exception e) {
@@ -46,9 +46,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return msg;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._del) {%>
+    @[ if ("1"==scfg._del) { /]
     @Override
     public String deleteData(${tcfg.tableNameFormat!}Dto dto) throws Exception {
         String msg = "seccuss";
@@ -65,9 +65,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return msg;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._delLogic && null!=scfg._col_del) {%>
+    @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
@@ -85,9 +85,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return msg;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._page) {%>
+    @[ if ("1"==scfg._page) { /]
     @Override
     public PageInfo findDataIsPage(${tcfg.tableNameFormat!}Dto dto) throws Exception {
        PageInfo pageInfo=null;
@@ -103,9 +103,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
        }
        return pageInfo;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._list) {%>
+    @[ if ("1"==scfg._list) { /]
     @Override
     public List<${tcfg.tableNameFormat!}Dto> findDataIsList(${tcfg.tableNameFormat!}Dto dto) throws Exception {
         List<${tcfg.tableNameFormat!}Dto> dtos = null;
@@ -118,9 +118,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return dtos;
     }
-     <%}%>
+     @[ } /]
 
-    <%if ("1"==scfg._detail) {%>
+    @[ if ("1"==scfg._detail) { /]
     @Override
     public ${tcfg.tableNameFormat!}Dto findDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
         ${tcfg.tableNameFormat!}Dto dto1 = null;
@@ -133,9 +133,9 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return dto1;
     }
-    <%}%>
+    @[ } /]
 
-     <%if ("1"==scfg._recovery && null!=scfg._col_del) {%>
+     @[ if ("1"==scfg._recovery && null!=scfg._col_del) { /]
     @Override
     public String recoveryDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
         String msg = "seccuss";
@@ -152,5 +152,5 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         return msg;
     }
-    <%}%>
+    @[ } /]
 }

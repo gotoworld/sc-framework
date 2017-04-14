@@ -32,10 +32,10 @@
 		setTimeout(function (){
 			//取得krpano对象
 			var krpano = document.getElementById("krpanoSWFObject");
-			<%if(isNotEmpty(proj.soundSrc)){%>
+			@[ if(isNotEmpty(proj.soundSrc)){ /]
 			//显示声音 按钮
 			krpano.call("set(layer[skin_bgm_btn_container].visible,true);");
-			<%}%>
+			@[ } /]
 		},3000);
 	</script>
 </div>
@@ -43,18 +43,18 @@
 <script type="text/javascript">
 //声明相关变量
 var xml_data = new Object();
-<%if(isNotEmpty(proj.tourEditJson)){%>
+@[ if(isNotEmpty(proj.tourEditJson)){ /]
 xml_data = ${proj.tourEditJson};
-<%}else{%>
+@[ }else{ /]
 xml_data = {
-<%for(scene in proj.scenes){%>
+@[ for(scene in proj.scenes){ /]
 "${scene.id}":{"view":null,"hotspots":null,"picspots":null}
-<%if(sceneLP.index<proj.scenes.~size){%>
+@[ if(sceneLP.index<proj.scenes.~size){ /]
 ,
-<%}%>
-<%}%>
+@[ } /]
+@[ } /]
 };
-<%}%>
+@[ } /]
 var pid = '${proj.id}';
 var img_host = '';
 var basePath = '${basePath}';
@@ -64,7 +64,7 @@ var panoPath ="${panoPath}";
 <!--导览图选择 场景列表-->
 <div class="radar-scenes-container">
 	<div class="radar-scenes-content">
-	<%for(scene in proj.scenes){%>
+	@[ for(scene in proj.scenes){ /]
     <div class="radar-scenes-one">
         <div class="scenes-img" data-scene-name="${scene.id}">
             <img src="${scene.breakdownImg!}thumb.jpg">
@@ -73,7 +73,7 @@ var panoPath ="${panoPath}";
             <span>${scene.sceneTitle}</span>
         </div>
     </div>
-	<%}%>
+	@[ } /]
 	</div>
 	<div class="radar-scenes-btn">
 		取消
@@ -86,17 +86,17 @@ var panoPath ="${panoPath}";
     </div>
     <div class="sandtable-img-margin" >
          <img class="sandtable-window-img" src="${proj.mapSrc}">
-      <%if(proj.radars!=null){%>
- 		<%for(radar in proj.radars){%>
+      @[ if(proj.radars!=null){ /]
+ 		@[ for(radar in proj.radars){ /]
          <div class="radar-control" x="${radar.x}" y="${radar.y}" style="top:${radar.x}px; left:${radar.y}px;">
 			<img class="radar-control-img" src="${panoPath}images/radar-out.png" onclick="triggerCircle(this)" data-original-title="${radar.sceneId}">
-			<div class="radar-circle" style="transform: rotate(${radar.rotate}deg);<%if(radarLP.index==1){%>display: block;<%}else{%>display:none;<%}%>">
+			<div class="radar-circle" style="transform: rotate(${radar.rotate}deg);@[ if(radarLP.index==1){ /]display: block;@[ }else{ /]display:none;@[ } /]">
 				<div class="radar-point" onmousedown="dragStart(event)"></div>
 				<div class="radar-center-point"></div>
 			</div>
 		</div>
-		<%}%> 
-     <%}%>
+		@[ } /]
+     @[ } /]
     </div>
     <div class="radar-btn-group">
         <div class="radar-add-btn"><button >添加标记</button></div>

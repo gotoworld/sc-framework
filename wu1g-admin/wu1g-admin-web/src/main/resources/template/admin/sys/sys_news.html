@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 系统_资讯 后台管理 (初始化页面)
  *		
@@ -8,13 +8,13 @@
  * -------- ----------- --------------- ---------------------------	
  * Copyright 2017 System. - All Rights Reserved.
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<% layout("../include/meta.html"){}%>
-	<% layout("../include/public_init_js_css.html"){}%>
+	@[ layout("../include/meta.html"){} /]
+	@[ layout("../include/public_init_js_css.html"){} /]
 	<style type="text/css">
 	.folder-list li{text-align: left; margin-top: 3px;}
 	.folder-list li.label-primary a,.folder-list li.label-primary i{color: #ffffff;}
@@ -42,12 +42,12 @@
 													<li  class="myacolor"  data-id="0">
 														<a href="#"> -全部-  <i class="fa fa-chevron-right"></i></a>
 													</li>
-													<% for(b in nodes !){ %>
+													@[ for(b in nodes !){ /]
 														<li  class=" "  data-id="${b.id}">
 															<a href="#">${b.name}  <i class=""></i> </a>
 														</li>
-														<% layout("sys_news_category_tree_li.html",{treeIndex:1,nodes:b.nodes}){} %>
-													<%}%>
+														@[ layout("sys_news_category_tree_li.html",{treeIndex:1,nodes:b.nodes}){} /]
+													@[ } /]
 												</ul>
 												<div class="clearfix"></div>
 										</div>
@@ -57,7 +57,7 @@
 							<div class="col-sm-10">
 								<div class="ibox float-e-margins ">
 									<div class="ibox-content">
-										<% layout("../include/notifications.html"){}%>
+										@[ layout("../include/notifications.html"){} /]
 										<table class="table">
 											<tr>
 												<td>
@@ -86,9 +86,9 @@
 												</td>
 											</tr>
 										</table>
-										<% if(shiro.hasPermission("sysNews:add")){ %>
+										@[ if(shiro.hasPermission("sysNews:add")){ /]
 										<a href="#" onclick="openMyBoxLayer('a','${basePath}h/sys/sysNews/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-										<%}%>
+										@[ } /]
 										<div id="info_list_div">
 											<div class="alert alert-warning mt10">
 												<strong>数据加载中!</strong>data loading...
@@ -104,7 +104,7 @@
 
 		</div>
 	</div>
-	<% layout("../include/public_last_js_css.html"){}%>
+	@[ layout("../include/public_last_js_css.html"){} /]
 	<script>
 		$("#data_5 .input-daterange").datepicker({
 			keyboardNavigation : !1,

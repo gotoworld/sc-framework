@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,24 @@ public class SysNewsCategoryController extends BaseController {
 	public String init() {
 		log.info("SysNewsCategoryController init.........");
 		return init;
+	}
+	/**
+	 * <p> 信息树json。
+	 */
+	@RequiresPermissions("sysNewsCategory:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")
+	@ResponseBody
+	public Response jsonTree() {
+		log.info("SysNewsCategoryController jsonTree.........");
+		Response result=new Response();
+		try {
+			SysCategory sysCategory=new SysCategory();
+			sysCategory.setType(1);
+			result.data=sysCategoryService.findDataTree(sysCategory);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
 	}
 	/**
 	 * <p> 信息分页 (未删除)。

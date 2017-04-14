@@ -1,4 +1,4 @@
-<%
+@[
 /*
  * 权限_角色信息 后台管理 (信息编辑页面)
  *
@@ -9,13 +9,13 @@
  * Copyright 2015 isd System. - All Rights Reserved.
  *
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
-	<% include("../include/meta.html"){} %>
-	<% include("../include/public_init_js_css.html"){} %>
+	@[ include("../include/meta.html"){} /]
+	@[ include("../include/public_init_js_css.html"){} /]
 	<style type="text/css">
 	</style>
 </head>
@@ -43,7 +43,7 @@
 								<span class="help-block"></span>
 						  </div>
 						</div>
-						  <%if(shiro.hasPermission("authRole:super")){ %>
+						  @[ if(shiro.hasPermission("authRole:super")){ /]
 							<div class="form-group">
 								<div class="checkbox" style="margin-left: 10px;">
 									<label >
@@ -51,17 +51,17 @@
 									</label>
 								</div>
 							</div>
-						  <%}%>
+						  @[ } /]
 					</div>
 					<div class="col-sm-6 b-r">
-						<%if(shiro.hasPermission("authRole:parm")){ %>
+						@[ if(shiro.hasPermission("authRole:parm")){ /]
 						<div class="form-group">
 						  <label class="col-md-2 control-label ">
 							功能列表
 						  </label>
 						  <div class="col-md-10">
 							  <div class="">
-								  <%
+								  @[
 								  var permBeansCopy=null;
 								  var dcode="";
 								  var checkBoxX="";
@@ -79,7 +79,7 @@
 											 checkLabel=' style="color:#1c84c6;"';
 										  }
 									  }
-								  %>
+								 /]
 									  <p>
 										  <label ${checkLabel}>
 											  -
@@ -87,15 +87,15 @@
 											  ${b.name}
 										  </label>
 									  </p>
-									  <%if(isNotEmpty(b.beans) && b.beans.~size>0){
+									  @[ if(isNotEmpty(b.beans) && b.beans.~size>0){
 										  layout("auth_role_tree_checkbox.html",{beans:b.beans,permBeansCopy:permBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
 										  dcode="";
-									  }%>
-								  <%}%>
+									  } /]
+								  @[ } /]
 							  </div>
 						  </div>
 						</div>
-						<%}%>
+						@[ } /]
 					</div>
 					<div class="col-sm-12">
 						<div style="width: 200px;margin: 0 auto;">
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div>
-<% include("../include/public_last_js_css.html"){} %>
+@[ include("../include/public_last_js_css.html"){} /]
 <script type="text/javascript">
     $().ready(function(){
         formValidate();

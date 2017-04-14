@@ -18,7 +18,7 @@
       });
       //locations request
       map.getElevations({
-        locations : [[-12.040397656836609,-77.03373871559225], [-12.050047116528843,-77.02448169303511],  [-12.044804866577001,-77.02154422636042]],
+        locations : [@[ 12.040397656836609,-77.03373871559225], @[ 12.050047116528843,-77.02448169303511],  @[ 12.044804866577001,-77.02154422636042]],
           callback : function (result, status){
           if (status == google.maps.ElevationStatus.OK) {
             for (var i in result){
@@ -46,7 +46,7 @@
     <div class="span6">
       <p>With GMaps.js you can add elevation this way:</p>
       <pre>map.getElevations({
-  locations : [[-12.040397656836609,-77.03373871559225], [-12.050047116528843,-77.02448169303511],  [-12.044804866577001,-77.02154422636042]],
+  locations : [@[ 12.040397656836609,-77.03373871559225], @[ 12.050047116528843,-77.02448169303511],  @[ 12.044804866577001,-77.02154422636042]],
     callback : function (result, status){
     if (status == google.maps.ElevationStatus.OK) {
       console.log(result, status);

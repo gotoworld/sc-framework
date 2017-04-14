@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <% layout("include/meta.html"){}%>
+    @[ layout("include/meta.html"){} /]
     <title>W全景发布系统</title>
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
-    <% layout("include/public_init_js_css.html"){}%>
+    @[ layout("include/public_init_js_css.html"){} /]
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
@@ -45,8 +45,8 @@
                 <li>
                     <a class="J_menuItem" href="${basePath}h/home"> <i class="fa fa-home"></i> <span class="nav-label">首页</span></a>
                 </li>
-                <% layout("nav_menu_pano.html"){}%>
-                <% layout("nav_menu_sys.html"){}%>
+                @[ layout("nav_menu_pano.html"){} /]
+                @[ layout("nav_menu_sys.html"){} /]
             </ul>
         </div>
     </nav>

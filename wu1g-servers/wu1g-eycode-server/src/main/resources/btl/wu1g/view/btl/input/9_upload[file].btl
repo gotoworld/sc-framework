@@ -4,9 +4,9 @@
                             <div class="col-md-12">
                                 <span  class="help-block m-b-none"><button type="button" id="upload_btn_${t.columnNameFormat}">点击上传</button></span>
                                 <div id="upload_div_${t.columnNameFormat}" style="">
-                                    \<% if(isNotEmpty(bean.${t.columnNameFormat})){%>
+                                    \@[  if(isNotEmpty(bean.${t.columnNameFormat})){ /]
                                     <input name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" class="form-control" type="text">
-                                    \<%}%>
+                                    \@[ } /]
                                 </div>
                             </div>
                         </div>

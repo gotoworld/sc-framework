@@ -15,8 +15,8 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ${tcfg.tableNameFormat!} extends BaseEntity {
-<%for( t in beanVo!){%>
+@[ for( t in beanVo!){ /]
     /**${t.columnComment!}*/
     private ${t.javaType} ${t.columnNameFormat};
-<%}%>
+@[ } /]
 }

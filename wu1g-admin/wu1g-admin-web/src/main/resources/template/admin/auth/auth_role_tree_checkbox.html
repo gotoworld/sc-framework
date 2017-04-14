@@ -1,9 +1,9 @@
-<%
+@[
 /*
  * 权限_权限信息  树递归
 */
-%>
-<%
+ /]
+@[
 var dcodex="";
 for(b in beans!){
 	checkBoxX="";
@@ -14,21 +14,21 @@ for(b in beans!){
 			checkLabel=' style="color:#1c84c6;"';
 		}
 	}
-%>
+ /]
 	<p>
 		<label ${checkLabel}>
 			-
-			<% for(var i=1;i<=numx;i++){ %>
+			@[ for(var i=1;i<=numx;i++){ /]
 			|-
-			<%}%>
+			@[ } /]
 			<input type="checkbox" class="${dcode} ${b.id}" level="${numx}" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="permIdArray">
 			${b.name}
 		</label>
 	</p>
-<%
+@[
 	if(isNotEmpty(b.beans) && b.beans.~size>0){
 		layout("auth_role_tree_checkbox.html",{beans:b.beans,permBeansCopy:permBeansCopy,numx:numx+1,dcodex:dcode,dcode:dcode+b.id}){};
 		dcode=dcodex;
 	}
 }
-%>
+ /]

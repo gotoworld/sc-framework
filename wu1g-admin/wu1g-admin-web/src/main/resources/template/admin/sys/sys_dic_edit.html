@@ -1,4 +1,4 @@
-<%
+@[
 /*
  * 系统_数据字典 后台管理 (信息编辑页面)
  *
@@ -9,13 +9,13 @@
  * Copyright 2015 isd System. - All Rights Reserved.
  *
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
-	<% include("../include/meta.html"){} %>
-	<% include("../include/public_init_js_css.html"){} %>
+	@[ include("../include/meta.html"){} /]
+	@[ include("../include/public_init_js_css.html"){} /]
 	<style type="text/css">
 	</style>
 </head>
@@ -50,15 +50,15 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="parentId">父级节点</label>
 							<div class="col-md-4">
-								<% var treeIndex=1; %>
-								<% var _this_self=bean.id; %>
-								<% var _band_flag=bean.parentId; %>
+								@[ var treeIndex=1; /]
+								@[ var _this_self=bean.id; /]
+								@[ var _band_flag=bean.parentId; /]
 								<select  class="form-control" name="parentId" id="parentId">
 									<option value="">---顶级---</option>
-									<% for(b in nodes !){ %>
+									@[ for(b in nodes !){ /]
 									<option  value="${_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
-									<% layout("sys_dic_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.parentId,_this_self:bean.id}){} %>
-									<%}%>
+									@[ layout("sys_dic_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.parentId,_this_self:bean.id}){} /]
+									@[ } /]
 								</select>
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 		</div>
 	</div>
 </div>
-<% include("../include/public_last_js_css.html"){} %>
+@[ include("../include/public_last_js_css.html"){} /]
 <script type="text/javascript">
     $().ready(function(){
         formValidate();

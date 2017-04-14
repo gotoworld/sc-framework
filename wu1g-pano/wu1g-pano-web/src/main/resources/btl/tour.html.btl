@@ -25,18 +25,18 @@
 		var krpano = document.getElementById("krpanoSWFObject");
 		//显示赞 按钮
 		krpano.call("set(layer[skin_zan_btn_container].visible,true);");
-		<%if(isNotEmpty(proj.soundSrc)){%>
+		@[ if(isNotEmpty(proj.soundSrc)){ /]
 		//显示声音 按钮
 		krpano.call("set(layer[skin_bgm_btn_container].visible,true);");
-		<%}%>
-		<%if(isNotEmpty(proj.mapSrc)){%>
+		@[ } /]
+		@[ if(isNotEmpty(proj.mapSrc)){ /]
 		//显示导览图 按钮
 		krpano.call("set(layer[skin_radar_btn_container].visible,true);");
-		<%}%>
-		<%if(proj.isComments==1){%>
+		@[ } /]
+		@[ if(proj.isComments==1){ /]
 		//显示评论 按钮
 		krpano.call("set(layer[skin_co_btn_container].visible,true);");
-		<%}%>
+		@[ } /]
 		//显示访问量
 		krpano.call("set(layer[skin_visit_btn_container].visible,true);");
 		
@@ -57,7 +57,7 @@ var img_host = '${basePath}';
 var basePath = '${basePath}';
 var pid = '${proj.id}';
 var allow_comment = ${proj.isComments};
-var is_show_comment = <%if(proj.isComments==1){%>true<%}else{%>false<%}%>;
+var is_show_comment = @[ if(proj.isComments==1){ /]true@[ }else{ /]false@[ } /];
 
 var visit_num = ${proj.pvNum};
 var like_num = ${proj.thumbsUpNum};

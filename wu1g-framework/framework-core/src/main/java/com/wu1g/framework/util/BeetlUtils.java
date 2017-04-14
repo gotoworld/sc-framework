@@ -28,6 +28,8 @@ public class BeetlUtils {
 		try {
 			ClasspathResourceLoader resourceLoader=new ClasspathResourceLoader();
 			Configuration cfg=Configuration.defaultConfiguration();
+			cfg.setStatementStart("@[");
+			cfg.setStatementEnd("/]");
 			cfg.addPkg( "com.wu1g" );
 			GroupTemplate gt=new GroupTemplate(resourceLoader,cfg);
 			gt.registerFunctionPackage("krpano", new KrSceneImageUtil());

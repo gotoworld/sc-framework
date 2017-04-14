@@ -3,11 +3,11 @@
       method="post"  accept-charset="UTF-8"
       action="javascript:void(0);"
       data-action="${basePath}column">
-    <%
+    @[
         for(db in dbs!){
-    %>
+    /]
         <input type="hidden" name="dbs" value="${db}">
-    <%}%>
+    @[ } /]
 
     <table class="table table-bordered table-striped  table-hover">
         <thead>
@@ -18,9 +18,9 @@
         </tr>
         </thead>
         <tbody>
-        <%
+        @[
         for(bean in result.data!){
-        %>
+        /]
         <tr>
             <td>
                 <label>
@@ -37,15 +37,15 @@
 
             </td>
         </tr>
-        <%
+        @[
         }elsefor{
-        %>
+        /]
         <tr>
             <td colspan="3">
                 <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
             </td>
         </tr>
-        <%}%>
+        @[ } /]
         </tbody>
     </table>
 </form>

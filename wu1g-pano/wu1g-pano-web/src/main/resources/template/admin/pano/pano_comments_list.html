@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 全景_评论 (初始化页面 信息列表)
  *		
@@ -9,7 +9,7 @@
  * Copyright 2016 pano System. - All Rights Reserved.
  *	
  */
-%>
+ /]
 <div class="table-responsive table-scrollable">
 	<table class="table table-bordered table-striped  table-hover">
 		<thead>
@@ -23,10 +23,10 @@
 			</tr>
 		</thead>
 		<tbody>
-			<%
+			@[
 			if(beans!=null && beans.~size>0){
 				for(bean in beans){
-			%>
+			 /]
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
 				<td>
@@ -36,21 +36,21 @@
 				<td>${bean.content}</td>
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
-	               <% if(shiro.hasPermission("panoComment:del")){ %>
+	               @[ if(shiro.hasPermission("panoComment:del")){ /]
 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/pano/comments/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-	               <%}%>
+	               @[ } /]
                 </td>
 			</tr>
-			<%	
+			@[
 				}
 			}else{
-			%>
+			 /]
 			<tr>
 				<td colspan="6">
 				<div class="alert"><strong>暂无数据!</strong></div>
 				</td>
 			</tr>
-			<%}%>
+			@[ } /]
 		</tbody>
 	</table>
 	<#pageTag func="loadUrlPage" params="'info_search_form','info_list_div'" />

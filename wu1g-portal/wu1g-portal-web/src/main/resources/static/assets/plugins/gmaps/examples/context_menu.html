@@ -37,7 +37,7 @@
           action: function(e){
             this.setCenter(e.latLng.lat(), e.latLng.lng());
           }
-        }]
+        } ]
       });
       map.setContextMenu({
         control: 'marker',
@@ -47,7 +47,7 @@
           action: function(e){
             this.setCenter(e.latLng.lat(), e.latLng.lng());
           }
-        }]
+        } ]
       });
     });
   </script>
@@ -78,7 +78,7 @@
     action: function(e){
       this.setCenter(e.latLng.lat(), e.latLng.lng());
     }
-  }]
+  } ]
 });</pre>
       <p>You must define the <strong>control</strong> that the context menu is attached (<strong>map</strong> or <strong>marker</strong>) and an array of <strong>options</strong> with <code>title</code>, <code>name</code> and <code>action</code> Inside <code>action</code> you can use <code>this</code> for the GMaps.js object (<code>map</code> in this case) and MouseEvent object <code>e</code>.</p>
     </div>

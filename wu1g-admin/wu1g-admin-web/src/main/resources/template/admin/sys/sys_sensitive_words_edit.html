@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 系统_敏感词 后台管理 (信息编辑页面)
  *
@@ -8,13 +8,13 @@
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<% include("../include/meta.html"){} %>
-<% include("../include/public_init_js_css.html"){} %>
+@[ include("../include/meta.html"){} /]
+@[ include("../include/public_init_js_css.html"){} /]
 </head>
 
 <body class="gray-bg">
@@ -66,7 +66,7 @@
 		</div>
 	</div>
 </div>
-<% include("../include/public_last_js_css.html"){} %>
+@[ include("../include/public_last_js_css.html"){} /]
 <script type="text/javascript">
 $(document).ready(function(){
 	formValidate();

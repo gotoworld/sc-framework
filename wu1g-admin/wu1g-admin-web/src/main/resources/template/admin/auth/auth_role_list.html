@@ -1,4 +1,4 @@
-<%
+@[
 /*
 * 权限_角色信息 后台管理 (初始化页面  信息列表)
 *
@@ -9,7 +9,7 @@
 * Copyright 2015 isd System. - All Rights Reserved.
 *
 */
-%>
+ /]
 <div class="table-responsive table-scrollable">
     <table class="table table-bordered table-striped  table-hover">
         <thead>
@@ -22,33 +22,33 @@
         </tr>
         </thead>
         <tbody>
-        <% for(bean in beans!){ %>
+        @[ for(bean in beans!){ /]
         <tr>
             <td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
             <td>${bean.name}</td>
             <td>${bean.isSuper==1?'是':'否'}</td>
             <td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
             <td>
-                <%if(shiro.hasPermission("authRole:edit")){%>
+                @[ if(shiro.hasPermission("authRole:edit")){ /]
                 <a href="javascript:;" onclick="openMyBoxLayer('e','${basePath}h/auth/role/edit/${bean.id}');"
                    class="label label-success"><i class="fa fa-edit"></i> 编辑</a>
-                <%}%>
-                <%if(bean.id!=1 && shiro.hasPermission("authRole:del")){%>
+                @[ } /]
+                @[ if(bean.id!=1 && shiro.hasPermission("authRole:del")){ /]
                 <a href="javascript:;"
                    onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/auth/role/del/${bean.id}');};"
                    class="label label-danger"><i class="fa fa-trash-o"></i> 删除</a>
-                <%}%>
+                @[ } /]
             </td>
         </tr>
-        <%
+        @[
         }elsefor{
-        %>
+       /]
         <tr>
             <td colspan="5">
                 <div class="alert"><strong>暂无数据!</strong></div>
             </td>
         </tr>
-        <%}%>
+        @[ } /]
         </tbody>
     </table>
     <#pageTag func="loadUrlPage" params="'info_search_form','info_list_div'" />

@@ -1,22 +1,22 @@
 ﻿<krpano version="1.19" title="${proj.name}" onstart="startup();">
    <!-- sceneJump(); -->
-	<%if(proj.isComments==1){%>
+	@[ if(proj.isComments==1){ /]
    <!-- 下载动态更新评论 -->
    <events name="loading_comments" 
 	        keep="true"
             onxmlcomplete="js(initStatis(););"
 			onloadcomplete="js(get_comm(););"
 	        />
-	<%}%>
-	<% include("public.xml.btl"){}%>
-	<%if(proj.isPlanetoid==1){%>
+	@[ } /]
+	@[  include("public.xml.btl"){} /]
+	@[ if(proj.isPlanetoid==1){ /]
 	<!-- 小行星开场 -->
     <skin_settings littleplanetintro="true" />
-	<%}%>
-	<%if(isNotEmpty(proj.videoSrc)){%>
+	@[ } /]
+	@[ if(isNotEmpty(proj.videoSrc)){ /]
 	<!-- 视频解说 -->
  	<plugin devices="flash" name="ui1" url="%SWFPATH%/plugins/videoplayer.swf" alturl="%SWFPATH%/plugins/videoplayer.js" updateeveryframe="true" videourl="${proj.videoSrc}" loop="true" volume="0.7" onhover="showtext('点击播放/暂停');" onclick="togglepause();" zorder="100" alpha="1" align="rightbottom" x="-30" y="80" ox="0" oy="0" width="" height="" scale="1" visible="true" enabled="true" capture="true" keep="true" showpic=""/>
-	<%}%>
+	@[ } /]
     <!-- 拖动热点动态获取坐标 - call it once in the ondown event -->
 	<action name="draghotspot">
 		spheretoscreen(ath, atv, hotspotcenterx, hotspotcentery, 'l');

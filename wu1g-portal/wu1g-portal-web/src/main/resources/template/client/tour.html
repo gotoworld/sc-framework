@@ -6,14 +6,14 @@
 <head>
     <title>Tour</title>
     <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
-    <% layout("include/meta.html"){}%>
-    <% layout("include/public_init_js_css.html"){}%>
+    @[ layout("include/meta.html"){} /]
+    @[ layout("include/public_init_js_css.html"){} /]
 </head>
 <!-- END HEAD -->
 
 <!-- BEGIN BODY -->
 <body>
-    <% layout("include/header.html"){}%>
+    @[ layout("include/header.html"){} /]
     <!-- BEGIN PAGE CONTAINER -->
     <div class="page-container">
         <!-- BEGIN BREADCRUMBS -->
@@ -174,7 +174,7 @@
     </div>
     <!-- END COPYRIGHT -->
 
-    <% layout("include/public_last_js_css.html"){}%>
+    @[ layout("include/public_last_js_css.html"){} /]
     <script src="assets/plugins/jquery.mixitup.min.js"></script>    
     <script src="assets/scripts/portfolio.js"></script>
     <script type="text/javascript">

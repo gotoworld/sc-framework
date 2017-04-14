@@ -1,19 +1,19 @@
-<%
+@[
 /*
  * 组织架构_部门 树递归
  */
-%>
-<%
+ /]
+@[
 	for(bean in beans!){
-%>
+ /]
 		<option value="${_this_self!=bean.id?bean.id:'-999'}" ${_band_flag==bean.id?'selected="selected"':''}>
 			-
-			<% for(var i=1;i<=treeIndex;i++){ %>
+			@[ for(var i=1;i<=treeIndex;i++){ /]
 			|-
-			<%}%>
+			@[ } /]
 			${bean.name}${_this_self==bean.id?'-----无效项-------':''}
 		</option>
-<% 		if(isNotEmpty(bean.beans) && bean.beans.~size>0){
+@[ 		if(isNotEmpty(bean.beans) && bean.beans.~size>0){
 			 include("org_dept_tree_select.html",{treeIndex:treeIndex+1,beans:bean.beans}){}
 		}
-}%>
+} /]

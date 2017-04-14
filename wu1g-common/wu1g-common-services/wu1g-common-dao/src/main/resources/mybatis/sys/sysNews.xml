@@ -8,7 +8,6 @@
         ,t1.second_title as "secondTitle"
         ,t1.cover_pic as "coverPic"
         ,t1.brief_info as "briefInfo"
-        ,t1.detail_info as "detailInfo"
         ,t1.is_ontop as "isOntop"
         ,t1.click_count as "clickCount"
         ,t1.state as "state"
@@ -26,6 +25,7 @@
     <select id="selectByPrimaryKey" resultType="com.wu1g.vo.sys.SysNews" parameterType="com.wu1g.vo.sys.SysNews">
         select
         <include refid="Base_Column_List"/>
+        ,t1.detail_info as "detailInfo"
         from sys_news t1
         where
         t1.id = #{id}

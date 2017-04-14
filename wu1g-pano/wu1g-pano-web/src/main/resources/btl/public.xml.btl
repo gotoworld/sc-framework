@@ -4,12 +4,12 @@
 	<allowdomain domain="*" />
 </security>
 -->
-<%if(proj.isFps == "1"){%>
+@[ if(proj.isFps == "1"){ /]
 <include url="%SWFPATH%/plugins/fps.xml" />
-<%}%>
-<%if(isNotEmpty(proj.snowType)){%>
+@[ } /]
+@[ if(isNotEmpty(proj.snowType)){ /]
 <include url="%SWFPATH%/skin/snow.xml" />
-<%}%>
+@[ } /]
 <include url="%SWFPATH%/skin/contextmenu.xml" />
 
 <include url="%SWFPATH%/skin/vtourskin.xml" />
@@ -31,7 +31,7 @@
 		horizon="0.0" 
 		tofov="120.0" 
 		/>
-<%if(isNotEmpty(proj.snowType)){%>		
+@[ if(isNotEmpty(proj.snowType)){ /]
 <!-- 下雪效果-->
 <plugin name="snow" zorder="1"  
        url="%SWFPATH%/plugins/snow.swf"  
@@ -40,7 +40,7 @@
        keep="true"  
        onloaded="${proj.snowType}();"  
        />  
-<%}%>	   		
+@[ } /]
 		
 <!-- 自动旋转一周 跳转到下一个场景 -->
 <action name="sceneJump">
@@ -65,7 +65,7 @@
 	  );
 </action>
 
- <%if(isNotEmpty(proj.mapSrc)){%>
+ @[ if(isNotEmpty(proj.mapSrc)){ /]
 	<!-- 导览图 -->
 	<layer name="mapcontainer"  keep="true" type="container"  align="righttop" x="80" y="160" width="264" height="264" visible="false">
 		<layer name="map" url="${proj.mapSrc}" align="top" x="0" y="0" width="100%" height="264" handcursor="false" scalechildren="true">
@@ -80,11 +80,11 @@
 			       headingoffset="0"
 			       />
 			  <!-- 雷达列表 -->
-			 <%if(proj.radars!=null){%>
-     			<%for(radar in proj.radars){%>
+			 @[ if(proj.radars!=null){ /]
+     			@[ for(radar in proj.radars){ /]
 					<layer name="${radar.sceneId}"  style="spot" x="${parseInt(radar.y)+30}" y="${parseInt(radar.x)+35}"  />
-  				<%}%> 
-        	 <%}%>
+  				@[ } /]
+        	 @[ } /]
 			<layer name="activespot" url="%SWFPATH%/skin/vtourskin_mapspotactive.png"  width="57.2" height="71.5" scale="0.5" oy="-17" align="lefttop" edge="center" zorder="3" visible="false"/>
 		</layer>
 	</layer>
@@ -116,7 +116,7 @@
   	)
    
     </action>  
-<%}%>
+@[ } /]
 
 <!-- 自定义热点加载事件 -->
 <action name="do_crop_animation">
@@ -145,8 +145,8 @@
 	</action>
 
 <!--场景列表-->
-<%for(scene in proj.scenes){%>
-<%
+@[ for(scene in proj.scenes){ /]
+@[
    var radar_rotate=0;
    if(proj.radars != null){
   	 for(radar in proj.radars){
@@ -155,7 +155,7 @@
    		}
 	 }
 	}
-%>
+]
    <scene name="${scene.id}" title="${scene.sceneTitle}" onstart="activatespot(${radar_rotate})"  havevrimage="true"  thumburl="${scene.breakdownImg}thumb.jpg" lat="" lng="" heading="">
 		<view hlookat="${scene.hlookat}" vlookat="${scene.vlookat}" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 		<preview url="${scene.breakdownImg!}preview.jpg" />
@@ -163,20 +163,20 @@
 		<image if="webvr.isenabled">
 			<cube url="${scene.breakdownImg!}vr/pano_%s.jpg" />
 		</image>
-		<%if(scene.hotSpots!=null && scene.hotSpots.~size>0){%>
+		@[ if(scene.hotSpots!=null && scene.hotSpots.~size>0){ /]
 		<!-- 场景 跳转热点 -->
-		<%for(hot in scene.hotSpots){%>
-		<hotspot name="${hot.hname}" style="skin_hotspotstyle" distorted="true" <%if(isNotEmpty(hot.depth)){%>depth="${hot.depth}" <%}%> <%if(isNotEmpty(hot.scale)){%>scale="${hot.scale}" <%}%> <%if(isNotEmpty(hot.rotate)){%>rotate="${hot.rotate}" <%}%> zoom="false" ath="${hot.ath}" atv="${hot.atv}" linkedscene="${hot.linkedscene}" />
-		<%}}%>
-		<%if(scene.imgSpots!=null && scene.imgSpots.~size>0){%>
+		@[ for(hot in scene.hotSpots){ /]
+		<hotspot name="${hot.hname}" style="skin_hotspotstyle" distorted="true" @[ if(isNotEmpty(hot.depth)){ /]depth="${hot.depth}" @[ } /] @[ if(isNotEmpty(hot.scale)){ /]scale="${hot.scale}" @[ } /] @[ if(isNotEmpty(hot.rotate)){ /]rotate="${hot.rotate}" @[ } /] zoom="false" ath="${hot.ath}" atv="${hot.atv}" linkedscene="${hot.linkedscene}" />
+		@[ }} /]
+		@[ if(scene.imgSpots!=null && scene.imgSpots.~size>0){ /]
 		<!-- 场景 图片装饰 -->
-		<%for(hot in scene.imgSpots){%>
-		<hotspot name="${hot.hname}"  <%if(hot.isOnclick==1){%> style="flyoutimage" url="${strutil.replace(hot.url,'/n1/','/n3/')}" <%}else{%> enabled="false" url="${hot.url}" <%}%> distorted="true" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}"/>
-		<%}}%>
+		@[ for(hot in scene.imgSpots){ /]
+		<hotspot name="${hot.hname}"  @[ if(hot.isOnclick==1){ /] style="flyoutimage" url="${strutil.replace(hot.url,'/n1/','/n3/')}" @[ }else{ /] enabled="false" url="${hot.url}" @[ } /] distorted="true" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}"/>
+		@[ }} /]
 	</scene>      
-<%}%>
+@[ } /]
 
-<%if(isNotEmpty(proj.soundSrc)){%>
+@[ if(isNotEmpty(proj.soundSrc)){ /]
 <!-- 背景音乐 -->
 <plugin name="soundinterface"
         url.flash="%SWFPATH%/plugins/soundinterface.swf"
@@ -189,4 +189,4 @@
 	playsound(bgm, '${proj.soundSrc}', 0);
 </action>
 
-<%}%>
+@[ } /]

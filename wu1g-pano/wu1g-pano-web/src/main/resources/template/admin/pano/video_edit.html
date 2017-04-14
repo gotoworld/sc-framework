@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 全景_视频 后台管理 (信息编辑页面)
  *		
@@ -9,13 +9,13 @@
  * Copyright 2016 pano System. - All Rights Reserved.
  *	
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<% include("../include/meta.html"){} %> 
-<% include("../include/public_init_js_css.html"){} %>
+@[ include("../include/meta.html"){} /]
+@[ include("../include/public_init_js_css.html"){} /]
 <link href="${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
 <link href="${basePath}css/upload.css" rel="stylesheet">
 
@@ -71,9 +71,9 @@
 							<div class="col-sm-11">
 								<p>视频上传:<span class="red s12">全景视频的格式为 mp4;</span></p>
 								<div class="img-input red" id="upload_scene_div" style="">
-								<%if(bean.scenes!=null && bean.scenes.~size>0){
+								@[ if(bean.scenes!=null && bean.scenes.~size>0){
 									for(scene in bean.scenes){
-								%>
+								 /]
 									<div id="${scene.id}" class="img-grid">
 										<input name="scene_id" value="${scene.id}" type="hidden">
 										<input name="${scene.id}_scene_src" value="${scene.sceneSrc}" type="hidden">
@@ -83,9 +83,9 @@
 										<a href="javascript:;" onclick="javascript:del_scene_btn(this,'${scene.id}');" class="ico_del"></a>
 										<a href="javascript:;" onclick="move_scene(this,'right');" class="ico_right"></a>
 									</div>
-								<%}
+								@[ }
 									}
-								%>
+								 /]
 								</div>
 								<div class="upload_scene_btn" style="">
 									<a href="javascript:;" id="upload_scene_btn"><img src="${basePath}img/add_video_btn.png" style="border: solid 4px #ddd"></a>
@@ -103,7 +103,7 @@
 			</div>
 		</div>
 	</div>
-	<% include("../include/public_last_js_css.html"){} %>
+	@[ include("../include/public_last_js_css.html"){} /]
 	<script src="${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
 	<script src="${basePath}plugins/plupload/js/plupload.min.js"></script>
 	<script type="text/javascript" src="${basePath}js/video_upload.js"></script>

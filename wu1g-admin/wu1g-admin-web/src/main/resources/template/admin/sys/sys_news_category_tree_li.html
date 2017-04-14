@@ -1,22 +1,22 @@
-<%
+@[
 /*
  * 递归树
  */
-%>
-<%
+ /]
+@[
 	for(bean in nodes!){
-%>
+ /]
 <li class="" data-id="${bean.id}">
 	<a href="#">
 			-
-		<% for(var i=1;i<=treeIndex;i++){ %>
+		@[ for(var i=1;i<=treeIndex;i++){ /]
 		|-
-		<%}%>
+		@[ } /]
 		${bean.name}
 		<i class=""></i>
 	</a>
 </li>
-<% 		if(isNotEmpty(bean.nodes) && bean.nodes.~size>0){
+@[ 		if(isNotEmpty(bean.nodes) && bean.nodes.~size>0){
 			 include("sys_news_category_tree_li.html",{treeIndex:treeIndex+1,nodes:bean.nodes}){}
 		}
-}%>
+} /]

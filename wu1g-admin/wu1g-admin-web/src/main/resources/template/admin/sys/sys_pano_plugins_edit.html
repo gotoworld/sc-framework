@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 系统_全景插件 后台管理 (信息编辑页面)
  *
@@ -8,13 +8,13 @@
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<% include("../include/meta.html"){} %>
-<% include("../include/public_init_js_css.html"){} %>
+@[ include("../include/meta.html"){} /]
+@[ include("../include/public_init_js_css.html"){} /]
 <link href="${basePath}css/upload.css" rel="stylesheet">
 </head>
 
@@ -49,9 +49,9 @@
                             <div class="col-md-8">
                                 <span  class="help-block m-b-none"><button type="button" id="upload_btn_pluginSrc">点击上传</button></span>
                                 <div id="upload_div_pluginSrc" style="">
-                                    <% if(isNotEmpty(bean.pluginSrc)){%>
+                                    @[ if(isNotEmpty(bean.pluginSrc)){ /]
                                         <input name="pluginSrc" value="${bean.pluginSrc}" class="form-control" type="text">
-                                    <%}%>
+                                    @[ } /]
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
 		</div>
 	</div>
 </div>
-<% include("../include/public_last_js_css.html"){} %>
+@[ include("../include/public_last_js_css.html"){} /]
 <script type="text/javascript" src="${basePath}plugins/plupload/js/plupload.min.js"></script>
 <script type="text/javascript" src="${basePath}js/upload_single_file.js"></script>
 <script type="text/javascript">

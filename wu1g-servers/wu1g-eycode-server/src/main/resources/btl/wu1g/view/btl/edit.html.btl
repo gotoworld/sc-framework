@@ -1,4 +1,4 @@
-\<%
+\@[
  /*	
  * ${tcfg.tableComment} 后台管理 (信息编辑页面)
  *
@@ -8,10 +8,10 @@
  * -------- ----------- --------------- ---------------------------
  * Copyright ${year} System. - All Rights Reserved.
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
-<%
+@[
 var isRichFlag=0;
 var isDateFlag=0;
 var isImgFlag=0;
@@ -31,24 +31,24 @@ for(t in columns){
 		}
 	}
 }
-%>
+ /]
 <head>
 <meta charset="utf-8" />
-\<% include("../include/meta.html"){} %>
-\<% include("../include/public_init_js_css.html"){} %>
-<%if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){%>
+\@[  include("../include/meta.html"){} /]
+\@[  include("../include/public_init_js_css.html"){} /]
+@[ if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){ /]
 <link href="\${basePath}css/upload.css" rel="stylesheet">
-<%}%>
-<%if(isBGMFlag==1){%>
+@[ } /]
+@[ if(isBGMFlag==1){ /]
 <link href="\${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
-<%}%>
-<%if(isSelectFlag==1){%>
+@[ } /]
+@[ if(isSelectFlag==1){ /]
 <link href="\${basePath}plugins/hplus/css/plugins/chosen/chosen.css" rel="stylesheet">
-<%}%>
-<%if(isRichFlag==1){%>
+@[ } /]
+@[ if(isRichFlag==1){ /]
 <link rel="stylesheet" href="\${basePath}plugins/editor/themes/default/default.css" />
 <link rel="stylesheet" href="\${basePath}plugins/editor/plugins/code/prettify.css" />
-<%}%>
+@[ } /]
 </head>
 
 <body class="gray-bg">
@@ -63,14 +63,14 @@ for(t in columns){
 						</div>
 					</div>
 					<input type="hidden" name="pageNum" id="bean-pageNum" value="\${bean.pageNum}">
-					<%for(t in pks){%>
+					@[ for(t in pks){ /]
 					<input type="hidden" name="${t.columnNameFormat}" value="\${bean.${t.columnNameFormat}}" />
-					<%}%>
+					@[ } /]
 					<input type="hidden" name="token" value="\${bean.token}" />
 					<input type="hidden" name="newFlag" value="\${bean.newFlag}" />
 					<div class="clearfix "></div>
 					<div class="col-sm-6 b-r">
-	<%
+	@[
 		var _col_edit_count=0;
 		for(t in columns){
 		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
@@ -91,50 +91,50 @@ for(t in columns){
 				case "14":{ layout("input/14_show[html].btl",{t:t}){};break;}
 			}
 		   if(_col_edit_count==scfg._col_edit.~size/2){
-	%>
+	 /]
 
 					</div>
 					<div class="col-sm-6">
-    <%
+    @[
             }
         }
-    }%>
+    } /]
 
 					</div>
-	<%
+	@[
 	for(t in columns){
 		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
 			switch(scfg._edit_type[t.columnNameFormat]){
 				case "10":{
-					%>
+					 /]
 
 					<div class="clearfix "></div>
 					<div class="col-md-12">
-					<%
+					@[
 					layout("input/10_editor[simple].btl",{t:t}){};
-					%>
+					 /]
 
 					</div>
-					<%
+					@[
 					break;
 				}
 				case "11":{
-					%>
+					 /]
 
 					<div class="clearfix "></div>
 					<div class="col-md-12">
-					<%
+					@[
 					layout("input/11_editor[full].btl",{t:t}){};
-					%>
+					 /]
 
 					</div>
-					<%
+					@[
 					break;
 				}
 			}
 		}
 	}
-	%>
+	 /]
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
@@ -146,42 +146,42 @@ for(t in columns){
 		</div>
 	</div>
 </div>
-\<% include("../include/public_last_js_css.html"){} %>
-<%if(isDateFlag==1){%>
+\@[  include("../include/public_last_js_css.html"){} /]
+@[ if(isDateFlag==1){ /]
 <script src="\${basePath}plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
-<%}%>
-<%if(isRichFlag==1){%>
+@[ } /]
+@[ if(isRichFlag==1){ /]
 <script charset="utf-8" src="\${basePath}plugins/editor/kindeditor-all-min.js"></script>
-<%}%>
-<%if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){%>
+@[ } /]
+@[ if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){ /]
 <script type="text/javascript" src="\${basePath}plugins/plupload/js/plupload.min.js"></script>
-<%}%>
-<%if(isBGMFlag==1){%>
+@[ } /]
+@[ if(isBGMFlag==1){ /]
 <script type="text/javascript" src="\${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
 <script type="text/javascript" src="\${basePath}js/upload_single_bgm.js"></script>
-<%}%>
-<%if(isSelectFlag==1){%>
+@[ } /]
+@[ if(isSelectFlag==1){ /]
 <script type="text/javascript" src="\${basePath}plugins/hplus/js/plugins/chosen/chosen.jquery.js"></script>
-<%}%>
-<%if(isImgFlag==1){%>
+@[ } /]
+@[ if(isImgFlag==1){ /]
 <script type="text/javascript" src="\${basePath}js/upload_single_pic.js"></script>
-<%}%>
-<%if(isFileFlag==1){%>
+@[ } /]
+@[ if(isFileFlag==1){ /]
 <script type="text/javascript" src="\${basePath}js/upload_single_file.js"></script>
-<%}%>
+@[ } /]
 <script type="text/javascript">
-<%if(isRichFlag==1){%>
+@[ if(isRichFlag==1){ /]
 KindEditor.ready(function(K) {
-	<%for(t in columns){
+	@[ for(t in columns){
 		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
 			switch(scfg._edit_type[t.columnNameFormat]){
 				case "10":{ layout("js/10_editor[simple].btl",{t:t}){};break;}
 				case "11":{ layout("js/11_editor[full].btl",{t:t}){};break;}
 			}
 		}
-	}%>
+	} /]
 });
-<%}%>
+@[ } /]
 function formValidate(){
 	setTimeout(function(){
 		$("#${tableNameL}_01").validate();
@@ -189,7 +189,7 @@ function formValidate(){
 }
 $(document).ready(function(){
 	formValidate();
-	<% for(t in columns){
+	@[  for(t in columns){
     	if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
     		switch(scfg._edit_type[t.columnNameFormat]){
     			case "0":{ layout("js/0_input[hidden].btl",{t:t}){};break;}
@@ -209,7 +209,7 @@ $(document).ready(function(){
                 case "14":{layout("js/input/14_show[html].btl",{t:t}){};break;}
     		}
     	}
-    } %>
+    } /]
 });
 </script>
 </body>

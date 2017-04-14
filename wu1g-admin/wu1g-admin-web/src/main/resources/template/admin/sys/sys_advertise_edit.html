@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 广告管理 后台管理 (信息编辑页面)
  *
@@ -8,13 +8,13 @@
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<% include("../include/meta.html"){} %>
-<% include("../include/public_init_js_css.html"){} %>
+@[ include("../include/meta.html"){} /]
+@[ include("../include/public_init_js_css.html"){} /]
 <link href="${basePath}css/upload.css" rel="stylesheet">
 </head>
 
@@ -49,12 +49,12 @@
                             <div class="col-md-8">
                                 <span  class="help-block m-b-none"><button type="button" id="upload_btn_imgUrl">点击上传</button></span>
                                 <div id="upload_div_imgUrl" style="">
-                                    <% if(isNotEmpty(bean.imgUrl)){%>
+                                    @[ if(isNotEmpty(bean.imgUrl)){ /]
                                     <div class="img-grid-2">
                                         <input name="imgUrl" value="${bean.imgUrl}" type="hidden">
                                         <img src="${bean.imgUrl}" style="max-width:264px;max-height:264px">
                                     </div>
-                                    <%}%>
+                                    @[ } /]
                                 </div>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
 		</div>
 	</div>
 </div>
-<% include("../include/public_last_js_css.html"){} %>
+@[ include("../include/public_last_js_css.html"){} /]
 <script type="text/javascript" src="${basePath}plugins/plupload/js/plupload.min.js"></script>
 <script type="text/javascript" src="${basePath}js/upload_single_pic.js"></script>
 <script type="text/javascript">

@@ -1,4 +1,4 @@
-<%
+@[
 /*
 * 系统_管理员操作日志 后台管理 (初始化页面  信息列表)
 *
@@ -9,7 +9,7 @@
 * Copyright 2015 isd System. - All Rights Reserved.
 *
 */
-%>
+ /]
 <div class="table-responsive table-scrollable">
     <table class="table table-bordered table-striped  table-hover">
         <thead>
@@ -22,9 +22,9 @@
         </tr>
         </thead>
         <tbody>
-        <%
+        @[
         for(bean in beans!){
-        %>
+       /]
         <tr>
             <td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
             <td>${bean.type}</td>
@@ -32,15 +32,15 @@
             <td>${bean.createName}</td>
             <td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
         </tr>
-        <%
+        @[
         }elsefor{
-        %>
+       /]
         <tr>
             <td colspan="5">
                 <div class="alert"><strong>暂无数据!</strong></div>
             </td>
         </tr>
-        <%}%>
+        @[ } /]
         </tbody>
     </table>
     <#pageTag func="loadUrlPage" params="'info_search_form','info_list_div'" />

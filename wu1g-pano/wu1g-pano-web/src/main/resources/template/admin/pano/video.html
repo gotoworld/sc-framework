@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 全景_项目 后台管理 (初始化页面)
  *		
@@ -9,13 +9,13 @@
  * Copyright 2016 pano System. - All Rights Reserved.
  *	
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<% layout("../include/meta.html"){}%>
-	<% layout("../include/public_init_js_css.html"){}%>
+	@[ layout("../include/meta.html"){} /]
+	@[ layout("../include/public_init_js_css.html"){} /]
 	<style type="text/css">
 	.qrcode{
 	position:relative;
@@ -42,7 +42,7 @@
 						<div id="tab-1" class="tab-pane active">
 							<div class="ibox float-e-margins">
 								<div class="ibox-content">
-									<% layout("../include/notifications.html"){}%>
+									@[ layout("../include/notifications.html"){} /]
 									<table class="table">
 										<tr>
 											<td>
@@ -70,9 +70,9 @@
 											</td>
 										</tr>
 									</table>
-									<% if(shiro.hasPermission("video:add")){ %>
+									@[ if(shiro.hasPermission("video:add")){ /]
 									<a href="#" onclick="openMyBoxLayer('a','${basePath}h/video/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									<%}%>
+									@[ } /]
 									<div id="info_list_div">
 										<div class="alert alert-warning mt10">
 											<strong>数据加载中!</strong>data loading...
@@ -87,7 +87,7 @@
 
 		</div>
 	</div>
-	<% layout("../include/public_last_js_css.html"){}%>
+	@[ layout("../include/public_last_js_css.html"){} /]
 	<script>
 		//打开不同尺寸的二维码
 		function get_qrcode(pid,size,version){

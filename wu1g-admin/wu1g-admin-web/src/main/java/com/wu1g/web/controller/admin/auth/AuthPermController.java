@@ -29,6 +29,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.List;
@@ -61,6 +62,22 @@ public class AuthPermController extends BaseController {
 		List<AuthPerm> beans=authPermService.findDataTree(null);
 		request.setAttribute( "beans", beans );
 		return init;
+	}
+	/**
+	 * <p> 信息树json。
+	 */
+	@RequiresPermissions("authPerm:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")
+	@ResponseBody
+	public Response jsonTree() {
+		log.info("AuthPermController jsonTree.........");
+		Response result=new Response();
+		try {
+			result.data=authPermService.findDataTree(null);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
 	}
 	/**
 	 * <p> 编辑。

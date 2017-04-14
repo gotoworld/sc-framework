@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 系统_资讯 后台管理 (信息编辑页面)
  *
@@ -8,13 +8,13 @@
  * -------- ----------- --------------- ---------------------------
  * Copyright 2017 System. - All Rights Reserved.
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<% include("../include/meta.html"){} %>
-<% include("../include/public_init_js_css.html"){} %>
+@[ include("../include/meta.html"){} /]
+@[ include("../include/public_init_js_css.html"){} /]
 <link href="${basePath}css/upload.css" rel="stylesheet">
 <link rel="stylesheet" href="${basePath}plugins/editor/themes/default/default.css" />
 <link rel="stylesheet" href="${basePath}plugins/editor/plugins/code/prettify.css" />
@@ -41,14 +41,14 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">栏目：</label>
                             <div class="col-md-12">
-                                <% var treeIndex=1; %>
+                                @[ var treeIndex=1; /]
                                 <select  class="form-control" name="categorys" id="categorys" >
                                     <option value="">---顶级---</option>
-                                    <% var _theself=bean.categorys;%>
-                                    <% for(b in nodes !){ %>
+                                    @[ var _theself=bean.categorys; /]
+                                    @[ for(b in nodes !){ /]
                                     <option  value="${b.id}" ${array.contain(_theself,b.id)?'selected':''} >-${b.name}</option>
-                                    <% layout("sys_news_edit_create_tree_select.html",{treeIndex:1,nodes:b.nodes,_theself:_theself}){} %>
-                                    <%}%>
+                                    @[ layout("sys_news_edit_create_tree_select.html",{treeIndex:1,nodes:b.nodes,_theself:_theself}){} /]
+                                    @[ } /]
                                 </select>
                             </div>
                         </div>
@@ -83,12 +83,12 @@
                             <div class="col-md-12">
                                 <span  class="help-block m-b-none"><button type="button" id="upload_btn_coverPic">点击上传</button></span>
                                 <div id="upload_div_coverPic" style="">
-                                    <% if(isNotEmpty(bean.coverPic)){%>
+                                    @[ if(isNotEmpty(bean.coverPic)){ /]
                                     <div class="img-grid-2">
                                         <input name="coverPic" value="${bean.coverPic}" type="hidden">
                                         <img src="${bean.coverPic}" style="max-width:264px;max-height:264px">
                                     </div>
-                                    <%}%>
+                                    @[ } /]
                                 </div>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
 		</div>
 	</div>
 </div>
-<% include("../include/public_last_js_css.html"){} %>
+@[ include("../include/public_last_js_css.html"){} /]
 <script charset="utf-8" src="${basePath}plugins/editor/kindeditor-all-min.js"></script>
 <script type="text/javascript" src="${basePath}plugins/plupload/js/plupload.min.js"></script>
 <script type="text/javascript" src="${basePath}js/upload_single_pic.js"></script>

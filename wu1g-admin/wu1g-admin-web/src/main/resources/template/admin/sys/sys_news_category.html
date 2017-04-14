@@ -1,4 +1,4 @@
-<%
+@[
  /*	
  * 资讯_栏目 后台管理 (初始化页面)
  *		
@@ -8,59 +8,83 @@
  * -------- ----------- --------------- ---------------------------	
  * Copyright 2017 System. - All Rights Reserved.
  */
-%>
+ /]
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<% layout("../include/meta.html"){}%>
-	<% layout("../include/public_init_js_css.html"){}%>
+	@[ layout("../include/meta.html"){} /]
+	@[ layout("../include/public_init_js_css.html"){} /]
+	<link href="${basePath!}plugins/hplus/css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
 	<style type="text/css">
-	.qrcode{
-	position:relative;
-	width: 100px;
-	}
-	.qrcode .sizes{
-	position:absolute;top:-78px;padding:5px;background:#fff;border:1px solid #ddd;display:none;
-	}
-	.qrcode:hover .sizes{
-	display:block;
-	}
-	.qrcode .line{display:block;width: 100px;text-align: center;}
 	</style>
 </head>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
 			<div class="col-md-12">
+				@[ layout("../include/notifications.html"){} /]
 				<div class="clients-list">
 					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+						<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息树</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="true">信息列表</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
 							<div class="ibox float-e-margins">
 								<div class="ibox-content">
-									<% layout("../include/notifications.html"){}%>
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="col-md-4">
+												<div class="ibox float-e-margins">
+													<div class="ibox-title">
+														@[ if(shiro.hasPermission("sysNewsCategory:add")){ /]
+														<a href="#" onclick="openMyBoxLayer('a','${basePath}h/sys/sysNewsCategory/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+														@[ } /]
+														<div class="ibox-tools">
+															<a href="#" onclick="getDataTree();">
+																<i class="glyphicon glyphicon-refresh"></i>
+															</a>
+														</div>
+													</div>
+													<div class="ibox-content">
+														<div id="disTree" class="test"></div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-8">
+												<table class="table table-bordered table-striped  table-hover" id="event_output" style="min-width:500px;width: 500px;">
+
+												</table>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="tab-2" class="tab-pane">
+							<div class="ibox float-e-margins">
+								<div class="ibox-content">
 									<table class="table">
 										<tr>
 											<td>
-												<form id="info_search_form" 
-													role="form" class="form-inline" 
-													method="post"  accept-charset="UTF-8" 
-													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
+												<form id="info_search_form"
+													role="form" class="form-inline"
+													method="post"  accept-charset="UTF-8"
+													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');"
 													data-action="${basePath}h/sys/sysNewsCategory/page">
 													<input type="hidden" name="pageNum" id="pageNumA" value="1">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
 															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
-															<span class="input-group-addon">到</span> 
+															<span class="input-group-addon">到</span>
 															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
 														</div>
 													</div>
 													<div class="input-group">
-														<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
 														</span>
@@ -69,9 +93,9 @@
 											</td>
 										</tr>
 									</table>
-									<% if(shiro.hasPermission("sysNewsCategory:add")){ %>
+									@[ if(shiro.hasPermission("sysNewsCategory:add")){ /]
 									<a href="#" onclick="openMyBoxLayer('a','${basePath}h/sys/sysNewsCategory/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									<%}%>
+									@[ } /]
 									<div id="info_list_div">
 										<div class="alert alert-warning mt10">
 											<strong>数据加载中!</strong>data loading...
@@ -86,7 +110,9 @@
 
 		</div>
 	</div>
-	<% layout("../include/public_last_js_css.html"){}%>
+	@[ layout("../include/public_last_js_css.html"){} /]
+	<script src="${basePath!}plugins/hplus/js/plugins/treeview/bootstrap-treeview.js"></script>
+
 	<script>
 		$("#data_5 .input-daterange").datepicker({
 			keyboardNavigation : !1,
@@ -95,6 +121,37 @@
 		});
 		//初始加载..
 		loadUrlPage(null, 'info_search_form', 'info_list_div');
+        function getDataTree(){
+            $.get(basePath+"h/sys/sysNewsCategory/jsonTree", {},
+                function (result) {
+                    console.info("获取数据.." + JSON.stringify(result));
+                    if (result.code == 0) {
+                        $('#disTree').treeview({
+                            color: "#428bca",
+                            showTags: true,
+                            data: result.data,
+                            onNodeSelected: function (event, node) {
+                                var trStr ='<tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
+									trStr+='<tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+                                @[ if(shiro.hasPermission("sysNewsCategory:edit")||shiro.hasPermission("sysNewsCategory:del")){ /]
+                                    trStr+='<tr><th class="col-md-2">操作:</th><th> ';
+                                	@[ if(shiro.hasPermission("sysNewsCategory:edit")){ /]
+									trStr+='<a href="javascript:;"  onclick="openMyBoxLayer(\'e\',\'${basePath}h/sys/sysNewsCategory/edit/'+node.id+'\');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
+									@[ } /]
+                               		@[ if(shiro.hasPermission("sysNewsCategory:edit")){ /]
+									trStr+=' <a href="javascript:;"  onclick="if(confirm(\'确认删除吗?\')){delInfoData(\'${basePath}h/sys/sysNewsCategory/del/'+node.id+'\');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
+									@[ } /]
+									trStr+='</th></tr>';
+                                @[ } /]
+                                $('#event_output').html(trStr);
+                            }
+                        });
+                    } else {
+                        alert(result.message);
+                    }
+                }, 'json');
+        }
+        getDataTree();
 	</script>
 </body>
 </html>

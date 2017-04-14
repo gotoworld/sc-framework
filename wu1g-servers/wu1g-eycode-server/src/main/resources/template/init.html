@@ -43,9 +43,9 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <%
+                                            @[
                                             for(bean in result.data!){
-                                            %>
+                                            /]
                                             <tr>
                                                 <td>
                                                     <label>
@@ -59,15 +59,15 @@
                                                 <td>
                                                 </td>
                                             </tr>
-                                            <%
+                                            @[
                                             }elsefor{
-                                            %>
+                                            /]
                                             <tr>
                                                 <td colspan="2">
                                                     <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
                                                 </td>
                                             </tr>
-                                            <%}%>
+                                            @[ } /]
                                             </tbody>
                                         </table>
                                     </form>

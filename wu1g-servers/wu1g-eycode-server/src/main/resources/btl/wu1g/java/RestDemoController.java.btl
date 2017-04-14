@@ -26,7 +26,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     private I${tcfg.tableNameFormat!}Service ${tableNameL}Service;
     private static final String acPrefix = "/${scfg._web_http}/";
 
-    <%if ("1"==scfg._page) {%>
+    @[ if ("1"==scfg._page) { /]
     /**
      * <p>信息分页 (未删除)。
      */
@@ -50,29 +50,29 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         }
         return result;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._detail) {%>
+    @[ if ("1"==scfg._detail) { /]
     /**
      * <p> 信息详情。
      */
     @RequiresPermissions("${tableNameL}:edit")
-    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
     @ApiOperation(value = "信息详情")
-    public Response info(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
+    public Response info(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
         log.info("${tcfg.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
             ${tcfg.tableNameFormat!} dto = new ${tcfg.tableNameFormat!}();
-            if (<%for(t in pks){%>${tLP.index==1?'':' && '} ${t.columnNameFormat}==0<%}%>) {
-                <%for(t in pks){%>
+            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '} ${t.columnNameFormat}==0@[ } /]) {
+                @[ for(t in pks){ /]
                 dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(0L);
-                <%}%>
+                @[ } /]
                 result.data = new ${tcfg.tableNameFormat!}();
             } else {
-                <%for(t in pks){%>
+                @[ for(t in pks){ /]
                 dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
-                <%}%>
+                @[ } /]
                 result.data = ${tableNameL}Service.findDataById(dto);
             }
         } catch (Exception e) {
@@ -80,37 +80,37 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         }
         return result;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._delLogic && null!=scfg._col_del) {%>
+    @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
     /**
      * <p>删除。
      */
    @RequiresPermissions("${tableNameL}:del")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/<%for(t in pks){%>${tLP.index==1?'':'/'}{${t.columnNameFormat}}<%}%>")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
     @ALogOperation(type = "删除", desc = "${tcfg.tableComment}")
     @ApiOperation(value = "信息删除")
-    public Response del(<%for(t in pks){%>${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}<%}%>) {
+    public Response del(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
         log.info("${tcfg.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
             ${tcfg.tableNameFormat!} dto = new ${tcfg.tableNameFormat!}();
-            <%for(t in pks){%>
+            @[ for(t in pks){ /]
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
-            <%}%>
-            <%if ("1"==scfg._delLogic) {%>
+            @[ } /]
+            @[ if ("1"==scfg._delLogic) { /]
             result.message = ${tableNameL}Service.deleteDataById(dto);
-            <%}else{%>
+            @[ }else{ /]
             result.message = ${tableNameL}Service.deleteData(dto);
-            <%}%>
+            @[ } /]
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
-    <%}%>
+    @[ } /]
 
-    <%if ("1"==scfg._insert||"1"==scfg._update) {%>
+    @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
     /**
      * <p> 信息保存
      */
@@ -147,5 +147,5 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         }
         return result;
     }
-    <%}%>
+    @[ } /]
 }

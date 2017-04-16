@@ -14,12 +14,14 @@ package com.wu1g.web.controller.admin.pano;
 import com.github.pagehelper.PageInfo;
 import com.wu1g.api.pano.IPanoProjService;
 import com.wu1g.api.pano.IPanoSceneService;
+import com.wu1g.api.sys.ISysCategoryService;
 import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.vo.pano.PanoProj;
 import com.wu1g.vo.pano.PanoScene;
+import com.wu1g.vo.sys.SysCategory;
 import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
@@ -53,6 +55,8 @@ public class PanoVideoController extends BaseController {
     private IPanoProjService panoProjService;
     @Autowired
     private IPanoSceneService panoSceneService;
+    @Autowired
+    protected ISysCategoryService sysCategoryService;
     // 全景_项目
     private static final String acPrefix = "/h/video/";
     private static final String init = "admin/pano/video";
@@ -114,6 +118,10 @@ public class PanoVideoController extends BaseController {
         }
         bean.setPageNum(pageNum);
         request.setAttribute("bean", bean);
+        //获取类目列表
+        SysCategory sysCategory = new SysCategory();
+        sysCategory.setType(2);
+        request.setAttribute("nodes",sysCategoryService.findDataTree(sysCategory));
         return edit;
     }
 

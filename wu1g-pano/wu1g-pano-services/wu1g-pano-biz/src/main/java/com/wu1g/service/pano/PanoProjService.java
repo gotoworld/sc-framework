@@ -69,10 +69,12 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     //--新增场景信息
                     panoSceneDao.insertBatch(bean.getScenes());
                 }
-                //清除无效热点信息
-                panoSpotsDao.deletePanoSpots(bean);
-                //生成全景图
-                makePano(bean);
+                if("0".equals(bean.getType())){
+                    //清除无效热点信息
+                    panoSpotsDao.deletePanoSpots(bean);
+                    //生成全景图
+                    makePano(bean);
+                }
             } catch (Exception e) {
                 msg = "信息保存失败!";
                 log.error(msg, e);

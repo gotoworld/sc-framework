@@ -43,7 +43,7 @@
 			var startSceneTitle="";
 			for(scene in proj.scenes){
 				if(sceneLP.index==1){startSceneTitle=scene.sceneTitle;}
-			]
+			/]
 			videointerface_addsource('${scene.sceneTitle}', '${scene.sceneSrc}');
 			@[ } /]
 			videointerface_play('${startSceneTitle}');

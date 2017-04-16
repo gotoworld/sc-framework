@@ -44,7 +44,7 @@
 	width: 16px;
 	height: 16px;
 	display: inline-block;
-	background: #fff url(../../../../../../../wu1g-pano/wu1g-pano-web/src/main/resources/static/img/cuowu.png) 0 0 no-repeat;
+	background: #fff url(../img/cuowu.png) 0 0 no-repeat;
 	position: absolute;
 	top: -10px;
 	left: 210px;
@@ -54,7 +54,7 @@
 	width: 16px;
 	height: 16px;
 	display: inline-block;
-	background: #fff url(../../../../../../../wu1g-pano/wu1g-pano-web/src/main/resources/static/img/left.png) 0 0 no-repeat;
+	background: #fff url(../img/left.png) 0 0 no-repeat;
 	position: absolute;
 	top: -10px;
 	left: 170px;
@@ -64,7 +64,7 @@
 	width: 16px;
 	height: 16px;
 	display: inline-block;
-	background: #fff url(../../../../../../../wu1g-pano/wu1g-pano-web/src/main/resources/static/img/right.png) 0 0 no-repeat;
+	background: #fff url(../img/right.png) 0 0 no-repeat;
 	position: absolute;
 	top: -10px;
 	left: 190px;

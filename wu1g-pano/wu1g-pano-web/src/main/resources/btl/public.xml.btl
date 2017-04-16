@@ -155,7 +155,7 @@
    		}
 	 }
 	}
-]
+/]
    <scene name="${scene.id}" title="${scene.sceneTitle}" onstart="activatespot(${radar_rotate})"  havevrimage="true"  thumburl="${scene.breakdownImg}thumb.jpg" lat="" lng="" heading="">
 		<view hlookat="${scene.hlookat}" vlookat="${scene.vlookat}" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 		<preview url="${scene.breakdownImg!}preview.jpg" />

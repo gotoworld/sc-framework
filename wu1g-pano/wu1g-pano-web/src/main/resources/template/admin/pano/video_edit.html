@@ -43,13 +43,19 @@
 					    <div class="col-sm-12">
 							<div class="form-group">
 								<label class="col-sm-1 control-label"  for="bean-categoryId">类目:</label>
-								<div class="col-sm-5">
-<!-- 								value="${bean.categoryId}" -->
-									<select id="bean-categoryId" name="categoryId"  class="form-control" aria-describedby="bean-categoryId-error"   aria-invalid="true">
-										<option value="testCategoryId">测试类目1</option>
-									</select>
+								<div class="col-md-8">
+									<div class="col-sm-8">
+										@[ var treeIndex=1; /]
+										@[ var _band_flag=bean.categoryId; /]
+										<select  class="form-control" name="categoryId" id="bean-categoryId">
+											@[ for(b in nodes !){ /]
+											<option  value="${b.id}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}</option>
+											@[ layout("pano_category_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.categoryId}){} /]
+											@[ } /]
+										</select>
+									</div>
 									<span id="bean-categoryId-error" class="help-block m-b-none"></span>
-								 </div>
+								</div>
 							 </div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label"  for="bean-name">名称:</label>

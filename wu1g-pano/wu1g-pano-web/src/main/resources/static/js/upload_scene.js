@@ -1,5 +1,5 @@
 function upload_scene(btn, divId, projId) {
-    var fileMaxSize = 4096;
+    var fileMaxSize = 1096;
     var fileExtensions = 'jpg,jpeg,tif,tiff,btf,tf8,bigtiff,psd,psb,kro';
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
@@ -15,7 +15,7 @@ function upload_scene(btn, divId, projId) {
                 {title: "Image files", extensions: "" + fileExtensions},
             ],
             max_file_size: fileMaxSize + 'mb', //最大只能上传mb的文件
-            prevent_duplicates: true //不允许选取重复文件
+            prevent_duplicates: false //不允许选取重复文件
         },
 
         init: {

@@ -15,7 +15,7 @@ function updte_single_bgm(btn, divId,_fileExt,name) {
 	        { title : "Music files", extensions : ""+fileExtensions }, 
 	        ],
 	        max_file_size : fileMaxSize+'mb', //最大只能上传mb的文件
-	        prevent_duplicates : true //不允许选取重复文件
+	        prevent_duplicates : false //不允许选取重复文件
 	    },
 	
 	    init: {

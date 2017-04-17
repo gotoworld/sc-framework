@@ -33,12 +33,12 @@
 						<td>
 						@[ if(shiro.hasPermission("sysDic:edit")){ /]
 						<a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/sys/dic/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-						/]
+						@[ } /]
 						@[ if(shiro.hasPermission("sysDic:del")){ /]
 							@[ if(isEmpty(bean.nodes) || bean.nodes.~size==0){ /]
 								<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/sys/dic/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-							/]
-						/]
+							@[ } /]
+						@[ } /]
 						</td>
 					</tr>
 				@[

@@ -16,7 +16,7 @@ function video_upload(btn, divId) {
             ],
             max_file_size: fileMaxSize + 'mb', //
 
-            prevent_duplicates: true //不允许选取重复文件
+            prevent_duplicates: false //不允许选取重复文件
         },
 
         init: {

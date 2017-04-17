@@ -102,7 +102,11 @@
     <!--信息列表 -->
     <select id="findDataIsList" parameterType="com.wu1g.vo.auth.AuthPerm" resultType="com.wu1g.vo.auth.AuthPerm">
         select
-        <include refid="Base_Column_List"/>
+         t1.id as  "id"
+        ,t1.name as  "name"
+        ,t1.match_str as  "matchStr"
+        ,t1.parent_id as  "parentId"
+        ,t1.memo as  "memo"
         from auth_perm t1
         where 1=1
         <include refid="list_where_sql"/>

@@ -173,8 +173,8 @@
                                                 ${b.name}
                                             </label>
                                         </p>
-                                        @[if(isNotEmpty(b.beans) && b.beans.~size>0){
-                                            layout("org_user_tree_checkbox.html",{beans:b.beans,deptBeansCopy:deptBeansCopy,numx:1,dcode:dcode}){} ;
+                                        @[if(isNotEmpty(b.nodes) && b.nodes.~size>0){
+                                            layout("org_user_tree_checkbox.html",{beans:b.nodes,deptBeansCopy:deptBeansCopy,numx:1,dcode:dcode}){} ;
                                             dcode="";
                                         } /]
                                     @[} /]

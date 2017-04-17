@@ -26,8 +26,8 @@ for(b in beans!){
 			</label>
 		</p>
 @[
-		if(isNotEmpty(b.beans) && b.beans.~size>0){
-			 layout("org_user_tree_checkbox.html",{beans:b.beans,deptBeansCopy:deptBeansCopy,numx:numx+1,dcodex:dcode,dcode:dcode+b.id}){};
+		if(isNotEmpty(b.nodes) && b.nodes.~size>0){
+			 layout("org_user_tree_checkbox.html",{beans:b.nodes,deptBeansCopy:deptBeansCopy,numx:numx+1,dcodex:dcode,dcode:dcode+b.id}){};
 			 dcode=dcodex;
 		}
 }

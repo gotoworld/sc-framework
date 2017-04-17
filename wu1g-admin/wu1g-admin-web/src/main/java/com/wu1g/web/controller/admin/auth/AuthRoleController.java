@@ -27,12 +27,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,7 +145,7 @@ public class AuthRoleController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "角色信息")
-    public String save(@Validated AuthRole bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
+    public String save(@Valid AuthRole bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
         log.info("AuthRoleController save.........");
         Response result = new Response();
         if (bean != null) {

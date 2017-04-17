@@ -46,10 +46,10 @@
 								  <option value="">---顶级---</option>
 								  @[ if(isNotEmpty(beans) && beans.~size>0){ /]
 									  @[ for(b in beans){ /]
-										 <option  value="_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >
+										 <option  value="${_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >
 											 - ${b.name}${_this_self==b.id?'-----无效项-------':''}
 										 </option>
-										 @[ layout("auth_perm_tree_select.html",{treeIndex:1,beans:b.beans,_band_flag:bean.parentId,_this_self:bean.id}){} /]
+										 @[ layout("auth_perm_tree_select.html",{treeIndex:1,beans:b.nodes,_band_flag:bean.parentId,_this_self:bean.id}){} /]
 									  @[ } /]
 								  @[ } /]
 							  </select>

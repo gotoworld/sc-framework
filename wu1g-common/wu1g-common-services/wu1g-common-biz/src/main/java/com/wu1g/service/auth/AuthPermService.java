@@ -27,11 +27,10 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(AuthPerm bean) throws Exception {
+    public String saveOrUpdateData(AuthPerm dto) throws Exception {
         String msg = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                AuthPerm dto = new AuthPerm();
                 //判断数据是否存在
                 if (authPermDao.isDataYN(dto) != 0) {
                     //数据存在
@@ -137,7 +136,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         if (beans == null) {
             return null;
         }
-        NodeTree<AuthPerm> tree = new NodeTree(beans,"id","parentId","beans");
+        NodeTree<AuthPerm> tree = new NodeTree(beans,"id","parentId","nodes");
         return tree.buildTree();
     }
 

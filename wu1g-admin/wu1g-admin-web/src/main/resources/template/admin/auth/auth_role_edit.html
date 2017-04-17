@@ -87,8 +87,8 @@
 											  ${b.name}
 										  </label>
 									  </p>
-									  @[ if(isNotEmpty(b.beans) && b.beans.~size>0){
-										  layout("auth_role_tree_checkbox.html",{beans:b.beans,permBeansCopy:permBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
+									  @[ if(isNotEmpty(b.nodes) && b.nodes.~size>0){
+										  layout("auth_role_tree_checkbox.html",{beans:b.nodes,permBeansCopy:permBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
 										  dcode="";
 									  } /]
 								  @[ } /]

@@ -91,5 +91,14 @@ public class OrgDept extends BaseVO {
     /**
      * 子对象集合
      */
-    private List<OrgDept> beans;
+    private List<OrgDept> nodes;
+
+    private String text;
+    private Integer[] tags;
+    public String getText(){
+        return name;
+    }
+    public Integer[] getTags(){
+        return new Integer[]{nodes!=null?nodes.size():0};
+    };
 }

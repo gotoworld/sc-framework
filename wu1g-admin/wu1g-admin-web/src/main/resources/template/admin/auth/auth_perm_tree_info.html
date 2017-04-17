@@ -23,14 +23,14 @@ for(bean in beans){
             <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/auth/perm/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
             @[ } /]
             @[ if(shiro.hasPermission("authPerm:del")){ /]
-            @[ if(isEmpty(bean.beans) || bean.beans.~size==0){ /]
+            @[ if(isEmpty(bean.nodes) || bean.nodes.~size==0){ /]
             <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/auth/perm/del/${bean.id}');};" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
             @[ }} /]
         </td>
     </tr>
 @[
-    if(isNotEmpty(bean.beans) && bean.beans.~size>0){
-        layout("auth_perm_tree_info.html",{beans:bean.beans,treeIndex:treeIndex+1}){};
+    if(isNotEmpty(bean.nodes) && bean.nodes.~size>0){
+        layout("auth_perm_tree_info.html",{beans:bean.nodes,treeIndex:treeIndex+1}){};
     }
   }
 }

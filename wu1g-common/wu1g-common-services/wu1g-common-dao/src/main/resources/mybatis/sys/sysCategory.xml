@@ -117,10 +117,13 @@
     <!--信息列表 -->
     <select id="findDataIsList" parameterType="com.wu1g.vo.sys.SysCategory" resultType="com.wu1g.vo.sys.SysCategory">
         select
-        <include refid="Base_Column_List"/>
+         t1.id as "id"
+        ,t1.name as "name"
+        ,t1.code as "code"
+        ,t1.parent_id as "parentId"
+        ,t1.memo as "memo"
         from sys_category t1
         where type = #{type}
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
     </select>
 </mapper>

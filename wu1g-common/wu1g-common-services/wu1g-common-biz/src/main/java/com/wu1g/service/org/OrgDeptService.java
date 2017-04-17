@@ -126,7 +126,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
         if (beans == null) {
             return null;
         }
-        NodeTree<OrgDept> tree = new NodeTree(beans, "id", "parentId", "beans");
+        NodeTree<OrgDept> tree = new NodeTree(beans, "id", "parentId", "nodes");
         return tree.buildTree();
     }
 }

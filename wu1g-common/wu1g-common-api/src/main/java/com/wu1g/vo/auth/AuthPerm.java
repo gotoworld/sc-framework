@@ -86,6 +86,15 @@ public class AuthPerm extends BaseVO {
     /**
      * bean类 集合
      */
-    List<AuthPerm> beans;
+    List<AuthPerm> nodes;
+
+    private String text;
+    private Integer[] tags;
+    public String getText(){
+        return name;
+    }
+    public Integer[] getTags(){
+        return new Integer[]{nodes!=null?nodes.size():0};
+    };
 
 }

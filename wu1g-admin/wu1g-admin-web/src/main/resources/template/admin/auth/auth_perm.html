@@ -16,6 +16,8 @@
 	<meta charset="utf-8">
 	@[ layout("../include/meta.html"){} /]
 	@[ layout("../include/public_init_js_css.html"){} /]
+	<link href="${basePath!}plugins/hplus/css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -26,65 +28,85 @@
 					<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
 				</ul>
 				@[ layout("../include/notifications.html"){} /]
-				@[ if(shiro.hasPermission("authPerm:add")){ /]
-				<a href="#" onclick="openMyBoxLayer('a','${basePath}h/auth/perm/edit/0');"
-				   class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-				@[ } /]
-				<div class="table-responsive table-scrollable">
-					<table class="table table-bordered table-striped  table-hover">
-						<thead>
-						<tr>
-							<th style="width: 20px"></th>
-							<th class="col-md-6">名称</th>
-							<th class="col-md-2">匹配符</th>
-							<th class="col-md-2">备注</th>
-							<th class=""></th>
-						</tr>
-						</thead>
-						<tbody>
-						@[
-						pageCtx("trIndex",0);//全局变量
-						for(bean in beans!){
-							pageCtx("trIndex",pageCtx("trIndex")+1);
-						 /]
-						<tr>
-							<td>${pageCtx("trIndex")}</td>
-							<td>-${bean.name}</td>
-							<td>${bean.matchStr}</td>
-							<td>${bean.memo}</td>
-							<td>
-								@[ if(shiro.hasPermission("authPerm:edit")){ /]
-								<a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/auth/perm/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-								@[ } /]
-								@[ if(shiro.hasPermission("authPerm:del")){ /]
-								@[ if(isEmpty(bean.beans) || bean.beans.~size==0){ /]
-								<a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/auth/perm/del/${bean.id}');};" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-								@[ }} /]
-							</td>
-						</tr>
-						@[
-							if(isNotEmpty(bean.beans) && bean.beans.~size>0){
-								layout("auth_perm_tree_info.html",{beans:bean.beans,treeIndex:1}){};
-							}
-						}elsefor{
-						 /]
-						<tr>
-							<td colspan="5">
-								<div class="alert"><strong>暂无数据!</strong></div>
-							</td>
-						</tr>
-						@[ } /]
-						</tbody>
-					</table>
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="col-md-4">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											@[ if(shiro.hasPermission("authPerm:add")){ /]
+											<a href="#" onclick="openMyBoxLayer('a','${basePath}h/auth/perm/edit/0');"
+											   class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+											@[ } /]
+											<div class="ibox-tools">
+												<a href="#" onclick="getDataTree();">
+													<i class="glyphicon glyphicon-refresh"></i>
+												</a>
+											</div>
+										</div>
+										<div class="ibox-content">
+											<div id="disTree" class="test"></div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<table class="table table-bordered table-striped  table-hover" style="min-width:500px;width: 500px;">
+										<thead  id="event_output">
+										</thead>
+									</table>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 @[ layout("../include/public_last_js_css.html"){} /]
+<script src="${basePath!}plugins/hplus/js/plugins/treeview/bootstrap-treeview.js"></script>
+
 <script>
     //初始加载..
     loadUrlPage(null, 'info_search_form', 'info_list_div');
+    function getDataTree(){
+        $.get(basePath+"h/auth/perm/jsonTree", {},
+            function (result) {
+                //console.info("获取数据.." + JSON.stringify(result));
+                if (result.code == 0) {
+                    $('#disTree').treeview({
+                        color: "#428bca",
+                        showTags: true,
+                        data: result.data,
+                        onNodeSelected: function (event, node) {
+                            var trStr='';
+                            trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+                            trStr+=' <tr><th class="col-md-2">匹配符:</th><th class="">'+node.matchStr+'</th></tr>';
+                            trStr+=' <tr><th class="col-md-2">备注:</th><th class="">'+node.memo+'</th></tr>';
+
+                            @[ if(shiro.hasPermission("authPerm:edit")||shiro.hasPermission("authPerm:del")){ /]
+                                trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
+                            	@[ if(shiro.hasPermission("authPerm:edit")){ /]
+                                    trStr+=' <a href="javascript:;"  onclick="openMyBoxLayer(\'e\',\'${basePath}h/auth/perm/edit/'+node.id+'\');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
+                                @[ } /]
+                            @[ if(shiro.hasPermission("authPerm:edit")){ /]
+                                    if(node.nodes==undefined && node.tags[0]==0) {
+                                        trStr+=' <a href="javascript:;"  onclick="if(confirm(\'确认删除吗?\')){delInfoData(\'${basePath}h/auth/perm/del/'+node.id+'\');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
+                                    }
+                                @[ } /]
+                                trStr+=' </th></tr>';
+                            @[ } /]
+                            $('#event_output').html(trStr);
+                        }
+                    });
+                } else {
+                    alert(result.message);
+                }
+            }, 'json');
+    }
+    getDataTree();
 </script>
 </body>
 </html>

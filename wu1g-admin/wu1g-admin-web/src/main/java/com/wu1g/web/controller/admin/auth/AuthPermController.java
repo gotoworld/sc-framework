@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -129,7 +130,7 @@ public class AuthPermController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
-	public String save(@Validated  AuthPerm bean,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
+	public String save(@Valid AuthPerm bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
 		log.info("AuthPermController save.........");
 		Response result = new Response();
 		if(bean!=null){

@@ -13,7 +13,7 @@
 			@[ } /]
 			${bean.name}${_this_self==bean.id?'-----无效项-------':''}
 		</option>
-@[ 		if(isNotEmpty(bean.beans) && bean.beans.~size>0){
-			 include("org_dept_tree_select.html",{treeIndex:treeIndex+1,beans:bean.beans}){}
+@[ 		if(isNotEmpty(bean.nodes) && bean.nodes.~size>0){
+			 include("org_dept_tree_select.html",{treeIndex:treeIndex+1,beans:bean.nodes}){}
 		}
 } /]

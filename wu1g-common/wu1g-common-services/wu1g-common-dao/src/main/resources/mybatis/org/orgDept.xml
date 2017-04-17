@@ -105,7 +105,11 @@
     <!--信息列表 -->
     <select id="findDataIsList" parameterType="com.wu1g.vo.org.OrgDept" resultType="com.wu1g.vo.org.OrgDept">
         select
-        <include refid="Base_Column_List"/>
+         t1.id as  "id"
+        ,t1.code as  "code"
+        ,t1.name as  "name"
+        ,t1.parent_id as  "parentId"
+        ,t1.memo as  "memo"
         from org_dept t1
         where 1=1
         <include refid="list_where_sql"/>

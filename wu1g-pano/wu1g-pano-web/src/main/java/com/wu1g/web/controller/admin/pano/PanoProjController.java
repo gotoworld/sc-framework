@@ -77,6 +77,9 @@ public class PanoProjController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "init")
     public String init() {
         log.info("PanoProjController init.........");
+        SysCategory dto = new SysCategory();
+        dto.setType(2);
+        request.setAttribute("nodes", sysCategoryService.findDataTree(dto));
         return init;
     }
 

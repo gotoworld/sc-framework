@@ -22,12 +22,16 @@
 	width: 100px;
 	}
 	.qrcode .sizes{
-	position:absolute;top:-78px;padding:5px;background:#fff;border:1px solid #ddd;display:none;
+	position:absolute;top:-38px;padding:5px;background:#fff;border:1px solid #ddd;display:none;
 	}
 	.qrcode:hover .sizes{
 	display:block;
 	}
 	.qrcode .line{display:block;width: 100px;text-align: center;}
+	.folder-list li{text-align: left; margin-top: 3px;}
+	.folder-list li.label-primary a,.folder-list li.label-primary i{color: #ffffff;}
+	.folder-list li.myacolor i{float: right;color: #a94442;}
+	.folder-list li.myacolor a{ color: #a94442;font-weight: bolder}
 	</style>
 </head>
 <body class="gray-bg">
@@ -40,42 +44,67 @@
 					</ul>
 					<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
-							<div class="ibox float-e-margins">
-								<div class="ibox-content">
-									@[ layout("../include/notifications.html"){} /]
-									<table class="table">
-										<tr>
-											<td>
-												<form id="info_search_form" 
-													role="form" class="form-inline" 
-													method="post"  accept-charset="UTF-8" 
-													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
-													data-action="${basePath}h/video/list">
-													<input type="hidden" name="pageNum" id="pageNumA" value="1">
-													<div class="form-group" id="data_5">
-														<label class="font-noraml">创建时间</label>
-														<div class="input-daterange input-group" id="datepicker">
-															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
-															<span class="input-group-addon">到</span> 
-															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+							<div class="col-sm-2  b-r">
+								<div class="ibox float-e-margins ">
+									<div class="ibox-content mailbox-content">
+										<div class="file-manager">
+											<div class="space-25"></div>
+											<h5 class="label label-success">全景类目</h5>
+											<ul class="folder-list m-b-md " style="padding: 0">
+												<li  class="myacolor"  data-id="0">
+													<a href="#"> -全部-  <i class="fa fa-chevron-right"></i></a>
+												</li>
+												@[ for(b in nodes !){ /]
+												<li  class=" "  data-id="${b.id}">
+													<a href="#">${b.name}  <i class=""></i> </a>
+												</li>
+												@[ layout("pano_category_tree_li.html",{treeIndex:1,nodes:b.nodes}){} /]
+												@[ } /]
+											</ul>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-10">
+								<div class="ibox float-e-margins">
+									<div class="ibox-content">
+										@[ layout("../include/notifications.html"){} /]
+										<table class="table">
+											<tr>
+												<td>
+													<form id="info_search_form"
+														role="form" class="form-inline"
+														method="post"  accept-charset="UTF-8"
+														action="javascript:loadUrlPage(null,'info_search_form','info_list_div');"
+														data-action="${basePath}h/video/list">
+														<input type="hidden" name="pageNum" id="pageNumA" value="1">
+														<input type="hidden" name="categoryId" id="categoryIdA" value="">
+														<div class="form-group" id="data_5">
+															<label class="font-noraml">创建时间</label>
+															<div class="input-daterange input-group" id="datepicker">
+																<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+																<span class="input-group-addon">到</span>
+																<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+															</div>
 														</div>
-													</div>
-													<div class="input-group">
-														<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
-															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
-															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
-														</span>
-													</div>
-												</form>
-											</td>
-										</tr>
-									</table>
-									@[ if(shiro.hasPermission("video:add")){ /]
-									<a href="#" onclick="openMyBoxLayer('a','${basePath}h/video/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									@[ } /]
-									<div id="info_list_div">
-										<div class="alert alert-warning mt10">
-											<strong>数据加载中!</strong>data loading...
+														<div class="input-group">
+															<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+																<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+																<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+															</span>
+														</div>
+													</form>
+												</td>
+											</tr>
+										</table>
+										@[ if(shiro.hasPermission("video:add")){ /]
+										<a href="#" onclick="openMyBoxLayer('a','${basePath}h/video/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+										@[ } /]
+										<div id="info_list_div">
+											<div class="alert alert-warning mt10">
+												<strong>数据加载中!</strong>data loading...
+											</div>
 										</div>
 									</div>
 								</div>
@@ -91,7 +120,7 @@
 	<script>
 		//打开不同尺寸的二维码
 		function get_qrcode(pid,size,version){
-		    window.open('http://qr.liantu.com/api.php?w='+size+'&m=10&text=${basePath}video/'+pid);
+            openMyBoxLayer('二维码','http://qr.liantu.com/api.php?w='+size+'&m=10&text=${basePath}video/'+pid);
 		}
 		$("#data_5 .input-daterange").datepicker({
 			keyboardNavigation : !1,
@@ -100,6 +129,18 @@
 		});
 		//初始加载..
 		loadUrlPage(null, 'info_search_form', 'info_list_div');
+        $('.folder-list li').click(function(){
+            //移除全部样式
+            $('.folder-list li').removeClass('myacolor');
+            $('.folder-list i').removeClass('fa fa-chevron-right');
+            //添加新样式
+            $(this).addClass('myacolor');
+            $(this).find('i').addClass('fa fa-chevron-right');
+            //设置栏目id
+            $('#categoryIdA').val($(this).attr('data-id'));
+            //刷新列表
+            loadUrlPage(null, 'info_search_form', 'info_list_div');
+        });
 	</script>
 </body>
 </html>

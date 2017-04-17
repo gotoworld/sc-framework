@@ -33,7 +33,7 @@
 				<td>${bean.version}</td>
 				<td>${bean.name}</td>
 				<td>
-					<img style="" src='http://qr.liantu.com/api.php?w=100&m=10&text=${basePath}tour/${bean.id}'/>
+					<!--<img style="" src='http://qr.liantu.com/api.php?w=100&m=10&text=${basePath}tour/${bean.id}'/>-->
 					<div class="qrcode">
 						 <div class="sizes">
 							 <a  href="#" class="blue line" onClick="get_qrcode('${bean.id}',100,${bean.version})">100px*100px</a> 
@@ -41,7 +41,7 @@
 							 <a  href="#" class="blue line" onClick="get_qrcode('${bean.id}',300,${bean.version})">300px*300px</a>
 							 <a  href="#" class="blue line" onClick="get_qrcode('${bean.id}',500,${bean.version})">500px*500px</a>
 						 </div>
-						 <a href="javascript:;" class="blue line">更多尺寸</a>
+						 <a href="javascript:;" class="blue line">二维码</a>
 					 </div>
 					
 				</td>

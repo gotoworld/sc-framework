@@ -135,8 +135,10 @@
                         showTags: true,
                         data: result.data,
                         onNodeSelected: function (event, node) {
-                            var trStr='<tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
-                            trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+                            var trStr='';
+								trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
+								trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+								trStr+=' <tr><th class="col-md-2">备注:</th><th class="">'+node.memo+'</th></tr>';
                             @[ if(shiro.hasPermission("sysDic:edit")||shiro.hasPermission("sysDic:del")){ /]
                                 trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
                             	@[ if(shiro.hasPermission("sysDic:edit")){ /]

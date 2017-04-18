@@ -1,5 +1,5 @@
 function upload_scene(btn, divId, projId) {
-    var fileMaxSize = 1096;
+    var fileMaxSize = 1024;
     var fileExtensions = 'jpg,jpeg,tif,tiff,btf,tf8,bigtiff,psd,psb,kro';
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
@@ -20,7 +20,6 @@ function upload_scene(btn, divId, projId) {
 
         init: {
             PostInit: function () {
-
             },
             FilesAdded: function (up, files) {
                 var file = files[files.length - 1];
@@ -54,7 +53,7 @@ function upload_scene(btn, divId, projId) {
                         html += '<input type="hidden" name="scene_id" value="' + file.id + '" />';
                         html += '<input type="hidden" name="' + file.id + '_scene_src" value="' + infoData.fileUrl + '" />';
                         html += '<input type="hidden" name="' + file.id + '_scene_key" value="' + s_key + '" />';
-                        html += '<img src="' + (infoData.defaultBigPicUrl?infoData.defaultBigPicUrl:infoData.fileUrl) + '" >';
+                        html += '<img src="' + (infoData.defaultBigPicUrl ? infoData.defaultBigPicUrl : infoData.fileUrl) + '" >';
                         html += '<input type="text" name="' + file.id + '_scene_tit" placeholder="请填写场景名称" required="" aria-required="true"   maxlength="20" aria-invalid="true"/>';
                         html += '<a href="javascript:;" onclick="move_scene(this,\'left\');" class="ico_left" ></a>';
                         html += '<a href="javascript:;" onclick="javascript:del_scene_btn(this,\'' + file.id + '\');" class="ico_del"></a>';
@@ -63,8 +62,7 @@ function upload_scene(btn, divId, projId) {
 
                         $('#makePanoFlag').attr('checked', 'checked');
                     }
-                }
-                else {
+                } else {
                     document.getElementById(file.id).innerHTML = info.response;
                 }
                 $("#" + btn).css('pointer-events', '');

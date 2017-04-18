@@ -3,7 +3,7 @@
 <mapper namespace="com.wu1g.dao.org.IOrgDeptVsUserDao">
     <!-- 新增 批量数据 -->
     <insert id="insertBatch">
-        insert into org_dept_vs_user(
+        insert into org_dept_vs_user (
         user_id,
         dept_id,
         date_created

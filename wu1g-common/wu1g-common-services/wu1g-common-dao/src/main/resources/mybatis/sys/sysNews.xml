@@ -33,7 +33,7 @@
 
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.wu1g.vo.sys.SysNews"  useGeneratedKeys="true" keyProperty="id"  >
-        insert into sys_news(
+        insert into sys_news (
          
             title 
            ,second_title 
@@ -59,7 +59,7 @@
            ,#{briefInfo} 
            ,#{detailInfo} 
            ,#{isOntop} 
-           ,#{clickCount} 
+           ,0
            ,#{state} 
            ,#{memo} 
            ,0
@@ -123,6 +123,7 @@
         left join sys_news_vs_category t2 on (t2.news_id=t1.id)
         where 1=1
         <include refid="list_where_sql"/>
+        GROUP BY t1.id
         order by t1.is_ontop,t1.date_created desc
     </select>
 
@@ -134,6 +135,7 @@
         left join sys_news_vs_category t2 on (t2.news_id=t1.id)
         where 1=1
         <include refid="list_where_sql"/>
+        GROUP BY t1.id
         order by t1.is_ontop,t1.date_created desc
     </select>
 </mapper>

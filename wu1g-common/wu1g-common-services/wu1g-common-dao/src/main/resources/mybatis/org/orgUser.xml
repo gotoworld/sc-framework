@@ -45,7 +45,7 @@
 	</delete>
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.wu1g.vo.org.OrgUser" useGeneratedKeys="true" keyProperty="id">
-		insert into org_user(
+		insert into org_user (
              accid
             ,pwd
             ,name
@@ -112,7 +112,6 @@
         <if test="tel!= null">,tel=#{tel}</if>
         <if test="enable!= null">,enable=#{enable}</if>
         <if test="avatar!= null">,avatar=#{avatar}</if>
-        <if test="status!= null">,status=#{status}</if>
         <if test="email!= null">,email=#{email}</if>
         <if test="weixinid!= null">,weixinid=#{weixinid}</if>
         <if test="type!= null">,type=#{type}</if>

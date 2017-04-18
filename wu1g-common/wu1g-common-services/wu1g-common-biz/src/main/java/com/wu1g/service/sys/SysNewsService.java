@@ -46,7 +46,7 @@ public class SysNewsService extends BaseService implements ISysNewsService {
                 sysNewsVsCategory.setNewsId(dto.getId());
                 sysNewsVsCategoryDao.deleteByNewsId(sysNewsVsCategory);
 
-                if(dto.getCategorys()!=null){
+                if(dto.getCategorys()!=null && dto.getCategorys().size()>0){
                     List<SysNewsVsCategory> sysNewsVsCategoriesList=new ArrayList<>();
                     dto.getCategorys().forEach(catecory->{
                         SysNewsVsCategory sysNewsVsCategory2=new SysNewsVsCategory();

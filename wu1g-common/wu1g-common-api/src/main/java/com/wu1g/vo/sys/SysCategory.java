@@ -88,4 +88,13 @@ public class SysCategory extends BaseVO {
     private Date dateUpdated;
 
     private List<SysCategory> nodes;
+
+    private String text;
+    private Integer[] tags;
+    public String getText(){
+        return name;
+    }
+    public Integer[] getTags(){
+        return new Integer[]{nodes!=null?nodes.size():0};
+    };
 }

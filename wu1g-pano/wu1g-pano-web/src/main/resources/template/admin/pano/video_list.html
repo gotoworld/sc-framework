@@ -25,8 +25,7 @@
 		</thead>
 		<tbody>
 			@[
-			if(beans!=null && beans.~size>0){
-				for(bean in beans){
+				for(bean in beans!){
 			 /]
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
@@ -60,8 +59,7 @@
                 </td>
 			</tr>
 			@[
-				}
-			}else{
+			}elsefor{
 			 /]
 			<tr>
 				<td colspan="6">

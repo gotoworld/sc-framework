@@ -1,3 +1,11 @@
+<li><a href="#"><i class="glyphicon glyphicon-th-list"></i> <span class="nav-label">系统类目管理 </span><span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        @[ if(shiro.hasPermission("sysCategory:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysCategory/init">全景类目管理</a></li>
+        @[ } /]
+        <li><a class="J_menuItem" href="/indevelopment.html?v=a6">作品类别标签</a></li>
+    </ul>
+</li>
 @[ if(shiro.hasPermission("sys:menu")){ /]
 <li><a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">系统管理 </span><span
         class="fa arrow"></span></a>
@@ -40,15 +48,6 @@
     </ul>
 </li>
 @[ } /]
-
-<li><a href="#"><i class="glyphicon glyphicon-th-list"></i> <span class="nav-label">系统类目管理 </span><span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">
-        @[ if(shiro.hasPermission("sysCategory:menu")){ /]
-        <li><a class="J_menuItem" href="${basePath }h/sys/sysCategory/init">全景类目管理</a></li>
-        @[ } /]
-        <li><a class="J_menuItem" href="/indevelopment.html?v=a6">作品类别标签</a></li>
-    </ul>
-</li>
 @[ if(shiro.hasPermission("newsManager:menu")){ /]
 <li><a href="/file_manager.html"><i class="glyphicon glyphicon-text-background"></i> <span class="nav-label">资讯管理 </span><span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">

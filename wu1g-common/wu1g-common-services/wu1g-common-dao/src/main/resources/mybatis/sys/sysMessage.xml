@@ -24,7 +24,7 @@
 
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.wu1g.vo.sys.SysMessage"  useGeneratedKeys="true" keyProperty="id"  >
-        insert into sys_message(
+        insert into sys_message (
          
             send_id 
            ,accept_id 

@@ -53,9 +53,9 @@ public class SysNewsController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"init")
 	public String init() {
 		log.info("SysNewsController init.........");
-		SysCategory dto = new SysCategory();
-		dto.setType(1);
-		request.setAttribute("nodes", sysCategoryService.findDataTree(dto));
+//		SysCategory dto = new SysCategory();
+//		dto.setType(1);
+//		request.setAttribute("nodes", sysCategoryService.findDataTree(dto));
 		return init;
 	}
 	/**

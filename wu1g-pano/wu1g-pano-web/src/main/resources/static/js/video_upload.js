@@ -15,7 +15,6 @@ function video_upload(btn, divId) {
                 {title: "Video files", extensions: "" + fileExtensions},
             ],
             max_file_size: fileMaxSize + 'mb', //
-
             prevent_duplicates: false //不允许选取重复文件
         },
 
@@ -31,11 +30,8 @@ function video_upload(btn, divId) {
                 uploader.start();
                 return false;
             },
-
-
             BeforeUpload: function (up, file) {
             },
-
             UploadProgress: function (up, file) {
                 var d = document.getElementById(file.id);
                 d.getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
@@ -44,7 +40,6 @@ function video_upload(btn, divId) {
                 progBar.style.width = 2 * file.percent + 'px';
                 progBar.setAttribute('aria-valuenow', file.percent);
             },
-
             FileUploaded: function (up, file, info) {
                 if (info.status == 200) {
                     var infoData = eval('(' + info.response + ')');
@@ -67,7 +62,6 @@ function video_upload(btn, divId) {
                 //--
                 formValidate();
             },
-
             Error: function (up, err) {
                 if (err.code == -600) {
                     layer.msg("测试服务最大只能上传" + fileMaxSize + "M的视频，请裁剪视频后再测试");

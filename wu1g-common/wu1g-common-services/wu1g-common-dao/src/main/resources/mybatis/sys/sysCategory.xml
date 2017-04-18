@@ -31,7 +31,7 @@
 
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.wu1g.vo.sys.SysCategory"  useGeneratedKeys="true" keyProperty="id"  >
-        insert into sys_category(
+        insert into sys_category (
          
             name 
            ,code 

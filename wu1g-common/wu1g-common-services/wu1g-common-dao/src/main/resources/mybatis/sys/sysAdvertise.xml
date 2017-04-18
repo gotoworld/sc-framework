@@ -27,7 +27,7 @@
 
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.wu1g.vo.sys.SysAdvertise"  useGeneratedKeys="true" keyProperty="id"  >
-        insert into sys_advertise(
+        insert into sys_advertise (
          
             name 
            ,img_url 

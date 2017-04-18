@@ -72,9 +72,9 @@ public class PanoVideoController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "init")
     public String init() {
         log.info("PanoVideoController init.........");
-        SysCategory dto = new SysCategory();
-        dto.setType(2);
-        request.setAttribute("nodes", sysCategoryService.findDataTree(dto));
+//        SysCategory dto = new SysCategory();
+//        dto.setType(2);
+//        request.setAttribute("nodes", sysCategoryService.findDataTree(dto));
         return init;
     }
 

@@ -1,6 +1,6 @@
-function upload_single_file(btn, divId,_fileExt,name) {
+function upload_single_file(btn, divId, _fileExt, name) {
     var fileMaxSize = 50;
-    var fileExtensions = _fileExt||'xml';
+    var fileExtensions = _fileExt || 'xml';
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: '' + btn,
@@ -49,9 +49,9 @@ function upload_single_file(btn, divId,_fileExt,name) {
                     if (infoData.code != 0) {
                         $("#" + divId).append(infoData.message);
                     } else {
-                        var html ='<div id="' + file.id + '" class="file-grid-2">';
-                            html+='<input name="'+name+'" value="' + infoData.fileUrl + '" class="form-control" type="text">';
-                            html+='</div>'
+                        var html = '<div id="' + file.id + '" class="file-grid-2">';
+                        html += '<input name="' + name + '" value="' + infoData.fileUrl + '" class="form-control" type="text">';
+                        html += '</div>'
                         $("#" + divId).append(html);
                     }
                 } else {

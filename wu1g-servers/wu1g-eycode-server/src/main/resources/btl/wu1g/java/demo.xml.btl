@@ -27,7 +27,7 @@
     @[ if ("1"==scfg._insert) { /]
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}" @[ if(null!=scfg._col_autopk){ /] useGeneratedKeys="true" keyProperty="${scfg._col_autopk}" @[ } /] >
-        insert into ${tcfg.tableName}(
+        insert into ${tcfg.tableName} (
          @[
          count=1;
          for(t in xmlInsert){ /]
@@ -46,7 +46,7 @@
     @[ if ("1"==scfg._insertBatch) { /]
     <!-- 新增 批量数据 -->
     <insert id="insertBatch" @[ if(null!=scfg._col_autopk){ /] useGeneratedKeys="true" keyProperty="${scfg._col_autopk}" @[ } /] >
-        insert into ${tcfg.tableName}(
+        insert into ${tcfg.tableName} (
          @[
          count=1;
          for(t in xmlInsert){ /]

@@ -34,10 +34,4 @@ public class BaseVO implements IVO,IEntity {
         }
         return token;
     }
-    public void setMember(boolean flag,Long userId){
-        this.isMember=flag;
-        this.createId=userId;
-    }
-    private void setMember(boolean flag){
-    }
 }

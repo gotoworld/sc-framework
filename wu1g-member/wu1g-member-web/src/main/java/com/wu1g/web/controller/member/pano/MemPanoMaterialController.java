@@ -1,6 +1,7 @@
 package com.wu1g.web.controller.member.pano;
 
 import com.github.pagehelper.PageInfo;
+import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -60,8 +61,7 @@ public class MemPanoMaterialController extends BaseController {
         Response result = new Response();
 		try {
             if(dto==null)  dto = new SysMaterial();
-			dto.setMember(true,getMember().getId());
-
+			setMember(dto);//会员标记
             PageInfo<?> page=new PageInfo<>(memMaterialService.findDataIsPage(dto));
             request.setAttribute( "beans", page.getList() );
             //分页对象
@@ -93,7 +93,7 @@ public class MemPanoMaterialController extends BaseController {
                 dto.setNewFlag(1);
             }
             dto.setPageNum( pageNum );
-			dto.setMember(true,getMember().getId());
+			setMember(dto);//会员标记
             request.setAttribute("bean",dto);
 		} catch (Exception e) {
            result = Response.error(e.getMessage());
@@ -114,7 +114,7 @@ public class MemPanoMaterialController extends BaseController {
 		try {
 			SysMaterial dto=new SysMaterial();
             dto.setId(id);
-			dto.setMember(true,getMember().getId());
+			setMember(dto);//会员标记
             result.message = memMaterialService.deleteDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
@@ -145,7 +145,7 @@ public class MemPanoMaterialController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					dto.setMember(true,getMember().getId());
+					setMember(dto);//会员标记
 					result.message=memMaterialService.saveOrUpdateData(dto);
 					result.data = dto.getId();
 					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");

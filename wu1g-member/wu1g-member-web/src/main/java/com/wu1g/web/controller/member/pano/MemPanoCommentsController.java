@@ -65,7 +65,7 @@ public class MemPanoCommentsController extends BaseController {
             bean = new PanoComments();
         }
         bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-        bean.setMember(true,getMember().getId());
+        setMember(bean);//会员标记
         // 信息列表
         PageInfo<?> page = new PageInfo<>(panoCommentsService.findDataIsPage(bean));
         request.setAttribute("beans", page.getList());
@@ -86,7 +86,7 @@ public class MemPanoCommentsController extends BaseController {
         try {
             PanoComments bean = new PanoComments();
             bean.setId(id);
-            bean.setMember(true,getMember().getId());
+            setMember(bean);//会员标记
             result.message = panoCommentsService.deleteDataById(bean);
         } catch (Exception e) {
             result = Response.error(e.getMessage());

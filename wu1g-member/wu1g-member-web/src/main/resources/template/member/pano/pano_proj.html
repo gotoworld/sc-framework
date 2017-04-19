@@ -136,7 +136,7 @@
 		//初始加载..
 		loadUrlPage(null, 'info_search_form', 'info_list_div');
         function getDataTree(){
-            $.get(basePath+"h/sys/sysCategory/jsonTree", {},
+            $.get(basePath+"m/pano/category/jsonTree", {},
                 function (result) {
 //                    console.info("获取数据.." + JSON.stringify(result));
                     if (result.code == 0) {

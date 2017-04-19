@@ -95,7 +95,7 @@ public class MemPanoProjController extends BaseController {
         }
         bean.setType(0);
         bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-        bean.setMember(true,getMember().getId());
+        setMember(bean);//会员标记
         // 信息列表
         PageInfo<?> page = new PageInfo<>(panoProjService.findDataIsPage(bean));
         request.setAttribute("beans", page.getList());
@@ -130,12 +130,12 @@ public class MemPanoProjController extends BaseController {
             bean.setNewFlag(1);
         }
         bean.setPageNum(pageNum);
-        bean.setMember(true,getMember().getId());
+        setMember(bean);//会员标记
         request.setAttribute("bean", bean);
         //获取类目列表
         SysCategory sysCategory = new SysCategory();
         sysCategory.setType(2);
-        sysCategory.setMember(true,getMember().getId());
+        setMember(sysCategory);//会员标记
         request.setAttribute("nodes",sysCategoryService.findDataTree(sysCategory));
         return edit;
     }
@@ -152,7 +152,7 @@ public class MemPanoProjController extends BaseController {
         try {
             PanoProj bean = new PanoProj();
             bean.setId(id);// id
-            bean.setMember(true,getMember().getId());
+            setMember(bean);//会员标记
             result.message = panoProjService.deleteDataById(bean);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -388,7 +388,7 @@ public class MemPanoProjController extends BaseController {
     }
 
     @RequiresPermissions(value = {"memPanoProj:edit"}, logical = Logical.OR)
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/h/touredit/{id}")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/m/touredit/{id}")
     public String touredit(@PathVariable("id") Long id) {
         log.info("MemPanoProjController touredit.........");
         PanoProj bean = new PanoProj();

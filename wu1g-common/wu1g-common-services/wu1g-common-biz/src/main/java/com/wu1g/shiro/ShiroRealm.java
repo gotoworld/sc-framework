@@ -56,7 +56,7 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Map<String, Object> dto = new HashMap<>();
         dto.put("uid", orgUserBean.getId());
-        if ("0".equals(orgUserBean.getType()) && roleSourceService.isSuperAdmin(dto) > 0) {
+        if (0==(orgUserBean.getType()) && roleSourceService.isSuperAdmin(dto) > 0) {
             //超级管理员标记
             dto.put("iissuperman", 1);
             SecurityUtils.getSubject().getSession().setAttribute("isSuper", "1");

@@ -62,7 +62,7 @@ public class MemPanoCategoryController extends BaseController {
 		try {
 			SysCategory sysCategory=new SysCategory();
 			sysCategory.setType(2);
-			sysCategory.setMember(true,getMember().getId());
+			setMember(sysCategory);//会员标记
 			result.data=sysCategoryService.findDataTree(sysCategory);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
@@ -82,7 +82,7 @@ public class MemPanoCategoryController extends BaseController {
                 dto = new SysCategory();
             }
 			dto.setType(2);
-			dto.setMember(true,getMember().getId());
+			setMember(dto);//会员标记
             PageInfo<?> page=new PageInfo<>(sysCategoryService.findDataIsPage(dto));
             request.setAttribute( "beans", page.getList() );
             //分页对象
@@ -115,7 +115,7 @@ public class MemPanoCategoryController extends BaseController {
 			}
 			dto.setType(2);
 			dto.setPageNum( pageNum );
-			dto.setMember(true,getMember().getId());
+			setMember(dto);//会员标记
             request.setAttribute("bean",dto);
 			request.setAttribute("nodes",sysCategoryService.findDataTree(dto));
 		} catch (Exception e) {
@@ -138,7 +138,7 @@ public class MemPanoCategoryController extends BaseController {
 			SysCategory dto=new SysCategory();
             dto.setId(id);
 			dto.setType(2);
-			dto.setMember(true,getMember().getId());
+			setMember(dto);//会员标记
             result.message = sysCategoryService.deleteDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
@@ -170,7 +170,7 @@ public class MemPanoCategoryController extends BaseController {
 					result = Response.error(errorMsg);
 				}else{
 					dto.setType(2);
-					dto.setMember(true,getMember().getId());
+					setMember(dto);//会员标记
 					result.message=sysCategoryService.saveOrUpdateData(dto);
 					result.data = dto.getId();
 					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");

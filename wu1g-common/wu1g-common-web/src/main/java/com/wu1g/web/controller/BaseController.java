@@ -92,4 +92,11 @@ public class BaseController {
         String pageNum = (String) ReflectUtil.getValueByFieldName(obj,"pageNum");
         return pageNum!=null?Integer.parseInt(pageNum):1;
     }
+
+    public void setMember(Object obj){
+        ReflectUtil.setValueByFieldName(obj,"isMember",true);
+        ReflectUtil.setValueByFieldName(obj,"createId",getMember().getId());
+    }
+
+
 }

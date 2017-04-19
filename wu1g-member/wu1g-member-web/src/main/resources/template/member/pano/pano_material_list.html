@@ -56,13 +56,13 @@ for(bean in beans!){
         </div>
         @[ } /]
         <div style="text-align: center;padding-bottom: 10px;">
-            @[ if(shiro.hasPermission("sysMaterial:down")){ /]
+            @[ if(shiro.hasPermission("memMaterial:down")){ /]
             <a href="${bean.materialUrl}" target="_blank" class="label label-info"><i class="fa fa-anchor"></i> 下载</a>
             @[ } /]
-            @[ if(shiro.hasPermission("sysMaterial:edit")){ /]
+            @[ if(shiro.hasPermission("memMaterial:edit")){ /]
             <a href="javascript:;" onclick="openMyBoxLayer('e','${basePath}m/material/edit/${bean.id}');" class="label label-success"><i class="fa fa-edit"></i> 编辑</a>
             @[ } /]
-            @[ if(shiro.hasPermission("sysMaterial:del")){ /]
+            @[ if(shiro.hasPermission("memMaterial:del")){ /]
             <a href="javascript:;" onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}m/material/del/${bean.id}');};" rel="nofollow" class="label label-danger"><i class="fa fa-trash-o"></i> 删除</a>
             @[ } /]
         </div>

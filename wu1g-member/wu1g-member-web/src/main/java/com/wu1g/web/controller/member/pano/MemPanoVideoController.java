@@ -89,7 +89,7 @@ public class MemPanoVideoController extends BaseController {
         bean.setType(1);
         bean.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
         // 信息列表
-        bean.setMember(true,getMember().getId());
+        setMember(bean);//会员标记
         PageInfo<?> page = new PageInfo<>(panoProjService.findDataIsPage(bean));
         request.setAttribute("beans", page.getList());
         // 分页对象-JSP标签使用-
@@ -110,7 +110,7 @@ public class MemPanoVideoController extends BaseController {
                 bean = new PanoProj();
             }
             bean.setId(id);// id
-            bean.setMember(true,getMember().getId());
+            setMember(bean);//会员标记
             bean = panoProjService.findDataById(bean);
             if (bean != null) {
                 PanoScene scene = new PanoScene();
@@ -123,7 +123,7 @@ public class MemPanoVideoController extends BaseController {
         //获取类目列表
         SysCategory sysCategory = new SysCategory();
         sysCategory.setType(2);
-        sysCategory.setMember(true,getMember().getId());
+        setMember(sysCategory);//会员标记
         request.setAttribute("nodes",sysCategoryService.findDataTree(sysCategory));
         return edit;
     }
@@ -140,7 +140,7 @@ public class MemPanoVideoController extends BaseController {
         try {
             PanoProj bean = new PanoProj();
             bean.setId(id);// id
-            bean.setMember(true,getMember().getId());
+            setMember(bean);//会员标记
             result.message = panoProjService.deleteDataById(bean);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -188,7 +188,7 @@ public class MemPanoVideoController extends BaseController {
                         }
                     }
                     bean.setScenes(scenes);
-                    bean.setMember(true,getMember().getId());
+                    setMember(bean);//会员标记
                     result.message = panoProjService.saveOrUpdateData(bean);
                     result.data = bean.getId();
 

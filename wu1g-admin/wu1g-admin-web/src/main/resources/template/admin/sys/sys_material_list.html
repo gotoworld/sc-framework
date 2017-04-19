@@ -57,7 +57,7 @@ for(bean in beans!){
         @[ } /]
         <div style="text-align: center;padding-bottom: 10px;">
             @[ if(shiro.hasPermission("sysMaterial:down")){ /]
-            <a href="${bean.materialUrl}" target="_blank" class="label label-success"><i class="fa fa-anchor"></i> 下载</a>
+            <a href="${bean.materialUrl}" target="_blank" class="label label-info"><i class="fa fa-anchor"></i> 下载</a>
             @[ } /]
             @[ if(shiro.hasPermission("sysMaterial:edit")){ /]
             <a href="javascript:;" onclick="openMyBoxLayer('e','${basePath}h/sys/sysMaterial/edit/${bean.id}');" class="label label-success"><i class="fa fa-edit"></i> 编辑</a>

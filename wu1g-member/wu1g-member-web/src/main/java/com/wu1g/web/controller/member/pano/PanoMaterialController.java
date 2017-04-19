@@ -1,4 +1,4 @@
-package com.wu1g.web.controller.admin.pano;
+package com.wu1g.web.controller.member.pano;
 
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +36,9 @@ public class PanoMaterialController extends BaseController {
 	protected ISysMaterialService sysMaterialService;
 	
 	private static final String acPrefix="/h/pano/sysMaterial/";
-	private static final String init = "admin/pano/pano_material";
-	private static final String edit = "admin/pano/pano_material_edit";
-	private static final String list = "admin/pano/pano_material_list";
+	private static final String init = "member/pano/pano_material";
+	private static final String edit = "member/pano/pano_material_edit";
+	private static final String list = "member/pano/pano_material_list";
 	private static final String success = "redirect:"+acPrefix+"init";
 	
 	/**

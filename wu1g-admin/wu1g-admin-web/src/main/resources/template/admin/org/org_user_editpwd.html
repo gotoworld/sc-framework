@@ -43,7 +43,7 @@
 							<label class="col-md-2 control-label" >原始密码</label>
 							<div class="col-md-8">
 								<input type="hidden" name="oldpwd" id="oldpwd" value="" />
-								<input id="bean-old" type="password" class="form-control" onchange="cPwd('oldpwd',this.value)"  onblur="cPwd('oldpwd',this.value)" placeholder="请输入原始密码" value=""  required="true" aria-describedby="bean-old-error"  aria-required="true" minlength="6" maxlength="64" aria-invalid="true"/>
+								<input id="bean-old" type="password" class="form-control" onchange="cPwd('oldpwd',this.value)"  onblur="cPwd('oldpwd',this.value)" placeholder="请输入原始密码" value=""  required="true" aria-describedby="bean-old-error"  aria-required="true" minlength="4" maxlength="64" aria-invalid="true"/>
 								<span id="bean-old-error" class="help-block m-b-none"></span>
 							</div>
 						</div>
@@ -51,7 +51,7 @@
 							<label class="col-md-2 control-label" >新密码</label>
 							<div class="col-md-8">
 								<input type="hidden" name="newpwd"  id="newpwd"  value="" />
-								<input id="bean-newpwd" type="password" class="form-control" id="bean-newpwd" onchange="cPwd('newpwd',this.value)"  onblur="cPwd('newpwd',this.value)" placeholder="请输入新密码" value="" aria-describedby="bean-newpwd-error"  required="true" aria-required="true" minlength="6" maxlength="64" aria-invalid="true"/>
+								<input id="bean-newpwd" type="password" class="form-control" id="bean-newpwd" onchange="cPwd('newpwd',this.value)"  onblur="cPwd('newpwd',this.value)" placeholder="请输入新密码" value="" aria-describedby="bean-newpwd-error"  required="true" aria-required="true" minlength="4" maxlength="64" aria-invalid="true"/>
 								<span id="bean-newpwd-error" class="help-block m-b-none"></span>
 							</div>
 						</div>
@@ -59,7 +59,7 @@
 							<label class="col-md-2 control-label" >密码确认</label>
 							<div class="col-md-8">
 								<input type="hidden" name="confirmpwd" id="confirmpwd" value="" />
-								<input id="bean-confirmpwd" type="password" class="form-control" onchange="cPwd('confirmpwd',this.value)"  onblur="cPwd('confirmpwd',this.value)" placeholder="请再次输入新密码" value="" aria-describedby="bean-confirmpwd-error"  required="true" equalTo="#bean-newpwd" aria-required="true" minlength="6" maxlength="64" aria-invalid="true"/>
+								<input id="bean-confirmpwd" type="password" class="form-control" onchange="cPwd('confirmpwd',this.value)"  onblur="cPwd('confirmpwd',this.value)" placeholder="请再次输入新密码" value="" aria-describedby="bean-confirmpwd-error"  required="true" equalTo="#bean-newpwd" aria-required="true" minlength="4" maxlength="64" aria-invalid="true"/>
 								<span id="bean-confirmpwd-error" class="help-block m-b-none"></span>
 							</div>
 						</div>

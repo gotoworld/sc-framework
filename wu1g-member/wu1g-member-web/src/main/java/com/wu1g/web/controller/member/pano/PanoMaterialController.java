@@ -33,9 +33,9 @@ import com.wu1g.vo.sys.SysMaterial;
 @Slf4j
 public class PanoMaterialController extends BaseController {
 	@Autowired
-	protected ISysMaterialService sysMaterialService;
+	protected ISysMaterialService memMaterialService;
 	
-	private static final String acPrefix="/h/pano/sysMaterial/";
+	private static final String acPrefix="/m/material/";
 	private static final String init = "member/pano/pano_material";
 	private static final String edit = "member/pano/pano_material_edit";
 	private static final String list = "member/pano/pano_material_list";
@@ -44,26 +44,25 @@ public class PanoMaterialController extends BaseController {
 	/**
 	 * <p> 初始化处理。
 	 */
-	@RequiresPermissions("sysMaterial:menu")
+	@RequiresPermissions("memMaterial:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"init")
 	public String init() {
-		log.info("sysMaterialController init.........");
+		log.info("memMaterialController init.........");
 		return init;
 	}
 	/**
 	 * <p> 信息分页 (未删除)。
 	 */
-	@RequiresPermissions("sysMaterial:menu")
+	@RequiresPermissions("memMaterial:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
 	public String page(HttpServletRequest request, HttpServletResponse response,SysMaterial dto) {
-		log.info("sysMaterialController page.........");
+		log.info("memMaterialController page.........");
         Response result = new Response();
 		try {
             if(dto==null)  dto = new SysMaterial();
-			dto.setMember(true);
-			dto.setCreateId(getUser().getId());//会员id
+			dto.setMember(true,getMember().getId());
 
-            PageInfo<?> page=new PageInfo<>(sysMaterialService.findDataIsPage(dto));
+            PageInfo<?> page=new PageInfo<>(memMaterialService.findDataIsPage(dto));
             request.setAttribute( "beans", page.getList() );
             //分页对象
             request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
@@ -77,25 +76,24 @@ public class PanoMaterialController extends BaseController {
 	/**
 	 * <p> 编辑。
 	 */
-	@RequiresPermissions("sysMaterial:edit")
+	@RequiresPermissions("memMaterial:edit")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/{id}")
 	public String edit(SysMaterial dto, @PathVariable("id") Long id) {
-		log.info("sysMaterialController edit.........");
+		log.info("memMaterialController edit.........");
 		Response result = new Response();
 		try {
             int pageNum=getPageSize(dto);
             if (id!=null) {
                 if(dto==null)dto=new SysMaterial();
                 dto.setId(id);
-                dto=sysMaterialService.findDataById(dto);
+                dto=memMaterialService.findDataById(dto);
             }
             if(dto==null||0==id){
                 dto=new SysMaterial();
                 dto.setNewFlag(1);
             }
             dto.setPageNum( pageNum );
-			dto.setMember(true);
-			dto.setCreateId(getUser().getId());//会员id
+			dto.setMember(true,getMember().getId());
             request.setAttribute("bean",dto);
 		} catch (Exception e) {
            result = Response.error(e.getMessage());
@@ -107,18 +105,17 @@ public class PanoMaterialController extends BaseController {
 	/**
 	 * <li>删除。
 	 */
-	@RequiresPermissions("sysMaterial:del")
+	@RequiresPermissions("memMaterial:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
 	@ALogOperation(type="删除",desc="全景_素材")
 	public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
-		log.info("sysMaterialController del.........");
+		log.info("memMaterialController del.........");
 		Response result = new Response();
 		try {
 			SysMaterial dto=new SysMaterial();
             dto.setId(id);
-			dto.setMember(true);
-			dto.setCreateId(getUser().getId());//会员id
-            result.message = sysMaterialService.deleteDataById(dto);
+			dto.setMember(true,getMember().getId());
+            result.message = memMaterialService.deleteDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -128,12 +125,12 @@ public class PanoMaterialController extends BaseController {
 	/**
 	 * <p> 信息保存
 	 */
-	@RequiresPermissions(value={"sysMaterial:add","sysMaterial:edit"},logical=Logical.OR)
+	@RequiresPermissions(value={"memMaterial:add","memMaterial:edit"},logical=Logical.OR)
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="全景_素材")
 	public String save(@Validated SysMaterial dto, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
-		log.info("sysMaterialController save.........");
+		log.info("memMaterialController save.........");
 		Response result = new Response();
 		if(dto!=null){
 			try {
@@ -148,9 +145,8 @@ public class PanoMaterialController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					dto.setMember(true);
-					dto.setCreateId(getUser().getId());//会员id
-					result.message=sysMaterialService.saveOrUpdateData(dto);
+					dto.setMember(true,getMember().getId());
+					result.message=memMaterialService.saveOrUpdateData(dto);
 					result.data = dto.getId();
 					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 				}

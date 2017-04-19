@@ -79,4 +79,13 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
         }
         return null;
     }
+    @Override
+    public int lastLogin(OrgUser orgUser) {
+        try {
+            return orgUserDao.lastLogin(orgUser);
+        } catch (Exception e) {
+            log.error("根据用户id,判断用户是否为超级管理员,要特权.,数据库处理异常!", e);
+        }
+        return 0;
+    }
 }

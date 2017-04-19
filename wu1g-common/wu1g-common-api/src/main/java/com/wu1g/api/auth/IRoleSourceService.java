@@ -26,7 +26,6 @@ public interface IRoleSourceService {
      * 根据用户id,判断用户是否为超级管理员,要的就是特权.
      */
     public int isSuperAdmin(Map dto);
-
     /**
      * <p>角色信息列表>根据用户id。
      */
@@ -41,4 +40,9 @@ public interface IRoleSourceService {
      * <p>用户信息。
      */
     public OrgUser findUserByLoginName(String accid,Integer userType);
+
+    /**
+     * 更新用户登陆信息
+     */
+    public int lastLogin(OrgUser orgUser);
 }

@@ -22,6 +22,8 @@ public class BaseVO implements IVO,IEntity {
     String keyword;
     /** 用户id */
     String accid;
+    /**  建立者ID */
+    private Long createId;
     /** 会员 */
     boolean isMember;
 
@@ -31,5 +33,11 @@ public class BaseVO implements IVO,IEntity {
             token= IdUtil.createUUID(32);
         }
         return token;
+    }
+    public void setMember(boolean flag,Long userId){
+        this.isMember=flag;
+        this.createId=userId;
+    }
+    private void setMember(boolean flag){
     }
 }

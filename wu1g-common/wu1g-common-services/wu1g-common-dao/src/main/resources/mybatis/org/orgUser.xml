@@ -113,7 +113,6 @@
         <if test="avatar!= null">,avatar=#{avatar}</if>
         <if test="email!= null">,email=#{email}</if>
         <if test="weixinid!= null">,weixinid=#{weixinid}</if>
-        <if test="type!= null">,type=#{type}</if>
         <if test="lastLogin!= null">,last_login=#{lastLogin}</if>
         <if test="count!= null">,count=#{count}</if>
         <if test="state!= null">,state=#{state}</if>

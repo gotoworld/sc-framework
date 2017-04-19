@@ -84,6 +84,9 @@ public class BaseController {
     public OrgUser getUser(){
         return (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
     }
+    public OrgUser getMember(){
+        return (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
+    }
 
     public Integer getPageSize(Object obj){
         String pageNum = (String) ReflectUtil.getValueByFieldName(obj,"pageNum");

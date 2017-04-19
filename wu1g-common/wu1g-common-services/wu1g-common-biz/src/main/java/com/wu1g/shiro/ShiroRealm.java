@@ -49,14 +49,14 @@ public class ShiroRealm extends AuthorizingRealm {
             return null;
         }
         //1.根据用户登录名获取用户信息
-        OrgUser orgUserBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+        OrgUser orgUserBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
         if (orgUserBean == null) {
             return null;
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Map<String, Object> dto = new HashMap<>();
         dto.put("uid", orgUserBean.getId());
-        if (roleSourceService.isSuperAdmin(dto) > 0) {
+        if ("0".equals(orgUserBean.getType()) && roleSourceService.isSuperAdmin(dto) > 0) {
             //超级管理员标记
             dto.put("iissuperman", 1);
             SecurityUtils.getSubject().getSession().setAttribute("isSuper", "1");
@@ -91,6 +91,7 @@ public class ShiroRealm extends AuthorizingRealm {
             info = new SimpleAuthenticationInfo(accid, orgUser.getPwd(), getName());
             SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
             SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
+            roleSourceService.lastLogin(orgUser);
         }
         return info;
     }

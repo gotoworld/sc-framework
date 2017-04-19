@@ -49,7 +49,7 @@
 													role="form" class="form-inline" 
 													method="post"  accept-charset="UTF-8" 
 													action="javascript:loadUrlPage(null,'info_search_form','info_list_div');" 
-													data-action="${basePath}h/pano/panoMaterial/page">
+													data-action="${basePath}h/sys/sysMaterial/page">
 													<input type="hidden" name="pageNum" id="pageNumA" value="1">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
@@ -69,8 +69,8 @@
 											</td>
 										</tr>
 									</table>
-									@[ if(shiro.hasPermission("panoMaterial:add")){ /]
-									<a href="#" onclick="openMyBoxLayer('a','${basePath}h/pano/panoMaterial/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									@[ if(shiro.hasPermission("sysMaterial:add")){ /]
+									<a href="#" onclick="openMyBoxLayer('a','${basePath}h/sys/sysMaterial/edit/0');" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									@[ } /]
 									<div id="info_list_div">
 										<div class="alert alert-warning mt10">

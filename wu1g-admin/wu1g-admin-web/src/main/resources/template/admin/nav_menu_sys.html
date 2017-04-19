@@ -36,8 +36,8 @@
         <li><a class="J_menuItem" href="${basePath }h/sys/sysPanoPlugins/init">系统_全景插件</a></li>
         @[ } /]
         <!--<li><a class="J_menuItem" href="/file_manager.html">素材管理</a></li>-->
-        @[ if(shiro.hasPermission("panoMaterial:menu")){ /]
-        <li><a class="J_menuItem" href="${basePath }h/pano/panoMaterial/init">全景_素材</a></li>
+        @[ if(shiro.hasPermission("sysMaterial:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysMaterial/init">全景_素材</a></li>
         @[ } /]
         <li><a class="J_menuItem" href="/contacts.html">广告管理</a></li>
         @[ if(shiro.hasPermission("sysAdvertise:menu")){ /]

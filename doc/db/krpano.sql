@@ -69,10 +69,10 @@ INSERT INTO `auth_perm` VALUES ('id_pano_comment_add', '全景_评论_新增', '
 INSERT INTO `auth_perm` VALUES ('id_pano_comment_del', '全景_评论_逻辑删除', 'panoComment:del', 'id_pano_comment', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 INSERT INTO `auth_perm` VALUES ('id_pano_comment_edit', '全景_评论_编辑', 'panoComment:edit', 'id_pano_comment', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 INSERT INTO `auth_perm` VALUES ('id_pano_comment_save', '全景_评论_保存', 'panoComment:save', 'id_pano_comment', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_material', '全景_素材', 'panoMaterial:menu', 'id_pano', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_material_add', '新增', 'panoMaterial:add', 'id_pano_material', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_material_del', '删除', 'panoMaterial:del', 'id_pano_material', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
-INSERT INTO `auth_perm` VALUES ('id_pano_material_edit', '编辑', 'panoMaterial:edit', 'id_pano_material', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_sys_material', '全景_素材', 'sysMaterial:menu', 'id_pano', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_sys_material_add', '新增', 'sysMaterial:add', 'id_sys_material', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_sys_material_del', '删除', 'sysMaterial:del', 'id_sys_material', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
+INSERT INTO `auth_perm` VALUES ('id_sys_material_edit', '编辑', 'sysMaterial:edit', 'id_sys_material', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 INSERT INTO `auth_perm` VALUES ('id_pano_proj', '全景_项目', 'panoProj:menu', 'id_pano', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 INSERT INTO `auth_perm` VALUES ('id_pano_proj_add', '全景_项目_新增', 'panoProj:add', 'id_pano_proj', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
 INSERT INTO `auth_perm` VALUES ('id_pano_proj_del', '全景_项目_逻辑删除', 'panoProj:del', 'id_pano_proj', '系统生成', '0', '0', null, '0', '2000-01-01 00:00:00', '2000-01-01 00:00:00');
@@ -322,10 +322,10 @@ INSERT INTO `pano_map` VALUES ('4', 'o_1bakkr84vli014b41j1jt5uve22a', '0', '171'
 INSERT INTO `pano_map` VALUES ('4', 'o_1bakkrkeg6tg1mrq117247fcj02n', '0', '181', '156', null, '2017-03-08 15:07:59');
 
 -- ----------------------------
--- Table structure for `pano_material`
+-- Table structure for `sys_material`
 -- ----------------------------
-DROP TABLE IF EXISTS `pano_material`;
-CREATE TABLE `pano_material` (
+DROP TABLE IF EXISTS `sys_material`;
+CREATE TABLE `sys_material` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(55) NOT NULL COMMENT '素材名称',
   `type` tinyint(1) DEFAULT NULL COMMENT '素材类型(0图片1音乐2视频)',
@@ -344,7 +344,7 @@ CREATE TABLE `pano_material` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全景_素材';
 
 -- ----------------------------
--- Records of pano_material
+-- Records of sys_material
 -- ----------------------------
 
 -- ----------------------------

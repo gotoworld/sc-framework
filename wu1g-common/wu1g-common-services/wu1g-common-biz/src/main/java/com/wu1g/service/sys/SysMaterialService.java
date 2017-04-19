@@ -1,12 +1,12 @@
-package com.wu1g.service.pano;
+package com.wu1g.service.sys;
 
-import com.wu1g.api.pano.IPanoMaterialService;
-import com.wu1g.dao.pano.IPanoMaterialDao;
-import com.wu1g.vo.pano.PanoMaterial;
+import com.github.pagehelper.PageHelper;
+import com.wu1g.api.sys.ISysMaterialService;
+import com.wu1g.dao.sys.ISysMaterialDao;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
-import com.github.pagehelper.PageHelper;
+import com.wu1g.vo.sys.SysMaterial;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,23 +18,23 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class PanoMaterialService extends BaseService implements IPanoMaterialService {
+public class SysMaterialService extends BaseService implements ISysMaterialService {
     @Autowired
-    private IPanoMaterialDao panoMaterialDao;
+    private ISysMaterialDao sysMaterialDao;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(PanoMaterial dto) throws Exception {
+    public String saveOrUpdateData(SysMaterial dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
-                if (dto.getId() != null && panoMaterialDao.isDataYN(dto) != 0) {
+                if (dto.getId() != null && sysMaterialDao.isDataYN(dto) != 0) {
                     //数据存在
-                    panoMaterialDao.update(dto);
+                    sysMaterialDao.update(dto);
                 } else {
                     //新增
-                     panoMaterialDao.insert(dto);
+                     sysMaterialDao.insert(dto);
                 }
             } catch (Exception e) {
                 log.error("信息保存异常!", e);
@@ -45,11 +45,11 @@ public class PanoMaterialService extends BaseService implements IPanoMaterialSer
     }
 
     @Override
-    public String deleteData(PanoMaterial dto) throws Exception {
+    public String deleteData(SysMaterial dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(panoMaterialDao.deleteByPrimaryKey(dto)==0){
+                if(sysMaterialDao.deleteByPrimaryKey(dto)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -62,11 +62,11 @@ public class PanoMaterialService extends BaseService implements IPanoMaterialSer
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(PanoMaterial dto) throws Exception {
+    public String deleteDataById(SysMaterial dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {
             try {
-                if(panoMaterialDao.deleteById(dto)==0){
+                if(sysMaterialDao.deleteById(dto)==0){
 					throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -78,11 +78,11 @@ public class PanoMaterialService extends BaseService implements IPanoMaterialSer
     }
 
     @Override
-    public List<PanoMaterial> findDataIsPage(PanoMaterial dto) throws Exception {
-        List<PanoMaterial> dtos = null;
+    public List<SysMaterial> findDataIsPage(SysMaterial dto) throws Exception {
+        List<SysMaterial> dtos = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<PanoMaterial>) panoMaterialDao.findDataIsPage(dto);
+            dtos = (List<SysMaterial>) sysMaterialDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
             throw new Exception("信息查询异常!");
@@ -91,10 +91,10 @@ public class PanoMaterialService extends BaseService implements IPanoMaterialSer
     }
 
     @Override
-    public List<PanoMaterial> findDataIsList(PanoMaterial dto) throws Exception {
-        List<PanoMaterial> dtos = null;
+    public List<SysMaterial> findDataIsList(SysMaterial dto) throws Exception {
+        List<SysMaterial> dtos = null;
         try {
-            dtos = (List<PanoMaterial>) panoMaterialDao.findDataIsList(dto);
+            dtos = (List<SysMaterial>) sysMaterialDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
             throw new Exception("信息查询异常!");
@@ -104,10 +104,10 @@ public class PanoMaterialService extends BaseService implements IPanoMaterialSer
 
     @Override
     @RfAccount2Bean
-    public PanoMaterial findDataById(PanoMaterial dto) throws Exception {
-        PanoMaterial dto1 = null;
+    public SysMaterial findDataById(SysMaterial dto) throws Exception {
+        SysMaterial dto1 = null;
         try {
-            dto1 = (PanoMaterial) panoMaterialDao.selectByPrimaryKey(dto);
+            dto1 = (SysMaterial) sysMaterialDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
             throw new Exception("信息查询异常!");

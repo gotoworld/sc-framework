@@ -1,6 +1,13 @@
-package com.wu1g.web.controller.admin.pano;
+package com.wu1g.web.controller.admin.sys;
 
 import com.github.pagehelper.PageInfo;
+import com.wu1g.api.sys.ISysMaterialService;
+import com.wu1g.framework.Response;
+import com.wu1g.framework.annotation.ALogOperation;
+import com.wu1g.framework.annotation.RfAccount2Bean;
+import com.wu1g.framework.util.CommonConstant;
+import com.wu1g.vo.sys.SysMaterial;
+import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -18,27 +25,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import com.wu1g.framework.Response;
-import com.wu1g.framework.annotation.ALogOperation;
-import com.wu1g.framework.annotation.RfAccount2Bean;
-import com.wu1g.framework.util.CommonConstant;
-import com.wu1g.web.controller.BaseController;
-import com.wu1g.api.sys.ISysMaterialService;
-import com.wu1g.vo.sys.SysMaterial;
-
 /**
- * <p>全景_素材。
+ * <p>系统_素材。
  */
 @Controller
 @Slf4j
-public class PanoMaterialController extends BaseController {
+public class SysMaterialController extends BaseController {
 	@Autowired
 	protected ISysMaterialService sysMaterialService;
 	
-	private static final String acPrefix="/h/pano/sysMaterial/";
-	private static final String init = "admin/pano/pano_material";
-	private static final String edit = "admin/pano/pano_material_edit";
-	private static final String list = "admin/pano/pano_material_list";
+	private static final String acPrefix="/h/sys/sysMaterial/";
+	private static final String init = "admin/sys/sys_material";
+	private static final String edit = "admin/sys/sys_material_edit";
+	private static final String list = "admin/sys/sys_material_list";
 	private static final String success = "redirect:"+acPrefix+"init";
 	
 	/**

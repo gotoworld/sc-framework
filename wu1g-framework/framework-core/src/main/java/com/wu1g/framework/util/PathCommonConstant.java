@@ -20,6 +20,10 @@ public class PathCommonConstant extends CommonConstant {
      */
     public final static String UPLOAD_CATAGORY_MEDIA = "media";
     /**
+     * 上传的文件种类 ：音频
+     */
+    public final static String UPLOAD_CATAGORY_AUDIO = "audio";
+    /**
      * 上传的文件种类 ：普通文件
      */
     public final static String UPLOAD_CATAGORY_FILE = "file";

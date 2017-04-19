@@ -36,11 +36,11 @@
 				<td>${bean.type}</td>
 				<td>${bean.logoUrl}</td>
 				<td>
-				    @[ if(shiro.hasPermission("panoMaterial:edit")){ /]
-	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/pano/panoMaterial/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+				    @[ if(shiro.hasPermission("sysMaterial:edit")){ /]
+	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/sys/sysMaterial/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 	               @[ } /]
- 	               @[ if(shiro.hasPermission("panoMaterial:del")){ /]
- 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/pano/panoMaterial/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+ 	               @[ if(shiro.hasPermission("sysMaterial:del")){ /]
+ 	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/sys/sysMaterial/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
  	               @[ } /]
                 </td>
 			</tr>

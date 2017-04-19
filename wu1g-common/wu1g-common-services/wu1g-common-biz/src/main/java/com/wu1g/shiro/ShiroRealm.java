@@ -89,6 +89,7 @@ public class ShiroRealm extends AuthorizingRealm {
         OrgUser orgUser = roleSourceService.findUserByLoginName(accid,token.getUserType().getId());
         if (orgUser != null) {
             info = new SimpleAuthenticationInfo(accid, orgUser.getPwd(), getName());
+            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
             SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
         }
         return info;

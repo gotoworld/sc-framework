@@ -1,4 +1,4 @@
-package com.wu1g.vo.pano;
+package com.wu1g.vo.sys;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PanoMaterial extends BaseVO {
+public class SysMaterial extends BaseVO {
      /**ID*/
      private Long id;
      /**素材名称*/

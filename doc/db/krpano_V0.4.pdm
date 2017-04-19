@@ -12511,7 +12511,7 @@ Table.Comment 0</a:SymbolContent>
 <o:Table Id="o266">
 <a:ObjectID>2354B9F4-7258-4A53-B425-0389015981BD</a:ObjectID>
 <a:Name>全景_素材</a:Name>
-<a:Code>pano_material</a:Code>
+<a:Code>sys_material</a:Code>
 <a:CreationDate>1487562940</a:CreationDate>
 <a:Creator>Administrator</a:Creator>
 <a:ModificationDate>1487930409</a:ModificationDate>

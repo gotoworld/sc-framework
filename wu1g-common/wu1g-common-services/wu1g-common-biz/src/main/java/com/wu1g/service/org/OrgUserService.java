@@ -274,7 +274,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             try {
                 OrgUser dto=findDataById(bean);
                 if (dto==null) throw new RuntimeException("用户不存在!");
-                if(!dto.getPwd().equals(dto.getOldpwd())) throw new RuntimeException("原密码错误!");
+                if(!dto.getPwd().equals(bean.getOldpwd())) throw new RuntimeException("原密码错误!");
                 if(orgUserDao.updatePwd(bean)==0) throw new RuntimeException("密码修改失败,请重试!");
             } catch (Exception e) {
                 log.error("用户修改密码异常!",e);

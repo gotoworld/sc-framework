@@ -16,11 +16,11 @@
 			<tr>
 				<th style="width:20px;">#</th>
 				<th style="width:20px;">version</th>
-				<th>视频名称</th>
-				<th style="width:100px;">二维码</th>
-				<th class="col-md-2">引用链接</th>
+				<th class="col-md-3">视频名称</th>
+				<th style="width:80px;">二维码</th>
+				<!--<th class="col-md-2">引用链接</th>-->
 				<th style="width:150px;">创建时间</th>
-				<th style="width:390px;">操作</th>
+				<th style="">操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -44,9 +44,9 @@
 					 </div>
 					
 				</td>
-				<td>
-				<span>${basePath}video/${bean.id}</span>
-				</td>
+				<!--<td>-->
+				<!--<span>${basePath}video/${bean.id}</span>-->
+				<!--</td>-->
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
 				    @[ if(shiro.hasPermission("video:edit")){ /]

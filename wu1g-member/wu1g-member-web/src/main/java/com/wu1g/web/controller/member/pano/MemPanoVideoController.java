@@ -46,7 +46,7 @@ import java.util.List;
  */
 @Controller
 @Slf4j
-public class PanoVideoController extends BaseController {
+public class MemPanoVideoController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     /**
      * 全景_项目 业务处理
@@ -58,7 +58,7 @@ public class PanoVideoController extends BaseController {
     @Autowired
     protected ISysCategoryService sysCategoryService;
     // 全景_项目
-    private static final String acPrefix = "/h/video/";
+    private static final String acPrefix = "/m/video/";
     private static final String init = "member/pano/video";
     private static final String edit = "member/pano/video_edit";
     private static final String list = "member/pano/video_list";
@@ -68,7 +68,7 @@ public class PanoVideoController extends BaseController {
      * <p>
      * 初始化处理。
      */
-    @RequiresPermissions("video:menu")
+    @RequiresPermissions("memVideo:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "init")
     public String init() {
         log.info("PanoVideoController init.........");
@@ -79,7 +79,7 @@ public class PanoVideoController extends BaseController {
      * <p>
      * 信息列表 (未删除)。
      */
-    @RequiresPermissions("video:menu")
+    @RequiresPermissions("memVideo:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
     public String list(PanoProj bean) {
         log.info("PanoVideoController list.........");
@@ -100,7 +100,7 @@ public class PanoVideoController extends BaseController {
     /**
      * <p>编辑。
      */
-    @RequiresPermissions("video:edit")
+    @RequiresPermissions("memVideo:edit")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "edit/{id}")
     public String edit(PanoProj bean, @PathVariable("id") Long id) {
         log.info("PanoVideoController edit.........");
@@ -131,7 +131,7 @@ public class PanoVideoController extends BaseController {
     /**
      * <p>逻辑删除。
      */
-    @RequiresPermissions("video:del")
+    @RequiresPermissions("memVideo:del")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "全景视频信息")
     public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
@@ -152,7 +152,7 @@ public class PanoVideoController extends BaseController {
     /**
      * <p>信息保存
      */
-    @RequiresPermissions(value = {"video:add", "video:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"memVideo:add", "memVideo:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "全景视频信息")

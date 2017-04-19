@@ -49,14 +49,14 @@
 				<!--</td>-->
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
-				    @[ if(shiro.hasPermission("panoProj:edit")){ /]
+				    @[ if(shiro.hasPermission("memPanoProj:edit")){ /]
 	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}m/pano/proj/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 	               @[ } /]
- 	               @[ if(shiro.hasPermission("panoProj:del")){ /]
+ 	               @[ if(shiro.hasPermission("memPanoProj:del")){ /]
  	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}m/pano/proj/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
  	               @[ } /]
 	               <a href="${basePath}tour/${bean.id}" target="_blank" class="label label-primary" ><i class="fa fa-desktop"></i> 预览</a>
-					@[ if(shiro.hasPermission("panoProj:edit")){ /]
+					@[ if(shiro.hasPermission("memPanoProj:edit")){ /]
 				  		<a href="${basePath}h/touredit/${bean.id}"  target="_blank" class="label label-info" ><i class="fa fa-edit"></i> 漫游编辑</a>
 					@[ } /]
                 </td>

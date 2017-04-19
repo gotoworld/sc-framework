@@ -31,16 +31,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
  * <p>全景_评论 ACTION类。
  */
 @Controller
-@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = "/m")
 @Slf4j
-public class PanoCommentsController extends BaseController {
+public class MemPanoCommentsController extends BaseController {
 
     private static final long serialVersionUID = -893683902158611114L;
     @Autowired
     private IPanoCommentsService panoCommentsService;
 
     // 全景_评论
-    private static final String acPrefix = "/pano/comments/";
+    private static final String acPrefix = "/m/pano/comments/";
     private static final String init = "member/pano/pano_comments";
     private static final String list = "member/pano/pano_comments_list";
     private static final String success = "redirect:/m" + acPrefix + "init";
@@ -48,7 +47,7 @@ public class PanoCommentsController extends BaseController {
     /**
      * <p>初始化处理。
      */
-    @RequiresPermissions("panoComment:menu")
+    @RequiresPermissions("memPanoComment:menu")
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "init")
     public String init() {
         log.info("PanoCommentsController init.........");
@@ -58,7 +57,7 @@ public class PanoCommentsController extends BaseController {
     /**
      * <p>信息列表 (未删除)。
      */
-    @RequiresPermissions("panoComment:menu")
+    @RequiresPermissions("memPanoComment:menu")
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "list")
     public String list(PanoComments bean) {
         log.info("PanoCommentsController list.........");
@@ -78,7 +77,7 @@ public class PanoCommentsController extends BaseController {
     /**
      * <p>逻辑删除。
      */
-    @RequiresPermissions("panoComment:del")
+    @RequiresPermissions("memPanoComment:del")
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "全景评论信息")
     public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {

@@ -55,7 +55,7 @@ import java.util.Map.Entry;
  */
 @Controller
 @Slf4j
-public class PanoProjController extends BaseController {
+public class MemPanoProjController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IPanoProjService panoProjService;
@@ -66,7 +66,7 @@ public class PanoProjController extends BaseController {
     @Autowired
     protected ISysCategoryService sysCategoryService;
     // 全景_项目
-    private static final String acPrefix = "/h/pano/proj/";
+    private static final String acPrefix = "/m/pano/proj/";
     private static final String init = "member/pano/pano_proj";
     private static final String edit = "member/pano/pano_proj_edit";
     private static final String list = "member/pano/pano_proj_list";
@@ -76,23 +76,20 @@ public class PanoProjController extends BaseController {
     /**
      * <p>初始化处理。
      */
-    @RequiresPermissions("panoProj:menu")
+    @RequiresPermissions("memPanoProj:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "init")
     public String init() {
-        log.info("PanoProjController init.........");
-//        SysCategory dto = new SysCategory();
-//        dto.setType(2);
-//        request.setAttribute("nodes", sysCategoryService.findDataTree(dto));
+        log.info("MemPanoProjController init.........");
         return init;
     }
 
     /**
      * <p>信息列表 (未删除)。
      */
-    @RequiresPermissions("panoProj:menu")
+    @RequiresPermissions("memPanoProj:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
     public String list(PanoProj bean) {
-        log.info("PanoProjController list.........");
+        log.info("MemPanoProjController list.........");
         if (bean == null) {
             bean = new PanoProj();
         }
@@ -110,10 +107,10 @@ public class PanoProjController extends BaseController {
     /**
      * <p> 编辑。
      */
-    @RequiresPermissions("panoProj:edit")
+    @RequiresPermissions("memPanoProj:edit")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "edit/{id}")
     public String edit(PanoProj bean, @PathVariable("id") Long id) {
-        log.info("PanoProjController edit.........");
+        log.info("MemPanoProjController edit.........");
         int pageNum = getPageSize(bean);
         if (id != 0) {
             if (bean == null) {
@@ -146,11 +143,11 @@ public class PanoProjController extends BaseController {
     /**
      * <p>逻辑删除。
      */
-    @RequiresPermissions("panoProj:del")
+    @RequiresPermissions("memPanoProj:del")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "全景项目")
     public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
-        log.info("PanoProjController del.........");
+        log.info("MemPanoProjController del.........");
         Response result = new Response();
         try {
             PanoProj bean = new PanoProj();
@@ -167,12 +164,12 @@ public class PanoProjController extends BaseController {
     /**
      * <p>信息保存
      */
-    @RequiresPermissions(value = {"panoProj:add", "panoProj:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"memPanoProj:add", "memPanoProj:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "全景项目信息")
     public String save(@Validated PanoProj bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
-        log.info("PanoProjController save.........");
+        log.info("MemPanoProjController save.........");
         Response result = new Response();
         if (bean != null) {
             try {
@@ -225,13 +222,13 @@ public class PanoProjController extends BaseController {
         return success;
     }
 
-    @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"memPanoProj:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "xmlsave")
     @ResponseBody
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "漫游场景信息")
     public String xmlsave() {
-        log.info("PanoProjController xmlsave.........");
+        log.info("MemPanoProjController xmlsave.........");
         Map msg = new HashMap();
         msg.put("status", 1);
         msg.put("msg", "保存成功");
@@ -390,10 +387,10 @@ public class PanoProjController extends BaseController {
         return radars;
     }
 
-    @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"memPanoProj:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/h/touredit/{id}")
     public String touredit(@PathVariable("id") Long id) {
-        log.info("PanoProjController touredit.........");
+        log.info("MemPanoProjController touredit.........");
         PanoProj bean = new PanoProj();
         bean.setId(id);
         bean.setType(0);

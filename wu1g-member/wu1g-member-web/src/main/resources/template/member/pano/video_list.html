@@ -49,10 +49,10 @@
 				<!--</td>-->
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
-				    @[ if(shiro.hasPermission("video:edit")){ /]
+				    @[ if(shiro.hasPermission("memVideo:edit")){ /]
 	                  <a href="javascript:;"  onclick="openMyBoxLayer('e','${basePath}h/video/edit/${bean.id}');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 	               @[ } /]
- 	               @[ if(shiro.hasPermission("video:del")){ /]
+ 	               @[ if(shiro.hasPermission("memVideo:del")){ /]
  	                  <a href="javascript:;"  onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}h/video/del/${bean.id}');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
  	               @[ } /]
 	               <a href="${basePath}video/${bean.id}" target="_blank" class="label label-primary" ><i class="fa fa-desktop"></i> 预览</a>

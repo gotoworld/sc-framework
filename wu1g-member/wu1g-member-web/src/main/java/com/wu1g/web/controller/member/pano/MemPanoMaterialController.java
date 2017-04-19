@@ -31,7 +31,7 @@ import com.wu1g.vo.sys.SysMaterial;
  */
 @Controller
 @Slf4j
-public class PanoMaterialController extends BaseController {
+public class MemPanoMaterialController extends BaseController {
 	@Autowired
 	protected ISysMaterialService memMaterialService;
 	

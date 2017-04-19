@@ -86,4 +86,8 @@ public interface IOrgUserService {
      * <p>判断用户id是否存在
      */
     public String isUidYN(String uid);
+    /**
+     * <p>密码修改
+     */
+    public String updatePwd(OrgUser dto) throws Exception;
 }

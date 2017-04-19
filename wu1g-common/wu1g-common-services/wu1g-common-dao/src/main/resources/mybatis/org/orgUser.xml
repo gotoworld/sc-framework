@@ -103,7 +103,6 @@
     <update id="update" parameterType="com.wu1g.vo.org.OrgUser">
         update org_user set
         version=version+1,date_updated=now()
-        <if test="pwd!= null and pwd!= ''">,pwd=#{pwd}</if>
         <if test="name!= null">,name=#{name}</if>
         <if test="jobNo!= null">,job_no=#{jobNo}</if>
         <if test="position!= null">,position=#{position}</if>

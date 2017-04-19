@@ -160,4 +160,8 @@ public class OrgUser extends BaseVO {
      * 部门id集合
      */
     private List<Long> deptIdArray;
+
+    private String oldpwd;
+    private String newpwd;
+    private String confirmpwd;
 }

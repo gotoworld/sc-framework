@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.wu1g.framework.IBaseDao;
+import com.wu1g.framework.IEntity;
 import com.wu1g.vo.org.OrgUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>组织架构_用户  数据库处理接口类。
@@ -16,7 +18,7 @@ public interface IOrgUserDao extends IBaseDao {
     /**
      * <p>获取用户信息>根据用户登录名。
      */
-    public OrgUser findUserByLoginName(Map dto) throws Exception;
+    OrgUser findUserByLoginName(Map dto) throws Exception;
 
     /**
      * 获取某一种角色所有用户
@@ -31,7 +33,12 @@ public interface IOrgUserDao extends IBaseDao {
     /**
      * <p>判断用户id是否存在
      */
-    public int isUidYN(@Param("UserId") String uid) throws Exception;
+    int isUidYN(@Param("UserId") String uid) throws Exception;
+    /**
+     * <p>密码修改
+     */
+    @Update("update org_user set version=version+1,date_updated=now(),pwd=#{confirmpwd} where id = #{id} and pwd=#{oldpwd}")
+    int updatePwd(IEntity entity) throws Exception;
 
     List<OrgUser> findTeacherDataIsList(OrgUser dto);
 }

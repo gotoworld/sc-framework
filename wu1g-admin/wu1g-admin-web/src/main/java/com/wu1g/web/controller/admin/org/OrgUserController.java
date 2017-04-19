@@ -35,6 +35,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.io.IOException;
@@ -61,6 +62,7 @@ public class OrgUserController extends BaseController {
 	private static final String edit = "admin/org/org_user_edit";
 	private static final String list = "admin/org/org_user_list";
 	private static final String editUser = "admin/org/org_user_myinfo";
+	private static final String editPwd = "admin/org/org_user_editpwd";
 	private static final String success = "redirect:/h"+acPrefix+"init";
 	
 	/**
@@ -232,6 +234,7 @@ public class OrgUserController extends BaseController {
 	/**
 	 * <p> 信息保存
 	 */
+//	@RequiresPermissions(value={"orgUser:edit"})
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="用户信息")
@@ -269,5 +272,49 @@ public class OrgUserController extends BaseController {
 		modelMap.addFlashAttribute("msg", result);
 		response.getWriter().print(result);
 		return null;
+	}
+	/**
+	 * <p> 密码修改。
+	 */
+	@RequiresPermissions(value={"orgUser:editPwd"})
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"editPwd/{id}")
+	public String editPwd(@PathVariable("id") Long id) {
+		log.info("OrgUserController editPwd.........");
+		if(0!=id){
+			OrgUser bean=new OrgUser();
+			bean.setId(id);
+			bean=orgUserService.findDataById(bean);
+			request.setAttribute( "bean", bean );
+		}
+		return editPwd;
+	}
+	/**
+	 * <p> 密码修改
+	 */
+	@RequiresPermissions(value={"orgUser:editPwd"})
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"updatePwd")
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="用户密码")
+	@ResponseBody
+	public Response updatePwd(@Validated OrgUser bean) throws IOException {
+		log.info("OrgUserController updatePwd.........");
+		if(bean==null||ValidatorUtil.isNullEmpty(bean.getOldpwd())||ValidatorUtil.isNullEmpty(bean.getNewpwd())||ValidatorUtil.isNullEmpty(bean.getConfirmpwd())) return Response.error("参数异常!");
+
+		Response result = new Response();
+		try {
+			if(!bean.getNewpwd().equals(bean.getConfirmpwd()))throw new RuntimeException("两次密码不一致!");
+			if ("1".equals(request.getSession().getAttribute(acPrefix + "updatePwd." + bean.getToken()))) {
+				throw new RuntimeException("请不要重复提交!");
+			}
+			OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+			if(orgUser ==null){
+				throw new RuntimeException("登陆超时!");
+			}
+			result.message=orgUserService.updatePwd(bean);
+			request.getSession().setAttribute(acPrefix + "updatePwd." + bean.getToken(), "1");
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
 	}
 }

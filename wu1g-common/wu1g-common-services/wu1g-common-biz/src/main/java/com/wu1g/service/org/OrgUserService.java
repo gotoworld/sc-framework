@@ -127,7 +127,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         }
         return msg;
     }
-
     public String deleteData(OrgUser bean) throws Exception {
         String msg = "seccuss";
         if (bean != null) {
@@ -264,6 +263,22 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             }
         } catch (Exception e) {
             log.error("判断用户id是否存在,数据库处理异常!", e);
+        }
+        return msg;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public String updatePwd(OrgUser bean) throws Exception {
+        String msg = "seccuss";
+        if (bean != null) {
+            try {
+                OrgUser dto=findDataById(bean);
+                if (dto==null) throw new RuntimeException("用户不存在!");
+                if(!dto.getPwd().equals(dto.getOldpwd())) throw new RuntimeException("原密码错误!");
+                if(orgUserDao.updatePwd(bean)==0) throw new RuntimeException("密码修改失败,请重试!");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
         return msg;
     }

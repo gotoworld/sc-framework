@@ -20,6 +20,8 @@ public class BaseVO implements IVO,IEntity {
     Integer pageSize;
     /** 关键字 */
     String keyword;
+    /** 用户id */
+    String accid;
 
     String str;
     public String getToken(){

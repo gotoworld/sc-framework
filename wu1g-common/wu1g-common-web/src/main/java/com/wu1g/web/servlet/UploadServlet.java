@@ -302,7 +302,7 @@ public class UploadServlet extends HttpServlet{
                     material.setType(materialType);//0图片1音乐2视频3文件
                     material.setName(name);//资源名称
                     material.setLogoUrl(obj.get("defaultBigPicUrl")==null?(saveUrl + newFileName):""+obj.get("defaultBigPicUrl"));
-                    material.setMaterialUrl(saveUrl + newFileName);
+                    material.setMaterialUrl(StrUtil.replaceAll(saveUrl + newFileName,"/n1/","/n4/"));
                     material.setMemo("来源:"+request.getHeader("referer"));
                     OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
                     if(user!=null){

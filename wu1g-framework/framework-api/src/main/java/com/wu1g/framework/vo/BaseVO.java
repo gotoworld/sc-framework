@@ -22,6 +22,8 @@ public class BaseVO implements IVO,IEntity {
     String keyword;
     /** 用户id */
     String accid;
+    /** 会员 */
+    boolean isMember;
 
     String str;
     public String getToken(){

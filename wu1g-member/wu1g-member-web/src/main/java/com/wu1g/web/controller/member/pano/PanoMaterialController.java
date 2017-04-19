@@ -59,9 +59,10 @@ public class PanoMaterialController extends BaseController {
 		log.info("sysMaterialController page.........");
         Response result = new Response();
 		try {
-            if(dto==null){
-                dto = new SysMaterial();
-            }
+            if(dto==null)  dto = new SysMaterial();
+			dto.setMember(true);
+			dto.setCreateId(getUser().getId());//会员id
+
             PageInfo<?> page=new PageInfo<>(sysMaterialService.findDataIsPage(dto));
             request.setAttribute( "beans", page.getList() );
             //分页对象
@@ -93,6 +94,8 @@ public class PanoMaterialController extends BaseController {
                 dto.setNewFlag(1);
             }
             dto.setPageNum( pageNum );
+			dto.setMember(true);
+			dto.setCreateId(getUser().getId());//会员id
             request.setAttribute("bean",dto);
 		} catch (Exception e) {
            result = Response.error(e.getMessage());
@@ -113,6 +116,8 @@ public class PanoMaterialController extends BaseController {
 		try {
 			SysMaterial dto=new SysMaterial();
             dto.setId(id);
+			dto.setMember(true);
+			dto.setCreateId(getUser().getId());//会员id
             result.message = sysMaterialService.deleteDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
@@ -143,6 +148,8 @@ public class PanoMaterialController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
+					dto.setMember(true);
+					dto.setCreateId(getUser().getId());//会员id
 					result.message=sysMaterialService.saveOrUpdateData(dto);
 					result.data = dto.getId();
 					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");

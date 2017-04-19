@@ -25,7 +25,7 @@
         <include refid="Base_Column_List"/>
         from sys_material t1
         where
-        t1.id = #{id}
+        t1.id = #{id} <if test="isMember"> and t1.create_id = #{createId}</if>
     </select>
 
     <!-- 新增单条数据 -->
@@ -77,7 +77,7 @@
              <if test="keyword!=null">,keyword = #{keyword}</if>
              <if test="createId!=null">,create_id = #{createId}</if>
         where
-        id = #{id}
+        id = #{id} <if test="isMember"> and create_id = #{createId}</if>
     </update>
 
     <!--列表通用条件-->
@@ -90,7 +90,7 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
-        <if test="accid!=null"> and t1.create_id = #{accid}</if>
+        <if test="isMember"> and t1.create_id = #{createId}</if>
         <if test="type!=null and type!=-1">
             and t1.type = #{type}
         </if>

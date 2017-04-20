@@ -39,47 +39,47 @@
 			            <input type="hidden" name="id" value="${bean.id}" />
 						<input type="hidden" name="token" value="${bean.token}" />
                         <input type="hidden" name="newFlag" value="${bean.newFlag}" />
-                        <input type="hidden" name="type" value="1" />
-					    <div class="col-sm-12">
+						<input type="hidden" name="type" value="1" />
+						<div class="col-sm-6 b-r">
 							<div class="form-group">
-								<label class="col-sm-1 control-label"  for="bean-categoryId">类目:</label>
-								<div class="col-md-8">
-									<div class="col-sm-8">
-										@[ var treeIndex=1; /]
-										@[ var _band_flag=bean.categoryId; /]
-										<select  class="form-control" name="categoryId" id="bean-categoryId">
-											@[ for(b in nodes !){ /]
-											<option  value="${b.id}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}</option>
-											@[ layout("pano_category_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.categoryId}){} /]
-											@[ } /]
-										</select>
-									</div>
-									<span id="bean-categoryId-error" class="help-block m-b-none"></span>
-								</div>
-							 </div>
-							<div class="form-group">
-								<label class="col-sm-1 control-label"  for="bean-name">名称:</label>
-								<div class="col-sm-5">
+								<label class="col-md-3 control-label"  for="bean-name">名称:</label>
+								<div class="col-md-12">
 									<input id="bean-name" name="name" value="${bean.name}" class="form-control" type="text"  placeholder="名称"  required="" aria-required="true" aria-describedby="bean-name-error"  maxlength="50"   aria-invalid="true">
 									<span id="bean-name-error" class="help-block m-b-none"></span>
-								 </div>
-							 </div>
-							 <div class="form-group">
-								<label class="col-sm-1 control-label"  for="bean-memo">备注:</label>
-								<div class="col-sm-5">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label"  for="bean-memo">备注:</label>
+								<div class="col-sm-12">
 									<input id="bean-memo" name="memo" value="${bean.memo}" class="form-control" type="text"  placeholder="备注" aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
 									<span id="bean-memo-error" class="help-block m-b-none"></span>
-								 </div>
-							 </div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-md-3 control-label"  for="bean-categoryId">类目:</label>
+								<div class="col-md-12">
+									@[ var treeIndex=1; /]
+									@[ var _band_flag=bean.categoryId; /]
+									<select  class="form-control" name="categoryId" id="bean-categoryId">
+										<option>请选择..</option>
+										@[ for(b in nodes !){ /]
+										<option  value="${b.id}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}</option>
+										@[ layout("pano_category_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.categoryId}){} /]
+										@[ } /]
+									</select>
+								</div>
+								<span id="bean-categoryId-error" class="help-block m-b-none"></span>
+							</div>
 						</div>
 						<div class="col-sm-12 form-group">
-							<label class="col-sm-1 control-label"></label>
-							<div class="col-sm-11">
+							<div class="col-sm-12">
 								<p>视频上传:<span class="red s12">全景视频的格式为 mp4;</span></p>
 								<div class="img-input red" id="upload_scene_div" style="">
-								@[ if(bean.scenes!=null && bean.scenes.~size>0){
+									@[ if(bean.scenes!=null && bean.scenes.~size>0){
 									for(scene in bean.scenes){
-								 /]
+									/]
 									<div id="${scene.id}" class="img-grid">
 										<input name="scene_id" value="${scene.id}" type="hidden">
 										<input name="${scene.id}_scene_src" value="${scene.sceneSrc}" type="hidden">
@@ -89,9 +89,9 @@
 										<a href="javascript:;" onclick="javascript:del_scene_btn(this,'${scene.id}');" class="ico_del"></a>
 										<a href="javascript:;" onclick="move_scene(this,'right');" class="ico_right"></a>
 									</div>
-								@[ }
+									@[ }
 									}
-								 /]
+									/]
 								</div>
 								<div class="upload_scene_btn" style="">
 									<a href="javascript:;" id="upload_scene_btn"><img src="${basePath}img/add_video_btn.png" style="border: solid 4px #ddd"></a>

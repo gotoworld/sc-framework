@@ -60,12 +60,14 @@ public class MemOrgUserController extends BaseController {
 	/**
 	 * <p> 编辑。
 	 */
+	@RequiresPermissions(value={"myinfo:menu"})
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"editUser/{id}")
 	public String editUser(@PathVariable("id") Long id) {
-		log.info("OrgUserController editUser.........");
+		log.info("MemOrgUserController editUser.........");
 		if(0!=id){
 			OrgUser bean=new OrgUser();
 			bean.setId(id);
+			setMember(bean);//会员标记
 			bean=orgUserService.findDataById(bean);
 			request.setAttribute( "bean", bean );
 		}
@@ -96,17 +98,59 @@ public class MemOrgUserController extends BaseController {
 	    out.print(json);
 		return null;
 	}
-
+	/**
+	 * <p> 信息保存
+	 */
+	@RequiresPermissions(value={"myinfo:menu"})
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update")
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="用户信息")
+	@ResponseBody
+	public Response update(@Validated OrgUser bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) throws IOException {
+		log.info("MemOrgUserController update.........");
+		Response result = new Response();
+		if(bean==null)Response.error("信息保存失败!");
+		try {
+			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+				throw new RuntimeException("请不要重复提交!");
+			}
+			if (bindingResult.hasErrors()) {
+				String errorMsg = "";
+				List<ObjectError> errorList = bindingResult.getAllErrors();
+				for (ObjectError error : errorList) {
+					errorMsg += (error.getDefaultMessage()) + ";";
+				}
+				result = Response.error(errorMsg);
+			}else{
+				OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+				if(orgUser !=null){
+					if(ValidatorUtil.isEmpty(bean.getAccid())){
+						bean.setAccid(orgUser.getAccid());
+					}
+				}
+				setMember(bean);//会员标记
+				result.message=orgUserService.updateData(bean);
+				OrgUser newOrgUser=orgUserService.findDataById(bean);
+				getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER,newOrgUser);
+				getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER,newOrgUser);
+				request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+			}
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
 	/**
 	 * <p> 密码修改。
 	 */
 	@RequiresPermissions(value={"memOrgUser:editPwd"})
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"editPwd/{id}")
 	public String editPwd(@PathVariable("id") Long id) {
-		log.info("OrgUserController editPwd.........");
+		log.info("MemOrgUserController editPwd.........");
 		if(0!=id){
 			OrgUser bean=new OrgUser();
 			bean.setId(id);
+			setMember(bean);//会员标记
 			bean=orgUserService.findDataById(bean);
 			request.setAttribute( "bean", bean );
 		}
@@ -121,7 +165,7 @@ public class MemOrgUserController extends BaseController {
 	@ALogOperation(type="修改",desc="用户密码")
 	@ResponseBody
 	public Response updatePwd(@Validated OrgUser bean) throws IOException {
-		log.info("OrgUserController updatePwd.........");
+		log.info("MemOrgUserController updatePwd.........");
 		if(bean==null||ValidatorUtil.isNullEmpty(bean.getOldpwd())||ValidatorUtil.isNullEmpty(bean.getNewpwd())||ValidatorUtil.isNullEmpty(bean.getConfirmpwd())) return Response.error("参数异常!");
 
 		Response result = new Response();
@@ -134,6 +178,7 @@ public class MemOrgUserController extends BaseController {
 			if(orgUser ==null){
 				throw new RuntimeException("登陆超时!");
 			}
+			setMember(bean);//会员标记
 			result.message=orgUserService.updatePwd(bean);
 			request.getSession().setAttribute(acPrefix + "updatePwd." + bean.getToken(), "1");
 		} catch (Exception e) {

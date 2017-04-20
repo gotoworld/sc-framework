@@ -41,6 +41,10 @@ public class PathCommonConstant extends CommonConstant {
      */
     public final static String UPLOAD_TYPE_MEDIA = "swf,flv,mp4,mpg,wmv";
     /**
+     * 上传的多媒体类型 音频
+     */
+    public final static String UPLOAD_TYPE_AUDIO = "flac,ape,wav,mp3,aac,ogg,wma";
+    /**
      * 上传的文件类型
      */
     public final static String UPLOAD_TYPE_FILE = "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,ftl";

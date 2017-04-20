@@ -28,7 +28,8 @@
                             <span class="clear">
                                 <span class="block m-t-xs">
                                       <strong class="font-bold">
-								       ${shiro.principal(null)}
+								       <!--${shiro.principal(null)}-->
+                                          ${session['SESSION_KEY_USER_ADMIN'].name}
 							    	</strong>
                                     <b class="caret"></b>
                                 </span>

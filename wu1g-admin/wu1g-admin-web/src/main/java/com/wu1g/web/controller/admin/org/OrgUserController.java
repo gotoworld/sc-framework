@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.InvalidSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -221,6 +222,13 @@ public class OrgUserController extends BaseController {
 					if(null==bean.getEnable()) bean.setEnable(0);
 					result.message=orgUserService.saveOrUpdateData(bean);
 					result.data = bean.getId();
+					try {
+						if(bean.getId()==getUser().getId()) {
+							getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, bean);
+							getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, bean);
+						}
+					} catch (InvalidSessionException e) {
+					}
 					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {
@@ -262,6 +270,12 @@ public class OrgUserController extends BaseController {
 						}
 					}
 					result.message=orgUserService.updateData(bean);
+					try {
+						OrgUser newOrgUser=orgUserService.findDataById(bean);
+						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER,newOrgUser);
+						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN,newOrgUser);
+					} catch (InvalidSessionException e) {
+					}
 					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {

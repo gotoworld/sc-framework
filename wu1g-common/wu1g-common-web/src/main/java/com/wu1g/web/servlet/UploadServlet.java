@@ -337,6 +337,10 @@ public class UploadServlet extends HttpServlet{
             if (size/1024/1024 > PathCommonConstant.UPLOAD_VIDEO_MAX_SIZE) {
                 flag = false;
             }
+        }else if (PathCommonConstant.UPLOAD_CATAGORY_AUDIO.equals(type)) {
+            if (size/1024/1024 > PathCommonConstant.UPLOAD_VIDEO_MAX_SIZE) {
+                flag = false;
+            }
         }
         return flag;
     }
@@ -351,6 +355,7 @@ public class UploadServlet extends HttpServlet{
      */
     private String getError(String message) {
         Map<String, Object> obj = new HashMap<String, Object>();
+        obj.put("status", 1);
         obj.put("code", 1);
         obj.put("error", 1);
         obj.put("message", message);
@@ -375,6 +380,8 @@ public class UploadServlet extends HttpServlet{
             return PathCommonConstant.UPLOAD_TYPE_MEDIA.contains(ext);
         } else if (PathCommonConstant.UPLOAD_CATAGORY_FILE.equals(type)) {
             // 普通文件
+            return true;
+        }else if (PathCommonConstant.UPLOAD_CATAGORY_AUDIO.equals(type)) {
             return true;
         }
         return false;

@@ -16,8 +16,6 @@
     <version>1.0</version>
 
     <modules>
-        <module>wu1g-portal-api</module>
-        <module>wu1g-portal-services</module>
         <module>wu1g-portal-web</module>
     </modules>
 </project>

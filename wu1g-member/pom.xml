@@ -16,8 +16,6 @@
     <version>1.0</version>
 
     <modules>
-        <module>wu1g-member-api</module>
-        <module>wu1g-member-services</module>
         <module>wu1g-member-web</module>
     </modules>
 </project>

@@ -1,4 +1,4 @@
-<li><a href="#"><i class="glyphicon glyphicon-th-list"></i> <span class="nav-label">系统类目管理 </span><span class="fa arrow"></span></a>
+<li><a href="#"><i class="glyphicon glyphicon-th-list"></i> <span class="nav-label">类目管理 </span><span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
         @[ if(shiro.hasPermission("sysCategory:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysCategory/init">全景类目管理</a></li>
@@ -35,11 +35,9 @@
         @[ if(shiro.hasPermission("sysPanoPlugins:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysPanoPlugins/init">系统_全景插件</a></li>
         @[ } /]
-        <!--<li><a class="J_menuItem" href="/file_manager.html">素材管理</a></li>-->
         @[ if(shiro.hasPermission("sysMaterial:menu")){ /]
-        <li><a class="J_menuItem" href="${basePath }h/sys/sysMaterial/init">全景_素材</a></li>
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysMaterial/init">素材管理</a></li>
         @[ } /]
-        <li><a class="J_menuItem" href="/contacts.html">广告管理</a></li>
         @[ if(shiro.hasPermission("sysAdvertise:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysAdvertise/init">广告管理</a></li>
         @[ } /]
@@ -55,10 +53,7 @@
         <li><a class="J_menuItem" href="${basePath }h/sys/sysNewsCategory/init">资讯栏目</a></li>
         @[ } /]
         @[ if(shiro.hasPermission("sysNews:menu")){ /]
-        <li><a class="J_menuItem" href="/file_manager.html">新闻资讯</a></li>
-        @[ } /]
-        @[ if(shiro.hasPermission("sysNews:menu")){ /]
-        <li><a class="J_menuItem" href="${basePath }h/sys/sysNews/init">系统_资讯</a></li>
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysNews/init">新闻资讯</a></li>
         @[ } /]
     </ul>
 </li>
@@ -78,7 +73,7 @@
     </ul>
 </li>
 <li>
-    <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right">16</span></a>
+    <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">系统消息 </span><span class="label label-warning pull-right">16</span></a>
     <ul class="nav nav-second-level">
         <li><a class="J_menuItem" href="/mailbox.html">收件箱</a>
         </li>

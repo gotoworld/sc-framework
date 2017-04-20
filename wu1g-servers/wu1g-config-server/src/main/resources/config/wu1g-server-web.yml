@@ -75,6 +75,10 @@ pagehelper:
 wu1g:
   config:
     beetl: classpath:/conf/beetl.properties
+  logClear: #清理用户操作日志
+    enable: true #是否启用
+    cron: 0 30 04 */2 * ? #定时任务
+    expireDay: 30 #删除N天前日志
   krpano:
     win: d:/home/krpano/win/krpanotools64.exe
     linux: /home/wu1g/software/krpano/krpanotools

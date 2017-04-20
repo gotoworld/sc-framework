@@ -60,5 +60,4 @@ public class SysUserLog extends BaseVO {
      * 操作人IP
      */
     private String createIp;
-
 }

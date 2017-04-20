@@ -16,8 +16,6 @@
     <version>1.0</version>
 
     <modules>
-        <module>wu1g-admin-api</module>
-        <module>wu1g-admin-services</module>
         <module>wu1g-admin-web</module>
     </modules>
 </project>

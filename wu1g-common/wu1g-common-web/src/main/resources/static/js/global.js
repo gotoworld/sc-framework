@@ -53,9 +53,9 @@ function openMyBoxLayer(mytitle, myurl) {
         pageNumA = parseInt(pageNumA);
         if (!!myurl) {
             if (myurl.indexOf('?') != -1) {
-                myurl += '&pageNum=' + pageNumA
+                myurl += '&bean.pageNum=' + pageNumA
             } else {
-                myurl += '?pageNum=' + pageNumA
+                myurl += '?bean.pageNum=' + pageNumA
             }
         }
     }

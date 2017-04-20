@@ -13,11 +13,6 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.wu1g.portal</groupId>
-            <artifactId>wu1g-portal-biz</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.wu1g.framework</groupId>
             <artifactId>wu1g-framework-web</artifactId>
             <version>1.0</version>

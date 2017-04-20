@@ -27,11 +27,6 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.wu1g.admin</groupId>
-            <artifactId>wu1g-admin-biz</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.wu1g.pano</groupId>
             <artifactId>wu1g-pano-biz</artifactId>
             <version>1.0</version>

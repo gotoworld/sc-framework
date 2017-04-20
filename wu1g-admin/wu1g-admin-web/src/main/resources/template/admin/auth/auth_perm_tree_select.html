@@ -6,7 +6,7 @@
 @[
 for(bean in beans!){
  /]
-		<option value="${_this_self!=bean.id?bean.id:'-999'}" ${_band_flag==bean.id?'selected="selected"':''}>
+		<option value="${_this_self!=bean.id?bean.id:_this_self}" ${_band_flag==bean.id?'selected="selected"':''}>
 			-
 			@[ for(var i=1;i<=treeIndex;i++){ /]
 			|-

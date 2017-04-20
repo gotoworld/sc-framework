@@ -65,7 +65,7 @@
         <if test="memo!= null">,memo=#{memo}</if>
         <if test="orderNo!= null">,order_no=#{orderNo}</if>
         <if test="keyword!= null">,keyword=#{keyword}</if>
-        <if test="parentId!= null and parentId!='-999'">,parent_id=#{parentId}</if>
+        ,parent_id=#{parentId}
         where id = #{id}
     </update>
     <!-- 判断是否存在 -->

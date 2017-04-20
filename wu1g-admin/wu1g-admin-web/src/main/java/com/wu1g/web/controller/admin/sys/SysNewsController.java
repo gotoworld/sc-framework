@@ -154,6 +154,7 @@ public class SysNewsController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
+					if(null==dto.getIsOntop()) dto.setIsOntop(0);
 					result.message=sysNewsService.saveOrUpdateData(dto);
 					result.data = dto.getId();
 					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");

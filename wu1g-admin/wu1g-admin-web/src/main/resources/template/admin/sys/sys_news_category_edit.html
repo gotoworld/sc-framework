@@ -64,7 +64,7 @@
                                 <select  class="form-control" name="parentId" id="parentId">
                                     <option value="">---顶级---</option>
                                     @[ for(b in nodes !){ /]
-                                    <option  value="${_this_self!=b.id?b.id:'-999'}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
+                                    <option  value="${_this_self!=b.id?b.id:_this_self}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}${_this_self==b.id?'-----无效项-------':''}</option>
                                     @[ layout("sys_category_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.parentId,_this_self:bean.id}){} /]
                                     @[ } /]
                                 </select>

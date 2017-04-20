@@ -17,7 +17,7 @@
 				<th>广告名称</th>
 				<th>图片地址</th>
 				<th>广告位置</th>
-				<th>状态0下架1上架</th>
+				<th>状态</th>
 				<th>创建时间</th>
 				<th>操作</th>
 			</tr>
@@ -31,7 +31,7 @@
 				<td>${bean.name}</td>
 				<td>${bean.imgUrl}</td>
 				<td>${bean.position}</td>
-				<td>${bean.state}</td>
+				<td>${bean.state==0?'下架':'上架'}</td>
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
 				    @[ if(shiro.hasPermission("sysAdvertise:edit")){ /]

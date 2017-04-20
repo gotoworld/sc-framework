@@ -183,7 +183,7 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean getShiroFilterFactoryBean() {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(getSecurityManager());
-        bean.setLoginUrl("/h/init");
+        bean.setLoginUrl("/");
         bean.setSuccessUrl("/h/index");
         bean.setUnauthorizedUrl("/error/noauth");
 

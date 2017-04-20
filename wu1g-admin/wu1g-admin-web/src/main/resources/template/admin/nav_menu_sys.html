@@ -1,11 +1,38 @@
-<li><a href="#"><i class="glyphicon glyphicon-th-list"></i> <span class="nav-label">类目管理 </span><span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">
-        @[ if(shiro.hasPermission("sysCategory:menu")){ /]
-        <li><a class="J_menuItem" href="${basePath }h/sys/sysCategory/init">全景类目管理</a></li>
-        @[ } /]
-        <li><a class="J_menuItem" href="/indevelopment.html?v=a6">作品类别标签</a></li>
-    </ul>
-</li>
+@[ if(shiro.hasPermission("pano:menu")){ /]
+    <li>
+        <a href="#">
+            <i class="fa fa-camera"></i>
+            <span class="nav-label">全景系统</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="nav nav-second-level">
+            @[ if(shiro.hasPermission("sysCategory:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }h/sys/sysCategory/init">全景类目</a></li>
+            @[ } /]
+
+            <li><a class="J_menuItem" href="/indevelopment.html?v=a3">作品标签</a></li>
+
+            @[ if(shiro.hasPermission("panoProj:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }/h/pano/proj/init">全景漫游</a></li>
+            @[ } /]
+            @[ if(shiro.hasPermission("video:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }/h/video/init">全景视频</a></li>
+            @[ } /]
+            @[ if(shiro.hasPermission("panoComment:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }/h/pano/comments/init">场景留言</a></li>
+            @[ } /]
+            @[ if(shiro.hasPermission("sysMaterial:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }h/sys/sysMaterial/init">素材管理</a></li>
+            @[ } /]
+
+            @[ if(shiro.hasPermission("sysPanoPlugins:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }h/sys/sysPanoPlugins/init">全景插件</a></li>
+            @[ } /]
+
+            <li><a class="J_menuItem" href="/indevelopment.html?v=a4">VR脚本管理</a></li>
+        </ul>
+    </li>
+@[ } /]
 @[ if(shiro.hasPermission("sys:menu")){ /]
 <li><a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">系统管理 </span><span
         class="fa arrow"></span></a>
@@ -31,18 +58,12 @@
         @[ if(shiro.hasPermission("sysSensitiveWords:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysSensitiveWords/init">敏感词管理</a></li>
         @[ } /]
-        <li><a class="J_menuItem" href="/indevelopment.html?v=a2">系统设置</a></li>
-        @[ if(shiro.hasPermission("sysPanoPlugins:menu")){ /]
-        <li><a class="J_menuItem" href="${basePath }h/sys/sysPanoPlugins/init">系统_全景插件</a></li>
-        @[ } /]
-        @[ if(shiro.hasPermission("sysMaterial:menu")){ /]
-        <li><a class="J_menuItem" href="${basePath }h/sys/sysMaterial/init">素材管理</a></li>
-        @[ } /]
         @[ if(shiro.hasPermission("sysAdvertise:menu")){ /]
         <li><a class="J_menuItem" href="${basePath }h/sys/sysAdvertise/init">广告管理</a></li>
         @[ } /]
-        <li><a class="J_menuItem" href="/indevelopment.html?v=a4">VR脚本管理</a></li>
+
         <li><a class="J_menuItem" href="/graph_metrics.html">数据统计</a></li>
+        <li><a class="J_menuItem" href="/indevelopment.html?v=a2">系统设置</a></li>
     </ul>
 </li>
 @[ } /]

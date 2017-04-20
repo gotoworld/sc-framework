@@ -206,6 +206,11 @@ public class MemPanoProjController extends BaseController {
                     } else {
                         bean.setMakePanoFlag(false);
                     }
+
+                    if(bean.getIsComments()==null) bean.setIsComments(0);
+                    if(bean.getIsPlanetoid()==null) bean.setIsPlanetoid(0);
+                    if(bean.getIsFps()==null) bean.setIsFps(0);
+
                     result.message = panoProjService.saveOrUpdateData(bean);
                     result.data = bean.getId();
 

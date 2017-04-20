@@ -218,6 +218,7 @@ public class OrgUserController extends BaseController {
 							bean.setAccid(orgUser.getAccid());
 						}
 					}
+					if(null==bean.getEnable()) bean.setEnable(0);
 					result.message=orgUserService.saveOrUpdateData(bean);
 					result.data = bean.getId();
 					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");

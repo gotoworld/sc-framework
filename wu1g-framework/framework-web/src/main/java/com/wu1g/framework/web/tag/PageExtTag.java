@@ -15,9 +15,11 @@ package com.wu1g.framework.web.tag;
 import com.github.pagehelper.PageInfo;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.beetl.core.GeneralVarTagBinding;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.Map;
 
@@ -25,6 +27,7 @@ import java.util.Map;
 /**
  * <p>分页显示标签</p>
  */
+@Slf4j
 public class PageExtTag extends GeneralVarTagBinding  {
     private static final long serialVersionUID = 7313107737668941157L;
 
@@ -51,6 +54,10 @@ public class PageExtTag extends GeneralVarTagBinding  {
         HttpServletRequest request = (HttpServletRequest)ctx.getGlobal("request");
         
 	     PageInfo<?> pageInfo = (PageInfo<?>)request.getAttribute(CommonConstant.PAGEROW_OBJECT_KEY);
+	     if(pageInfo==null){
+			log.error("分页标签异常!分页对象为空!");
+	     	return;
+		 }
 	     /** 当前页码 */
 	     int currentPageNo = pageInfo.getPageNum();
 	     /** 总页数 */

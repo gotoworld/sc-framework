@@ -72,7 +72,7 @@
         update sys_category set date_updated=now() ,version=version+1
              <if test="name!=null">,name = #{name}</if>
              <if test="code!=null">,code = #{code}</if>
-             <if test="parentId!=null">,parent_id = #{parentId}</if>
+            ,parent_id = #{parentId}
              <if test="type!=null">,type = #{type}</if>
              <if test="detailInfo!=null">,detail_info = #{detailInfo}</if>
              <if test="state!=null">,state = #{state}</if>

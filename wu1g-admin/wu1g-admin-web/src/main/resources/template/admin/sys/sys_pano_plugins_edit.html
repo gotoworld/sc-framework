@@ -38,37 +38,34 @@
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">名称：</label>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <input id="bean-name" name="name" value="${bean.name}" class="form-control" type="text"  placeholder="请输入名称"  required="" aria-required="true"  aria-describedby="bean-name-error"  maxlength="50"   aria-invalid="true">
                                 <span id="bean-name-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-md-3 control-label">插件地址：</label>
-                            <div class="col-md-8">
-                                <span  class="help-block m-b-none"><button type="button" id="upload_btn_pluginSrc">点击上传</button></span>
-                                <div id="upload_div_pluginSrc" style="">
-                                    @[ if(isNotEmpty(bean.pluginSrc)){ /]
-                                        <input name="pluginSrc" value="${bean.pluginSrc}" class="form-control" type="text">
-                                    @[ } /]
+                            <label class="col-md-3 control-label">插件：</label>
+                            <div class="col-md-12">
+                                <div class="input-append input-group">
+                                    <span  class="input-group-btn"><button type="button" id="upload_btn_pluginSrc" class="btn btn-white">点击上传</button></span>
+                                    <div id="upload_div_pluginSrc" style="" class="file-grid-2">
+                                        @[ if(isNotEmpty(bean.pluginSrc)){ /]
+                                        <div class="file-grid-2">
+                                            <input name="pluginSrc" value="${bean.pluginSrc}" class="input-large form-control" type="text">
+                                        </div>
+                                        @[ } /]
+                                    </div>
                                 </div>
                             </div>
                         </div>
 					</div>
 					<div class="col-sm-6">
-
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">状态：</label>
-                            <div class="col-sm-9">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="state" value="option1">启用状态</label>
-                                <span id="bean-state-error" class="help-block m-b-none"></span>
-                            </div>
+                            <label class="col-sm-12 control-label">状态：<label class=""> <input type="checkbox" name="state"  value="1" ${bean.state==1?'checked':''}>启用</label></label>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">备注：</label>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <textarea id="bean-memo" name="memo" class="form-control"  placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">${bean.memo}</textarea>
                                 <span id="bean-memo-error" class="help-block m-b-none"></span>
                             </div>

@@ -133,6 +133,16 @@
 			forceParse : !1,
 			autoclose : !0
 		});
+        var treeviewA=$('#disTree').treeview({
+            color: "#428bca",
+            showTags: false,
+            data: [{"id":'',"text":"=全部="}],
+            onNodeSelected: function (event, node) {
+                $('#categoryIdA').val(node.id);
+                //刷新列表
+                loadUrlPage(null, 'info_search_form', 'info_list_div');
+            }
+        });
 		//初始加载..
 		loadUrlPage(null, 'info_search_form', 'info_list_div');
         function getDataTree(){
@@ -140,16 +150,7 @@
                 function (result) {
 //                    console.info("获取数据.." + JSON.stringify(result));
                     if (result.code == 0) {
-                        $('#disTree').treeview({
-                            color: "#428bca",
-                            showTags: false,
-                            data: [{"id":'',"text":"=全部="}].concat(result.data),
-                            onNodeSelected: function (event, node) {
-                                $('#categoryIdA').val(node.id);
-                                //刷新列表
-                                loadUrlPage(null, 'info_search_form', 'info_list_div');
-                            }
-                        });
+                        treeviewA.treeview({data: [{"id":'',"text":"=全部="}].concat(result.data)});
                     } else {
                         alert(result.message);
                     }

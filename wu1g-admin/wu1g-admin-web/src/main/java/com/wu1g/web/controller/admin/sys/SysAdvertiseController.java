@@ -144,6 +144,7 @@ public class SysAdvertiseController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
+					if(null==dto.getState()) dto.setState(0);
 					result.message=sysAdvertiseService.saveOrUpdateData(dto);
 					result.data = dto.getId();
 					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");

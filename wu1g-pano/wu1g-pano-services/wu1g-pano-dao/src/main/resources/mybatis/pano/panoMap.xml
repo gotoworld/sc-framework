@@ -42,7 +42,7 @@
         <include refid="Base_Column_List"/>
         from pano_map t1
         inner join pano_scene t2 on t1.scene_id=t2.id
-        where t1.proj_id = #{projId}
+        where t1.proj_id = #{projId} <if test="isMember"> and t1.create_id = #{createId}</if>
         order by t1.date_created desc
     </select>
 
@@ -50,6 +50,6 @@
 		delete
 		from pano_map
 		where  
-		proj_id=#{projId}
+		proj_id=#{projId} <if test="isMember"> and t1.create_id = #{createId}</if>
 	</delete>
 </mapper>

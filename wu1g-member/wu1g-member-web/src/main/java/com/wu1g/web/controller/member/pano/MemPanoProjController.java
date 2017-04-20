@@ -211,6 +211,8 @@ public class MemPanoProjController extends BaseController {
                     if(bean.getIsPlanetoid()==null) bean.setIsPlanetoid(0);
                     if(bean.getIsFps()==null) bean.setIsFps(0);
 
+                    setMember(bean);//会员标记
+
                     result.message = panoProjService.saveOrUpdateData(bean);
                     result.data = bean.getId();
 
@@ -246,6 +248,9 @@ public class MemPanoProjController extends BaseController {
             bean.setTourEditJson(scene_str);
             bean.setScenes(getScenesByjson(Long.parseLong(pid), scene_str));
             bean.setRadars(getRadarsByjson(Long.parseLong(pid), radars_str));
+
+            setMember(bean);//会员标记
+
             panoProjService.saveXmlData(bean);
 
             bean.setStr(getBasePath());
@@ -399,6 +404,7 @@ public class MemPanoProjController extends BaseController {
         PanoProj bean = new PanoProj();
         bean.setId(id);
         bean.setType(0);
+        setMember(bean);//会员标记
         PanoProj proj = panoProjService.findDataById(bean);
         PanoScene sceneDto = new PanoScene();
         sceneDto.setProjId(proj.getId());

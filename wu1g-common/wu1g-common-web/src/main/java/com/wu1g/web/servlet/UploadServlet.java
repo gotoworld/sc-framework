@@ -281,27 +281,29 @@ public class UploadServlet extends HttpServlet{
                 obj.put("fileName", name);
 
                 try {
+                    String logImg=null;
                     Integer materialType=3;
                     switch (dirName){
-                        case "image": if(ValidatorUtil.notEmpty(projId)) materialType=4; else materialType=0; break;
-                        case "audio": materialType=1; break;
-                        case "media": if(ValidatorUtil.notEmpty(projId)) materialType=5; else materialType=2; break;
+                        case "image": if(ValidatorUtil.notEmpty(projId)) materialType=4; else materialType=0; logImg=obj.get("defaultBigPicUrl")==null?(saveUrl + newFileName):"/img/bigImg.png"; break;
+                        case "audio": materialType=1; logImg="/img/audio.png";break;
+                        case "media": if(ValidatorUtil.notEmpty(projId)) materialType=5; else materialType=2; logImg="/img/video.png";break;
                         default:
                             if("bmp gif jfif jpe jpeg jpg png ico".contains((""+fileExt).toLowerCase())){
-                                if(ValidatorUtil.notEmpty(projId)) materialType=4; else materialType=0;
+                                if(ValidatorUtil.notEmpty(projId)) materialType=4; else materialType=0;logImg=obj.get("defaultBigPicUrl")==null?(saveUrl + newFileName):"/img/bigImg.png";
                             }else if("flac ape wav mp3 aac ogg wma".contains((""+fileExt).toLowerCase())){
-                                materialType=1;
+                                materialType=1;logImg="/img/audio.png";
                             }else if("mp4".contains((""+fileExt).toLowerCase())){
-                                if(ValidatorUtil.notEmpty(projId)) materialType=5; else materialType=2;
+                                if(ValidatorUtil.notEmpty(projId)) materialType=5; else materialType=2;logImg="/img/video.png";
                             }else{
                                 materialType=3;
+                                logImg="/img/file.png";
                             }
                             break;
                     }
                     SysMaterial material=new SysMaterial();
                     material.setType(materialType);//0图片1音乐2视频3文件
                     material.setName(name);//资源名称
-                    material.setLogoUrl(obj.get("defaultBigPicUrl")==null?(saveUrl + newFileName):""+obj.get("defaultBigPicUrl"));
+                    material.setLogoUrl(logImg);
                     material.setMaterialUrl(StrUtil.replaceAll(saveUrl + newFileName,"/n1/","/n4/"));
                     material.setMemo("来源:"+request.getHeader("referer"));
                     OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);

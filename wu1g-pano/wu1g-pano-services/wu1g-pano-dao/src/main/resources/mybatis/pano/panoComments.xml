@@ -84,8 +84,8 @@
 		<if test="city!= null" >,city=#{city}</if>
 		<if test="memo!= null" >,memo=#{memo}</if>
 		where
-        id= #{id}
-    </update>
+		id= #{id}
+	</update>
 
     <!-- 判断是否存在 -->
     <select id="isDataYN" parameterType="com.wu1g.vo.pano.PanoComments" resultType="int">
@@ -105,6 +105,7 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
+		<if test="isMember"> and t3.create_id = #{createId}</if>
         <if test="content!=null and content!=''">
             and t1.content like CONCAT('%',#{content},'%')
         </if>

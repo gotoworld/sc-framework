@@ -42,7 +42,7 @@ public class MemPanoCommentsController extends BaseController {
     private static final String acPrefix = "/m/pano/comments/";
     private static final String init = "member/pano/pano_comments";
     private static final String list = "member/pano/pano_comments_list";
-    private static final String success = "redirect:/m" + acPrefix + "init";
+    private static final String success = "redirect:" + acPrefix + "init";
 
     /**
      * <p>初始化处理。

@@ -26,7 +26,7 @@
         ,t1.detail_info as "detailInfo"
         from sys_category t1
         where
-        t1.id = #{id}
+        t1.id = #{id}<if test="isMember"> and t1.create_id = #{createId}</if>
     </select>
 
     <!-- 新增单条数据 -->
@@ -80,7 +80,7 @@
              <if test="orderNo!=null">,order_no = #{orderNo}</if>
              <if test="keyword!=null">,keyword = #{keyword}</if>
         where
-        id = #{id}
+        id = #{id}<if test="isMember"> and create_id = #{createId}</if>
     </update>
 
     <!--列表通用条件-->
@@ -93,6 +93,7 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
+        <if test="isMember"> and t1.create_id = #{createId}</if>
         <if test="keyword!=null and keyword!=''">
             <![CDATA[ and t1.name like concat('%',#{keyword},'%') ]]>
         </if>
@@ -125,5 +126,22 @@
         from sys_category t1
         where type = #{type}
         <include refid="list_where_sql"/>
+        order by t1.date_created desc
     </select>
+
+
+    <update id="deleteById" parameterType="com.wu1g.vo.sys.SysCategory">
+        update sys_category set version=version+1, date_updated=now(), del_flag=1
+        where id = #{id}<if test="isMember"> and create_id = #{createId}</if>
+    </update>
+
+    <update id="recoveryDataById" parameterType="com.wu1g.vo.sys.SysCategory">
+        update sys_category set  version=version+1, date_updated=now(), del_flag=0
+        where id = #{id}<if test="isMember"> and create_id = #{createId}</if>
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.wu1g.vo.sys.SysCategory">
+        delete from sys_category where
+        where id = #{id}<if test="isMember"> and create_id = #{createId}</if>
+    </delete>
 </mapper>

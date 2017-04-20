@@ -77,8 +77,9 @@
         from pano_spots t1
         inner join pano_scene t2 on t1.scene_id=t2.id
         where t1.proj_id = #{projId}
-        and scene_id=#{sceneId}
-        and htype=#{htype}
+        and t1.scene_id=#{sceneId}
+        and t1.htype=#{htype}
+        <if test="isMember"> and t1.create_id = #{createId}</if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
         </if>
@@ -92,13 +93,13 @@
 		delete
 		from pano_spots
 		where  
-		proj_id=#{projId}
+		proj_id=#{projId} <if test="isMember"> and create_id = #{createId}</if>
 	</delete>
     <!--删除废弃雷达坐标-->
     <delete id="deletePanoSpots" parameterType="com.wu1g.vo.pano.PanoSpots">
 		delete
 		from pano_spots
 		where
-		scene_id not in (select id from pano_scene)
+		scene_id not in (select id from pano_scene) <if test="isMember"> and create_id = #{createId}</if>
 	</delete>
 </mapper>

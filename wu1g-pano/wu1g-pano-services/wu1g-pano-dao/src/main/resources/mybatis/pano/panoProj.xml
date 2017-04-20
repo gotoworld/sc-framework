@@ -40,7 +40,7 @@
         <include refid="Base_Column_List"/>
         from pano_proj t1
         where
-        t1.id = #{id}
+        t1.id = #{id}<if test="isMember"> and t1.create_id = #{createId}</if>
     </select>
 
     <!-- 根据主键物理删除信息 -->
@@ -48,7 +48,7 @@
 		delete
 		from pano_proj
 		where  
-		id = #{id}
+		id = #{id}<if test="isMember"> and create_id = #{createId}</if>
 	</delete>
 
     <!-- 新增单条数据 -->
@@ -141,7 +141,7 @@
 		<if test="orderNo!= null" >,order_no=#{orderNo}</if>
 		<if test="keyword!= null" >,keyword=#{keyword}</if>
 		where
-        id= #{id}
+        id= #{id}<if test="isMember"> and create_id = #{createId}</if>
     </update>
 
     <!-- 判断是否存在 -->
@@ -162,6 +162,7 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
+		<if test="isMember"> and t1.create_id = #{createId}</if>
 		<if test="categoryId!= null and categoryId!=''" > and category_id=#{categoryId}</if>
         <if test="name!=null and name!=''">
             and t1.name like CONCAT('%',#{name},'%')
@@ -202,7 +203,7 @@
 			,date_updated=now()
 			,del_flag=1
 		where  
-			id = #{id}
+			id = #{id}<if test="isMember"> and create_id = #{createId}</if>
 	</update>
 
     <!-- 恢复逻辑删除 -->
@@ -212,7 +213,7 @@
 			,date_updated=now()
 			,del_flag=0
 		where  
-			id = #{id}
+			id = #{id}<if test="isMember"> and create_id = #{createId}</if>
 	</update>
 
     <!-- 数据更新 -->
@@ -222,7 +223,7 @@
 			   ,date_updated=now()
 			   ,tour_edit_json=#{tourEditJson}
 		where 
-			id= #{id}
+			id= #{id}<if test="isMember"> and create_id = #{createId}</if>
 	</update>
     <update id="thumbsUpNum" parameterType="com.wu1g.vo.pano.PanoProj">
 		update pano_proj set thumbs_up_num=thumbs_up_num+1

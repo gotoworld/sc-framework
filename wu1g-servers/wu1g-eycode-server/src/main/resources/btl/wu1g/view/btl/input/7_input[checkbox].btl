@@ -1,5 +1,5 @@
 
-                        <div class="form-group">
+                        <div class="form-group clearfix">
                             <label class="col-sm-3 control-label">${t.columnComment}：</label>
                             <div class="col-sm-9">
                                 <label class="">

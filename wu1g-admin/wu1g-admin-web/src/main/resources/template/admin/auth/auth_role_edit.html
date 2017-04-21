@@ -25,7 +25,7 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-sm-12">
-				<form id="id_form" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/auth/role/save">
+				<form id="id_form" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/auth/role/save">
 					<div class="col-sm-12">
 						<div style="float:right;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
@@ -36,7 +36,7 @@
 					<input type="hidden" name="token" value="${bean.token}" />
                     <input type="hidden" name="newFlag" value="${bean.newFlag}" />
                     <div class="col-sm-6 b-r">
-						<div class="form-group">
+						<div class="form-group clearfix">
 						  <label class="col-md-2 control-label" for="bean-name">角色名称</label>
 						  <div class="col-md-4">
 							  <input type="text" class="form-control" placeholder="请输入角色名称" id="bean-name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
@@ -45,7 +45,7 @@
 						</div>
 						  @[ /**
 							if(shiro.hasPermission("authRole:super")){ /]
-							<div class="form-group">
+							<div class="form-group clearfix">
 								<div class="checkbox" style="margin-left: 10px;">
 									<label >
 										<input class="checkbox" id="bean-isSuper" ${bean.isSuper==1?'checked="checked"':''} name="isSuper" value="1" type="checkbox"> 超级管理员
@@ -56,7 +56,7 @@
 					</div>
 					<div class="col-sm-6">
 						@[ if(shiro.hasPermission("authRole:parm")){ /]
-						<div class="form-group">
+						<div class="form-group clearfix">
 						  <label class="col-md-2 control-label ">
 							功能列表
 						  </label>

@@ -14,9 +14,8 @@
 		<thead>
 			<tr>
 				<th style="width:20px;">#</th>
-				<th>名称</th>
 				<th>编码</th>
-				<th>状态</th>
+				<th>名称</th>
 				<th>创建时间</th>
 				<th>操作</th>
 			</tr>
@@ -27,9 +26,8 @@
 			 /]
 			<tr>
 				<td>${PAGEROW_OBJECT_KEY.startRow+beanLP.index-1}</td>
-				<td>${bean.name}</td>
 				<td>${bean.code}</td>
-				<td>${bean.state}</td>
+				<td>${bean.name}</td>
 				<td>${bean.dateCreated,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td>
 				    @[ if(shiro.hasPermission("sysCategory:edit")){ /]

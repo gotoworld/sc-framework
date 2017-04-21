@@ -53,6 +53,10 @@
 								<div class="col-md-8">
 									<table class="table table-bordered table-striped  table-hover" style="min-width:500px;width: 500px;">
 										<thead  id="event_output">
+										<tr><th class="col-md-2">#</th><th></th></tr>
+										<tr><th class="col-md-2">#</th><th></th></tr>
+										<tr><th class="col-md-2">#</th><th></th></tr>
+										<tr><th class="col-md-2">#</th><th></th></tr>
 										</thead>
 									</table>
 								</div>
@@ -75,7 +79,7 @@
     var treeviewA=$('#disTree').treeview({
         color: "#428bca",
         showTags: false,
-        data: [{"id":'',"text":"=全部="}],
+        data: [ ],
         onNodeSelected: function (event, node) {
             var trStr='';
             trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
@@ -103,7 +107,7 @@
             function (result) {
                 //console.info("获取数据.." + JSON.stringify(result));
                 if (result.code == 0) {
-                    treeviewA.treeview({data: [{"id":'',"text":"=全部="}].concat(result.data)});
+                    treeviewA.treeview({data: result.data});
                 } else {
                     alert(result.message);
                 }

@@ -1,5 +1,5 @@
 
-                        <div class="form-group">
+                        <div class="form-group clearfix">
                             <label class="col-md-3 control-label font-noraml">${t.columnComment}：</label>
                             <div class="col-md-12 input-group">
                                 <select multiple  data-placeholder="选择${t.columnComment}.." id="bean-${t.columnNameFormat}" name="${t.columnNameFormat}" class="chosen-select"  @[ if(t.isNullable!='YES'){ /] required="" aria-required="true" @[ } /] aria-describedby="bean-${t.columnNameFormat}-error" @[ if(t.dataLength!=null){ /] maxlength="${t.dataLength}" @[ } /]  aria-invalid="true">

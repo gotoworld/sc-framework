@@ -29,7 +29,7 @@
 					<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 					<label id="result_message_txt"></label>
 				</div>
-				<form id="org02_01" method="post" class="form-horizontal m-t" target="_parent" accept-charset="UTF-8" action="javascript:submitUserInfo();">
+				<form id="org02_01" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="javascript:submitUserInfo();">
 					<div class="col-sm-12">
 						<div style="float:right;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
@@ -38,7 +38,7 @@
 					<input type="hidden" name="id" value="${bean.id}" />
 					<input type="hidden" name="token" value="${bean.token}" />
 					<div class="col-sm-6 b-r ">
-						<div class="form-group">
+						<div class="form-group clearfix">
 							<label class="col-md-2 control-label" for="bean-name">成员名称</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入成员名称"
@@ -47,7 +47,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group clearfix">
 							<label class="col-md-2 control-label" for="bean-mobile">移动电话</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入移动电话"
@@ -56,7 +56,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group clearfix">
 							<label class="col-md-2 control-label" for="bean-email">邮箱</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入邮箱"
@@ -66,7 +66,7 @@
 						</div>
 					</div>
 					<div class="col-sm-6 ">
-						<div class="form-group">
+						<div class="form-group clearfix">
 							<label class="col-md-2 control-label" for="bean-jobNo">工号</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入工号"
@@ -74,7 +74,7 @@
 									class="help-block"></span>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group clearfix">
 							<label class="col-md-2 control-label" for="bean-tel">固定电话</label>
 							<div class="col-md-8">
 								<input type="text" class="form-control" placeholder="请输入固定电话"

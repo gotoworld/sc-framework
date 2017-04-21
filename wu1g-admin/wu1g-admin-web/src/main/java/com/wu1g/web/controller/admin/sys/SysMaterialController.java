@@ -81,7 +81,7 @@ public class SysMaterialController extends BaseController {
 		log.info("sysMaterialController edit.........");
 		Response result = new Response();
 		try {
-            int pageNum=getPageSize(dto);
+            int pageNum= getPageNum(dto);
             if (id!=null) {
                 if(dto==null)dto=new SysMaterial();
                 dto.setId(id);

@@ -1,7 +1,6 @@
 package com.wu1g.web.controller.member.pano;
 
 import com.github.pagehelper.PageInfo;
-import com.wu1g.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -82,7 +81,7 @@ public class MemPanoMaterialController extends BaseController {
 		log.info("memMaterialController edit.........");
 		Response result = new Response();
 		try {
-            int pageNum=getPageSize(dto);
+            int pageNum= getPageNum(dto);
             if (id!=null) {
                 if(dto==null)dto=new SysMaterial();
                 dto.setId(id);

@@ -77,7 +77,7 @@ public class OrgDeptController extends BaseController {
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "edit/{id}")
     public String edit(OrgDept bean, @PathVariable("id") Long id) {
         log.info("OrgDepartmentController edit.........");
-        int pageNum=getPageSize(bean);
+        int pageNum= getPageNum(bean);
         if (0!=id) {
             OrgDept bean1 = new OrgDept();
             bean1.setId(id);

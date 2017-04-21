@@ -99,7 +99,7 @@ public class OrgUserController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/{id}")
 	public String edit(OrgUser bean, @PathVariable("id") Long id) {
 		log.info("OrgUserController edit.........");
-		int pageNum=getPageSize(bean);
+		int pageNum= getPageNum(bean);
 		if(0!=id){
 			OrgUser bean1=new OrgUser();
 			bean1.setId(id);
@@ -119,7 +119,7 @@ public class OrgUserController extends BaseController {
 		}
 		bean.setPageNum(pageNum);
 		request.setAttribute( "bean", bean );
-		if(!"admin".equals(bean.getAccid())){
+		if(!"1".equals(getAuth().getSession().getAttribute("isSuper"))){
 			//所有角色集合
 			request.setAttribute("roleBeans", authRoleService.findDataIsList(null));
 		}

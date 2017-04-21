@@ -102,7 +102,7 @@ public class SysPanoCategoryController extends BaseController {
 		log.info("SysCategoryController edit.........");
 		Response result = new Response();
 		try {
-            int pageNum=getPageSize(dto);
+            int pageNum= getPageNum(dto);
             if (id!=null) {
                 if(dto==null)dto=new SysCategory();
                 dto.setId(id);

@@ -95,7 +95,7 @@ public class AuthRoleController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "edit/{id}")
     public String edit(AuthRole bean, @PathVariable("id") Long id) {
         log.info("AuthRoleController edit.........");
-        int pageNum=getPageSize(bean);
+        int pageNum= getPageNum(bean);
         if (0 != id) {
             AuthRole bean1 = new AuthRole();
             bean1.setId(id);//角色ID

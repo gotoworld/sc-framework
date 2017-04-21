@@ -61,13 +61,10 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 		log.info("${tcfg.tableNameFormat!}Controller page.........");
         Response result = new Response();
 		try {
-            if(dto==null){
-                dto = new ${tcfg.tableNameFormat!}();
-            }
+            if(dto==null) dto = new ${tcfg.tableNameFormat!}();
             PageInfo<?> page=new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
             request.setAttribute( "beans", page.getList() );
-            //分页对象
-            request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);
+            request.setAttribute(CommonConstant.PAGEROW_OBJECT_KEY,page);//分页对象
 		} catch (Exception e) {
            result = Response.error(e.getMessage());
         }
@@ -86,7 +83,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 		log.info("${tcfg.tableNameFormat!}Controller edit.........");
 		Response result = new Response();
 		try {
-            int pageNum=getPageSize(dto);
+            int pageNum=getPageNum(dto);
             if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {
                 if(dto==null)dto=new ${tcfg.tableNameFormat!}();
                 @[ for(t in pks){ /]
@@ -145,30 +142,27 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	@ALogOperation(type="修改",desc="${tcfg.tableComment}")
 	public String save(@Validated ${tcfg.tableNameFormat!} dto,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
 		log.info("${tcfg.tableNameFormat!}Controller save.........");
+		if(dto==null) return Response.error("信息保存异常!");
 		Response result = new Response();
-		if(dto!=null){
-			try {
-				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
-					throw new RuntimeException("请不要重复提交!");
-				}
-				if (bindingResult.hasErrors()) {
-					String errorMsg = "";
-					List<ObjectError> errorList = bindingResult.getAllErrors();
-					for (ObjectError error : errorList) {
-						errorMsg += (error.getDefaultMessage()) + ";";
-					}
-					result = Response.error(errorMsg);
-				}else{
-					result.message=${tableNameL}Service.saveOrUpdateData(dto);
-					result.data = dto.getId();
-					request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
-				}
-			} catch (Exception e) {
-				result = Response.error(e.getMessage());
-			}
-		} else {
-			result = Response.error("信息保存异常!");
-		}
+        try {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            }else{
+                result.message=${tableNameL}Service.saveOrUpdateData(dto);
+                result.data = dto.getId();
+                request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
 		modelMap.addFlashAttribute("result", result);
 		return success;
 	}

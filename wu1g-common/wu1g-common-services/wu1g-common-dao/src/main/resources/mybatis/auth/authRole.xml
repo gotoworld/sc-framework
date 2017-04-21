@@ -41,7 +41,7 @@
             ,date_updated
         ) values (
              #{name}
-            ,#{isSuper}
+            ,0
             ,#{memo}
             ,0
             ,0
@@ -55,7 +55,7 @@
     <update id="update" parameterType="com.wu1g.vo.auth.AuthRole">
         update auth_role set version=version+1,date_updated=now()
         <if test="name!= null" >,name=#{name}</if>
-        <if test="isSuper!= null" >,is_super=#{isSuper}</if>
+        <!--<if test="isSuper!= null" >,is_super=#{isSuper}</if>-->
         <if test="memo!= null" >,memo=#{memo}</if>
         <if test="orderNo!= null" >,order_no=#{orderNo}</if>
         <if test="keyword!= null" >,keyword=#{keyword}</if>

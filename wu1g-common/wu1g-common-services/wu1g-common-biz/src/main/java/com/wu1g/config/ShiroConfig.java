@@ -46,7 +46,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import java.util.LinkedHashMap;
+import javax.servlet.Filter;
 import java.util.Map;
 
 @Configuration
@@ -166,16 +166,18 @@ public class ShiroConfig {
     }
 
 //    @Bean(name = "adminUser")
-//    public org.apache.shiro.web.filter.authc.UserFilter getAdminUser() {
-//        UserFilter filter = new UserFilter();
+//    public org.apache.shiro.web.filter.authc.FormAuthenticationFilter getAdminUser() {
+//        MyShiroFilter filter = new MyShiroFilter();
 //        filter.setLoginUrl("/h/init");
+//        filter.setSuccessUrl("/h/index");
 //        return filter;
 //    }
-//
+
 //    @Bean(name = "membersUser")
-//    public org.apache.shiro.web.filter.authc.UserFilter getMembersUser() {
-//        UserFilter filter = new MemberUserFilter();
+//    public org.apache.shiro.web.filter.authc.FormAuthenticationFilter getMembersUser() {
+//        MyShiroFilter filter = new MyShiroFilter();
 //        filter.setLoginUrl("/m/init");
+//        filter.setSuccessUrl("/m/index");
 //        return filter;
 //    }
 
@@ -183,32 +185,27 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean getShiroFilterFactoryBean() {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(getSecurityManager());
-        bean.setLoginUrl("/");
+        bean.setLoginUrl("/h/init");
         bean.setSuccessUrl("/h/index");
         bean.setUnauthorizedUrl("/error/noauth");
 
-//        Map<String, Filter> filterMap = new HashMap<>();
+        Map<String, Filter> filterMap =bean.getFilters();
 //        filterMap.put("adminUser", getAdminUser());
 //        filterMap.put("membersUser", getMembersUser());
 //        bean.setFilters(filterMap);
 
-        Map filterChainDefinitionMap = new LinkedHashMap<>();
-//        filterChainDefinitionMap.put("/css/**", "anon");
-//        filterChainDefinitionMap.put("/js/**", "anon");
-//        filterChainDefinitionMap.put("/img/**", "anon");
-//        filterChainDefinitionMap.put("/plugins/**", "anon");
-//        filterChainDefinitionMap.put("/error/noauth", "anon");
+        Map filterChainDefinitionMap = bean.getFilterChainDefinitionMap();
 
         filterChainDefinitionMap.put("/h/init", "anon");
         filterChainDefinitionMap.put("/h/logout", "logout");
         filterChainDefinitionMap.put("/h/login", "anon");
-        filterChainDefinitionMap.put("/h/**", "authc");
+        filterChainDefinitionMap.put("/h/**", "authc");//,roles["admin"]
 
         filterChainDefinitionMap.put("/m/init", "anon");
         filterChainDefinitionMap.put("/m/logout", "logout");
         filterChainDefinitionMap.put("/m/login", "anon");
-        filterChainDefinitionMap.put("/m/**", "authc");
-        bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        filterChainDefinitionMap.put("/m/**", "authc");//,roles["member"]
+//        bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
     }
 }

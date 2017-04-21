@@ -4,6 +4,7 @@ package com.wu1g.web.controller;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IpUtils;
 import com.wu1g.framework.util.ReflectUtil;
+import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.vo.org.OrgUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -53,8 +54,6 @@ public class BaseController {
 
     /**
      * 获取用户IP
-     *
-     * @return
      */
     public String getIpAddr() {
         return IpUtils.getIpAddr(request);
@@ -73,8 +72,6 @@ public class BaseController {
     }
     /**
      * 权限验证框架取得
-     *
-     * @return 权限验证框架
      */
     public Subject getAuth() {
         return SecurityUtils.getSubject();
@@ -87,16 +84,14 @@ public class BaseController {
     public OrgUser getMember(){
         return (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
     }
-
-    public Integer getPageSize(Object obj){
-        String pageNum = (String) ReflectUtil.getValueByFieldName(obj,"pageNum");
-        return pageNum!=null?Integer.parseInt(pageNum):1;
-    }
-
     public void setMember(Object obj){
         ReflectUtil.setValueByFieldName(obj,"isMember",true);
         ReflectUtil.setValueByFieldName(obj,"createId",getMember().getId());
     }
 
+    public Integer getPageNum(Object obj){
+        Object pageNum = ReflectUtil.getValueByFieldName(obj,"pageNum");
+        return ValidatorUtil.notEmpty(""+pageNum)?Integer.parseInt(""+pageNum):1;
+    }
 
 }

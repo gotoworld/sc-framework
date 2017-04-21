@@ -26,21 +26,20 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
         String msg = "seccuss";
-        if (dto != null) {
-            try {
-                //判断数据是否存在
-                if (dto.getId() != null && ${tableNameL}${scfg._dao_suffix!}.isDataYN(dto) != 0) {
-                    //数据存在
-                    @[ if ("1"==scfg._update){ /]${tableNameL}${scfg._dao_suffix!}.update(dto);@[ } /]
-                } else {
-                    //新增
-                     @[ if ("1"==scfg._insert){ /]${tableNameL}${scfg._dao_suffix!}.insert(dto);@[ } /]
-                }
-            } catch (Exception e) {
-                log.error("信息保存异常!", e);
-                throw new Exception("信息保存异常!");
+        try {
+            //判断数据是否存在
+            if (dto.getId() != null && ${tableNameL}${scfg._dao_suffix!}.isDataYN(dto) != 0) {
+                //数据存在
+                @[ if ("1"==scfg._update){ /]${tableNameL}${scfg._dao_suffix!}.update(dto);@[ } /]
+            } else {
+                //新增
+                 @[ if ("1"==scfg._insert){ /]${tableNameL}${scfg._dao_suffix!}.insert(dto);@[ } /]
             }
+        } catch (Exception e) {
+            log.error("信息保存异常!", e);
+            throw new RuntimeException("信息保存异常!");
         }
         return msg;
     }
@@ -49,16 +48,15 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @[ if ("1"==scfg._del) { /]
     @Override
     public String deleteData(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
         String msg = "seccuss";
-        if (dto != null) {
-            try {
-                if(${tableNameL}${scfg._dao_suffix!}.deleteByPrimaryKey(dto)==0){
-					throw new RuntimeException("数据不存在!");
-                }
-            } catch (Exception e) {
-                log.error("物理删除异常!", e);
-                throw new Exception(e.getMessage());
+        try {
+            if(${tableNameL}${scfg._dao_suffix!}.deleteByPrimaryKey(dto)==0){
+                throw new RuntimeException("数据不存在!");
             }
+        } catch (Exception e) {
+            log.error("物理删除异常!", e);
+            throw new RuntimeException(e.getMessage());
         }
         return msg;
     }
@@ -68,16 +66,15 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
         String msg = "seccuss";
-        if (dto != null) {
-            try {
-                if(${tableNameL}${scfg._dao_suffix!}.deleteById(dto)==0){
-					throw new RuntimeException("数据不存在!");
-                }
-            } catch (Exception e) {
-                log.error("逻辑删除异常!", e);
-                throw new Exception(e.getMessage());
+        try {
+            if(${tableNameL}${scfg._dao_suffix!}.deleteById(dto)==0){
+                throw new RuntimeException("数据不存在!");
             }
+        } catch (Exception e) {
+            log.error("逻辑删除异常!", e);
+            throw new RuntimeException(e.getMessage());
         }
         return msg;
     }
@@ -86,13 +83,14 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @[ if ("1"==scfg._page) { /]
     @Override
     public List<${tcfg.tableNameFormat!}> findDataIsPage(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
         List<${tcfg.tableNameFormat!}> dtos = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
             dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}${scfg._dao_suffix!}.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
         return dtos;
     }
@@ -101,12 +99,13 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @[ if ("1"==scfg._list) { /]
     @Override
     public List<${tcfg.tableNameFormat!}> findDataIsList(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
         List<${tcfg.tableNameFormat!}> dtos = null;
         try {
             dtos = (List<${tcfg.tableNameFormat!}>) ${tableNameL}${scfg._dao_suffix!}.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
         return dtos;
     }
@@ -116,12 +115,13 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @Override
     @RfAccount2Bean
     public ${tcfg.tableNameFormat!} findDataById(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
         ${tcfg.tableNameFormat!} dto1 = null;
         try {
             dto1 = (${tcfg.tableNameFormat!}) ${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
         return dto1;
     }
@@ -130,16 +130,15 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
      @[ if ("1"==scfg._recovery && null!=scfg._col_del) { /]
     @Override
     public String recoveryDataById(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
         String msg = "seccuss";
-        if (dto != null) {
-            try {
-                if(${tableNameL}${scfg._dao_suffix!}.recoveryDataById(dto)==0){
-					throw new RuntimeException("数据不存在!");
-                }
-            } catch (Exception e) {
-                log.error("数据恢复异常!", e);
-                throw new Exception(e.getMessage());
+        try {
+            if(${tableNameL}${scfg._dao_suffix!}.recoveryDataById(dto)==0){
+                throw new RuntimeException("数据不存在!");
             }
+        } catch (Exception e) {
+            log.error("数据恢复异常!", e);
+            throw new RuntimeException(e.getMessage());
         }
         return msg;
     }

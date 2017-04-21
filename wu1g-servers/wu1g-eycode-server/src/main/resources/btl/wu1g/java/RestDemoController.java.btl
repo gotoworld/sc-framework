@@ -36,9 +36,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     public Response page(@ModelAttribute  ${tcfg.tableNameFormat!} dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("${tcfg.tableNameFormat!}Controller page.........");
         Response result = new Response();
-        if (dto == null) {
-            dto = new ${tcfg.tableNameFormat!}();
-        }
+        if (dto == null)dto = new ${tcfg.tableNameFormat!}();
         try {
             dto.setPageNum(pageNum);
             dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);
@@ -121,29 +119,26 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!} dto, BindingResult bindingResult) {
         log.info("${tcfg.tableNameFormat!}Controller save.........");
+        if (dto == null) return Response.error("参数获取异常!");
         Response result = new Response();
-        if (dto != null) {
-            try {
-                if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
-                    throw new RuntimeException("请不要重复提交!");
-                }
-                if (bindingResult.hasErrors()) {
-                    String errorMsg = "";
-                    List<ObjectError> errorList = bindingResult.getAllErrors();
-                    for (ObjectError error : errorList) {
-                        errorMsg += (error.getDefaultMessage()) + ";";
-                    }
-                    result = Response.error(errorMsg);
-                } else {
-                    result.message = ${tableNameL}Service.saveOrUpdateData(dto);
-                    result.data = dto.getId();
-                    request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
-                }
-            } catch (Exception e) {
-                result = Response.error(e.getMessage());
+        try {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
+                throw new RuntimeException("请不要重复提交!");
             }
-        } else {
-            result = Response.error("参数获取异常!");
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result.message = ${tableNameL}Service.saveOrUpdateData(dto);
+                result.data = dto.getId();
+                request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
         }
         return result;
     }

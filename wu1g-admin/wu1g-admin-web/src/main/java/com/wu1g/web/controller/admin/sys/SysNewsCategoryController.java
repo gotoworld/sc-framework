@@ -101,7 +101,7 @@ public class SysNewsCategoryController extends BaseController {
 		log.info("SysNewsCategoryController edit.........");
 		Response result = new Response();
 		try {
-            int pageNum=getPageSize(dto);
+            int pageNum= getPageNum(dto);
             if (id!=null) {
                 if(dto==null)dto=new SysCategory();
                 dto.setId(id);

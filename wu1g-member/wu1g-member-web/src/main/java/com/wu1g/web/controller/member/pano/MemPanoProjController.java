@@ -111,7 +111,7 @@ public class MemPanoProjController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "edit/{id}")
     public String edit(PanoProj bean, @PathVariable("id") Long id) {
         log.info("MemPanoProjController edit.........");
-        int pageNum = getPageSize(bean);
+        int pageNum = getPageNum(bean);
         if (id != 0) {
             if (bean == null) {
                 bean = new PanoProj();

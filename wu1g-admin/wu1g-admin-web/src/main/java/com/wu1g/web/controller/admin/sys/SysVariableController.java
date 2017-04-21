@@ -105,7 +105,7 @@ public class SysVariableController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/{id}")
 	public String edit(SysVariable bean,@PathVariable("id") Long id) {
 		log.info("VariableController edit.........");
-		int pageNum=getPageSize(bean);
+		int pageNum= getPageNum(bean);
 		if(0!=id){
 			SysVariable bean1=new SysVariable();
 			bean1.setId(id);

@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,7 +82,7 @@ public class SysPanoPluginsController extends BaseController {
 		log.info("SysPanoPluginsController edit.........");
 		Response result = new Response();
 		try {
-            int pageNum=getPageSize(dto);
+            int pageNum= getPageNum(dto);
             if (id!=null) {
                 if(dto==null)dto=new SysPanoPlugins();
                 dto.setId(id);

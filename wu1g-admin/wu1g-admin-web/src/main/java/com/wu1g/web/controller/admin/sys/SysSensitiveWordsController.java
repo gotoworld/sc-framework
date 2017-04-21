@@ -82,7 +82,7 @@ public class SysSensitiveWordsController extends BaseController {
         log.info("SysSensitiveWordsController edit.........");
         Response result = new Response();
         try {
-            int pageNum = getPageSize(dto);
+            int pageNum = getPageNum(dto);
             if (id != null) {
                 if (dto == null) dto = new SysSensitiveWords();
                 dto.setId(id);

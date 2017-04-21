@@ -77,9 +77,6 @@ public class PanoProjController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "init")
     public String init() {
         log.info("PanoProjController init.........");
-//        SysCategory dto = new SysCategory();
-//        dto.setType(2);
-//        request.setAttribute("nodes", sysCategoryService.findDataTree(dto));
         return init;
     }
 
@@ -110,7 +107,7 @@ public class PanoProjController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "edit/{id}")
     public String edit(PanoProj bean, @PathVariable("id") Long id) {
         log.info("PanoProjController edit.........");
-        int pageNum = getPageSize(bean);
+        int pageNum = getPageNum(bean);
         if (id != 0) {
             if (bean == null) {
                 bean = new PanoProj();

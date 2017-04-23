@@ -59,25 +59,9 @@
             <artifactId>spring-cloud-starter-feign</artifactId>
         </dependency>
         <!-- spring-cloud end -->
-
-        <dependency>
-            <groupId>com.wu1g.framework</groupId>
-            <artifactId>wu1g-framework-web</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.wu1g.common</groupId>
-            <artifactId>wu1g-common-web</artifactId>
-            <version>1.0</version>
-        </dependency>
         <dependency>
             <groupId>com.wu1g.admin</groupId>
             <artifactId>wu1g-admin-web</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.wu1g.pano</groupId>
-            <artifactId>wu1g-pano-web</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

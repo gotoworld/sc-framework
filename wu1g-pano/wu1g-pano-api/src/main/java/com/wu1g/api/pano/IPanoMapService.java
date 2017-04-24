@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * <p>全景_导览图 业务处理接口类。
  */
-@FeignClient(name = "${spring.application.name}")
+@FeignClient(name = "wu1g-service-server")
 public interface IPanoMapService {
     /**
      * <p>信息列表。

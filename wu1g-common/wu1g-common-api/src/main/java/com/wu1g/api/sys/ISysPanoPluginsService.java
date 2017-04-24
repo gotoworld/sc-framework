@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * <p>系统_全景插件 业务处理接口类。
  */
-@FeignClient(name = "${spring.application.name}")
+@FeignClient(name = "wu1g-service-server")
 public interface ISysPanoPluginsService {
     /**
      * <p>信息编辑。

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * <p>全景_项目 业务处理接口类。
  */
-@FeignClient(name = "${spring.application.name}")
+@FeignClient(name = "wu1g-service-server")
 public interface IPanoProjService {
 
     /**

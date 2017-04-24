@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * <p>广告管理 业务处理接口类。
  */
-@FeignClient(name = "${spring.application.name}")
+@FeignClient(name = "wu1g-service-server")
 public interface ISysAdvertiseService {
     /**
      * <p>信息编辑。

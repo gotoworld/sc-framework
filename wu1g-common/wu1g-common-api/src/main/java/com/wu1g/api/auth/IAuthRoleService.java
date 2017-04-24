@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * <p>权限_角色信息   业务处理接口类。
  */
-@FeignClient(name = "${spring.application.name}")//, fallback = TestServiceHystrix.class)
+@FeignClient(name = "wu1g-service-server")//, fallback = TestServiceHystrix.class)
 public interface IAuthRoleService {
 
     /**

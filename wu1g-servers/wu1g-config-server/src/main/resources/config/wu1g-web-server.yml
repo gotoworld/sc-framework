@@ -5,7 +5,7 @@
 # Spring properties
 spring:
   application:
-    name: wu1g-server-web
+    name: wu1g-web-server
   profiles:
     active: dev
   http:

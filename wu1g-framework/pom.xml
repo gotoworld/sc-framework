@@ -24,6 +24,8 @@
         <druid.version>1.0.25</druid.version>
         <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
         <shiro.version>1.4.0-RC2</shiro.version>
+
+        <spring.cloud.version>Brixton.SR7</spring.cloud.version>
     </properties>
 
     <modules>

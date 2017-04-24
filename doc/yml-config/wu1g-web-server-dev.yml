@@ -15,7 +15,7 @@ spring:
     auto: true
     proxy-target-class: true
   application:
-    name: wu1g-server-web
+    name: wu1g-web-server
   resources:
     static-locations: classpath:/static/,file:${wu1g.common.fileServer.rootFolder}
   mvc:

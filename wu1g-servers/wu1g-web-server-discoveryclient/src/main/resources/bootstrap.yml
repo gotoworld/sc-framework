@@ -1,6 +1,6 @@
 spring:
   application:
-    name: wu1g-server-web
+    name: wu1g-web-server
   cloud:
     config:
       uri: http://localhost:28889

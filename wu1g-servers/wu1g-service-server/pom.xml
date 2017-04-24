@@ -18,7 +18,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <spring.cloud.version>Camden.SR2</spring.cloud.version>
         <start-class>com.wu1g.ServiceServer</start-class>
     </properties>
 

@@ -16,7 +16,6 @@
     <modules>
         <module>wu1g-pano-dao</module>
         <module>wu1g-pano-biz</module>
-        <module>wu1g-pano-server</module>
     </modules>
 
     <dependencies>

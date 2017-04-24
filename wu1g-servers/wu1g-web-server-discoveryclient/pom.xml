@@ -18,7 +18,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <spring.cloud.version>Brixton.SR7</spring.cloud.version>
         <start-class>com.wu1g.Application</start-class>
         <!--<docker.image.prefix>wu1g</docker.image.prefix>-->
     </properties>

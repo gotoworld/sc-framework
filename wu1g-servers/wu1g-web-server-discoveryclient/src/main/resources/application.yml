@@ -24,6 +24,6 @@ server:
   port: 6060
   context-path: /
 logging:
-#  file: logs/wu1g-server-web.log
+#  file: logs/wu1g-web-server.log
   level:
     ROOT: INFO

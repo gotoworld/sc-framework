@@ -16,7 +16,6 @@
     <modules>
         <module>wu1g-common-dao</module>
         <module>wu1g-common-biz</module>
-        <module>wu1g-common-server</module>
     </modules>
 
     <dependencies>

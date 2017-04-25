@@ -14,13 +14,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 
-//@EnableEurekaClient
 //@EnableHystrix
-//@EnableAutoConfiguration
+//@EnableCircuitBreaker
+
+@EnableAutoConfiguration
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableCircuitBreaker
-@EnableFeignClients
 public class ServiceServer {
     @Bean
     @LoadBalanced

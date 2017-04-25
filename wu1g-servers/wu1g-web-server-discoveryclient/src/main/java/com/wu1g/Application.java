@@ -13,12 +13,12 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 
 
-//@EnableEurekaClient
-@EnableFeignClients
-@EnableHystrix
-@EnableCircuitBreaker
+//@EnableHystrix
+//@EnableCircuitBreaker
+
 @EnableAutoConfiguration
 @SpringBootApplication
+@EnableFeignClients
 @EnableDiscoveryClient
 public class Application extends SpringBootServletInitializer {
     @Override

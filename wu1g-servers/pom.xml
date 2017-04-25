@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.wu1g.servers</groupId>
     <artifactId>wu1g-servers</artifactId>
     <packaging>pom</packaging>
@@ -12,8 +13,8 @@
         <module>wu1g-config-server</module>
         <module>wu1g-register-server</module>
         <module>wu1g-proxy-server</module>
-        <module>wu1g-service-server</module>
         <module>wu1g-web-server</module>
+        <module>wu1g-service-server-discoveryclient</module>
         <module>wu1g-web-server-discoveryclient</module>
         <module>wu1g-eycode-server</module>
     </modules>

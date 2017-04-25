@@ -21,22 +21,22 @@ public class SwaggerConfig {
                 .forCodeGeneration(true)
                 .pathMapping("/")// api测试请求地址
                 .select()
-                .paths(PathSelectors.regex("/boss/.*"))// 过滤的接口
-                .build()
-                .apiInfo(testApiInfo());
+                .paths(PathSelectors.regex("/api/.*"))// 过滤的接口
+                .build();
+                //.apiInfo(testApiInfo());
     }
 
-    private ApiInfo testApiInfo() {
-        Contact contact = new Contact("wu1g@163.com", "http://springfox.github.io/springfox/", "wu1g@163.com");
-        ApiInfo apiInfo = new ApiInfo("标题", // 标题
-                "描述", // 描述
-                "0.1", // 版本
-                "Url的服务条款", //Url的服务条款
-                contact, // 作者
-                "授权", // 授权信息
-                ""// 授权URL
-        );
-        return apiInfo;
-    }
+//    private ApiInfo testApiInfo() {
+//        Contact contact = new Contact("wu1g@163.com", "http://springfox.github.io/springfox/", "wu1g@163.com");
+//        ApiInfo apiInfo = new ApiInfo("标题", // 标题
+//                "描述", // 描述
+//                "0.1", // 版本
+//                "Url的服务条款", //Url的服务条款
+//                contact, // 作者
+//                "授权", // 授权信息
+//                ""// 授权URL
+//        );
+//        return apiInfo;
+//    }
 
 }

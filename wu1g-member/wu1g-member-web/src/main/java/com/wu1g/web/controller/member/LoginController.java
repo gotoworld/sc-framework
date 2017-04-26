@@ -12,19 +12,16 @@ package com.wu1g.web.controller.member;
 
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.shiro.MyShiroUserToken;
+import com.wu1g.vo.shiro.MyShiroUserToken;
 import com.wu1g.vo.org.OrgUser;
 import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.Cookie;
 
 /**
  * <p>登录登出action

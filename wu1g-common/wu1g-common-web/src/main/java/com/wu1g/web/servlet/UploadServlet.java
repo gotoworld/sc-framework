@@ -2,7 +2,7 @@ package com.wu1g.web.servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.wu1g.dao.sys.ISysMaterialDao;
+import com.wu1g.api.sys.ISysMaterialService;
 import com.wu1g.framework.config.AppConfig;
 import com.wu1g.framework.util.*;
 import com.wu1g.vo.org.OrgUser;
@@ -37,7 +37,7 @@ import java.util.*;
 public class UploadServlet extends HttpServlet{
     private final long serialVersionUID = 1L;
     @Autowired
-    private ISysMaterialDao materialDao;
+    private ISysMaterialService materialService;
     // 线程池 默认大小
 //    private static ExecutorService threadPool = null;
     private static String rootFolderUpload = null;
@@ -310,7 +310,7 @@ public class UploadServlet extends HttpServlet{
                     if(user!=null){
                         material.setCreateId(user.getId());
                     }
-                    materialDao.insert(material);
+                    materialService.insert(material);
                 } catch (Throwable e) {
                    log.error("素材记录异常!",e);
                 }

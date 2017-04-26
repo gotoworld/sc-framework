@@ -24,6 +24,21 @@ public class SysMaterialService extends BaseService implements ISysMaterialServi
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public String insert(SysMaterial dto) throws Exception {
+        String msg = "seccuss";
+        if (dto != null) {
+            try {
+                //新增
+                 sysMaterialDao.insert(dto);
+            } catch (Exception e) {
+                log.error("信息保存异常!", e);
+                throw new Exception("信息保存异常!");
+            }
+        }
+        return msg;
+    }
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysMaterial dto) throws Exception {
         String msg = "seccuss";
         if (dto != null) {

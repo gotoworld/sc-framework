@@ -1,4 +1,4 @@
-package com.wu1g.shiro;
+package com.wu1g.vo.shiro;
 
 import com.wu1g.framework.util.CommonConstant;
 import lombok.Data;

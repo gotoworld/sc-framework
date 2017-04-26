@@ -14,6 +14,11 @@ public interface ISysMaterialService {
     /**
      * <p>信息编辑。
      */
+    @RequestMapping(value = "/insert")
+    public String insert(SysMaterial dto) throws Exception;
+    /**
+     * <p>信息编辑。
+     */
     @RequestMapping(value = "/saveOrUpdateData")
     public String saveOrUpdateData(SysMaterial dto) throws Exception;
 

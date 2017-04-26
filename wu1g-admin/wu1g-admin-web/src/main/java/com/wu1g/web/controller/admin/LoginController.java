@@ -12,7 +12,7 @@ package com.wu1g.web.controller.admin;
 
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
-import com.wu1g.shiro.MyShiroUserToken;
+import com.wu1g.vo.shiro.MyShiroUserToken;
 import com.wu1g.vo.org.OrgUser;
 import com.wu1g.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.Cookie;
 import java.util.Locale;
 
 /**

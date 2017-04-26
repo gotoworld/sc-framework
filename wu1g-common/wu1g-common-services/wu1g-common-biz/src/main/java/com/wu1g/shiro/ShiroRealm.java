@@ -5,6 +5,7 @@ import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.vo.auth.AuthPerm;
 import com.wu1g.vo.auth.AuthRole;
 import com.wu1g.vo.org.OrgUser;
+import com.wu1g.vo.shiro.MyShiroUserToken;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

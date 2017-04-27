@@ -11,10 +11,12 @@
 
     <modules>
         <module>wu1g-config-server</module>
-        <module>wu1g-register-server</module>
-        <module>wu1g-proxy-server</module>
+        <module>wu1g-eureka-server</module>
+        <module>wu1g-gateway-server</module>
+        <module>wu1g-turbine-server</module>
+        <module>wu1g-graphite-server</module>
         <module>wu1g-web-server</module>
-        <module>wu1g-service-server-discoveryclient</module>
+        <module>wu1g-service-provide-server</module>
         <module>wu1g-web-server-discoveryclient</module>
         <module>wu1g-eycode-server</module>
     </modules>

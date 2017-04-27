@@ -1,11 +1,11 @@
 spring:
   application:
-    name: wu1g-web-server
+    name: wu1g-service-server
   cloud:
     config:
       uri: http://localhost:8888
       profile: dev
-#      label: trunk #分支版本
+#      label: trunk
 eureka:
   instance:
     preferIpAddress: true

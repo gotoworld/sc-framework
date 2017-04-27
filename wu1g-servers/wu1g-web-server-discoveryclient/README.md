@@ -1,5 +1,5 @@
 #启动顺序
-1.wu1g-register-server eureka注册中心
+1.wu1g-eureka-server eureka注册中心
 
 2.wu1g-config-server 配置文件管理
 

@@ -11,7 +11,7 @@
         <relativePath></relativePath>
     </parent>
 
-    <artifactId>wu1g-service-server</artifactId>
+    <artifactId>wu1g-service-provide-server</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 

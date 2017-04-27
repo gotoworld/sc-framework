@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.wu1g.servers</groupId>
-    <artifactId>wu1g-proxy-server</artifactId>
+    <artifactId>wu1g-gateway-server</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 

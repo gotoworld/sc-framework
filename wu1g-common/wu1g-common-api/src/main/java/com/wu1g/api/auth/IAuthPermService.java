@@ -10,61 +10,62 @@ import java.util.Map;
 /**
  * <p>权限_权限信息   业务处理接口类。
  */
-@FeignClient(name = "wu1g-service-server")//, fallback = TestServiceHystrix.class)
+@FeignClient(name = "${feign.name}")//, fallback = TestServiceHystrix.class)
 public interface IAuthPermService {
+    String actPrefix = "/api/IAuthPermService";
 
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(value = "/saveOrUpdateData")
+    @RequestMapping(value = actPrefix + "/saveOrUpdateData")
     public String saveOrUpdateData(AuthPerm bean) throws Exception;
 
     /**
      * <p>物理删除。
      */
-    @RequestMapping(value = "/deleteData")
+    @RequestMapping(value = actPrefix + "/deleteData")
     public String deleteData(AuthPerm bean) throws Exception;
 
     /**
      * <p>恢复逻辑删除的数据。
      */
-    @RequestMapping(value = "/recoveryDataById")
+    @RequestMapping(value = actPrefix + "/recoveryDataById")
     public String recoveryDataById(AuthPerm bean) throws Exception;
 
     /**
      * <p>逻辑删除。
      */
-    @RequestMapping(value = "/deleteDataById")
+    @RequestMapping(value = actPrefix + "/deleteDataById")
     public String deleteDataById(AuthPerm bean) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    @RequestMapping(value = "/findDataIsPage")
+    @RequestMapping(value = actPrefix + "/findDataIsPage")
     public List<AuthPerm> findDataIsPage(AuthPerm bean);
 
     /**
      * <p>信息列表。
      */
-    @RequestMapping(value = "/findDataIsList")
+    @RequestMapping(value = actPrefix + "/findDataIsList")
     public List<AuthPerm> findDataIsList(AuthPerm bean);
 
     /**
      * <p>信息详情。
      */
-    @RequestMapping(value = "/findDataById")
+    @RequestMapping(value = actPrefix + "/findDataById")
     public AuthPerm findDataById(AuthPerm bean);
 
     /**
      * <p>信息树。
      */
-    @RequestMapping(value = "/findDataTree")
+    @RequestMapping(value = actPrefix + "/findDataTree")
     public List<AuthPerm> findDataTree(AuthPerm bean);
 
     /**
      * <p>根据角色id获取对应的权限信息列表。
      */
-    @RequestMapping(value = "/findPermDataIsListByRoleId")
+    @RequestMapping(value = actPrefix + "/findPermDataIsListByRoleId")
     public List<AuthPerm> findPermDataIsListByRoleId(Map dto);
 
 }

@@ -9,12 +9,13 @@ import java.util.List;
 /**
  * <p>全景_场景 业务处理接口类。
  */
-@FeignClient(name = "wu1g-service-server")
+@FeignClient(name = "${feign.name}")//, fallback = TestServiceHystrix.class)
 public interface IPanoSceneService {
+    String actPrefix = "/api/IPanoSceneService";
 
     /**
      * <p>信息列表。
      */
-    @RequestMapping(value = "/findDataIsList")
+    @RequestMapping(value = actPrefix + "/findDataIsList")
     public List<PanoScene> findDataIsList(PanoScene bean);
 }

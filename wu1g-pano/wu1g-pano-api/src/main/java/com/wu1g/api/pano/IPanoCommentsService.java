@@ -9,30 +9,31 @@ import java.util.List;
 /**
  * <p>全景_评论 业务处理接口类。
  */
-@FeignClient(name = "wu1g-service-server")
+@FeignClient(name = "${feign.name}")//, fallback = TestServiceHystrix.class)
 public interface IPanoCommentsService {
+    String actPrefix = "/api/IPanoCommentsService";
 
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(value = "/saveOrUpdateData")
+    @RequestMapping(value = actPrefix + "/saveOrUpdateData")
     public String saveOrUpdateData(PanoComments bean) throws Exception;
 
     /**
      * <p>逻辑删除 单条。
      */
-    @RequestMapping(value = "/deleteDataById")
+    @RequestMapping(value = actPrefix + "/deleteDataById")
     public String deleteDataById(PanoComments bean) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    @RequestMapping(value = "/findDataIsPage")
+    @RequestMapping(value = actPrefix + "/findDataIsPage")
     public List<PanoComments> findDataIsPage(PanoComments bean);
 
     /**
      * <p>信息列表。
      */
-    @RequestMapping(value = "/findDataIsList")
+    @RequestMapping(value = actPrefix + "/findDataIsList")
     public List<PanoComments> findDataIsList(PanoComments bean);
 }

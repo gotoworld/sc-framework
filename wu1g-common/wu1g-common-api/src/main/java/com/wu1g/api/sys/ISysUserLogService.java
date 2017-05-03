@@ -20,17 +20,18 @@ import java.util.List;
 /**
  * <p>系统_管理员操作日志   业务处理接口类。
  */
-@FeignClient(name = "wu1g-service-server")//, fallback = TestServiceHystrix.class)
+@FeignClient(name = "${feign.name}")//, fallback = TestServiceHystrix.class)
 public interface ISysUserLogService {
+    String actPrefix = "/api/ISysUserLogService";
 
     /**
      * 管理员操作日志记录。
      */
-    @RequestMapping(value = "/info")
+    @RequestMapping(value = actPrefix + "/info")
     public void info(@RequestParam("type") String type,@RequestParam("memo")  String memo,@RequestParam("detailInfo")  String detailInfo,@RequestParam("userId")  Long userId,@RequestParam("userName")  String userName,@RequestParam("ip")  String ip);
     /**
      * <p>信息列表 分页。
      */
-    @RequestMapping(value = "/findDataIsPage")
+    @RequestMapping(value = actPrefix + "/findDataIsPage")
     public List<SysUserLog> findDataIsPage(SysUserLog bean);
 }

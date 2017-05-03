@@ -9,78 +9,79 @@ import java.util.List;
 /**
  * <p>全景_项目 业务处理接口类。
  */
-@FeignClient(name = "wu1g-service-server")
+@FeignClient(name = "${feign.name}")//, fallback = TestServiceHystrix.class)
 public interface IPanoProjService {
+    String actPrefix = "/api/IPanoProjService";
 
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(value = "/saveOrUpdateData")
+    @RequestMapping(value = actPrefix + "/saveOrUpdateData")
     public String saveOrUpdateData(PanoProj bean) throws Exception;
 
     /**
      * <p>物理删除。
      */
-    @RequestMapping(value = "/deleteData")
+    @RequestMapping(value = actPrefix + "/deleteData")
     public String deleteData(PanoProj bean) throws Exception;
 
     /**
      * <p>恢复逻辑删除的数据 单条。
      */
-    @RequestMapping(value = "/recoveryDataById")
+    @RequestMapping(value = actPrefix + "/recoveryDataById")
     public String recoveryDataById(PanoProj bean) throws Exception;
 
     /**
      * <p>逻辑删除 单条。
      */
-    @RequestMapping(value = "/deleteDataById")
+    @RequestMapping(value = actPrefix + "/deleteDataById")
     public String deleteDataById(PanoProj bean) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    @RequestMapping(value = "/findDataIsPage")
+    @RequestMapping(value = actPrefix + "/findDataIsPage")
     public List<PanoProj> findDataIsPage(PanoProj bean);
 
     /**
      * <p>信息列表。
      */
-    @RequestMapping(value = "/findDataIsList")
+    @RequestMapping(value = actPrefix + "/findDataIsList")
     public List<PanoProj> findDataIsList(PanoProj bean);
 
     /**
      * <p>信息详情。
      */
-    @RequestMapping(value = "/findDataById")
+    @RequestMapping(value = actPrefix + "/findDataById")
     public PanoProj findDataById(PanoProj bean);
 
     /**
      * <p>生成全景图。
      */
-    @RequestMapping(value = "/makePano")
+    @RequestMapping(value = actPrefix + "/makePano")
     public void makePano(PanoProj bean);
 
     /**
      * <p>保存xml信息
      */
-    @RequestMapping(value = "/saveXmlData")
+    @RequestMapping(value = actPrefix + "/saveXmlData")
     public String saveXmlData(PanoProj bean) throws Exception;
 
     /**
      * <p>点赞
      */
-    @RequestMapping(value = "/thumbsUpNum")
+    @RequestMapping(value = actPrefix + "/thumbsUpNum")
     public String thumbsUpNum(PanoProj bean) throws Exception;
 
     /**
      * <p>浏览量+1
      */
-    @RequestMapping(value = "/pvNum")
+    @RequestMapping(value = actPrefix + "/pvNum")
     public String pvNum(PanoProj bean) throws Exception;
 
     /**
      * <p>生成视频文件。
      */
-    @RequestMapping(value = "/makeVideo")
+    @RequestMapping(value = actPrefix + "/makeVideo")
     public void makeVideo(PanoProj bean) throws Exception;
 }

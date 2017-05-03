@@ -110,7 +110,7 @@ public class OrgDeptController extends BaseController {
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
-        modelMap.addFlashAttribute("msg", result);
+        modelMap.addFlashAttribute("result", result);
         return success;
     }
 
@@ -147,7 +147,7 @@ public class OrgDeptController extends BaseController {
         } else {
             result = Response.error("信息保存失败!");
         }
-        modelMap.addFlashAttribute("msg", result);
+        modelMap.addFlashAttribute("result", result);
         return success;
     }
 }

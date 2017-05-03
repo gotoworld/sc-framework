@@ -90,7 +90,7 @@ public class PanoCommentsController extends BaseController {
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
-        modelMap.addFlashAttribute("msg", result);
+        modelMap.addFlashAttribute("result", result);
         return success;
     }
 }

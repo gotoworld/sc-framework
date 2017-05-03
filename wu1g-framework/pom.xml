@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
+        <version>1.5.3.RELEASE</version>
         <relativePath></relativePath>
     </parent>
 
@@ -25,7 +25,7 @@
         <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
         <shiro.version>1.4.0-RC2</shiro.version>
 
-        <spring.cloud.version>Brixton.SR7</spring.cloud.version>
+        <spring.cloud.version>Dalston.RELEASE</spring.cloud.version>
     </properties>
 
     <modules>

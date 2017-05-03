@@ -64,12 +64,12 @@
         <!-- spring-cloud end -->
         <dependency>
             <groupId>com.wu1g.common</groupId>
-            <artifactId>wu1g-common-biz</artifactId>
+            <artifactId>wu1g-common-server</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.wu1g.pano</groupId>
-            <artifactId>wu1g-pano-biz</artifactId>
+            <artifactId>wu1g-pano-server</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

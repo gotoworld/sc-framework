@@ -7,3 +7,5 @@ logging:
 #  file: logs/wu1g-web-server.log
   level:
     ROOT: INFO
+
+feign.name: wu1g-service-server

@@ -11,7 +11,7 @@
         <relativePath></relativePath>
     </parent>
 
-    <artifactId>wu1g-web-server-discoveryclient</artifactId>
+    <artifactId>wu1g-web-feign-app-server</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 

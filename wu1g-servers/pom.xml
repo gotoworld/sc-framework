@@ -17,7 +17,7 @@
         <module>wu1g-graphite-server</module>
         <module>wu1g-web-server</module>
         <module>wu1g-service-provide-server</module>
-        <module>wu1g-web-server-discoveryclient</module>
+        <module>wu1g-web-feign-app-server</module>
         <module>wu1g-eycode-server</module>
     </modules>
 

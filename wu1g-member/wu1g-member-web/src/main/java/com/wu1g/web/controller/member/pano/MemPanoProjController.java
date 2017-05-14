@@ -184,7 +184,7 @@ public class MemPanoProjController extends BaseController {
                     }
                     result = Response.error(errorMsg);
                 } else {
-                    if ("1".equals(request.getParameter("makePanoFlag"))) {
+                    if ("1".equals(request.getParameter("refreshSceneFlag"))||"1".equals(request.getParameter("makePanoFlag"))) {
                         List<PanoScene> scenes = new ArrayList<PanoScene>();
                         String[] scene_id_arr = request.getParameterValues("scene_id");
                         if (scene_id_arr != null && scene_id_arr.length > 0) {
@@ -194,7 +194,7 @@ public class MemPanoProjController extends BaseController {
                                 scene.setId(scene_id);
                                 scene.setOrderNo(i);
                                 scene.setSceneSrc(request.getParameter(scene_id + "_scene_src"));
-                                scene.setOrderNo(Integer.parseInt(""+request.getParameter(scene_id + "_scene_order_no")));
+                                scene.setOrderNo(Integer.parseInt("" + request.getParameter(scene_id + "_scene_order_no")));
                                 scene.setKeyword(request.getParameter(scene_id + "_scene_key"));
                                 scene.setSceneTitle(request.getParameter(scene_id + "_scene_tit"));
                                 scene.setCreateId(getUser().getId());
@@ -202,7 +202,8 @@ public class MemPanoProjController extends BaseController {
                             }
                         }
                         bean.setScenes(scenes);
-
+                    }
+                    if ("1".equals(request.getParameter("makePanoFlag"))) {
                         bean.setMakePanoFlag(true);
                     } else {
                         bean.setMakePanoFlag(false);

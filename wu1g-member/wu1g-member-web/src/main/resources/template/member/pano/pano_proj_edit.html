@@ -151,6 +151,7 @@
 						</div>
 						
 						<div class="col-sm-12 form-group">
+							<input name="refreshSceneFlag" id="_refreshSceneFlag" value="0">
 							<div class="col-md-12">
 								<p>场景上传：<span class="red s12">全景图宽高比须为2:1，格式为jpg；</span> <span class="c00 s12">单次只能上传1张全景图，多个场景请分次上传</span></p>
 								<div class="img-input red" id="upload_scene_div" style="">
@@ -236,6 +237,7 @@
         $('.x_scene_order_no').each(function(index,ele){
             $(ele).val(index);
         });
+        $('#_refreshSceneFlag').val(1);
 	}
 	@[ if(isNotEmpty(bean.soundSrc)){ /]
 	plyr.setup();

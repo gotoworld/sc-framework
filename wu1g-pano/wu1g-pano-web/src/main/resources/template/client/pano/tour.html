@@ -22,9 +22,9 @@
 	<script>
  		embedpano({swf:"${panoPath}tour.swf", xml:"/upload/pano/${proj.id}.xml?version=${proj.version}", target:"krpanoDIV", html5:"prefer", mobilescale:1.0, passQueryParameters:true});
 //		var viewer = createPanoViewer({swf:"${panoPath}tour.swf", xml:"/upload/pano/${proj.id}.xml?version=${proj.version}", html5:"prefer"});
-//		viewer.passQueryParameters();
-//		viewer.embed("krpanoDIV");
-		
+        //		viewer.passQueryParameters();
+        //		viewer.embed("krpanoDIV");
+
 		//取得krpano对象
 		var krpano = document.getElementById("krpanoSWFObject");
 		//显示赞 按钮
@@ -43,7 +43,7 @@
 		@[ } /]
 		//显示访问量
 		krpano.call("set(layer[skin_visit_btn_container].visible,true);");
-		
+
 	</script>
 </div>
 <div class="commentBox">

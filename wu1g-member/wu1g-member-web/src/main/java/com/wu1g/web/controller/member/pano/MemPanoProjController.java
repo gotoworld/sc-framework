@@ -194,6 +194,7 @@ public class MemPanoProjController extends BaseController {
                                 scene.setId(scene_id);
                                 scene.setOrderNo(i);
                                 scene.setSceneSrc(request.getParameter(scene_id + "_scene_src"));
+                                scene.setOrderNo(Integer.parseInt(""+request.getParameter(scene_id + "_scene_order_no")));
                                 scene.setKeyword(request.getParameter(scene_id + "_scene_key"));
                                 scene.setSceneTitle(request.getParameter(scene_id + "_scene_tit"));
                                 scene.setCreateId(getUser().getId());

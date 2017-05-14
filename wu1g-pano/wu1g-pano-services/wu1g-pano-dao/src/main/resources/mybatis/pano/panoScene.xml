@@ -72,7 +72,7 @@
             ,0
             ,#{t.state}
             ,#{t.memo}
-            ,0
+            ,#{t.orderNo}
             ,#{t.keyword}
             ,0
             ,#{t.createId}
@@ -132,7 +132,7 @@
         <if test="dateEnd!=null and dateEnd!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d')]]>
         </if>
-        order by t1.date_created desc
+        order by t1.order_no asc
     </select>
 
     <delete id="deleteByProjId" parameterType="com.wu1g.vo.pano.PanoScene">

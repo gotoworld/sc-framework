@@ -159,6 +159,7 @@
 								 /]
 									<div id="${scene.id}" class="img-grid">
 										<input name="scene_id" value="${scene.id}" type="hidden">
+										<input name="${scene.id}_scene_order_no" class="x_scene_order_no" value="${scene.orderNo}" type="hidden">
 										<input name="${scene.id}_scene_src" value="${scene.sceneSrc}" type="hidden">
 										<input name="${scene.id}_scene_key" value="${scene.keyword}" type="hidden" >
 										<img src="${scene.sceneSrc}">
@@ -232,6 +233,9 @@
 				$p.next().after($p);
 			};
 		}
+		$('.x_scene_order_no').each(function(index,ele){
+			$(ele).val(index);
+		});
 	}
 	@[ if(isNotEmpty(bean.soundSrc)){ /]
 	plyr.setup();

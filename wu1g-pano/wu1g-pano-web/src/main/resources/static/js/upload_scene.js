@@ -52,6 +52,7 @@ function upload_scene(btn, divId, projId) {
                         var html = '';
                         html += '<input type="hidden" name="scene_id" value="' + file.id + '" />';
                         html += '<input type="hidden" name="' + file.id + '_scene_src" value="' + infoData.fileUrl + '" />';
+                        html += '<input name="' + file.id + '_scene_order_no" class="x_scene_order_no" value="'+($('.x_scene_order_no').length)+'" type="hidden" />';
                         html += '<input type="hidden" name="' + file.id + '_scene_key" value="' + s_key + '" />';
                         html += '<img src="' + (infoData.defaultBigPicUrl ? infoData.defaultBigPicUrl : infoData.fileUrl) + '" >';
                         html += '<input type="text" name="' + file.id + '_scene_tit" placeholder="请填写场景名称" required="" aria-required="true"   maxlength="20" aria-invalid="true"/>';

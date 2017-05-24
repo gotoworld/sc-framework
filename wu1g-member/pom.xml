@@ -17,5 +17,6 @@
 
     <modules>
         <module>wu1g-member-web</module>
+        <module>wu1g-member-web-restful</module>
     </modules>
 </project>

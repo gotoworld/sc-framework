@@ -29,11 +29,12 @@
     </properties>
 
     <modules>
-        <module>framework-cache</module>
-        <module>framework-core</module>
-        <module>framework-api</module>
-        <module>framework-service</module>
-        <module>framework-web</module>
+        <module>wu1g-framework-cache</module>
+        <module>wu1g-framework-core</module>
+        <module>wu1g-framework-api</module>
+        <module>wu1g-framework-service</module>
+        <module>wu1g-framework-web</module>
+        <module>wu1g-framework-web-restful</module>
     </modules>
 
     <dependencies>
@@ -47,7 +48,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

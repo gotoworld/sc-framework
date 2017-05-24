@@ -32,8 +32,8 @@ public class MyErrorController implements ErrorController {
 
     @RequestMapping(value = prefix + "/404")
     public Response error404(HttpServletRequest request, HttpServletResponse response) {
-        String gurl404 =""+(request.getAttribute("javax.servlet.forward.servlet_path"));
-        if(ValidatorUtil.isNullEmpty(gurl404)){
+        String gurl404 =""+(request.getAttribute("javax.servlet.error.request_uri"));
+        if(ValidatorUtil.isEmpty(gurl404)){
             Object[] objArr = (Object[]) ReflectUtil.getValueByFieldName(request, "specialAttributes");
             if (objArr != null && objArr.length > 6) {
                 gurl404 = (String) objArr[6];

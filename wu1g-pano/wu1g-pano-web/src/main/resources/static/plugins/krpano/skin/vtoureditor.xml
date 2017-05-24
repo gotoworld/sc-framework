@@ -9,7 +9,7 @@
 	    <layer name="set_txt" style="text" html="设为初始角度" />
 	</layer>	
 	
-	<layer name="add_container" style="subbtn" x="100" y="10"  onclick="add_hotspot();">
+	<layer name="add_container" style="subbtn" x="100" y="10"  onclick="add_hotspot('add_btn_box',0);">
 	    <layer name="add_txt" style="text" html="添加热点" />
 	</layer>	
 	<layer name="add_btn_box" type="container" align="lefttop" x="100" y="40" keep="true" visible="false">
@@ -66,8 +66,21 @@
 			<layer name="pic_txt_d" style="text" html="完成"/>
 		</layer>	
 	</layer>
-	
-	<layer name="save_container" style="subbtn" x="530" y="10"  onclick="save_set();">
+	<!-- 2017-05-23 -->
+	<layer name="link_container" style="container" x="530" y="10"  onclick="add_hotspot('add_btn_link_box',2);">
+		<layer name="link_txt" style="text" html="添加外链" />
+	</layer>
+	<layer name="add_btn_link_box" type="container" align="lefttop" x="530" y="40" keep="true" visible="false">
+		<layer name="con_add_link_txt_p" style="subbtn" x="0" y="0"  onclick="js(confirm_hotspot_2());">
+			<layer name="con_add_link_txt" style="text" html="确认" />
+		</layer>
+		<layer name="can_add_link_txt_p" style="subbtn" x="0" y="30"  onclick="cancel_add_link_hotspot();">
+			<layer name="can_add_link_txt" style="text" html="取消" />
+		</layer>
+	</layer>
+
+
+	<layer name="save_container" style="subbtn" x="600" y="10"  onclick="save_set();">
 	    <layer name="save_txt" style="text" html="保存设置" />
 	</layer>	
 		
@@ -178,10 +191,16 @@
 		copy(vlookat,view.vlookat);
 		txtadd(newspot,'hotspot_',get(hs_n));
 		addhotspot(get(newspot));
-		set(hotspot[get(newspot)].url,%SWFPATH%/skin/vtourskin_hotspot.png);
 		set(hotspot[get(newspot)].ath,get(hlookat));
-		set(hotspot[get(newspot)].atv,get(vlookat));
-		set(hotspot[get(newspot)].crop,'0|0|128|128');
+        set(hotspot[get(newspot)].atv,get(vlookat));
+		<!-- %2 类型0场景切换1图片2外部链接3图文介绍4语音热点5视频热点-->
+        if(%2==2,
+        set(hotspot[get(newspot)].url,%SWFPATH%/skin/animatedhotspot_white.png);
+        set(hotspot[get(newspot)].crop,'0|0|64|64');
+        ,
+        set(hotspot[get(newspot)].url,%SWFPATH%/skin/vtourskin_hotspot.png);
+        set(hotspot[get(newspot)].crop,'0|0|128|128');
+        );
 		set(hotspot[get(newspot)].rotate,0);
 		set(hotspot[get(newspot)].scale,0.5);
 		set(hotspot[get(newspot)].zoom,false);
@@ -191,7 +210,7 @@
 <!-- 		jscall(calc('console.log("添加热点:'+newspot+'")')); -->
 		
 		<!-- 显示确认、取消添加按钮 -->
-		set(layer[add_btn_box].visible,true);
+		set(layer[%1].visible,true);
 		
 		set_ele_status(false);
 	</action>
@@ -274,7 +293,35 @@
 		set(from_radar,0);
 		) 
 	</action>
-	
+	<!-- 添加外链确定操作 -->
+	<action name="confirm_linkded_scene_2">
+		txtadd('hname','hotspot_',get(hs_n));
+		set(c_hotspot,get(hname));
+
+		jsget(hotspot_link_title,getInputValById('hotspot_link_title'));
+		jsget(hotspot_link_url,getInputValById('hotspot_link_url'));
+
+		<!-- %1 类型0场景切换1图片2外部链接3图文介绍4语音热点5视频热点-->
+		set(hotspot[get(c_hotspot)].tooltip,get(hotspot_link_title));
+		set(hotspot[get(c_hotspot)].style,"showtxt_hotspotstyle");
+		set(hotspot[get(c_hotspot)].ondown,null);
+		set(hotspot[get(c_hotspot)].onup,null);
+
+		js(save_xml_data_2(
+		get(scene[get(xml.scene)].name)
+		,'linkSpots'
+		,get(hotspot[get(c_hotspot)].ath)
+		,get(hotspot[get(c_hotspot)].atv)
+		,get(hotspot[get(c_hotspot)].name)
+		,get(hotspot[get(c_hotspot)].scale)
+		,get(hotspot[get(c_hotspot)].depth)
+		,get(hotspot[get(c_hotspot)].rotate)
+		,get(hotspot_link_url)
+		,get(hotspot_link_title)
+		));
+		hide_scene_add_link_container();
+		set_ele_status(true);
+	</action>
 	<!-- 显示旋转热点 -->
 	<action name="rotate_hotspot">
 	    set(layer[rotate_btn_box].visible,true);
@@ -324,7 +371,7 @@
 	
 	<action name="remove_picspots">
 	     if(is_del_hp,
-		    js(del_xml_h(get(scene[get(xml.scene)].name),get(name),'picspots'));
+		    js(del_xml_h(get(scene[get(xml.scene)].name),get(name)));
 			removehotspot(get(name)),
 			);
 	</action>
@@ -496,4 +543,22 @@
 		   onover="set(bgalpha,0.7);"
 		   onout="set(bgalpha,0.5)"
 	       />
+
+    <!-- 取消添加热点 -->
+    <action name="cancel_add_link_hotspot">
+        txtadd('hname','hotspot_',get(hs_n));
+        set(r_hotspot,get(hname));
+        <!-- 	    jscall(calc('console.log("删除热点:'+r_hotspot+'")')); -->
+        removehotspot(get(r_hotspot));
+        hide_scene_add_link_container();
+        set_ele_status(true);
+        set(from_radar,0);
+    </action>
+
+    <!-- 隐藏缩略图弹窗、隐藏确认|取消添加按钮 -->
+    <action name="hide_scene_add_link_container">
+        <!-- 显示确认、取消添加按钮 -->
+        set(layer[add_btn_link_box].visible,false);
+        set(layer[hotspot_link_container].visible,false);
+    </action>
 </krpano>

@@ -24,7 +24,7 @@
 			</layer>
 		</layer>
 		<!-- 按钮 -->
-		<layer name="btn_con_link_container" style="subbtn" width="130" auheight="true" align="topleft" x="10" y="210" enabled="false" onclick="confirm_linkded_scene();">
+		<layer name="btn_con_link_container" style="subbtn" width="130" auheight="true" align="topleft" x="10" y="210" enabled="false" onclick="confirm_linkded_scene(0);">
 	         <layer name="btn_con_link_scene" style="text" html="确定" />
 	    </layer>
 		<layer name="btn_can_link_scene_p" style="subbtn" width="130" align="topright" x="10" y="210" onclick="cancel_add_hotspot();">

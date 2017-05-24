@@ -1,6 +1,9 @@
 package com.wu1g.api.pano;
 
+import com.wu1g.vo.pano.PanoMap;
 import com.wu1g.vo.pano.PanoProj;
+import com.wu1g.vo.pano.PanoScene;
+import com.wu1g.vo.pano.PanoSpots;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -84,4 +87,11 @@ public interface IPanoProjService {
      */
     @RequestMapping(value = actPrefix + "/makeVideo")
     public void makeVideo(PanoProj bean) throws Exception;
+
+    @RequestMapping(value = actPrefix + "/getScenesByjson")
+    public List<PanoScene> getScenesByjson(Long pid, String scene_str);
+    @RequestMapping(value = actPrefix + "/getSpotsObject")
+    public List<PanoSpots>  getSpotsObject(Integer htype, String spotsStr, PanoScene scene );
+    @RequestMapping(value = actPrefix + "/getRadarsByjson")
+    public List<PanoMap> getRadarsByjson(Long pid, String radars_str) ;
 }

@@ -44,7 +44,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -53,7 +56,7 @@ import java.util.Map.Entry;
 @Controller
 @Slf4j
 public class PanoProjController extends BaseController {
-    private static final long serialVersionUID = -528422099490438672L;
+	private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IPanoProjService panoProjService;
     @Autowired
@@ -239,8 +242,8 @@ public class PanoProjController extends BaseController {
             PanoProj bean = new PanoProj();
             bean.setId(Long.parseLong(pid));
             bean.setTourEditJson(scene_str);
-            bean.setScenes(getScenesByjson(Long.parseLong(pid), scene_str));
-            bean.setRadars(getRadarsByjson(Long.parseLong(pid), radars_str));
+            bean.setScenes(panoProjService.getScenesByjson(Long.parseLong(pid), scene_str));
+            bean.setRadars(panoProjService.getRadarsByjson(Long.parseLong(pid), radars_str));
             panoProjService.saveXmlData(bean);
 
             bean.setStr(getBasePath());
@@ -256,137 +259,6 @@ public class PanoProjController extends BaseController {
         }
         return JSON.toJSONString(msg);
     }
-
-    private List<PanoScene> getScenesByjson(Long pid, String scene_str) {
-        List<PanoScene> scenes = new ArrayList<PanoScene>();
-        JSONObject dataJson = JSON.parseObject(scene_str);
-        if (dataJson != null && dataJson.entrySet() != null && dataJson.entrySet().size() > 0) {
-            for (Entry<String, Object> entiry : dataJson.entrySet()) {
-                if (entiry.getValue() != null) {
-                    JSONObject sceneJson = null;
-                    try {
-                        sceneJson = JSON.parseObject(entiry.getValue().toString());
-                    } catch (Exception e) {
-
-                    }
-                    if (sceneJson != null && !sceneJson.isEmpty()) {
-                        PanoScene scene = new PanoScene();
-                        //项目id
-                        scene.setProjId(pid);
-                        //获取场景id
-                        scene.setId(entiry.getKey());
-                        //获取场景初始视角参数字符串
-                        String viewStr = sceneJson.getString("view");
-                        if (ValidatorUtil.notEmpty(viewStr)) {
-                            JSONObject viewJson = JSON.parseObject(viewStr);
-                            if (viewJson != null && !viewJson.isEmpty()) {
-                                scene.setHlookat(viewJson.getString("hlookat"));
-                                scene.setVlookat(viewJson.getString("vlookat"));
-                            }
-                        }
-                        //获取场景跳转热点列表
-                        String hotspotsStr = sceneJson.getString("hotspots");
-                        if (ValidatorUtil.notEmpty(hotspotsStr) && !"[]".equals(hotspotsStr.replaceAll(" ", ""))) {
-                            JSONArray spotsJsonArr = null;
-                            try {
-                                spotsJsonArr = JSONArray.parseArray(hotspotsStr);
-                            } catch (Exception e) {
-                            }
-                            if (spotsJsonArr != null && !spotsJsonArr.isEmpty()) {
-                                List<PanoSpots> spots = new ArrayList<PanoSpots>();
-                                for (int i = 0; i < spotsJsonArr.size(); i++) {
-                                    JSONObject spotsJson = spotsJsonArr.getJSONObject(i);
-                                    if (spotsJson != null && !spotsJson.isEmpty()) {
-                                        PanoSpots panoSpots = new PanoSpots();
-//                                        panoSpots.setId(IdUtil.createUUID(32));
-                                        panoSpots.setProjId(scene.getProjId());
-                                        panoSpots.setSceneId(scene.getId());
-                                        panoSpots.setHtype(0);
-                                        panoSpots.setHname(spotsJson.getString("hname"));
-                                        panoSpots.setAth(spotsJson.getString("ath"));
-                                        panoSpots.setAtv(spotsJson.getString("atv"));
-                                        panoSpots.setLinkedscene(spotsJson.getString("linkedscene"));
-                                        panoSpots.setScale(spotsJson.getString("scale"));
-                                        panoSpots.setDepth(spotsJson.getString("depth"));
-                                        panoSpots.setRotate(spotsJson.getString("rotate"));
-//                                        panoSpots.setUrl( spotsJson.getString( "url" ) );
-                                        spots.add(panoSpots);
-                                    }
-                                }
-                                scene.setHotSpots(spots);
-                            }
-                        }
-                        //获取场景图片装饰列表
-                        String picspotsStr = sceneJson.getString("picspots");
-                        if (ValidatorUtil.notEmpty(picspotsStr) && !"[]".equals(picspotsStr.replaceAll(" ", ""))) {
-                            JSONArray spotsJsonArr = null;
-                            try {
-                                spotsJsonArr = JSONArray.parseArray(picspotsStr);
-                            } catch (Exception e) {
-                            }
-                            if (spotsJsonArr != null && !spotsJsonArr.isEmpty()) {
-                                List<PanoSpots> spots = new ArrayList<PanoSpots>();
-                                for (int i = 0; i < spotsJsonArr.size(); i++) {
-                                    JSONObject spotsJson = spotsJsonArr.getJSONObject(i);
-                                    if (spotsJson != null && !spotsJson.isEmpty()) {
-                                        PanoSpots panoSpots = new PanoSpots();
-//                                        panoSpots.setId(IdUtil.createUUID(32));
-                                        panoSpots.setProjId(scene.getProjId());
-                                        panoSpots.setSceneId(scene.getId());
-                                        panoSpots.setHtype(1);
-                                        panoSpots.setHname(spotsJson.getString("hname"));
-                                        panoSpots.setAth(spotsJson.getString("ath"));
-                                        panoSpots.setAtv(spotsJson.getString("atv"));
-                                        panoSpots.setLinkedscene(spotsJson.getString("linkedscene"));
-                                        panoSpots.setScale(spotsJson.getString("scale"));
-                                        panoSpots.setDepth(spotsJson.getString("depth"));
-                                        panoSpots.setRotate(spotsJson.getString("rotate"));
-                                        panoSpots.setUrl(spotsJson.getString("url"));
-                                        panoSpots.setIsOnclick(spotsJson.getInteger("isOnclick"));
-                                        spots.add(panoSpots);
-                                    }
-                                }
-                                scene.setImgSpots(spots);
-                            }
-                        }
-                        scenes.add(scene);
-                    }
-                }
-            }
-        }
-        return scenes;
-    }
-
-    private List<PanoMap> getRadarsByjson(Long pid, String radars_str) {
-        List<PanoMap> radars = new ArrayList<PanoMap>();
-        JSONObject radarsJson = JSON.parseObject(radars_str);
-        if (radarsJson != null && radarsJson.entrySet() != null && radarsJson.entrySet().size() > 0) {
-            for (Entry<String, Object> entiry : radarsJson.entrySet()) {
-                if (entiry.getValue() != null) {
-                    JSONObject mapJson = null;
-                    try {
-                        mapJson = JSON.parseObject(entiry.getValue().toString());
-                    } catch (Exception e) {
-
-                    }
-                    if (mapJson != null && !mapJson.isEmpty()) {
-                        PanoMap map = new PanoMap();
-                        //项目id
-                        map.setProjId(pid);
-                        //获取场景id
-                        map.setSceneId(entiry.getKey());
-                        //--
-                        map.setRotate(mapJson.getString("rotate"));
-                        map.setX(mapJson.getString("x"));
-                        map.setY(mapJson.getString("y"));
-                        radars.add(map);
-                    }
-                }
-            }
-        }
-        return radars;
-    }
-
     @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/h/touredit/{id}")
     public String touredit(@PathVariable("id") Long id) {

@@ -19,5 +19,6 @@
         <module>wu1g-common-api</module>
         <module>wu1g-common-services</module>
         <module>wu1g-common-web</module>
+        <module>wu1g-common-web-restful</module>
     </modules>
 </project>

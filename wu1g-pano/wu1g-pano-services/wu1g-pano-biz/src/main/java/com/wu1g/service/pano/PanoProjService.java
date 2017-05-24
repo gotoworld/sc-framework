@@ -1,5 +1,8 @@
 package com.wu1g.service.pano;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.api.pano.IPanoProjService;
 import com.wu1g.dao.pano.IPanoMapDao;
@@ -192,15 +195,11 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     imgappend += AppConfig.getProperty("common.fileServer.upload") + scene.getSceneSrc().replace(AppConfig.getProperty("common.fileServer.download"), "").replace("/n1/", "/n4/") + " ";
                     scene.setBreakdownImg(getBreakdownImg(proj.getCode(), scene.getSceneSrc()));
 
-                    //--获取场景-跳转热点
+                    //--获取场景-所有热点
                     panoSpots = new PanoSpots();
-                    panoSpots.setHtype(0);
                     panoSpots.setProjId(scene.getProjId());
                     panoSpots.setSceneId(scene.getId());
                     scene.setHotSpots((List<PanoSpots>) panoSpotsDao.findDataIsList(panoSpots));
-                    //--获取场景-装饰图片热点
-                    panoSpots.setHtype(1);
-                    scene.setImgSpots((List<PanoSpots>) panoSpotsDao.findDataIsList(panoSpots));
                 }
             }
             //--获取导览图坐标信息
@@ -254,16 +253,32 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                         for (PanoScene scene : bean.getScenes()) {
                             //--修改场景初始角度
                             panoSceneDao.update(scene);
-                            //--新增跳转热点
+                            //--新增热点-场景切换
                             if (scene.getHotSpots() != null && scene.getHotSpots().size() > 0) {
                                 panoSpotsList.addAll(scene.getHotSpots());
                             }
-                            //--新增图片热点
+                            //--新增热点-装饰图/单图片展示
                             if (scene.getImgSpots() != null && scene.getImgSpots().size() > 0) {
                                 scene.getImgSpots().forEach(imgSpots -> {
                                     imgSpots.getUrl().replaceAll("/n1/", "/n3/");
                                 });
                                 panoSpotsList.addAll(scene.getImgSpots());
+                            }
+                            //--新增热点-外部链接
+                            if (scene.getLinkSpots() != null && scene.getLinkSpots().size() > 0) {
+                                panoSpotsList.addAll(scene.getLinkSpots());
+                            }
+                            //--新增热点-弹窗/图文介绍
+                            if (scene.getRichSpots() != null && scene.getRichSpots().size() > 0) {
+                                panoSpotsList.addAll(scene.getRichSpots());
+                            }
+                            //--新增热点-语音/讲解
+                            if (scene.getSoundSpots() != null && scene.getSoundSpots().size() > 0) {
+                                panoSpotsList.addAll(scene.getSoundSpots());
+                            }
+                            //--新增热点-视频/讲解
+                            if (scene.getVideoSpots() != null && scene.getVideoSpots().size() > 0) {
+                                panoSpotsList.addAll(scene.getVideoSpots());
                             }
                         }
                         //--写入数据库
@@ -359,6 +374,120 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             log.error(msg, e);
             throw new RuntimeException(msg);
         }
+    }
+
+    public List<PanoScene> getScenesByjson(Long pid, String scene_str) {
+        List<PanoScene> scenes = new ArrayList<PanoScene>();
+        JSONObject dataJson = JSON.parseObject(scene_str);
+        if (dataJson != null && dataJson.entrySet() != null && dataJson.entrySet().size() > 0) {
+            for (Map.Entry<String, Object> entiry : dataJson.entrySet()) {
+                if (entiry.getValue() != null) {
+                    JSONObject sceneJson = null;
+                    try {
+                        sceneJson = JSON.parseObject(entiry.getValue().toString());
+                    } catch (Exception e) {
+
+                    }
+                    if (sceneJson != null && !sceneJson.isEmpty()) {
+                        PanoScene scene = new PanoScene();
+                        //项目id
+                        scene.setProjId(pid);
+                        //获取场景id
+                        scene.setId(entiry.getKey());
+                        //获取场景初始视角参数字符串
+                        String viewStr = sceneJson.getString("view");
+                        if (ValidatorUtil.notEmpty(viewStr)) {
+                            JSONObject viewJson = JSON.parseObject(viewStr);
+                            if (viewJson != null && !viewJson.isEmpty()) {
+                                scene.setHlookat(viewJson.getString("hlookat"));
+                                scene.setVlookat(viewJson.getString("vlookat"));
+                            }
+                        }
+                        //热点-0场景切换
+                        scene.setHotSpots(getSpotsObject(0,sceneJson.getString("hotspots"),scene));
+                        //热点-1装饰图片
+                        scene.setImgSpots(getSpotsObject(1,sceneJson.getString("picspots"),scene));
+                        //热点-2外部链接
+                        scene.setLinkSpots(getSpotsObject(2,sceneJson.getString("linkSpots"),scene));
+                        //热点-3图文介绍 | 内部弹窗页
+                        scene.setRichSpots(getSpotsObject(3,sceneJson.getString("richSpots"),scene));
+                        //热点-4语音热点
+                        scene.setSoundSpots(getSpotsObject(4,sceneJson.getString("soundSpots"),scene));
+                        //热点-5视频热点
+                        scene.setVideoSpots(getSpotsObject(5,sceneJson.getString("videoSpots"),scene));
+
+                        scenes.add(scene);
+                    }
+                }
+            }
+        }
+        return scenes;
+    }
+    public List<PanoSpots>  getSpotsObject(Integer htype, String spotsStr, PanoScene scene ){
+        List<PanoSpots> spots=null;
+        if (ValidatorUtil.notEmpty(spotsStr) && !"[]".equals(spotsStr.replaceAll(" ", ""))) {
+            JSONArray spotsJsonArr = null;
+            try {
+                spotsJsonArr = JSONArray.parseArray(spotsStr);
+            } catch (Exception e) {
+            }
+            if (spotsJsonArr != null && !spotsJsonArr.isEmpty()) {
+                spots = new ArrayList<>();
+                for (int i = 0; i < spotsJsonArr.size(); i++) {
+                    JSONObject spotsJson = spotsJsonArr.getJSONObject(i);
+                    if (spotsJson != null && !spotsJson.isEmpty()) {
+                        PanoSpots panoSpots = new PanoSpots();
+//                      panoSpots.setId(IdUtil.createUUID(32));
+                        panoSpots.setProjId(scene.getProjId());
+                        panoSpots.setSceneId(scene.getId());
+                        panoSpots.setHtype(htype);
+                        panoSpots.setHname(spotsJson.getString("hname"));
+                        panoSpots.setAth(spotsJson.getString("ath"));
+                        panoSpots.setAtv(spotsJson.getString("atv"));
+                        panoSpots.setLinkedscene(spotsJson.getString("linkedscene"));
+                        panoSpots.setScale(spotsJson.getString("scale"));
+                        panoSpots.setDepth(spotsJson.getString("depth"));
+                        panoSpots.setRotate(spotsJson.getString("rotate"));
+                        panoSpots.setUrl(spotsJson.getString("url"));
+                        panoSpots.setIsOnclick(spotsJson.getInteger("isOnclick"));
+                        panoSpots.setHotspotImg(spotsJson.getString("hotspotImg"));
+                        panoSpots.setTitle(spotsJson.getString("title"));
+                        panoSpots.setDetailInfo(spotsJson.getString("detailInfo"));
+                        spots.add(panoSpots);
+                    }
+                }
+            }
+        }
+        return spots;
+    }
+    public List<PanoMap> getRadarsByjson(Long pid, String radars_str) {
+        List<PanoMap> radars = new ArrayList<PanoMap>();
+        JSONObject radarsJson = JSON.parseObject(radars_str);
+        if (radarsJson != null && radarsJson.entrySet() != null && radarsJson.entrySet().size() > 0) {
+            for (Map.Entry<String, Object> entiry : radarsJson.entrySet()) {
+                if (entiry.getValue() != null) {
+                    JSONObject mapJson = null;
+                    try {
+                        mapJson = JSON.parseObject(entiry.getValue().toString());
+                    } catch (Exception e) {
+
+                    }
+                    if (mapJson != null && !mapJson.isEmpty()) {
+                        PanoMap map = new PanoMap();
+                        //项目id
+                        map.setProjId(pid);
+                        //获取场景id
+                        map.setSceneId(entiry.getKey());
+                        //--
+                        map.setRotate(mapJson.getString("rotate"));
+                        map.setX(mapJson.getString("x"));
+                        map.setY(mapJson.getString("y"));
+                        radars.add(map);
+                    }
+                }
+            }
+        }
+        return radars;
     }
 
     public static void main(String[] args) {

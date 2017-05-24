@@ -108,4 +108,8 @@ public class PanoSpots extends BaseVO {
      * 更新时间
      */
     private Date dateUpdated;
+    /**
+     * 自定义热点图标
+     */
+    private String hotspotImg;
 }

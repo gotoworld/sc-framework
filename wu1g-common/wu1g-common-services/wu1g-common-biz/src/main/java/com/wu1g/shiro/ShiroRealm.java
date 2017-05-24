@@ -78,6 +78,7 @@ public class ShiroRealm extends AuthorizingRealm {
                 }
             }
         }
+        SecurityUtils.getSubject().getSession().setAttribute("SimpleAuthorizationInfo", info);
         return info;
     }
 

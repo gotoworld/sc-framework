@@ -78,7 +78,6 @@
         inner join pano_scene t2 on t1.scene_id=t2.id
         where t1.proj_id = #{projId}
         and t1.scene_id=#{sceneId}
-        and t1.htype=#{htype}
         <if test="isMember"> and t1.create_id = #{createId}</if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>

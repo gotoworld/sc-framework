@@ -102,11 +102,27 @@ public class PanoScene extends BaseVO {
      */
     private String breakdownImg;
     /**
-     * 场景跳转热点
+     * 场景热点
      */
     private List<PanoSpots> hotSpots;
     /**
-     * 场景装饰图热点
+     * 场景热点-装饰图/单图片展示
      */
     private List<PanoSpots> imgSpots;
+    /**
+     * 场景热点-外部链接
+     */
+    private List<PanoSpots> linkSpots;
+    /**
+     * 场景热点-弹窗/图文介绍
+     */
+    private List<PanoSpots> richSpots;
+    /**
+     * 场景热点-语音/讲解
+     */
+    private List<PanoSpots> soundSpots;
+    /**
+     * 场景热点-视频/讲解
+     */
+    private List<PanoSpots> videoSpots;
 }

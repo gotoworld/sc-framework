@@ -16,6 +16,7 @@
         <module>wu1g-turbine-server</module>
         <module>wu1g-graphite-server</module>
         <module>wu1g-web-server</module>
+        <module>wu1g-web-restful-server</module>
         <module>wu1g-service-provide-server</module>
         <module>wu1g-web-feign-app-server</module>
         <module>wu1g-eycode-server</module>

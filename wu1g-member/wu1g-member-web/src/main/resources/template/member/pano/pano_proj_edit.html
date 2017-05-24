@@ -163,7 +163,7 @@
 										<input name="${scene.id}_scene_order_no" class="x_scene_order_no" value="${scene.orderNo}" type="hidden">
 										<input name="${scene.id}_scene_src" value="${scene.sceneSrc}" type="hidden">
 										<input name="${scene.id}_scene_key" value="${scene.keyword}" type="hidden" >
-										<img src="${scene.sceneSrc}">
+										<img src="${scene.sceneSrc}" onerror="this.onerror=null;this.src='${scene.breakdownImg!}thumb.jpg'">
 										<input name="${scene.id}_scene_tit" value="${scene.sceneTitle}" placeholder="请填写场景名称" required="" aria-required="true" maxlength="20" aria-invalid="true" type="text">
 										<a href="javascript:;" onclick="move_scene(this,'left');" class="ico_left"></a>
 										<a href="javascript:;" onclick="javascript:del_scene_btn(this,'${scene.id}');" class="ico_del"></a>

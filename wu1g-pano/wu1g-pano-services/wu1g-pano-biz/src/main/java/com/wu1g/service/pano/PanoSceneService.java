@@ -99,12 +99,20 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 	public List<PanoScene> findDataIsList(PanoScene bean){	
 		List<PanoScene> beans=null;	
 		try {	
-			beans=(List<PanoScene>) panoSceneDao.findDataIsList(bean);	
+			beans=(List<PanoScene>) panoSceneDao.findDataIsList(bean);
+			if(beans!=null)
+				beans.forEach(scene->{
+					scene.setBreakdownImg(getBreakdownImg(bean.getProjId(), scene.getSceneSrc()));
+				});
 		} catch (Exception e) {	
 			log.error("信息查询失败!", e);
 		}	
 		return beans;	
-	}	
+	}
+	private String getBreakdownImg(Long projId, String sceneSrc) {
+		sceneSrc = sceneSrc.substring(sceneSrc.lastIndexOf("/") + 1, sceneSrc.indexOf("."));
+		return "/upload/image/n4/" + projId + "/vtour/panos/" + sceneSrc + ".tiles/";
+	}
 //	@Override
 //	public PanoScene findDataById(PanoScene bean){
 //	   PanoScene bean1=null;

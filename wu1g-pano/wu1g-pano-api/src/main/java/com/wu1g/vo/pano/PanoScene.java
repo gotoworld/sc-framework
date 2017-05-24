@@ -31,6 +31,10 @@ public class PanoScene extends BaseVO {
      */
     private Long projId;
     /**
+     * 项目编码
+     */
+    private String projCode;
+    /**
      * 场景名称
      */
     @NotNull(message = "sceneTitle不能为空")

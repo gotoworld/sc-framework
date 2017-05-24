@@ -120,6 +120,7 @@ public class PanoProjController extends BaseController {
             if (bean != null) {
                 PanoScene scene = new PanoScene();
                 scene.setProjId(bean.getId());
+                scene.setProjCode(bean.getCode());
                 bean.setScenes(panoSceneService.findDataIsList(scene));
             }
         }

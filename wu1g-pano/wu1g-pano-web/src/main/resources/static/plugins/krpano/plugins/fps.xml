@@ -10,7 +10,7 @@
 		delayedcall(1.0,
 			addlayer(fps_display);
 			set(layer[fps_display].keep, true);
-			set(layer[fps_display].align, 'righttop');
+			set(layer[fps_display].align, 'lefttop');
 			if(device.mobile AND stagescale LT 1.0,
 				<!-- a larger font for mobiles -->
 				set(layer[fps_display].css, 'font-size:24px; color:#FFFFFF;');

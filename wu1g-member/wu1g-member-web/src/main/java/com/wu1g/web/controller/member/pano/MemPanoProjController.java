@@ -267,7 +267,7 @@ public class MemPanoProjController extends BaseController {
     }
 
     @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/h/touredit/{id}")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/m/touredit/{id}")
     public String touredit(@PathVariable("id") Long id) {
         log.info("PanoProjController touredit.........");
         PanoProj bean = new PanoProj();

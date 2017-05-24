@@ -9,6 +9,9 @@ import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -86,7 +89,7 @@ public class KrSceneImageUtil {
             if (tiledimagewidth == 0 || tiledimageheight == 0) {
                 return;
             }
-            sb.append("\t\t\t<level tiledimagewidth=\"" + tiledimagewidth + "\" tiledimageheight=\"" + tiledimageheight + "\">\n" +
+            sb.append("\t\t\t<level tiledimagewidth=\"" + tiledimagewidth + "\" tiledimageheight=\"" + tiledimagewidth + "\">\n" +
                     "\t\t\t\t<cube url=\""+projDir+"%s/" + dir.getParentFile().getName() + "/%"+dirPrefix+"v/" + dir.getParentFile().getName() + "_%s_%"+dirPrefix+"v_%"+dirPrefix+"h.jpg\" />\n" +
                     "\t\t\t</level>");
             sb.append("\n");
@@ -103,17 +106,13 @@ public class KrSceneImageUtil {
             int tilesize = 64;
             String newPath = IOUtil.escapeRemoteToLocal(path);
             try {
-                File dir = new File(newPath);
-                while(dir.isDirectory()) {
-                    File[] dirs=dir.listFiles();
-                    dir = dirs[0];
-                    if (dir!=null && dir.isFile()) {
-                        tilesize=getTitleSize(dir);
-                        if(tilesize<=64){
-                            tilesize=getTitleSize(dirs[1]);
-                        }
-                        break;
-                    }
+                //  xx.tiles/b/l1/1/l1_b_1_1.jpg
+                //  xx.tiles/b/l1/01/l1_b_01_01.jpg
+                File dir = new File(newPath+"/b/l1/1/l1_b_1_1.jpg");
+                if (dir.exists() && dir.isFile()) {
+                    tilesize = getTitleSize(dir);
+                }else{
+                    tilesize = getTitleSize( new File(newPath+"/b/l1/01/l1_b_01_01.jpg"));
                 }
             } catch (Exception e) {
                 tilesize=256;
@@ -133,11 +132,5 @@ public class KrSceneImageUtil {
                     "            </image>"
             );
         }
-    }
-
-    public static void main(String[] args) {
-        KrSceneImageUtil krPanoUtil = new KrSceneImageUtil();
-        String path = "\\upload\\image\\n4\\1492691885612583937\\vtour\\panos\\20170521002426u1iz7.tiles\\";
-        System.out.println(krPanoUtil.getSceneImage(path));
     }
 }

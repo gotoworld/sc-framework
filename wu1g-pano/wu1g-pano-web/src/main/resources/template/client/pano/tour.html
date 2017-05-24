@@ -99,7 +99,7 @@
     //判断是否移动端
     if(browser.versions.mobile||browser.versions.android||browser.versions.ios||browser.versions.weixin||browser.versions.qq){
         window.onresize =function(){
-            krpano.call("switch(fullscreen);");
+            krpano.call("set(fullscreen,true);");
         };
     }
 </script>

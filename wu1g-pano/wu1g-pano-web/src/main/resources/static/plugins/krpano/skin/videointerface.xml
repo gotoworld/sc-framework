@@ -193,30 +193,31 @@
 						<!-- seek bar -->
 			<layer name="skin_video_seekbar_container" type="container" align="left" x.desktop="114" x.no-desktop="74" width.desktop="-277"  width.no-desktop="-224"  height="100%" bgcapture="true" ondown="stopdelayedcall(skin_autohide);skin_video_ondownseeking();" onup="js(get_time(get(plugin[video].time),get(plugin[video].totaltime),get(seekpos) ));">
 				<!--播放进度条-->
-				<layer name="skin_video_seekbar" type="container" bgcolor="0xFFFFFF" bgalpha="0.25" align="center" width.desktop="100%"	 width.no-desktop="100%" height="2" >
+				<layer name="skin_video_seekbar" type="container" bgcolor="0xFFFFFF" bgalpha="0.25" align="left" width.desktop="80%"	 width.no-desktop="80%" height="2" >
 					<layer name="skin_video_loadbar" type="container" bgcolor="0xffffff" bgalpha="0.5" align="left" width="0" height="2"/>
 					<layer name="skin_video_viewbar" type="container" bgcolor="0xfe5500" bgalpha="1.0" align="left" width="0" height="2"/>
 					<layer name="skin_video_seekpos" type="container" bgcolor="0xfe5500" bgalpha="1.0" align="left" edge="center" x="0" bgroundedge="8" width="10" height="10" />
+					<!--总时间-->
+					<layer name="skin_video_total_time" style="skintext" align="right" x.desktop="-43" x.no-desktop="-42" y="0" width="38"  html="0:00" />
+					<!-- 分辨率选择 -->
+					<layer name="skin_quality_settings" type="container" keep="true" align="right" edge="center" x.desktop="-93" x.no-desktop="-92" y="0" width="80" height="20" bgcolor="0x333333" bgroundedge="3" bgborder="1 0xfe5500 1.0" bgcapture="true" onclick="choosequality();">
+						<layer name="skin_quality_text" url="%SWFPATH%/plugins/textfield.swf" background="false" css="color:#FFFFFF;color:#fe5500" enabled="false" align="center" html="标清"/>
+					</layer>
+					<!-- 分辨率选择 video-quality sub-menu -->
+					<layer name="skin_settings_quality" type="container" align="righttop" edge="rightbottom" width="80" parent="layer[skin_quality_settings]" height="0" autoalpha="true" alpha="0" x="-130" y="-20" bgcapture="true" handcursor="false" bgcolor="get:skin_settings.design_bgcolor" bgalpha="get:skin_settings.design_bgalpha" bgborder="get:skin_settings.design_bgborder" bgroundedge="get:skin_settings.design_bgroundedge" bgshadow="get:skin_settings.design_bgshadow" >
+					</layer>
 				</layer>
 			</layer>
-			<!--总时间-->
-			<layer name="skin_video_total_time" style="skintext" align="right" x.desktop="120" x.no-desktop="113" y="0" width="38"  html="0:00" />
-			<!-- VR按钮 -->
-			<layer name="skin_btn_vr" style="skin_base|skin_glow" crop="0|0|80|64" align="right" x.fullscreensupport="80" x.no-fullscreensupport="43" y="0" scale="0.5" onclick="webvr.enterVR();" enabled="false" alpha="0.25" />
-			<!-- 分辨率选择 -->
-			<layer name="skin_quality_settings" type="container" keep="true" align="right" edge="center" x.fullscreensupport="54" x.no-fullscreensupport="54" y="0" width="40" height="20" bgcolor="0x333333" bgroundedge="3" bgborder="1 0xfe5500 1.0" bgcapture="true" onclick="choosequality();">
-			 <layer name="skin_quality_text" url="%SWFPATH%/plugins/textfield.swf" background="false" css="color:#FFFFFF;color:#fe5500" enabled="false" align="center" html="标清"/>
-			</layer>
 			<!-- 全屏按钮 -->
-			<layer name="skin_btn_fullscreen" style="skin_base|skin_glow" crop="0|576|64|64" align="right" x="5" y="0" scale="0.5" onclick="switch(fullscreen);" devices="fullscreensupport" />
+			<layer name="skin_btn_fullscreen" style="skin_base|skin_glow" crop="0|576|64|64" align="right" x="45" y="0" scale="0.5" onclick="switch(fullscreen);" devices="fullscreensupport" />
+			<!-- VR按钮 -->
+			<layer name="skin_btn_vr" style="skin_base|skin_glow" crop="0|0|80|64" align="right" x.fullscreensupport="3" x.no-fullscreensupport="3" y="0" scale="0.5" onclick="webvr.enterVR();" enabled="false" alpha="0.25" />
 
 			<!-- title, video time -->
 			<layer name="skin_title" style="skintext" align="lefttop" edge="leftbottom" x="4" capture="false" handcursor="false" html="" />
 			<layer name="skin_video_time" style="skintext" align="righttop" edge="rightbottom" x="4" enabled="false" html="" />
 
-			<!-- video-quality sub-menu -->
-			<layer name="skin_settings_quality" type="container" align="righttop" edge="rightbottom" width="70" parent="layer[skin_quality_settings]" height="0" autoalpha="true" alpha="0" x="20" y="-4" bgcapture="true" handcursor="false" bgcolor="get:skin_settings.design_bgcolor" bgalpha="get:skin_settings.design_bgalpha" bgborder="get:skin_settings.design_bgborder" bgroundedge="get:skin_settings.design_bgroundedge" bgshadow="get:skin_settings.design_bgshadow" >
-			</layer>
+			
 
 			<!-- sound volume control -->
 			<layer name="skin_volumectrl" type="container" align="lefttop" edge="leftbottom" width="32" height="110" x="40" y="-4" autoalpha="true" alpha="0.0" bgcolor="get:skin_settings.design_bgcolor" bgalpha="get:skin_settings.design_bgalpha" bgborder="get:skin_settings.design_bgborder" bgroundedge="get:skin_settings.design_bgroundedge" bgshadow="get:skin_settings.design_bgshadow" bgcapture="true" onover="stopdelayedcall(autoclose_volumectrl);" onout="if(pressed == false, delayedcall(autoclose_volumectrl, 0.5, skin_close_volumectrl()); );" ondown="stopdelayedcall(autoclose_volumectrl); skin_volumectrl_ondownchanging();" onup="onout();">

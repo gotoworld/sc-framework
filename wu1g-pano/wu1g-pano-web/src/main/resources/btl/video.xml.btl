@@ -11,7 +11,7 @@
 			loadscene(videopano);
 		  );
 	</action>
-	<scene name="videopano" title="krpano Panoramic Video Example">
+	<scene name="videopano" title="">
 		<include url="${panoPath}skin/videointerface.xml" />
 		<!-- include the videoplayer plugin -->
 		<plugin name="video"

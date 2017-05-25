@@ -1,9 +1,7 @@
-<!--
 <security cors="anonymous">
 	<crossdomainxml url="%SWFPATH%/crossdomain.xml" />
 	<allowdomain domain="*" />
 </security>
--->
 @[ if(proj.isFps == "1"){ /]
 <include url="%SWFPATH%/plugins/fps.xml" />
 @[ } /]

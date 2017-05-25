@@ -1,10 +1,8 @@
 ﻿<krpano version="1.19" title="${proj.name}">
-<!--
-<security cors="anonymous">
-	<crossdomainxml url="%SWFPATH%/crossdomain.xml" />
-	<allowdomain domain="*" />
-</security>
--->
+    <security cors="anonymous">
+        <crossdomainxml url="%SWFPATH%/crossdomain.xml" />
+        <allowdomain domain="*" />
+    </security>
 	<include url="%SWFPATH%/skin/contextmenu.xml" />
 	<action name="startup" autorun="onstart">
 		if(device.panovideosupport == false,
@@ -29,7 +27,7 @@
 		</image>
 		<view hlookat="0" vlookat="0" fovtype="DFOV" fov="130" fovmin="75" fovmax="150" distortion="0.0" />
 		<action name="add_video_sources">			
-			if(device.desktop || device.chrome,
+			if(device.desktop || device.chrome || device.ios || device.html5 || device.android ,
 				start_play(),
 				calc(layer[skin_error_msg].html, '提示: '+'为了更好的观看体验，建议您使用谷歌浏览器打开，点此继续播放');
 				set(layer[skin_error].ondown, start_play());	

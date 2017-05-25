@@ -50,7 +50,7 @@ xml_data = ${proj.tourEditJson};
 @[ }else{ /]
 xml_data = {
 @[ for(scene in proj.scenes){ /]
-"${scene.id}":{"view":null,"hotspots":null,"picspots":null}
+	"${scene.id}":{"view":null,"hotspots":null,"picspots":null,"linkSpots":null,"richSpots":null,"soundSpots":null,"videoSpots":null}
 @[ if(sceneLP.index<proj.scenes.~size){ /]
 ,
 @[ } /]

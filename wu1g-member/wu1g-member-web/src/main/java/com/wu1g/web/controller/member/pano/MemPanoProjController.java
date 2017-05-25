@@ -23,6 +23,7 @@ import com.wu1g.framework.Response;
 import com.wu1g.framework.annotation.ALogOperation;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.util.CommonConstant;
+import com.wu1g.framework.util.KrSceneImageUtil;
 import com.wu1g.framework.util.ValidatorUtil;
 import com.wu1g.vo.pano.PanoMap;
 import com.wu1g.vo.pano.PanoProj;
@@ -282,7 +283,7 @@ public class MemPanoProjController extends BaseController {
         if (sceneList != null && sceneList.size() > 0) {
             PanoSpots panoSpots = null;
             for (PanoScene scene : sceneList) {
-                scene.setBreakdownImg(getBreakdownImg(proj.getId(), scene.getSceneSrc()));
+                scene.setBreakdownImg(KrSceneImageUtil.getBreakdownImg(proj.getCode(), scene.getSceneSrc()));
             }
         }
         //--获取导览图坐标信息
@@ -296,10 +297,5 @@ public class MemPanoProjController extends BaseController {
         request.setAttribute("basePath", getBasePath());
         request.setAttribute("panoPath", getBasePath() + "/plugins/krpano/");
         return touredit;
-    }
-
-    private String getBreakdownImg(Long projId, String sceneSrc) {
-        sceneSrc = sceneSrc.substring(sceneSrc.lastIndexOf("/") + 1, sceneSrc.indexOf("."));
-        return "/upload/image/n4/" + projId + "/vtour/panos/" + sceneSrc + ".tiles/";
     }
 }

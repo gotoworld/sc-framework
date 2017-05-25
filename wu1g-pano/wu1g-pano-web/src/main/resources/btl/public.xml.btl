@@ -165,27 +165,27 @@
     <!-- 场景热点 -->
     @[ for(hot in scene.hotSpots){
         switch(hot.htype){
-                    case 0:// 0场景切换
+            case 0:// 0场景切换
     /]
 		    <hotspot name="${hot.hname}" style="skin_hotspotstyle" distorted="true" @[ if(isNotEmpty(hot.depth)){ /]depth="${hot.depth}" @[ } /] @[ if(isNotEmpty(hot.scale)){ /]scale="${hot.scale}" @[ } /] @[ if(isNotEmpty(hot.rotate)){ /]rotate="${hot.rotate}" @[ } /] zoom="false" ath="${hot.ath}" atv="${hot.atv}" linkedscene="${hot.linkedscene}" />
           @[ break;
-                    case 1://1装饰图片
+            case 1://1装饰图片
          /]
 		    <hotspot name="${hot.hname}"  @[ if(hot.isOnclick==1){ /] style="flyoutimage" url="${strutil.replace(hot.url,'/n1/','/n3/')}" @[ }else{ /] enabled="false" url="${hot.url}" @[ } /] distorted="true" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}"/>
           @[ break;
-                    case 2://2外部链接
+            case 2://2外部链接
           /]
             <hotspot name="${hot.hname}" tooltip="${hot.title}" style="showtxt_hotspotstyle" onclick="js(window.open('${stringEscapeUtils.escapeXml(hot.url)}');)" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}" />
           @[ break;
-                    case 3://3图文介绍 | 内部弹窗页
+            case 3://3图文介绍 | 内部弹窗页
           /]
 
           @[ break;
-                    case 4://4语音热点
+            case 4://4语音热点
           /]
 
           @[ break;
-                    case 5://5视频热点
+            case 5://5视频热点
           /]
             <hotspot name="videospot"
 	         url.html5="%SWFPATH%/plugins/videoplayer.js"

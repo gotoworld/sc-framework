@@ -5,6 +5,8 @@ import java.io.StringWriter;
 import java.util.*;
 
 import java.io.*;
+
+import org.apache.commons.lang.StringEscapeUtils;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
@@ -35,6 +37,8 @@ public class BeetlUtils {
 			gt.registerFunctionPackage("krpano", new KrSceneImageUtil());
 			gt.registerFunctionPackage("validator", new ValidatorUtil());
 			gt.registerFunctionPackage("strUtil", new StrUtil());
+			gt.registerFunctionPackage("stringEscapeUtils", new StringEscapeUtils());
+
 			Template template=gt.getTemplate( readTlFileName );
 //			String output=template.render();
 			template.binding( context );

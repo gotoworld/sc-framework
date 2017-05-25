@@ -175,7 +175,7 @@
           @[ break;
                     case 2://2外部链接
           /]
-            <hotspot name="${hot.hname}" tooltip="${hot.title}" style="showtxt_hotspotstyle" onclick="js(window.open('${hot.url}');)" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}" />
+            <hotspot name="${hot.hname}" tooltip="${hot.title}" style="showtxt_hotspotstyle" onclick="js(window.open('${stringEscapeUtils.escapeXml(hot.url)}');)" depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}" />
           @[ break;
                     case 3://3图文介绍 | 内部弹窗页
           /]

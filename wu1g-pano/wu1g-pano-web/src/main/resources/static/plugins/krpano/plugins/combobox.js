@@ -1,5 +1,5 @@
 /*
-	krpano 1.19-pr8 Combobox Plugin (build 2016-09-30)
+	krpano 1.19-pr10 Combobox Plugin (build 2017-05-10)
 	http://krpano.com/plugins/combobox/
 */
 var krpanoplugin=function(){function D(a,b,d,f,c){var e=null;c=(!0===c?"remove":"add")+"EventListener";var l=m.browser.events;if(l.touch&&("down"==b?e=l.touchstart:"move"==b?e=l.touchmove:"up"==b&&(e=l.touchend),e))a[c](e,d,f);if(l.mouse&&("down"==b?e="mousedown":"move"==b?e="mousemove":"up"==b&&(e="mouseup"),e))a[c](e,d,f)}function ua(a){for(;0<I.length&&!(100>=a-I[0].time);)I.shift()}function La(a){D(window,"up",va,!0);D(window,"move",wa,!0);I=[];var b=a.changedTouches&&0<a.changedTouches.length?

@@ -1,3 +1,5 @@
+<include url="%SWFPATH%/skin/vtourskin.xml" />
+
 <security cors="anonymous">
 	<crossdomainxml url="%SWFPATH%/crossdomain.xml" />
 	<allowdomain domain="*" />
@@ -9,8 +11,6 @@
 <include url="%SWFPATH%/skin/snow.xml" />
 @[ } /]
 <include url="%SWFPATH%/skin/contextmenu.xml" />
-
-<include url="%SWFPATH%/skin/vtourskin.xml" />
 
 <!-- startup action - load the first scene -->
 <action name="startup" autorun="onstart">

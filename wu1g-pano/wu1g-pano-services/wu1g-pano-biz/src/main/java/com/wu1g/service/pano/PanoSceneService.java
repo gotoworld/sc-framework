@@ -17,6 +17,7 @@ import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.api.pano.IPanoSceneService;
 import com.wu1g.dao.pano.IPanoSceneDao;
+import com.wu1g.framework.util.KrSceneImageUtil;
 import com.wu1g.vo.pano.PanoScene;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,16 +103,12 @@ public class PanoSceneService   extends BaseService implements IPanoSceneService
 			beans=(List<PanoScene>) panoSceneDao.findDataIsList(bean);
 			if(beans!=null)
 				beans.forEach(scene->{
-					scene.setBreakdownImg(getBreakdownImg(bean.getProjCode(), scene.getSceneSrc()));
+					scene.setBreakdownImg(KrSceneImageUtil.getBreakdownImg(bean.getProjCode(), scene.getSceneSrc()));
 				});
 		} catch (Exception e) {	
 			log.error("信息查询失败!", e);
 		}	
 		return beans;	
-	}
-	private String getBreakdownImg(String projCode, String sceneSrc) {
-		sceneSrc = sceneSrc.substring(sceneSrc.lastIndexOf("/") + 1, sceneSrc.indexOf("."));
-		return "/upload/image/n4/" + projCode + "/vtour/panos/" + sceneSrc + ".tiles/";
 	}
 //	@Override
 //	public PanoScene findDataById(PanoScene bean){

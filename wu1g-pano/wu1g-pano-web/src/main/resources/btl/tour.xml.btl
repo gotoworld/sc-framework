@@ -8,7 +8,7 @@
 			onloadcomplete="js(get_comm(););"
 	        />
 	@[ } /]
-	@[  include("public.xml.btl"){} /]
+	@[  include("public.xml.btl",{isEdit:true}){} /]
 	@[ if(proj.isPlanetoid==1){ /]
 	<!-- 小行星开场 -->
     <skin_settings littleplanetintro="true" />

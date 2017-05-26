@@ -1148,8 +1148,8 @@
 
 	<style name="showtxt_hotspotstyle"
            url="%SWFPATH%/skin/animatedhotspot_white.png"
-           framewidth="128" frameheight="128" frame="0" lastframe="24"
-		   tooltip="" scale="0.5" edge="top" oy="0" distorted="false" onloaded="do_crop_animation(128,128,24);add_all_the_time_tooltip_2();" />
+           framewidth="64" frameheight="64" frame="0" lastframe="24"
+		   tooltip="" scale="0.5" edge="top" oy="0" distorted="false" onloaded="do_crop_animation(64,64,24);add_all_the_time_tooltip_2();" />
 	<action name="add_all_the_time_tooltip_2">
 		txtadd(tooltipname, 'tooltip_', get(name));
 		addplugin(get(tooltipname)); txtadd(plugin[get(tooltipname)].parent, 'hotspot[',get(name),']');

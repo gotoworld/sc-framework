@@ -132,7 +132,7 @@ function init_xml_data(scene) {
         if (typeof(xml_data_h) != 'undefined' && xml_data_h != null && xml_data_h != '') {
             for (var i = 0; i < xml_data_h.length; i++) {
                 var hotdata = xml_data_h[i];
-                krpano.call("addhotspot(" + hotdata.hname + ");set(hotspot[" + hotdata.hname + "].url," + hotdata.url + ");set(hotspot[" + hotdata.hname + "].tooltip," + hotdata.title + ");set(hotspot[" + hotdata.hname + "].ath," + hotdata.ath + ");set(hotspot[" + hotdata.hname + "].atv," + hotdata.atv + ");set(hotspot[" + hotdata.hname + "].rotate," + hotdata.rotate + ");set(hotspot[" + hotdata.hname + "].scale," + hotdata.scale + ");set(hotspot[" + hotdata.hname + "].distorted,true);set(hotspot[" + hotdata.hname + "].depth," + hotdata.depth + ");set(hotspot[" + hotdata.hname + "].onclick,remove_picspots());");
+                krpano.call("addhotspot(" + hotdata.hname + ");set(hotspot[" + hotdata.hname + "].style,showtxt_hotspotstyle);set(hotspot[" + hotdata.hname + "].tooltip," + hotdata.title + ");set(hotspot[" + hotdata.hname + "].ath," + hotdata.ath + ");set(hotspot[" + hotdata.hname + "].atv," + hotdata.atv + ");set(hotspot[" + hotdata.hname + "].rotate," + hotdata.rotate + ");set(hotspot[" + hotdata.hname + "].scale," + hotdata.scale + ");set(hotspot[" + hotdata.hname + "].distorted,true);set(hotspot[" + hotdata.hname + "].depth," + hotdata.depth + ");set(hotspot[" + hotdata.hname + "].onclick,remove_picspots());");
             }
         }
         xml_data_h = xml_data_n.richSpots;
@@ -249,12 +249,14 @@ function up_pic_func() {
     uploader.init();
     return uploader;
 }
-var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','A','b','c','d','e','f','g','h','i','J','k','L','m'];
 function generateMixed(n) {
     var res = "";
     for (var i = 0; i < n; i++) {
-        var id = Math.ceil(Math.random() * 10);
-        res += chars[id];
+        var id = Math.ceil(Math.random() * 18);
+        var x=chars[id];
+        if(x)
+        res += x;
     }
     return res;
 }

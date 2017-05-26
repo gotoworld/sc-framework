@@ -1,5 +1,5 @@
 <krpano version="1.19" title="${proj.name}-场景编辑">
-@[  include("public.xml.btl"){} /]
+@[  include("public.xml.btl",{isEdit:false}){} /]
 	<!-- scene缩略列表弹窗 -->
 	<layer name="scene_thumb_container" style="container" width="290" height="240" bgcapture="false" bgalpha="0.7" align="center" visible="false">
 		<!-- 标题 -->

@@ -133,4 +133,8 @@ public class KrSceneImageUtil {
             );
         }
     }
+    public static String getBreakdownImg(String projCode, String sceneSrc) {
+        sceneSrc = sceneSrc.substring(sceneSrc.lastIndexOf("/") + 1, sceneSrc.indexOf("."));
+        return "/upload/image/n4/" + projCode + "/vtour/panos/" + sceneSrc + ".tiles/";
+    }
 }

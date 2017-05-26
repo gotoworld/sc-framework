@@ -177,14 +177,9 @@
     
 	<!-- 显示添加热点 -->    
 	<action name="add_hotspot" keep="true">
-	    if(hs_n GT 0,
-			inc(hs_n,1);
-		  ,
-		    <!-- 设置初始序号为1 -->
-			set(hs_n,1);
-		);
-        show_notice_msg('左键拖动热点进行定位');
-		
+		<!-- 生成随机数 -->
+		jsget(hs_n,generateMixed(22));
+        show_notice_msg('左键拖动热点进行定位,'+get(hs_n)+'');
 		<!-- 生成热点 -->
 		<!-- 取得当前视角 -->
 		copy(hlookat,view.hlookat);

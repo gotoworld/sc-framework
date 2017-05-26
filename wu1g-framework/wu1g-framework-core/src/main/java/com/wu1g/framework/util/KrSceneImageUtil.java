@@ -103,7 +103,7 @@ public class KrSceneImageUtil {
     }
     public StringBuffer getSceneImage(final String path) {
         try {
-            int tilesize = 64;
+            int tilesize = 512;
             String newPath = IOUtil.escapeRemoteToLocal(path);
             try {
                 //  xx.tiles/b/l1/1/l1_b_1_1.jpg
@@ -115,17 +115,17 @@ public class KrSceneImageUtil {
                     tilesize = getTitleSize( new File(newPath+"/b/l1/01/l1_b_01_01.jpg"));
                 }
             } catch (Exception e) {
-                tilesize=256;
+                tilesize=512;
                 log.error("获取全景切图分辨率异常!",e);
             }
 //        System.out.println(path);
-            StringBuffer sb = new StringBuffer("\t\t<image type=\"CUBE\" multires=\"true\" tilesize=\"" + tilesize + "\" if=\"!webvr.isenabled\">\n");
+            StringBuffer sb = new StringBuffer("\t<image type=\"CUBE\" multires=\"true\" tilesize=\"" + tilesize + "\" if=\"!webvr.isenabled\">\n");
             getFile("",path,newPath + "/b", sb);
             sb.append("\t\t</image>");
             return sb;
         } catch (Exception e) {
             return new StringBuffer(
-                    "            <image type=\"CUBE\" multires=\"true\" if=\"!webvr.isenabled\">\n" +
+                    "<image type=\"CUBE\" multires=\"true\" if=\"!webvr.isenabled\">\n" +
                     "                <level>\n" +
                     "                    <cube url=\"" + path + "%s/l1/%v/l1_%s_%v_%h.jpg\" />\n" +
                     "                </level>\n" +

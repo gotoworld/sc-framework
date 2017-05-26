@@ -125,7 +125,7 @@ public class KrSceneImageUtil {
             return sb;
         } catch (Exception e) {
             return new StringBuffer(
-                    "<image type=\"CUBE\" multires=\"true\" if=\"!webvr.isenabled\">\n" +
+                    "      <image type=\"CUBE\" multires=\"true\" if=\"!webvr.isenabled\">\n" +
                     "                <level>\n" +
                     "                    <cube url=\"" + path + "%s/l1/%v/l1_%s_%v_%h.jpg\" />\n" +
                     "                </level>\n" +

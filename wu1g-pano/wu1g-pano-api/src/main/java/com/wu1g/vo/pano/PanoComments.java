@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -96,4 +95,17 @@ public class PanoComments extends BaseVO {
      * 场景标题
      */
     private String sceneTitle;
+
+    /**
+     * 水平视角
+     */
+    private String hlookat;
+    /**
+     * 垂直视角
+     */
+    private String vlookat;
+    /**
+     * 排序
+     */
+    private Integer orderNo;
 }

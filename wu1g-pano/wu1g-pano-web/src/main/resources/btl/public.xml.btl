@@ -15,8 +15,8 @@
 <!-- startup action - load the first scene -->
 <action name="startup" autorun="onstart">
 	if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
-	loadscene(get(startscene), null, MERGE);
-	if(startactions !== null, startactions() );
+    loadscene(get(scene[get(startscene)].name), null, MERGE);
+    if(startactions !== null, startactions() );
 	
 	<!-- sceneJump(); -->
 </action>

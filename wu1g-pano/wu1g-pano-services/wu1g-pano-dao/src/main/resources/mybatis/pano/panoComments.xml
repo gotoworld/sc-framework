@@ -124,6 +124,9 @@
         select
         <include refid="Base_Column_List"/>
         ,t2.scene_title as "sceneTitle"
+        ,t2.hlookat as "hlookat"
+        ,t2.vlookat as "vlookat"
+        ,t2.order_no as "orderNo"
         ,t3.name as "projTitle"
         ,t3.id as "projId"
         from pano_comments t1

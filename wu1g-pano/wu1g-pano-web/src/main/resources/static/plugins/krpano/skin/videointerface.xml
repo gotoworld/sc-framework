@@ -191,9 +191,9 @@
 			<!--播放时间-->
 			<layer name="skin_video_min_time" style="skintext" align="left" x.desktop="68" x.no-desktop="28"  y="0" width="38" html="0:00" />
 						<!-- seek bar -->
-			<layer name="skin_video_seekbar_container" type="container" align="left" x.desktop="114" x.no-desktop="74" width.desktop="-277"  width.no-desktop="-224"  height="100%" bgcapture="true" ondown="stopdelayedcall(skin_autohide);skin_video_ondownseeking();" onup="js(get_time(get(plugin[video].time),get(plugin[video].totaltime),get(seekpos) ));">
+			<layer name="skin_video_seekbar_container" type="container" align="left" x.desktop="114" x.no-desktop="74" width.desktop="-277"  width.no-desktop="-224"  height="100%" >
 				<!--播放进度条-->
-				<layer name="skin_video_seekbar" type="container" bgcolor="0xFFFFFF" bgalpha="0.25" align="left" width.desktop="80%"	 width.no-desktop="80%" height="2" >
+				<layer name="skin_video_seekbar" type="container"  align="left" width.desktop="80%" width.no-desktop="80%" height="100%" bgcapture="true" ondown="stopdelayedcall(skin_autohide);skin_video_ondownseeking();" onup="js(get_time(get(plugin[video].time),get(plugin[video].totaltime),get(seekpos) ));">
 					<layer name="skin_video_loadbar" type="container" bgcolor="0xffffff" bgalpha="0.5" align="left" width="0" height="2"/>
 					<layer name="skin_video_viewbar" type="container" bgcolor="0xfe5500" bgalpha="1.0" align="left" width="0" height="2"/>
 					<layer name="skin_video_seekpos" type="container" bgcolor="0xfe5500" bgalpha="1.0" align="left" edge="center" x="0" bgroundedge="8" width="10" height="10" />

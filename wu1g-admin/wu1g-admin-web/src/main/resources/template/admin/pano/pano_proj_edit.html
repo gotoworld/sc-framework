@@ -101,15 +101,16 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group clearfix">
-								<label class="col-md-3 control-label"  for="bean-categoryId">类目：</label>
+								<label class="col-md-3 control-label"  for="bean-categoryId" >类目：</label>
 								<div class="col-md-12">
 									@[ var treeIndex=1; /]
 									@[ var _band_flag=bean.categoryId; /]
-									<select  class="form-control" name="categoryId" id="bean-categoryId">
-										<option>请选择..</option>
+									<select  class="form-control" name="categoryId" id="bean-categoryId" required="" aria-required="true" aria-invalid="true">
 										@[ for(b in nodes !){ /]
 										<option  value="${b.id}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}</option>
 										@[ layout("pano_category_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.categoryId}){} /]
+										@[ }elsefor{ /]
+										<option>请选择..</option>
 										@[ } /]
 									</select>
 									<span id="bean-categoryId-error" class="help-block m-b-none"></span>

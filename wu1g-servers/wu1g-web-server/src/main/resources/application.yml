@@ -77,7 +77,7 @@ wu1g:
     win: d:/home/krpano/win/krpanotools64.exe
     linux: /home/wu1g/software/krpano/krpanotools
     mac: /Users/panpan/soft/krpano-1.19-pr8
-    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
+    config:  makepano -config=templates/vtour-vr.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
   common:
     logClear: #清理用户操作日志
       enable: true #是否启用

@@ -1,0 +1,4 @@
+logging:
+#  file: logs/wu1g-service-server.log
+  level:
+    ROOT: INFO

@@ -1,13 +1,3 @@
-/*
- * 基础Service类接口
- *
- * VERSION  DATE        BY              REASON
- * -------- ----------- --------------- ------------------------------------------
- * 1.00     2015.01.13  wuxiaogang      程序・发布
- * -------- ----------- --------------- ------------------------------------------
- * Copyright 2015 baseos  System. - All Rights Reserved.
- *
- */
 package com.wu1g.framework.service;
 
 import org.apache.shiro.SecurityUtils;
@@ -19,17 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.Observable;
 
 /**
- * <p>
- * service 基类 放置service通用资源或公共方法
- * </p>
- * <ol>
- * [提供机能]
- * <li>taskExecutor 线程池
- * <li>jedisHelper 缓存服务
- * <li>Subject 权限验证
- * </ol>
+ * <p> service 基类 放置service通用资源或公共方法
  */
-@Service
 public abstract class BaseService extends Observable {
 //	/** 线程池 */
 //	@Autowired

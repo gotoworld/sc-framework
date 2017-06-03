@@ -1,5 +1,6 @@
 package com.wu1g.service.pano;
 
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.api.pano.IPanoMapService;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class PanoMapService extends BaseService implements IPanoMapService {
     /**

@@ -12,7 +12,7 @@
 
     <artifactId>wu1g-web-server</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <dependencies>
         <!--<dependency>-->

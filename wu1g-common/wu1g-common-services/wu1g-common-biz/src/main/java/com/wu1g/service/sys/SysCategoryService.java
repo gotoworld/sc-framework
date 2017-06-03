@@ -3,6 +3,7 @@ package com.wu1g.service.sys;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.api.sys.ISysCategoryService;
 import com.wu1g.dao.sys.ISysCategoryDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class SysCategoryService extends BaseService implements ISysCategoryService {
     @Autowired

@@ -2,6 +2,7 @@ package com.wu1g.service.sys;
 
 import com.wu1g.api.sys.ISysMessageService;
 import com.wu1g.dao.sys.ISysMessageDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.vo.sys.SysMessage;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class SysMessageService extends BaseService implements ISysMessageService {
     @Autowired

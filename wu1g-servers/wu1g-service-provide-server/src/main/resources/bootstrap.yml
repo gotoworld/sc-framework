@@ -1,6 +1,6 @@
 spring:
   application:
-    name: wu1g-service-server
+    name: ${feign.name}
   cloud:
     config:
       uri: http://localhost:8888
@@ -25,3 +25,7 @@ hystrix:
     maxConcurrentConnections: 20
     bus:
       enabled: true
+feign:
+  name: wu1g-service-server
+  okhttp:
+    enabled: true

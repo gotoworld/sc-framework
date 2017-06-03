@@ -3,6 +3,7 @@ package com.wu1g.service.sys;
 import com.wu1g.api.sys.ISysNewsService;
 import com.wu1g.dao.sys.ISysNewsDao;
 import com.wu1g.dao.sys.ISysNewsVsCategoryDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.vo.sys.SysNews;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class SysNewsService extends BaseService implements ISysNewsService {
     @Autowired

@@ -3,6 +3,7 @@ package com.wu1g.service.sys;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.api.sys.ISysVariableService;
 import com.wu1g.dao.sys.ISysVariableDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.vo.NodeTree;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * <p>数据字典 业务处理实现类。
  */
-@Service
+@FeignService
 @Slf4j
 public class SysVariableService extends BaseService implements ISysVariableService {
     /**

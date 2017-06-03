@@ -16,6 +16,7 @@ import com.wu1g.vo.org.OrgDept;
 import com.wu1g.vo.org.OrgUser;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -29,83 +30,83 @@ public interface IOrgUserService {
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(value = actPrefix + "/saveOrUpdateData")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
     public String saveOrUpdateData(OrgUser bean) throws Exception;
 
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(value = actPrefix + "/updateData")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/updateData")
     public String updateData(OrgUser bean) throws Exception;
 
     /**
      * <p>物理删除。
      */
-    @RequestMapping(value = actPrefix + "/deleteData")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteData")
     public String deleteData(OrgUser bean) throws Exception;
 
     /**
      * <p>恢复逻辑删除的数据 单条。
      */
-    @RequestMapping(value = actPrefix + "/recoveryDataById")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/recoveryDataById")
     public String recoveryDataById(OrgUser bean) throws Exception;
 
     /**
      * <p>逻辑删除 单条。
      */
-    @RequestMapping(value = actPrefix + "/deleteDataById")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteDataById")
     public String deleteDataById(OrgUser bean) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    @RequestMapping(value = actPrefix + "/findDataIsPage")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsPage")
     public List<OrgUser> findDataIsPage(OrgUser bean);
 
     /**
      * <p>信息列表。
      */
-    @RequestMapping(value = actPrefix + "/findDataIsList")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsList")
     public List<OrgUser> findDataIsList(OrgUser bean);
 
     /**
      * <p>信息详情。
      */
-    @RequestMapping(value = actPrefix + "/findDataById")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataById")
     public OrgUser findDataById(OrgUser bean);
 
     /**
      * <p>获取用户角色集合。
      */
-    @RequestMapping(value = actPrefix + "/findRoleDataIsList")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findRoleDataIsList")
     public List<AuthRole> findRoleDataIsList(OrgUser bean);
 
     /**
      * <p>获取用户所在部门集合。
      */
-    @RequestMapping(value = actPrefix + "/findDeptDataIsList")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDeptDataIsList")
     public List<OrgDept> findDeptDataIsList(OrgUser bean);
 
     /**
      * <p>某一种角色所有用户。
      */
-    @RequestMapping(value = actPrefix + "/findUserList")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserList")
     public List<OrgUser> findUserList(OrgUser orgUserBean);
 
     /**
      * <p>某一种角色所有用户。
      */
-    @RequestMapping(value = actPrefix + "/findUserIsPage")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserIsPage")
     public List<OrgUser> findUserIsPage(OrgUser orgUserBean);
 
     /**
      * <p>判断用户id是否存在
      */
-    @RequestMapping(value = actPrefix + "/isUidYN")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/isUidYN")
     public String isUidYN(String uid);
     /**
      * <p>密码修改
      */
-    @RequestMapping(value = actPrefix + "/updatePwd")
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/updatePwd")
     public String updatePwd(OrgUser dto) throws Exception;
 }

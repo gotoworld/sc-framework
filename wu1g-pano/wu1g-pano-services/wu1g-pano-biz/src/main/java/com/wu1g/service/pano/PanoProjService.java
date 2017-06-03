@@ -9,6 +9,7 @@ import com.wu1g.dao.pano.IPanoMapDao;
 import com.wu1g.dao.pano.IPanoProjDao;
 import com.wu1g.dao.pano.IPanoSceneDao;
 import com.wu1g.dao.pano.IPanoSpotsDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.config.AppConfig;
 import com.wu1g.framework.service.BaseService;
@@ -33,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@FeignService
 @Slf4j
 public class PanoProjService extends BaseService implements IPanoProjService {
     @Autowired

@@ -3,6 +3,7 @@ package com.wu1g.service.pano;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.api.pano.IPanoCommentsService;
 import com.wu1g.dao.pano.IPanoCommentsDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.vo.pano.PanoComments;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class PanoCommentsService extends BaseService implements IPanoCommentsService {
     @Autowired

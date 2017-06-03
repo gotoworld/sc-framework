@@ -3,6 +3,7 @@ package com.wu1g.service.auth;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.api.auth.IAuthPermService;
 import com.wu1g.dao.auth.IAuthPermDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.IdUtil;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@FeignService
 @Slf4j
 public class AuthPermService extends BaseService implements IAuthPermService {
     @Autowired

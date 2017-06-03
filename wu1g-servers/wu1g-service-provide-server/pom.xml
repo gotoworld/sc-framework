@@ -21,55 +21,20 @@
         <start-class>com.wu1g.ServiceServer</start-class>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.wu1g.framework</groupId>
+            <artifactId>wu1g-framework-server</artifactId>
+            <version>${wu1g.framework.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter</artifactId>
-        </dependency>
-        <!-- spring-cloud begin -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
-        </dependency>
-
-        <!-- spring-cloud end -->
         <dependency>
             <groupId>com.wu1g.common</groupId>
-            <artifactId>wu1g-common-server</artifactId>
+            <artifactId>wu1g-common-biz</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.wu1g.pano</groupId>
-            <artifactId>wu1g-pano-server</artifactId>
+            <artifactId>wu1g-pano-biz</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

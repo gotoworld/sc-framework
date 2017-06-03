@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.wu1g.api.auth.IAuthRoleService;
 import com.wu1g.dao.auth.IAuthRoleDao;
 import com.wu1g.dao.auth.IAuthRoleVsPermDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.vo.auth.AuthRole;
@@ -20,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@FeignService
 @Slf4j
 public class AuthRoleService extends BaseService implements IAuthRoleService {
     @Autowired

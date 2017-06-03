@@ -17,6 +17,7 @@ import com.wu1g.dao.auth.IAuthUserVsRoleDao;
 import com.wu1g.dao.org.IOrgDeptDao;
 import com.wu1g.dao.org.IOrgUserDao;
 import com.wu1g.dao.org.IOrgDeptVsUserDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.framework.util.ValidatorUtil;
@@ -37,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@FeignService
 @Slf4j
 public class OrgUserService extends BaseService implements IOrgUserService {
     @Autowired

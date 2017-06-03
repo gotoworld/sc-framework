@@ -13,6 +13,7 @@ package com.wu1g.service.pano;
 
 
 import com.github.pagehelper.PageHelper;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
 import com.wu1g.api.pano.IPanoSceneService;
@@ -28,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class PanoSceneService   extends BaseService implements IPanoSceneService {
 	/**全景_场景 Dao接口类*/

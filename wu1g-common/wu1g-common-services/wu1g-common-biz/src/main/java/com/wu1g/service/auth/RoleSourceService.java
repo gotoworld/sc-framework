@@ -13,6 +13,7 @@ package com.wu1g.service.auth;
 import com.wu1g.api.auth.IRoleSourceService;
 import com.wu1g.dao.auth.IAuthPermDao;
 import com.wu1g.dao.auth.IAuthRoleDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.vo.auth.AuthPerm;
 import com.wu1g.vo.auth.AuthRole;
 import com.wu1g.framework.service.BaseService;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service("roleSourceService")
+@FeignService("roleSourceService")
 @Slf4j
 public class RoleSourceService extends BaseService implements IRoleSourceService {
 

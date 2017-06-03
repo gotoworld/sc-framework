@@ -3,6 +3,7 @@ package com.wu1g.service.org;
 import com.github.pagehelper.PageHelper;
 import com.wu1g.api.org.IOrgDeptService;
 import com.wu1g.dao.org.IOrgDeptDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
 import com.wu1g.framework.util.CommonConstant;
@@ -17,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class OrgDeptService extends BaseService implements IOrgDeptService {
     @Autowired

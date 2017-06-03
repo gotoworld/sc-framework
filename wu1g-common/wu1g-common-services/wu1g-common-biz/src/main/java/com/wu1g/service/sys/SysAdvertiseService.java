@@ -2,6 +2,7 @@ package com.wu1g.service.sys;
 
 import com.wu1g.api.sys.ISysAdvertiseService;
 import com.wu1g.dao.sys.ISysAdvertiseDao;
+import com.wu1g.framework.annotation.FeignService;
 import com.wu1g.vo.sys.SysAdvertise;
 import com.wu1g.framework.annotation.RfAccount2Bean;
 import com.wu1g.framework.service.BaseService;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class SysAdvertiseService extends BaseService implements ISysAdvertiseService {
     @Autowired

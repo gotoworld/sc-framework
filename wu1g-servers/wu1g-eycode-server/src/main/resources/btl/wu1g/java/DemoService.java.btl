@@ -9,6 +9,7 @@ import com.wu1g.framework.util.CommonConstant;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.wu1g.framework.annotation.FeignService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@FeignService
 @Slf4j
 public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${tcfg.tableNameFormat!}Service {
     @Autowired

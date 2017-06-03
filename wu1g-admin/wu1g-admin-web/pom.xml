@@ -14,7 +14,7 @@
         <dependency>
             <groupId>com.wu1g.framework</groupId>
             <artifactId>wu1g-framework-web</artifactId>
-            <version>1.0</version>
+            <version>${wu1g.framework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.wu1g.common</groupId>

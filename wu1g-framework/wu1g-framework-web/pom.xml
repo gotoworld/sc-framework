@@ -21,12 +21,12 @@
         <dependency>
             <groupId>com.wu1g.framework</groupId>
             <artifactId>wu1g-framework-core</artifactId>
-            <version>1.0</version>
+            <version>${wu1g.framework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.wu1g.framework</groupId>
             <artifactId>wu1g-framework-api</artifactId>
-            <version>1.0</version>
+            <version>${wu1g.framework.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>

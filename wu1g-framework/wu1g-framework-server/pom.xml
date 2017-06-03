@@ -54,6 +54,12 @@
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.wu1g.framework</groupId>
+            <artifactId>wu1g-framework-core</artifactId>
+            <version>${wu1g.framework.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

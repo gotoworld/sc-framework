@@ -33,6 +33,7 @@
         <module>wu1g-framework-core</module>
         <module>wu1g-framework-api</module>
         <module>wu1g-framework-service</module>
+        <module>wu1g-framework-server</module>
         <module>wu1g-framework-web</module>
         <module>wu1g-framework-web-restful</module>
     </modules>

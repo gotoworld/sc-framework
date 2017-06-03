@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
+import static java.lang.String.format;
+
 /** 服务发现错误、例外处理
  * Created by Administrator on 17-6-1.
  */

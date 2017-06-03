@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.wu1g.framework</groupId>
             <artifactId>wu1g-framework-web-restful</artifactId>
-            <version>1.0</version>
+            <version>${wu1g.framework.version}</version>
         </dependency>
     </dependencies>
 </project>

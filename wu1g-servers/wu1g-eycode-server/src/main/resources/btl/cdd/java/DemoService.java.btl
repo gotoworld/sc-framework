@@ -4,6 +4,7 @@ import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
 import ${scfg._dao_pkg}.I${tcfg.tableNameFormat!}${scfg._dao_suffix!};
 import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
 import ${scfg._dto_pkg}.${tcfg.tableNameFormat!}Dto;
+import com.cddang.order.OrderErrorCode;
 import com.cddang.common.constant.PortalConstant;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -42,7 +43,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 }
             } catch (Exception e) {
                 log.error("信息保存异常!", e);
-                throw new Exception("信息保存异常!");
+                throw new ServiceException(OrderErrorCode.defaultError,"信息保存异常!");
             }
         }
         return msg;
@@ -61,7 +62,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 }
             } catch (Exception e) {
                 log.error("物理删除异常!", e);
-                throw new Exception(e.getMessage());
+                throw new ServiceException(OrderErrorCode.defaultError,e.getMessage());
             }
         }
         return msg;
@@ -81,7 +82,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 }
             } catch (Exception e) {
                 log.error("逻辑删除异常!", e);
-                throw new Exception(e.getMessage());
+                throw new ServiceException(OrderErrorCode.defaultError,e.getMessage());
             }
         }
         return msg;
@@ -100,7 +101,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
            pageInfo.setList(copyTo(pageInfo.getList(), ${tcfg.tableNameFormat!}Dto.class));
        } catch (Exception e) {
            log.error("信息查询异常!", e);
-           throw new RuntimeException("信息查询异常!");
+           throw new ServiceException(OrderErrorCode.defaultError,"信息查询异常!");
        }
        return pageInfo;
     }
@@ -115,7 +116,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
             dtos = copyTo(${tableNameL}${scfg._dao_suffix!}.findDataIsList(entity), ${tcfg.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new ServiceException(OrderErrorCode.defaultError,"信息查询异常!");
         }
         return dtos;
     }
@@ -130,7 +131,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
             dto1 = copyTo(${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(entity),${tcfg.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new ServiceException(OrderErrorCode.defaultError,"信息查询异常!");
         }
         return dto1;
     }
@@ -144,11 +145,11 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(entity, ${tcfg.tableNameFormat!}.class);
                 if(${tableNameL}${scfg._dao_suffix!}.recoveryDataById(entity)==0){
-					throw new RuntimeException("数据不存在!");
+					throw new ServiceException(OrderErrorCode.defaultError,"数据不存在!");
                 }
             } catch (Exception e) {
                 log.error("数据恢复异常!", e);
-                throw new Exception(e.getMessage());
+                throw new ServiceException(OrderErrorCode.defaultError,e.getMessage());
             }
         }
         return msg;

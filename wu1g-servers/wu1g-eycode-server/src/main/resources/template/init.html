@@ -182,8 +182,8 @@
             var _my_pkg=$('#_my_pkg').val();
             var httpMyPkg='';
             if(_my_pkg){
-                _my_pkg='.'+_my_pkg;
                 httpMyPkg=_my_pkg;
+                _my_pkg='.'+_my_pkg;
             }
             switch(tempName){
                 case 'wu1g':{
@@ -207,7 +207,7 @@
                     $('._dao_pkg').val('com.cddang'+_my_pkg+'.mapper');
                     $('._api_pkg').val('com.cddang'+_my_pkg+'.api');
                     $('._biz_pkg').val('com.cddang'+_my_pkg+'.service');
-                    $('._web_pkg').val('com.cddang'+_my_pkg+'.web.controller.admin');
+                    $('._web_pkg').val('com.cddang'+_my_pkg+'.web.controller');
                     $('._view_pkg').val('');
                     $('._web_http').each(function(){
                         $(this).val('/boss/'+httpMyPkg+'/'+$(this).attr('data'));

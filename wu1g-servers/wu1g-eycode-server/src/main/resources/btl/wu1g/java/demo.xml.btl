@@ -100,10 +100,10 @@
         @[ } /]
         @[ if(null!=scfg._col_created){ /]
         <if test="dateBegin!=null and dateBegin!=''">
-            <![CDATA[ and DATE_FORMAT(t1.${scfg._col_created},'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') /] /]>
+            <![CDATA[ and DATE_FORMAT(t1.${scfg._col_created},'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
         </if>
         <if test="dateEnd!=null and dateEnd!=''">
-            <![CDATA[ and DATE_FORMAT(t1.${scfg._col_created},'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') /] /]>
+            <![CDATA[ and DATE_FORMAT(t1.${scfg._col_created},'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
         </if>
         @[ } /]
     </sql>

@@ -1,6 +1,6 @@
 package ${scfg._dao_pkg};
 
-import com.cddang.activity.modal.IEntity;
+import ${scfg._domain_pkg}.IEntity;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

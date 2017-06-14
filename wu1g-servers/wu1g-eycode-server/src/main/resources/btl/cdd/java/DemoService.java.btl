@@ -28,7 +28,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(${tcfg.tableNameFormat!}Dto dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
@@ -46,14 +46,14 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 throw new ServiceException(OrderErrorCode.defaultError,"信息保存异常!");
             }
         }
-        return msg;
+        return result;
     }
     @[ } /]
 
     @[ if ("1"==scfg._del) { /]
     @Override
     public String deleteData(${tcfg.tableNameFormat!}Dto dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
@@ -65,7 +65,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 throw new ServiceException(OrderErrorCode.defaultError,e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
     @[ } /]
 
@@ -73,7 +73,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
@@ -85,7 +85,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 throw new ServiceException(OrderErrorCode.defaultError,e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
     @[ } /]
 
@@ -110,37 +110,37 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
     @[ if ("1"==scfg._list) { /]
     @Override
     public List<${tcfg.tableNameFormat!}Dto> findDataIsList(${tcfg.tableNameFormat!}Dto dto) throws Exception {
-        List<${tcfg.tableNameFormat!}Dto> dtos = null;
+        List<${tcfg.tableNameFormat!}Dto>  results = null;
         try {
             ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
-            dtos = copyTo(${tableNameL}${scfg._dao_suffix!}.findDataIsList(entity), ${tcfg.tableNameFormat!}Dto.class);
+             results = copyTo(${tableNameL}${scfg._dao_suffix!}.findDataIsList(entity), ${tcfg.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
             throw new ServiceException(OrderErrorCode.defaultError,"信息查询异常!");
         }
-        return dtos;
+        return  results;
     }
      @[ } /]
 
     @[ if ("1"==scfg._detail) { /]
     @Override
     public ${tcfg.tableNameFormat!}Dto findDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
-        ${tcfg.tableNameFormat!}Dto dto1 = null;
+        ${tcfg.tableNameFormat!}Dto result = null;
         try {
             ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
-            dto1 = copyTo(${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(entity),${tcfg.tableNameFormat!}Dto.class);
+            result = copyTo(${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(entity),${tcfg.tableNameFormat!}Dto.class);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
             throw new ServiceException(OrderErrorCode.defaultError,"信息查询异常!");
         }
-        return dto1;
+        return result;
     }
     @[ } /]
 
      @[ if ("1"==scfg._recovery && null!=scfg._col_del) { /]
     @Override
     public String recoveryDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 ${tcfg.tableNameFormat!} entity = copyTo(entity, ${tcfg.tableNameFormat!}.class);
@@ -152,7 +152,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 throw new ServiceException(OrderErrorCode.defaultError,e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
     @[ } /]
 }

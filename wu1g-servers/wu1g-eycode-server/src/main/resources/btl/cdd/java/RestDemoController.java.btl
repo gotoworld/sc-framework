@@ -13,8 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.cddang.activity.web.controller.BaseController;
-import com.cddang.activity.web.utils.PageUtil;
+import ${scfg._web_pkg}.controller.BaseController;
+import ${scfg._web_pkg}.utils.PageUtil;
 import java.util.List;
 
 @RestController
@@ -109,28 +109,25 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!}Dto dto, BindingResult bindingResult) {
         log.info("${tcfg.tableNameFormat!}Controller save.........");
         Response result = new Response();
-        if (dto != null) {
-            try {
-                if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
-                    throw new RuntimeException("请不要重复提交!");
-                }
-                if (bindingResult.hasErrors()) {
-                    String errorMsg = "";
-                    List<ObjectError> errorList = bindingResult.getAllErrors();
-                    for (ObjectError error : errorList) {
-                        errorMsg += (error.getDefaultMessage()) + ";";
-                    }
-                    result = Response.error(errorMsg);
-                } else {
-                    result.message = ${tableNameL}Service.saveOrUpdateData(dto);
-                    result.data = dto.getId();
-                    request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
-                }
-            } catch (Exception e) {
-                result = Response.error(e.getMessage());
+        try {
+            if (dto == null) throw new RuntimeException("参数获取异常!");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
+                throw new RuntimeException("请不要重复提交!");
             }
-        } else {
-            result = Response.error("参数获取异常!");
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result.message = ${tableNameL}Service.saveOrUpdateData(dto);
+                result.data = dto.getId();
+                request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
         }
         return result;
     }

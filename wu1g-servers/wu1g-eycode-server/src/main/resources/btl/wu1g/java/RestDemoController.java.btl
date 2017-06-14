@@ -119,9 +119,9 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!} dto, BindingResult bindingResult) {
         log.info("${tcfg.tableNameFormat!}Controller save.........");
-        if (dto == null) return Response.error("参数获取异常!");
         Response result = new Response();
         try {
+            if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }

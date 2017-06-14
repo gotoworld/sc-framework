@@ -142,9 +142,9 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	@ALogOperation(type="修改",desc="${tcfg.tableComment}")
 	public String save(@Validated ${tcfg.tableNameFormat!} dto,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
 		log.info("${tcfg.tableNameFormat!}Controller save.........");
-		if(dto==null) return Response.error("信息保存异常!");
 		Response result = new Response();
         try {
+		    if(dto==null) return Response.error("参数异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }

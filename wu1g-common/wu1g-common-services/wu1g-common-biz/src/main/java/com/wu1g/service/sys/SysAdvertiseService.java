@@ -26,7 +26,7 @@ public class SysAdvertiseService extends BaseService implements ISysAdvertiseSer
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysAdvertise dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -39,15 +39,15 @@ public class SysAdvertiseService extends BaseService implements ISysAdvertiseSer
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
-                throw new Exception("信息保存失败!");
+                throw new RuntimeException("信息保存失败!");
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public String deleteData(SysAdvertise dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysAdvertiseDao.deleteByPrimaryKey(dto)==0){
@@ -55,16 +55,16 @@ public class SysAdvertiseService extends BaseService implements ISysAdvertiseSer
                 }
             } catch (Exception e) {
                 log.error("物理删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(SysAdvertise dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysAdvertiseDao.deleteById(dto)==0){
@@ -72,53 +72,53 @@ public class SysAdvertiseService extends BaseService implements ISysAdvertiseSer
                 }
             } catch (Exception e) {
                 log.error("逻辑删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public List<SysAdvertise> findDataIsPage(SysAdvertise dto) throws Exception {
-        List<SysAdvertise> dtos = null;
+        List<SysAdvertise> results = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<SysAdvertise>) sysAdvertiseDao.findDataIsPage(dto);
+            results = (List<SysAdvertise>) sysAdvertiseDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     public List<SysAdvertise> findDataIsList(SysAdvertise dto) throws Exception {
-        List<SysAdvertise> dtos = null;
+        List<SysAdvertise> results = null;
         try {
-            dtos = (List<SysAdvertise>) sysAdvertiseDao.findDataIsList(dto);
+            results = (List<SysAdvertise>) sysAdvertiseDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     @RfAccount2Bean
     public SysAdvertise findDataById(SysAdvertise dto) throws Exception {
-        SysAdvertise dto1 = null;
+        SysAdvertise result = null;
         try {
-            dto1 = (SysAdvertise) sysAdvertiseDao.selectByPrimaryKey(dto);
+            result = (SysAdvertise) sysAdvertiseDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dto1;
+        return result;
     }
 
     @Override
     public String recoveryDataById(SysAdvertise dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysAdvertiseDao.recoveryDataById(dto)==0){
@@ -126,9 +126,9 @@ public class SysAdvertiseService extends BaseService implements ISysAdvertiseSer
                 }
             } catch (Exception e) {
                 log.error("数据恢复失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 }

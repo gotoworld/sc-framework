@@ -74,7 +74,7 @@ public class IOUtil extends IOUtils {
         //检查目录写权限
         if (!saveDirFile.canWrite()) {
             log.error("目录没有写权限，写入文件失败");
-            throw new Exception();
+            throw new RuntimeException("目录没有写权限，写入文件失败");
         }
         File file = new File(savePath + fileName);
         PrintWriter pfp = new PrintWriter(file, "utf-8");

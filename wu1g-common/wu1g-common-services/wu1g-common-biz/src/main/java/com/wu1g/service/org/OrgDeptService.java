@@ -27,7 +27,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String saveOrUpdateData(OrgDept bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -39,95 +39,95 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
                     orgDepartmentDao.insert(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     @RfAccount2Bean
     public String deleteData(OrgDept bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 orgDepartmentDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                result = "信息删除失败!";
+                log.error(result, e);
             }
         }
-        return msg;
+        return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String deleteDataById(OrgDept bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 orgDepartmentDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息删除失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<OrgDept> findDataIsPage(OrgDept bean) {
-        List<OrgDept> beans = null;
+        List<OrgDept> results = null;
         try {
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<OrgDept>) orgDepartmentDao.findDataIsPage(bean);
+            results = (List<OrgDept>) orgDepartmentDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public List<OrgDept> findDataIsList(OrgDept bean) {
-        List<OrgDept> beans = null;
+        List<OrgDept> results = null;
         try {
-            beans = (List<OrgDept>) orgDepartmentDao.findDataIsList(bean);
+            results = (List<OrgDept>) orgDepartmentDao.findDataIsList(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public OrgDept findDataById(OrgDept bean) {
-        OrgDept bean1 = null;
+        OrgDept result = null;
         try {
-            bean1 = (OrgDept) orgDepartmentDao.selectByPrimaryKey(bean);
+            result = (OrgDept) orgDepartmentDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
-        return bean1;
+        return result;
     }
 
     public String recoveryDataById(OrgDept bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 orgDepartmentDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息恢复失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<OrgDept> findDataTree(OrgDept bean) {
-        List<OrgDept> beans = findDataIsList(bean);
-        if (beans == null) {
+        List<OrgDept> results = findDataIsList(bean);
+        if (results == null) {
             return null;
         }
-        NodeTree<OrgDept> tree = new NodeTree(beans, "id", "parentId", "nodes");
+        NodeTree<OrgDept> tree = new NodeTree(results, "id", "parentId", "nodes");
         return tree.buildTree();
     }
 }

@@ -167,16 +167,16 @@ public class OrgUserController extends BaseController {
 	 * @throws IOException */
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isUidYN/{uid}")
 	public String isUidYN(@PathVariable("uid") String uid) throws IOException{
-		String msg="true";
+		String result="true";
 		JSONObject json = new JSONObject();
 	    PrintWriter out=response.getWriter();
 	    response.setContentType("application/json");
 		try {
-			msg=orgUserService.isUidYN(uid);
+			result=orgUserService.isUidYN(uid);
 		} catch (Exception e) {
-			//msg=e.getMessage();
+			//result=e.getMessage();
 		}
-		 if("0".equals(msg)){
+		 if("0".equals(result)){
 			 try {
 	            json.put("valid",true);
 	         } catch (JSONException e) {}
@@ -206,12 +206,12 @@ public class OrgUserController extends BaseController {
 					throw new RuntimeException("请不要重复提交!");
 				}
 				if (bindingResult.hasErrors()) {
-					String errorMsg = "";
+					String errorresult = "";
 					List<ObjectError> errorList = bindingResult.getAllErrors();
 					for (ObjectError error : errorList) {
-						errorMsg += (error.getDefaultMessage()) + ";";
+						errorresult += (error.getDefaultMessage()) + ";";
 					}
-					result = Response.error(errorMsg);
+					result = Response.error(errorresult);
 				}else{
 					OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 					if(orgUser !=null){
@@ -256,12 +256,12 @@ public class OrgUserController extends BaseController {
 					throw new RuntimeException("请不要重复提交!");
 				}
 				if (bindingResult.hasErrors()) {
-					String errorMsg = "";
+					String errorresult = "";
 					List<ObjectError> errorList = bindingResult.getAllErrors();
 					for (ObjectError error : errorList) {
-						errorMsg += (error.getDefaultMessage()) + ";";
+						errorresult += (error.getDefaultMessage()) + ";";
 					}
-					result = Response.error(errorMsg);
+					result = Response.error(errorresult);
 				}else{
 					OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 					if(orgUser !=null){

@@ -49,7 +49,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(PanoProj bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -80,93 +80,93 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     makePano(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public String deleteData(PanoProj bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 panoProjDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                result = "信息删除失败!";
+                log.error(result, e);
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
     public String deleteDataById(PanoProj bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 panoProjDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息删除失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public List<PanoProj> findDataIsPage(PanoProj bean) {
-        List<PanoProj> beans = null;
+        List<PanoProj> results = null;
         try {
             PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
-            beans = (List<PanoProj>) panoProjDao.findDataIsPage(bean);
+            results = (List<PanoProj>) panoProjDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     @Override
     public List<PanoProj> findDataIsList(PanoProj bean) {
-        List<PanoProj> beans = null;
+        List<PanoProj> results = null;
         try {
-            beans = (List<PanoProj>) panoProjDao.findDataIsList(bean);
+            results = (List<PanoProj>) panoProjDao.findDataIsList(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     @Override
     @RfAccount2Bean
     public PanoProj findDataById(PanoProj bean) {
-        PanoProj bean1 = null;
+        PanoProj result = null;
         try {
-            bean1 = (PanoProj) panoProjDao.selectByPrimaryKey(bean);
+            result = (PanoProj) panoProjDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
-        return bean1;
+        return result;
     }
 
     @Override
     public String recoveryDataById(PanoProj bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 panoProjDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息恢复失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     /**
@@ -219,9 +219,9 @@ public class PanoProjService extends BaseService implements IPanoProjService {
             }
             KrpanoUtil.makeTourXml(context,saveDir,bean);
         } catch (Exception e) {
-            String msg = "全景图生成失败!" + bean.getId() + "," + bean.getName();
-            log.error(msg, e);
-            throw new RuntimeException(msg);
+            String result = "全景图生成失败!" + bean.getId() + "," + bean.getName();
+            log.error(result, e);
+            throw new RuntimeException(result);
         }
     }
 
@@ -235,7 +235,7 @@ public class PanoProjService extends BaseService implements IPanoProjService {
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveXmlData(PanoProj bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -298,16 +298,16 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     }
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public String thumbsUpNum(PanoProj bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -315,16 +315,16 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     panoProjDao.thumbsUpNum(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public String pvNum(PanoProj bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 //判断数据是否存在
@@ -332,12 +332,12 @@ public class PanoProjService extends BaseService implements IPanoProjService {
                     panoProjDao.pvNum(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     /**
@@ -371,9 +371,9 @@ public class PanoProjService extends BaseService implements IPanoProjService {
 
 //            BeetlUtils.renderToFile("/btl/video.html.btl", context, saveDir + bean.getId() + ".html");
         } catch (Exception e) {
-            String msg = "全景视频文件生成失败!" + bean.getId() + "," + bean.getName();
-            log.error(msg, e);
-            throw new RuntimeException(msg);
+            String result = "全景视频文件生成失败!" + bean.getId() + "," + bean.getName();
+            log.error(result, e);
+            throw new RuntimeException(result);
         }
     }
 

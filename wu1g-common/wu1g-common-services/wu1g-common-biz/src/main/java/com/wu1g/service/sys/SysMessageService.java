@@ -26,7 +26,7 @@ public class SysMessageService extends BaseService implements ISysMessageService
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysMessage dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -39,15 +39,15 @@ public class SysMessageService extends BaseService implements ISysMessageService
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
-                throw new Exception("信息保存失败!");
+                throw new RuntimeException("信息保存失败!");
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public String deleteData(SysMessage dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysMessageDao.deleteByPrimaryKey(dto)==0){
@@ -55,16 +55,16 @@ public class SysMessageService extends BaseService implements ISysMessageService
                 }
             } catch (Exception e) {
                 log.error("物理删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(SysMessage dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysMessageDao.deleteById(dto)==0){
@@ -72,48 +72,48 @@ public class SysMessageService extends BaseService implements ISysMessageService
                 }
             } catch (Exception e) {
                 log.error("逻辑删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public List<SysMessage> findDataIsPage(SysMessage dto) throws Exception {
-        List<SysMessage> dtos = null;
+        List<SysMessage> results = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<SysMessage>) sysMessageDao.findDataIsPage(dto);
+            results = (List<SysMessage>) sysMessageDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     public List<SysMessage> findDataIsList(SysMessage dto) throws Exception {
-        List<SysMessage> dtos = null;
+        List<SysMessage> results = null;
         try {
-            dtos = (List<SysMessage>) sysMessageDao.findDataIsList(dto);
+            results = (List<SysMessage>) sysMessageDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     @RfAccount2Bean
     public SysMessage findDataById(SysMessage dto) throws Exception {
-        SysMessage dto1 = null;
+        SysMessage result = null;
         try {
-            dto1 = (SysMessage) sysMessageDao.selectByPrimaryKey(dto);
+            result = (SysMessage) sysMessageDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dto1;
+        return result;
     }
 
 }

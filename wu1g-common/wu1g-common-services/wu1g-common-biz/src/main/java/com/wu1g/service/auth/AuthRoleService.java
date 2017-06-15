@@ -31,7 +31,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(AuthRole bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 if (getAuth().isPermitted("authRole:super")) {
@@ -67,83 +67,83 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                     }
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public String deleteData(AuthRole bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 authRoleDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                result = "信息删除失败!";
+                log.error(result, e);
             }
         }
-        return msg;
+        return result;
     }
 
     public String deleteDataById(AuthRole bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 authRoleDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息删除失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<AuthRole> findDataIsPage(AuthRole bean) {
-        List<AuthRole> beans = null;
+        List<AuthRole> results = null;
         try {
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<AuthRole>) authRoleDao.findDataIsPage(bean);
+            results = (List<AuthRole>) authRoleDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public List<AuthRole> findDataIsList(AuthRole bean) {
-        List<AuthRole> beans = null;
+        List<AuthRole> results = null;
         try {
-            beans = (List<AuthRole>) authRoleDao.findDataIsList(bean);
+            results = (List<AuthRole>) authRoleDao.findDataIsList(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public AuthRole findDataById(AuthRole bean) {
-        AuthRole bean1 = null;
+        AuthRole result = null;
         try {
-            bean1 = (AuthRole) authRoleDao.selectByPrimaryKey(bean);
+            result = (AuthRole) authRoleDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
-        return bean1;
+        return result;
     }
 
     public String recoveryDataById(AuthRole bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 authRoleDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息恢复失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 }

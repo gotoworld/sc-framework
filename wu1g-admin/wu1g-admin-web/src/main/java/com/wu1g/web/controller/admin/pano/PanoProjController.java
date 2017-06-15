@@ -234,9 +234,9 @@ public class PanoProjController extends BaseController {
     @ALogOperation(type = "修改", desc = "漫游场景信息")
     public String xmlsave() {
         log.info("PanoProjController xmlsave.........");
-        Map msg = new HashMap();
-        msg.put("status", 1);
-        msg.put("msg", "保存成功");
+        Map result = new HashMap();
+        result.put("status", 1);
+        result.put("msg", "保存成功");
         try {
             String pid = request.getParameter("pid");//项目id
             String scene_str = request.getParameter("data");//场景信息
@@ -255,11 +255,11 @@ public class PanoProjController extends BaseController {
 
         } catch (Exception e) {
             log.error("保存场景编辑信息失败!", e);
-            msg = new HashMap();
-            msg.put("status", 0);
-            msg.put("msg", e.getMessage());
+            result = new HashMap();
+            result.put("status", 0);
+            result.put("msg", e.getMessage());
         }
-        return JSON.toJSONString(msg);
+        return JSON.toJSONString(result);
     }
     @RequiresPermissions(value = {"panoProj:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/h/touredit/{id}")

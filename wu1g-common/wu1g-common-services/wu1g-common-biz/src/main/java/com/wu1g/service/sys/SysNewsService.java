@@ -31,7 +31,7 @@ public class SysNewsService extends BaseService implements ISysNewsService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysNews dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -59,15 +59,15 @@ public class SysNewsService extends BaseService implements ISysNewsService {
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
-                throw new Exception("信息保存失败!");
+                throw new RuntimeException("信息保存失败!");
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public String deleteData(SysNews dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysNewsDao.deleteByPrimaryKey(dto)==0){
@@ -75,16 +75,16 @@ public class SysNewsService extends BaseService implements ISysNewsService {
                 }
             } catch (Exception e) {
                 log.error("物理删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(SysNews dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysNewsDao.deleteById(dto)==0){
@@ -92,58 +92,58 @@ public class SysNewsService extends BaseService implements ISysNewsService {
                 }
             } catch (Exception e) {
                 log.error("逻辑删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public List<SysNews> findDataIsPage(SysNews dto) throws Exception {
-        List<SysNews> dtos = null;
+        List<SysNews> results = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<SysNews>) sysNewsDao.findDataIsPage(dto);
+            results = (List<SysNews>) sysNewsDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     public List<SysNews> findDataIsList(SysNews dto) throws Exception {
-        List<SysNews> dtos = null;
+        List<SysNews> results = null;
         try {
-            dtos = (List<SysNews>) sysNewsDao.findDataIsList(dto);
+            results = (List<SysNews>) sysNewsDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     @RfAccount2Bean
     public SysNews findDataById(SysNews dto) throws Exception {
-        SysNews dto1 = null;
+        SysNews result = null;
         try {
-            dto1 = (SysNews) sysNewsDao.selectByPrimaryKey(dto);
-            if(dto1!=null){
+            result = (SysNews) sysNewsDao.selectByPrimaryKey(dto);
+            if(result!=null){
                 SysNewsVsCategory sysNewsVsCategory=new SysNewsVsCategory();
-                sysNewsVsCategory.setNewsId(dto1.getId());
-                dto1.setCategorys(sysNewsVsCategoryDao.getNewsCategorysByNewsId(sysNewsVsCategory));
+                sysNewsVsCategory.setNewsId(result.getId());
+                result.setCategorys(sysNewsVsCategoryDao.getNewsCategorysByNewsId(sysNewsVsCategory));
             }
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dto1;
+        return result;
     }
 
     @Override
     public String recoveryDataById(SysNews dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysNewsDao.recoveryDataById(dto)==0){
@@ -151,9 +151,9 @@ public class SysNewsService extends BaseService implements ISysNewsService {
                 }
             } catch (Exception e) {
                 log.error("数据恢复失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 }

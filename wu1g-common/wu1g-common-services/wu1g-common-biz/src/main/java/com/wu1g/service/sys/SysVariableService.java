@@ -32,7 +32,7 @@ public class SysVariableService extends BaseService implements ISysVariableServi
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysVariable bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -43,93 +43,93 @@ public class SysVariableService extends BaseService implements ISysVariableServi
                     sysVariableDao.insert(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public String deleteData(SysVariable bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 sysVariableDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                result = "信息删除失败!";
+                log.error(result, e);
             }
         }
-        return msg;
+        return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(SysVariable bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 sysVariableDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息删除失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<SysVariable> findDataIsPage(SysVariable bean) {
-        List<SysVariable> beans = null;
+        List<SysVariable> results = null;
         try {
             PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
-            beans = (List<SysVariable>) sysVariableDao.findDataIsPage(bean);
+            results = (List<SysVariable>) sysVariableDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public List<SysVariable> findDataIsList(SysVariable bean) {
-        List<SysVariable> beans = null;
+        List<SysVariable> results = null;
         try {
-            beans = (List<SysVariable>) sysVariableDao.findDataIsList(bean);
+            results = (List<SysVariable>) sysVariableDao.findDataIsList(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public SysVariable findDataById(SysVariable bean) {
-        SysVariable bean1 = null;
+        SysVariable result = null;
         try {
-            bean1 = (SysVariable) sysVariableDao.selectByPrimaryKey(bean);
+            result = (SysVariable) sysVariableDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
-        return bean1;
+        return result;
     }
 
     public String recoveryDataById(SysVariable bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 sysVariableDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息恢复失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<SysVariable> findDataTree(SysVariable bean) {
-        List<SysVariable> beans = findDataIsList(bean);
-        if (beans == null) {
+        List<SysVariable> results = findDataIsList(bean);
+        if (results == null) {
             return null;
         }
-        NodeTree<SysVariable> tree = new NodeTree(beans, "id", "parentId", "nodes");
+        NodeTree<SysVariable> tree = new NodeTree(results, "id", "parentId", "nodes");
         return tree.buildTree();
     }
 }

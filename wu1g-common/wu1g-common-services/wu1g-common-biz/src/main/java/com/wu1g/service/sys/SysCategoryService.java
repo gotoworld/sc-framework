@@ -30,7 +30,7 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysCategory dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -43,15 +43,15 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
-                throw new Exception("信息保存失败!");
+                throw new RuntimeException("信息保存失败!");
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public String deleteData(SysCategory dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if (sysCategoryDao.deleteByPrimaryKey(dto) == 0) {
@@ -59,16 +59,16 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
                 }
             } catch (Exception e) {
                 log.error("物理删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(SysCategory dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if (sysCategoryDao.deleteById(dto) == 0) {
@@ -76,53 +76,53 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
                 }
             } catch (Exception e) {
                 log.error("逻辑删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public List<SysCategory> findDataIsPage(SysCategory dto) throws Exception {
-        List<SysCategory> dtos = null;
+        List<SysCategory> results = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<SysCategory>) sysCategoryDao.findDataIsPage(dto);
+            results = (List<SysCategory>) sysCategoryDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     public List<SysCategory> findDataIsList(SysCategory dto) throws Exception {
-        List<SysCategory> dtos = null;
+        List<SysCategory> results = null;
         try {
-            dtos = (List<SysCategory>) sysCategoryDao.findDataIsList(dto);
+            results = (List<SysCategory>) sysCategoryDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     @RfAccount2Bean
     public SysCategory findDataById(SysCategory dto) throws Exception {
-        SysCategory dto1 = null;
+        SysCategory result = null;
         try {
-            dto1 = (SysCategory) sysCategoryDao.selectByPrimaryKey(dto);
+            result = (SysCategory) sysCategoryDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dto1;
+        return result;
     }
 
     @Override
     public String recoveryDataById(SysCategory dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if (sysCategoryDao.recoveryDataById(dto) == 0) {
@@ -130,19 +130,19 @@ public class SysCategoryService extends BaseService implements ISysCategoryServi
                 }
             } catch (Exception e) {
                 log.error("数据恢复失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     public List<SysCategory> findDataTree(SysCategory bean) {
         try {
-            List<SysCategory> beans = findDataIsList(bean);
-            if (beans == null) {
+            List<SysCategory> results = findDataIsList(bean);
+            if (results == null) {
                 return null;
             }
-            NodeTree<SysCategory> tree = new NodeTree<>(beans,"id","parentId","nodes");
+            NodeTree<SysCategory> tree = new NodeTree<>(results,"id","parentId","nodes");
             return tree.buildTree();
         } catch (Exception e) {
         }

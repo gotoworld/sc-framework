@@ -26,22 +26,22 @@ public class SysMaterialService extends BaseService implements ISysMaterialServi
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String insert(SysMaterial dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //新增
                  sysMaterialDao.insert(dto);
             } catch (Exception e) {
                 log.error("信息保存异常!", e);
-                throw new Exception("信息保存异常!");
+                throw new RuntimeException("信息保存异常!");
             }
         }
-        return msg;
+        return result;
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysMaterial dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -54,15 +54,15 @@ public class SysMaterialService extends BaseService implements ISysMaterialServi
                 }
             } catch (Exception e) {
                 log.error("信息保存异常!", e);
-                throw new Exception("信息保存异常!");
+                throw new RuntimeException("信息保存异常!");
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public String deleteData(SysMaterial dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysMaterialDao.deleteByPrimaryKey(dto)==0){
@@ -70,16 +70,16 @@ public class SysMaterialService extends BaseService implements ISysMaterialServi
                 }
             } catch (Exception e) {
                 log.error("物理删除异常!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(SysMaterial dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysMaterialDao.deleteById(dto)==0){
@@ -87,48 +87,48 @@ public class SysMaterialService extends BaseService implements ISysMaterialServi
                 }
             } catch (Exception e) {
                 log.error("逻辑删除异常!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public List<SysMaterial> findDataIsPage(SysMaterial dto) throws Exception {
-        List<SysMaterial> dtos = null;
+        List<SysMaterial> results = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<SysMaterial>) sysMaterialDao.findDataIsPage(dto);
+            results = (List<SysMaterial>) sysMaterialDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     public List<SysMaterial> findDataIsList(SysMaterial dto) throws Exception {
-        List<SysMaterial> dtos = null;
+        List<SysMaterial> results = null;
         try {
-            dtos = (List<SysMaterial>) sysMaterialDao.findDataIsList(dto);
+            results = (List<SysMaterial>) sysMaterialDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     @RfAccount2Bean
     public SysMaterial findDataById(SysMaterial dto) throws Exception {
-        SysMaterial dto1 = null;
+        SysMaterial result = null;
         try {
-            dto1 = (SysMaterial) sysMaterialDao.selectByPrimaryKey(dto);
+            result = (SysMaterial) sysMaterialDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
-        return dto1;
+        return result;
     }
 
 }

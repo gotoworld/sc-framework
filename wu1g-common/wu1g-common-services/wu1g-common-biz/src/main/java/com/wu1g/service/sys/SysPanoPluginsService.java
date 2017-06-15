@@ -26,7 +26,7 @@ public class SysPanoPluginsService extends BaseService implements ISysPanoPlugin
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysPanoPlugins dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -39,15 +39,15 @@ public class SysPanoPluginsService extends BaseService implements ISysPanoPlugin
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
-                throw new Exception("信息保存失败!");
+                throw new RuntimeException("信息保存失败!");
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public String deleteData(SysPanoPlugins dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysPanoPluginsDao.deleteByPrimaryKey(dto)==0){
@@ -55,16 +55,16 @@ public class SysPanoPluginsService extends BaseService implements ISysPanoPlugin
                 }
             } catch (Exception e) {
                 log.error("物理删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(SysPanoPlugins dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysPanoPluginsDao.deleteById(dto)==0){
@@ -72,53 +72,53 @@ public class SysPanoPluginsService extends BaseService implements ISysPanoPlugin
                 }
             } catch (Exception e) {
                 log.error("逻辑删除失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public List<SysPanoPlugins> findDataIsPage(SysPanoPlugins dto) throws Exception {
-        List<SysPanoPlugins> dtos = null;
+        List<SysPanoPlugins> results = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<SysPanoPlugins>) sysPanoPluginsDao.findDataIsPage(dto);
+            results = (List<SysPanoPlugins>) sysPanoPluginsDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     public List<SysPanoPlugins> findDataIsList(SysPanoPlugins dto) throws Exception {
-        List<SysPanoPlugins> dtos = null;
+        List<SysPanoPlugins> results = null;
         try {
-            dtos = (List<SysPanoPlugins>) sysPanoPluginsDao.findDataIsList(dto);
+            results = (List<SysPanoPlugins>) sysPanoPluginsDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     @RfAccount2Bean
     public SysPanoPlugins findDataById(SysPanoPlugins dto) throws Exception {
-        SysPanoPlugins dto1 = null;
+        SysPanoPlugins result = null;
         try {
-            dto1 = (SysPanoPlugins) sysPanoPluginsDao.selectByPrimaryKey(dto);
+            result = (SysPanoPlugins) sysPanoPluginsDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
-            throw new Exception("信息查询失败!");
+            throw new RuntimeException("信息查询失败!");
         }
-        return dto1;
+        return result;
     }
 
     @Override
     public String recoveryDataById(SysPanoPlugins dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysPanoPluginsDao.recoveryDataById(dto)==0){
@@ -126,9 +126,9 @@ public class SysPanoPluginsService extends BaseService implements ISysPanoPlugin
                 }
             } catch (Exception e) {
                 log.error("数据恢复失败!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 }

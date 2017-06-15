@@ -54,7 +54,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(OrgUser bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -102,17 +102,17 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     }
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String updateData(OrgUser bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -121,156 +121,156 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     orgUserDao.update(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
     public String deleteData(OrgUser bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 orgUserDao.deleteByPrimaryKey(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                result = "信息删除失败!";
+                log.error(result, e);
             }
         }
-        return msg;
+        return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(OrgUser bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 orgUserDao.deleteById(bean);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息删除失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<OrgUser> findDataIsPage(OrgUser bean) {
-        List<OrgUser> beans = null;
+        List<OrgUser> results = null;
         try {
             PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
-            beans = (List<OrgUser>) orgUserDao.findDataIsPage(bean);
+            results = (List<OrgUser>) orgUserDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public List<OrgUser> findDataIsList(OrgUser bean) {
-        List<OrgUser> beans = null;
+        List<OrgUser> results = null;
         try {
-            beans = (List<OrgUser>) orgUserDao.findDataIsList(bean);
+            results = (List<OrgUser>) orgUserDao.findDataIsList(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public OrgUser findDataById(OrgUser bean) {
-        OrgUser bean1 = null;
+        OrgUser result = null;
         try {
-            bean1 = (OrgUser) orgUserDao.selectByPrimaryKey(bean);
+            result = (OrgUser) orgUserDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
-        return bean1;
+        return result;
     }
 
     public String recoveryDataById(OrgUser bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 orgUserDao.recoveryDataById(bean);
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息恢复失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<AuthRole> findRoleDataIsList(OrgUser bean) {
-        List<AuthRole> beans = null;
+        List<AuthRole> results = null;
         try {
             if (bean != null) {
                 Map dto = new HashMap();
                 dto.put("uid", bean.getId());
-                beans = authRoleDao.getRoleListByUId(dto);
+                results = authRoleDao.getRoleListByUId(dto);
             }
         } catch (Exception e) {
             log.error("获取用户角色集合,数据库处理异常!", e);
         }
-        return beans;
+        return results;
     }
 
     public List<OrgDept> findDeptDataIsList(OrgUser bean) {
-        List<OrgDept> beans = null;
+        List<OrgDept> results = null;
         try {
             if (bean != null) {
                 Map dto = new HashMap();
                 dto.put("uid", bean.getId());
-                beans = orgDepartmentDao.getDeptListByUId(dto);
+                results = orgDepartmentDao.getDeptListByUId(dto);
             }
         } catch (Exception e) {
             log.error("获取用户角色集合,数据库处理异常!", e);
         }
-        return beans;
+        return results;
     }
 
     public List<OrgUser> findUserList(OrgUser bean) {
-        List<OrgUser> beans = null;
+        List<OrgUser> results = null;
         try {
             if (bean != null) {
-                beans = orgUserDao.getUserList(bean);
+                results = orgUserDao.getUserList(bean);
             }
         } catch (Exception e) {
             log.error("获取某一种角色所有用户,数据库处理异常!", e);
         }
-        return beans;
+        return results;
     }
 
     public List<OrgUser> findUserIsPage(OrgUser bean) {
-        List<OrgUser> beans = null;
+        List<OrgUser> results = null;
         try {
             if (bean != null) {
                 PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
-                beans = orgUserDao.getUserIsPage(bean);
+                results = orgUserDao.getUserIsPage(bean);
             }
         } catch (Exception e) {
             log.error("获取某一种角色所有用户,数据库处理异常!", e);
         }
-        return beans;
+        return results;
     }
 
     public String isUidYN(String uid) {
-        String msg = "seccuss";
+        String result = "seccuss";
         try {
             if (ValidatorUtil.notEmpty(uid)) {
                 if (orgUserDao.isUidYN(uid) == 0) {
-                    msg = "0";
+                    result = "0";
                 }
             }
         } catch (Exception e) {
             log.error("判断用户id是否存在,数据库处理异常!", e);
         }
-        return msg;
+        return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String updatePwd(OrgUser bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 OrgUser dto=findDataById(bean);
@@ -282,6 +282,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 }

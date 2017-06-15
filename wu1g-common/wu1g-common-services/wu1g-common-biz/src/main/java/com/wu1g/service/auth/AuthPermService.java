@@ -29,7 +29,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
     public String saveOrUpdateData(AuthPerm dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -44,110 +44,110 @@ public class AuthPermService extends BaseService implements IAuthPermService {
                     authPermDao.insert(dto);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public String deleteData(AuthPerm bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 AuthPerm dto = new AuthPerm();
                 dto.setId(bean.getId());//权限id
                 authPermDao.deleteByPrimaryKey(dto);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
+                result = "信息删除失败!";
+                log.error(result, e);
             }
         }
-        return msg;
+        return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
     public String deleteDataById(AuthPerm bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 AuthPerm dto = new AuthPerm();
                 dto.setId(bean.getId());//权限id
                 authPermDao.deleteById(dto);
             } catch (Exception e) {
-                msg = "信息删除失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息删除失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<AuthPerm> findDataIsPage(AuthPerm bean) {
-        List<AuthPerm> beans = null;
+        List<AuthPerm> results = null;
         try {
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<AuthPerm>) authPermDao.findDataIsPage(bean);
+            results = (List<AuthPerm>) authPermDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public List<AuthPerm> findDataIsList(AuthPerm bean) {
-        List<AuthPerm> beans = null;
+        List<AuthPerm> results = null;
         try {
-            beans = (List<AuthPerm>) authPermDao.findDataIsList(bean);
+            results = (List<AuthPerm>) authPermDao.findDataIsList(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 
     public AuthPerm findDataById(AuthPerm bean) {
-        AuthPerm bean1 = null;
+        AuthPerm result = null;
         try {
-            bean1 = (AuthPerm) authPermDao.selectByPrimaryKey(bean);
+            result = (AuthPerm) authPermDao.selectByPrimaryKey(bean);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
-        return bean1;
+        return result;
     }
 
     public String recoveryDataById(AuthPerm bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 AuthPerm dto = new AuthPerm();
                 dto.setId(bean.getId());//权限id
                 authPermDao.recoveryDataById(dto);
             } catch (Exception e) {
-                msg = "信息恢复失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息恢复失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
 
     public List<AuthPerm> findDataTree(AuthPerm bean) {
-        List<AuthPerm> beans = findDataIsList(bean);
-        if (beans == null) {
+        List<AuthPerm> results = findDataIsList(bean);
+        if (results == null) {
             return null;
         }
-        NodeTree<AuthPerm> tree = new NodeTree(beans,"id","parentId","nodes");
+        NodeTree<AuthPerm> tree = new NodeTree(results,"id","parentId","nodes");
         return tree.buildTree();
     }
 
     public List<AuthPerm> findPermDataIsListByRoleId(Map dto) {
-        List<AuthPerm> beans = null;
+        List<AuthPerm> results = null;
         try {
-            beans = (List<AuthPerm>) authPermDao.findPermDataIsListByRoleId(dto);
+            results = (List<AuthPerm>) authPermDao.findPermDataIsListByRoleId(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
 }

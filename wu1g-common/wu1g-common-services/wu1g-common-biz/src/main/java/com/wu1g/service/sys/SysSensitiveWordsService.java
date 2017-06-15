@@ -26,7 +26,7 @@ public class SysSensitiveWordsService extends BaseService implements ISysSensiti
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysSensitiveWords dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -39,15 +39,15 @@ public class SysSensitiveWordsService extends BaseService implements ISysSensiti
                 }
             } catch (Exception e) {
                 log.error("信息保存异常!", e);
-                throw new Exception("信息保存异常!");
+                throw new RuntimeException("信息保存异常!");
             }
         }
-        return msg;
+        return result;
     }
 
     @Override
     public String deleteData(SysSensitiveWords dto) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (dto != null) {
             try {
                 if(sysSensitiveWordsDao.deleteByPrimaryKey(dto)==0){
@@ -55,49 +55,49 @@ public class SysSensitiveWordsService extends BaseService implements ISysSensiti
                 }
             } catch (Exception e) {
                 log.error("物理删除异常!", e);
-                throw new Exception(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
         }
-        return msg;
+        return result;
     }
 
 
     @Override
     public List<SysSensitiveWords> findDataIsPage(SysSensitiveWords dto) throws Exception {
-        List<SysSensitiveWords> dtos = null;
+        List<SysSensitiveWords> results = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            dtos = (List<SysSensitiveWords>) sysSensitiveWordsDao.findDataIsPage(dto);
+            results = (List<SysSensitiveWords>) sysSensitiveWordsDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     public List<SysSensitiveWords> findDataIsList(SysSensitiveWords dto) throws Exception {
-        List<SysSensitiveWords> dtos = null;
+        List<SysSensitiveWords> results = null;
         try {
-            dtos = (List<SysSensitiveWords>) sysSensitiveWordsDao.findDataIsList(dto);
+            results = (List<SysSensitiveWords>) sysSensitiveWordsDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
-        return dtos;
+        return results;
     }
 
     @Override
     @RfAccount2Bean
     public SysSensitiveWords findDataById(SysSensitiveWords dto) throws Exception {
-        SysSensitiveWords dto1 = null;
+        SysSensitiveWords result = null;
         try {
-            dto1 = (SysSensitiveWords) sysSensitiveWordsDao.selectByPrimaryKey(dto);
+            result = (SysSensitiveWords) sysSensitiveWordsDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息查询异常!", e);
-            throw new Exception("信息查询异常!");
+            throw new RuntimeException("信息查询异常!");
         }
-        return dto1;
+        return result;
     }
 
 }

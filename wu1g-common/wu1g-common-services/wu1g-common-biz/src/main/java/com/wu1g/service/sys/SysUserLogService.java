@@ -24,7 +24,7 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
     private ISysUserLogDao sysUserLogDao;
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String saveOrUpdateData(SysUserLog bean) throws Exception {
-        String msg = "seccuss";
+        String result = "seccuss";
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -36,22 +36,22 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
                     sysUserLogDao.insert(bean);
                 }
             } catch (Exception e) {
-                msg = "信息保存失败!";
-                log.error(msg, e);
-                throw new Exception(msg);
+                result = "信息保存失败!";
+                log.error(result, e);
+                throw new RuntimeException(result);
             }
         }
-        return msg;
+        return result;
     }
     public List<SysUserLog> findDataIsPage(SysUserLog bean) {
-        List<SysUserLog> beans = null;
+        List<SysUserLog> results = null;
         try {
             PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            beans = (List<SysUserLog>) sysUserLogDao.findDataIsPage(bean);
+            results = (List<SysUserLog>) sysUserLogDao.findDataIsPage(bean);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
-        return beans;
+        return results;
     }
     public void info(String type, String memo,String detailInfo, Long userId, String userName, String ip) {
         try {

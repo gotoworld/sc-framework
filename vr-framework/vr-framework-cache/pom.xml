@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vr-framework-starter</artifactId>
+        <groupId>com.vr.framework</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vr-framework-cache</artifactId>
+
+    <properties>
+        <org.springframework.data-redis.version>1.7.4.RELEASE</org.springframework.data-redis.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-redis</artifactId>-->
+        <!--&lt;!&ndash;<version>1.7.4.RELEASE</version>&ndash;&gt;-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>com.vr.framework</groupId>
+            <artifactId>vr-framework-core</artifactId>
+            <version>${vr.framework.version}</version>
+        </dependency>
+    </dependencies>
+</project>

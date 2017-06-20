@@ -1,0 +1,123 @@
+@[
+/*
+ * 权限_角色信息 后台管理 (信息编辑页面)
+ *
+ * VERSION  DATE		BY		   REASON
+ * -------- ----------- ------------ ------------------------------------------
+ * 1.00	 2015.10.01  easycode   程序.发布
+ * -------- ----------- ------------ ------------------------------------------
+ * Copyright 2015 isd System. - All Rights Reserved.
+ *
+ */
+ /]
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	@[ include("../include/meta.html"){} /]
+	@[ include("../include/public_init_js_css.html"){} /]
+	<style type="text/css">
+	</style>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-sm-12">
+				<form id="id_form" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/auth/role/save">
+					<div class="col-sm-12">
+						<div style="float:right;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+					<input type="hidden" name="pageNum" id="bean-pageNum" value="${bean.pageNum}"/>
+					<input type="hidden" name="id" value="${bean.id}" />
+					<input type="hidden" name="token" value="${bean.token}" />
+                    <input type="hidden" name="newFlag" value="${bean.newFlag}" />
+                    <div class="col-sm-6 b-r">
+						<div class="form-group clearfix">
+						  <label class="col-md-2 control-label" for="bean-name">角色名称</label>
+						  <div class="col-md-4">
+							  <input type="text" class="form-control" placeholder="请输入角色名称" id="bean-name" name="name" value="${bean.name}" required="" aria-required="true" maxlength="20" aria-invalid="true" />
+								<span class="help-block"></span>
+						  </div>
+						</div>
+						  @[ /**
+							if(shiro.hasPermission("authRole:super")){ /]
+							<div class="form-group clearfix">
+								<div class="checkbox" style="margin-left: 10px;">
+									<label >
+										<input class="checkbox" id="bean-isSuper" ${bean.isSuper==1?'checked="checked"':''} name="isSuper" value="1" type="checkbox"> 超级管理员
+									</label>
+								</div>
+							</div>
+						  @[ } */ /]
+					</div>
+					<div class="col-sm-6">
+						@[ if(shiro.hasPermission("authRole:parm")){ /]
+						<div class="form-group clearfix">
+						  <label class="col-md-2 control-label ">
+							功能列表
+						  </label>
+						  <div class="col-md-10">
+							  <div class="">
+								  @[
+								  var permBeansCopy=null;
+								  var dcode="";
+								  var checkBoxX="";
+								  var checkLabel="";
+								  if(isNotEmpty(permBeans) && permBeans.~size>0 ){
+									  permBeansCopy=permBeans;
+								  }
+								  for(b in permTree!){
+									  dcode=b.id;
+									  checkBoxX="";
+								      checkLabel="";
+									  for(perm in permBeans!){
+										  if(perm.id==b.id){
+											 checkBoxX='oldc="1" checked="checked"';
+											 checkLabel=' style="color:#1c84c6;"';
+										  }
+									  }
+								 /]
+									  <p>
+										  <label ${checkLabel}>
+											  -
+											  <input type="checkbox" class="${dcode}" level="0" ${checkBoxX} id="x_${b.id}" value="${b.id}" name="permIdArray">
+											  ${b.name}
+										  </label>
+									  </p>
+									  @[ if(isNotEmpty(b.nodes) && b.nodes.~size>0){
+										  layout("auth_role_tree_checkbox.html",{beans:b.nodes,permBeansCopy:permBeansCopy,numx:1,dcode:dcode+bean.id}){} ;
+										  dcode="";
+									  } /]
+								  @[ } /]
+							  </div>
+						  </div>
+						</div>
+						@[ } /]
+					</div>
+					<div class="col-sm-12">
+						<div style="width: 200px;margin: 0 auto;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+@[ include("../include/public_last_js_css.html"){} /]
+<script type="text/javascript">
+    $().ready(function(){
+        formValidate();
+    });
+    function formValidate(){
+        setTimeout(function(){
+            $("#id_form").validate();
+        },1000);
+    }
+</script>
+</body>
+</html>

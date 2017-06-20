@@ -1,0 +1,119 @@
+@[
+/*
+ * 权限_权限信息 后台管理 (初始化页面)
+ *
+ * VERSION  DATE		BY		   REASON
+ * -------- ----------- ------------ ------------------------------------------
+ * 1.00	 2015.10.01  easycode   程序.发布
+ * -------- ----------- ------------ ------------------------------------------
+ * Copyright 2015 isd System. - All Rights Reserved.
+ *
+ */
+ /]
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	@[ layout("../include/meta.html"){} /]
+	@[ layout("../include/public_init_js_css.html"){} /]
+	<link href="${basePath!}plugins/hplus/css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="clients-list">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+				</ul>
+				@[ layout("../include/notifications.html"){} /]
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="col-md-4">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											@[ if(shiro.hasPermission("authPerm:add")){ /]
+											<a href="#" onclick="openMyBoxLayer('a','${basePath}h/auth/perm/edit/0');"
+											   class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+											@[ } /]
+											<div class="ibox-tools">
+												<a href="#" onclick="getDataTree();">
+													<i class="glyphicon glyphicon-refresh"></i>
+												</a>
+											</div>
+										</div>
+										<div class="ibox-content">
+											<div id="disTree" class="test"></div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<table class="table table-bordered table-striped  table-hover" style="min-width:500px;width: 500px;">
+										<thead  id="event_output">
+										<tr><th class="col-md-2">#</th><th></th></tr>
+										<tr><th class="col-md-2">#</th><th></th></tr>
+										<tr><th class="col-md-2">#</th><th></th></tr>
+										<tr><th class="col-md-2">#</th><th></th></tr>
+										</thead>
+									</table>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@[ layout("../include/public_last_js_css.html"){} /]
+<script src="${basePath!}plugins/hplus/js/plugins/treeview/bootstrap-treeview.js"></script>
+
+<script>
+    //初始加载..
+    loadUrlPage(null, 'info_search_form', 'info_list_div');
+
+    var treeviewA=$('#disTree').treeview({
+        color: "#428bca",
+        showTags: false,
+        data: [ ],
+        onNodeSelected: function (event, node) {
+            var trStr='';
+            trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+            trStr+=' <tr><th class="col-md-2">匹配符:</th><th class="">'+node.matchStr+'</th></tr>';
+            trStr+=' <tr><th class="col-md-2">备注:</th><th class="">'+node.memo+'</th></tr>';
+
+			@[ if(shiro.hasPermission("authPerm:edit")||shiro.hasPermission("authPerm:del")){ /]
+                trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
+			@[ if(shiro.hasPermission("authPerm:edit")){ /]
+				trStr+=' <a href="javascript:;"  onclick="openMyBoxLayer(\'e\',\'${basePath}h/auth/perm/edit/'+node.id+'\');" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
+			@[ } /]
+            @[ if(shiro.hasPermission("authPerm:edit")){ /]
+				if(node.nodes==undefined && node.tags[0]==0) {
+					trStr+=' <a href="javascript:;"  onclick="if(confirm(\'确认删除吗?\')){delInfoData(\'${basePath}h/auth/perm/del/'+node.id+'\');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
+				}
+			@[ } /]
+                trStr+=' </th></tr>';
+			@[ } /]
+            $('#event_output').html(trStr);
+        }
+    });
+
+    function getDataTree(){
+        $.get(basePath+"h/auth/perm/jsonTree", {},
+            function (result) {
+                //console.info("获取数据.." + JSON.stringify(result));
+                if (result.code == 0) {
+                    treeviewA.treeview({data: result.data});
+                } else {
+                    alert(result.message);
+                }
+            }, 'json');
+    }
+    getDataTree();
+</script>
+</body>
+</html>

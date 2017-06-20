@@ -1,0 +1,72 @@
+# dev 开发环境
+# prod 生产环境
+# sit 测试环境
+#默认的配置文件，这里设置为dev(开发环境)，在pro(生产环境)时，可以使用 --spring.profiles.active=prod运行
+spring:
+  application:
+    name: vr-proxy-server
+  profiles:
+    active: dev
+  aop:
+    proxy-target-class: true
+  multipart:
+    maxFileSize: 15Mb
+    maxRequestSize: 100Mb
+
+multipart:
+  maxFileSize: 15Mb
+  maxRequestSize: 100Mb
+
+info:
+  component: Zuul Server
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: INFO
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 600000
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 30000
+  ConnectTimeout: 600000
+
+
+zuul:
+  #ignoredServices: "*"
+  routes:
+#    vr-service-admin:
+#      path: /api/admin/**
+#    vr-service-common:
+#      path: /api/common/**
+
+---
+server:
+  session:
+    # Session timeout in seconds.
+    timeout: 1800
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/javascript,application/javascript,text/html,text/xml,text/plain,text/css
+
+---
+server:
+#  port: 26004
+  ssl:
+    enabled: false
+spring:
+  profiles: dev

@@ -1,0 +1,177 @@
+<form id="column_form"
+      role="form" class="form-inline"
+      method="post"  accept-charset="UTF-8"
+      action="javascript:void(0);"
+      data-action="${basePath}templateRender">
+    <p>
+        代码模板:
+        <select name="_template_dir" id="_template_dir" style="width: 200px;" onchange="ec.templateSwitch(this.value)">
+            <option value="">--请选择代码模板--</option>
+            <option value="vr">--vr--</option>
+            <option value="cdd">--cdd--</option>
+        </select>
+        代码包目录:<input type="text" id="_my_pkg" name="_my_pkg" onkeyup="ec.setCodePkg2()" onblur="ec.setCodePkg2()" placeholder="请录入代码生成子目录名称">
+        dao后缀:<input type="text" name="_dao_suffix" id="_dao_suffix" value=""  placeholder="Dao类后缀">
+    </p>
+    <div class="tabs-container">
+        <ul class="nav nav-tabs">
+            @[
+            for(table in tables!){
+            /]
+            <li class="${tableLP.index==1?'active':''}">
+                <a data-toggle="tab" href="#tab-${table}" aria-expanded="true">${table}配置</a>
+            </li>
+            @[ } /]
+        </ul>
+        <div class="tab-content">
+            @[ for(table in tables!){ /]
+            <input type="hidden" name="tables" value="${table}">
+            <div id="tab-${table}" class="tab-pane ${tableLP.index==1?'active':''}">
+                <div class="td_${table}">
+                    <p>
+                        <label ><input type="checkbox" class="input input_${table} _domain" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_domain" value="1">domain</label>
+                        包:<input type="text" name="${table}_domain_pkg" class="_domain_pkg" value="">
+                        <label ><input type="checkbox" class="input input_${table} _dto" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_dto" value="1">dto</label>
+                        包:<input type="text" name="${table}_dto_pkg" class="_dto_pkg" value="">
+                    </p>
+                    <p>
+                        <label ><input type="checkbox" class="input input_${table} _mybatis" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_mybatis" value="1">mybatis</label>
+                        包:<input type="text" name="${table}_mybatis_pkg" class="_mybatis_pkg" value="">
+                        <label ><input type="checkbox" class="input input_${table} _dao" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_dao" value="1">dao</label>
+                        包:<input type="text" name="${table}_dao_pkg" class="_dao_pkg" value="">
+                    </p>
+                    <p>
+                        <label ><input type="checkbox" class="input input_${table} _insert" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_insert" value="1">增</label>
+                        <label><input type="checkbox" class="input _insertBatch" onclick="ec.clickCheck2(this)" data="${table}" name="${table}_insertBatch" value="1">批增</label>
+                        <label ><input type="checkbox" class="input input_${table} _delLogic" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_delLogic" value="1">逻辑删</label>
+                        <label><input type="checkbox" class="input input_${table}" onclick="ec.clickCheck2(this)"  data="${table}" name="${table}_recovery" value="1">逻辑恢</label>
+                        <label ><input type="checkbox" class="input input_${table} _del" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_del" value="1">物理删</label>
+                        <label ><input type="checkbox" class="input input_${table} _update" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_update" value="1">改</label>
+                        <label ><input type="checkbox" class="input input_${table} _page" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_page" value="1">分页</label>
+                        <label ><input type="checkbox" class="input input_${table} _list" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_list" value="1">列表</label>
+                        <label ><input type="checkbox" class="input input_${table} _detail" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_detail" value="1">详情</label>
+                    </p>
+                    <p>
+                        <label ><input type="checkbox" class="input input_${table} _api" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_api" value="1">api</label>
+                        包:<input type="text" name="${table}_api_pkg" class="_api_pkg" value="">
+                        <label ><input type="checkbox" class="input input_${table} _biz" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_biz" value="1">biz</label>
+                        包:<input type="text" name="${table}_biz_pkg" class="_biz_pkg" value="">
+                    </p>
+                    <p>
+                        <label ${!strUtil.containsStr(table,'_vs_')?'style="color: red;"':''} ><input type="checkbox" class="input input_${table} _web_ctrl" data="${table}" onclick="ec.clickCheck2(this)" ${!strUtil.containsStr(table,'_vs_')?'checked':''} name="${table}_web_ctrl" value="1">web.ctrl</label>
+                        <label><input type="checkbox" class="input _web_rest" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_web_rest" value="1" >web.rest</label>
+                        controller包:<input type="text" name="${table}_web_pkg" class="_web_pkg" value="" style="width: 350px;">
+                        http目录路径:<input type="text" name="${table}_web_http" class="_web_http" data="${strUtil.fmtStr(table,'_')}" value="">
+                    </p>
+                    <p>
+                        <label ${!strUtil.containsStr(table,'_vs_')?'style="color: red;"':''} ><input type="checkbox" class="input input_${table} _view_btl" data="${table}" onclick="ec.clickCheck2(this)" ${!strUtil.containsStr(table,'_vs_')?'checked':''} name="${table}_view_btl" value="1">view.btl</label>
+                        <label><input type="checkbox" class="input _view_ng" data="${table}" onclick="ec.clickCheck2(this)" name="${table}_view_ng" value="1">view.ng</label>
+                        页面目录:<input type="text" name="${table}_view_pkg" class="_view_pkg" value="">
+                    </p>
+                </div>
+                <table class="table table-bordered table-striped  table-hover" style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th class="">可配参数</th>
+                        <th class="col-sm-2">字段名</th>
+                        <th class="col-sm-2">字段备注</th>
+                        <th class="" style="width: 50px;">必填</th>
+                        <th class="" style="width: 40px;">类型</th>
+                        <th class="" style="width: 40px;">长度</th>
+                        <th class="" style="width: 40px;">主键</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @[
+                    //是否存在自增主键
+                    var isAutoPk=0;
+                    for(bean in result.data[table]!){
+                        if(bean.autoIncrement=='auto_increment'){
+                            isAutoPk=1;
+                        }
+                    }
+                    for(bean in result.data[table]!){
+                    /]
+                    <tr>
+                        <td>
+                           @[ if(beanLP.index==1){ /] <input type="hidden" name="${bean.tableName!}_db" value="${bean.dbName!}">@[ } /]
+                            ${beanLP.index<10?'0'+beanLP.index:beanLP.index}#
+                            <input type="hidden" name="tsuffix_${table}_${bean.columnNameFormat}_comment" value="${bean.columnComment!}">
+                            @[ if(bean.pk!='PRI'){ /]
+                            <label style="color: red;"><input type="checkbox" onclick="ec.clickCheck2(this)" name="tsuffix_${table}_col_edit" checked value="${bean.columnNameFormat}">编辑</label>
+                            <select name="tsuffix_${table}_${bean.columnNameFormat}_edit_type" style="width: 130px;">
+                                <option value="1">--input[text]--</option>
+                                <option value="0">--input[hidden]--</option>
+                                <option value="3" ${strUtil.containsStr(' datetime timestamp ',bean.dataType)?'selected':''}>--日期控件--</option>
+                                <option value="4">--select--</option>
+                                <option value="5">--select[multiple]--</option>
+                                <option value="6">--input[radio]--</option>
+                                <option value="7">--input[checkbox]--</option>
+                                @[ if(bean.javaType=='String'){ /]
+                                <option value="2" ${bean.dataLength !=null && bean.dataLength>255 && bean.dataLength<=1000?'selected':''}>--textarea--</option>
+                                <option value="8">--上传[图片]--</option>
+                                <option value="9">--上传[文件]--</option>
+                                <option value="12">--上传[音乐]--</option>
+                                <option value="10" ${bean.dataLength !=null && bean.dataLength>1000 && bean.dataLength<=4000?'selected':''}>--富文本(简单)--</option>
+                                <option value="11" ${bean.dataLength !=null && bean.dataLength>4000?'selected':''}>--富文本(完整)--</option>
+                                @[ } /]
+                                <option value="13">--显示[纯文本]--</option>
+                                <option value="14">--显示[富文本]--</option>
+                            </select>
+                            @[ } /]
+                            @[ if(bean.dataLength ==null || bean.dataLength<=300){ /]
+                            <label>
+                                <input type="checkbox" name="tsuffix_${table}_col_show" onclick="ec.clickCheck2(this)" value="${bean.columnNameFormat}">列表展示
+                            </label>
+                            @[ } /]
+                            @[ if(bean.pk!='PRI'){ /]
+                            @[ if(strUtil.containsStr(' datetime timestamp ',bean.dataType)){ /]
+                            <label ${strUtil.containsStr(' datetime timestamp ',bean.dataType) && strUtil.containsStr(bean.columnName,'create')?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_created" onclick="ec.clickRadio2(this)" @[ if(strUtil.containsStr(bean.columnName,'create')){ /]checked@[ } /]  value="${bean.columnName}">创建时间</label>
+                            <label ${strUtil.containsStr(' datetime timestamp ',bean.dataType) && strUtil.containsStr(bean.columnName,'update')?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_updated" onclick="ec.clickRadio2(this)" @[ if(strUtil.containsStr(bean.columnName,'update')){ /]checked@[ } /]  value="${bean.columnName}">修改时间</label>
+                            @[ } /]
+                            @[ if(strUtil.containsStr(' smallint mediumint int tinyint char ',bean.dataType)){ /]
+                            <label ${bean.columnName=='del_flag'?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_del" onclick="ec.clickRadio2(this)"  ${bean.columnName=='del_flag'?'checked':''} value="${bean.columnName}">删除标记</label>
+                            @[ } /]
+                            @[ if(strUtil.containsStr(' int bigint ',bean.dataType)  && bean.columnName=='version'){ /]
+                            <label style="color: red;"><input type="radio" name="tsuffix_${table}_col_version" onclick="ec.clickRadio2(this)" checked value="${bean.columnName}">自增版本号</label>
+                            @[ } /]
+                            @[ } /]
+                            @[ if(isAutoPk==1 && bean.pk=='PRI' && strUtil.containsStr(' int bigint ',bean.dataType)){ /]<label ${bean.autoIncrement=='auto_increment'?'style="color: red;"':''}><input type="radio" name="tsuffix_${table}_col_autopk" onclick="ec.clickRadio2(this)" ${bean.autoIncrement=='auto_increment'?'checked':''} value="${bean.columnNameFormat}">自增主键</label>@[ } /]
+                        </td>
+                        <td>
+                            ${bean.columnName!}
+                        </td>
+                        <td>
+                            ${bean.columnComment!}
+                        </td>
+                        <td>
+                            ${bean.isNullable=='NO'?'Y':'N'}
+                        </td>
+                        <td>
+                            ${bean.dataType!}
+                        </td>
+                        <td>
+                            ${bean.dataLength!}
+                        </td>
+                        <td>
+                            ${bean.pk!}
+                        </td>
+                    </tr>
+                    @[
+                    }elsefor{
+                    /]
+                    <tr>
+                        <td colspan="7">
+                            <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
+                        </td>
+                    </tr>
+                    @[ } /]
+                    </tbody>
+                </table>
+            </div>
+            @[ } /]
+        </div>
+        <a href="javascript:void(0);" onclick="$('#example-vertical-t-1').click();" class="btn btn-xs btn-info"> <i class="glyphicon glyphicon-chevron-left"></i> PREVIOUS</a>
+        <a href="javascript:void(0);" onclick="submitForm('column_form','finish_msg');$('#example-vertical-t-3').click();" class="btn btn-xs btn-success">NEXT <i class="glyphicon glyphicon-chevron-right"></i> </a>
+    </div>
+</form>

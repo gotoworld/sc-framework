@@ -1,0 +1,82 @@
+@[
+/*
+* 全景_素材 后台管理 (信息列表)
+*
+* VERSION      DATE          BY              REASON
+* -------- ----------- --------------- ---------------------------
+* 1.00     2017-03-31      easycode         程序.发布
+* -------- ----------- --------------- ---------------------------
+* Copyright 2017 System. - All Rights Reserved.
+*/
+/]
+@[
+for(bean in beans!){
+/]
+<div class="file-box">
+    <div class="file">
+        @[ if(bean.type==0 || bean.type==4){ /]
+        <span class="corner"></span>
+        <div class="image">
+            <img alt="image" class="img-responsive" src="${bean.logoUrl}">
+        </div>
+        <div class="file-name">
+            ${bean.name}
+            <br/>
+            <small>添加时间：${bean.dateCreated,dateFormat="yyyy-MM-dd"}</small>
+        </div>
+        @[ }else if(bean.type==1){ /]
+        <span class="corner"></span>
+        <div class="icon">
+            <i class="fa fa-music"></i>
+        </div>
+        <div class="file-name">
+            ${bean.name}
+            <br/>
+            <small>添加时间：${bean.dateCreated,dateFormat="yyyy-MM-dd"}</small>
+        </div>
+        @[ }else if(bean.type==2 || bean.type==5){ /]
+        <span class="corner"></span>
+        <div class="icon">
+            <i class="img-responsive fa fa-film"></i>
+        </div>
+        <div class="file-name">
+            ${bean.name}
+            <br/>
+            <small>添加时间：${bean.dateCreated,dateFormat="yyyy-MM-dd"}</small>
+        </div>
+        @[ }else{ /]
+        <span class="corner"></span>
+        <div class="icon">
+            <i class="fa fa-file"></i>
+        </div>
+        <div class="file-name">
+            ${bean.name}
+            <br/>
+            <small>添加时间：${bean.dateCreated,dateFormat="yyyy-MM-dd"}</small>
+        </div>
+        @[ } /]
+        <div style="text-align: center;padding-bottom: 10px;">
+            @[ if(shiro.hasPermission("memMaterial:down")){ /]
+            <a href="${bean.materialUrl}" target="_blank" class="label label-info"><i class="fa fa-anchor"></i> 下载</a>
+            @[ } /]
+            @[ if(shiro.hasPermission("memMaterial:edit")){ /]
+            <a href="javascript:;" onclick="openMyBoxLayer('e','${basePath}m/material/edit/${bean.id}');" class="label label-success"><i class="fa fa-edit"></i> 编辑</a>
+            @[ } /]
+            @[ if(shiro.hasPermission("memMaterial:del")){ /]
+            <a href="javascript:;" onclick="if(confirm('确认删除吗?')){delInfoData('${basePath}m/material/del/${bean.id}');};" rel="nofollow" class="label label-danger"><i class="fa fa-trash-o"></i> 删除</a>
+            @[ } /]
+        </div>
+    </div>
+</div>
+@[
+}elsefor{
+/]
+暂无素材文件!
+@[ } /]
+<#pageTag func="loadUrlPage" params="'info_search_form','info_list_div'" />
+<script type="text/javascript">
+    //判断是否尾页
+    if (${PAGEROW_OBJECT_KEY.hasNextPage!}) {
+        $('#pageNumA').val(${PAGEROW_OBJECT_KEY.pageNum!});
+    }
+</script>

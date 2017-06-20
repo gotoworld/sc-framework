@@ -1,0 +1,71 @@
+@[
+/*
+* 首页
+*
+* VERSION  DATE        BY           REASON
+* -------- ----------- ------------ ------------------------------------------
+* 1.00     2016-09-23  wuxiaogang   程序・发布
+* -------- ----------- ------------ ------------------------------------------
+* Copyright 2016 baseos System. - All Rights Reserved.
+*
+*/
+ /]
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    @[ include("include/meta.html"){} /]
+
+    <link href="${basePath}plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${basePath}plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="${basePath}plugins/hplus/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
+    <link href="${basePath}plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="${basePath}plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="row">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox-content m-b-sm border-bottom">
+            <div class="p-xs">
+                <div class="pull-left m-r-md">
+                    <i class="fa fa-globe text-navy mid-icon"></i>
+                </div>
+                <h2>欢迎使用 W全景发布系统</h2>
+                <span>测试版V0.1。</span>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>更新日志</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <ol>
+                            <li>2016.10.18新增 导览图编辑取消/关闭</li>
+                            <li>2016.10.18修复 场景编辑中跳转场景与已有导览图雷达冲突问题</li>
+                            <li>2016.10.18修复 未打开导览图前直接点击保存 雷达坐标归0问题</li>
+                            <li>2016.10.20新增 图片热点点击放大观看</li>
+                            <li>2016.10.20新增 下雪/下雨场景效果</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="${basePath}plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
+<script src="${basePath}plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="${basePath}plugins/hplus/js/content.js?v=1.0.0"></script>
+</body>
+</html>

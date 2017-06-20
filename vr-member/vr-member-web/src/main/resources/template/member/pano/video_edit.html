@@ -1,0 +1,151 @@
+@[
+ /*	
+ * 全景_视频 后台管理 (信息编辑页面)
+ *		
+ * VERSION      DATE          BY              REASON		
+ * -------- ----------- --------------- ---------------------------	
+ * 1.00     2016.10.02      easycode         程序.发布		
+ * -------- ----------- --------------- ---------------------------	
+ * Copyright 2016 pano System. - All Rights Reserved.
+ *	
+ */
+ /]
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+@[ include("../include/meta.html"){} /]
+@[ include("../include/public_init_js_css.html"){} /]
+<link href="${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
+<link href="${basePath}css/upload.css" rel="stylesheet">
+
+<style type="text/css">
+#upload_scene_btn{width: 220px;height: 164px;float: left;} 
+</style>
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content col-sm-12">
+					<form id="video_editor" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="${basePath}m/video/save">
+						<div class="col-sm-12">
+							<div style="float:right;">
+								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							</div>
+						</div>
+						<input type="hidden" name="pageNum" id="bean-pageNum" value="${bean.pageNum}">
+			            <input type="hidden" name="id" value="${bean.id}" />
+						<input type="hidden" name="token" value="${bean.token}" />
+                        <input type="hidden" name="newFlag" value="${bean.newFlag}" />
+                        <input type="hidden" name="type" value="1" />
+					    <div class="col-sm-6 b-r">
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label"  for="bean-name">名称:</label>
+								<div class="col-md-12">
+									<input id="bean-name" name="name" value="${bean.name}" class="form-control" type="text"  placeholder="名称"  required="" aria-required="true" aria-describedby="bean-name-error"  maxlength="50"   aria-invalid="true">
+									<span id="bean-name-error" class="help-block m-b-none"></span>
+								 </div>
+							 </div>
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label"  for="bean-memo">备注:</label>
+								<div class="col-sm-12">
+									<input id="bean-memo" name="memo" value="${bean.memo}" class="form-control" type="text"  placeholder="备注" aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
+									<span id="bean-memo-error" class="help-block m-b-none"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label"  for="bean-categoryId">类目:</label>
+								<div class="col-md-12">
+									@[ var treeIndex=1; /]
+									@[ var _band_flag=bean.categoryId; /]
+									<select  class="form-control" name="categoryId" id="bean-categoryId" required="" aria-required="true" aria-invalid="true">
+										@[ for(b in nodes !){ /]
+										<option  value="${b.id}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}</option>
+										@[ layout("pano_category_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.categoryId}){} /]
+										@[ }elsefor{ /]
+										<option>请选择..</option>
+										@[ } /]
+									</select>
+								</div>
+								<span id="bean-categoryId-error" class="help-block m-b-none"></span>
+							</div>
+						</div>
+						<div class="col-sm-12 form-group">
+							<div class="col-sm-12">
+								<p>视频上传:<span class="red s12">全景视频的格式为 mp4;</span></p>
+								<div class="img-input red" id="upload_scene_div" style="">
+								@[ if(bean.scenes!=null && bean.scenes.~size>0){
+									for(scene in bean.scenes){
+								 /]
+									<div id="${scene.id}" class="img-grid">
+										<input name="scene_id" value="${scene.id}" type="hidden">
+										<input name="${scene.id}_scene_src" value="${scene.sceneSrc}" type="hidden">
+										<img src="${basePath}img/vuped.png">
+										<input name="${scene.id}_scene_tit" value="${scene.sceneTitle}" placeholder="请填写清晰度,比如:标清" required="" aria-required="true" maxlength="5" aria-invalid="true" type="text">
+										<a href="javascript:;" onclick="move_scene(this,'left');" class="ico_left"></a>
+										<a href="javascript:;" onclick="javascript:del_scene_btn(this,'${scene.id}');" class="ico_del"></a>
+										<a href="javascript:;" onclick="move_scene(this,'right');" class="ico_right"></a>
+									</div>
+								@[ }
+									}
+								 /]
+								</div>
+								<div class="upload_scene_btn" style="">
+									<a href="javascript:;" id="upload_scene_btn"><img src="${basePath}img/add_video_btn.png" style="border: solid 4px #ddd"></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12">
+							<div style="width: 200px;margin: 0 auto;">
+								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	@[ include("../include/public_last_js_css.html"){} /]
+	<script src="${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
+	<script src="${basePath}plugins/plupload/js/plupload.min.js"></script>
+	<script type="text/javascript" src="${basePath}js/video_upload.js"></script>
+	<script type="text/javascript">
+	$().ready(function(){
+		formValidate();
+	});
+	function formValidate(){
+		setTimeout(function(){
+			$("#video_editor").validate();
+		},1000);
+	}
+	var uploader = video_upload('upload_scene_btn','upload_scene_div');
+	//删除上传的场景
+	function del_scene_btn(ele, file) {
+		if (file) {
+			//删除uploader保存的上传记录
+			uploader.removeFile(file);
+		};
+		$(ele).parent().remove();
+	}
+	function move_scene(ele, direction) {
+// 		console.log(direction);
+		var $p = $(ele).parent("div");
+		if (direction == "left") {
+			if ($p.prev()) {
+				$p.prev().before($p);
+			};
+		} else {
+			if ($p.next()) {
+				$p.next().after($p);
+			};
+		}
+	}
+	</script>
+</body>
+</html>
+

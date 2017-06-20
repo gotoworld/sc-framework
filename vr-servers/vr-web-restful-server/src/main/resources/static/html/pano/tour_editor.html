@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>${proj.name} - 场景设置</title>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta http-equiv="x-ua-compatible" content="IE=edge" />
+	<style>
+		@-ms-viewport { width: device-width; }
+		@media only screen and (min-device-width: 800px) { html { overflow:hidden; } }
+		html { height:100%; }
+		body { height:100%; overflow: hidden; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; background-color:#000000; }
+		a{ color:#AAAAAA; text-decoration:underline; }
+		a:hover{ color:#FFFFFF; text-decoration:underline; }
+	</style>
+	<link rel="stylesheet" type="text/css" href="${panoPath}css/main.css" />
+</head>
+<body>
+<script type="text/javascript" src="${panoPath}tour.js"></script>
+<div id="title" style="width:100%; height:20px; padding:5px; font-size:16px;"><b>${proj.name} - 场景设置</b></div>
+<div id="pano" style="width:100%; height:95%;">
+	<noscript><table style="width:100%;height:100%;"><tr style="vertical-align:middle;"><td><div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div></td></tr></table></noscript>
+	<script>
+		embedpano({swf:"${panoPath}tour.swf", xml:"/upload/pano/${proj.id}.editor.xml?version=${proj.version}", target:"pano", html5:"prefer", mobilescale:1.0, passQueryParameters:false});
+		function resize(){
+			var th = document.getElementById("title").clientHeight;
+			var ph = (typeof(window.innerHeight) == 'number') ? window.innerHeight : ((document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : ((document.body && document.body.clientHeight) ? document.body.clientHeight : 500));
+			document.getElementById("pano").style.height = (ph-th)+"px"
+		}
+		window.onresize = resize;
+		resize();
+		setTimeout(function (){
+			//取得krpano对象
+			var krpano = document.getElementById("krpanoSWFObject");
+			@[   if(isNotEmpty(proj.soundSrc)){   /]
+			//显示声音 按钮
+			krpano.call("set(layer[skin_bgm_btn_container].visible,true);");
+			@[   }   /]
+			//显示访问量
+			krpano.call("set(layer[skin_visit_btn_container].visible,false);");
+		},3000);
+	</script>
+</div>
+
+<script type="text/javascript">
+//声明相关变量
+var xml_data = new Object();
+@[   if(isNotEmpty(proj.tourEditJson)){   /]
+xml_data = ${proj.tourEditJson};
+@[   }else{   /]
+xml_data = {
+@[   for(scene in proj.scenes){   /]
+"${scene.id}":{"view":null,"hotspots":null,"picspots":null}
+@[   if(sceneLP.index<proj.scenes.~size){   /]
+,
+@[   }   /]
+@[   }   /]
+};
+@[   }   /]
+var pid = '${proj.id}';
+var img_host = '';
+var basePath = '/';
+var radar_img ="${proj.mapSrc}";
+var panoPath ="${panoPath}";
+</script>
+<!-- 导览图选择 场景列表 -->
+<div class="radar-scenes-container">
+	<div class="radar-scenes-content">
+	@[   for(scene in proj.scenes){   /]
+    <div class="radar-scenes-one">
+        <div class="scenes-img" data-scene-name="${scene.id}">
+            <img src="${scene.breakdownImg!}thumb.jpg">
+        </div>
+        <div class="scenes-title">
+            <span>${scene.sceneTitle}</span>
+        </div>
+    </div>
+	@[   }   /]
+	</div>
+	<div class="radar-scenes-btn">
+		取消
+	</div>
+</div>
+<div class="radar-container" >
+    <div class="radar-title">
+    	导览图编辑
+    	<div class="radar-container-close">关闭</div>
+    </div>
+    <div class="sandtable-img-margin" >
+         <img class="sandtable-window-img" src="${proj.mapSrc}">
+      @[   if(proj.radars!=null){   /]
+ 		@[   for(radar in proj.radars){   /]
+         <div class="radar-control" x="${radar.x}" y="${radar.y}" style="top:${radar.x}px; left:${radar.y}px;">
+			<img class="radar-control-img" src="${panoPath}images/radar-out.png" onclick="triggerCircle(this)" data-original-title="${radar.sceneId}">
+			<div class="radar-circle" style="transform: rotate(${radar.rotate}deg);@[   if(radarLP.index==1){   /]display: block;@[   }else{   /]display:none;@[   }   /]">
+				<div class="radar-point" onmousedown="dragStart(event)"></div>
+				<div class="radar-center-point"></div>
+			</div>
+		</div>
+		@[   }   /]
+     @[   }   /]
+    </div>
+    <div class="radar-btn-group">
+        <div class="radar-add-btn"><button >添加标记</button></div>
+        <div class="radar-del-btn"><button data-original-title="">删除标记</button></div>
+    </div>
+</div>
+<div id="container" style="display:none"><input type="button" id="upload_pichots_btn" value="上传图片"/></div>
+<div id="upload_file_btn"></div>
+<script type="text/javascript" src="${panoPath}js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="${panoPath}js/jquery.rotate.js"></script>
+<script type="text/javascript" src="${panoPath}js/panoeditor.js"></script>
+<script type="text/javascript" src="${panoPath}js/plupload.full.min.js"></script>
+<script type="text/javascript" src="${panoPath}js/addtoureditor.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+@[ if(shiro.hasPermission("pano:menu")){ /]
+    <li>
+        <a href="#">
+            <i class="fa fa-camera"></i>
+            <span class="nav-label">全景系统</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="nav nav-second-level">
+            @[ if(shiro.hasPermission("sysCategory:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }h/sys/sysCategory/init">全景类目</a></li>
+            @[ } /]
+
+            <li><a class="J_menuItem" href="/indevelopment.html?v=a3">作品标签</a></li>
+
+            @[ if(shiro.hasPermission("panoProj:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }/h/pano/proj/init">全景漫游</a></li>
+            @[ } /]
+            @[ if(shiro.hasPermission("video:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }/h/video/init">全景视频</a></li>
+            @[ } /]
+            @[ if(shiro.hasPermission("panoComment:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }/h/pano/comments/init">场景留言</a></li>
+            @[ } /]
+            @[ if(shiro.hasPermission("sysMaterial:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }h/sys/sysMaterial/init">素材管理</a></li>
+            @[ } /]
+
+            @[ if(shiro.hasPermission("sysPanoPlugins:menu")){ /]
+            <li><a class="J_menuItem" href="${basePath }h/sys/sysPanoPlugins/init">全景插件</a></li>
+            @[ } /]
+
+            <li><a class="J_menuItem" href="/indevelopment.html?v=a4">VR脚本管理</a></li>
+        </ul>
+    </li>
+@[ } /]
+@[ if(shiro.hasPermission("sys:menu")){ /]
+<li><a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">系统管理 </span><span
+        class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        @[ if(shiro.hasPermission("orgDept:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/org/dept/init">组织架构_部门</a></li>
+        @[ } /]
+        @[ if(shiro.hasPermission("orgUser:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/org/user/init">组织架构_用户</a></li>
+        @[ } /]
+        @[ if(shiro.hasPermission("authPerm:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/auth/perm/init">权限_权限信息</a></li>
+        @[ } /]
+        @[ if(shiro.hasPermission("authRole:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/auth/role/init">权限_角色信息</a></li>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysLog:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/alog/init">系统_操作日志</a></li>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysDic:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/dic/init">系统_数据字典</a></li>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysSensitiveWords:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysSensitiveWords/init">敏感词管理</a></li>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysAdvertise:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysAdvertise/init">广告管理</a></li>
+        @[ } /]
+
+        <li><a class="J_menuItem" href="/graph_metrics.html">数据统计</a></li>
+        <li><a class="J_menuItem" href="/indevelopment.html?v=a2">系统设置</a></li>
+    </ul>
+</li>
+@[ } /]
+@[ if(shiro.hasPermission("newsManager:menu")){ /]
+<li><a href="/file_manager.html"><i class="glyphicon glyphicon-text-background"></i> <span class="nav-label">资讯管理 </span><span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        @[ if(shiro.hasPermission("sysNewsCategory:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysNewsCategory/init">资讯栏目</a></li>
+        @[ } /]
+        @[ if(shiro.hasPermission("sysNews:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysNews/init">新闻资讯</a></li>
+        @[ } /]
+    </ul>
+</li>
+@[ } /]
+<li><a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">会员管理 </span><span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <li><a class="J_menuItem" href="/indevelopment.html?v=a8">级别设置</a></li>
+        <li><a class="J_menuItem" href="/clients.html">会员管理</a></li>
+        <li><a class="J_menuItem" href="/indevelopment.html?v=a9">会员作品</a></li>
+    </ul>
+</li>
+<li><a href="#"><i class="glyphicon glyphicon-bitcoin"></i> <span class="nav-label">VIP系统 </span><span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <li><a class="J_menuItem" href="/indevelopment.html?v=a10">套餐管理</a></li>
+        <li><a class="J_menuItem" href="/indevelopment.html?v=a11">订单管理</a></li>
+        <li><a class="J_menuItem" href="/indevelopment.html?v=a12">会员作品</a></li>
+    </ul>
+</li>
+<li>
+    <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">系统消息 </span><span class="label label-warning pull-right">16</span></a>
+    <ul class="nav nav-second-level">
+        <li><a class="J_menuItem" href="/mailbox.html">收件箱</a>
+        </li>
+        <li><a class="J_menuItem" href="/mail_detail.html">查看邮件</a>
+        </li>
+        <li><a class="J_menuItem" href="/mail_compose.html">写信</a>
+        </li>
+        @[ if(shiro.hasPermission("sysMessage:menu")){ /]
+        <li><a class="J_menuItem" href="${basePath }h/sys/sysMessage/init">系统_站内信</a></li>
+        @[ } /]
+    </ul>
+</li>

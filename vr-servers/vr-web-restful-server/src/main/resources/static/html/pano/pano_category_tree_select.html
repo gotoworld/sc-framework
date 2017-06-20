@@ -1,0 +1,19 @@
+<!-- 
+/*
+ * 递归树
+ */
+  -->
+<!-- 
+	for(bean in nodes!){
+  -->
+		<option value="${bean.id}" ${_band_flag==bean.id?'selected="selected"':''}>
+			-
+			<!--  for(var i=1;i<=treeIndex;i++){  -->
+			|-
+			<!--  }  -->
+			${bean.name}
+		</option>
+<!--  		if(isNotEmpty(bean.nodes) && bean.nodes.~size>0){
+			 include("pano_category_tree_select.html",{treeIndex:treeIndex+1,nodes:bean.nodes}){}
+		}
+}  -->

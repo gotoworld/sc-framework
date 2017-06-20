@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>${proj.name}</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <style>
+        @-ms-viewport { width:device-width; }
+        @media only screen and (min-device-width:800px) { html { overflow:hidden; } }
+        html { height:100%; }
+        body { height:100%; overflow:hidden; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; background-color:#000000; }
+    </style>
+    <link rel="stylesheet" type="text/css" href="${panoPath}css/main.css" />
+    <script type="text/javascript" src="${panoPath}tour.js"></script>
+</head>
+<body>
+<div id="pano" style="width:100%;height:100%;">
+    <noscript><table style="width:100%;height:100%;"><tr style="vertical-align:middle;"><td><div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div></td></tr></table></noscript>
+    <script>
+        embedpano({swf:"${panoPath}tour.swf", xml:"/upload/pano/${proj.id}.xml?version=${proj.version}", target:"pano", html5:"auto", mobilescale:1.0, passQueryParameters:true});
+        //取得krpano对象
+        var krpano = document.getElementById("krpanoSWFObject");
+        //显示赞 按钮
+        krpano.call("set(layer[skin_zan_btn_container].visible,true);");
+        @[ if(isNotEmpty(proj.soundSrc)){ /]
+            //显示声音 按钮
+            krpano.call("set(layer[skin_bgm_btn_container].visible,true);");
+		@[ } /]
+        @[ if(isNotEmpty(proj.mapSrc)){ /]
+            //显示导览图 按钮
+            krpano.call("set(layer[skin_radar_btn_container].visible,true);");
+		@[ } /]
+        @[ if(proj.isComments==1){ /]
+            //显示评论 按钮
+            krpano.call("set(layer[skin_co_btn_container].visible,true);");
+		@[ } /]
+        //显示访问量
+        krpano.call("set(layer[skin_visit_btn_container].visible,true);");
+        //        @[ if(true){ /]
+        //            //隐藏所有按钮
+        //            krpano.call("set(layer[skin_layer].visible,false);");
+        //        @[ } /]
+    </script>
+</div>
+<div class="commentBox">
+    <div style="padding:0 15px">
+        <h4>说一说</h4>
+        <textarea name="comment" id="usercomm" maxlength="20" placeholder="拖动头像就可以发表说一说到指定位置哦！"></textarea>
+        <div class="commentbtn"><span onclick="cancel_comment();">取&nbsp;消</span>
+            <span id="doComm" style="cursor:not-allowed;background-color:#aaaaaa;">发&nbsp;表</span>
+            <i onclick="javascript:switch_show_comment();">隐藏</i>	</div>
+    </div>
+</div>
+<script type="text/javascript">
+    //声明相关变量
+    var img_host = '${basePath}';
+    var basePath = '${basePath}';
+    var pid = '${proj.id}';
+    var allow_comment = ${proj.isComments};
+    var is_show_comment = ${proj.isComments==1?true:false};
+
+    var visit_num = ${proj.pvNum};
+    var like_num = ${proj.thumbsUpNum};
+    var bgm = "${proj.soundSrc}";
+    var sname = '';
+    var ath = 0;
+    var atv = 0;
+    var comment_list = new Array();   //评论列表
+    var designer_name = '';
+    var company_name = '';
+    var radar_img ='${proj.mapSrc}';
+</script>
+<script type="text/javascript" src="${panoPath}js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="${panoPath}js/addtour.js"></script>
+</body>
+</html>

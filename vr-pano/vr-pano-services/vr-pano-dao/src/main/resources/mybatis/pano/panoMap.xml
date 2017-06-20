@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vr.dao.pano.IPanoMapDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+		 t1.proj_id as  "projId"
+        ,t1.scene_id as  "sceneId"
+        ,t1.rotate as  "rotate"
+        ,t1.x as  "x"
+        ,t1.y as  "y"
+        ,t1.create_id as  "createId"
+        ,t1.date_created as  "dateCreated"
+	</sql>
+
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch">
+        insert into pano_map(
+             proj_id
+            ,scene_id
+            ,rotate
+            ,x
+            ,y
+            ,create_id
+            ,date_created
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+                 #{t.projId}
+                ,#{t.sceneId}
+                ,#{t.rotate}
+                ,#{t.x}
+                ,#{t.y}
+                ,#{t.createId}
+                ,now()
+            )
+        </foreach>
+    </insert>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.vr.vo.pano.PanoMap" resultType="com.vr.vo.pano.PanoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pano_map t1
+        inner join pano_scene t2 on t1.scene_id=t2.id
+        where t1.proj_id = #{projId} <if test="isMember"> and t1.create_id = #{createId}</if>
+        order by t1.date_created desc
+    </select>
+
+    <delete id="deleteByProjId" parameterType="com.vr.vo.pano.PanoMap">
+		delete
+		from pano_map
+		where  
+		proj_id=#{projId} <if test="isMember"> and t1.create_id = #{createId}</if>
+	</delete>
+</mapper>

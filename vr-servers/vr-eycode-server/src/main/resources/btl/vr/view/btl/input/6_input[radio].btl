@@ -1,0 +1,11 @@
+
+                        <div class="form-group clearfix">
+                            <label class="col-sm-3 control-label">${t.columnComment}：</label>
+                            <div class="col-sm-9">
+                                <label class="radio-inline">
+                                    <input type="radio" checked="" value="option1" name="${t.columnNameFormat}">选项1</label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="option2" name="${t.columnNameFormat}">选项2</label>
+                                <span id="bean-${t.columnNameFormat}-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>

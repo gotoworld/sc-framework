@@ -1,0 +1,249 @@
+@[
+ /*	
+ * 全景_项目 后台管理 (信息编辑页面)
+ *		
+ * VERSION      DATE          BY              REASON		
+ * -------- ----------- --------------- ---------------------------	
+ * 1.00     2016.10.02      easycode         程序.发布		
+ * -------- ----------- --------------- ---------------------------	
+ * Copyright 2016 pano System. - All Rights Reserved.
+ *	
+ */
+ /]
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+@[ include("../include/meta.html"){} /]
+@[ include("../include/public_init_js_css.html"){} /]
+<link href="${basePath}plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
+<link href="${basePath}css/upload.css" rel="stylesheet">
+
+<style type="text/css">
+#upload_scene_btn{width: 220px;height: 164px;float: left;}
+</style>
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content col-sm-12">
+					<form id="pano02_01" method="post" class="form m-t" target="_parent" accept-charset="UTF-8" action="${basePath}h/pano/proj/save">
+						<div class="col-sm-12">
+							<div style="float:right;">
+								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							</div>
+						</div>
+						<input type="hidden" name="pageNum" id="bean-pageNum" value="${bean.pageNum}">
+			            <input type="hidden" name="id" value="${bean.id}" />
+			            <input type="hidden" name="code" value="${bean.code}" />
+						<input type="hidden" name="token" value="${bean.token}" />
+                        <input type="hidden" name="newFlag" value="${bean.newFlag}" />
+                        <input type="hidden" name="type" value="0" />
+						<div class="col-sm-6 b-r">
+							<div class="form-group clearfix">
+								<div class="col-md-8 col-md-offset-3">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" class="checkbox" id="bean-isComments" @[ if(bean.isComments==1){ /] checked="checked" @[ } /] name="isComments" value="1">开放评论
+										</label>
+
+										<label>
+											<input type="checkbox" class="checkbox" id="bean-isPlanetoid" @[ if(bean.isPlanetoid==1){ /] checked="checked" @[ } /] name="isPlanetoid" value="1">小行星开场
+										</label>
+
+										<label>
+											<input type="checkbox" class="checkbox" id="bean-isFps" @[ if(bean.isFps==1){ /] checked="checked" @[ } /] name="isFps" value="1">显示FPS
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label"  for="bean-name">名称：</label>
+								<div class="col-md-12">
+									<input id="bean-name" name="name" value="${bean.name}" class="form-control" type="text"  placeholder="名称"  required="" aria-required="true" aria-describedby="bean-name-error"  maxlength="50"   aria-invalid="true">
+									<span id="bean-name-error" class="help-block m-b-none"></span>
+								</div>
+							</div>
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label" >雪景类型：</label>
+								<div class="col-md-12">
+									<select name="snowType" class="form-control m-b">
+										<option value="">--不显示--</option>
+										<option value="defaultsnow" ${bean.snowType=='defaultsnow'?'selected="selected"':''} >默认</option>
+										<option value="snowballs" ${bean.snowType=='snowballs'?'selected="selected"':''}>雪花球</option>
+										<option value="snowflakes" ${bean.snowType=='snowflakes'?'selected="selected"':''}>雪花</option>
+										<option value="rain" ${bean.snowType=='rain'?'selected="selected"':''}>雨</option>
+										<option value="heavyrain" ${bean.snowType=='heavyrain'?'selected="selected"':''}>大雨</option>
+									</select>
+									<span id="snowType-error" class="help-block m-b-none"></span>
+								</div>
+							</div>
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label">背景音乐：</label>
+								<div class="col-md-12">
+									<span  class="help-block m-b-none">
+									<button type="button" id="upload_sound_btn">点击上传</button>(可以不添加,)必须为mp3</span>
+									<div id="upload_sound_div" style="">
+										@[ if(isNotEmpty(bean.soundSrc)){ /]
+										<div class="music-upload">
+											<input name="soundSrc" value="${bean.soundSrc}" type="hidden">
+											<audio controls>
+												<source src="${bean.soundSrc}" type="audio/mp3">
+												您的浏览器不支持在线播放
+											</audio>
+										</div>
+										@[ } /]
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label"  for="bean-categoryId" >类目：</label>
+								<div class="col-md-12">
+									@[ var treeIndex=1; /]
+									@[ var _band_flag=bean.categoryId; /]
+									<select  class="form-control" name="categoryId" id="bean-categoryId" required="" aria-required="true" aria-invalid="true">
+										@[ for(b in nodes !){ /]
+										<option  value="${b.id}" ${_band_flag==b.id?'selected="selected"':''} >-${b.name}</option>
+										@[ layout("pano_category_tree_select.html",{treeIndex:1,nodes:b.nodes,_band_flag:bean.categoryId}){} /]
+										@[ }elsefor{ /]
+										<option>请选择..</option>
+										@[ } /]
+									</select>
+									<span id="bean-categoryId-error" class="help-block m-b-none"></span>
+								</div>
+							</div>
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label"  for="bean-memo">备注：</label>
+								<div class="col-md-12">
+									<input id="bean-memo" name="memo" value="${bean.memo}" class="form-control" type="text"  placeholder="备注" aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
+									<span id="bean-memo-error" class="help-block m-b-none"></span>
+								</div>
+							</div>
+							<div class="form-group clearfix">
+								<label class="col-md-3 control-label">导览图：</label>
+								<div class="col-md-12">
+									<span  class="help-block m-b-none"><button type="button" id="upload_map_btn">点击上传</button>(可以不添加,)建议尺寸264*264</span>
+									<div id="upload_map_div" style="">
+										@[ if(isNotEmpty(bean.mapSrc)){ /]
+										<div class="img-grid-2">
+											<input name="mapSrc" value="${bean.mapSrc}" type="hidden">
+											<img src="${bean.mapSrc}" style="max-width:264px;max-height:264px">
+										</div>
+										@[ } /]
+									</div>
+								</div>
+							</div>
+
+							<!-- 							<div class="form-group clearfix"> -->
+							<!-- 								<label class="col-md-3 control-label"  for="bean-logoPicUrl">logo图片：</label> -->
+							<!-- 								<div class="col-md-12"> -->
+							<!-- 									<input id="bean-logoPicUrl" name="logoPicUrl" value="${bean.logoPicUrl}" class="form-control" type="text"  placeholder="logo图片" aria-describedby="bean-logoPicUrl-error"  maxlength="255"   aria-invalid="true"> -->
+							<!-- 									<span id="bean-logoPicUrl-error" class="help-block m-b-none">可不上传</span> -->
+							<!-- 									<input id="bean-logoWebUrl" name="logoWebUrl" value="${bean.logoWebUrl}" class="form-control" type="text"  placeholder="logo链接" aria-describedby="bean-logoWebUrl-error"  maxlength="255"   aria-invalid="true"> -->
+							<!-- 									<div id="upload_logo_file" class="fl" style=""> -->
+							<!-- 										<a href="javascript:;" id="upload_logo_src"><img src="${basePath}img/add_pic_btn.png" style="border: solid 4px #ddd"></a> -->
+							<!-- 									</div> -->
+							<!-- 								 </div> -->
+							<!-- 							 </div> -->
+						</div>
+
+						<div class="col-sm-12 form-group">
+							<input name="refreshSceneFlag" id="_refreshSceneFlag" value="0" type="hidden">
+							<div class="col-sm-12">
+								<p>场景上传：<span class="red s12">全景图宽高比须为2:1，格式为jpg；</span> <span class="c00 s12">单次只能上传1张全景图，多个场景请分次上传</span></p>
+								<div class="img-input red" id="upload_scene_div" style="">
+								@[ if(bean.scenes!=null && bean.scenes.~size>0){
+									for(scene in bean.scenes){
+								 /]
+									<div id="${scene.id}" class="img-grid">
+										<input name="scene_id" value="${scene.id}" type="hidden">
+										<input name="${scene.id}_scene_order_no" class="x_scene_order_no" value="${scene.orderNo}" type="hidden">
+										<input name="${scene.id}_scene_src" value="${scene.sceneSrc}" type="hidden">
+										<input name="${scene.id}_scene_key" value="${scene.keyword}" type="hidden" >
+										<img src="${scene.sceneSrc}" onerror="this.onerror=null;this.src='${scene.breakdownImg!}thumb.jpg'">
+										<input name="${scene.id}_scene_tit" value="${scene.sceneTitle}" placeholder="请填写场景名称" required="" aria-required="true" maxlength="20" aria-invalid="true" type="text">
+										<a href="javascript:;" onclick="move_scene(this,'left');" class="ico_left"></a>
+										<a href="javascript:;" onclick="javascript:del_scene_btn(this,'${scene.id}');" class="ico_del"></a>
+										<a href="javascript:;" onclick="move_scene(this,'right');" class="ico_right"></a>
+									</div>
+								@[ }
+									}
+								 /]
+								</div>
+								<div class="upload_scene_btn" style="">
+									<a href="javascript:;" id="upload_scene_btn"><img src="${basePath}img/add_pic_btn.png" style="border: solid 4px #ddd"></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12">
+							<div class="checkbox">
+								 <label>
+		                           <input type="checkbox" class="checkbox"  name="makePanoFlag" id="makePanoFlag" value="1">重新生成场景分解图
+		                         </label>
+                        	 </div>
+							<div style="width: 200px; margin: 0 auto;">
+								<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	@[ include("../include/public_last_js_css.html"){} /]
+	<script src="${basePath}plugins/hplus/js/plugins/plyr/plyr.js"></script>
+	<script src="${basePath}plugins/plupload/js/plupload.min.js"></script>
+	<script type="text/javascript" src="${basePath}js/upload_scene.js"></script>
+	<script type="text/javascript" src="${basePath}js/upload_single_bgm.js"></script>
+	<script type="text/javascript" src="${basePath}js/upload_single_pic.js"></script>
+	<script type="text/javascript">
+	$().ready(function(){
+		formValidate();
+	});
+	function formValidate(){
+		setTimeout(function(){
+			$("#pano02_01").validate();
+		},1000);
+	}
+	var uploader = upload_scene('upload_scene_btn','upload_scene_div','${bean.code}');
+	updte_single_bgm('upload_sound_btn','upload_sound_div','mp3','soundSrc');
+	upload_single_pic('upload_map_btn','upload_map_div','png','mapSrc');
+	//删除上传的场景
+	function del_scene_btn(ele, file) {
+		if (file) {
+			//删除uploader保存的上传记录
+			uploader.removeFile(file);
+		};
+		$(ele).parent().remove();
+
+		$('#makePanoFlag').attr('checked','checked');
+	}
+	function move_scene(ele, direction) {
+// 		console.log(direction);
+		var $p = $(ele).parent("div");
+		if (direction == "left") {
+			if ($p.prev()) {
+				$p.prev().before($p);
+			};
+		} else {
+			if ($p.next()) {
+				$p.next().after($p);
+			};
+		}
+		$('.x_scene_order_no').each(function(index,ele){
+			$(ele).val(index);
+		});
+		$('#_refreshSceneFlag').val(1);
+	}
+	@[ if(isNotEmpty(bean.soundSrc)){ /]
+	plyr.setup();
+	@[ } /]
+	</script>
+</body>
+</html>
+

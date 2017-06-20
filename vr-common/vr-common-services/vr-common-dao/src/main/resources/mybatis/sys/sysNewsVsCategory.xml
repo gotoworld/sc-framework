@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vr.dao.sys.ISysNewsVsCategoryDao">
+
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch"  >
+        insert into sys_news_vs_category (
+            news_id 
+           ,category_id 
+           ,date_created 
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+                   #{t.newsId} 
+                  ,#{t.categoryId} 
+                  ,now()
+            )
+        </foreach>
+    </insert>
+
+</mapper>

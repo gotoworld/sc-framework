@@ -1,5 +1,8 @@
 <include url="%SWFPATH%/skin/vtourskin.xml" />
 
+<krpano flare_dir="%SWFPATH%/skin/lensflare" />
+<include url="%SWFPATH%/skin/lensflare/core.xml" />
+
 <security cors="anonymous">
 	<crossdomainxml url="%SWFPATH%/crossdomain.xml" />
 	<allowdomain domain="*" />
@@ -15,9 +18,9 @@
 <!-- startup action - load the first scene -->
 <action name="startup" autorun="onstart">
 	if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
-    loadscene(get(scene[get(startscene)].name), null, MERGE);
+    loadscene(get(startscene), null, MERGE);
+    <!-- loadscene(get(scene[get(startscene)].name), null, MERGE); -->
     if(startactions !== null, startactions() );
-	
 	<!-- sceneJump(); -->
 </action>
 
@@ -141,7 +144,7 @@
 			  );
 		  );
 	</action>
-	<!-- 打开新页面 -->
+	<!-- 打开新页面  ${is_edit_flag} -->
 	<action name="openWinUrl">js(window.open(%1));</action>
 <!--场景列表-->
 @[ for(scene in proj.scenes){ /]
@@ -176,7 +179,7 @@
           @[ break;
             case 2://2外部链接
           /]
-            <hotspot name="${hot.hname}" tooltip="${hot.title}" style="showtxt_hotspotstyle" @[ if(is_edit_flag==1){ /] onclick="js(window.open(${stringEscapeUtils.escapeXml(hot.url)}))" @[ } /] depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}" />
+            <hotspot name="${hot.hname}" tooltip="${hot.title}" style="showtxt_hotspotstyle" @[ if(is_edit_flag!=1){ /] onclick="js(window.open(${stringEscapeUtils.escapeXml(hot.url)}))" @[ } /] depth="${hot.depth}" scale="${hot.scale}" ath="${hot.ath}" atv="${hot.atv}" rotate="${hot.rotate}" />
           @[ break;
             case 3://3图文介绍 | 内部弹窗页
           /]

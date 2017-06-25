@@ -14,6 +14,8 @@
 		a:hover{ color:#FFFFFF; text-decoration:underline; }
 	</style>
 	<link rel="stylesheet" type="text/css" href="${panoPath}css/main.css" />
+	<!--<link rel="stylesheet" href="${panoPath}skin/css/font-awesome/css/font-awesome.min.css">-->
+	<!--<script src="${panoPath}skin/js/howler.min.js"></script>-->
 </head>
 <body>
 <script type="text/javascript" src="${panoPath}tour.js"></script>
@@ -21,7 +23,7 @@
 <div id="pano" style="width:100%; height:95%;">
 	<noscript><table style="width:100%;height:100%;"><tr style="vertical-align:middle;"><td><div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div></td></tr></table></noscript>
 	<script>
-		embedpano({swf:"${panoPath}tour.swf", xml:"/upload/pano/${proj.id}.editor.xml?version=${proj.version}", target:"pano", html5:"prefer", mobilescale:1.0, passQueryParameters:false,initvars:{addflaremode:1}});
+		embedpano({swf:"${panoPath}tour.swf", xml:"/upload/pano/${proj.id}.editor.xml?version=${proj.version}", target:"pano", html5:"prefer", mobilescale:1.0, passQueryParameters:false, initvars:{edditmode:1}});
 		function resize(){
 			var th = document.getElementById("title").clientHeight;
 			var ph = (typeof(window.innerHeight) == 'number') ? window.innerHeight : ((document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : ((document.body && document.body.clientHeight) ? document.body.clientHeight : 500));

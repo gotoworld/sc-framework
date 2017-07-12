@@ -13,7 +13,7 @@ spring:
     auto: true
     proxy-target-class: true
   application:
-    name: vrresource-web-server
+    name: hsd-web-restful-server
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
   mvc:
@@ -73,11 +73,6 @@ pagehelper:
 hsd:
   config:
     beetl: classpath:/conf/beetl.properties
-  krpano:
-    win: D:/home/krpano/win/krpanotools64.exe
-    linux: /home/wu1g/software/krpano/krpanotools
-    mac: /Users/panpan/soft/krpano-1.19-pr8
-    config:  makepano -config=templates/vtour-multires.config  -askforxmloverwrite=false -xml=false -html=false -panotype=sphere #-tilesize=256 -adjustlevelsizes=true -adjustlevelsizesformipmapping=true -progressiveloading=auto -preview=true -cspreview=true -quiet=false -maxcubesize=512
   common:
     logClear: #清理用户操作日志
       enable: true #是否启用

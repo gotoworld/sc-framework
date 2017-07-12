@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>demo index</title>
+    <link rel="stylesheet" href="css/weui.min.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+</head>
+<style type="text/css">
+</style>
+
+<body ng-controller="app-ctrl" class="ng-cloak" ng-cloak>
+<div class="page">
+    <div class="hd">
+        <h1 class="page_title">示例 {{userName}}</h1>
+    </div>
+    <div class="weui_panel_hd"><a href="javascript:void(0);" ng-click="edit(0)">新增</a></div>
+    <div class="bd">
+        <div class="weui_panel_hd" ng-show="infoError" ng-bind="message">
+        </div>
+        <div class="weui_panel weui_panel_access" ng-show="infoSuccess">
+            <div class="weui_panel_bd">
+                <div class="weui_media_box weui_media_appmsg" ng-repeat="item in list">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">id:{{item.id}},姓名:{{item.name}},年龄:{{item.age}}</h4>
+                        <p class="weui_media_desc">
+                            <a href="javascript:void(0);" ng-click="edit(item.id)">编辑</a>
+                            <a href="javascript:void(0);" ng-click="info(item.id)">详情</a>
+                            <a href="javascript:void(0);" ng-click="del(item.id)">删除</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="weui_panel_hd" ng-show="loaded">加载完成..</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+    angular.module("app", [ /]).controller("app-ctrl", ['$scope', function ($scope) {
+        $data = $scope;
+        $scope.edit = function (id) {
+            sessionStorage.setItem(site.demo.info,id);
+            location.href = 'edit.html.btl'
+        }
+        $scope.info = function (id) {
+            sessionStorage.setItem(site.demo.info,id);
+            location.href = './info.html'
+        }
+        $scope.del = function (id) {
+            $.post( site.demo.del + id,{}, function (result) {
+                if(result.code==0){
+                    alert('删除成功');
+                    $data.list=null;
+                    demo.page(1);
+                }else{
+                    alert(result.message);
+                }
+            });
+        }
+    } /]);
+    $(function () {
+        user.init(function(){
+            demo.page(1);
+        });
+    });
+    $(window).scroll(function () {
+        var bot = 50; //bot是底部距离的高度
+        if (isPageReady && page.hasNextPage && (bot + $(window).scrollTop()) >= ($(document).height() - $(window).height())) {
+            demo.page(page.nextPage);
+        }
+    });
+</script>
+</body>
+</html>

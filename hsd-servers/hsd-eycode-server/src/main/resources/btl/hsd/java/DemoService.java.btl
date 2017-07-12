@@ -1,0 +1,147 @@
+package ${scfg._biz_pkg};
+
+import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
+import ${scfg._dao_pkg}.I${tcfg.tableNameFormat!}${scfg._dao_suffix!};
+import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
+import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.service.BaseService;
+import com.hsd.framework.util.CommonConstant;
+import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.hsd.framework.annotation.FeignService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@FeignService
+@Slf4j
+public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${tcfg.tableNameFormat!}Service {
+    @Autowired
+    private I${tcfg.tableNameFormat!}${scfg._dao_suffix!} ${tableNameL}${scfg._dao_suffix!};
+
+    @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public String saveOrUpdateData(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
+        String result = "seccuss";
+        try {
+            //判断数据是否存在
+            if (dto.getId() != null && ${tableNameL}${scfg._dao_suffix!}.isDataYN(dto) != 0) {
+                //数据存在
+                @[ if ("1"==scfg._update){ /]${tableNameL}${scfg._dao_suffix!}.update(dto);@[ } /]
+            } else {
+                //新增
+                 @[ if ("1"==scfg._insert){ /]${tableNameL}${scfg._dao_suffix!}.insert(dto);@[ } /]
+            }
+        } catch (Exception e) {
+            log.error("信息保存异常!", e);
+            throw new RuntimeException("信息保存异常!");
+        }
+        return result;
+    }
+    @[ } /]
+
+    @[ if ("1"==scfg._del) { /]
+    @Override
+    public String deleteData(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
+        String result = "seccuss";
+        try {
+            if(${tableNameL}${scfg._dao_suffix!}.deleteByPrimaryKey(dto)==0){
+                throw new RuntimeException("数据不存在!");
+            }
+        } catch (Exception e) {
+            log.error("物理删除异常!", e);
+            throw new RuntimeException(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+
+    @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public String deleteDataById(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
+        String result = "seccuss";
+        try {
+            if(${tableNameL}${scfg._dao_suffix!}.deleteById(dto)==0){
+                throw new RuntimeException("数据不存在!");
+            }
+        } catch (Exception e) {
+            log.error("逻辑删除异常!", e);
+            throw new RuntimeException(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+
+    @[ if ("1"==scfg._page) { /]
+    @Override
+    public List<${tcfg.tableNameFormat!}> findDataIsPage(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
+        List<${tcfg.tableNameFormat!}> results = null;
+        try {
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            results = (List<${tcfg.tableNameFormat!}>) ${tableNameL}${scfg._dao_suffix!}.findDataIsPage(dto);
+        } catch (Exception e) {
+            log.error("信息查询异常!", e);
+            throw new RuntimeException("信息查询异常!");
+        }
+        return results;
+    }
+    @[ } /]
+
+    @[ if ("1"==scfg._list) { /]
+    @Override
+    public List<${tcfg.tableNameFormat!}> findDataIsList(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
+        List<${tcfg.tableNameFormat!}> results = null;
+        try {
+            results = (List<${tcfg.tableNameFormat!}>) ${tableNameL}${scfg._dao_suffix!}.findDataIsList(dto);
+        } catch (Exception e) {
+            log.error("信息查询异常!", e);
+            throw new RuntimeException("信息查询异常!");
+        }
+        return results;
+    }
+     @[ } /]
+
+    @[ if ("1"==scfg._detail) { /]
+    @Override
+    @RfAccount2Bean
+    public ${tcfg.tableNameFormat!} findDataById(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
+        ${tcfg.tableNameFormat!} result = null;
+        try {
+            result = (${tcfg.tableNameFormat!}) ${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(dto);
+        } catch (Exception e) {
+            log.error("信息查询异常!", e);
+            throw new RuntimeException("信息查询异常!");
+        }
+        return result;
+    }
+    @[ } /]
+
+     @[ if ("1"==scfg._recovery && null!=scfg._col_del) { /]
+    @Override
+    public String recoveryDataById(${tcfg.tableNameFormat!} dto) throws Exception {
+        if (dto == null) throw new RuntimeException("参数异常!");
+        String result = "seccuss";
+        try {
+            if(${tableNameL}${scfg._dao_suffix!}.recoveryDataById(dto)==0){
+                throw new RuntimeException("数据不存在!");
+            }
+        } catch (Exception e) {
+            log.error("数据恢复异常!", e);
+            throw new RuntimeException(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+}

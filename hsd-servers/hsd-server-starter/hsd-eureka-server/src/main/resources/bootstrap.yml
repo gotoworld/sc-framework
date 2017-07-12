@@ -1,0 +1,14 @@
+eureka:
+  server:
+    enableSelfPreservation: false
+#   waitTimeInMsWhenSyncEmpty: 0
+  instance:
+    hostname: discovery-2
+    perferIpAddress: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://192.168.101.100:${server.port}/eureka/,http://192.168.101.101:${server.port}/eureka/
+
+spring.cloud.config.discovery.enabled: true

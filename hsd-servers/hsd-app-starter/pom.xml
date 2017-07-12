@@ -13,7 +13,6 @@
         <module>hsd-web-server</module>
         <module>hsd-web-restful-server</module>
         <module>hsd-service-provide-server</module>
-        <module>hsd-web-feign-app-server</module>
     </modules>
 
 </project>

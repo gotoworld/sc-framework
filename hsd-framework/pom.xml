@@ -34,6 +34,7 @@
         <module>hsd-framework-api</module>
         <module>hsd-framework-service</module>
         <module>hsd-framework-server</module>
+        <module>hsd-framework-web</module>
         <module>hsd-framework-web-restful</module>
     </modules>
 

@@ -3,17 +3,16 @@ package com.hsd.web.servlet;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hsd.framework.config.AppConfig;
-import com.hsd.framework.util.*;
-import com.hsd.vo.org.OrgUser;
-
+import com.hsd.framework.util.ImageUtil;
+import com.hsd.framework.util.PathCommonConstant;
+import com.hsd.framework.util.ValidatorUtil;
+import com.hsd.framework.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 
 import javax.servlet.ServletException;
@@ -35,8 +34,8 @@ import java.util.*;
 @Slf4j
 public class UploadServlet extends HttpServlet{
     private final long serialVersionUID = 1L;
-    @Autowired
-    private ISysMaterialService materialService;
+//    @Autowired
+//    private ISysMaterialService materialService;
     // 线程池 默认大小
 //    private static ExecutorService threadPool = null;
     private static String rootFolderUpload = null;
@@ -279,40 +278,40 @@ public class UploadServlet extends HttpServlet{
                 obj.put("fileUrl", (saveUrl + newFileName));
                 obj.put("fileName", name);
 
-                try {
-                    String logImg=null;
-                    Integer materialType=3;
-                    switch (dirName){
-                        case "image": if(ValidatorUtil.notEmpty(projId)) materialType=4; else materialType=0; logImg=obj.get("defaultBigPicUrl")==null?(saveUrl + newFileName):"/img/bigImg.png"; break;
-                        case "audio": materialType=1; logImg="/img/audio.png";break;
-                        case "media": if(ValidatorUtil.notEmpty(projId)) materialType=5; else materialType=2; logImg="/img/video.png";break;
-                        default:
-                            if("bmp gif jfif jpe jpeg jpg png ico".contains((""+fileExt).toLowerCase())){
-                                if(ValidatorUtil.notEmpty(projId)) materialType=4; else materialType=0;logImg=obj.get("defaultBigPicUrl")==null?(saveUrl + newFileName):"/img/bigImg.png";
-                            }else if("flac ape wav mp3 aac ogg wma".contains((""+fileExt).toLowerCase())){
-                                materialType=1;logImg="/img/audio.png";
-                            }else if("mp4".contains((""+fileExt).toLowerCase())){
-                                if(ValidatorUtil.notEmpty(projId)) materialType=5; else materialType=2;logImg="/img/video.png";
-                            }else{
-                                materialType=3;
-                                logImg="/img/file.png";
-                            }
-                            break;
-                    }
-                    SysMaterial material=new SysMaterial();
-                    material.setType(materialType);//0图片1音乐2视频3文件
-                    material.setName(name);//资源名称
-                    material.setLogoUrl(logImg);
-                    material.setMaterialUrl(StrUtil.replaceAll(saveUrl + newFileName,"/n1/","/n4/"));
-                    material.setMemo("来源:"+request.getHeader("referer"));
-                    OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-                    if(user!=null){
-                        material.setCreateId(user.getId());
-                    }
-                    materialService.insert(material);
-                } catch (Throwable e) {
-                   log.error("素材记录异常!",e);
-                }
+//                try {
+//                    String logImg=null;
+//                    Integer materialType=3;
+//                    switch (dirName){
+//                        case "image": if(ValidatorUtil.notEmpty(projId)) materialType=4; else materialType=0; logImg=obj.get("defaultBigPicUrl")==null?(saveUrl + newFileName):"/img/bigImg.png"; break;
+//                        case "audio": materialType=1; logImg="/img/audio.png";break;
+//                        case "media": if(ValidatorUtil.notEmpty(projId)) materialType=5; else materialType=2; logImg="/img/video.png";break;
+//                        default:
+//                            if("bmp gif jfif jpe jpeg jpg png ico".contains((""+fileExt).toLowerCase())){
+//                                if(ValidatorUtil.notEmpty(projId)) materialType=4; else materialType=0;logImg=obj.get("defaultBigPicUrl")==null?(saveUrl + newFileName):"/img/bigImg.png";
+//                            }else if("flac ape wav mp3 aac ogg wma".contains((""+fileExt).toLowerCase())){
+//                                materialType=1;logImg="/img/audio.png";
+//                            }else if("mp4".contains((""+fileExt).toLowerCase())){
+//                                if(ValidatorUtil.notEmpty(projId)) materialType=5; else materialType=2;logImg="/img/video.png";
+//                            }else{
+//                                materialType=3;
+//                                logImg="/img/file.png";
+//                            }
+//                            break;
+//                    }
+//                    SysMaterial material=new SysMaterial();
+//                    material.setType(materialType);//0图片1音乐2视频3文件
+//                    material.setName(name);//资源名称
+//                    material.setLogoUrl(logImg);
+//                    material.setMaterialUrl(StrUtil.replaceAll(saveUrl + newFileName,"/n1/","/n4/"));
+//                    material.setMemo("来源:"+request.getHeader("referer"));
+//                    OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+//                    if(user!=null){
+//                        material.setCreateId(user.getId());
+//                    }
+//                    materialService.insert(material);
+//                } catch (Throwable e) {
+//                   log.error("素材记录异常!",e);
+//                }
 
                 response.getWriter().write(JSON.toJSONString(obj));
             }

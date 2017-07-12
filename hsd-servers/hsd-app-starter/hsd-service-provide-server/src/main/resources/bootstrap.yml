@@ -26,7 +26,7 @@ hystrix:
       enabled: true
 feign:
   name:
-    common: hsd-common
-    account: hsd-account
+    common: hsd-common-server
+    account: hsd-account-server
   okhttp:
     enabled: true

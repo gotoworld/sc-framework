@@ -37,6 +37,11 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+            <version>RELEASE</version>
+        </dependency>
 
         <!--<dependency>-->
             <!--<groupId>com.esotericsoftware.kryo</groupId>-->

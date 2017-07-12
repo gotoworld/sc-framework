@@ -18,7 +18,6 @@
             <artifactId>hsd-framework-core</artifactId>
             <version>${hsd.framework.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>

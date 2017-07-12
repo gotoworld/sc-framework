@@ -1,0 +1,4 @@
+logging:
+#  file: logs/hsd-service-server.log
+  level:
+    ROOT: INFO

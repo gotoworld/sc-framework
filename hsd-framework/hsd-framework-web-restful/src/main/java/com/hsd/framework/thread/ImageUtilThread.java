@@ -8,8 +8,6 @@ import net.coobird.thumbnailator.name.Rename;
 
 import javax.imageio.ImageIO;
 
-import com.hsd.framework.util.ResourcesUtil;
-
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;

@@ -34,7 +34,6 @@ public class BeetlUtils {
 			cfg.setStatementEnd("/]");
 			cfg.addPkg( "com.vr" );
 			GroupTemplate gt=new GroupTemplate(resourceLoader,cfg);
-			gt.registerFunctionPackage("krpano", new KrSceneImageUtil());
 			gt.registerFunctionPackage("validator", new ValidatorUtil());
 			gt.registerFunctionPackage("strUtil", new StrUtil());
 			gt.registerFunctionPackage("stringEscapeUtils", new StringEscapeUtils());

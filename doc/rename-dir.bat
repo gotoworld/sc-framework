@@ -22,20 +22,20 @@ for /d  %%i in  (,*) do (
 
 		call:findDir %%i
 		
-		for /f "delims=" %%a in ('dir /b/s/a-d wu1g*.*') do (
+		for /f "delims=" %%a in ('dir /b/s/a-d vr*.*') do (
 			set "str=%%~nxa"
-			ren "%%a" "vr!str:~4!"
+			ren "%%a" "hsd!str:~2!"
 		)
 		
 		set m=%%i
-		set has_key=!m:wu1g=vr!
+		set has_key=!m:vr=hsd!
 
 		if !m! NEQ !has_key! (
 			echo "old->：" %cur_dir%
 			echo "new->：" %cd%
-			echo 重命名：!m! -》 !m:wu1g=vr!
+			echo 重命名：!m! -》 !m:vr=hsd!
 
-			ren !m! !m:wu1g=vr!
+			ren !m! !m:vr=hsd!
 		)
 		
 	)

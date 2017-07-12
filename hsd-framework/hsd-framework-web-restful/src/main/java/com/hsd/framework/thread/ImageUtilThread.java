@@ -120,8 +120,8 @@ public class ImageUtilThread implements Runnable {
      * @return
      */
     public void watermark(String savePath, String pic) throws IOException {
-        Thumbnails.of(new File(savePath, pic)).allowOverwrite(true).scale(1.0f)
-                .watermark(Positions.CENTER, ImageIO.read(ResourcesUtil.getResourceAsFile(WATERMARK)), 0.5f).asFiles(Rename.NO_CHANGE);
+//        Thumbnails.of(new File(savePath, pic)).allowOverwrite(true).scale(1.0f)
+//                .watermark(Positions.CENTER, ImageIO.read(ResourcesUtil.getResourceAsFile(WATERMARK)), 0.5f).asFiles(Rename.NO_CHANGE);
     }
 
     /**

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  
+    
+    <localRepository>D:/IDE/maven/repository</localRepository>
+    
+
+    <pluginGroups>
+       
+    </pluginGroups>
+
+     <proxies>
+        
+    </proxies>
+
+    <servers>
+      <server>  
+		  <id>releases</id>  
+		  <username>admin</username>  
+		  <password>admin123</password>  
+	  </server>  
+	  <server>  
+		  <id>snapshots</id>  
+		  <username>admin</username>  
+		  <password>admin123</password>  
+	  </server>  
+    </servers>
+	<!--
+        <mirrorOf>central</mirrorOf> 这里最好不要写成*号，否则你项目中的pom中配置repository不生效
+    -->
+    <mirrors>
+        <mirror>
+            <id>nexus-aliyun</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Nexus Aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </mirror>
+		<mirror>
+            <id>central</id>
+            <mirrorOf>*</mirrorOf>
+           <name>Nexus</name>
+           <url>http://192.168.101.100:8081/nexus/content/groups/public/</url>
+	   </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+		    <id>hsd</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<jdk>1.8</jdk>
+			</activation>
+			<repositories>
+				<!-- 私有库地址-->
+				<repository>
+					<id>nexus</id>
+					<url>http://192.168.101.100:8081/nexus/content/groups/public/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>      
+			<pluginRepositories>
+				<!--插件库地址-->
+				<pluginRepository>
+					<id>nexus</id>
+					<url>http://192.168.101.100:8081/nexus/content/groups/public/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+				   </snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+    </profiles>
+	<!--激活profile-->
+	<activeProfiles>
+		<activeProfile>hsd</activeProfile>
+	</activeProfiles>
+</settings>

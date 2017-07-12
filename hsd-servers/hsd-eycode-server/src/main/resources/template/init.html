@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script type="text/javascript">var basePath = '${basePath==""?"/":basePath}';</script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery.steps.css" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="clients-list">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-1" aria-expanded="true">EC配置</a>
+                    </li>
+                </ul>
+                <div class="col-sm-12">
+                    <div id="example-vertical">
+                        <h3>选择数据库</h3>
+                        <section>
+                            <div class="text-center m-t-md">
+                                <div class="table-responsive table-scrollable">
+                                    <form id="db_form"
+                                          role="form" class="form-inline"
+                                          method="post" accept-charset="UTF-8"
+                                          action="javascript:void(0);"
+                                          data-action="${basePath}table">
+                                        <table class="table table-bordered table-striped  table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-sm-3">数据库</th>
+                                                <th class="col-sm-3">编码</th>
+                                                <th class=""></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @[
+                                            for(bean in result.data!){
+                                            /]
+                                            <tr>
+                                                <td>
+                                                    <label>
+                                                        <input type="radio" name="dbs" value="${bean.dbName!}">
+                                                        ${beanLP.index}.${bean.dbName!}
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    ${bean.dbCharset!}
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                            @[
+                                            }elsefor{
+                                            /]
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="alert"><strong>暂无数据!${result.message!}</strong></div>
+                                                </td>
+                                            </tr>
+                                            @[ } /]
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                    <a href="#next"
+                                       onclick="submitForm('db_form','table_list');$('#example-vertical-t-1').click();"
+                                       class="btn btn-xs btn-success actions"><i
+                                            class="glyphicon glyphicon-chevron-right"></i> NEXT</a>
+                                </div>
+                            </div>
+                        </section>
+                        <h3>选择数据表</h3>
+                        <section>
+                            <div id="table_list">
+                                请选择数据表
+                            </div>
+                        </section>
+                        <h3>具体参数配置</h3>
+                        <section>
+                            <div id="column_list">
+                                请配置具体参数
+                            </div>
+                        </section>
+                        <h3>执行结果</h3>
+                        <section>
+                            <div id="finish_msg">
+                                执行结果2
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/content.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/messages_zh.min.js"></script>
+<script src="js/jquery.steps.min.js"></script>
+
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/global.js"></script>
+<style type="text/css">
+    .table-scrollable {
+        border: 0px solid #dddddd;
+        margin: 5px 0 !important;
+    }
+
+    .table thead {
+        background: #eee;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 0px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+    }
+
+    .clients-list table tr td {
+        height: 16px;
+        vertical-align: middle;
+        border: 1px solid #ddd;
+    }
+
+    .table {
+        /*width: 400px;*/
+        max-width: 100%;
+        margin-bottom: 0px;
+    }
+
+    .table td {
+        text-align: left;
+    }
+    .wizard.vertical > .content {
+        width: 74%;
+    }
+</style>
+<script>
+    var ec = {
+        radioFlagJson: {},
+        radioKeyJson: {},
+        clickCheck1: function (obj) {
+            //$(obj).css("background", $(obj).prop('checked') ? 'red' : '#000');
+            ec.clickCheck2(obj);
+        },
+        clickCheck2: function (obj) {
+            $(obj).parent().css("color", $(obj).prop('checked') ? 'red' : '#000');
+        },
+        clickRadio2:function (obj) {
+            //console.info("=radioFlagJson[obj.name+obj.value]="+radioFlagJson[obj.name+obj.value]);
+            if (ec.radioFlagJson[obj.name + obj.value] == undefined) {
+                ec.radioFlagJson[obj.name + obj.value] = true;
+            }
+            $('input[name=\'' + obj.name + '\']').parent().css("color", '#000');
+            if (ec.radioKeyJson[obj.name] == obj.name + obj.value) {
+                $(obj)[0].checked = ec.radioFlagJson[obj.name + obj.value];
+                $(obj).parent().css("color", ec.radioFlagJson[obj.name + obj.value] ? 'red' : '#000');
+            } else {
+                $(obj)[0].checked = true;
+                $(obj).parent().css("color", 'red');
+            }
+            ec.radioFlagJson[obj.name + obj.value] = !ec.radioFlagJson[obj.name + obj.value];
+            ec.radioKeyJson[obj.name] = obj.name + obj.value;
+        },
+        setCodePkg2:function(){
+            ec.setCodePkg($("#_template_dir").val());
+        }
+        ,
+        setCodePkg:function(tempName){
+            var _my_pkg=$('#_my_pkg').val();
+            var httpMyPkg='';
+            if(_my_pkg){
+                httpMyPkg=_my_pkg;
+                _my_pkg='.'+_my_pkg;
+            }
+            switch(tempName){
+                case 'hsd':{
+                    $('._domain_pkg').val('com.hsd.vo'+_my_pkg);
+                    $('._dto_pkg').val('');
+                    $('._mybatis_pkg').val('mybatis'+_my_pkg);
+                    $('._dao_pkg').val('com.hsd.dao'+_my_pkg);
+                    $('._api_pkg').val('com.hsd.api'+_my_pkg);
+                    $('._biz_pkg').val('com.hsd.service'+_my_pkg);
+                    $('._web_pkg').val('com.hsd.web.controller.admin'+_my_pkg);
+                    $('._view_pkg').val('admin'+_my_pkg);
+                    $('._web_http').each(function(){
+                        $(this).val('h/'+httpMyPkg+'/'+$(this).attr('data'));
+                    });
+                    break;
+                }
+                case 'cdd':{
+                    $('._domain_pkg').val('com.cddang'+_my_pkg+'.modal');
+                    $('._dto_pkg').val('com.cddang'+_my_pkg+'.dto');
+                    $('._mybatis_pkg').val('mappers'+_my_pkg+'');
+                    $('._dao_pkg').val('com.cddang'+_my_pkg+'.mapper');
+                    $('._api_pkg').val('com.cddang'+_my_pkg+'.api');
+                    $('._biz_pkg').val('com.cddang'+_my_pkg+'.service');
+                    $('._web_pkg').val('com.cddang'+_my_pkg+'.web.controller');
+                    $('._view_pkg').val('');
+                    $('._web_http').each(function(){
+                        $(this).val('/boss/'+httpMyPkg+'/'+$(this).attr('data'));
+                    });
+                    break;
+                }
+            }
+        }
+        ,
+        templateSwitch: function (tempName) {
+            $('._domain').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+            $('._mybatis').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+            $('._dao').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+            $('._biz').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._api').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._insert').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._insertBatch').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?true:false;
+                ec.clickCheck1(this);
+            });
+            $('._delLogic').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._recovery').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._del').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+            $('._update').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._page').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._list').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            $('._detail').each(function(){
+                var table=$(this).attr('data');
+                $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                ec.clickCheck1(this);
+            });
+            switch(tempName){
+                case 'hsd':{
+                    $('#_dao_suffix').val('Dao');
+                    $('._dto').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._web_rest').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);
+                    });
+                    $('._web_ctrl').each(function(){
+                        var table=$(this).attr('data');
+                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                        ec.clickCheck1(this);
+                    });
+                    $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._view_btl').each(function(){ var table=$(this).attr('data');
+                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                        ec.clickCheck1(this);
+                    });
+                    break;
+                }
+                case 'cdd':{
+                    $('#_dao_suffix').val('Mapper');
+                    $('._dto').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+                    $('._web_rest').each(function(){var table=$(this).attr('data');
+                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                        ec.clickCheck1(this);
+                    });
+                    $('._web_ctrl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._view_btl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+
+                    break;
+                }
+            }
+            ec.setCodePkg2();
+        }
+    };
+    $("#example-vertical").steps({
+        headerTag: "h3",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        stepsOrientation: "vertical",
+        enableAllSteps: true,
+        enablePagination: false,
+    });
+</script>
+
+
+</body>
+</html>

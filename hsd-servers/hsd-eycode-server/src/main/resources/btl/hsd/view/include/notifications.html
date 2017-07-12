@@ -1,0 +1,13 @@
+@[ if(isNotEmpty(msg)){ ]
+	@[ if(msg.code==0){ ]
+	<div class="alert alert-success alert-dismissable">
+	    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+	    <strong>Success!</strong> 操作成功。
+	</div>
+	@[ }else{ ]
+	<div class="alert alert-danger alert-dismissable">
+	    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+	    ${msg.message!}
+	</div>
+	@[ } ]
+@[ } ]

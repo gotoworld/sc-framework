@@ -1,0 +1,146 @@
+package ${scfg._web_pkg};
+
+import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
+import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
+import com.hsd.framework.Response;
+import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.web.controller.BaseController;
+import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Api(description = "${tcfg.tableComment}")
+@RestController
+@Slf4j
+public class ${tcfg.tableNameFormat!}Controller extends BaseController {
+    private static final long serialVersionUID = -528422099490438672L;
+    @Autowired
+    private I${tcfg.tableNameFormat!}Service ${tableNameL}Service;
+    private static final String acPrefix = "/${scfg._web_http}/";
+
+    @[ if ("1"==scfg._page) { /]
+    /**
+     * <p>信息分页 (未删除)。
+     */
+    @RequiresPermissions("${tableNameL}:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
+    @ApiOperation(value = "信息分页")
+    public Response page(@ModelAttribute  ${tcfg.tableNameFormat!} dto, @PathVariable("pageNum") Integer pageNum) {
+        log.info("${tcfg.tableNameFormat!}Controller page.........");
+        Response result = new Response();
+        if (dto == null)dto = new ${tcfg.tableNameFormat!}();
+        try {
+            dto.setPageNum(pageNum);
+            dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);
+            // 信息列表
+            PageInfo<?> page = new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
+            result.data = page;
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+
+    @[ if ("1"==scfg._detail) { /]
+    /**
+     * <p> 信息详情。
+     */
+    @RequiresPermissions("${tableNameL}:edit")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
+    @ApiOperation(value = "信息详情")
+    public Response info(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
+        log.info("${tcfg.tableNameFormat!}Controller info.........");
+        Response result = new Response();
+        try {
+            ${tcfg.tableNameFormat!} dto = new ${tcfg.tableNameFormat!}();
+            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '} ${t.columnNameFormat}==0@[ } /]) {
+                @[ for(t in pks){ /]
+                dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(0L);
+                @[ } /]
+                result.data = new ${tcfg.tableNameFormat!}();
+            } else {
+                @[ for(t in pks){ /]
+                dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+                @[ } /]
+                result.data = ${tableNameL}Service.findDataById(dto);
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+
+    @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
+    /**
+     * <p>删除。
+     */
+   @RequiresPermissions("${tableNameL}:del")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
+    @ALogOperation(type = "删除", desc = "${tcfg.tableComment}")
+    @ApiOperation(value = "信息删除")
+    public Response del(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
+        log.info("${tcfg.tableNameFormat!}Controller del.........");
+        Response result = new Response();
+        try {
+            ${tcfg.tableNameFormat!} dto = new ${tcfg.tableNameFormat!}();
+            @[ for(t in pks){ /]
+            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            @[ } /]
+            @[ if ("1"==scfg._delLogic) { /]
+            result.message = ${tableNameL}Service.deleteDataById(dto);
+            @[ }else{ /]
+            result.message = ${tableNameL}Service.deleteData(dto);
+            @[ } /]
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+
+    @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
+    /**
+     * <p> 信息保存
+     */
+    @RequiresPermissions(value = {"${tableNameL}:add", "${tableNameL}:edit"}, logical = Logical.OR)
+    @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
+    @RfAccount2Bean
+    @ALogOperation(type = "修改", desc = "${tcfg.tableComment}")
+    @ApiOperation(value = "信息保存")
+    public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!} dto, BindingResult bindingResult) {
+        log.info("${tcfg.tableNameFormat!}Controller save.........");
+        Response result = new Response();
+        try {
+            if (dto == null) return Response.error("参数获取异常!");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result.message = ${tableNameL}Service.saveOrUpdateData(dto);
+                result.data = dto.getId();
+                request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+}

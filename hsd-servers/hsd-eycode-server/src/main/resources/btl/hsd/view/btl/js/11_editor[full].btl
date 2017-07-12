@@ -1,0 +1,8 @@
+
+    //--编辑框(完整)[${t.columnComment}]
+    K.create('#bean-${t.columnNameFormat}', {
+        resizeType : 2,
+        uploadJson : '\${basePath}fileUpload?isrich=1',
+        fileManagerJson : '\${basePath}fileManagerServlet',
+        allowFileManager : true
+    });

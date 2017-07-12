@@ -10,13 +10,11 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>vr-framework</module>
-        <module>vr-common</module>
-        <module>vr-admin</module>
-        <module>vr-pano</module>
-        <module>vr-member</module>
-        <module>vr-portal</module>
-        <module>vr-servers</module>
+        <module>hsd-framework</module>
+        <module>hsd-common</module>
+        <module>hsd-admin</module>
+        <module>hsd-member</module>
+        <module>hsd-servers</module>
     </modules>
 
 </project>

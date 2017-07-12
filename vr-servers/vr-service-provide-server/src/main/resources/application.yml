@@ -1,4 +1,0 @@
-logging:
-#  file: logs/vr-service-server.log
-  level:
-    ROOT: INFO

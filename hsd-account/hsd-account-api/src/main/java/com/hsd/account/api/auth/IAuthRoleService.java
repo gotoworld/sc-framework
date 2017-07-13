@@ -2,6 +2,7 @@ package com.hsd.account.api.auth;
 
 
 import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +19,7 @@ public interface IAuthRoleService {
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
-    public String saveOrUpdateData(AuthRole bean) throws Exception;
+    public Response saveOrUpdateData(AuthRole bean) throws Exception;
 
     /**
      * <p>物理删除。

@@ -1,9 +1,10 @@
 package com.hsd.shiro;
 
 import com.hsd.account.api.auth.IRoleSourceService;
-import com.hsd.framework.util.CommonConstant;
 import com.hsd.account.vo.auth.AuthPerm;
 import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.framework.util.CommonConstant;
+import com.hsd.vo.org.OrgUser;
 import com.hsd.vo.shiro.MyShiroUserToken;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;

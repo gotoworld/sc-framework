@@ -13,6 +13,7 @@ package com.hsd.account.api.auth;
 
 import com.hsd.account.vo.auth.AuthPerm;
 import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.vo.org.OrgUser;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public interface IRoleSourceService {
     /**
      * <p>用户信息。
      */
-    public OrgUser findUserByLoginName(String accid,Integer userType);
+    public OrgUser findUserByLoginName(String accid, Integer userType);
 
     /**
      * 更新用户登陆信息

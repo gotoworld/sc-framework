@@ -12,19 +12,21 @@ package com.hsd.account.service.org;
 
 import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.org.IOrgUserService;
-import com.hsd.dao.account.auth.IAuthRoleDao;
-import com.hsd.dao.account.auth.IAuthUserVsRoleDao;
-import com.hsd.dao.account.org.IOrgDeptDao;
-import com.hsd.dao.account.org.IOrgUserDao;
-import com.hsd.dao.account.org.IOrgDeptVsUserDao;
-import com.hsd.framework.annotation.FeignService;
-import com.hsd.framework.service.BaseService;
-import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.account.vo.auth.AuthRole;
 import com.hsd.account.vo.auth.AuthUserVsRole;
 import com.hsd.account.vo.org.OrgDept;
 import com.hsd.account.vo.org.OrgDeptVsUser;
+import com.hsd.dao.account.auth.IAuthRoleDao;
+import com.hsd.dao.account.auth.IAuthUserVsRoleDao;
+import com.hsd.dao.account.org.IOrgDeptDao;
+import com.hsd.dao.account.org.IOrgDeptVsUserDao;
+import com.hsd.dao.account.org.IOrgUserDao;
+import com.hsd.framework.Response;
+import com.hsd.framework.annotation.FeignService;
+import com.hsd.framework.service.BaseService;
+import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.ValidatorUtil;
+import com.hsd.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -51,8 +53,8 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     private IOrgDeptVsUserDao orgUserVsDepartmentDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(OrgUser bean) throws Exception {
-        String result = "seccuss";
+    public Response saveOrUpdateData(OrgUser bean) throws Exception {
+        Response result = new Response(0,"seccuss");
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -72,6 +74,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 } else {
                     // 新增
                     orgUserDao.insert(bean);
+                    result.data=bean.getId();
                 }
                 if (getAuth().isPermitted("orgUser:role.edit")) {
                     // 2.新增用户角色关联信息
@@ -100,9 +103,8 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     }
                 }
             } catch (Exception e) {
-                result = "信息保存失败!";
-                log.error(result, e);
-                throw new RuntimeException(result);
+                log.error("信息保存失败!", e);
+                throw new RuntimeException("信息保存失败!");
             }
         }
         return result;
@@ -231,7 +233,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         List<OrgUser> results = null;
         try {
             if (bean != null) {
-                results = orgUserDao.getUserList(bean);
+                results = (List<OrgUser>) orgUserDao.getUserList(bean);
             }
         } catch (Exception e) {
             log.error("获取某一种角色所有用户,数据库处理异常!", e);
@@ -244,7 +246,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         try {
             if (bean != null) {
                 PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
-                results = orgUserDao.getUserIsPage(bean);
+                results = (List<OrgUser>) orgUserDao.getUserIsPage(bean);
             }
         } catch (Exception e) {
             log.error("获取某一种角色所有用户,数据库处理异常!", e);

@@ -1,6 +1,7 @@
 package com.hsd.aspect;
 
 import com.alibaba.fastjson.JSON;
+import com.hsd.api.sys.ISysUserLogService;
 import com.hsd.framework.IVO;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.util.CommonConstant;
@@ -8,7 +9,6 @@ import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.vo.org.OrgUser;
-import com.hsd.api.sys.ISysUserLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
@@ -16,11 +16,11 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
 @Slf4j
 public class ALogAspect {
     //注入Service用于把日志保存数据库
-    @Resource
+    @Autowired
     private ISysUserLogService sysUserLogService;
 
     //操作日志切点

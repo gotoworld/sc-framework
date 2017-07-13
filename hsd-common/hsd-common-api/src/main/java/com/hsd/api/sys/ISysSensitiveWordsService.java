@@ -1,5 +1,6 @@
 package com.hsd.api.sys;
 
+import com.hsd.framework.Response;
 import com.hsd.vo.sys.SysSensitiveWords;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public interface ISysSensitiveWordsService {
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
-    public String saveOrUpdateData(SysSensitiveWords dto) throws Exception;
+    public Response saveOrUpdateData(SysSensitiveWords dto) throws Exception;
 
     /**
      * <p>物理删除。

@@ -42,7 +42,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 public class LoginController extends BaseController {
-    private static final String acPrefix = "/api/m/user/";
+    private static final String acPrefix = "/api/account/user/";
     @Autowired
     private JwtUtil jwt;
     /**

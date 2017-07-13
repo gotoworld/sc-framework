@@ -1,5 +1,6 @@
 package com.hsd.api.sys;
 
+import com.hsd.framework.Response;
 import com.hsd.vo.sys.SysVariable;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public interface ISysVariableService {
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
-    public String saveOrUpdateData(SysVariable bean) throws Exception;
+    public Response saveOrUpdateData(SysVariable bean) throws Exception;
 
     /**
      * <p>物理删除。

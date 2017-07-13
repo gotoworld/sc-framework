@@ -1,18 +1,15 @@
 package com.hsd.service.sys;
 
 import com.github.pagehelper.PageHelper;
-import com.hsd.framework.annotation.FeignService;
-import com.hsd.framework.service.BaseService;
-import com.hsd.framework.util.CommonConstant;
 import com.hsd.api.sys.ISysUserLogService;
 import com.hsd.dao.sys.ISysUserLogDao;
+import com.hsd.framework.annotation.FeignService;
+import com.hsd.framework.service.BaseService;
 import com.hsd.vo.sys.SysUserLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,38 +19,22 @@ public class SysUserLogService extends BaseService implements ISysUserLogService
 
     @Autowired
     private ISysUserLogDao sysUserLogDao;
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(SysUserLog bean) throws Exception {
-        String result = "seccuss";
-        if (bean != null) {
-            try {
-                // 判断数据是否存在
-                if (sysUserLogDao.isDataYN(bean) != 0) {
-                    // 数据存在
-                    sysUserLogDao.update(bean);
-                } else {
-                    // 新增
-                    sysUserLogDao.insert(bean);
-                }
-            } catch (Exception e) {
-                result = "信息保存失败!";
-                log.error(result, e);
-                throw new RuntimeException(result);
-            }
-        }
-        return result;
-    }
-    public List<SysUserLog> findDataIsPage(SysUserLog bean) {
+    public List<SysUserLog> findDataIsPage(@RequestBody SysUserLog dto) {
         List<SysUserLog> results = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            results = (List<SysUserLog>) sysUserLogDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS( dto.getPageSize()));
+            results = (List<SysUserLog>) sysUserLogDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
         return results;
     }
-    public void info(String type, String memo,String detailInfo, Long userId, String userName, String ip) {
+    public void info(@RequestParam("type") String type,
+                     @RequestParam("memo")String memo,
+                     @RequestParam("detailInfo")String detailInfo,
+                     @RequestParam("userId")Long userId,
+                     @RequestParam("userName")String userName,
+                     @RequestParam("ip")String ip) {
         try {
             SysUserLog dto = new SysUserLog();
             dto.setType(type);// 操作类型(a增d删u改q查)

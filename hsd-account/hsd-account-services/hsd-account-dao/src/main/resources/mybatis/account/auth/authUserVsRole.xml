@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.dao.account.auth.IAuthUserVsRoleDao">
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch">
+        insert into auth_user_vs_role(
+        user_id,
+        role_id,
+        date_created
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+            #{t.userId},
+            #{t.roleId},
+            now()
+            )
+        </foreach>
+    </insert>
+    <!-- 根据用户id删除用户关联角色信息 -->
+    <delete id="deleteDataByUid" parameterType="map">
+		delete
+		from auth_user_vs_role
+		where  user_id = #{userId}
+	</delete>
+</mapper>

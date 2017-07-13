@@ -38,10 +38,10 @@ public interface IBaseDao {
     /**
      * <p>信息列表 分页。
      */
-    public List<?> findDataIsPage(IEntity dto) throws Exception;
+    List<?> findDataIsPage(IEntity dto) throws Exception;
     /**
      * <p>信息列表。
      */
-    public List<?> findDataIsList(IEntity dto) throws Exception;
+    List<?> findDataIsList(IEntity dto) throws Exception;
 
 }

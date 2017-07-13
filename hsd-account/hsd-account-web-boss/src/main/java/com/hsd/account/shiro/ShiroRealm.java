@@ -1,4 +1,4 @@
-package com.hsd.shiro;
+package com.hsd.account.shiro;
 
 import com.hsd.account.api.auth.IRoleSourceService;
 import com.hsd.account.vo.auth.AuthPerm;
@@ -20,9 +20,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
@@ -50,27 +48,25 @@ public class ShiroRealm extends AuthorizingRealm {
             return null;
         }
         //1.根据用户登录名获取用户信息
-        OrgUser orgUserBean = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-        if (orgUserBean == null) {
+        OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        if (orgUser == null) {
             return null;
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Map<String, Object> dto = new HashMap<>();
-        dto.put("uid", orgUserBean.getId());
-        if (0==(orgUserBean.getType()) && roleSourceService.isSuperAdmin(dto) > 0) {
+        if (0==(orgUser.getType()) && roleSourceService.isSuperAdmin(orgUser) > 0) {
             //超级管理员标记
-            dto.put("iissuperman", 1);
+            orgUser.setIissuperman(1);
             SecurityUtils.getSubject().getSession().setAttribute("isSuper", "1");
         }
         //2.获取角色集合
-        List<AuthRole> roleList = roleSourceService.getRoleListByUId(dto);
+        List<AuthRole> roleList = roleSourceService.getRoleListByUId(orgUser);
         if (roleList != null) {
             for (AuthRole role : roleList) {
                 info.addRole(role.getName());
             }
         }
         //3.获取功能集合
-        List<AuthPerm> permList = roleSourceService.getPermListByUId(dto);
+        List<AuthPerm> permList = roleSourceService.getPermListByUId(orgUser);
         if (permList != null) {
             for (AuthPerm perm : permList) {
                 if (perm.getMatchStr() != null && !"".equals(perm.getMatchStr())) {

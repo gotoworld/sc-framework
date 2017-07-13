@@ -30,6 +30,7 @@
 
     <modules>
         <module>hsd-framework-cache</module>
+        <module>hsd-framework-mq</module>
         <module>hsd-framework-core</module>
         <module>hsd-framework-api</module>
         <module>hsd-framework-service</module>

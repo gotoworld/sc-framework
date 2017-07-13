@@ -39,8 +39,6 @@ public interface IOrgUserDao extends IBaseDao {
     @Update("update org_user set version=version+1,date_updated=now(),pwd=#{confirmpwd} where id = #{id} and pwd=#{oldpwd}")
     int updatePwd(IEntity entity) throws Exception;
 
-    List<?> findTeacherDataIsList(IEntity dto);
-
     /**
      * <p>最后登陆记录
      */

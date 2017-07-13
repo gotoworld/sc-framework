@@ -1,6 +1,5 @@
 package com.hsd.dao.account.auth;
 
-import com.hsd.account.vo.auth.AuthRole;
 import com.hsd.framework.IBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,7 +14,7 @@ public interface IAuthRoleDao extends IBaseDao {
     /**
      * 角色信息列表>根据用户id。
      */
-    List<AuthRole> getRoleListByUId(Map dto) throws Exception;
+    List<?> getRoleListByUId(Map dto) throws Exception;
 
     /**
      * 根据用户id,判断用户是否为超级管理员,要的就是特权.

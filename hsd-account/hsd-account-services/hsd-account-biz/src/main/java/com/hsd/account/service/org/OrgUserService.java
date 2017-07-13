@@ -212,7 +212,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             if (dto != null) {
                 Map entity = new HashMap();
                 entity.put("uid", dto.getId());
-                results = authRoleDao.getRoleListByUId(entity);
+                results = (List<AuthRole>) authRoleDao.getRoleListByUId(entity);
             }
         } catch (Exception e) {
             log.error("获取用户角色集合,数据库处理异常!", e);
@@ -226,7 +226,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             if (dto != null) {
                 Map entity = new HashMap();
                 entity.put("uid", dto.getId());
-                results = orgDepartmentDao.getDeptListByUId(entity);
+                results = (List<OrgDept>) orgDepartmentDao.getDeptListByUId(entity);
             }
         } catch (Exception e) {
             log.error("获取用户角色集合,数据库处理异常!", e);

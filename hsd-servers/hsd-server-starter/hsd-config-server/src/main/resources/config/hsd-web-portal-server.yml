@@ -1,9 +1,13 @@
-# HTTP Server
-server:
-  port: 6060
-  context-path: /
+## HTTP Server
+#server:
+#  port: 6060
+#  context-path: /
 # Spring properties
 spring:
+  application:
+    name: hsd-web-portal-server
+  profiles:
+    active: dev
   http:
     encoding:
       charset: UTF-8
@@ -12,12 +16,10 @@ spring:
   aop:
     auto: true
     proxy-target-class: true
-  application:
-    name: hsd-web-boss-server
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
-  mvc:
-    #表示所有的访问都经过静态资源路径
+    static-locations: classpath:/static/,file:${hsd.common.fileServer.rootFolder}
+#  mvc:
+#    #表示所有的访问都经过静态资源路径
 #    static-path-pattern: /**
 #    view:
 #      prefix: classpath*:template/
@@ -71,13 +73,11 @@ pagehelper:
   params: count=countSql
 
 hsd:
-  config:
-    beetl: classpath:/conf/beetl.properties
+  logClear: #清理用户操作日志
+    enable: true #是否启用
+    cron: 0 30 04 */2 * ? #定时任务
+    expireDay: 30 #删除N天前日志
   common:
-    logClear: #清理用户操作日志
-      enable: true #是否启用
-      cron: 0 30 04 */2 * ? #定时任务
-      expireDay: 30 #删除N天前日志
     fileServer:
       rootFolder: /home/wu1g/file/
       upload: ${hsd.common.fileServer.rootFolder}upload/

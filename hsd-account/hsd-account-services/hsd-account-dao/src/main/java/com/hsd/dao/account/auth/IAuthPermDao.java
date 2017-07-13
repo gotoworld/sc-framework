@@ -1,6 +1,5 @@
 package com.hsd.dao.account.auth;
 
-import com.hsd.account.vo.auth.AuthPerm;
 import com.hsd.framework.IBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,5 +19,5 @@ public interface IAuthPermDao extends IBaseDao {
     /**
      * <p>根据角色id获取对应的权限信息列表。
      */
-    public List<AuthPerm> findPermDataIsListByRoleId(Map dto) throws Exception;
+    List<?> findPermDataIsListByRoleId(Map dto) throws Exception;
 }

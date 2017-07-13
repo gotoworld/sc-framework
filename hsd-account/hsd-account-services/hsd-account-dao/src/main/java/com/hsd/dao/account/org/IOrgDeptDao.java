@@ -1,7 +1,6 @@
 package com.hsd.dao.account.org;
 
 import com.hsd.framework.IBaseDao;
-import com.hsd.account.vo.org.OrgDept;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,5 +14,5 @@ public interface IOrgDeptDao extends IBaseDao {
     /**
      * 获取用户所在部门集合>根据用户id
      */
-    List<OrgDept> getDeptListByUId(Map dto) throws Exception;
+    List<?> getDeptListByUId(Map dto) throws Exception;
 }

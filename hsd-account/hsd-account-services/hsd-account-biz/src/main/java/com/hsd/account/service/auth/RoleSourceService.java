@@ -11,13 +11,14 @@
 package com.hsd.account.service.auth;
 
 import com.hsd.account.api.auth.IRoleSourceService;
-import com.hsd.dao.account.auth.IAuthPermDao;
-import com.hsd.dao.account.auth.IAuthRoleDao;
-import com.hsd.framework.annotation.FeignService;
 import com.hsd.account.vo.auth.AuthPerm;
 import com.hsd.account.vo.auth.AuthRole;
-import com.hsd.framework.service.BaseService;
+import com.hsd.dao.account.auth.IAuthPermDao;
+import com.hsd.dao.account.auth.IAuthRoleDao;
 import com.hsd.dao.account.org.IOrgUserDao;
+import com.hsd.framework.annotation.FeignService;
+import com.hsd.framework.service.BaseService;
+import com.hsd.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -49,7 +50,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     @Override
     public List<AuthRole> getRoleListByUId(Map dto) {
         try {
-            return authRoleDao.getRoleListByUId(dto);
+            return (List<AuthRole>) authRoleDao.getRoleListByUId(dto);
         } catch (Exception e) {
             log.error("角色信息列表>根据用户id,数据库处理异常!", e);
         }
@@ -67,12 +68,12 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public OrgUser findUserByLoginName(String accid,Integer userType) {
+    public OrgUser findUserByLoginName(String accid, Integer userType) {
         try {
             Map dto = new HashMap();
             dto.put("accid", accid);
             dto.put("userType", userType);
-            return orgUserDao.findUserByLoginName(dto);
+            return (OrgUser) orgUserDao.findUserByLoginName(dto);
         } catch (Exception e) {
             log.error("用户信息>根据用户登录名,数据库处理异常!", e);
         }

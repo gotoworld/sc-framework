@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.hsd.account</groupId>
-            <artifactId>hsd-account-biz</artifactId>
+            <artifactId>hsd-account-api</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

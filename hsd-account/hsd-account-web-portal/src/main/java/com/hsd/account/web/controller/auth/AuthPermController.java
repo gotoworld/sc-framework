@@ -41,16 +41,12 @@ import java.util.List;
 @RequestMapping(value = "/h")
 @Slf4j
 public class AuthPermController extends BaseController {
-	private static final long serialVersionUID = -255059907001339225L;
 	/**权限_权限信息 业务处理*/
 	@Autowired
 	private IAuthPermService authPermService;
 	
 	//权限_权限信息 管理
 	private static final String acPrefix="/auth/perm/";
-	private static final String init = "admin/auth/auth_perm";
-	private static final String edit = "admin/auth/auth_perm_edit";
-	private static final String success = "redirect:/h"+acPrefix+"init";
 	/**
 	 * <p> 初始化处理。
 	 */

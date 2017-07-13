@@ -191,8 +191,8 @@ public class ShiroConfig {
 
         Map filterChainDefinitionMap = bean.getFilterChainDefinitionMap();
         //restful
-        filterChainDefinitionMap.put("/api/m/user/**", "anon");
-        filterChainDefinitionMap.put("/api/m/**", "authc");//,roles["member"]
+        filterChainDefinitionMap.put("/api/account/user/**", "anon");
+        filterChainDefinitionMap.put("/api/account/**", "authc");//,roles["member"]
 
         return bean;
     }

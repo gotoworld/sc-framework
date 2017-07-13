@@ -1,12 +1,14 @@
 package com.hsd.web.controller;
 
 
+import com.github.pagehelper.PageInfo;
+import com.hsd.framework.PageUtil;
+import com.hsd.framework.page.PageDto;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.vo.org.OrgUser;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -95,4 +97,7 @@ public class BaseController {
         return ValidatorUtil.notEmpty(""+pageNum)?Integer.parseInt(""+pageNum):1;
     }
 
+    public PageDto getPageDto(PageInfo pageInfo){
+        return PageUtil.copy(pageInfo);
+    }
 }

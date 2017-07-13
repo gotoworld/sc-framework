@@ -38,11 +38,11 @@ import java.util.Map;
 /**
  * <p>登录登出action
  */
-@Api(description = "会员 登录/登出")
+@Api(description = "登录/登出")
 @RestController
 @Slf4j
 public class LoginController extends BaseController {
-    private static final String acPrefix = "/api/account/user/";
+    private static final String acPrefix = "/boss/account/user/";
     @Autowired
     private JwtUtil jwt;
     /**

@@ -1,13 +1,9 @@
 # HTTP Server
 server:
-  port: 6063
+  port: 6060
   context-path: /
 # Spring properties
 spring:
-  application:
-    name: hsd-eycode-web
-  profiles:
-    active: dev
   http:
     encoding:
       charset: UTF-8
@@ -16,14 +12,16 @@ spring:
   aop:
     auto: true
     proxy-target-class: true
+  application:
+    name: hsd-web-portal-server
   resources:
-    static-locations: classpath:/static/
+    static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
   mvc:
     #表示所有的访问都经过静态资源路径
-    static-path-pattern: /**
-    view:
-      prefix: classpath*:template/
-      suffix: .html
+#    static-path-pattern: /**
+#    view:
+#      prefix: classpath*:template/
+#      suffix: .html
   datasource:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=UTC&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
@@ -55,12 +53,13 @@ spring:
     useGlobalDataSourceStat: true
 
 logging:
-  level:
-    root: INFO
-    com.hsd: DEBUG
-    com.hsd.dao: TRACE
+  config: classpath:logback.xml
+#  level:
+#    root: INFO
+#    com.hsd: DEBUG
+#    com.hsd.dao: TRACE
 mybatis:
-  type-aliases-package: com.hsd.domain
+#  type-aliases-package: com.hsd.vo
   mapper-locations: classpath*:mybatis/**/*.xml
 mapper:
   not-empty: false
@@ -74,3 +73,26 @@ pagehelper:
 hsd:
   config:
     beetl: classpath:/conf/beetl.properties
+  common:
+    logClear: #清理用户操作日志
+      enable: true #是否启用
+      cron: 0 30 04 */2 * ? #定时任务
+      expireDay: 30 #删除N天前日志
+    fileServer:
+      rootFolder: /home/wu1g/file/
+      upload: ${hsd.common.fileServer.rootFolder}upload/
+      download: /upload/
+      image:
+        executorServiceSize: 5
+        n0:
+          width: 200
+          height: 200
+        n1:
+          width: 400
+          height: 400
+        n2:
+          width: 800
+          height: 800
+        n3:
+          width: 1200
+          height: 1200

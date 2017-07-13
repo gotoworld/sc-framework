@@ -23,7 +23,7 @@ import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.web.controller.BaseController;
+import BaseController;
 import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
 import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
 

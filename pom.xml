@@ -14,8 +14,6 @@
         <module>hsd-framework</module>
         <module>hsd-common</module>
         <module>hsd-account</module>
-        <module>hsd-admin</module>
-        <module>hsd-member</module>
     </modules>
 
 </project>

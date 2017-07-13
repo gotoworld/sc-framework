@@ -1,4 +1,5 @@
-# Spring properties
+#系统级别的一些参数配置，这些参数一般是不会变动的
+
 spring:
   application:
 #    cloud:
@@ -20,8 +21,8 @@ eureka:
 #    lease-renewal-interval-in-seconds: 10 # 续约到期时间（默认90秒）
 #    lease-expiration-duration-in-seconds: 30 # 续约更新时间间隔（默认30秒）
   client:
-    registerWithEureka: true
-    fetchRegistry: true
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
     serviceUrl:
       defaultZone: http://192.168.101.100:8761/eureka/,http://192.168.101.101:8761/eureka/,http://192.168.101.102:8761/eureka/
     healthcheck:

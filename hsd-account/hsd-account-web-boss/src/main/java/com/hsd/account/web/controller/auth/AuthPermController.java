@@ -17,6 +17,7 @@ import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -38,26 +39,11 @@ public class AuthPermController extends BaseController {
 	@Autowired
 	private IAuthPermService authPermService;
 	/**
-	 * <p> 初始化处理。
-	 */
-	@RequiresPermissions("authPerm:menu")
-	@RequestMapping(method={RequestMethod.GET},value=acPrefix+"init")
-	public Response init() {
-		log.info("AuthPermController init.........");
-		Response result = new Response(0,"seccuss");
-		try {
-			//信息列表
-			result.data=authPermService.findDataTree(null);
-		} catch (Exception e) {
-			result=Response.error(e.getMessage());
-		}
-		return result;
-	}
-	/**
 	 * <p> 信息树json。
 	 */
 	@RequiresPermissions("authPerm:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")
+	@ApiOperation(value = "信息树")
 	@ResponseBody
 	public Response jsonTree() {
 		log.info("AuthPermController jsonTree.........");
@@ -70,11 +56,29 @@ public class AuthPermController extends BaseController {
 		return result;
 	}
 	/**
+	 * <p> 详情。
+	 */
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
+	@ApiOperation(value = "详情")
+	public Response info(@PathVariable("id") String id) {
+		log.info("AuthPermController info.........");
+		Response result = new Response();
+		try {
+			AuthPerm bean=new AuthPerm();
+			bean.setId(id);
+			result.data=authPermService.findDataById(bean);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**
 	 * <li>逻辑删除。
 	 */
 	@RequiresPermissions("authPerm:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix+"del/{id}")
 	@ALogOperation(type="删除",desc="权限信息")
+	@ApiOperation(value = "逻辑删除")
 	public Response del(@PathVariable("id") String id) {
 		log.info("AuthPermController del.........");
 		Response result = new Response(0,"seccuss");
@@ -94,6 +98,7 @@ public class AuthPermController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
+	@ApiOperation(value = "信息保存")
 	public Response save(@Validated AuthPerm bean, BindingResult bindingResult) {
 		log.info("AuthPermController save.........");
 		Response result = null;

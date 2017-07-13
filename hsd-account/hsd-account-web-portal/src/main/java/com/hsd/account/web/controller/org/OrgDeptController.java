@@ -1,65 +1,40 @@
 package com.hsd.account.web.controller.org;
 
 import com.hsd.account.api.org.IOrgDeptService;
+import com.hsd.account.vo.org.OrgDept;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.account.vo.org.OrgDept;
 import com.hsd.web.controller.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * <p>组织架构_部门  ACTION类。
- */
-@Controller
-@RequestMapping(value = "/h")
+@Api(description = "组织架构_部门")
+@RestController
 @Slf4j
 public class OrgDeptController extends BaseController {
+    private static final String acPrefix = "/api/account/org/dept/";
 
-    private static final long serialVersionUID = -905929872130603565L;
-    /**
-     * 组织架构_部门 业务处理
-     */
     @Autowired
     private IOrgDeptService orgDeptService;
 
-    //组织架构_部门 管理
-    private static final String acPrefix = "/org/dept/";
-    private static final String init = "admin/org/org_dept";
-    private static final String edit = "admin/org/org_dept_edit";
-    private static final String success = "redirect:/h" + acPrefix + "init";
-
-    /**
-     * <p> 初始化处理。
-     */
-    @RequiresPermissions("orgDept:menu")
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "init")
-    public String init() {
-        log.info("OrgDepartmentController init.........");
-        Object x = orgDeptService.findDataTree(null);
-        request.setAttribute("beans", x);
-        return init;
-    }
     /**
      * <p> 信息树json。
      */
     @RequiresPermissions("orgDept:menu")
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")
     @ResponseBody
+    @ApiOperation(value = "信息树")
     public Response jsonTree() {
         log.info("OrgDepartmentController jsonTree.........");
         Response result=new Response();
@@ -71,47 +46,40 @@ public class OrgDeptController extends BaseController {
         return result;
     }
     /**
-     * <p> 编辑。
+     * <p> 详情。
      */
-    @RequiresPermissions("orgDept:edit")
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "edit/{id}")
-    public String edit(OrgDept bean, @PathVariable("id") Long id) {
-        log.info("OrgDepartmentController edit.........");
-        int pageNum= getPageNum(bean);
-        if (0!=id) {
-            OrgDept bean1 = new OrgDept();
-            bean1.setId(id);
-            bean = orgDeptService.findDataById(bean1);
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
+    @ApiOperation(value = "详情")
+    public Response info(@PathVariable("id") Long id) {
+        log.info("OrgDepartmentController info.........");
+        Response result = new Response();
+        try {
+            OrgDept bean=new OrgDept();
+            bean.setId(id);
+            result.data=orgDeptService.findDataById(bean);
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
         }
-        if (bean == null || 0==id) {
-            bean = new OrgDept();
-            bean.setNewFlag(1);
-        }
-        bean.setPageNum(pageNum);
-        request.setAttribute("bean", bean);
-        //--部门树
-        request.setAttribute("beans", orgDeptService.findDataTree(null));
-        return edit;
+        return result;
     }
-
     /**
      * <p> 删除。
      */
     @RequiresPermissions("orgDept:del")
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "部门信息")
-    public String del(@PathVariable("id") Long id, RedirectAttributesModelMap modelMap) {
+    @ApiOperation(value = "删除")
+    public Response del(@PathVariable("id") Long id) {
         log.info("OrgDepartmentController del.........");
         Response result = new Response();
         try {
-            OrgDept bean1 = new OrgDept();
-            bean1.setId(id);
-            result.message = orgDeptService.deleteDataById(bean1);
+            OrgDept bean = new OrgDept();
+            bean.setId(id);
+            result.message = orgDeptService.deleteDataById(bean);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
-        modelMap.addFlashAttribute("result", result);
-        return success;
+        return result;
     }
 
     /**
@@ -121,32 +89,29 @@ public class OrgDeptController extends BaseController {
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "部门信息")
-    public String save(@Validated OrgDept bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
+    @ApiOperation(value = "信息保存")
+    public Response save(@Validated OrgDept bean, BindingResult bindingResult) {
         log.info("OrgDepartmentController save.........");
         Response result = new Response();
-        if (bean != null) {
-            try {
-                if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
-                    throw new RuntimeException("请不要重复提交!");
-                }
-                if (bindingResult.hasErrors()) {
-                    String errorMsg = "";
-                    List<ObjectError> errorList = bindingResult.getAllErrors();
-                    for (ObjectError error : errorList) {
-                        errorMsg += (error.getDefaultMessage()) + ";";
-                    }
-                    result = Response.error(errorMsg);
-                } else {
-                    result = orgDeptService.saveOrUpdateData(bean);
-                    request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
-                }
-            } catch (Exception e) {
-                result = Response.error(e.getMessage());
+        try {
+            if (bean == null)throw new RuntimeException("参数异常");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+                throw new RuntimeException("请不要重复提交!");
             }
-        } else {
-            result = Response.error("信息保存失败!");
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result = orgDeptService.saveOrUpdateData(bean);
+                request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
         }
-        modelMap.addFlashAttribute("result", result);
-        return success;
+        return result;
     }
 }

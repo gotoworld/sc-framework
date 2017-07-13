@@ -19,6 +19,7 @@ import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -45,10 +46,11 @@ public class AuthRoleController extends BaseController {
     private IAuthPermService authPermService;
 
     /**
-     * <p> 信息列表 (未删除)。
+     * <p> 信息分页 (未删除)。
      */
     @RequiresPermissions("authRole:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page")
+    @ApiOperation(value = "信息分页")
     public Response page(AuthRole bean) {
         log.info("AuthRoleController page.........");
         Response result = new Response(0,"seccuss");
@@ -63,12 +65,29 @@ public class AuthRoleController extends BaseController {
         }
         return result;
     }
-
+    /**
+     * <p> 详情。
+     */
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
+    @ApiOperation(value = "详情")
+    public Response info(@PathVariable("id") Long id) {
+        log.info("AuthRoleController info.........");
+        Response result = new Response();
+        try {
+            AuthRole bean=new AuthRole();
+            bean.setId(id);
+            result.data=authRoleService.findDataById(bean);
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
     /**
      * <p> 当前角色已有权限。
      */
     @RequiresPermissions("authRole:edit")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "authPerm/{id}")
+    @ApiOperation(value = "当前角色已有权限")
     public Response authPerm(@PathVariable("id") Long id) {
         log.info("AuthRoleController authPerm.........");
         Response result = new Response();
@@ -102,6 +121,7 @@ public class AuthRoleController extends BaseController {
     @RequiresPermissions("authRole:del")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "角色信息")
+    @ApiOperation(value = "逻辑删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("AuthRoleController del.........");
         Response result = new Response();
@@ -122,6 +142,7 @@ public class AuthRoleController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "save")
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "角色信息")
+    @ApiOperation(value = "信息保存")
     public Response save(@Validated @RequestBody AuthRole bean, BindingResult bindingResult) {
         log.info("AuthRoleController save.........");
         Response result = new Response();

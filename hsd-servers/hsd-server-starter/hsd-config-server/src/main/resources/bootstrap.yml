@@ -1,9 +1,3 @@
-spring:
-  application:
-    name: config
-  profiles:
-    active: native
-    
 eureka:
   instance:
     preferIpAddress: true

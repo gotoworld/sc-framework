@@ -21,6 +21,8 @@ import com.hsd.framework.service.BaseService;
 import com.hsd.vo.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,9 +40,12 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     private IOrgUserDao orgUserDao;
 
     @Override
-    public int isSuperAdmin(Map dto) {
+    public int isSuperAdmin(@RequestBody OrgUser dto) {
         try {
-            return authRoleDao.isSuperAdmin(dto);
+            Map<String, Object> map = new HashMap<>();
+            map.put("uid", dto.getId());
+            map.put("iissuperman", dto.getIissuperman());
+            return authRoleDao.isSuperAdmin(map);
         } catch (Exception e) {
             log.error("根据用户id,判断用户是否为超级管理员,要特权.,数据库处理异常!", e);
         }
@@ -48,9 +53,12 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public List<AuthRole> getRoleListByUId(Map dto) {
+    public List<AuthRole> getRoleListByUId(@RequestBody OrgUser dto) {
         try {
-            return (List<AuthRole>) authRoleDao.getRoleListByUId(dto);
+            Map<String, Object> map = new HashMap<>();
+            map.put("uid", dto.getId());
+            map.put("iissuperman", dto.getIissuperman());
+            return (List<AuthRole>) authRoleDao.getRoleListByUId(map);
         } catch (Exception e) {
             log.error("角色信息列表>根据用户id,数据库处理异常!", e);
         }
@@ -58,9 +66,12 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public List<AuthPerm> getPermListByUId(Map dto) {
+    public List<AuthPerm> getPermListByUId(@RequestBody OrgUser dto) {
         try {
-            return authPermDao.getPermListByUId(dto);
+            Map<String, Object> map = new HashMap<>();
+            map.put("uid", dto.getId());
+            map.put("iissuperman", dto.getIissuperman());
+            return authPermDao.getPermListByUId(map);
         } catch (Exception e) {
             log.error("角色权限信息列表>根据用户id,数据库处理异常!", e);
         }
@@ -68,7 +79,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public OrgUser findUserByLoginName(String accid, Integer userType) {
+    public OrgUser findUserByLoginName(@RequestParam("accid") String accid,@RequestParam("userType")  Integer userType) {
         try {
             Map dto = new HashMap();
             dto.put("accid", accid);
@@ -80,7 +91,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
         return null;
     }
     @Override
-    public int lastLogin(OrgUser orgUser) {
+    public int lastLogin(@RequestBody OrgUser orgUser) {
         try {
             return orgUserDao.lastLogin(orgUser);
         } catch (Exception e) {

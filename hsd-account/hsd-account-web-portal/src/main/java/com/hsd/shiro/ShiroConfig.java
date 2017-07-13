@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-package com.hsd;
+package com.hsd.shiro;
 
-import com.hsd.shiro.ShiroRealm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.cache.CacheManager;

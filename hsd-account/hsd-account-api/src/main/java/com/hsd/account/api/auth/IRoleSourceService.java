@@ -14,35 +14,44 @@ package com.hsd.account.api.auth;
 import com.hsd.account.vo.auth.AuthPerm;
 import com.hsd.account.vo.auth.AuthRole;
 import com.hsd.vo.org.OrgUser;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>角色资源   业务处理接口类。
  */
+@FeignClient(name = "${feign.name.account}")//, fallback = TestServiceHystrix.class)
 public interface IRoleSourceService {
+    String actPrefix = "/api/IRoleSourceService";
     /**
      * 根据用户id,判断用户是否为超级管理员,要的就是特权.
      */
-    public int isSuperAdmin(Map dto);
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/isSuperAdmin")
+    public int isSuperAdmin(OrgUser orgUser);
     /**
      * <p>角色信息列表>根据用户id。
      */
-    public List<AuthRole> getRoleListByUId(Map dto);
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/getRoleListByUId")
+    public List<AuthRole> getRoleListByUId(OrgUser orgUser);
 
     /**
      * <p>角色权限信息列表>根据用户id。
      */
-    public List<AuthPerm> getPermListByUId(Map dto);
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/getPermListByUId")
+    public List<AuthPerm> getPermListByUId(OrgUser orgUser);
 
     /**
      * <p>用户信息。
      */
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserByLoginName")
     public OrgUser findUserByLoginName(String accid, Integer userType);
 
     /**
      * 更新用户登陆信息
      */
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/lastLogin")
     public int lastLogin(OrgUser orgUser);
 }

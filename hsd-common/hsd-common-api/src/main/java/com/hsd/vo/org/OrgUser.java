@@ -163,4 +163,6 @@ public class OrgUser extends BaseVO {
     private String oldpwd;
     private String newpwd;
     private String confirmpwd;
+    /**超级管理员标记*/
+    private Integer iissuperman;
 }

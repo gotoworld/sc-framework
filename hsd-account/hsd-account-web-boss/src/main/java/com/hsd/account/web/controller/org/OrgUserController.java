@@ -22,6 +22,7 @@ import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.vo.org.OrgUser;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -56,6 +57,7 @@ public class OrgUserController extends BaseController {
 	 */
 	@RequiresPermissions("orgUser:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
+	@ApiOperation(value = "信息分页")
 	public Response page(@RequestBody OrgUser bean) {
 		log.info("OrgUserController page.........");
 		Response result = new Response();
@@ -73,6 +75,7 @@ public class OrgUserController extends BaseController {
 	 */
 	@RequiresPermissions("orgUser:edit")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"myRoles/{id}")
+	@ApiOperation(value = "获取当前用户的角色集合")
 	public Response myRoles(@PathVariable("id") Long id) {
 		log.info("OrgUserController myRoles.........");
 		Response result = new Response();
@@ -91,6 +94,7 @@ public class OrgUserController extends BaseController {
 	 * <p> 详情。
 	 */
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
+	@ApiOperation(value = "详情")
 	public Response info(@PathVariable("id") Long id) {
 		log.info("OrgUserController info.........");
 		Response result = new Response();
@@ -108,6 +112,7 @@ public class OrgUserController extends BaseController {
 	 */
 	@RequiresPermissions("orgUser:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
+	@ApiOperation(value = "逻辑删除")
 	public Response del(@PathVariable("id") Long id) {
 		log.info("OrgUserController del.........");
 		Response result = new Response();
@@ -126,6 +131,7 @@ public class OrgUserController extends BaseController {
 	}
 	/**判断用户id是否存在 */
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isUidYN/{uid}")
+	@ApiOperation(value = "判断用户id是否存在")
 	public Response isUidYN(@PathVariable("uid") String uid) throws IOException{
 		Response result = new Response();
 		try {
@@ -144,6 +150,7 @@ public class OrgUserController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
+	@ApiOperation(value = "信息保存")
 	public Response save(@Validated OrgUser bean, BindingResult bindingResult) {
 		log.info("OrgUserController save.........");
 		Response result = new Response();
@@ -183,11 +190,12 @@ public class OrgUserController extends BaseController {
 		return result;
 	}
 	/**
-	 * <p> 信息保存
+	 * <p> 信息修改
 	 */
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="用户信息")
+	@ApiOperation(value = "信息修改")
 	public Response update(@Validated OrgUser bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) throws IOException {
 		log.info("OrgUserController update.........");
 		Response result = new Response();
@@ -232,6 +240,7 @@ public class OrgUserController extends BaseController {
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="用户密码")
 	@ResponseBody
+	@ApiOperation(value = "密码修改")
 	public Response updatePwd(@Validated OrgUser bean) throws IOException {
 		log.info("OrgUserController updatePwd.........");
 		Response result = new Response();

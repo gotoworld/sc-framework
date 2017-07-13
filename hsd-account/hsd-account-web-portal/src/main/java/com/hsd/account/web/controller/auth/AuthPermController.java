@@ -11,63 +11,43 @@
 package com.hsd.account.web.controller.auth;
 
 import com.hsd.account.api.auth.IAuthPermService;
+import com.hsd.account.vo.auth.AuthPerm;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.framework.util.IdUtil;
-import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.account.vo.auth.AuthPerm;
 import com.hsd.web.controller.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
-/**
- * <p>权限_权限信息  ACTION类。
- */
-@Controller
-@RequestMapping(value = "/h")
+@Api(description = "权限_权限信息")
+@RestController
 @Slf4j
 public class AuthPermController extends BaseController {
-	/**权限_权限信息 业务处理*/
+
+	private static final String acPrefix="/api/account/auth/perm/";
+
 	@Autowired
 	private IAuthPermService authPermService;
-	
-	//权限_权限信息 管理
-	private static final String acPrefix="/auth/perm/";
-	/**
-	 * <p> 初始化处理。
-	 */
-	@RequiresPermissions("authPerm:menu")
-	@RequestMapping(method={RequestMethod.GET},value=acPrefix+"init")
-	public String init() {
-		log.info("AuthPermController init.........");
-		//信息列表
-		List<AuthPerm> beans=authPermService.findDataTree(null);
-		request.setAttribute( "beans", beans );
-		return init;
-	}
 	/**
 	 * <p> 信息树json。
 	 */
 	@RequiresPermissions("authPerm:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")
+	@ApiOperation(value = "信息树")
 	@ResponseBody
 	public Response jsonTree() {
 		log.info("AuthPermController jsonTree.........");
-		Response result=new Response();
+		Response result = new Response(0,"seccuss");
 		try {
 			result.data=authPermService.findDataTree(null);
 		} catch (Exception e) {
@@ -76,27 +56,21 @@ public class AuthPermController extends BaseController {
 		return result;
 	}
 	/**
-	 * <p> 编辑。
+	 * <p> 详情。
 	 */
-	@RequiresPermissions("authPerm:edit")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix+"edit/{id}")
-	public String edit( AuthPerm bean,@PathVariable("id") String id) {
-		log.info("AuthPermController edit.........");
-		if(ValidatorUtil.notEmpty(id)){
-			AuthPerm bean1=new AuthPerm();
-			bean1.setId(id);//权限id
-			bean=authPermService.findDataById(bean1);
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
+	@ApiOperation(value = "详情")
+	public Response info(@PathVariable("id") String id) {
+		log.info("AuthPermController info.........");
+		Response result = new Response();
+		try {
+			AuthPerm bean=new AuthPerm();
+			bean.setId(id);
+			result.data=authPermService.findDataById(bean);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
 		}
-		if(bean==null||"0".equals(id)){
-			bean=new AuthPerm();
-			bean.setId(IdUtil.createUUID(22));//权限id
-			bean.setNewFlag(1);
-		}
-		request.setAttribute( "bean", bean );
-		//信息列表
-		List<AuthPerm> beans=authPermService.findDataTree(null);
-		request.setAttribute( "beans", beans );
-		return edit;
+		return result;
 	}
 	/**
 	 * <li>逻辑删除。
@@ -104,9 +78,10 @@ public class AuthPermController extends BaseController {
 	@RequiresPermissions("authPerm:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix+"del/{id}")
 	@ALogOperation(type="删除",desc="权限信息")
-	public String del(@PathVariable("id") String id, RedirectAttributesModelMap modelMap) {
+	@ApiOperation(value = "逻辑删除")
+	public Response del(@PathVariable("id") String id) {
 		log.info("AuthPermController del.........");
-		Response result = new Response();
+		Response result = new Response(0,"seccuss");
 		try {
 			AuthPerm bean1=new AuthPerm();
 			bean1.setId(id);//权限id
@@ -114,9 +89,7 @@ public class AuthPermController extends BaseController {
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
-		modelMap.addFlashAttribute("result", result);
-		
-		return success;
+		return result;
 	}
 	/**
 	 * <p> 信息保存
@@ -125,32 +98,29 @@ public class AuthPermController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
-	public String save(@Valid AuthPerm bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) {
+	@ApiOperation(value = "信息保存")
+	public Response save(@Validated AuthPerm bean, BindingResult bindingResult) {
 		log.info("AuthPermController save.........");
-		Response result = new Response();
-		if(bean!=null){
-			try {
-				if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
-					throw new RuntimeException("请不要重复提交!");
-				}
-				if (bindingResult.hasErrors()) {
-					String errorMsg = "";
-					List<ObjectError> errorList = bindingResult.getAllErrors();
-					for (ObjectError error : errorList) {
-						errorMsg += (error.getDefaultMessage()) + ";";
-					}
-					result = Response.error(errorMsg);
-				}else{
-					result=authPermService.saveOrUpdateData(bean);
-					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
-				}
-			} catch (Exception e) {
-				result = Response.error(e.getMessage());
+		Response result = null;
+		if(bean==null) result = Response.error("参数异常!");
+		try {
+			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+				throw new RuntimeException("请不要重复提交!");
 			}
-		} else {
-			result = Response.error("信息保存失败!");
+			if (bindingResult.hasErrors()) {
+				String errorMsg = "";
+				List<ObjectError> errorList = bindingResult.getAllErrors();
+				for (ObjectError error : errorList) {
+					errorMsg += (error.getDefaultMessage()) + ";";
+				}
+				result = Response.error(errorMsg);
+			}else{
+				result=authPermService.saveOrUpdateData(bean);
+				request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+			}
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
 		}
-		modelMap.addFlashAttribute("result", result);
-		return success;
+		return result;
 	}
 }

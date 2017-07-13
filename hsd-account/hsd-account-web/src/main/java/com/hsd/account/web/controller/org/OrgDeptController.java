@@ -137,8 +137,7 @@ public class OrgDeptController extends BaseController {
                     }
                     result = Response.error(errorMsg);
                 } else {
-                    result.message = orgDeptService.saveOrUpdateData(bean);
-                    result.data = bean.getId();
+                    result = orgDeptService.saveOrUpdateData(bean);
                     request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
                 }
             } catch (Exception e) {

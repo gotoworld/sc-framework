@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
@@ -26,9 +27,8 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     @Autowired
     private IAuthPermDao authPermDao;
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
-            Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(AuthPerm dto) throws Exception {
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response saveOrUpdateData(@RequestBody AuthPerm dto) throws Exception {
         Response result = new Response(0,"seccuss");
         if (dto != null) {
             try {
@@ -52,12 +52,10 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         return result;
     }
 
-    public String deleteData(AuthPerm bean) throws Exception {
+    public String deleteData(@RequestBody AuthPerm dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                AuthPerm dto = new AuthPerm();
-                dto.setId(bean.getId());//权限id
                 authPermDao.deleteByPrimaryKey(dto);
             } catch (Exception e) {
                 result = "信息删除失败!";
@@ -69,12 +67,10 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
-    public String deleteDataById(AuthPerm bean) throws Exception {
+    public String deleteDataById(@RequestBody AuthPerm dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                AuthPerm dto = new AuthPerm();
-                dto.setId(bean.getId());//权限id
                 authPermDao.deleteById(dto);
             } catch (Exception e) {
                 result = "信息删除失败!";
@@ -85,43 +81,41 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         return result;
     }
 
-    public List<AuthPerm> findDataIsPage(AuthPerm bean) {
+    public List<AuthPerm> findDataIsPage(@RequestBody AuthPerm dto) {
         List<AuthPerm> results = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            results = (List<AuthPerm>) authPermDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS( dto.getPageSize()));
+            results = (List<AuthPerm>) authPermDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
         return results;
     }
 
-    public List<AuthPerm> findDataIsList(AuthPerm bean) {
+    public List<AuthPerm> findDataIsList(@RequestBody AuthPerm dto) {
         List<AuthPerm> results = null;
         try {
-            results = (List<AuthPerm>) authPermDao.findDataIsList(bean);
+            results = (List<AuthPerm>) authPermDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
         return results;
     }
 
-    public AuthPerm findDataById(AuthPerm bean) {
+    public AuthPerm findDataById(@RequestBody AuthPerm dto) {
         AuthPerm result = null;
         try {
-            result = (AuthPerm) authPermDao.selectByPrimaryKey(bean);
+            result = (AuthPerm) authPermDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
         return result;
     }
 
-    public String recoveryDataById(AuthPerm bean) throws Exception {
+    public String recoveryDataById(@RequestBody AuthPerm dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                AuthPerm dto = new AuthPerm();
-                dto.setId(bean.getId());//权限id
                 authPermDao.recoveryDataById(dto);
             } catch (Exception e) {
                 result = "信息恢复失败!";
@@ -132,8 +126,8 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         return result;
     }
 
-    public List<AuthPerm> findDataTree(AuthPerm bean) {
-        List<AuthPerm> results = findDataIsList(bean);
+    public List<AuthPerm> findDataTree(@RequestBody AuthPerm dto) {
+        List<AuthPerm> results = findDataIsList(dto);
         if (results == null) {
             return null;
         }

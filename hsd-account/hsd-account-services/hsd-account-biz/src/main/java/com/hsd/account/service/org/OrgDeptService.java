@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -26,18 +27,18 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public Response saveOrUpdateData(OrgDept bean) throws Exception {
+    public Response saveOrUpdateData(@RequestBody OrgDept dto) throws Exception {
         Response result = new Response(0,"seccuss");
-        if (bean != null) {
+        if (dto != null) {
             try {
                 // 判断数据是否存在
-                if (orgDepartmentDao.isDataYN(bean) != 0) {
+                if (orgDepartmentDao.isDataYN(dto) != 0) {
                     // 数据存在
-                    orgDepartmentDao.update(bean);
+                    orgDepartmentDao.update(dto);
                 } else {
                     // 新增
-                    orgDepartmentDao.insert(bean);
-                    result.data=bean.getId();
+                    orgDepartmentDao.insert(dto);
+                    result.data=dto.getId();
                 }
             } catch (Exception e) {
                 log.error("信息保存失败!", e);
@@ -48,11 +49,11 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
     }
 
     @RfAccount2Bean
-    public String deleteData(OrgDept bean) throws Exception {
+    public String deleteData(@RequestBody OrgDept dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                orgDepartmentDao.deleteByPrimaryKey(bean);
+                orgDepartmentDao.deleteByPrimaryKey(dto);
             } catch (Exception e) {
                 result = "信息删除失败!";
                 log.error(result, e);
@@ -63,11 +64,11 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String deleteDataById(OrgDept bean) throws Exception {
+    public String deleteDataById(@RequestBody OrgDept dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                orgDepartmentDao.deleteById(bean);
+                orgDepartmentDao.deleteById(dto);
             } catch (Exception e) {
                 result = "信息删除失败!";
                 log.error(result, e);
@@ -77,42 +78,42 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
         return result;
     }
 
-    public List<OrgDept> findDataIsPage(OrgDept bean) {
+    public List<OrgDept> findDataIsPage(@RequestBody OrgDept dto) {
         List<OrgDept> results = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS( bean.getPageSize()));
-            results = (List<OrgDept>) orgDepartmentDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS( dto.getPageSize()));
+            results = (List<OrgDept>) orgDepartmentDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
         return results;
     }
 
-    public List<OrgDept> findDataIsList(OrgDept bean) {
+    public List<OrgDept> findDataIsList(@RequestBody OrgDept dto) {
         List<OrgDept> results = null;
         try {
-            results = (List<OrgDept>) orgDepartmentDao.findDataIsList(bean);
+            results = (List<OrgDept>) orgDepartmentDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
         return results;
     }
 
-    public OrgDept findDataById(OrgDept bean) {
+    public OrgDept findDataById(@RequestBody OrgDept dto) {
         OrgDept result = null;
         try {
-            result = (OrgDept) orgDepartmentDao.selectByPrimaryKey(bean);
+            result = (OrgDept) orgDepartmentDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
         return result;
     }
 
-    public String recoveryDataById(OrgDept bean) throws Exception {
+    public String recoveryDataById(@RequestBody OrgDept dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                orgDepartmentDao.recoveryDataById(bean);
+                orgDepartmentDao.recoveryDataById(dto);
             } catch (Exception e) {
                 result = "信息恢复失败!";
                 log.error(result, e);
@@ -122,8 +123,8 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
         return result;
     }
 
-    public List<OrgDept> findDataTree(OrgDept bean) {
-        List<OrgDept> results = findDataIsList(bean);
+    public List<OrgDept> findDataTree(@RequestBody OrgDept dto) {
+        List<OrgDept> results = findDataIsList(dto);
         if (results == null) {
             return null;
         }

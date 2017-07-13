@@ -23,6 +23,7 @@ import com.hsd.dao.account.org.IOrgDeptVsUserDao;
 import com.hsd.dao.account.org.IOrgUserDao;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.FeignService;
+import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.ValidatorUtil;
@@ -32,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,17 +55,18 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     private IOrgDeptVsUserDao orgUserVsDepartmentDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(OrgUser bean) throws Exception {
+    @RfAccount2Bean
+    public Response saveOrUpdateData(@RequestBody OrgUser dto) throws Exception {
         Response result = new Response(0,"seccuss");
-        if (bean != null) {
+        if (dto != null) {
             try {
                 // 判断数据是否存在
-                if (orgUserDao.isDataYN(bean) != 0) {
+                if (orgUserDao.isDataYN(dto) != 0) {
                     // 数据存在
-                    orgUserDao.update(bean);
+                    orgUserDao.update(dto);
                     Map xdto = new HashMap();
-                    xdto.put("userId", bean.getId());
-                    if (getAuth().isPermitted("orgUser:role.edit") && 1!=(bean.getId())) {
+                    xdto.put("userId", dto.getId());
+                    if (getAuth().isPermitted("orgUser:role.edit") && 1!=(dto.getId())) {
                         // 1.根据用户id清空用户角色关联表
                         authUserVsRoleDao.deleteDataByUid(xdto);
                     }
@@ -73,16 +76,16 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     }
                 } else {
                     // 新增
-                    orgUserDao.insert(bean);
-                    result.data=bean.getId();
+                    orgUserDao.insert(dto);
+                    result.data=dto.getId();
                 }
                 if (getAuth().isPermitted("orgUser:role.edit")) {
                     // 2.新增用户角色关联信息
-                    if (bean.getRoleIdArray() != null) {
+                    if (dto.getRoleIdArray() != null) {
                         List<AuthUserVsRole> xdtos = new ArrayList<AuthUserVsRole>();
-                        for (Long roleId : bean.getRoleIdArray()) {
+                        for (Long roleId : dto.getRoleIdArray()) {
                             AuthUserVsRole authUserVsRoleDto = new AuthUserVsRole();
-                            authUserVsRoleDto.setUserId(bean.getId());
+                            authUserVsRoleDto.setUserId(dto.getId());
                             authUserVsRoleDto.setRoleId(roleId);
                             xdtos.add(authUserVsRoleDto);
                         }
@@ -91,11 +94,11 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 }
                 if (getAuth().isPermitted("orgUser:dept.edit")) {
                     // 2.新增用户部门关联信息
-                    if (bean.getDeptIdArray() != null) {
+                    if (dto.getDeptIdArray() != null) {
                         List<OrgDeptVsUser> xdtos = new ArrayList<OrgDeptVsUser>();
-                        for (Long deptId : bean.getDeptIdArray()) {
+                        for (Long deptId : dto.getDeptIdArray()) {
                             OrgDeptVsUser orgDeptVsUserDto = new OrgDeptVsUser();
-                            orgDeptVsUserDto.setUserId(bean.getId());
+                            orgDeptVsUserDto.setUserId(dto.getId());
                             orgDeptVsUserDto.setDeptId(deptId);
                             xdtos.add(orgDeptVsUserDto);
                         }
@@ -111,14 +114,15 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String updateData(OrgUser bean) throws Exception {
+    @RfAccount2Bean
+    public String updateData(@RequestBody OrgUser dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
                 // 判断数据是否存在
-                if (orgUserDao.isDataYN(bean) != 0) {
+                if (orgUserDao.isDataYN(dto) != 0) {
                     // 数据存在
-                    orgUserDao.update(bean);
+                    orgUserDao.update(dto);
                 }
             } catch (Exception e) {
                 result = "信息保存失败!";
@@ -128,11 +132,11 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         }
         return result;
     }
-    public String deleteData(OrgUser bean) throws Exception {
+    public String deleteData(@RequestBody OrgUser dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                orgUserDao.deleteByPrimaryKey(bean);
+                orgUserDao.deleteByPrimaryKey(dto);
             } catch (Exception e) {
                 result = "信息删除失败!";
                 log.error(result, e);
@@ -142,11 +146,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String deleteDataById(OrgUser bean) throws Exception {
+    @RfAccount2Bean
+    public String deleteDataById(@RequestBody OrgUser dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                orgUserDao.deleteById(bean);
+                orgUserDao.deleteById(dto);
             } catch (Exception e) {
                 result = "信息删除失败!";
                 log.error(result, e);
@@ -156,42 +161,42 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 
-    public List<OrgUser> findDataIsPage(OrgUser bean) {
+    public List<OrgUser> findDataIsPage(@RequestBody OrgUser dto) {
         List<OrgUser> results = null;
         try {
-            PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
-            results = (List<OrgUser>) orgUserDao.findDataIsPage(bean);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            results = (List<OrgUser>) orgUserDao.findDataIsPage(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
         return results;
     }
 
-    public List<OrgUser> findDataIsList(OrgUser bean) {
+    public List<OrgUser> findDataIsList(@RequestBody OrgUser dto) {
         List<OrgUser> results = null;
         try {
-            results = (List<OrgUser>) orgUserDao.findDataIsList(bean);
+            results = (List<OrgUser>) orgUserDao.findDataIsList(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
         }
         return results;
     }
 
-    public OrgUser findDataById(OrgUser bean) {
+    public OrgUser findDataById(@RequestBody OrgUser dto) {
         OrgUser result = null;
         try {
-            result = (OrgUser) orgUserDao.selectByPrimaryKey(bean);
+            result = (OrgUser) orgUserDao.selectByPrimaryKey(dto);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
         }
         return result;
     }
 
-    public String recoveryDataById(OrgUser bean) throws Exception {
+    public String recoveryDataById(@RequestBody OrgUser dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                orgUserDao.recoveryDataById(bean);
+                orgUserDao.recoveryDataById(dto);
             } catch (Exception e) {
                 result = "信息恢复失败!";
                 log.error(result, e);
@@ -201,13 +206,13 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 
-    public List<AuthRole> findRoleDataIsList(OrgUser bean) {
+    public List<AuthRole> findRoleDataIsList(@RequestBody OrgUser dto) {
         List<AuthRole> results = null;
         try {
-            if (bean != null) {
-                Map dto = new HashMap();
-                dto.put("uid", bean.getId());
-                results = authRoleDao.getRoleListByUId(dto);
+            if (dto != null) {
+                Map entity = new HashMap();
+                entity.put("uid", dto.getId());
+                results = authRoleDao.getRoleListByUId(entity);
             }
         } catch (Exception e) {
             log.error("获取用户角色集合,数据库处理异常!", e);
@@ -215,13 +220,13 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
 
-    public List<OrgDept> findDeptDataIsList(OrgUser bean) {
+    public List<OrgDept> findDeptDataIsList(@RequestBody OrgUser dto) {
         List<OrgDept> results = null;
         try {
-            if (bean != null) {
-                Map dto = new HashMap();
-                dto.put("uid", bean.getId());
-                results = orgDepartmentDao.getDeptListByUId(dto);
+            if (dto != null) {
+                Map entity = new HashMap();
+                entity.put("uid", dto.getId());
+                results = orgDepartmentDao.getDeptListByUId(entity);
             }
         } catch (Exception e) {
             log.error("获取用户角色集合,数据库处理异常!", e);
@@ -229,11 +234,11 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
 
-    public List<OrgUser> findUserList(OrgUser bean) {
+    public List<OrgUser> findUserList(@RequestBody OrgUser dto) {
         List<OrgUser> results = null;
         try {
-            if (bean != null) {
-                results = (List<OrgUser>) orgUserDao.getUserList(bean);
+            if (dto != null) {
+                results = (List<OrgUser>) orgUserDao.getUserList(dto);
             }
         } catch (Exception e) {
             log.error("获取某一种角色所有用户,数据库处理异常!", e);
@@ -241,12 +246,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
 
-    public List<OrgUser> findUserIsPage(OrgUser bean) {
+    public List<OrgUser> findUserIsPage(@RequestBody OrgUser dto) {
         List<OrgUser> results = null;
         try {
-            if (bean != null) {
-                PageHelper.startPage(PN(bean.getPageNum()), PS(bean.getPageSize()));
-                results = (List<OrgUser>) orgUserDao.getUserIsPage(bean);
+            if (dto != null) {
+                PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+                results = (List<OrgUser>) orgUserDao.getUserIsPage(dto);
             }
         } catch (Exception e) {
             log.error("获取某一种角色所有用户,数据库处理异常!", e);
@@ -269,14 +274,14 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String updatePwd(OrgUser bean) throws Exception {
+    public String updatePwd(@RequestBody OrgUser dto) throws Exception {
         String result = "seccuss";
-        if (bean != null) {
+        if (dto != null) {
             try {
-                OrgUser dto=findDataById(bean);
-                if (dto==null) throw new RuntimeException("用户不存在!");
-                if(!dto.getPwd().equals(bean.getOldpwd())) throw new RuntimeException("原密码错误!");
-                if(orgUserDao.updatePwd(bean)==0) throw new RuntimeException("密码修改失败,请重试!");
+                OrgUser entity=findDataById(dto);
+                if (entity==null) throw new RuntimeException("用户不存在!");
+                if(!entity.getPwd().equals(entity.getOldpwd())) throw new RuntimeException("原密码错误!");
+                if(orgUserDao.updatePwd(entity)==0) throw new RuntimeException("密码修改失败,请重试!");
             } catch (Exception e) {
                 log.error("用户修改密码异常!",e);
                 throw new RuntimeException(e.getMessage());

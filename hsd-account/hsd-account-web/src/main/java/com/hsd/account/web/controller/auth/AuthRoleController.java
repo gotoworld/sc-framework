@@ -161,8 +161,7 @@ public class AuthRoleController extends BaseController {
                     }
                     result = Response.error(errorMsg);
                 } else {
-                    result.message = authRoleService.saveOrUpdateData(bean);
-                    result.data = bean.getId();
+                    result = authRoleService.saveOrUpdateData(bean);
                     request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
                 }
             } catch (Exception e) {

@@ -12,14 +12,14 @@
     <artifactId>hsd-common-web</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.hsd.common</groupId>
-            <artifactId>hsd-common-biz</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.hsd.framework</groupId>
             <artifactId>hsd-framework-web-restful</artifactId>
             <version>${hsd.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hsd.common</groupId>
+            <artifactId>hsd-common-api</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>

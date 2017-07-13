@@ -18,6 +18,7 @@
     <modules>
         <module>hsd-account-api</module>
         <module>hsd-account-services</module>
-        <module>hsd-account-web</module>
+        <module>hsd-account-web-portal</module>
+        <module>hsd-account-web-boss</module>
     </modules>
 </project>

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * <p>${tcfg.tableComment} 业务处理接口类。
  */
-@FeignClient(value = "\${feign.name}")
+@FeignClient(value = "\${feign.common.name}")
 public interface I${tcfg.tableNameFormat!}Service {
     String acPrefix = "/feign/I${tcfg.tableNameFormat!}Service";
     @[ if ("1"==scfg._insert||"1"==scfg._update) { /]

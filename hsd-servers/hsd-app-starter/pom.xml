@@ -10,9 +10,9 @@
     <version>1.0</version>
 
     <modules>
-        <module>hsd-web-server</module>
-        <module>hsd-web-restful-server</module>
         <module>hsd-service-provide-server</module>
+        <module>hsd-web-portal-server</module>
+        <module>hsd-web-boss-server</module>
     </modules>
 
 </project>

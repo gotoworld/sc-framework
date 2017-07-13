@@ -17,17 +17,17 @@ public interface IOrgUserDao extends IBaseDao {
     /**
      * <p>获取用户信息>根据用户登录名。
      */
-    OrgUser findUserByLoginName(Map dto) throws Exception;
+    Object findUserByLoginName(Map dto) throws Exception;
 
     /**
      * 获取某一种角色所有用户
      */
-    List<OrgUser> getUserList(OrgUser dto) throws Exception;
+    List<?> getUserList(IEntity dto) throws Exception;
 
     /**
      * 获取某一种角色所有用户(分页)
      */
-    List<OrgUser> getUserIsPage(OrgUser dto) throws Exception;
+    List<?> getUserIsPage(IEntity dto) throws Exception;
 
     /**
      * <p>判断用户id是否存在
@@ -39,7 +39,7 @@ public interface IOrgUserDao extends IBaseDao {
     @Update("update org_user set version=version+1,date_updated=now(),pwd=#{confirmpwd} where id = #{id} and pwd=#{oldpwd}")
     int updatePwd(IEntity entity) throws Exception;
 
-    List<OrgUser> findTeacherDataIsList(OrgUser dto);
+    List<?> findTeacherDataIsList(IEntity dto);
 
     /**
      * <p>最后登陆记录

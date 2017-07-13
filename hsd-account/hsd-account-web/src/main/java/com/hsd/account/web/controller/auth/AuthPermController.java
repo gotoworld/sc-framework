@@ -145,8 +145,7 @@ public class AuthPermController extends BaseController {
 					}
 					result = Response.error(errorMsg);
 				}else{
-					result.message=authPermService.saveOrUpdateData(bean);
-					result.data = bean.getId();
+					result=authPermService.saveOrUpdateData(bean);
 					request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
 				}
 			} catch (Exception e) {

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.auth.IAuthRoleService;
 import com.hsd.dao.account.auth.IAuthRoleDao;
 import com.hsd.dao.account.auth.IAuthRoleVsPermDao;
+import com.hsd.framework.Response;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
@@ -29,8 +30,8 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     private IAuthRoleVsPermDao authRoleVsPermDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(AuthRole bean) throws Exception {
-        String result = "seccuss";
+    public Response saveOrUpdateData(AuthRole bean) throws Exception {
+        Response result = new Response(0,"seccuss");
         if (bean != null) {
             try {
                 if (getAuth().isPermitted("authRole:super")) {
@@ -51,6 +52,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                 } else {
                     // 新增
                     authRoleDao.insert(bean);
+                    result.data=bean.getId();
                 }
                 if (getAuth().isPermitted("authRole:parm")) {
                     // 2.新增角色权限关联信息
@@ -66,9 +68,8 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                     }
                 }
             } catch (Exception e) {
-                result = "信息保存失败!";
-                log.error(result, e);
-                throw new RuntimeException(result);
+                log.error("信息保存失败!", e);
+                throw new RuntimeException("信息保存失败!");
             }
         }
         return result;

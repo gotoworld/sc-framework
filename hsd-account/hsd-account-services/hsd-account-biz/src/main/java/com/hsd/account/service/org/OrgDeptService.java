@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.org.IOrgDeptService;
 import com.hsd.account.vo.org.OrgDept;
 import com.hsd.dao.account.org.IOrgDeptDao;
+import com.hsd.framework.Response;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.service.BaseService;
@@ -25,8 +26,8 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String saveOrUpdateData(OrgDept bean) throws Exception {
-        String result = "seccuss";
+    public Response saveOrUpdateData(OrgDept bean) throws Exception {
+        Response result = new Response(0,"seccuss");
         if (bean != null) {
             try {
                 // 判断数据是否存在
@@ -36,11 +37,11 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
                 } else {
                     // 新增
                     orgDepartmentDao.insert(bean);
+                    result.data=bean.getId();
                 }
             } catch (Exception e) {
-                result = "信息保存失败!";
-                log.error(result, e);
-                throw new RuntimeException(result);
+                log.error("信息保存失败!", e);
+                throw new RuntimeException("信息保存失败!");
             }
         }
         return result;

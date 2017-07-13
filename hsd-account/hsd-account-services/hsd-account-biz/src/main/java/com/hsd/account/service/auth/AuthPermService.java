@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.auth.IAuthPermService;
 import com.hsd.account.vo.auth.AuthPerm;
 import com.hsd.dao.account.auth.IAuthPermDao;
+import com.hsd.framework.Response;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
@@ -27,8 +28,8 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
-    public String saveOrUpdateData(AuthPerm dto) throws Exception {
-        String result = "seccuss";
+    public Response saveOrUpdateData(AuthPerm dto) throws Exception {
+        Response result = new Response(0,"seccuss");
         if (dto != null) {
             try {
                 //判断数据是否存在
@@ -41,11 +42,11 @@ public class AuthPermService extends BaseService implements IAuthPermService {
                         dto.setId(IdUtil.createUUID(22));
                     }
                     authPermDao.insert(dto);
+                    result.data=dto.getId();
                 }
             } catch (Exception e) {
-                result = "信息保存失败!";
-                log.error(result, e);
-                throw new RuntimeException(result);
+                log.error("信息保存失败!", e);
+                throw new RuntimeException("信息保存失败!");
             }
         }
         return result;

@@ -13,6 +13,7 @@ package com.hsd.account.api.org;
 
 import com.hsd.account.vo.auth.AuthRole;
 import com.hsd.account.vo.org.OrgDept;
+import com.hsd.framework.Response;
 import com.hsd.vo.org.OrgUser;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public interface IOrgUserService {
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
-    public String saveOrUpdateData(OrgUser bean) throws Exception;
+    public Response saveOrUpdateData(OrgUser bean) throws Exception;
 
     /**
      * <p>信息编辑。

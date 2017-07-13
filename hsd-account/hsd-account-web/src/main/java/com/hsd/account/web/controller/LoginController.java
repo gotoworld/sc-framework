@@ -1,5 +1,5 @@
 /*
- * 后台登陆总入口
+ * 会员登陆总入口
  *
  * VERSION  DATE        BY              REASON
  * -------- ----------- --------------- ------------------------------------------
@@ -10,152 +10,129 @@
  */
 package com.hsd.account.web.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.hsd.framework.Response;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.account.vo.shiro.MyShiroUserToken;
+import com.hsd.vo.org.OrgUser;
+import com.hsd.vo.shiro.MyShiroUserToken;
 import com.hsd.web.controller.BaseController;
+import io.jsonwebtoken.Claims;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.springframework.stereotype.Controller;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>登录登出action
  */
-@Controller("AdminLoginController")
-@RequestMapping(value = "/h")
+@Api(description = "会员 登录/登出")
+@RestController
 @Slf4j
 public class LoginController extends BaseController {
-    private static final long serialVersionUID = -6103432072290645133L;
-
-    /**
-     * 默认的构造函数
-     */
-    public LoginController() {
-        log.info("LoginController constructed");
-    }
-
-    /**
-     * <p>init
-     */
-    @RequestMapping(method = {RequestMethod.GET}, value = "/init")
-    public String init() throws Exception {
-        log.info("LoginController init");
-
-        return "admin/login";
-    }
-
-    /**
-     * <p>无权限页面
-     */
-    @RequestMapping(method = {RequestMethod.GET}, value = "/noauth")
-    public String noauth() throws Exception {
-        log.info("LoginController noauth");
-
-        return "error/noauth";
-    }
-
+    private static final String acPrefix = "/api/m/user/";
+    @Autowired
+    private JwtUtil jwt;
     /**
      * <p>用户登录
      */
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/login")
-    public String login() throws Exception {
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix+"/login")
+    @ApiOperation(value = "登录")
+    public Response login(@RequestParam("accid") String accid , @RequestParam("password")String password ) throws Exception {
         log.info("LoginController login");
+        Response result = new Response();
+        try{
+            if (ValidatorUtil.isNullEmpty(accid) || ValidatorUtil.isNullEmpty(password)) {
+                return Response.error("用户名或密码不能为空!");
+            }
+            try {
+                UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.member);
+                getAuth().login(token);
 
-        String accid = request.getParameter("accid");
-        String password = request.getParameter("password");
+                OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
+                session.setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, user);
+                String subject = JwtUtil.generalSubject(user);
+                String authorizationToken = jwt.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
-        if (ValidatorUtil.isNullEmpty(accid) || ValidatorUtil.isNullEmpty(password)) {
-            request.setAttribute("msg", "用户名或密码不能为空!");
-            return "admin/login";
+               getAuth().hasRole("say me");
+
+                Map<String,Object> data = new HashMap<>();
+                data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
+                data.put("authorizationToken", authorizationToken);
+                data.put("user", JSONObject.parseObject(subject, OrgUser.class));
+                AuthorizationInfo authorizationInfo= (AuthorizationInfo) getAuth().getSession().getAttribute("SimpleAuthorizationInfo");
+                data.put("authorizationInfoPerms", authorizationInfo.getStringPermissions());
+                data.put("authorizationInfoRoles",authorizationInfo.getRoles());
+                data.put("sid",getAuth().getSession().getId());
+                result.data = data;
+                return result;
+            } catch (UnknownAccountException | IncorrectCredentialsException ex) {
+                result = Response.error("登录失败,用户名或密码错误1!");
+            }catch (Exception ex) {
+                log.error("登录失败,原因未知", ex);
+                result = Response.error("登录失败,服务器异常3!");
+            }
+        } catch (Exception e) {
+            getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, null);
+            result = Response.error(e.getMessage());
         }
-
-        // if (!VerifyUtil.checkVeifyCode( request, "authCode" )) {
-        // request.setAttribute( "msg", "验证码校验失败!" );
-        // return "admin/login";
-        // }
-
-        try {
-            UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.admin);
-            getAuth().login(token);
-//            String remember = request.getParameter("remember");
-//            if ("1".equals(remember)) {
-//                Cookie cookie = new Cookie("orgUser", accid + "=remember=" + password);
-//                cookie.setMaxAge(7 * 24 * 60 * 60);//7天免登陆
-//                response.addCookie(cookie);
-//            }
-            OrgUser orgUser = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
-            // System.out.println(orgUser);
-            session.setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, orgUser);
-            session.setAttribute("_language", "zh_CN");
-
-            return "redirect:/h/index";
-        } catch (UnknownAccountException ex) {
-            // username provided was not found
-            request.setAttribute("msg", "登录失败,用户名或密码错误1!");
-        } catch (IncorrectCredentialsException ex) {
-            // for the username provided
-            request.setAttribute("msg", "登录失败,用户名或密码错误2!");
-        } catch (Exception ex) {
-            log.error("登录失败,原因未知", ex);
-            request.setAttribute("msg", "登录失败,服务器异常3!");
-        }
-
-        getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, null);
-
-        return "admin/login";
+        return result;
     }
-
-    /**
-     * <p>切换界面语言
-     */
-    @RequestMapping(method = {RequestMethod.GET}, value = "/switchlanguage")
-    public String switchlanguage() throws Exception {
-        log.info("LoginController switchlanguage");
-
-        // String o = (String) session.getAttribute( "_language" );
-        String language = request.getParameter("language");
-
-        if ("en_US".equals(language)) {
-            session.setAttribute("_language", "en_US");
-        } else {
-            session.setAttribute("_language", "zh_CN");
-        }
-
-        // response.getWriter().print("1");
-        return null;
-    }
-
     /**
      * <p>用户登出
      */
-    @RequestMapping(method = {RequestMethod.GET}, value = "/logout")
-    public String logout() {
-        log.info("LoginController logout");
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "logout")
+    @ApiOperation(value = "登出")
+    public Response logout() {
+        log.info("UserController logout.........");
+        Response result = new Response();
         try {
             log.debug(getAuth().getPrincipal() + "准备退出!");
             // 清空用户登录信息
             request.getSession().invalidate();
             getAuth().logout();
         } catch (Exception e) {
-            log.error("清空登录缓存异常!", e);
+            result = Response.error(e.getMessage());
         }
-        return "redirect:/h/init";
+        return result;
     }
 
-    // test
-    public static void main(String[] args) {
-        Locale[] locales = Locale.getAvailableLocales();
+    /**
+     * <p> 刷新token。
+     */
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "refreshToken")
+    @ApiOperation(value = "刷新token")
+    public Response refreshToken() {
+        log.info("UserController refreshToken.........");
+        Response result = new Response();
+        try {
+            String authorization = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+            Claims claims = jwt.parseJWT(authorization);
 
-        // 获得所有已安装语言环境的数组
-        for (int i = 0; i < locales.length; i++) {
-            // 使用for循环进行遍历
-            System.out.println(locales[i]); // 输出语言环境及对应的国家/地区代码
+            Map data = new HashMap<>();
+            String json = claims.getSubject();
+            OrgUser user = JSONObject.parseObject(json, OrgUser.class);
+            String subject = JwtUtil.generalSubject(user);
+            String refreshToken = jwt.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+
+            data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
+            data.put("authorizationToken", refreshToken);
+            result.data = data;
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
         }
+        return result;
     }
 }

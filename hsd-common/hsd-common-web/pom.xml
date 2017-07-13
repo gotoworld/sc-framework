@@ -5,23 +5,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.hsd.account</groupId>
-        <artifactId>hsd-account</artifactId>
+        <groupId>com.hsd.common</groupId>
+        <artifactId>hsd-common</artifactId>
         <version>1.0</version>
     </parent>
-
-    <artifactId>hsd-account-api</artifactId>
-
+    <artifactId>hsd-common-web</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.hsd.framework</groupId>
-            <artifactId>hsd-framework-api</artifactId>
-            <version>${hsd.framework.version}</version>
+            <groupId>com.hsd.common</groupId>
+            <artifactId>hsd-common-biz</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.hsd.common</groupId>
-            <artifactId>hsd-common-api</artifactId>
-            <version>1.0</version>
+            <groupId>com.hsd.framework</groupId>
+            <artifactId>hsd-framework-web-restful</artifactId>
+            <version>${hsd.framework.version}</version>
         </dependency>
     </dependencies>
 </project>

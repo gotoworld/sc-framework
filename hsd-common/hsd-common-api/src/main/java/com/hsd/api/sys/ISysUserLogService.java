@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * <p>系统_管理员操作日志   业务处理接口类。
  */
-@FeignClient(name = "${feign.name}")//, fallback = TestServiceHystrix.class)
+@FeignClient(name = "${feign.common.name}")//, fallback = TestServiceHystrix.class)
 public interface ISysUserLogService {
     String actPrefix = "/api/ISysUserLogService";
 

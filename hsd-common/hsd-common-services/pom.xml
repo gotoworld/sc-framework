@@ -16,7 +16,6 @@
     <modules>
         <module>hsd-common-dao</module>
         <module>hsd-common-biz</module>
-        <module>hsd-common-server</module>
     </modules>
 
     <dependencies>

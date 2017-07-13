@@ -18,6 +18,6 @@
     <modules>
         <module>hsd-account-api</module>
         <module>hsd-account-services</module>
-        <module>hsd-account-web-restful</module>
+        <module>hsd-account-web</module>
     </modules>
 </project>

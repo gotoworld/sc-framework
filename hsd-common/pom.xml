@@ -19,6 +19,5 @@
         <module>hsd-common-api</module>
         <module>hsd-common-services</module>
         <module>hsd-common-web</module>
-        <module>hsd-common-web-restful</module>
     </modules>
 </project>

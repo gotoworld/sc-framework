@@ -33,5 +33,10 @@
             <artifactId>hsd-account-api</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.hsd.framework</groupId>
+            <artifactId>hsd-framework-cache</artifactId>
+            <version>${hsd.framework.version}</version>
+        </dependency>
     </dependencies>
 </project>

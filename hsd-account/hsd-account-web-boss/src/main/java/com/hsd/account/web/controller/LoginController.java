@@ -12,6 +12,7 @@ package com.hsd.account.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hsd.framework.Response;
+import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
@@ -41,6 +42,7 @@ import java.util.Map;
 @Api(description = "登录/登出")
 @RestController
 @Slf4j
+@NoAuthorize
 public class LoginController extends BaseController {
     private static final String acPrefix = "/boss/account/sign/";
     @Autowired

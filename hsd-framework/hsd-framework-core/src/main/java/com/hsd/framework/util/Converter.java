@@ -1,17 +1,34 @@
 package com.hsd.framework.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.hsd.framework.JsonClassSerializer;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by Administrator on 16-9-19.
  */
+@Slf4j
 public class Converter {
+    private static final Map<String, ObjectMapper> objectMappers = new ConcurrentHashMap<>();
+
+    public static final ObjectMapper getObjectMapper(String name) {
+        ObjectMapper objectMapper = objectMappers.get(name);
+
+        if (objectMapper == null) {
+            objectMapper = new ObjectMapper();
+            objectMappers.put(name, objectMapper);
+        }
+        return objectMapper;
+    }
 
     public static int hexCharToInt(char c) {
         if (c >= 'a') return (c - 'a' + 10) & 0x0f;
@@ -32,182 +49,261 @@ public class Converter {
     }
 
     public static byte[] toUTF8(String val) {
-        try
-        {
+        try {
             return val.getBytes("UTF-8");
-        }catch(Exception e ){
+        } catch (Exception e) {
             return val.getBytes();
         }
     }
 
     public static String toUTF8(byte[] val) {
-        try
-        {
+        try {
             return new String(val, 0, val.length, "UTF-8");
-        }catch(Exception e ){
+        } catch (Exception e) {
             return new String(val, 0, val.length);
         }
     }
 
     public static Integer stringToInteger(String val) {
-        try
-        {
+        try {
             return Integer.parseInt(val);
-        }catch(Exception e ){
+        } catch (Exception e) {
             return 0;
         }
     }
 
     public static Integer stringToInteger(String val, Integer defaultValue) {
-        try
-        {
+        try {
             return Integer.parseInt(val);
-        }catch(Exception e ){
+        } catch (Exception e) {
             return defaultValue;
         }
     }
 
     public static Long stringToLong(String val) {
-        try
-        {
+        try {
             return Long.parseLong(val);
-        }catch(Exception e ){
+        } catch (Exception e) {
             return 0L;
         }
     }
 
     public static Long stringToLong(String val, Long defaultValue) {
-        try
-        {
+        try {
             return Long.parseLong(val);
-        }catch(Exception e ){
+        } catch (Exception e) {
             return defaultValue;
         }
     }
 
+    public static String getObjectClass(Object object) {
+        Class clazz = object.getClass();
+        StringBuilder buf = new StringBuilder(clazz.getName());
+        buf.append(",");
+
+        String type;
+        do {
+            for (Field field : clazz.getDeclaredFields()) {
+                type = field.getType().getTypeName();//得到此属性的类型
+
+            }
+            clazz = clazz.getSuperclass();
+        } while (clazz != Object.class);
+        return buf.toString();
+    }
+
+    private static final ObjectMapper getDefaultObjectMapper() {
+        ObjectMapper objectMapper = getObjectMapper("defaultObjectMapper");
+        if (objectMapper.getDeserializationConfig().isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES))
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return objectMapper;
+    }
+
     /**
      * 将给定的json数据，反序列化成指定对象。
-     * @param jsonData
-     * @param clazz
+     *
+     * @param jsonData //     * @param clazz
      * @param <T>
      * @return
      */
-    public static <T> T parseObject(byte[] jsonData, Class<T> clazz)
-    {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        try
-        {
-            return (T)objectMapper.readValue(jsonData, clazz);
-        }catch(IOException e) {
+    public static <T> T parseObject(byte[] jsonData) {
+        ObjectMapper objectMapper = getDefaultObjectMapper();
+        try {
+//            T t = (T)objectMapper.readValue(jsonData, JsonClassSerializer.class );
+            T t = (T) objectMapper.readValue(jsonData, new TypeReference<T>() {
+            });
+            return t;
+        } catch (IOException e) {
             throw new IllegalArgumentException("parseObject:" + new String(jsonData), e);
         }
     }
 
+    public static <T> T parseObject(InputStream jsonData, Class<T> clazz) {
+        ObjectMapper objectMapper = getDefaultObjectMapper();
+        try {
+            T t = (T) objectMapper.readValue(jsonData, clazz);
+            return t;
+        } catch (IOException e) {
+            throw new IllegalArgumentException("parseObject:", e);
+        }
+    }
+
+    public static <T> T parseObject(String jsonData) {
+        return parseObject(toUTF8(jsonData));
+    }
+
     /**
      * 将给定的json数据(字符串)，反序列化成指定对象。
+     *
      * @param jsonData
      * @param clazz
      * @param <T>
      * @return
      */
     public static <T> T parseObject(String jsonData, Class<T> clazz) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        try
-        {
-            T t = (T)objectMapper.readValue(jsonData, clazz);
+        return parseObject(toUTF8(jsonData), clazz);
+    }
+
+    public static <T> T parseObject(byte[] jsonData, Class<T> clazz) {
+        ObjectMapper objectMapper = getDefaultObjectMapper();
+        try {
+            T t = (T) objectMapper.readValue(jsonData, clazz);
             return t;
-        }catch(IOException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("parseObject:" + jsonData, e);
         }
     }
 
     /**
      * 多泛型、或多级对象反序列化
-     *  示例：new TypeReference<Response<A>>() {}      (Response<A>) s = (Response<A>)parseObject(json, new TypeReference<Response<A>>() {} );
+     * 示例：new TypeReference<Response<A>>() {}      (Response<A>) s = (Response<A>)parseObject(json, new TypeReference<Response<A>>() {} );
+     *
      * @param jsonData
      * @param clazz
      * @param <T>
      * @return
      */
     public static <T> T parseObject(String jsonData, TypeReference<T> clazz) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        try
-        {
-            T t = (T)objectMapper.readValue(jsonData, clazz);
+        return parseObject(toUTF8(jsonData), clazz);
+    }
+
+    public static <T> T parseObject(byte[] jsonData, TypeReference<T> clazz) {
+        ObjectMapper objectMapper = getDefaultObjectMapper();
+        try {
+            T t = (T) objectMapper.readValue(jsonData, clazz);
             return t;
-        }catch(IOException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("parseObject:" + jsonData, e);
         }
     }
 
+    public static <T> T parseObject(String jsonData, Class<?> clazz, Class<?>... fieldClazz) {
+        return parseObject(toUTF8(jsonData), clazz, fieldClazz);
+    }
+
     /**
      * 多泛型、或多级对象反序列化
+     *
      * @param jsonData
      * @param clazz
-     * @param fieldClazz    熟悉类或泛型等
+     * @param fieldClazz 熟悉类或泛型等
      * @param <T>
      * @return
      */
-    public static <T> T parseObject(String jsonData, Class<?> clazz, Class<?>... fieldClazz) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        try
-        {
+    public static <T> T parseObject(byte[] jsonData, Class<?> clazz, Class<?>... fieldClazz) {
+        ObjectMapper objectMapper = getDefaultObjectMapper();
+        try {
             JavaType javaType = objectMapper.getTypeFactory().constructParametricType(clazz, fieldClazz);
-            T t = (T)objectMapper.readValue(jsonData, javaType);
+            T t = (T) objectMapper.readValue(jsonData, javaType);
             return t;
-        }catch(IOException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("parseObject:" + jsonData, e);
         }
     }
 
     /**
      * 将对象序列化成jackson（json）字符串
+     *
      * @param obj
      * @return
      */
-    public static String parseObject(Object obj) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+    public static String toJson(Object obj) {
+        return toJson(obj, true, true);
+    }
+
+    /**
+     * @param obj
+     * @param isFormat 是否格式化输出
+     * @param isNoNull 是否输出null字段属性，true-不输出
+     * @return
+     */
+    public static String toJson(Object obj, boolean isFormat, boolean isNoNull) {
+        String key = "serializer_" + isFormat + "_" + isNoNull;
+
+        ObjectMapper objectMapper = getObjectMapper(key);
+        if (objectMapper.getSerializationConfig().isEnabled(SerializationFeature.INDENT_OUTPUT) != isFormat)
+            objectMapper.configure(SerializationFeature.INDENT_OUTPUT, isFormat);
+        if (isNoNull)
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
         StringWriter stringEmp = new StringWriter();
-        try
-        {
+        try {
+//            Class cls = obj.getClass();
+//            if (obj instanceof List) {
+//                stringEmp.append("\"").append(cls.getName()).append("\":[");
+//
+//                for(Object cur : (List)obj) {
+//                    String s = objectMapper.writeValueAsString(cur);
+//                    stringEmp.append(s );
+//                    stringEmp.append(",");
+//                }
+//
+//                stringEmp.append("]");
+//            }
+// else
             objectMapper.writeValue(stringEmp, obj);
             return stringEmp.toString();
-        }catch(IOException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("parseObject:" + obj, e);
         }
     }
 
     /**
      * 序列化对象，如对象为Serializable则直接序列化；否则json序列化
+     *
      * @param object
      * @return
      */
     public static byte[] serialize(Object object) {
-        if ( object instanceof Serializable ) {
-            return serializeObject(object);
-        } else {
-            String val = parseObject(object);
+        if (object instanceof JsonClassSerializer) {
+//            log.debug("serialize: JsonClassSerializer ");
+            String val = toJson(object, false, false);
             return toUTF8(val);
         }
-//        return serializeKryo(object );
+
+        if (object instanceof Serializable) {
+            byte[] data = serializeObject(object);
+            return data;
+        } else {
+//            log.debug("serialize: JsonClassSerializer ");
+            String val = toJson(object, false, false);
+            return toUTF8(val);
+        }
     }
 
     /**
      * 反序列化对象：Serializable或json对象
+     *
      * @param bytes
      * @return
      */
-    public static <T>T unSerialize(byte[] bytes) {
+    public static <T> T unSerialize(byte[] bytes) {
         if (bytes == null)
             return null;
-//        return (T) unSerializeKryo(bytes, Object.class);
+
         if (bytes[0] == '[' || bytes[0] == '{') {
-            return (T)parseObject(toUTF8(bytes), Object.class);
+//            log.debug("unSerialize: of JsonClassSerializer ");
+            return (T) parseObject(bytes);
         } else {
             return unSerializeObject(bytes);
         }
@@ -215,6 +311,7 @@ public class Converter {
 
     /**
      * 反序列化对象：Serializable或json对象
+     *
      * @param bytes
      * @param clazz
      * @param <T>
@@ -287,6 +384,7 @@ public class Converter {
 
     /**
      * 序列化对象（Serializable）
+     *
      * @param object
      * @return
      */
@@ -302,8 +400,8 @@ public class Converter {
             return bytes;
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally{
-            if(oos!=null){
+        } finally {
+            if (oos != null) {
                 try {
                     oos.close();
                 } catch (IOException e) {
@@ -311,7 +409,7 @@ public class Converter {
                 }
             }
 
-            if(baos!=null){
+            if (baos != null) {
                 try {
                     baos.close();
                 } catch (IOException e) {
@@ -323,6 +421,7 @@ public class Converter {
 
     /**
      * 反序列化对象（Serializable）
+     *
      * @param bytes
      * @param <T>
      * @return
@@ -338,8 +437,8 @@ public class Converter {
             return (T) ois.readObject();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
-        }finally{
-            if(ois!=null){
+        } finally {
+            if (ois != null) {
                 try {
                     ois.close();
                 } catch (IOException e) {
@@ -347,7 +446,7 @@ public class Converter {
                 }
             }
 
-            if(bais!=null){
+            if (bais != null) {
                 try {
                     bais.close();
                 } catch (IOException e) {

@@ -28,8 +28,8 @@
             <version>${hsd.framework.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.hsd.common</groupId>
-            <artifactId>hsd-common-biz</artifactId>
+            <groupId>com.hsd.account</groupId>
+            <artifactId>hsd-account-biz</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

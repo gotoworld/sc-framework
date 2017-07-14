@@ -1,5 +1,8 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
-
+# HTTP Server
+server:
+  port: 6060
+  context-path: /
 spring:
   application:
     name: hsd-account-server

@@ -17,6 +17,7 @@ import com.hsd.vo.org.OrgUser;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface IRoleSourceService {
      * 根据用户id,判断用户是否为超级管理员,要的就是特权.
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/isSuperAdmin")
-    public int isSuperAdmin(OrgUser orgUser);
+    public Integer isSuperAdmin(OrgUser orgUser);
     /**
      * <p>角色信息列表>根据用户id。
      */
@@ -47,11 +48,11 @@ public interface IRoleSourceService {
      * <p>用户信息。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserByLoginName")
-    public OrgUser findUserByLoginName(String accid, Integer userType);
+    public OrgUser findUserByLoginName(@RequestParam("accid") String accid,@RequestParam("userType")  Integer userType);
 
     /**
      * 更新用户登陆信息
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/lastLogin")
-    public int lastLogin(OrgUser orgUser);
+    public Integer lastLogin(OrgUser orgUser);
 }

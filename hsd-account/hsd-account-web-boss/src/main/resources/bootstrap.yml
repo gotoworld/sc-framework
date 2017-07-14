@@ -36,17 +36,6 @@ hystrix:
 feign:
   okhttp:
     enabled: true
-mybatis:
-#  type-aliases-package: com.hsd.vo
-  mapper-locations: classpath*:mybatis/**/*.xml
-mapper:
-  not-empty: false
-  identity: MYSQL
-pagehelper:
-  helperDialect: mysql
-#  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
 
 logging:
   config: classpath:logback.xml

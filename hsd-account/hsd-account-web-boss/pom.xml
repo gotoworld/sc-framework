@@ -13,6 +13,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>com.netflix.feign</groupId>-->
+            <!--<artifactId>feign-slf4j</artifactId>-->
+            <!--<version>7.0.0</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.hsd.framework</groupId>
             <artifactId>hsd-framework-web-restful</artifactId>

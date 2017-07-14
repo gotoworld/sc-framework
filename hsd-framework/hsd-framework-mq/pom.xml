@@ -16,6 +16,12 @@
             <groupId>com.hsd.framework</groupId>
             <artifactId>hsd-framework-core</artifactId>
             <version>${hsd.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.pagehelper</groupId>
+                    <artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

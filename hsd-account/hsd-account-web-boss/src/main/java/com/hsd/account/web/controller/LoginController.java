@@ -42,7 +42,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 public class LoginController extends BaseController {
-    private static final String acPrefix = "/boss/account/user/";
+    private static final String acPrefix = "/boss/account/sign/";
     @Autowired
     private JwtUtil jwt;
     /**
@@ -58,7 +58,7 @@ public class LoginController extends BaseController {
                 return Response.error("用户名或密码不能为空!");
             }
             try {
-                UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.member);
+                UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.admin);
                 getAuth().login(token);
 
                 OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);

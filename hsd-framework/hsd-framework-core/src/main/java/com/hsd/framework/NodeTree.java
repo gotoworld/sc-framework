@@ -1,4 +1,4 @@
-package com.hsd.vo;
+package com.hsd.framework;
 
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;

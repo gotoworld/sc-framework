@@ -163,35 +163,17 @@ public class ShiroConfig {
         return advisor;
     }
 
-//    @Bean(name = "adminUser")
-//    public org.apache.shiro.web.filter.authc.FormAuthenticationFilter getAdminUser() {
-//        MyShiroFilter filter = new MyShiroFilter();
-//        filter.setLoginUrl("/h/init");
-//        filter.setSuccessUrl("/h/index");
-//        return filter;
-//    }
-
-//    @Bean(name = "membersUser")
-//    public org.apache.shiro.web.filter.authc.FormAuthenticationFilter getMembersUser() {
-//        MyShiroFilter filter = new MyShiroFilter();
-//        filter.setLoginUrl("/m/init");
-//        filter.setSuccessUrl("/m/index");
-//        return filter;
-//    }
-
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean() {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(getSecurityManager());
 
-        bean.setLoginUrl("/");
-        bean.setSuccessUrl("/");
         bean.setUnauthorizedUrl("/error/noauth");
 
         Map filterChainDefinitionMap = bean.getFilterChainDefinitionMap();
         //restful
-        filterChainDefinitionMap.put("/boss/account/user/**", "anon");
-        filterChainDefinitionMap.put("/boss/account/**", "authc");//,roles["member"]
+        filterChainDefinitionMap.put("/boss/account/sign/**", "anon");
+        filterChainDefinitionMap.put("/boss/**", "authc");
 
         return bean;
     }

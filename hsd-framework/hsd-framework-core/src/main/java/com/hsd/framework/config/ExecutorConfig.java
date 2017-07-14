@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-package com.hsd.config;
+package com.hsd.framework.config;
 
-import com.hsd.framework.config.AppConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;

@@ -2,16 +2,14 @@ package com.hsd;
 
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 
-//@EnableHystrix
-//@EnableCircuitBreaker
-@EnableAutoConfiguration
 @SpringBootApplication
-@EnableEurekaClient
+@EnableFeignClients(basePackages = {"com.hsd"})
+@EnableDiscoveryClient
 public class ServiceServer {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(ServiceServer.class, args);

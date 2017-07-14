@@ -3,6 +3,8 @@
 spring:
   application:
     name: hsd-account-web-portal
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
 feign:
   name:
     common: hsd-common-server
@@ -12,3 +14,7 @@ feign:
 hsd:
   common:
     appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
+    fileServer:
+      rootFolder: /home/hsd/file/
+      upload: ${hsd.common.fileServer.rootFolder}upload/
+      download: /upload/

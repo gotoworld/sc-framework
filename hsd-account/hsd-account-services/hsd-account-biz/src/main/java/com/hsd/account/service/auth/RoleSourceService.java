@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@FeignService("roleSourceService")
+@FeignService
 @Slf4j
 public class RoleSourceService extends BaseService implements IRoleSourceService {
 
@@ -40,7 +40,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     private IOrgUserDao orgUserDao;
 
     @Override
-    public int isSuperAdmin(@RequestBody OrgUser dto) {
+    public Integer isSuperAdmin(@RequestBody OrgUser dto) {
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("uid", dto.getId());
@@ -91,7 +91,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
         return null;
     }
     @Override
-    public int lastLogin(@RequestBody OrgUser orgUser) {
+    public Integer lastLogin(@RequestBody OrgUser orgUser) {
         try {
             return orgUserDao.lastLogin(orgUser);
         } catch (Exception e) {

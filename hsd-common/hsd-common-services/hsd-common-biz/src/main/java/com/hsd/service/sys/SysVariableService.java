@@ -7,7 +7,7 @@ import com.hsd.framework.Response;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.vo.NodeTree;
+import com.hsd.framework.NodeTree;
 import com.hsd.vo.sys.SysVariable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,7 +10,7 @@ import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IdUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.vo.NodeTree;
+import com.hsd.framework.NodeTree;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;

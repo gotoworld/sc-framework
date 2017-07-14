@@ -61,8 +61,8 @@ public class LoginController extends BaseController {
                 UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.admin);
                 getAuth().login(token);
 
-                OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
-                session.setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, user);
+                OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+                session.setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, user);
                 String subject = JwtUtil.generalSubject(user);
                 String authorizationToken = jwt.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
@@ -85,7 +85,7 @@ public class LoginController extends BaseController {
                 result = Response.error("登录失败,服务器异常3!");
             }
         } catch (Exception e) {
-            getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, null);
+            getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, null);
             result = Response.error(e.getMessage());
         }
         return result;

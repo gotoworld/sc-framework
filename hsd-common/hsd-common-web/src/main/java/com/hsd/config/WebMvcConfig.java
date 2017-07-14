@@ -1,5 +1,6 @@
 package com.hsd.config;
 
+import com.hsd.framework.interceptor.JwtInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
@@ -23,6 +24,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        log.info("==拦截器注册==");
+        registry.addInterceptor(new JwtInterceptor()).addPathPatterns("/api/**","/boss/**");//权限验证拦截器
+
         super.addInterceptors(registry);
     }
 }

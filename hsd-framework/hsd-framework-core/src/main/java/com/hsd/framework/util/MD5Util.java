@@ -1,24 +1,8 @@
-/*
- *  类描述待补充.
- *
- * VERSION  DATE        BY              REASON
- * -------- ----------- --------------- ------------------------------------
- * 1.00     2016-3-26  wu1g119      程序.发布
- * -------- ----------- --------------- ------------------------------------
- * Copyright 2016 baseos  System. - All Rights Reserved.
- *
- */
 package com.hsd.framework.util;
 
 import java.security.MessageDigest;
 
-/**
- *<p>类功能说明待补充</p>
- * <dl>[功能概要]
- * <dt>功能1</dt>
- *</dl>
- */
-public class MD5Util {  
+public class MD5Util {
 	  
     /*** 
      * MD5加码 生成32位md5码 

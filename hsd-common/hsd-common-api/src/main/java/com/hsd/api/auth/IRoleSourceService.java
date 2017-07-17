@@ -8,11 +8,11 @@
  * Copyright 2015 baseos System. - All Rights Reserved.		
  *	
  */
-package com.hsd.account.api.auth;
+package com.hsd.api.auth;
 
 
-import com.hsd.account.vo.auth.AuthPerm;
-import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.vo.auth.AuthPerm;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.vo.org.OrgUser;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +48,7 @@ public interface IRoleSourceService {
      * <p>用户信息。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserByLoginName")
-    public OrgUser findUserByLoginName(@RequestParam("accid") String accid,@RequestParam("userType")  Integer userType);
+    public OrgUser findUserByLoginName(@RequestParam("account") String account,@RequestParam("userType")  Integer userType);
 
     /**
      * 更新用户登陆信息

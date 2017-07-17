@@ -5,13 +5,40 @@ server:
   context-path: /
 spring:
   application:
-    name: hsd-account-web-boss
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
+    name: hsd-account-web-boss-wxg
+  profiles:
+    active: dev
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+    password:
+    timeout: 0
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 1800
+
+#服务名
 feign:
   name:
     common: hsd-common-server
-    account: hsd-account-server
+    account: hsd-account-server-wxg
+
+#shiro
+shiro:
+  login-url: /error/403
+  success-url: /info
+  unauthorized-url: /error/noauth
+  filterChainDefinitionMap:
+    /boss/account/sign/**: anon
+    /boss/**: authc
 
 # 自定义配置
 hsd:

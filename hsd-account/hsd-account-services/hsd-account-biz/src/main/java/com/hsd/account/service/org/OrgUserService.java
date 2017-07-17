@@ -12,7 +12,7 @@ package com.hsd.account.service.org;
 
 import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.org.IOrgUserService;
-import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.account.vo.auth.AuthUserVsRole;
 import com.hsd.account.vo.org.OrgDept;
 import com.hsd.account.vo.org.OrgDeptVsUser;

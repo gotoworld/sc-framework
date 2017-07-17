@@ -2,7 +2,7 @@ package com.hsd.account.service.auth;
 
 import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.auth.IAuthRoleService;
-import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.account.vo.auth.AuthRoleVsPerm;
 import com.hsd.dao.account.auth.IAuthRoleDao;
 import com.hsd.dao.account.auth.IAuthRoleVsPermDao;

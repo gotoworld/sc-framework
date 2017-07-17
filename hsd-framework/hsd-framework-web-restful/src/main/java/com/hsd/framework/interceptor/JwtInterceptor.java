@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
@@ -36,10 +36,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             if (ValidatorUtil.isEmpty(authorizationToken)) {
                 throw new SignatureException("头缺失");
             }
-            final Claims claims = Jwts.parser()
-                    .setSigningKey(CommonConstant.JWT_SECRET_KEY)
-                    .parseClaimsJws(authorizationToken)
-                    .getBody();
+            final Claims claims = JwtUtil.parseJWT(authorizationToken);
             if (log.isDebugEnabled()) {
                 log.debug("ID: " + claims.getId());
                 log.debug("Subject: " + claims.getSubject());

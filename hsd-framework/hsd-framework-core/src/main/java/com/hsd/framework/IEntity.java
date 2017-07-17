@@ -1,4 +1,6 @@
 package com.hsd.framework;
 
-public interface IEntity {
+import java.io.Serializable;
+
+public interface IEntity extends Serializable {
 }

@@ -50,19 +50,19 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix+"/login")
     @ApiOperation(value = "登录")
-    public Response login(@RequestParam("accid") String accid , @RequestParam("password")String password ) throws Exception {
+    public Response login(@RequestParam("account") String account , @RequestParam("password")String password ) throws Exception {
         log.info("LoginController login");
         Response result = new Response();
         try{
-            if (ValidatorUtil.isNullEmpty(accid) || ValidatorUtil.isNullEmpty(password)) {
+            if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                 return Response.error("用户名或密码不能为空!");
             }
             try {
-                UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.member);
+                UsernamePasswordToken token = new MyShiroUserToken(account, password, MyShiroUserToken.UserType.member);
                 getAuth().login(token);
 
                 OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
-                session.setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, user);
+//                session.setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, user);
                 String subject = JwtUtil.generalSubject(user);
                 String authorizationToken = jwt.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
@@ -100,8 +100,6 @@ public class LoginController extends BaseController {
         Response result = new Response();
         try {
             log.debug(getAuth().getPrincipal() + "准备退出!");
-            // 清空用户登录信息
-            request.getSession().invalidate();
             getAuth().logout();
         } catch (Exception e) {
             result = Response.error(e.getMessage());

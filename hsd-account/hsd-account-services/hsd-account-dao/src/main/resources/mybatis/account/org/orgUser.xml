@@ -4,7 +4,7 @@
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
 		 t1.id as  "id"
-        ,t1.accid as  "accid"
+        ,t1.account as  "account"
         ,t1.pwd as  "pwd"
         ,t1.name as  "name"
         ,t1.job_no as  "jobNo"
@@ -46,7 +46,7 @@
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.hsd.vo.org.OrgUser" useGeneratedKeys="true" keyProperty="id">
 		insert into org_user (
-             accid
+             account
             ,pwd
             ,name
             ,job_no
@@ -72,7 +72,7 @@
             ,date_created
             ,date_updated
         ) values (
-             #{accid}
+             #{account}
             ,#{pwd}
             ,#{name}
             ,#{jobNo}
@@ -202,7 +202,7 @@
         <include refid="Base_Column_List"/>
         from org_user t1
         where t1.del_flag=0 and enable=1
-        and accid=#{accid}
+        and account=#{account}
         and type=#{userType}
     </select>
     <!-- 逻辑删除 -->
@@ -221,6 +221,6 @@
 	</update>
     <!-- 判断用户id是否存在 -->
     <select id="isUidYN" parameterType="java.lang.String" resultType="int">
-		select count(0) from org_user where  accid=#{accid}
+		select count(0) from org_user where  account=#{account}
 	</select>
 </mapper>

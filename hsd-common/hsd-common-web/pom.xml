@@ -17,6 +17,11 @@
             <version>${hsd.framework.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.hsd.framework</groupId>
+            <artifactId>hsd-framework-cache</artifactId>
+            <version>${hsd.framework.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.hsd.common</groupId>
             <artifactId>hsd-common-api</artifactId>
             <version>1.0</version>

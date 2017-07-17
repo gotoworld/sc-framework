@@ -27,7 +27,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,28 +44,26 @@ import java.util.Map;
 @NoAuthorize
 public class LoginController extends BaseController {
     private static final String acPrefix = "/boss/account/sign/";
-    @Autowired
-    private JwtUtil jwt;
     /**
      * <p>用户登录
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix+"/login")
     @ApiOperation(value = "登录")
-    public Response login(@RequestParam("accid") String accid , @RequestParam("password")String password ) throws Exception {
+    public Response login(@RequestParam("account") String account , @RequestParam("password")String password ) throws Exception {
         log.info("LoginController login");
         Response result = new Response();
         try{
-            if (ValidatorUtil.isNullEmpty(accid) || ValidatorUtil.isNullEmpty(password)) {
+            if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                 return Response.error("用户名或密码不能为空!");
             }
             try {
-                UsernamePasswordToken token = new MyShiroUserToken(accid, password, MyShiroUserToken.UserType.admin);
+                UsernamePasswordToken token = new MyShiroUserToken(account, password, MyShiroUserToken.UserType.admin);
                 getAuth().login(token);
 
                 OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
-                session.setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, user);
+//                session.setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, user);
                 String subject = JwtUtil.generalSubject(user);
-                String authorizationToken = jwt.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
                getAuth().hasRole("say me");
 
@@ -102,8 +99,6 @@ public class LoginController extends BaseController {
         Response result = new Response();
         try {
             log.debug(getAuth().getPrincipal() + "准备退出!");
-            // 清空用户登录信息
-            request.getSession().invalidate();
             getAuth().logout();
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -121,13 +116,13 @@ public class LoginController extends BaseController {
         Response result = new Response();
         try {
             String authorization = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
-            Claims claims = jwt.parseJWT(authorization);
+            Claims claims = JwtUtil.parseJWT(authorization);
 
             Map data = new HashMap<>();
             String json = claims.getSubject();
             OrgUser user = JSONObject.parseObject(json, OrgUser.class);
             String subject = JwtUtil.generalSubject(user);
-            String refreshToken = jwt.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+            String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);

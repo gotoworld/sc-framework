@@ -1,7 +1,6 @@
 package com.hsd.vo.shiro;
 
 import com.hsd.framework.util.CommonConstant;
-import lombok.Data;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 /**
@@ -31,8 +30,8 @@ public class MyShiroUserToken extends UsernamePasswordToken {
             return name;
         }
     }
-    public MyShiroUserToken(String accid, String password, UserType userType) {
-        super(accid, password);
+    public MyShiroUserToken(String account, String password, UserType userType) {
+        super(account, password);
         this.userType = userType;
     }
 

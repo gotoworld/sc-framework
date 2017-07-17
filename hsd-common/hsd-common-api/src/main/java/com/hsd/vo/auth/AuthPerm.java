@@ -8,7 +8,7 @@
  * Copyright 2015 System. - All Rights Reserved.
  *	
  */
-package com.hsd.account.vo.auth;
+package com.hsd.vo.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hsd.framework.vo.BaseVO;

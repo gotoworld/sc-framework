@@ -11,7 +11,7 @@
 package com.hsd.account.api.org;
 
 
-import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.account.vo.org.OrgDept;
 import com.hsd.framework.Response;
 import com.hsd.vo.org.OrgUser;

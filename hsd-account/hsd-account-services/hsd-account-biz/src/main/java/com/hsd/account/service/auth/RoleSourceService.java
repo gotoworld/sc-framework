@@ -10,9 +10,9 @@
  */
 package com.hsd.account.service.auth;
 
-import com.hsd.account.api.auth.IRoleSourceService;
-import com.hsd.account.vo.auth.AuthPerm;
-import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.api.auth.IRoleSourceService;
+import com.hsd.vo.auth.AuthPerm;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.dao.account.auth.IAuthPermDao;
 import com.hsd.dao.account.auth.IAuthRoleDao;
 import com.hsd.dao.account.org.IOrgUserDao;
@@ -79,10 +79,10 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public OrgUser findUserByLoginName(@RequestParam("accid") String accid,@RequestParam("userType")  Integer userType) {
+    public OrgUser findUserByLoginName(@RequestParam("account") String account, @RequestParam("userType")  Integer userType) {
         try {
             Map dto = new HashMap();
-            dto.put("accid", accid);
+            dto.put("account", account);
             dto.put("userType", userType);
             return (OrgUser) orgUserDao.findUserByLoginName(dto);
         } catch (Exception e) {

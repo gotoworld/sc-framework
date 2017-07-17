@@ -1,15 +1,11 @@
 package com.hsd.framework.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.ReflectUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -18,15 +14,14 @@ import java.util.Date;
 /**
  * Created by wu1g119 on 2017/2/8.
  */
-@Component
 public class JwtUtil {
-    @Value("${spring.profiles.active}")
-    private String profiles;
+//    @Value("${spring.profiles.active}")
+    private static String profiles="";
 
     /**
      * 由字符串生成加密key
      */
-    public SecretKey generalKey() {
+    public static SecretKey generalKey() {
         String stringKey = profiles + CommonConstant.JWT_SECRET_KEY;
         byte[] encodedKey = Base64.decodeBase64(stringKey);
         SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
@@ -36,7 +31,7 @@ public class JwtUtil {
     /**
      * 创建jwt
      */
-    public String createJWT(String id, String subject, long ttlMillis) throws Exception {
+    public static String createJWT(String id, String subject, long ttlMillis) throws Exception {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         SecretKey key = generalKey();
@@ -56,7 +51,7 @@ public class JwtUtil {
     /**
      * 解密jwt
      */
-    public Claims parseJWT(String jwt) throws Exception {
+    public static Claims parseJWT(String jwt) throws Exception {
         SecretKey key = generalKey();
         Claims claims = Jwts.parser()
                 .setSigningKey(key)

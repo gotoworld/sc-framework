@@ -35,17 +35,17 @@ public class OrgUser extends BaseVO {
      */
     private Long id;
     /**
-     * 员工账号
+     * 账号
      */
-    @Size(max = 55, message = "accid最大55字符")
-    private String accid;
+    @Size(max = 55, message = "account最大55字符")
+    private String account;
     /**
-     * 员工密码
+     * 密码
      */
     @Size(max = 64, message = "pwd最大64字符")
     private String pwd;
     /**
-     * 成员名称
+     * 名称
      */
     @Size(max = 55, message = "name最大55字符")
     private String name;

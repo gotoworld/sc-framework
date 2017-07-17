@@ -5,7 +5,7 @@ server:
   context-path: /
 spring:
   application:
-    name: hsd-account-server
+    name: hsd-account-server-wxg
   datasource:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=UTC&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
@@ -35,6 +35,23 @@ spring:
     connectionProperties: "druid.stat.mergeSql:true;druid.stat.slowSqlMillis:5000"
     # 合并多个DruidDataSource的监控数据
     useGlobalDataSourceStat: true
+
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+    password:
+    timeout: 0
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 1800
 
 feign:
   name:

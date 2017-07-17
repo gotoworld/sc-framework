@@ -169,8 +169,8 @@ public class OrgUserController extends BaseController {
 			}else{
 				OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 				if(orgUser !=null){
-					if(ValidatorUtil.isEmpty(bean.getAccid())){
-						bean.setAccid(orgUser.getAccid());
+					if(ValidatorUtil.isEmpty(bean.getAccount())){
+						bean.setAccount(orgUser.getAccount());
 					}
 				}
 				if(null==bean.getEnable()) bean.setEnable(0);
@@ -214,8 +214,8 @@ public class OrgUserController extends BaseController {
 			}else{
 				OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 				if(orgUser !=null){
-					if(ValidatorUtil.isEmpty(bean.getAccid())){
-						bean.setAccid(orgUser.getAccid());
+					if(ValidatorUtil.isEmpty(bean.getAccount())){
+						bean.setAccount(orgUser.getAccount());
 					}
 				}
 				result.message=orgUserService.updateData(bean);

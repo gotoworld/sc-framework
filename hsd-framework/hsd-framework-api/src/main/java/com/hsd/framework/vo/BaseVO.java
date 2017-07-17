@@ -20,8 +20,10 @@ public class BaseVO implements IVO,IEntity {
     Integer pageSize;
     /** 关键字 */
     String keyword;
+    /** 用户名 */
+    String account;
     /** 用户id */
-    String accid;
+    Long accid;
     /**  建立者ID */
     private Long createId;
     /** 会员 */

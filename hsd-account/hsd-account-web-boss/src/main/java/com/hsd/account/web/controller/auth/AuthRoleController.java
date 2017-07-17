@@ -13,7 +13,7 @@ package com.hsd.account.web.controller.auth;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.api.auth.IAuthPermService;
 import com.hsd.account.api.auth.IAuthRoleService;
-import com.hsd.account.vo.auth.AuthRole;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;

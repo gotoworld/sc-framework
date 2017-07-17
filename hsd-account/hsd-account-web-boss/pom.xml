@@ -10,14 +10,8 @@
         <version>1.0</version>
     </parent>
     <artifactId>hsd-account-web-boss</artifactId>
-    <packaging>jar</packaging>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.netflix.feign</groupId>-->
-            <!--<artifactId>feign-slf4j</artifactId>-->
-            <!--<version>7.0.0</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.hsd.framework</groupId>
             <artifactId>hsd-framework-web-restful</artifactId>
@@ -32,11 +26,6 @@
             <groupId>com.hsd.account</groupId>
             <artifactId>hsd-account-api</artifactId>
             <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hsd.framework</groupId>
-            <artifactId>hsd-framework-cache</artifactId>
-            <version>${hsd.framework.version}</version>
         </dependency>
     </dependencies>
 </project>

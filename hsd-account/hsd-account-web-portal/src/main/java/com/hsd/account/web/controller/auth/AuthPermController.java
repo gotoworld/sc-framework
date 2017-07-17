@@ -11,7 +11,7 @@
 package com.hsd.account.web.controller.auth;
 
 import com.hsd.account.api.auth.IAuthPermService;
-import com.hsd.account.vo.auth.AuthPerm;
+import com.hsd.vo.auth.AuthPerm;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;

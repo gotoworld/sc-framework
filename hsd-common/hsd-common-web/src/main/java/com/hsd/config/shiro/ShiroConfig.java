@@ -111,7 +111,7 @@ public class ShiroConfig {
 	@Bean(name = "shrioRedisCacheManager")
 	@DependsOn(value = "shiroRedisTemplate")
 	public ShrioRedisCacheManager redisCacheManager() {
-		ShrioRedisCacheManager cacheManager = new ShrioRedisCacheManager(shiroRedisTemplate());
+		ShrioRedisCacheManager cacheManager = new ShrioRedisCacheManager(shiroRedisTemplate(),shiroProperties().getTimeout());
 		cacheManager.createCache("hsd-shiro-cache:");
 		return cacheManager;
 	}

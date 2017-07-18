@@ -1,4 +1,4 @@
-package com.hsd.account.shiro;
+package com.hsd.config.shiro;
 
 import com.hsd.api.auth.IRoleSourceService;
 import com.hsd.framework.util.CommonConstant;

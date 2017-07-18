@@ -9,9 +9,10 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.apache.shiro.web.session.mgt.WebSessionManager;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -19,9 +20,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.filter.DelegatingFilterProxy;
 
-import javax.servlet.DispatcherType;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class ShiroConfig {
 
 	/**
 	 * 加载属性文件数据
-	 * 
+	 *
 	 * @return
 	 */
 	@Bean
@@ -39,27 +38,23 @@ public class ShiroConfig {
 		return new RedisProperties();
 	}
 
-	/**
-	 * FilterRegistrationBean
-	 * 
-	 * @return
-	 */
-	@Bean
-	public FilterRegistrationBean filterRegistrationBean() {
-		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
-		filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
-		filterRegistration.setEnabled(true);
-		filterRegistration.addUrlPatterns("/*");
-		filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
-		return filterRegistration;
-	}
-//	@Bean(name = "sessionIdCookie")
-//	public SimpleCookie getSessionIdCookie() {
-//		SimpleCookie cookie = new SimpleCookie("sid");
-//		cookie.setHttpOnly(true);
-//		cookie.setMaxAge(-1);
-//		return cookie;
+//	@Bean
+//	public FilterRegistrationBean filterRegistrationBean() {
+//		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+//		filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
+//		filterRegistration.setEnabled(true);
+//		filterRegistration.addUrlPatterns("/*");
+//		filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
+//		return filterRegistration;
 //	}
+	@Bean(name = "sessionIdCookie")
+	public SimpleCookie getSessionIdCookie() {
+		SimpleCookie cookie = new SimpleCookie("sid");
+		cookie.setPath("/");
+		cookie.setMaxAge(1800000);
+		cookie.setHttpOnly(true);
+		return cookie;
+	}
 
 	/**
 	 * 权限管理器
@@ -71,24 +66,22 @@ public class ShiroConfig {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 		// 数据库认证的实现
 		manager.setRealm(userRealm());
-		// session 管理器
-		manager.setSessionManager(sessionManager());
+//		// session 管理器
+//		manager.setSessionManager(sessionManager());
 		// 缓存管理器
 		manager.setCacheManager(redisCacheManager());
 		return manager;
 	}
 
-	/**
-	 * DefaultWebSessionManager
-	 * 
-	 * @return
-	 */
 	@Bean(name = "sessionManager")
-	public ServletContainerSessionManager sessionManager() {
-//		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-//		sessionManager.setSessionIdCookieEnabled(true);
-//		sessionManager.setSessionIdCookie(getSessionIdCookie());
-		ServletContainerSessionManager sessionManager = new ServletContainerSessionManager();
+	public WebSessionManager sessionManager() {
+		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+		sessionManager.setGlobalSessionTimeout(1800000);//设置全局会话超时时间，默认30分钟(1800000)
+		sessionManager.setDeleteInvalidSessions(true);//是否在会话过期后会调用SessionDAO的delete方法删除会话 默认true
+		sessionManager.setSessionValidationInterval(1800000/2);//会话验证器调度时间
+		sessionManager.setSessionValidationSchedulerEnabled(true);//定时检查失效的session
+		sessionManager.setSessionIdCookie(getSessionIdCookie());//sessionIdCookie的实现,用于重写覆盖容器默认的JSESSIONID
+//		ServletContainerSessionManager sessionManager = new ServletContainerSessionManager();
 		return sessionManager;
 	}
 	//  密码加密算法 必须与数据库一致

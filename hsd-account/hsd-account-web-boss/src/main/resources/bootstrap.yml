@@ -2,11 +2,11 @@
 
 spring:
   application:
-#    cloud:
-#      config:
-#        uri: http://192.168.101.100:8888
-#        profile: dev
-  #      label: trunk
+    cloud:
+      config:
+        uri: http://192.168.101.100:8888
+        profile: dev
+        label: trunk
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
   http:

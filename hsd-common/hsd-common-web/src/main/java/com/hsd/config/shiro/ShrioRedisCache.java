@@ -10,19 +10,23 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class ShrioRedisCache<K, V> implements Cache<K, V> {
 	private RedisTemplate<byte[], V> shiroRedisTemplate;
 	private String prefix = "hsd-shiro-cache:";
 
+	private long timeout=-1;
+
 	public ShrioRedisCache(RedisTemplate<byte[], V> shiroRedisTemplate) {
 		this.shiroRedisTemplate = shiroRedisTemplate;
 	}
 
-	public ShrioRedisCache(RedisTemplate<byte[], V> shiroRedisTemplate, String prefix) {
+	public ShrioRedisCache(RedisTemplate<byte[], V> shiroRedisTemplate, String prefix,long _timeout) {
 		this(shiroRedisTemplate);
 		this.prefix = prefix;
+		this.timeout=_timeout;
 	}
 
 	@Override
@@ -35,6 +39,7 @@ public class ShrioRedisCache<K, V> implements Cache<K, V> {
 		}
 
 		byte[] bkey = getByteKey(key);
+		shiroRedisTemplate.expire(bkey, this.timeout, TimeUnit.MILLISECONDS);
 		return shiroRedisTemplate.opsForValue().get(bkey);
 	}
 
@@ -50,6 +55,7 @@ public class ShrioRedisCache<K, V> implements Cache<K, V> {
 
 		byte[] bkey = getByteKey(key);
 		shiroRedisTemplate.opsForValue().set(bkey, value);
+		shiroRedisTemplate.expire(bkey, this.timeout, TimeUnit.MILLISECONDS);
 		return value;
 	}
 

@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @Slf4j
 public class JwtInterceptor implements HandlerInterceptor {
@@ -53,12 +55,12 @@ public class JwtInterceptor implements HandlerInterceptor {
 //            }
             return true;
         } catch (final SignatureException e) {
-            response.getWriter().print(JSON.toJSONString(Response.error(403, "签名验证失败!" + e.getMessage())));
+            responseOutWithJson(response,Response.error(403, "签名验证失败!" + e.getMessage()));
         } catch (ExpiredJwtException e) {
-            response.getWriter().print(JSON.toJSONString(Response.error(403, "授权过期!") + e.getMessage()));
+            responseOutWithJson(response,Response.error(403, "授权过期!" + e.getMessage()));
         } catch (Throwable e) {
             log.error("授权检查异常", e);
-            response.getWriter().print(JSON.toJSONString(Response.error("授权检查异常," + e.getMessage())));
+            responseOutWithJson(response,Response.error(403, "授权检查异常!" + e.getMessage()));
         }
         return false;
     }
@@ -71,5 +73,24 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) throws Exception {
 
+    }
+    /**
+     * 以JSON格式输出
+     * @param response
+     */
+    protected void responseOutWithJson(HttpServletResponse response,Object responseObject) {
+        //将实体对象转换为JSON Object转换
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+            out.append(JSON.toJSONString(responseObject));
+        } catch (IOException e) {
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
     }
 }

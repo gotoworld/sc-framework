@@ -28,7 +28,7 @@ public class MyErrorController implements ErrorController {
     @ResponseBody
     public Response error403(HttpServletRequest request, HttpServletResponse response) {
         log.info("403错误~");
-        return Response.error(403, "403错误!");
+        return Response.error(403, "无效的登录认证!");
     }
 
     @RequestMapping(value = prefix + "/404")

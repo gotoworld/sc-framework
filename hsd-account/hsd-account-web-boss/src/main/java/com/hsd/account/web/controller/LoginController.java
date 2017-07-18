@@ -11,11 +11,14 @@
 package com.hsd.account.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hsd.api.auth.IRoleSourceService;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
+import com.hsd.vo.auth.AuthPerm;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.vo.org.OrgUser;
 import com.hsd.vo.shiro.MyShiroUserToken;
 import com.hsd.web.controller.BaseController;
@@ -26,14 +29,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,6 +49,8 @@ import java.util.Map;
 @NoAuthorize
 public class LoginController extends BaseController {
     private static final String acPrefix = "/boss/account/sign/";
+    @Autowired
+    private IRoleSourceService roleSourceService;
     /**
      * <p>用户登录
      */
@@ -57,19 +63,50 @@ public class LoginController extends BaseController {
                 if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                     return Response.error("用户名或密码不能为空!");
                 }
-                OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
-                if(user!=null && !account.equals(user.getAccount())){
+                OrgUser orgUser = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+                if(orgUser!=null && !account.equals(orgUser.getAccount())){
                     try {getAuth().logout();} catch (Exception e1) {}//注销之前的用户
                 }
-                UsernamePasswordToken token = new MyShiroUserToken(account, password, MyShiroUserToken.UserType.admin);
+                MyShiroUserToken token = new MyShiroUserToken(account, password, MyShiroUserToken.UserType.admin);
                 getAuth().login(token);
                 getAuth().hasRole("say me");
 
-                user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
-                String subject = JwtUtil.generalSubject(user);
+                if(orgUser==null){
+                    orgUser = roleSourceService.findUserByLoginName(account,token.getUserType().getId());
+                    SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
+                    SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
+                    roleSourceService.lastLogin(orgUser);
+                }
+
+                String subject = JwtUtil.generalSubject(orgUser);
                 String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
-                AuthorizationInfo authorizationInfo= (AuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
+                SimpleAuthorizationInfo authorizationInfo= (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
+                if(authorizationInfo==null){
+                    if (0==(orgUser.getType()) && roleSourceService.isSuperAdmin(orgUser) > 0) {
+                        //超级管理员标记
+                        orgUser.setIissuperman(1);
+                        SecurityUtils.getSubject().getSession().setAttribute("isSuper", "1");
+                    }
+                    //2.获取角色集合
+                    List<AuthRole> roleList = roleSourceService.getRoleListByUId(orgUser);
+                    if (roleList != null) {
+                        for (AuthRole role : roleList) {
+                            authorizationInfo.addRole(role.getName());
+                        }
+                    }
+                    //3.获取功能集合
+                    List<AuthPerm> permList = roleSourceService.getPermListByUId(orgUser);
+                    if (permList != null) {
+                        for (AuthPerm perm : permList) {
+                            if (perm.getMatchStr() != null && !"".equals(perm.getMatchStr())) {
+                                authorizationInfo.addStringPermission(perm.getMatchStr());
+                            }
+                        }
+                    }
+                    SecurityUtils.getSubject().getSession().setAttribute("SimpleAuthorizationInfo", authorizationInfo);
+                }
+
                 Map<String,Object> data = new HashMap<>();
                 data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
                 data.put("authorizationToken", authorizationToken);

@@ -11,10 +11,14 @@
 package com.hsd.account.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hsd.api.auth.IRoleSourceService;
 import com.hsd.framework.Response;
+import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
+import com.hsd.vo.auth.AuthPerm;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.vo.org.OrgUser;
 import com.hsd.vo.shiro.MyShiroUserToken;
 import com.hsd.web.controller.BaseController;
@@ -22,10 +26,10 @@ import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,18 +37,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * <p>登录登出action
  */
-@Api(description = "会员 登录/登出")
+@Api(description = "登录/登出")
 @RestController
 @Slf4j
+@NoAuthorize
 public class LoginController extends BaseController {
-    private static final String acPrefix = "/api/account/user/";
+    private static final String acPrefix = "/api/account/sign/";
     @Autowired
-    private JwtUtil jwt;
+    private IRoleSourceService roleSourceService;
     /**
      * <p>用户登录
      */
@@ -53,41 +59,64 @@ public class LoginController extends BaseController {
     public Response login(@RequestParam("account") String account , @RequestParam("password")String password ) throws Exception {
         log.info("LoginController login");
         Response result = new Response();
-        try{
-            if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
-                return Response.error("用户名或密码不能为空!");
-            }
             try {
-                UsernamePasswordToken token = new MyShiroUserToken(account, password, MyShiroUserToken.UserType.member);
+                if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
+                    return Response.error("用户名或密码不能为空!");
+                }
+                OrgUser orgUser = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
+                if(orgUser!=null && !account.equals(orgUser.getAccount())){
+                    try {getAuth().logout();} catch (Exception e1) {}//注销之前的用户
+                }
+                MyShiroUserToken token = new MyShiroUserToken(account, password, MyShiroUserToken.UserType.member);
                 getAuth().login(token);
+                getAuth().hasRole("say me");
+                if(orgUser==null) {
+                    orgUser = roleSourceService.findUserByLoginName(account, token.getUserType().getId());
+                    SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
+                    SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
+                    roleSourceService.lastLogin(orgUser);
+                }
+                String subject = JwtUtil.generalSubject(orgUser);
+                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
-                OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
-//                session.setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, user);
-                String subject = JwtUtil.generalSubject(user);
-                String authorizationToken = jwt.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
-
-               getAuth().hasRole("say me");
-
+                SimpleAuthorizationInfo authorizationInfo= (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
+                if(authorizationInfo==null){
+                    //2.获取角色集合
+                    List<AuthRole> roleList = roleSourceService.getRoleListByUId(orgUser);
+                    if (roleList != null) {
+                        for (AuthRole role : roleList) {
+                            authorizationInfo.addRole(role.getName());
+                        }
+                    }
+                    //3.获取功能集合
+                    List<AuthPerm> permList = roleSourceService.getPermListByUId(orgUser);
+                    if (permList != null) {
+                        for (AuthPerm perm : permList) {
+                            if (perm.getMatchStr() != null && !"".equals(perm.getMatchStr())) {
+                                authorizationInfo.addStringPermission(perm.getMatchStr());
+                            }
+                        }
+                    }
+                    SecurityUtils.getSubject().getSession().setAttribute("SimpleAuthorizationInfo", authorizationInfo);
+                }
                 Map<String,Object> data = new HashMap<>();
                 data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
                 data.put("authorizationToken", authorizationToken);
                 data.put("user", JSONObject.parseObject(subject, OrgUser.class));
-                AuthorizationInfo authorizationInfo= (AuthorizationInfo) getAuth().getSession().getAttribute("SimpleAuthorizationInfo");
+
                 data.put("authorizationInfoPerms", authorizationInfo.getStringPermissions());
                 data.put("authorizationInfoRoles",authorizationInfo.getRoles());
                 data.put("sid",getAuth().getSession().getId());
                 result.data = data;
                 return result;
             } catch (UnknownAccountException | IncorrectCredentialsException ex) {
+                try {getAuth().logout();} catch (Exception e1) {}
                 result = Response.error("登录失败,用户名或密码错误1!");
             }catch (Exception ex) {
+                try {getAuth().logout();} catch (Exception e1) {}
                 log.error("登录失败,原因未知", ex);
                 result = Response.error("登录失败,服务器异常3!");
             }
-        } catch (Exception e) {
-            getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_MEMBER, null);
-            result = Response.error(e.getMessage());
-        }
         return result;
     }
     /**
@@ -117,13 +146,13 @@ public class LoginController extends BaseController {
         Response result = new Response();
         try {
             String authorization = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
-            Claims claims = jwt.parseJWT(authorization);
+            Claims claims = JwtUtil.parseJWT(authorization);
 
             Map data = new HashMap<>();
             String json = claims.getSubject();
             OrgUser user = JSONObject.parseObject(json, OrgUser.class);
             String subject = JwtUtil.generalSubject(user);
-            String refreshToken = jwt.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+            String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);

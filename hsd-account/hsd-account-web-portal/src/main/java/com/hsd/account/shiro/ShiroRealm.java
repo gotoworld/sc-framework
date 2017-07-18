@@ -2,6 +2,7 @@ package com.hsd.account.shiro;
 
 import com.hsd.api.auth.IRoleSourceService;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.MD5Util;
 import com.hsd.vo.auth.AuthPerm;
 import com.hsd.vo.auth.AuthRole;
 import com.hsd.vo.org.OrgUser;
@@ -18,7 +19,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -89,15 +89,12 @@ public class ShiroRealm extends AuthorizingRealm {
         OrgUser orgUser = roleSourceService.findUserByLoginName(account,token.getUserType().getId());
         if (orgUser != null) {
             info = new SimpleAuthenticationInfo(account, orgUser.getPwd(), getName());
-            info.setCredentialsSalt(ByteSource.Util.bytes(account+salt2)); //盐是用户名+随机数
-            SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
-            SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
-            roleSourceService.lastLogin(orgUser);
+            clearCache(info.getPrincipals());
+//            info.setCredentialsSalt(ByteSource.Util.bytes(account+salt2)); //盐是用户名+随机数
         }
         return info;
     }
-
     public static void main(String[] args) {
-        SimpleAuthenticationInfo info=new SimpleAuthenticationInfo();
+        System.out.println(MD5Util.string2MD5(MD5Util.string2MD5("admin")+""));
     }
 }

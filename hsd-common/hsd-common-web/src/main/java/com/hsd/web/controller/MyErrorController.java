@@ -1,22 +1,28 @@
 package com.hsd.web.controller;
 
+import com.hsd.framework.Response;
+import com.hsd.framework.util.ReflectUtil;
+import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.hsd.framework.Response;
-import com.hsd.framework.util.ReflectUtil;
-import com.hsd.framework.util.ValidatorUtil;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @RestController
 @Slf4j
 public class MyErrorController implements ErrorController {
     private static final String prefix = "/error";
+    @Autowired
+    private ErrorAttributes errorAttributes;
 
     @RequestMapping(value = prefix+"/")
     public Response handleError(HttpServletRequest request, HttpServletResponse response) {
@@ -43,12 +49,13 @@ public class MyErrorController implements ErrorController {
         log.info("404错误 url=" + gurl404);
         return Response.error(404, "所访问的地址不存在 url=" + gurl404);
     }
-
+    private boolean debug = true;
     @RequestMapping(value = prefix + "/500")
     public Response error500(HttpServletRequest request, HttpServletResponse response) {
-        log.info("500错误~");
-        return Response.error("系统运行错误!");
+        log.info("500错误~"+request.getMethod()+response.getStatus()+getErrorAttributes(request, debug));
+        return Response.error("系统运行错误!"+getErrorAttributes(request, debug));
     }
+
 
     @RequestMapping(value = prefix + "/locked")
     @ResponseBody
@@ -66,5 +73,10 @@ public class MyErrorController implements ErrorController {
     @Override
     public String getErrorPath() {
         return prefix;
+    }
+
+    private Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
+        RequestAttributes requestAttributes = new ServletRequestAttributes(request);
+        return errorAttributes.getErrorAttributes(requestAttributes, includeStackTrace);
     }
 }

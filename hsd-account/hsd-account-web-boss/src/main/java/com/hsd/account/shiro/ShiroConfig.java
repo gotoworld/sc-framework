@@ -160,6 +160,7 @@ public class ShiroConfig {
 		bean.setSuccessUrl(shiroProps().getSuccessUrl());
 		bean.setUnauthorizedUrl(shiroProps().getUnauthorizedUrl());
 
+		bean.getFilterChainDefinitionMap().put("/error/*","anon");
 		bean.getFilterChainDefinitionMap().putAll(shiroProps().getFilterChainDefinitionMap());
 		return bean;
 	}

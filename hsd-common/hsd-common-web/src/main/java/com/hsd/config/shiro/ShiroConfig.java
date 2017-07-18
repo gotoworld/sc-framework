@@ -1,6 +1,5 @@
-package com.hsd.account.shiro;
+package com.hsd.config.shiro;
 
-import com.hsd.config.shiro.ShrioRedisCacheManager;
 import com.hsd.framework.cache.config.RedisProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +29,6 @@ public class ShiroConfig {
 
 	/**
 	 * 加载属性文件数据
-	 *
-	 * @return
 	 */
 	@Bean
 	public RedisProperties shiroProperties() {
@@ -58,8 +55,6 @@ public class ShiroConfig {
 
 	/**
 	 * 权限管理器
-	 * 
-	 * @return
 	 */
 	@Bean(name = "securityManager")
 	public DefaultWebSecurityManager securityManager() {
@@ -154,7 +149,6 @@ public class ShiroConfig {
 
 	/**
 	 * @see ShiroFilterFactoryBean
-	 * @return
 	 */
 	@Bean(name = "shiroFilter")
 	public ShiroFilterFactoryBean shiroFilter() {
@@ -165,13 +159,15 @@ public class ShiroConfig {
 		bean.setSuccessUrl(shiroProps().getSuccessUrl());
 		bean.setUnauthorizedUrl(shiroProps().getUnauthorizedUrl());
 
-		bean.setFilterChainDefinitionMap(shiroProps().getFilterChainDefinitionMap());
+		bean.getFilterChainDefinitionMap().put("/error/*","anon");
+		bean.getFilterChainDefinitionMap().putAll(shiroProps().getFilterChainDefinitionMap());
 		return bean;
 	}
 	@Bean
 	public ShiroProps shiroProps() {
 		return new ShiroProps();
 	}
+
 	@Data
 	@Configuration
 	@NoArgsConstructor

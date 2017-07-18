@@ -13,10 +13,11 @@ package com.hsd.account.web.controller.auth;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.api.auth.IAuthPermService;
 import com.hsd.account.api.auth.IAuthRoleService;
-import com.hsd.vo.auth.AuthRole;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.vo.auth.AuthPerm;
+import com.hsd.vo.auth.AuthRole;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -109,7 +110,7 @@ public class AuthRoleController extends BaseController {
         log.info("AuthRoleController permTree.........");
         Response result = new Response();
         try {
-            result.data = authPermService.findDataTree(null);
+            result.data = authPermService.findDataTree(new AuthPerm());
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

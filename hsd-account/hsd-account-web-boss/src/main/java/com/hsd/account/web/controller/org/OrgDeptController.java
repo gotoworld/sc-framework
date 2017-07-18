@@ -39,7 +39,7 @@ public class OrgDeptController extends BaseController {
         log.info("OrgDepartmentController jsonTree.........");
         Response result=new Response();
         try {
-            result.data=orgDeptService.findDataTree(null);
+            result.data=orgDeptService.findDataTree(new OrgDept());
         } catch (Exception e) {
             result=Response.error(e.getMessage());
         }

@@ -49,7 +49,7 @@ public class AuthPermController extends BaseController {
 		log.info("AuthPermController jsonTree.........");
 		Response result = new Response(0,"seccuss");
 		try {
-			result.data=authPermService.findDataTree(null);
+			result.data=authPermService.findDataTree(new AuthPerm());
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}

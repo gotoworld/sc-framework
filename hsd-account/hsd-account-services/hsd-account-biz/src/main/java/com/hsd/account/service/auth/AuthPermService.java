@@ -126,7 +126,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         return result;
     }
 
-    public List<AuthPerm> findDataTree(@RequestBody AuthPerm dto) {
+    public List<AuthPerm> findDataTree(@RequestBody(required = false) AuthPerm dto) {
         List<AuthPerm> results = findDataIsList(dto);
         if (results == null) {
             return null;

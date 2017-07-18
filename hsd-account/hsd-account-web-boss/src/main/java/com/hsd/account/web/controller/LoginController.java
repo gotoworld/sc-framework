@@ -23,6 +23,7 @@ import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -52,41 +53,41 @@ public class LoginController extends BaseController {
     public Response login(@RequestParam("account") String account , @RequestParam("password")String password ) throws Exception {
         log.info("LoginController login");
         Response result = new Response();
-        try{
-            if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
-                return Response.error("用户名或密码不能为空!");
-            }
             try {
+                if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
+                    return Response.error("用户名或密码不能为空!");
+                }
+                OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+                if(user!=null && !account.equals(user.getAccount())){
+                    try {getAuth().logout();} catch (Exception e1) {}//注销之前的用户
+                }
                 UsernamePasswordToken token = new MyShiroUserToken(account, password, MyShiroUserToken.UserType.admin);
                 getAuth().login(token);
+                getAuth().hasRole("say me");
 
-                OrgUser user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
-//                session.setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, user);
+                user = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
                 String subject = JwtUtil.generalSubject(user);
                 String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
-               getAuth().hasRole("say me");
-
+                AuthorizationInfo authorizationInfo= (AuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
                 Map<String,Object> data = new HashMap<>();
                 data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
                 data.put("authorizationToken", authorizationToken);
                 data.put("user", JSONObject.parseObject(subject, OrgUser.class));
-                AuthorizationInfo authorizationInfo= (AuthorizationInfo) getAuth().getSession().getAttribute("SimpleAuthorizationInfo");
+
                 data.put("authorizationInfoPerms", authorizationInfo.getStringPermissions());
                 data.put("authorizationInfoRoles",authorizationInfo.getRoles());
                 data.put("sid",getAuth().getSession().getId());
                 result.data = data;
                 return result;
             } catch (UnknownAccountException | IncorrectCredentialsException ex) {
+                try {getAuth().logout();} catch (Exception e1) {}
                 result = Response.error("登录失败,用户名或密码错误1!");
             }catch (Exception ex) {
+                try {getAuth().logout();} catch (Exception e1) {}
                 log.error("登录失败,原因未知", ex);
                 result = Response.error("登录失败,服务器异常3!");
             }
-        } catch (Exception e) {
-            getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, null);
-            result = Response.error(e.getMessage());
-        }
         return result;
     }
     /**

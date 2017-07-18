@@ -89,12 +89,12 @@ public class ShiroRealm extends AuthorizingRealm {
         OrgUser orgUser = roleSourceService.findUserByLoginName(account,token.getUserType().getId());
         if (orgUser != null) {
             info = new SimpleAuthenticationInfo(account, orgUser.getPwd(), getName());
+            clearCache(info.getPrincipals());
 //            info.setCredentialsSalt(ByteSource.Util.bytes(account+salt2)); //盐是用户名+随机数
             SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
             SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
             roleSourceService.lastLogin(orgUser);
         }
-        info.getCredentials();
         return info;
     }
     public static void main(String[] args) {

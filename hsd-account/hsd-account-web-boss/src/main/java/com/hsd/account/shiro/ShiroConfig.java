@@ -66,8 +66,8 @@ public class ShiroConfig {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 		// 数据库认证的实现
 		manager.setRealm(userRealm());
-//		// session 管理器
-//		manager.setSessionManager(sessionManager());
+		// session 管理器
+		manager.setSessionManager(sessionManager());
 		// 缓存管理器
 		manager.setCacheManager(redisCacheManager());
 		return manager;

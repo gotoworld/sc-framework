@@ -81,6 +81,7 @@ public class LoginController extends BaseController {
 
                 SimpleAuthorizationInfo authorizationInfo= (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
                 if(authorizationInfo==null){
+                    authorizationInfo=new SimpleAuthorizationInfo();
                     //2.获取角色集合
                     List<AuthRole> roleList = roleSourceService.getRoleListByUId(orgUser);
                     if (roleList != null) {

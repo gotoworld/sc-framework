@@ -83,6 +83,7 @@ public class LoginController extends BaseController {
 
                 SimpleAuthorizationInfo authorizationInfo= (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
                 if(authorizationInfo==null){
+                    authorizationInfo=new SimpleAuthorizationInfo();
                     if (0==(orgUser.getType()) && roleSourceService.isSuperAdmin(orgUser) > 0) {
                         //超级管理员标记
                         orgUser.setIissuperman(1);

@@ -71,7 +71,7 @@ public class LoginController extends BaseController {
                 getAuth().login(token);
                 getAuth().hasRole("say me");
 
-                if(orgUser==null){
+                if(orgUser==null||!account.equals(orgUser.getAccount())) {
                     orgUser = roleSourceService.findUserByLoginName(account,token.getUserType().getId());
                     SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
                     SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);

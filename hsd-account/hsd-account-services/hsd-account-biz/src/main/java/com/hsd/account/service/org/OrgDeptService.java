@@ -123,7 +123,7 @@ public class OrgDeptService extends BaseService implements IOrgDeptService {
         return result;
     }
 
-    public List<OrgDept> findDataTree(@RequestBody OrgDept dto) {
+    public List<OrgDept> findDataTree(@RequestBody(required = false) OrgDept dto) {
         List<OrgDept> results = findDataIsList(dto);
         if (results == null) {
             return null;

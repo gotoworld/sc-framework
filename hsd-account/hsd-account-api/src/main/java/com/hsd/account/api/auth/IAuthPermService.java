@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @FeignClient(name = "${feign.name.account}")//, fallback = TestServiceHystrix.class)
 public interface IAuthPermService {
-    String actPrefix = "/api/IAuthPermService";
+    String actPrefix = "/feign/IAuthPermService";
 
     /**
      * <p>信息编辑。

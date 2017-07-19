@@ -24,7 +24,7 @@ import java.util.List;
  */
 @FeignClient(name = "${feign.name.account}")//, fallback = TestServiceHystrix.class)
 public interface IOrgDeptService {
-    String actPrefix = "/api/IOrgDeptService";
+    String actPrefix = "/feign/IOrgDeptService";
 
     /**
      * <p>信息编辑。

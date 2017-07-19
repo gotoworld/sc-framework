@@ -26,7 +26,7 @@ import java.util.List;
  */
 @FeignClient(name = "${feign.name.account}")//, fallback = TestServiceHystrix.class)
 public interface IRoleSourceService {
-    String actPrefix = "/api/IRoleSourceService";
+    String actPrefix = "/feign/IRoleSourceService";
     /**
      * 根据用户id,判断用户是否为超级管理员,要的就是特权.
      */

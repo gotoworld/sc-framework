@@ -9,6 +9,6 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://192.168.101.100:${server.port}/eureka/,http://192.168.101.101:${server.port}/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.100:${server.port}/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.101:${server.port}/eureka/
 
 spring.cloud.config.discovery.enabled: true

@@ -106,7 +106,7 @@ public class AuthRoleController extends BaseController {
      */
     @RequiresPermissions("authRole:del")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "permTree")
-    public Response permTree(@PathVariable("id") Long id) {
+    public Response permTree() {
         log.info("AuthRoleController permTree.........");
         Response result = new Response();
         try {

@@ -13,7 +13,7 @@ import java.util.List;
  */
 @FeignClient(name = "${feign.name.common}")//, fallback = TestServiceHystrix.class)
 public interface ISysVariableService {
-    String actPrefix = "/api/ISysVariableService";
+    String actPrefix = "/feign/ISysVariableService";
 
     /**
      * <p>信息编辑。

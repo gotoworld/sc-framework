@@ -23,7 +23,7 @@ import java.util.List;
  */
 @FeignClient(name = "${feign.name.common}")//, fallback = TestServiceHystrix.class)
 public interface ISysUserLogService {
-    String actPrefix = "/api/ISysUserLogService";
+    String actPrefix = "/feign/ISysUserLogService";
 
     /**
      * 管理员操作日志记录。

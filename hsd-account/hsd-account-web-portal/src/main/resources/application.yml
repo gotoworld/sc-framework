@@ -13,8 +13,8 @@ spring:
     secondary-database: 11
     host: 192.168.101.101
     port: 6379
-    password:
-    timeout: 0
+#    password:
+    timeout: 1800000
     pool:
       max-active: 8
       max-total: 50
@@ -23,7 +23,7 @@ spring:
       max-idle: 10
       max-wait: -1
       min-idle: 0
-    session-expire: 1800
+    session-expire: 1800000
 
 #服务名
 feign:

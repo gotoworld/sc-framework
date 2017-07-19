@@ -14,7 +14,7 @@ import java.util.List;
  */
 @FeignClient(name = "${feign.name.account}")//, fallback = TestServiceHystrix.class)
 public interface IAuthRoleService {
-    String actPrefix = "/api/IAuthRoleService";
+    String actPrefix = "/feign/IAuthRoleService";
     /**
      * <p>信息编辑。
      */

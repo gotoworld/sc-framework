@@ -15,6 +15,7 @@
         <module>hsd-gateway-server</module>
         <module>hsd-turbine-server</module>
         <module>hsd-graphite-server</module>
+        <module>hsd-health-server</module>
     </modules>
 
 </project>

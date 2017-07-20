@@ -8,6 +8,13 @@ spring:
     name: hsd-account-web-portal-wxg
   profiles:
     active: dev
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
   redis:
     database: 10
     secondary-database: 11
@@ -47,6 +54,7 @@ shiro:
     /api/account/sign/**: anon
     /api/**: authc
 
+management.security.enabled: false
 # 自定义配置
 hsd:
   common:

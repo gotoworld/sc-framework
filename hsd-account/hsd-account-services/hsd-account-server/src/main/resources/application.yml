@@ -1,11 +1,21 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
+info.version: 1.0
 # HTTP Server
 server:
   port: 6060
   context-path: /
 spring:
   application:
-    name: hsd-account-server-wxg
+    name: hsd-account-server
+  profiles:
+    active: dev
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
   datasource:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=UTC&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
@@ -41,8 +51,8 @@ spring:
     secondary-database: 11
     host: 192.168.101.101
     port: 6379
-    password:
-    timeout: 0
+#    password:
+    timeout: 1800000
     pool:
       max-active: 8
       max-total: 50
@@ -51,11 +61,11 @@ spring:
       max-idle: 10
       max-wait: -1
       min-idle: 0
-    session-expire: 1800
+    session-expire: 1800000
 
 security:
   basic:
-    enabled: true
+    enabled: false
   user:
     name: admin
     password: admin
@@ -65,6 +75,7 @@ feign:
     common: hsd-common-server
     account: ${spring.application.name}
 
+management.security.enabled: false
 # 自定义配置
 hsd:
   common:

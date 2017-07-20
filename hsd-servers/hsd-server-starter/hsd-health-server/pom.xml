@@ -12,7 +12,7 @@
     <groupId>com.hsd.servers</groupId>
     <artifactId>hsd-health-server</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <dependencyManagement>
         <dependencies>

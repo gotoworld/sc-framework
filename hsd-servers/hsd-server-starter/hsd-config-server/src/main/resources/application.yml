@@ -2,7 +2,7 @@ server:
   port: 8888
 spring:
   application:
-    name: config
+    name: config-server
   profiles:
     active: native
     search-locations: classpath:/config
@@ -12,3 +12,8 @@ spring:
 #        git:
 #          uri: https://git.oschina.net/wu1g119/servers.git
 #          searchPaths: doc/yml-config/
+
+security:
+  user:
+    name: admin
+    password: admin

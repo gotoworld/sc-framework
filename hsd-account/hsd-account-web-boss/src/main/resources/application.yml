@@ -5,7 +5,7 @@ server:
   context-path: /
 spring:
   application:
-    name: hsd-account-web-boss-wxg
+    name: hsd-account-web-boss
   profiles:
     active: dev
   boot:
@@ -44,7 +44,7 @@ management.security.enabled: false
 feign:
   name:
     common: hsd-common-server
-    account: hsd-account-server-wxg
+    account: hsd-account-server
 
 #shiro
 shiro:

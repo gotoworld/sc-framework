@@ -1,0 +1,37 @@
+server:
+  port: 8889
+spring:
+  application:
+    name: hsd-health-server
+  boot:
+    admin:
+      auto-registration: true
+      auto-deregistration: true
+#      username: ${security.user.name}
+#      password: ${security.user.password}
+      url: http://localhost:8889
+      routes:
+        endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        location: hsd-health-server #配置实例管理所有的监控
+#        url: http://localhost:8889/turbine.stream
+#      client:
+#        metadata:
+#          user.name: ${security.user.name}         #These two are needed so that the server
+#          user.password:  ${security.user.password} #can access the proteceted client endpoints
+
+turbine:
+  clusterNameExpression: new String("default")
+  appConfig: hsd-health-server,hsd-account-server #代表你可以监控的应用有哪些，可以用逗号隔开
+  combineHostPort: false
+
+security:
+  basic.enabled: false
+  user:
+    name: admin
+    password: admin
+
+management:
+  security:
+    enabled: false

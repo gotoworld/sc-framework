@@ -4,7 +4,7 @@ spring:
   application:
     cloud:
       config:
-        uri: http://192.168.101.100:8888
+        uri: http://${security.user.name}:${security.user.password}@192.168.101.100:8888
         profile: dev
         label: trunk
   http:
@@ -24,7 +24,7 @@ eureka:
     registerWithEureka: true #服务注册
     fetchRegistry: true #服务获取
     serviceUrl:
-      defaultZone: http://192.168.101.100:8761/eureka/,http://192.168.101.101:8761/eureka/,http://192.168.101.102:8761/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.100:8761/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.101:8761/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.102:8761/eureka/
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 

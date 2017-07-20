@@ -25,6 +25,13 @@ spring:
       min-idle: 0
     session-expire: 1800000
 
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
+
 #服务名
 feign:
   name:

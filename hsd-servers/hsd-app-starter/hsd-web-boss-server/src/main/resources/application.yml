@@ -8,6 +8,14 @@ spring:
     name: hsd-web-boss-server
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
+
 feign:
   name:
     common: hsd-common-server

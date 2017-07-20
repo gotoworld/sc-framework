@@ -7,6 +7,6 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     service-url:
-      defaultZone: http://192.168.101.100:8761/eureka/,http://192.168.101.101:8761/eureka/,http://192.168.101.102:8761/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.100:8761/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.101:8761/eureka/
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖

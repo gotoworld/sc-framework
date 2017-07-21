@@ -49,5 +49,3 @@ pagehelper:
 #  reasonable: true
   supportMethodsArguments: true
   params: count=countSql
-
-hystrix.config.stream.maxConcurrentConnections: 50

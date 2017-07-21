@@ -39,6 +39,17 @@ security:
     name: admin
     password: admin
 
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
+logging:
+  file: "/logs/${spring.application.name}.log"
+
 #服务名
 feign:
   name:
@@ -54,7 +65,6 @@ shiro:
     /api/account/sign/**: anon
     /api/**: authc
 
-management.security.enabled: false
 # 自定义配置
 hsd:
   common:

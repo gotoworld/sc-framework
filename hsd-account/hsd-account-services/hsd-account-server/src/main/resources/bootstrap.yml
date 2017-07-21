@@ -50,9 +50,4 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-#logging:
-#  config: classpath:logback.xml
-#  level:
-#    root: INFO
-#    com.hsd: DEBUG
-#    com.hsd.dao: TRACE
+hystrix.config.stream.maxConcurrentConnections: 50

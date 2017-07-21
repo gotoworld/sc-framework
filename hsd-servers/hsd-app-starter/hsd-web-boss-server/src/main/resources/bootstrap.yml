@@ -38,6 +38,7 @@ feign:
     enabled: true
 
 logging:
+  file: "/logs/${spring.application.name}.log"
   config: classpath:logback.xml
 #  level:
 #    root: INFO

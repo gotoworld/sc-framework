@@ -22,6 +22,8 @@ public class CommonConstant {
 	public static final String SESSION_VERIFY_CODE = "SESSION_VERIFY_CODE";
 	/** SESSION里面存放 用户信息 */
 	public static final String SESSION_KEY_USER = "SESSION_KEY_USER";
+	/** SESSION里面存放 用户名 提供监控页面显示 */
+	public static final String SESSION_KEY_USERNAME = "SESSION_KEY_USERNAME";
 	/** SESSION里面存放 系统用户信息 */
 	public static final String SESSION_KEY_USER_ADMIN = "SESSION_KEY_USER_ADMIN";
 	/** SESSION里面存放 会员用户信息 */

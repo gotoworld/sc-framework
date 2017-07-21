@@ -41,10 +41,3 @@ hystrix:
 feign:
   okhttp:
     enabled: true
-
-logging:
-  config: classpath:logback.xml
-#  level:
-#    root: INFO
-#    com.hsd: DEBUG
-#    com.hsd.dao: TRACE

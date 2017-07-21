@@ -1,5 +1,7 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
-info.version: 1.0
+info:
+  description: 账号服务
+  version : v1.0
 # HTTP Server
 server:
   port: 6060
@@ -16,11 +18,16 @@ spring:
 #          metadata:
 #            user.name: ${security.user.name}
 #            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://192.168.101.100:8889/turbine.stream
+
   datasource:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=UTC&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
-    password: 123456
+    password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
 #    # 下面为连接池的补充设置，应用到上面所有数据源中
 #    # 初始化大小，最小，最大
     initialSize: 5
@@ -70,12 +77,23 @@ security:
     name: admin
     password: admin
 
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
 feign:
   name:
     common: hsd-common-server
     account: ${spring.application.name}
 
-management.security.enabled: false
+#
+logging:
+  file: "d:/logs/${spring.application.name}.log"
+
 # 自定义配置
 hsd:
   common:

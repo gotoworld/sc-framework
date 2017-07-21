@@ -28,8 +28,7 @@ public class ServiceServer {
         SpringApplication.run(ServiceServer.class, args);
     }
 
-
-    @RequestMapping(value = "/hello")
+    @RequestMapping(value = "/")
     @HystrixCommand
     @ResponseBody
     public ResponseEntity<String> hello() {

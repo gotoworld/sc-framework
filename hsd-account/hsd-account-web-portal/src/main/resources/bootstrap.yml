@@ -1,5 +1,4 @@
 #系统级别的一些参数配置，这些参数一般是不会变动的
-
 spring:
   cloud:
     config:
@@ -43,7 +42,7 @@ feign:
     enabled: true
 
 #logging:
-#  config: classpath:logback.xml
+#  config: classpath:logback-spring.xml
 #  level:
 #    root: INFO
 #    com.hsd: DEBUG

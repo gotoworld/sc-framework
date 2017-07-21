@@ -1,7 +1,7 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
   description: ${pom.description}
-  version : v${pom.version}
+  version: v${pom.version}
 # HTTP Server
 server:
   port: 6060
@@ -18,7 +18,7 @@ spring:
 #          metadata:
 #            user.name: ${security.user.name}
 #            user.password: ${security.user.password}
-      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
       turbine:
         clusters: default
         url: http://192.168.101.100:8889/turbine.stream

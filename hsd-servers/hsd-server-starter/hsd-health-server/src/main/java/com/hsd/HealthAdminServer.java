@@ -39,6 +39,6 @@ public class HealthAdminServer extends SpringBootServletInitializer {
     @RequestMapping(value = "/hello")
     @HystrixCommand
     public ResponseEntity<String> hello() {
-        return new ResponseEntity<String>("系统监控", HttpStatus.OK);
+        return new ResponseEntity<String>("应用监控中心", HttpStatus.OK);
     }
 }

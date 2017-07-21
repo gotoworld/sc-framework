@@ -1,3 +1,7 @@
+info:
+  description: 应用监控中心
+  version : v1.0
+
 server:
   port: 8889
 spring:
@@ -30,12 +34,9 @@ endpoints:
     allowed-methods: HEAD,GET,POST
 
 #
-info:
-  description: 应用监控中心
-  version : v1.0
-
 logging:
-  file: "d:/logs/spring-boot-admin.log"
+  file: "/logs/${spring.application.name}.log"
+
 management:
   security:
     enabled: false

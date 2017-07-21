@@ -13,8 +13,6 @@
         <module>hsd-config-server</module>
         <module>hsd-eureka-server</module>
         <module>hsd-gateway-server</module>
-        <module>hsd-turbine-server</module>
-        <module>hsd-graphite-server</module>
         <module>hsd-health-server</module>
     </modules>
 

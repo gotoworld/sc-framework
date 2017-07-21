@@ -28,6 +28,7 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
 import com.hsd.framework.config.AppConfig;
+import com.hsd.framework.util.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -39,7 +40,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
-import org.springframework.web.servlet.DispatcherServlet;
 
 @Configuration
 @AutoConfigureAfter(AppConfig.class)
@@ -64,7 +64,7 @@ public class DruidConfig implements EnvironmentAware {
         filterRegistrationBean.addInitParameter( "exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" );
         filterRegistrationBean.addInitParameter( "sessionStatMaxCount", "2000" );
         filterRegistrationBean.addInitParameter( "sessionStatEnable", "true" );
-        filterRegistrationBean.addInitParameter( "principalSessionName", "session_user_key" );
+        filterRegistrationBean.addInitParameter( "principalSessionName", CommonConstant.SESSION_KEY_USERNAME);
         filterRegistrationBean.addInitParameter( "profileEnable", "true" );
         return filterRegistrationBean;
     }

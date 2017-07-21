@@ -1,5 +1,9 @@
 #servers
 代码地址 http://192.168.101.16/wuxiaogang/hsd-servers
-注册中心,http://192.168.101.100:8761/,http://192.168.101.101:8761/,http://192.168.101.102:8761/
-swagger http://ip:port/swagger-ui.html
-crapAPI http://192.168.101.100:10086/api
+注册中心 http://192.168.101.100:8761/   admin/admin
+         http://192.168.101.101:8761/   admin/admin
+         http://192.168.101.102:8761/   admin/admin
+crapAPI http://192.168.101.100:10086/api    姓名pinyin/123456
+druid监控(服务层) http://ip:port/druid/ druidAdmin/druidAdmin-123
+swagger(web层) http://ip:port/swagger-ui.html
+服务监控中心 http://192.168.101.100:8889/   admin/admin

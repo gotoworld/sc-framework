@@ -55,6 +55,8 @@ shiro:
     /boss/account/sign/**: anon
     /boss/**: authc
 
+
+
 # 自定义配置
 hsd:
   common:

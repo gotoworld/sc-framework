@@ -1,6 +1,11 @@
+# 基于哪个镜像
 FROM java:8
+# 将本地文件夹挂载到当前容器
 VOLUME /tmp
-ADD target/hsd-account-server.jar /app.jar
+# 拷贝文件到容器
+ADD target/hsd-account-web-portal.jar /app.jar
 RUN bash -c 'touch /app.jar'
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+# 开放端口
+EXPOSE 6062
+# 配置容器启动后执行的命令
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

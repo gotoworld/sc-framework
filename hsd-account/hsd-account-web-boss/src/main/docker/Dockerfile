@@ -3,7 +3,7 @@ FROM java:8
 # 将本地文件夹挂载到当前容器
 VOLUME /tmp
 # 拷贝文件到容器
-ADD target/hsd-account-web-boss.jar /app.jar
+ADD hsd-account-web-boss-1.0.jar /app.jar
 RUN bash -c 'touch /app.jar'
 # 开放端口
 EXPOSE 6061

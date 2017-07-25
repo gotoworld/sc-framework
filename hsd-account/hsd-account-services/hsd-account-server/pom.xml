@@ -35,23 +35,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.0.0</version>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerDirectory>src/main/docker</dockerDirectory>
-                    <dockerHost>https://192.168.99.100:2376</dockerHost>
-                    <dockerCertPath>C:\Users\Administrator\.docker\machine\machines\default</dockerCertPath>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
+                    <mainClass>com.hsd.ServiceServer</mainClass>
                 </configuration>
             </plugin>
         </plugins>

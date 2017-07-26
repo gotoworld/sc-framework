@@ -8,3 +8,5 @@ druid监控(服务层) http://ip:port/druid/ druidAdmin/druidAdmin-123
 swagger(web层) http://ip:port/swagger-ui.html
 应用监控中心 http://192.168.101.100:8889/   admin/admin
 docker容器管理中心 http://192.168.101.150:8890/  admin/admin-123
+docker私有仓库 //TODO 
+jekins //TODO

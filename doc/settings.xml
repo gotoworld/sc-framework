@@ -26,7 +26,18 @@
 		  <username>admin</username>  
 		  <password>admin123</password>  
 	  </server>  
-    </servers>
+	  
+	  <!--docker私服-->
+	  <server>
+        <id>docker-hub</id>
+        <username>wuxiaogang</username>
+        <password>Hsd123456</password>
+        <configuration>
+          <email>wuxiaogang@heshidai.com</email>
+        </configuration>
+      </server>
+	  
+	</servers>
 	<!--
         <mirrorOf>central</mirrorOf> 这里最好不要写成*号，否则你项目中的pom中配置repository不生效
     -->
@@ -39,7 +50,7 @@
         </mirror>
 		<mirror>
             <id>central</id>
-            <mirrorOf>*</mirrorOf>
+            <mirrorOf>hsd</mirrorOf>
            <name>Nexus</name>
            <url>http://192.168.101.100:8081/nexus/content/groups/public/</url>
 	   </mirror>

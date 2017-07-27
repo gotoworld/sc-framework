@@ -26,7 +26,6 @@
         <shiro.version>1.4.0</shiro.version>
         <spring.cloud.version>Dalston.RELEASE</spring.cloud.version>
         <docker.image.prefix>hsd</docker.image.prefix>
-        <docker.repostory>https://docker.heshidai.com:5000</docker.repostory>
     </properties>
 
     <modules>
@@ -181,20 +180,15 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
-                <executions>
-                    <execution>
-                        <id>push-image</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>push</goal>
-                        </goals>
-                        <configuration>
-                            <imageName>${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
-                        </configuration>
-                    </execution>
-                </executions>
                 <configuration>
-                    <!--<imageName>${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>-->
+                    <serverId>docker-hub</serverId>
+                    <registryUrl>http://192.168.101.150</registryUrl>
+                    <exposes>80</exposes>
+                    <pushImage>true</pushImage>
+                    <imageName>192.168.101.150/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
+                    <imageTags>
+                        <imageTag>1.0</imageTag>
+                    </imageTags>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <skipDockerBuild>false</skipDockerBuild>
                     <resources>
@@ -209,13 +203,6 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
-                    <pushImage>true</pushImage>
-                    <imageName>${docker.repostory}/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
-                    <imageTags>
-                        <imageTag>latest</imageTag>
-                    </imageTags>
-                    <serverId>docker-registry-srv</serverId>
-                    <registryUrl>${docker.repostory}</registryUrl>
                 </configuration>
             </plugin>
         </plugins>

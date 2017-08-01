@@ -1,6 +1,6 @@
 package ${scfg._api_pkg};
 
-import ${scfg._domain_pkg}.${tcfg.tableNameFormat!}Dto;
+import ${scfg._dto_pkg}.${tcfg.tableNameFormat!}Dto;
 import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +59,7 @@ public interface I${tcfg.tableNameFormat!}Service {
      * <p>信息列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
-    public List<${tcfg.tableNameFormat!}> findDataIsList(${tcfg.tableNameFormat!}Dto dto) throws Exception;
+    public List<${tcfg.tableNameFormat!}Dto> findDataIsList(${tcfg.tableNameFormat!}Dto dto) throws Exception;
     @[ } /]
 
     @[ if ("1"==scfg._detail) { /]
@@ -67,6 +67,6 @@ public interface I${tcfg.tableNameFormat!}Service {
      * <p>信息详情。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
-    public ${tcfg.tableNameFormat!} findDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception;
+    public ${tcfg.tableNameFormat!}Dto findDataById(${tcfg.tableNameFormat!}Dto dto) throws Exception;
     @[ } /]
 }

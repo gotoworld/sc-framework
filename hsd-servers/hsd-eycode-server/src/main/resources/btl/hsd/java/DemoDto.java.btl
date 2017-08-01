@@ -1,4 +1,4 @@
-package ${scfg._domain_pkg};
+package ${scfg._dto_pkg};
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

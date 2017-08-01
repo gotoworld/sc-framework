@@ -143,7 +143,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         String result = "seccuss";
         if (dto != null) {
             try {
-                ${tcfg.tableNameFormat!} entity = copyTo(entity, ${tcfg.tableNameFormat!}.class);
+                ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
                 if(${tableNameL}${scfg._dao_suffix!}.recoveryDataById(entity)==0){
 					throw new ServiceException(OrderErrorCode.defaultError,"数据不存在!");
                 }

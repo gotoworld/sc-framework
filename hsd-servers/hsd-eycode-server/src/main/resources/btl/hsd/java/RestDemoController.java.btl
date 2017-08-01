@@ -1,7 +1,7 @@
 package ${scfg._web_pkg};
 
 import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
-import ${scfg._domain_pkg}.${tcfg.tableNameFormat!}Dto;
+import ${scfg._dto_pkg}.${tcfg.tableNameFormat!}Dto;
 import com.hsd.framework.Response;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.annotation.RfAccount2Bean;

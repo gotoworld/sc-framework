@@ -1,8 +1,9 @@
 package ${scfg._web_pkg};
 
 import ${scfg._api_pkg}.I${tcfg.tableNameFormat!}Service;
-import ${scfg._domain_pkg}.${tcfg.tableNameFormat!};
+import ${scfg._domain_pkg}.${tcfg.tableNameFormat!}Dto;
 import com.hsd.framework.Response;
+import com.hsd.framework.PageUtil;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
@@ -33,16 +34,18 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @RequiresPermissions("${tableNameL}:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
-    public Response page(@ModelAttribute  ${tcfg.tableNameFormat!} dto, @PathVariable("pageNum") Integer pageNum) {
+    public Response page(@ModelAttribute  ${tcfg.tableNameFormat!}Dto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("${tcfg.tableNameFormat!}Controller page.........");
         Response result = new Response();
-        if (dto == null)dto = new ${tcfg.tableNameFormat!}();
         try {
+            if (dto == null) {
+               dto = new ${tcfg.tableNameFormat!}Dto();
+               dto.setPageSize(PortalConstant.PAGEROW_DEFAULT_COUNT);
+            }
             dto.setPageNum(pageNum);
             dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);
             // 信息列表
-            PageInfo<?> page = new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
-            result.data = page;
+            result.data = PageUtil.copy(${tableNameL}Service.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -61,16 +64,12 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
-            ${tcfg.tableNameFormat!} dto = new ${tcfg.tableNameFormat!}();
-            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '} ${t.columnNameFormat}==0@[ } /]) {
-                @[ for(t in pks){ /]
-                dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(0L);
-                @[ } /]
-                result.data = new ${tcfg.tableNameFormat!}();
-            } else {
+            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
+            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {
                 @[ for(t in pks){ /]
                 dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
                 @[ } /]
+                dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);
                 result.data = ${tableNameL}Service.findDataById(dto);
             }
         } catch (Exception e) {
@@ -92,7 +91,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            ${tcfg.tableNameFormat!} dto = new ${tcfg.tableNameFormat!}();
+            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
             @[ for(t in pks){ /]
             dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             @[ } /]
@@ -117,7 +116,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "${tcfg.tableComment}")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!} dto, BindingResult bindingResult) {
+    public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!}Dto dto, BindingResult bindingResult) {
         log.info("${tcfg.tableNameFormat!}Controller save.........");
         Response result = new Response();
         try {
@@ -133,8 +132,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
-                result.message = ${tableNameL}Service.saveOrUpdateData(dto);
-                result.data = dto.getId();
+                result = ${tableNameL}Service.saveOrUpdateData(dto);
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }
         } catch (Exception e) {

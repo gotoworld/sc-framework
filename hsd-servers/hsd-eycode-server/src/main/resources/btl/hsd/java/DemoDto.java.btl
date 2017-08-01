@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.entity.BaseEntity;
+import com.hsd.framework.vo.BaseVO;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,9 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ${tcfg.tableNameFormat!} extends BaseEntity {
+public class ${tcfg.tableNameFormat!} extends BaseVO {
 @[ for( t in beanVo!){ /]
-     /**${t.columnComment!}*/
+     /**${t.columnComment!}*/${validator.notEmpty(t.JSR303)?'\n\t'+t.JSR303:''}
      private ${t.javaType} ${t.columnNameFormat};
 @[ } /]
 }

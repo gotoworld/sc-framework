@@ -110,7 +110,7 @@
     @[ } /]
 
     @[ if ("1"==scfg._page) { /]
-    <!--信息列表 分页 -->
+    <!--信息分页 -->
     <select id="findDataIsPage" parameterType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}" resultType="${scfg._domain_pkg}.${tcfg.tableNameFormat!}">
         select
         <include refid="Base_Column_List"/>

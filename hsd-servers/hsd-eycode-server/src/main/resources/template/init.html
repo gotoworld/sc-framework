@@ -180,40 +180,44 @@
         ,
         setCodePkg:function(tempName){
             var _my_pkg=$('#_my_pkg').val();
+            var _my_project=$('#_my_project').val();
             var httpMyPkg='';
-            if(_my_pkg){
-                httpMyPkg=_my_pkg;
-                _my_pkg='.'+_my_pkg;
+            if(_my_pkg||_my_project){
+                httpMyPkg=_my_project+'/'+_my_pkg;
             }
             switch(tempName){
                 case 'hsd':{
-                    $('._domain_pkg').val('com.hsd.vo'+_my_pkg);
-                    $('._dto_pkg').val('');
-                    $('._mybatis_pkg').val('mybatis'+_my_pkg);
-                    $('._dao_pkg').val('com.hsd.dao'+_my_pkg);
-                    $('._api_pkg').val('com.hsd.api'+_my_pkg);
-                    $('._biz_pkg').val('com.hsd.service'+_my_pkg);
-                    $('._web_pkg').val('com.hsd.web.controller.admin'+_my_pkg);
-                    $('._view_pkg').val('admin'+_my_pkg);
-                    $('._web_http').each(function(){
-                        $(this).val('h/'+httpMyPkg+'/'+$(this).attr('data'));
-                    });
-                    break;
-                }
-                case 'cdd':{
-                    $('._domain_pkg').val('com.cddang'+_my_pkg+'.modal');
-                    $('._dto_pkg').val('com.cddang'+_my_pkg+'.dto');
-                    $('._mybatis_pkg').val('mappers'+_my_pkg+'');
-                    $('._dao_pkg').val('com.cddang'+_my_pkg+'.mapper');
-                    $('._api_pkg').val('com.cddang'+_my_pkg+'.api');
-                    $('._biz_pkg').val('com.cddang'+_my_pkg+'.service');
-                    $('._web_pkg').val('com.cddang'+_my_pkg+'.web.controller');
-                    $('._view_pkg').val('');
+                    $('._view_pkg').val(_my_project+'/'+_my_pkg);
+
+                    _my_pkg='.'+_my_pkg;
+                    _my_project='.'+_my_project;
+
+                    $('._domain_pkg').val('com.hsd'+_my_project+'.entity'+_my_pkg);
+                    $('._dto_pkg').val('com.hsd'+_my_project+'.dto'+_my_pkg);
+                    $('._mybatis_pkg').val('mybatis'+_my_project+''+_my_pkg);
+                    $('._dao_pkg').val('com.hsd'+_my_project+'.dao'+_my_pkg);
+                    $('._api_pkg').val('com.hsd'+_my_project+'.api'+_my_pkg);
+                    $('._biz_pkg').val('com.hsd'+_my_project+'.service'+_my_pkg);
+                    $('._web_pkg').val('com.hsd'+_my_project+'.web.controller'+_my_pkg);
                     $('._web_http').each(function(){
                         $(this).val('/boss/'+httpMyPkg+'/'+$(this).attr('data'));
                     });
                     break;
                 }
+//                case 'cdd':{
+//                    $('._domain_pkg').val('com.cddang'+_my_pkg+'.modal');
+//                    $('._dto_pkg').val('com.cddang'+_my_pkg+'.dto');
+//                    $('._mybatis_pkg').val('mappers'+_my_pkg+'');
+//                    $('._dao_pkg').val('com.cddang'+_my_pkg+'.mapper');
+//                    $('._api_pkg').val('com.cddang'+_my_pkg+'.api');
+//                    $('._biz_pkg').val('com.cddang'+_my_pkg+'.service');
+//                    $('._web_pkg').val('com.cddang'+_my_pkg+'.web.controller');
+//                    $('._view_pkg').val('');
+//                    $('._web_http').each(function(){
+//                        $(this).val('/boss/'+httpMyPkg+'/'+$(this).attr('data'));
+//                    });
+//                    break;
+//                }
             }
         }
         ,
@@ -275,34 +279,38 @@
             switch(tempName){
                 case 'hsd':{
                     $('#_dao_suffix').val('Dao');
-                    $('._dto').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._web_rest').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);
-                    });
-                    $('._web_ctrl').each(function(){
+                    $('._dto').each(function(){
                         var table=$(this).attr('data');
                         $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
                         ec.clickCheck1(this);
                     });
-                    $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._view_btl').each(function(){ var table=$(this).attr('data');
-                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
-                        ec.clickCheck1(this);
-                    });
-                    break;
-                }
-                case 'cdd':{
-                    $('#_dao_suffix').val('Mapper');
-                    $('._dto').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
-                    $('._web_rest').each(function(){var table=$(this).attr('data');
+                    $('._web_rest').each(function(){
+                        var table=$(this).attr('data');
                         $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
                         ec.clickCheck1(this);
                     });
                     $('._web_ctrl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-                    $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+                    $('._view_ng').each(function(){
+                        var table=$(this).attr('data');
+                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+                        ec.clickCheck1(this);
+                    });
                     $('._view_btl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
-
                     break;
                 }
+//                case 'cdd':{
+//                    $('#_dao_suffix').val('Mapper');
+//                    $('._dto').each(function(){$(this)[0].checked=true;ec.clickCheck1(this);});
+//                    $('._web_rest').each(function(){var table=$(this).attr('data');
+//                        $(this)[0].checked=table.indexOf('_vs_')!=-1?false:true;
+//                        ec.clickCheck1(this);
+//                    });
+//                    $('._web_ctrl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+//                    $('._view_ng').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+//                    $('._view_btl').each(function(){$(this)[0].checked=false;ec.clickCheck1(this);});
+//
+//                    break;
+//                }
             }
             ec.setCodePkg2();
         }

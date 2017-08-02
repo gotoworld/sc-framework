@@ -11,7 +11,7 @@
 package com.hsd.account.api.org;
 
 
-import com.hsd.account.vo.org.OrgDept;
+import com.hsd.account.dto.org.OrgDept;
 import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

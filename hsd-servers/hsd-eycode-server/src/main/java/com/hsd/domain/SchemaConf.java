@@ -1,13 +1,12 @@
 package com.hsd.domain;
 
-import com.hsd.framework.vo.BaseVO;
+import com.hsd.framework.dto.BaseDto;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Map;
 
 @Data
-public class SchemaConf extends BaseVO {
+public class SchemaConf extends BaseDto {
     private static final long serialVersionUID = -762636592679599049L;
     private String _domain;//domain
     private String _dto;//dto

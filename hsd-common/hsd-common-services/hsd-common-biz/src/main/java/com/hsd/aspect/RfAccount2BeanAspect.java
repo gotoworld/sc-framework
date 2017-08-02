@@ -1,10 +1,10 @@
 package com.hsd.aspect;
 
-import com.hsd.framework.IVO;
+import com.hsd.framework.IDto;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
-import com.hsd.vo.org.OrgUser;
+import com.hsd.dto.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
@@ -48,7 +48,7 @@ public class RfAccount2BeanAspect {
             Object[] objArr=joinPoint.getArgs();
             if(objArr!=null){
                 for(Object obj:objArr){
-                    if(obj instanceof IVO){
+                    if(obj instanceof IDto){
 //                      System.out.printf(JSON.toJSONString(obj));
                         ReflectUtil.setValueByFieldName2(obj,"createId", orgUser.getId());//创建者id
 //                        ReflectUtil.setValueByFieldName2(obj,"account", orgUser.getAccount());//用户id

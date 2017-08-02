@@ -8,7 +8,7 @@ import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.vo.org.OrgUser;
+import com.hsd.dto.org.OrgUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.ModelAttribute;

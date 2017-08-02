@@ -2,13 +2,13 @@ package com.hsd.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.hsd.api.sys.ISysUserLogService;
-import com.hsd.framework.IVO;
+import com.hsd.framework.IDto;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.vo.org.OrgUser;
+import com.hsd.dto.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
@@ -63,7 +63,7 @@ public class ALogAspect {
             Object[] objArr=joinPoint.getArgs();
             if(objArr!=null){
                 for(Object obj:objArr){
-                    if(obj instanceof IVO){
+                    if(obj instanceof IDto){
 //                        log.debug(JSON.toJSONString(obj));
                         object=obj;
                         break;

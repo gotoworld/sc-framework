@@ -11,14 +11,14 @@
 package com.hsd.account.service.auth;
 
 import com.hsd.api.auth.IRoleSourceService;
-import com.hsd.vo.auth.AuthPerm;
-import com.hsd.vo.auth.AuthRole;
+import com.hsd.dto.auth.AuthPerm;
+import com.hsd.dto.auth.AuthRole;
 import com.hsd.dao.account.auth.IAuthPermDao;
 import com.hsd.dao.account.auth.IAuthRoleDao;
 import com.hsd.dao.account.org.IOrgUserDao;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.service.BaseService;
-import com.hsd.vo.org.OrgUser;
+import com.hsd.dto.org.OrgUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

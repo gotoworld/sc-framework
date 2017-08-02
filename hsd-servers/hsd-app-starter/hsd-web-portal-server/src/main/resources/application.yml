@@ -59,7 +59,7 @@ logging:
 #    com.hsd: DEBUG
 #    com.hsd.dao: TRACE
 mybatis:
-#  type-aliases-package: com.hsd.vo
+#  type-aliases-package: com.hsd.dto
   mapper-locations: classpath*:mybatis/**/*.xml
 mapper:
   not-empty: false

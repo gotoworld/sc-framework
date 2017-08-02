@@ -2,7 +2,7 @@ package com.hsd.account.service.auth;
 
 import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.auth.IAuthPermService;
-import com.hsd.vo.auth.AuthPerm;
+import com.hsd.dto.auth.AuthPerm;
 import com.hsd.dao.account.auth.IAuthPermDao;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.FeignService;

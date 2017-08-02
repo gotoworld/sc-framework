@@ -1,5 +1,6 @@
 package com.hsd.domain;
 
+import com.hsd.framework.IEntity;
 import com.hsd.framework.util.StrUtil;
 import com.hsd.framework.vo.BaseVO;
 import lombok.Data;
@@ -7,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class SchemaInfo extends BaseVO {
+public class SchemaInfo extends BaseVO implements IEntity {
     private static final long serialVersionUID = -762636592679599049L;
     /**
      * 数据库名

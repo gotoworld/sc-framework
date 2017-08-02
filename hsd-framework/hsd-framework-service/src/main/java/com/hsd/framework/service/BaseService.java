@@ -3,8 +3,7 @@ package com.hsd.framework.service;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.stereotype.Service;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.Observable;
 
@@ -12,30 +11,13 @@ import java.util.Observable;
  * <p> service 基类 放置service通用资源或公共方法
  */
 public abstract class BaseService extends Observable {
-//	/** 线程池 */
-//	@Autowired
-//	protected TaskExecutor			taskExecutor;
-    /**
-     * 用户登录id
-     */
-    protected String uid;
+	/** 线程池 */
+	@Autowired
+	protected ThreadPoolTaskExecutor taskExecutor;
     /**
      * 权限验证框架
      */
     private Subject auth;
-
-    /**
-     * 用户登录id取得
-     *
-     * @return 用户登录id
-     */
-    public String getUid() {
-        if (uid == null) {
-            uid = (String) SecurityUtils.getSubject().getPrincipal();
-        }
-        return uid;
-    }
-
     /**
      * 权限验证框架取得
      *

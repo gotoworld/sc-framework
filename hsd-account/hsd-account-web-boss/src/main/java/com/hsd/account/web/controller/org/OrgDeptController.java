@@ -1,7 +1,7 @@
 package com.hsd.account.web.controller.org;
 
 import com.hsd.account.api.org.IOrgDeptService;
-import com.hsd.account.vo.org.OrgDept;
+import com.hsd.account.dto.org.OrgDept;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;

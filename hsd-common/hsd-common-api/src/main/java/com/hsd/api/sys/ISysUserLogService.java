@@ -10,7 +10,7 @@
  */
 package com.hsd.api.sys;
 
-import com.hsd.vo.sys.SysUserLog;
+import com.hsd.dto.sys.SysUserLog;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

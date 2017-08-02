@@ -19,7 +19,7 @@ import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.vo.org.OrgUser;
+import com.hsd.dto.org.OrgUser;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

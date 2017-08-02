@@ -11,9 +11,9 @@
 package com.hsd.api.auth;
 
 
-import com.hsd.vo.auth.AuthPerm;
-import com.hsd.vo.auth.AuthRole;
-import com.hsd.vo.org.OrgUser;
+import com.hsd.dto.auth.AuthPerm;
+import com.hsd.dto.auth.AuthRole;
+import com.hsd.dto.org.OrgUser;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

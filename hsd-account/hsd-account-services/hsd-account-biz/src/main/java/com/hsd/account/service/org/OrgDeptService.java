@@ -2,7 +2,7 @@ package com.hsd.account.service.org;
 
 import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.org.IOrgDeptService;
-import com.hsd.account.vo.org.OrgDept;
+import com.hsd.account.dto.org.OrgDept;
 import com.hsd.dao.account.org.IOrgDeptDao;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.FeignService;

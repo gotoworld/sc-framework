@@ -1,7 +1,7 @@
 package com.hsd.api.sys;
 
 import com.hsd.framework.Response;
-import com.hsd.vo.sys.SysSensitiveWords;
+import com.hsd.dto.sys.SysSensitiveWords;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

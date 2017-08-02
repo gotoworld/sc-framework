@@ -5,7 +5,7 @@ import com.hsd.api.sys.ISysUserLogService;
 import com.hsd.dao.sys.ISysUserLogDao;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.service.BaseService;
-import com.hsd.vo.sys.SysUserLog;
+import com.hsd.dto.sys.SysUserLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -11,7 +11,7 @@
 
     <modules>
         <module>hsd-servers</module>
-        <module>hsd-framework</module>
+        <module>hsd-framework-starter</module>
         <module>hsd-common</module>
         <module>hsd-account</module>
     </modules>

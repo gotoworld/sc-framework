@@ -53,6 +53,27 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     }
     @[ } /]
 
+    @[ if ("1"==scfg._tree) { /]
+    /**
+     * <p> 信息树json。
+     */
+    @RequiresPermissions("${tableNameL}:menu")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"tree")
+    @ResponseBody
+    @ApiOperation(value = "信息树")
+    public Response jsonTree() {
+        log.info("${tcfg.tableNameFormat!}Controller jsonTree.........");
+        Response result=new Response();
+        try {
+            result.data=${tableNameL}Service.findDataIsTree(new ${tcfg.tableNameFormat!}Dto());
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+
+
     @[ if ("1"==scfg._detail) { /]
     /**
      * <p> 信息详情。

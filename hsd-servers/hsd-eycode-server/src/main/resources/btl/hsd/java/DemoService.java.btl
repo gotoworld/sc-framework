@@ -47,7 +47,8 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                     } else {
                         //新增
                          @[ if ("1"==scfg._insert){ /]${tableNameL}${scfg._dao_suffix!}.insert(entity);@[ } /]
-                         dto.setId(entity.getId());
+                         result.data=entity.getId();
+                    }
                 } catch (Exception e) {
                     log.error("信息保存异常!", e);
                     throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -106,7 +107,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                pageInfo=new PageInfo(list);
                pageInfo.setList(copyTo(pageInfo.getList(), ${tcfg.tableNameFormat!}Dto.class));
            } catch (Exception e) {
-               log.error("信息查询异常!", e);
+               log.error("信息[分页]查询异常!", e);
                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
            }
            return pageInfo;
@@ -121,7 +122,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
                  results = copyTo(${tableNameL}${scfg._dao_suffix!}.findDataIsList(entity), ${tcfg.tableNameFormat!}Dto.class);
             } catch (Exception e) {
-                log.error("信息查询异常!", e);
+                log.error("信息[列表]查询异常!", e);
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
             }
             return  results;
@@ -136,7 +137,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
                 result = copyTo(${tableNameL}${scfg._dao_suffix!}.selectByPrimaryKey(entity),${tcfg.tableNameFormat!}Dto.class);
             } catch (Exception e) {
-                log.error("信息查询异常!", e);
+                log.error("信息[详情]查询异常!", e);
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
             }
             return result;

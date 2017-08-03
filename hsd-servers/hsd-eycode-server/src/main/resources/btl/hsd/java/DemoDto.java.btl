@@ -19,4 +19,17 @@ public class ${tcfg.tableNameFormat!}Dto extends BaseDto {
      /**${t.columnComment!}*/${validator.notEmpty(t.JSR303)?'\n\t'+t.JSR303:''}
      private ${t.javaType} ${t.columnNameFormat};
 @[ } /]
+
+@[ if ("1"==scfg._tree) { /]
+    /** 子对象集合 */
+    private List<${tcfg.tableNameFormat!}Dto> nodes;
+    private String text;
+    private Integer[] tags;
+    public String getText(){
+        return name;
+    }
+    public Integer[] getTags(){
+        return new Integer[]{nodes!=null?nodes.size():0};
+    }
+@[ } /]
 }

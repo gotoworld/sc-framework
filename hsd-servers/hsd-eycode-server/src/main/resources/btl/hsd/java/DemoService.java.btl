@@ -113,7 +113,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         }
         @[ } /]
 
-        @[ if ("1"==scfg._list) { /]
+        @[ if ("1"==scfg._list||"1"==scfg._tree) { /]
         @Override
         public List<${tcfg.tableNameFormat!}Dto> findDataIsList(@RequestBody ${tcfg.tableNameFormat!}Dto dto) throws Exception {
             List<${tcfg.tableNameFormat!}Dto>  results = null;
@@ -158,6 +158,17 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
             }
             return result;
+        }
+        @[ } /]
+
+        @[ if ("1"==scfg._tree) { /]
+        public List<${tcfg.tableNameFormat!}Dto> findDataIsTree(@RequestBody(required = false) ${tcfg.tableNameFormat!}Dto dto) {
+            List<${tcfg.tableNameFormat!}Dto> results = findDataIsList(dto);
+            if (results == null) {
+                return null;
+            }
+            NodeTree<${tcfg.tableNameFormat!}Dto> tree = new NodeTree(results, "id", "parentId", "nodes");
+            return tree.buildTree();
         }
         @[ } /]
 }

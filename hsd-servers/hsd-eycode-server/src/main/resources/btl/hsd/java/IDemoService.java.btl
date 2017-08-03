@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * <p>${tcfg.tableComment} 业务处理接口类。
  */
-@FeignClient(value = "\${feign.common.name}")
+@FeignClient(value = "\${feign.name.${scfg._my_project!}}")
 public interface I${tcfg.tableNameFormat!}Service {
     String acPrefix = "/feign/I${tcfg.tableNameFormat!}Service";
     @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
@@ -60,6 +60,14 @@ public interface I${tcfg.tableNameFormat!}Service {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
     public List<${tcfg.tableNameFormat!}Dto> findDataIsList(${tcfg.tableNameFormat!}Dto dto) throws Exception;
+    @[ } /]
+
+    @[ if ("1"==scfg._tree) { /]
+    /**
+     * <p>信息树。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsTree")
+    public List<${tcfg.tableNameFormat!}Dto> findDataIsTree(${tcfg.tableNameFormat!}Dto dto);
     @[ } /]
 
     @[ if ("1"==scfg._detail) { /]

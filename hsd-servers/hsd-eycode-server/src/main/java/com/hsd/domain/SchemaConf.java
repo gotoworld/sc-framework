@@ -27,8 +27,10 @@ public class SchemaConf extends BaseDto {
     private String _update;//改
     private String _page;//分页
     private String _list;//列表
+    private String _tree;//树
     private String _detail;//详情
 
+    private String _my_project;
     private String _my_pkg;
     private String _domain_pkg;
     private String _dto_pkg;

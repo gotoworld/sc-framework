@@ -1,6 +1,6 @@
 package com.hsd.account.api.auth;
 
-import com.hsd.dto.auth.AuthPerm;
+import com.hsd.dto.auth.AuthPermDto;
 import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,54 +20,54 @@ public interface IAuthPermService {
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
-    public Response saveOrUpdateData(AuthPerm bean) throws Exception;
+    public Response saveOrUpdateData(AuthPermDto dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteData")
-    public String deleteData(AuthPerm bean) throws Exception;
+    public String deleteData(AuthPermDto dto) throws Exception;
 
     /**
      * <p>恢复逻辑删除的数据。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/recoveryDataById")
-    public String recoveryDataById(AuthPerm bean) throws Exception;
+    public String recoveryDataById(AuthPermDto dto) throws Exception;
 
     /**
      * <p>逻辑删除。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteDataById")
-    public String deleteDataById(AuthPerm bean) throws Exception;
+    public String deleteDataById(AuthPermDto dto) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsPage")
-    public List<AuthPerm> findDataIsPage(AuthPerm bean);
+    public List<AuthPermDto> findDataIsPage(AuthPermDto dto);
 
     /**
      * <p>信息列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsList")
-    public List<AuthPerm> findDataIsList(AuthPerm bean);
+    public List<AuthPermDto> findDataIsList(AuthPermDto dto);
 
     /**
      * <p>信息详情。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataById")
-    public AuthPerm findDataById(AuthPerm bean);
+    public AuthPermDto findDataById(AuthPermDto dto);
 
     /**
      * <p>信息树。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataTree")
-    public List<AuthPerm> findDataTree(AuthPerm bean);
+    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsTree")
+    public List<AuthPermDto> findDataIsTree(AuthPermDto dto);
 
     /**
      * <p>根据角色id获取对应的权限信息列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findPermDataIsListByRoleId")
-    public List<AuthPerm> findPermDataIsListByRoleId(Map dto);
+    public List<AuthPermDto> findPermDataIsListByRoleId(Map dto);
 
 }

@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>hsd-common-dao</module>
         <module>hsd-common-biz</module>
     </modules>
 

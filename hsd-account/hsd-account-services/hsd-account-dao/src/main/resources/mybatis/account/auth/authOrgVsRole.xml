@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.dao.auth.IAuthOrgVsRoleDao">
+
+
+
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch"  >
+        insert into auth_org_vs_role (
+        org_id
+        ,role_id
+        ,create_id
+        ,date_created
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+            #{t.orgId}
+            ,#{t.roleId}
+            ,#{t.createId}
+            ,now()
+            )
+        </foreach>
+    </insert>
+
+
+
+
+</mapper>

@@ -1,17 +1,7 @@
-/*	
- * 权限_权限信息  ACTION类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ------------------------------------------	
- * 1.00     2015.10.01      easycode         程序.发布		
- * -------- ----------- --------------- ------------------------------------------	
- * Copyright 2015 System. - All Rights Reserved.
- *	
- */
 package com.hsd.account.web.controller.auth;
 
 import com.hsd.account.api.auth.IAuthPermService;
-import com.hsd.dto.auth.AuthPerm;
+import com.hsd.dto.auth.AuthPermDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
@@ -37,19 +27,19 @@ public class AuthPermController extends BaseController {
 	private static final String acPrefix="/boss/account/auth/perm/";
 
 	@Autowired
-	private IAuthPermService authPermService;
+	private IAuthPermService AuthPermService;
 	/**
 	 * <p> 信息树json。
 	 */
-	@RequiresPermissions("authPerm:menu")
+	@RequiresPermissions("AuthPermDto:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"jsonTree")
 	@ApiOperation(value = "信息树")
 	@ResponseBody
 	public Response jsonTree() {
-		log.info("AuthPermController jsonTree.........");
+		log.info("AuthPermDtoController jsonTree.........");
 		Response result = new Response(0,"seccuss");
 		try {
-			result.data=authPermService.findDataTree(new AuthPerm());
+			result.data=AuthPermService.findDataIsTree(new AuthPermDto());
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -61,12 +51,12 @@ public class AuthPermController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
 	@ApiOperation(value = "详情")
 	public Response info(@PathVariable("id") String id) {
-		log.info("AuthPermController info.........");
+		log.info("AuthPermDtoController info.........");
 		Response result = new Response();
 		try {
-			AuthPerm bean=new AuthPerm();
-			bean.setId(id);
-			result.data=authPermService.findDataById(bean);
+			AuthPermDto dto=new AuthPermDto();
+			dto.setId(id);
+			result.data=AuthPermService.findDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -75,17 +65,17 @@ public class AuthPermController extends BaseController {
 	/**
 	 * <li>逻辑删除。
 	 */
-	@RequiresPermissions("authPerm:del")
+	@RequiresPermissions("AuthPermDto:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix+"del/{id}")
 	@ALogOperation(type="删除",desc="权限信息")
 	@ApiOperation(value = "逻辑删除")
 	public Response del(@PathVariable("id") String id) {
-		log.info("AuthPermController del.........");
+		log.info("AuthPermDtoController del.........");
 		Response result = new Response(0,"seccuss");
 		try {
-			AuthPerm bean1=new AuthPerm();
-			bean1.setId(id);//权限id
-			result.message=authPermService.deleteDataById(bean1);
+			AuthPermDto dto=new AuthPermDto();
+			dto.setId(id);//权限id
+			result.message=AuthPermService.deleteDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -94,17 +84,17 @@ public class AuthPermController extends BaseController {
 	/**
 	 * <p> 信息保存
 	 */
-	@RequiresPermissions(value={"authPerm:edit","authPerm:add"},logical=Logical.OR)
+	@RequiresPermissions(value={"AuthPermDto:edit","AuthPermDto:add"},logical=Logical.OR)
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
 	@ApiOperation(value = "信息保存")
-	public Response save(@Validated AuthPerm bean, BindingResult bindingResult) {
-		log.info("AuthPermController save.........");
+	public Response save(@Validated AuthPermDto dto, BindingResult bindingResult) {
+		log.info("AuthPermDtoController save.........");
 		Response result = null;
-		if(bean==null) result = Response.error("参数异常!");
 		try {
-			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+			if(dto==null) throw new RuntimeException("参数异常!");
+			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
 				throw new RuntimeException("请不要重复提交!");
 			}
 			if (bindingResult.hasErrors()) {
@@ -115,8 +105,8 @@ public class AuthPermController extends BaseController {
 				}
 				result = Response.error(errorMsg);
 			}else{
-				result=authPermService.saveOrUpdateData(bean);
-				request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+				result=AuthPermService.saveOrUpdateData(dto);
+				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());

@@ -12,15 +12,15 @@ package com.hsd.account.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hsd.api.auth.IRoleSourceService;
+import com.hsd.dto.auth.AuthPermDto;
+import com.hsd.dto.auth.AuthRoleDto;
+import com.hsd.dto.org.OrgUserDto;
+import com.hsd.dto.shiro.MyShiroUserToken;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.dto.auth.AuthPerm;
-import com.hsd.dto.auth.AuthRole;
-import com.hsd.dto.org.OrgUser;
-import com.hsd.dto.shiro.MyShiroUserToken;
 import com.hsd.web.controller.BaseController;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
@@ -63,7 +63,7 @@ public class LoginController extends BaseController {
                 if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                     return Response.error("用户名或密码不能为空!");
                 }
-                OrgUser orgUser = (OrgUser) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
+                OrgUserDto orgUser = (OrgUserDto) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
                 if(orgUser!=null && !account.equals(orgUser.getAccount())){
                     try {getAuth().logout();} catch (Exception e1) {}//注销之前的用户
                 }
@@ -83,16 +83,16 @@ public class LoginController extends BaseController {
                 if(authorizationInfo==null){
                     authorizationInfo=new SimpleAuthorizationInfo();
                     //2.获取角色集合
-                    List<AuthRole> roleList = roleSourceService.getRoleListByUId(orgUser);
+                    List<AuthRoleDto> roleList = roleSourceService.getRoleListByUId(orgUser);
                     if (roleList != null) {
-                        for (AuthRole role : roleList) {
+                        for (AuthRoleDto role : roleList) {
                             authorizationInfo.addRole(role.getName());
                         }
                     }
                     //3.获取功能集合
-                    List<AuthPerm> permList = roleSourceService.getPermListByUId(orgUser);
+                    List<AuthPermDto> permList = roleSourceService.getPermListByUId(orgUser);
                     if (permList != null) {
-                        for (AuthPerm perm : permList) {
+                        for (AuthPermDto perm : permList) {
                             if (perm.getMatchStr() != null && !"".equals(perm.getMatchStr())) {
                                 authorizationInfo.addStringPermission(perm.getMatchStr());
                             }
@@ -103,7 +103,7 @@ public class LoginController extends BaseController {
                 Map<String,Object> data = new HashMap<>();
                 data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
                 data.put("authorizationToken", authorizationToken);
-                data.put("user", JSONObject.parseObject(subject, OrgUser.class));
+                data.put("user", JSONObject.parseObject(subject, OrgUserDto.class));
 
                 data.put("authorizationInfoPerms", authorizationInfo.getStringPermissions());
                 data.put("authorizationInfoRoles",authorizationInfo.getRoles());
@@ -151,7 +151,7 @@ public class LoginController extends BaseController {
 
             Map data = new HashMap<>();
             String json = claims.getSubject();
-            OrgUser user = JSONObject.parseObject(json, OrgUser.class);
+            OrgUserDto user = JSONObject.parseObject(json, OrgUserDto.class);
             String subject = JwtUtil.generalSubject(user);
             String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 

@@ -1,14 +1,14 @@
 package com.hsd.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.hsd.api.sys.ISysUserLogService;
+import com.hsd.api.org.IOrgLogOperationService;
 import com.hsd.framework.IDto;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.dto.org.OrgUser;
+import com.hsd.dto.org.OrgUserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
@@ -31,9 +31,10 @@ import java.lang.reflect.Method;
 @Component
 @Slf4j
 public class ALogAspect {
+
     //注入Service用于把日志保存数据库
     @Autowired
-    private ISysUserLogService sysUserLogService;
+    private IOrgLogOperationService sysUserLogService;
 
     //操作日志切点
     @Pointcut("@annotation(com.hsd.framework.annotation.ALogOperation)")
@@ -48,7 +49,7 @@ public class ALogAspect {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 //        HttpSession session = request.getSession();
         //读取session中的用户
-        OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+        OrgUserDto user = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         String[] logArr = getMethodDesc(joinPoint);
@@ -85,7 +86,7 @@ public class ALogAspect {
                 id="["+objArr[0]+"]";
             }
 //            //*========数据库日志=========*//
-            sysUserLogService.info(logArr[0],logArr[1],id, user.getId(), user.getName(), ip);
+            sysUserLogService.info(logArr[0],logArr[1],""+SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE),id, user.getId(), user.getName(), ip);
 //            log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -111,7 +112,7 @@ public class ALogAspect {
         }
         try {
             //读取session中的用户
-            OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+            OrgUserDto user = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
             //获取请求ip
             String ip = IpUtil.getIpAddr(request);
             String[] logArr = getMethodDesc(joinPoint);
@@ -124,7 +125,7 @@ public class ALogAspect {
 //            log.debug("请求人:" + user.getName());
 //            log.debug("请求IP:" + ip);
 //            log.debug("请求参数:" + params);
-            sysUserLogService.info(logArr[0], logArr[1], e.getMessage(), user.getId(),user.getName(), ip);
+            sysUserLogService.info(logArr[0], logArr[1],""+SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), user.getId(),user.getName(), ip);
 //            log.debug("=====异常通知结束=====");
         } catch (Exception ex) {
             //记录本地异常日志

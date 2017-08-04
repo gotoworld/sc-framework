@@ -2,15 +2,18 @@ package com.hsd.account.service.auth;
 
 import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.auth.IAuthPermService;
-import com.hsd.dto.auth.AuthPerm;
-import com.hsd.dao.account.auth.IAuthPermDao;
+import com.hsd.account.dao.auth.IAuthPermDao;
+import com.hsd.account.entity.auth.AuthPerm;
+import com.hsd.dto.auth.AuthPermDto;
+import com.hsd.framework.NodeTree;
 import com.hsd.framework.Response;
+import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
+import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IdUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.framework.NodeTree;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -28,119 +31,119 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     private IAuthPermDao authPermDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(@RequestBody AuthPerm dto) throws Exception {
+    public Response saveOrUpdateData(@RequestBody AuthPermDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
-        if (dto != null) {
-            try {
-                //判断数据是否存在
-                if (authPermDao.isDataYN(dto) != 0) {
-                    //数据存在
-                    authPermDao.update(dto);
-                } else {
-                    //新增
-                    if (ValidatorUtil.isEmpty(dto.getId())) {
-                        dto.setId(IdUtil.createUUID(22));
-                    }
-                    authPermDao.insert(dto);
-                    result.data=dto.getId();
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            AuthPerm entity=copyTo(dto,AuthPerm.class);
+            if (authPermDao.isDataYN(entity) != 0) { //判断数据是否存在
+                //数据存在
+                authPermDao.update(entity);
+            } else {
+                //新增
+                if (ValidatorUtil.isEmpty(entity.getId())) {
+                    entity.setId(IdUtil.createUUID(22));
                 }
-            } catch (Exception e) {
-                log.error("信息保存失败!", e);
-                throw new RuntimeException("信息保存失败!");
+                authPermDao.insert(entity);
+                result.data=entity.getId();
             }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
 
-    public String deleteData(@RequestBody AuthPerm dto) throws Exception {
+    public String deleteData(@RequestBody AuthPermDto dto) throws Exception {
         String result = "seccuss";
-        if (dto != null) {
-            try {
-                authPermDao.deleteByPrimaryKey(dto);
-            } catch (Exception e) {
-                result = "信息删除失败!";
-                log.error(result, e);
-            }
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            authPermDao.deleteByPrimaryKey(copyTo(dto,AuthPerm.class));
+        } catch (Exception e) {
+            log.error("信息删除失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
-    public String deleteDataById(@RequestBody AuthPerm dto) throws Exception {
+    public String deleteDataById(@RequestBody AuthPermDto dto) throws Exception {
         String result = "seccuss";
-        if (dto != null) {
-            try {
-                authPermDao.deleteById(dto);
-            } catch (Exception e) {
-                result = "信息删除失败!";
-                log.error(result, e);
-                throw new RuntimeException(result);
-            }
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            authPermDao.deleteById(copyTo(dto,AuthPerm.class));
+        } catch (Exception e) {
+            log.error("信息删除失败", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
 
-    public List<AuthPerm> findDataIsPage(@RequestBody AuthPerm dto) {
-        List<AuthPerm> results = null;
+    public List<AuthPermDto> findDataIsPage(@RequestBody AuthPermDto dto) {
+        List<AuthPermDto> results = null;
         try {
             PageHelper.startPage(PN(dto.getPageNum()), PS( dto.getPageSize()));
-            results = (List<AuthPerm>) authPermDao.findDataIsPage(dto);
+            results = copyTo(authPermDao.findDataIsPage(copyTo(dto,AuthPerm.class)),AuthPermDto.class);
         } catch (Exception e) {
-            log.error("信息查询失败!", e);
+            log.error("信息[分页]查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
     }
 
-    public List<AuthPerm> findDataIsList(@RequestBody AuthPerm dto) {
-        List<AuthPerm> results = null;
+    public List<AuthPermDto> findDataIsList(@RequestBody AuthPermDto dto) {
+        List<AuthPermDto> results = null;
         try {
-            results = (List<AuthPerm>) authPermDao.findDataIsList(dto);
+            results = copyTo(authPermDao.findDataIsList(copyTo(dto,AuthPerm.class)),AuthPermDto.class);
         } catch (Exception e) {
-            log.error("信息查询失败!", e);
+            log.error("信息[列表]查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
     }
 
-    public AuthPerm findDataById(@RequestBody AuthPerm dto) {
-        AuthPerm result = null;
+    public AuthPermDto findDataById(@RequestBody AuthPermDto dto) {
+        AuthPermDto result = null;
         try {
-            result = (AuthPerm) authPermDao.selectByPrimaryKey(dto);
+            result = copyTo(authPermDao.selectByPrimaryKey(copyTo(dto,AuthPerm.class)),AuthPermDto.class);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
 
-    public String recoveryDataById(@RequestBody AuthPerm dto) throws Exception {
+    public String recoveryDataById(@RequestBody AuthPermDto dto) throws Exception {
         String result = "seccuss";
-        if (dto != null) {
             try {
-                authPermDao.recoveryDataById(dto);
+                if (dto == null) throw new RuntimeException("参数对象不能为null");
+                authPermDao.recoveryDataById(copyTo(dto,AuthPerm.class));
             } catch (Exception e) {
-                result = "信息恢复失败!";
-                log.error(result, e);
-                throw new RuntimeException(result);
+                log.error("信息恢复失败!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
             }
-        }
         return result;
     }
 
-    public List<AuthPerm> findDataTree(@RequestBody(required = false) AuthPerm dto) {
-        List<AuthPerm> results = findDataIsList(dto);
-        if (results == null) {
-            return null;
+    public List<AuthPermDto> findDataIsTree(@RequestBody(required = false) AuthPermDto dto) {
+        try {
+            List<AuthPermDto> results = findDataIsList(dto);
+            if (results == null)  return null;
+            NodeTree<AuthPermDto> tree = new NodeTree(results,"id","parentId","nodes");
+            return tree.buildTree();
+        } catch (Exception e) {
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
-        NodeTree<AuthPerm> tree = new NodeTree(results,"id","parentId","nodes");
-        return tree.buildTree();
     }
 
-    public List<AuthPerm> findPermDataIsListByRoleId(Map dto) {
-        List<AuthPerm> results = null;
+    public List<AuthPermDto> findPermDataIsListByRoleId(Map dto) {
+        List<AuthPermDto> results = null;
         try {
-            results = (List<AuthPerm>) authPermDao.findPermDataIsListByRoleId(dto);
+            results = (List<AuthPermDto>) authPermDao.findPermDataIsListByRoleId(dto);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
     }

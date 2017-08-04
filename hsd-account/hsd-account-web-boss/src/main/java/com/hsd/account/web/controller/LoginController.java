@@ -140,6 +140,7 @@ public class LoginController extends BaseController {
         try {
             log.debug(getAuth().getPrincipal() + "准备退出!");
             getAuth().logout();
+            request.getSession().invalidate();
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

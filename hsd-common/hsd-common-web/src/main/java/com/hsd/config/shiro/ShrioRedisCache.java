@@ -25,7 +25,7 @@ public class ShrioRedisCache<K, V> implements Cache<K, V> {
 
 	public ShrioRedisCache(RedisTemplate<byte[], V> shiroRedisTemplate, String prefix,long _timeout) {
 		this(shiroRedisTemplate);
-		this.prefix = prefix;
+//		this.prefix = prefix;
 		this.timeout=_timeout;
 	}
 
@@ -123,12 +123,12 @@ public class ShrioRedisCache<K, V> implements Cache<K, V> {
 			return SerializeUtil.serialize(key);
 		}
 	}
-
-	public String getPrefix() {
-		return prefix;
-	}
-
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
+//
+//	public String getPrefix() {
+//		return prefix;
+//	}
+//
+//	public void setPrefix(String prefix) {
+//		this.prefix = prefix;
+//	}
 }

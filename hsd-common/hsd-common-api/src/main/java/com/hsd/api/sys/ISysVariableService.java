@@ -1,65 +1,59 @@
 package com.hsd.api.sys;
 
+import com.github.pagehelper.PageInfo;
+import com.hsd.dto.sys.SysVariableDto;
 import com.hsd.framework.Response;
-import com.hsd.dto.sys.SysVariable;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-
 /**
- * <p>数据字典   业务处理接口类。
+ * <p>系统_数据字典表 业务处理接口类。
  */
-@FeignClient(name = "${feign.name.common}")//, fallback = TestServiceHystrix.class)
+@FeignClient(value = "${feign.name.account}")
 public interface ISysVariableService {
-    String actPrefix = "/feign/ISysVariableService";
-
+    String acPrefix = "/feign/ISysVariableService";
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
-    public Response saveOrUpdateData(SysVariable bean) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
+    public Response saveOrUpdateData(SysVariableDto dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteData")
-    public String deleteData(SysVariable bean) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteData")
+    public String deleteData(SysVariableDto dto) throws Exception;
+
 
     /**
-     * <p>恢复逻辑删除的数据 单条。
+     * <li>逻辑删除。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/recoveryDataById")
-    public String recoveryDataById(SysVariable bean) throws Exception;
-
-    /**
-     * <p>逻辑删除 单条。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteDataById")
-    public String deleteDataById(SysVariable bean) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteDataById")
+    public String deleteDataById(SysVariableDto dto) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsPage")
-    public List<SysVariable> findDataIsPage(SysVariable bean);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
+    public PageInfo findDataIsPage(SysVariableDto dto) throws Exception;
 
     /**
      * <p>信息列表。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsList")
-    public List<SysVariable> findDataIsList(SysVariable bean);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
+    public List<SysVariableDto> findDataIsList(SysVariableDto dto) throws Exception;
+
+    /**
+     * <p>信息树。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsTree")
+    public List<SysVariableDto> findDataIsTree(SysVariableDto dto);
 
     /**
      * <p>信息详情。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataById")
-    public SysVariable findDataById(SysVariable bean);
-
-    /**
-     * <p>字典树
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataTree")
-    public List<SysVariable> findDataTree(SysVariable bean);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
+    public SysVariableDto findDataById(SysVariableDto dto) throws Exception;
 }

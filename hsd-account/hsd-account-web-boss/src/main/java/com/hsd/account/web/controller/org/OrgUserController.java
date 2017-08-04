@@ -1,25 +1,15 @@
-/*	
- * 组织架构_用户  ACTION类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ------------------------------------------	
- * 1.00     2015.10.01      easycode         程序.发布		
- * -------- ----------- --------------- ------------------------------------------	
- * Copyright 2015 System. - All Rights Reserved.
- *	
- */
 package com.hsd.account.web.controller.org;
 
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.api.auth.IAuthRoleService;
-import com.hsd.account.api.org.IOrgDeptService;
+import com.hsd.account.api.org.IOrgInfoService;
 import com.hsd.account.api.org.IOrgUserService;
+import com.hsd.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.dto.org.OrgUser;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +23,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,7 +39,7 @@ public class OrgUserController extends BaseController {
 	private IAuthRoleService authRoleService;
 
 	@Autowired
-	private IOrgDeptService orgDepartmentService;
+	private IOrgInfoService orgDepartmentService;
 
 	/**
 	 * <p> 信息分页 (未删除)。
@@ -58,12 +47,12 @@ public class OrgUserController extends BaseController {
 	@RequiresPermissions("orgUser:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
 	@ApiOperation(value = "信息分页")
-	public Response page(@RequestBody OrgUser bean) {
+	public Response page(@RequestBody OrgUserDto dto) {
 		log.info("OrgUserController page.........");
 		Response result = new Response();
 		try {
-			if (bean == null)throw new RuntimeException("参数异常");
-			PageInfo<?> page=new PageInfo<>(orgUserService.findDataIsPage(bean));
+			if (dto == null)throw new RuntimeException("参数异常");
+			PageInfo<?> page=new PageInfo<>(orgUserService.findDataIsPage(dto));
 			result.data=getPageDto(page);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
@@ -80,11 +69,11 @@ public class OrgUserController extends BaseController {
 		log.info("OrgUserController myRoles.........");
 		Response result = new Response();
 		try {
-			OrgUser bean=new OrgUser();
-			bean.setId(id);
-			bean=orgUserService.findDataById(bean);
-			if(bean==null)throw new RuntimeException("用户不存在!");
-			result.data=orgUserService.findRoleDataIsList(bean);
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(id);
+			dto=orgUserService.findDataById(dto);
+			if(dto==null)throw new RuntimeException("用户不存在!");
+			result.data=orgUserService.findRoleDataIsList(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -99,9 +88,9 @@ public class OrgUserController extends BaseController {
 		log.info("OrgUserController info.........");
 		Response result = new Response();
 		try {
-			OrgUser bean=new OrgUser();
-			bean.setId(id);
-			result.data=orgUserService.findDataById(bean);
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(id);
+			result.data=orgUserService.findDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -117,13 +106,13 @@ public class OrgUserController extends BaseController {
 		log.info("OrgUserController del.........");
 		Response result = new Response();
 		try {
-			OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+			OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 			if(orgUser.getId().equals(id)){
 				throw new RuntimeException("不能删除自己!");
 			}
-			OrgUser bean1=new OrgUser();
-			bean1.setId(id);
-			result.message=orgUserService.deleteDataById(bean1);
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(id);
+			result.message=orgUserService.deleteDataById(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -151,12 +140,12 @@ public class OrgUserController extends BaseController {
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
 	@ApiOperation(value = "信息保存")
-	public Response save(@Validated OrgUser bean, BindingResult bindingResult) {
+	public Response save(@Validated OrgUserDto dto, BindingResult bindingResult) {
 		log.info("OrgUserController save.........");
 		Response result = new Response();
 		try {
-			if (bean == null)throw new RuntimeException("参数异常");
-			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+			if (dto == null)throw new RuntimeException("参数异常");
+			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
 				throw new RuntimeException("请不要重复提交!");
 			}
 			if (bindingResult.hasErrors()) {
@@ -167,22 +156,22 @@ public class OrgUserController extends BaseController {
 				}
 				result = Response.error(errorresult);
 			}else{
-				OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+				OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 				if(orgUser !=null){
-					if(ValidatorUtil.isEmpty(bean.getAccount())){
-						bean.setAccount(orgUser.getAccount());
+					if(ValidatorUtil.isEmpty(dto.getAccount())){
+						dto.setAccount(orgUser.getAccount());
 					}
 				}
-				if(null==bean.getEnable()) bean.setEnable(0);
-				result=orgUserService.saveOrUpdateData(bean);
+				if(null==dto.getState()) dto.setState(1);//禁用
+				result=orgUserService.saveOrUpdateData(dto);
 				try {
-					if(bean.getId()==getUser().getId()) {
-						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, bean);
-						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, bean);
+					if(dto.getId()==getUser().getId()) {
+						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
+						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
 					}
 				} catch (InvalidSessionException e) {
 				}
-				request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());
@@ -196,12 +185,12 @@ public class OrgUserController extends BaseController {
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="用户信息")
 	@ApiOperation(value = "信息修改")
-	public Response update(@Validated OrgUser bean, BindingResult bindingResult, RedirectAttributesModelMap modelMap) throws IOException {
+	public Response update(@Validated OrgUserDto dto, BindingResult bindingResult) throws IOException {
 		log.info("OrgUserController update.........");
 		Response result = new Response();
 		try {
-			if (bean == null)throw new RuntimeException("参数异常");
-			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+			if (dto == null)throw new RuntimeException("参数异常");
+			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
 				throw new RuntimeException("请不要重复提交!");
 			}
 			if (bindingResult.hasErrors()) {
@@ -212,20 +201,20 @@ public class OrgUserController extends BaseController {
 				}
 				result = Response.error(errorresult);
 			}else{
-				OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+				OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 				if(orgUser !=null){
-					if(ValidatorUtil.isEmpty(bean.getAccount())){
-						bean.setAccount(orgUser.getAccount());
+					if(ValidatorUtil.isEmpty(dto.getAccount())){
+						dto.setAccount(orgUser.getAccount());
 					}
 				}
-				result.message=orgUserService.updateData(bean);
+				result.message=orgUserService.updateData(dto);
 				try {
-					OrgUser newOrgUser=orgUserService.findDataById(bean);
+					OrgUserDto newOrgUser=orgUserService.findDataById(dto);
 					getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER,newOrgUser);
 					getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN,newOrgUser);
 				} catch (InvalidSessionException e) {
 				}
-				request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());
@@ -241,21 +230,21 @@ public class OrgUserController extends BaseController {
 	@ALogOperation(type="修改",desc="用户密码")
 	@ResponseBody
 	@ApiOperation(value = "密码修改")
-	public Response updatePwd(@Validated OrgUser bean) throws IOException {
+	public Response updatePwd(@Validated OrgUserDto dto) throws IOException {
 		log.info("OrgUserController updatePwd.........");
 		Response result = new Response();
 		try {
-			if(bean==null||ValidatorUtil.isNullEmpty(bean.getOldpwd())||ValidatorUtil.isNullEmpty(bean.getNewpwd())||ValidatorUtil.isNullEmpty(bean.getConfirmpwd())) return Response.error("参数异常!");
-			if(!bean.getNewpwd().equals(bean.getConfirmpwd()))throw new RuntimeException("两次密码不一致!");
-			if ("1".equals(request.getSession().getAttribute(acPrefix + "updatePwd." + bean.getToken()))) {
+			if(dto==null||ValidatorUtil.isNullEmpty(dto.getOldpwd())||ValidatorUtil.isNullEmpty(dto.getNewpwd())||ValidatorUtil.isNullEmpty(dto.getConfirmpwd())) return Response.error("参数异常!");
+			if(!dto.getNewpwd().equals(dto.getConfirmpwd()))throw new RuntimeException("两次密码不一致!");
+			if ("1".equals(request.getSession().getAttribute(acPrefix + "updatePwd." + dto.getToken()))) {
 				throw new RuntimeException("请不要重复提交!");
 			}
-			OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+			OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
 			if(orgUser ==null){
 				throw new RuntimeException("登陆超时!");
 			}
-			result.message=orgUserService.updatePwd(bean);
-			request.getSession().setAttribute(acPrefix + "updatePwd." + bean.getToken(), "1");
+			result.message=orgUserService.updatePwd(dto);
+			request.getSession().setAttribute(acPrefix + "updatePwd." + dto.getToken(), "1");
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());
 		}

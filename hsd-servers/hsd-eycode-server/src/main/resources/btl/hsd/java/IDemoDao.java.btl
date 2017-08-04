@@ -41,5 +41,16 @@ public interface I${tcfg.tableNameFormat!}${scfg._dao_suffix!} extends IBaseDao 
      */
     @Delete("delete from ${tcfg.tableName} where @[ for(t in pks){ /]${tLP.index==1?'':' and '} ${t.columnName} = #{${t.columnNameFormat}}@[ } /] ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
+
+    @[ if (pks.~size>1) {
+    for(t in pks){
+    /]
+     /**
+      * 根据主键${t.columnName} 物理删除
+      */
+     @Delete("delete from ${tcfg.tableName} where  ${t.columnName} = #{${t.columnNameFormat}}")
+     int deleteBulkDataBy${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(IEntity entity) throws Exception;
+    @[ }
+    } /]
     @[ } /]
 }

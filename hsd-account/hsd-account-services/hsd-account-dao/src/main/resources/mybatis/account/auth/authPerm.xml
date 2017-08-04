@@ -1,77 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hsd.dao.account.auth.IAuthPermDao">
+<mapper namespace="com.hsd.account.dao.auth.IAuthPermDao">
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
-		 t1.id as  "id"
-        ,t1.name as  "name"
-        ,t1.match_str as  "matchStr"
-        ,t1.parent_id as  "parentId"
-        ,t1.memo as  "memo"
-        ,t1.order_no as  "orderNo"
-        ,t1.version as  "version"
-        ,t1.keyword as  "keyword"
-        ,t1.del_flag as  "delFlag"
-        ,t1.date_created as  "dateCreated"
-        ,t1.date_updated as  "dateUpdated"
+		 t1.id as "id"
+        ,t1.name as "name"
+        ,t1.match_str as "matchStr"
+        ,t1.parent_id as "parentId"
+        ,t1.domain_code as "domainCode"
+        ,t1.memo as "memo"
+        ,t1.order_no as "orderNo"
+        ,t1.version as "version"
+        ,t1.keyword as "keyword"
+        ,t1.del_flag as "delFlag"
+        ,t1.create_id as "createId"
+        ,t1.date_created as "dateCreated"
+        ,t1.date_updated as "dateUpdated"
 	</sql>
     <!-- 根据主键获取信息详情 -->
-    <select id="selectByPrimaryKey" resultType="com.hsd.dto.auth.AuthPerm" parameterType="com.hsd.dto.auth.AuthPerm">
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.entity.auth.AuthPerm" parameterType="com.hsd.account.entity.auth.AuthPerm">
         select
         <include refid="Base_Column_List"/>
         from auth_perm t1
         where t1.id = #{id}
     </select>
-    <!-- 根据主键物理删除信息 -->
-    <delete id="deleteByPrimaryKey" parameterType="com.hsd.dto.auth.AuthPerm">
-		delete
-		from auth_perm
-		where  id = #{id}
-	</delete>
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="com.hsd.dto.auth.AuthPerm">
-		insert into auth_perm(
-             id
-            ,name
-            ,match_str
-            ,parent_id
-            ,memo
-            ,order_no
-            ,version
-            ,keyword
-            ,del_flag
-            ,date_created
-            ,date_updated
+    <insert id="insert" parameterType="com.hsd.account.entity.auth.AuthPerm">
+		insert into auth_perm (
+            id
+           ,name
+           ,match_str
+           ,parent_id
+           ,domain_code
+           ,memo
+           ,order_no
+           ,version
+           ,keyword
+           ,del_flag
+           ,create_id
+           ,date_created
+           ,date_updated
         ) values (
-             #{id}
-            ,#{name}
-            ,#{matchStr}
-            ,#{parentId}
-            ,#{memo}
-            ,0
-            ,0
-            ,#{keyword}
-            ,0
-            ,now()
-            ,now()
+            #{id}
+           ,#{name}
+           ,#{matchStr}
+           ,#{parentId}
+           ,#{domainCode}
+           ,#{memo}
+           ,#{orderNo}
+           ,0
+           ,#{keyword}
+           ,0
+           ,#{createId}
+           ,now()
+           ,now()
         )
 	</insert>
     <!-- 数据更新 -->
-    <update id="update" parameterType="com.hsd.dto.auth.AuthPerm">
-        update auth_perm set
-        version=version+1,date_updated=now()
-        <if test="name!= null">,name=#{name}</if>
-        <if test="matchStr!= null">,match_str=#{matchStr}</if>
-        <if test="memo!= null">,memo=#{memo}</if>
-        <if test="orderNo!= null">,order_no=#{orderNo}</if>
-        <if test="keyword!= null">,keyword=#{keyword}</if>
-        ,parent_id=#{parentId}
+    <update id="update" parameterType="com.hsd.account.entity.auth.AuthPerm">
+        update auth_perm set version=version+1,date_updated=now(),parent_id=#{parentId}
+        <if test="name!=null">,name = #{name}</if>
+        <if test="matchStr!=null">,match_str = #{matchStr}</if>
+        <if test="domainCode!=null">,domain_code = #{domainCode}</if>
+        <if test="memo!=null">,memo = #{memo}</if>
+        <if test="orderNo!=null">,order_no = #{orderNo}</if>
+        <if test="keyword!=null">,keyword = #{keyword}</if>
         where id = #{id}
     </update>
-    <!-- 判断是否存在 -->
-    <select id="isDataYN" parameterType="com.hsd.dto.auth.AuthPerm" resultType="int">
-		select count(0) from auth_perm where  id = #{id}
-	</select>
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
@@ -92,7 +87,7 @@
     </sql>
 
     <!--信息列表 分页 -->
-    <select id="findDataIsPage" parameterType="com.hsd.dto.auth.AuthPerm" resultType="com.hsd.dto.auth.AuthPerm">
+    <select id="findDataIsPage" parameterType="com.hsd.account.entity.auth.AuthPerm" resultType="com.hsd.account.entity.auth.AuthPerm">
         select
         <include refid="Base_Column_List"/>
         from auth_perm t1
@@ -100,34 +95,20 @@
         <include refid="list_where_sql"/>
     </select>
     <!--信息列表 -->
-    <select id="findDataIsList" parameterType="com.hsd.dto.auth.AuthPerm" resultType="com.hsd.dto.auth.AuthPerm">
+    <select id="findDataIsList" parameterType="com.hsd.account.entity.auth.AuthPerm" resultType="com.hsd.account.entity.auth.AuthPerm">
         select
          t1.id as  "id"
         ,t1.name as  "name"
         ,t1.match_str as  "matchStr"
+        ,t1.domain_code as "domainCode"
         ,t1.parent_id as  "parentId"
         ,t1.memo as  "memo"
         from auth_perm t1
         where 1=1
         <include refid="list_where_sql"/>
     </select>
-    <!-- 逻辑删除 -->
-    <update id="deleteById" parameterType="com.hsd.dto.auth.AuthPerm">
-		update auth_perm set
-		version=version+1
-		,del_flag=1
-		where  id = #{id}
-	</update>
-    <!-- 恢复逻辑删除 -->
-    <update id="recoveryDataById" parameterType="com.hsd.dto.auth.AuthPerm">
-		update auth_perm set
-		version=version+1
-		,del_flag=0
-		where  id = #{id}
-	</update>
-
     <!-- 角色权限信息列表>根据用户id -->
-    <select id="getPermListByUId" resultType="com.hsd.dto.auth.AuthPerm" parameterType="map">
+    <select id="getPermListByUId" resultType="com.hsd.account.entity.auth.AuthPerm" parameterType="map">
         <choose>
             <when test="iissuperman==1"><!-- i'm superman -->
                 select
@@ -145,7 +126,7 @@
             </otherwise>
         </choose>
     </select>
-    <select id="findPermDataIsListByRoleId" resultType="com.hsd.dto.auth.AuthPerm" parameterType="map">
+    <select id="findPermDataIsListByRoleId" resultType="com.hsd.account.entity.auth.AuthPerm" parameterType="map">
 		select
 		DISTINCT(t1.match_str) as "matchStr",t1.id
 		from auth_perm t1

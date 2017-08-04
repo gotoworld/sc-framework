@@ -1,12 +1,11 @@
 package com.hsd.framework.dto;
 
-import com.hsd.framework.IEntity;
 import com.hsd.framework.IDto;
 import com.hsd.framework.util.IdUtil;
 import lombok.Data;
 
 @Data
-public class BaseDto implements IDto,IEntity {
+public class BaseDto implements IDto {
     String token;
     /**新增标记0否1是*/
     Integer newFlag=0;

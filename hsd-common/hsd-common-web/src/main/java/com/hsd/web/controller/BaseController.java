@@ -2,13 +2,13 @@ package com.hsd.web.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.hsd.dto.org.OrgUserDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.page.PageDto;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.dto.org.OrgUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -81,11 +81,11 @@ public class BaseController {
     }
 
 
-    public OrgUser getUser(){
-        return (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+    public OrgUserDto getUser(){
+        return (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
     }
-    public OrgUser getMember(){
-        return (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
+    public OrgUserDto getMember(){
+        return (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
     }
     public void setMember(Object obj){
         ReflectUtil.setValueByFieldName(obj,"isMember",true);

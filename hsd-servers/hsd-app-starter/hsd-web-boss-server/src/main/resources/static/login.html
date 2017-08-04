@@ -54,21 +54,22 @@
                     <h1>[ W /]</h1>
                 </div>
                 <div class="m-b"></div>
-                <h4>欢迎使用 <strong>郑微全景发布系统测试版V0.1</strong></h4>
+                <h4>欢迎使用 <strong>合时代DEMO系统V0.1</strong></h4>
                 <ul class="m-b">
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> pano 密码 pano</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 管理员   admin/admin</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 普通员工 test/test</li>
                 </ul>
-                <strong>会员个人中心.</strong>
+                <strong>运营后台.</strong>
             </div>
         </div>
         <div class="col-sm-5">
             <form id="_login_form" ng-submit="uLogin()">
-                <h4 class="no-margins">会员登录：</h4>
+                <h4 class="no-margins">员工登录：</h4>
                 <h4 class="text-danger" ng-show="result.code!=0" ng-bind="result.message"></h4>
-                <input type="text" value="pano" name="account" class="form-control uname" placeholder="用户名"/>
+                <input type="text" value="admin" name="account" class="form-control uname" placeholder="用户名"/>
                 <input type="hidden" value="7af88f1d651067943c4aff4d7023ef55" autocomplete="off" id="passwordA"
                        name="password"/>
-                <input type="password" value="pano"
+                <input type="password" value="admin"
                        onkeydown="$('#passwordA').val($.md5($(this).val()));"
                        onchange="$('#passwordA').val($.md5($(this).val()));" class="form-control pword m-b"
                        placeholder="密码"/>

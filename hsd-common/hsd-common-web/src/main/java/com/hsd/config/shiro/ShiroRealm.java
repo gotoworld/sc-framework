@@ -1,12 +1,13 @@
 package com.hsd.config.shiro;
 
 import com.hsd.api.auth.IRoleSourceService;
+import com.hsd.dto.auth.AuthPermDto;
+import com.hsd.dto.auth.AuthRoleDto;
+import com.hsd.dto.org.OrgUserDto;
+import com.hsd.dto.shiro.MyShiroUserToken;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.MD5Util;
-import com.hsd.dto.auth.AuthPerm;
-import com.hsd.dto.auth.AuthRole;
-import com.hsd.dto.org.OrgUser;
-import com.hsd.dto.shiro.MyShiroUserToken;
+import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -49,7 +50,7 @@ public class ShiroRealm extends AuthorizingRealm {
             return null;
         }
         //1.根据用户登录名获取用户信息
-        OrgUser orgUser = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
         if (orgUser == null) {
             return null;
         }
@@ -60,20 +61,20 @@ public class ShiroRealm extends AuthorizingRealm {
             SecurityUtils.getSubject().getSession().setAttribute("isSuper", "1");
         }
         //2.获取角色集合
-        List<AuthRole> roleList = roleSourceService.getRoleListByUId(orgUser);
+        List<AuthRoleDto> roleList = roleSourceService.getRoleListByUId(orgUser);
         if (roleList != null) {
-            for (AuthRole role : roleList) {
+            roleList.forEach(role->{
                 info.addRole(role.getName());
-            }
+            });
         }
         //3.获取功能集合
-        List<AuthPerm> permList = roleSourceService.getPermListByUId(orgUser);
+        List<AuthPermDto> permList = roleSourceService.getPermListByUId(orgUser);
         if (permList != null) {
-            for (AuthPerm perm : permList) {
-                if (perm.getMatchStr() != null && !"".equals(perm.getMatchStr())) {
+            permList.forEach(perm->{
+                if (ValidatorUtil.notEmpty(perm.getMatchStr())) {
                     info.addStringPermission(perm.getMatchStr());
                 }
-            }
+            });
         }
         SecurityUtils.getSubject().getSession().setAttribute("SimpleAuthorizationInfo", info);
         return info;
@@ -86,7 +87,7 @@ public class ShiroRealm extends AuthorizingRealm {
         log.info("用户[" + account + "],类型:" + token.getUserType().getName());
         String salt2 = "wei12es46254ri01i20ijd982e9hadkl12312";
         SimpleAuthenticationInfo info = null;
-        OrgUser orgUser = roleSourceService.findUserByLoginName(account,token.getUserType().getId());
+        OrgUserDto orgUser = roleSourceService.findUserByLoginName(account,token.getUserType().getId());
         if (orgUser != null) {
             info = new SimpleAuthenticationInfo(account, orgUser.getPwd(), getName());
             clearCache(info.getPrincipals());

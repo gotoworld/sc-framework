@@ -1,25 +1,74 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
+info:
+  description: ${pom.description}
+  version : v${pom.version}
 # HTTP Server
 server:
   port: 80
   context-path: /
 spring:
   application:
-    name: hsd-web-boss-server
+    name: hsd-account-web-boss
+  profiles:
+    active: dev
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
+      static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+#    password:
+    timeout: 1800000
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 1800000
 
 security:
   basic:
-    enabled: true
+    enabled: false
   user:
     name: admin
     password: admin
 
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
+logging:
+  file: "/logs/${spring.application.name}.log"
+
+#服务名
 feign:
   name:
     common: hsd-common-server
     account: hsd-account-server
+
+#shiro
+shiro:
+  login-url: /error/403
+  success-url: /info
+  unauthorized-url: /error/noauth
+  filterChainDefinitionMap:
+    /boss/account/sign/**: anon
+    /boss/**: authc
 
 # 自定义配置
 hsd:

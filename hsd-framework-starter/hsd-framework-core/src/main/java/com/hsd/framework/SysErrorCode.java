@@ -14,9 +14,8 @@ public enum SysErrorCode implements ErrorCode {
 	AUTH_FAIL(401, "授权失败或超时,请登录访问!"),
 	TIMEOUT(408, "请求超时!"),
 	REQ_PARAMS_ERROR(406, "请求参数错误!"),
-
     ONE_LOGIN(420, "您已经在另一台手机登录"),
-
+    defaultError(500, "内部服务错误!"),
     ;
     private Integer code;
     private String message;

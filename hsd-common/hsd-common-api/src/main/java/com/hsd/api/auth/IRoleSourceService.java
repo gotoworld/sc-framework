@@ -11,9 +11,9 @@
 package com.hsd.api.auth;
 
 
-import com.hsd.dto.auth.AuthPerm;
-import com.hsd.dto.auth.AuthRole;
-import com.hsd.dto.org.OrgUser;
+import com.hsd.dto.auth.AuthPermDto;
+import com.hsd.dto.auth.AuthRoleDto;
+import com.hsd.dto.org.OrgUserDto;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,28 +31,28 @@ public interface IRoleSourceService {
      * 根据用户id,判断用户是否为超级管理员,要的就是特权.
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/isSuperAdmin")
-    public Integer isSuperAdmin(OrgUser orgUser);
+    public Integer isSuperAdmin(OrgUserDto orgUser);
     /**
      * <p>角色信息列表>根据用户id。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/getRoleListByUId")
-    public List<AuthRole> getRoleListByUId(OrgUser orgUser);
+    public List<AuthRoleDto> getRoleListByUId(OrgUserDto orgUser);
 
     /**
      * <p>角色权限信息列表>根据用户id。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/getPermListByUId")
-    public List<AuthPerm> getPermListByUId(OrgUser orgUser);
+    public List<AuthPermDto> getPermListByUId(OrgUserDto orgUser);
 
     /**
      * <p>用户信息。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserByLoginName")
-    public OrgUser findUserByLoginName(@RequestParam("account") String account,@RequestParam("userType")  Integer userType);
+    public OrgUserDto findUserByLoginName(@RequestParam("account") String account, @RequestParam("userType")  Integer userType);
 
     /**
      * 更新用户登陆信息
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/lastLogin")
-    public Integer lastLogin(OrgUser orgUser);
+    public Integer lastLogin(OrgUserDto orgUser);
 }

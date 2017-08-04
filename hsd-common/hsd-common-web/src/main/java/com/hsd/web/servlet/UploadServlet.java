@@ -304,7 +304,7 @@ public class UploadServlet extends HttpServlet{
 //                    material.setLogoUrl(logImg);
 //                    material.setMaterialUrl(StrUtil.replaceAll(saveUrl + newFileName,"/n1/","/n4/"));
 //                    material.setMemo("来源:"+request.getHeader("referer"));
-//                    OrgUser user = (OrgUser) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+//                    OrgUserDto user = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
 //                    if(user!=null){
 //                        material.setCreateId(user.getId());
 //                    }

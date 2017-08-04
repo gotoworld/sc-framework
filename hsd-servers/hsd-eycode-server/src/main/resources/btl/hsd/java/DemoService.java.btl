@@ -163,12 +163,17 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
 
         @[ if ("1"==scfg._tree) { /]
         public List<${tcfg.tableNameFormat!}Dto> findDataIsTree(@RequestBody(required = false) ${tcfg.tableNameFormat!}Dto dto) {
-            List<${tcfg.tableNameFormat!}Dto> results = findDataIsList(dto);
-            if (results == null) {
-                return null;
+            try {
+                List<${tcfg.tableNameFormat!}Dto> results = findDataIsList(dto);
+                if (results == null) {
+                    return null;
+                }
+                NodeTree<${tcfg.tableNameFormat!}Dto> tree = new NodeTree(results, "id", "parentId", "nodes");
+                return tree.buildTree();
+            } catch (Exception e) {
+                log.error("信息树获取失败!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
             }
-            NodeTree<${tcfg.tableNameFormat!}Dto> tree = new NodeTree(results, "id", "parentId", "nodes");
-            return tree.buildTree();
         }
         @[ } /]
 }

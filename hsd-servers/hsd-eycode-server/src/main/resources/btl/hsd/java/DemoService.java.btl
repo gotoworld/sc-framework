@@ -34,25 +34,24 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
 
     @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
         @Override
-        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody ${tcfg.tableNameFormat!}Dto dto) throws Exception {
             Response result = new Response(0,"seccuss");
-                try {
-                    if (dto == null)throw new RuntimeException("参数异常!");
-                    ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
-                    //判断数据是否存在
-                    if (${tableNameL}${scfg._dao_suffix!}.isDataYN(entity) != 0) {
-                        //数据存在
-                        @[ if ("1"==scfg._update){ /]${tableNameL}${scfg._dao_suffix!}.update(entity);@[ } /]
-                    } else {
-                        //新增
-                         @[ if ("1"==scfg._insert){ /]${tableNameL}${scfg._dao_suffix!}.insert(entity);@[ } /]
-                         result.data=entity.getId();
-                    }
-                } catch (Exception e) {
-                    log.error("信息保存异常!", e);
-                    throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            try {
+                if (dto == null)throw new RuntimeException("参数异常!");
+                ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
+                //判断数据是否存在
+                if (${tableNameL}${scfg._dao_suffix!}.isDataYN(entity) != 0) {
+                    //数据存在
+                    @[ if ("1"==scfg._update){ /]${tableNameL}${scfg._dao_suffix!}.update(entity);@[ } /]
+                } else {
+                    //新增
+                     @[ if ("1"==scfg._insert){ /]${tableNameL}${scfg._dao_suffix!}.insert(entity);@[ } /]
+                     result.data=entity.getId();
                 }
+            } catch (Exception e) {
+                log.error("信息保存异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
             }
             return result;
         }
@@ -78,7 +77,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
 
         @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
         @Override
-        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = PortalConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public String deleteDataById(@RequestBody ${tcfg.tableNameFormat!}Dto dto) throws Exception {
             String result = "seccuss";
             try {
@@ -102,7 +101,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
            try {
                if (dto == null)throw new RuntimeException("参数异常!");
                ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
-               PageHelper.startPage(PN(dto.getPageIndex()), PS(dto.getPageSize()));
+               PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
                List list = ${tableNameL}${scfg._dao_suffix!}.findDataIsPage(entity);
                pageInfo=new PageInfo(list);
                pageInfo.setList(copyTo(pageInfo.getList(), ${tcfg.tableNameFormat!}Dto.class));
@@ -164,12 +163,17 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
 
         @[ if ("1"==scfg._tree) { /]
         public List<${tcfg.tableNameFormat!}Dto> findDataIsTree(@RequestBody(required = false) ${tcfg.tableNameFormat!}Dto dto) {
-            List<${tcfg.tableNameFormat!}Dto> results = findDataIsList(dto);
-            if (results == null) {
-                return null;
+            try {
+                List<${tcfg.tableNameFormat!}Dto> results = findDataIsList(dto);
+                if (results == null) {
+                    return null;
+                }
+                NodeTree<${tcfg.tableNameFormat!}Dto> tree = new NodeTree(results, "id", "parentId", "nodes");
+                return tree.buildTree();
+            } catch (Exception e) {
+                log.error("信息树获取失败!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
             }
-            NodeTree<${tcfg.tableNameFormat!}Dto> tree = new NodeTree(results, "id", "parentId", "nodes");
-            return tree.buildTree();
         }
         @[ } /]
 }

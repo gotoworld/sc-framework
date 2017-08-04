@@ -18,10 +18,5 @@
             <artifactId>hsd-framework-service</artifactId>
             <version>${hsd.framework.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.hsd.common</groupId>
-            <artifactId>hsd-common-dao</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 </project>

@@ -1,23 +1,13 @@
-/*	
- * 权限_角色信息  ACTION类	
- *		
- * VERSION      DATE          BY              REASON		
- * -------- ----------- --------------- ------------------------------------------	
- * 1.00     2015.10.01      easycode         程序.发布		
- * -------- ----------- --------------- ------------------------------------------	
- * Copyright 2015 System. - All Rights Reserved.
- *	
- */
 package com.hsd.account.web.controller.auth;
 
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.api.auth.IAuthPermService;
 import com.hsd.account.api.auth.IAuthRoleService;
+import com.hsd.dto.auth.AuthPermDto;
+import com.hsd.dto.auth.AuthRoleDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.dto.auth.AuthPerm;
-import com.hsd.dto.auth.AuthRole;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,14 +42,14 @@ public class AuthRoleController extends BaseController {
     @RequiresPermissions("authRole:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page")
     @ApiOperation(value = "信息分页")
-    public Response page(AuthRole bean) {
+    public Response page(AuthRoleDto dto) {
         log.info("AuthRoleController page.........");
         Response result = new Response(0,"seccuss");
         try {
-            if (bean == null)throw new RuntimeException("参数异常");
+            if (dto == null)throw new RuntimeException("参数异常");
             //--超级管理员标记
-            bean.setIsSuper("1".equals(SecurityUtils.getSubject().getSession().getAttribute("isSuper")) ? 1 : 0);
-            PageInfo<?> page = new PageInfo<>(authRoleService.findDataIsPage(bean));
+            dto.setIsSuper("1".equals(SecurityUtils.getSubject().getSession().getAttribute("isSuper")) ? 1 : 0);
+            PageInfo<?> page = new PageInfo<>(authRoleService.findDataIsPage(dto));
             result.data=getPageDto(page);
         } catch (Exception e) {
             result=Response.error(e.getMessage());
@@ -75,9 +65,9 @@ public class AuthRoleController extends BaseController {
         log.info("AuthRoleController info.........");
         Response result = new Response();
         try {
-            AuthRole bean=new AuthRole();
-            bean.setId(id);
-            result.data=authRoleService.findDataById(bean);
+            AuthRoleDto dto=new AuthRoleDto();
+            dto.setId(id);
+            result.data=authRoleService.findDataById(dto);
         } catch (Exception e) {
             result=Response.error(e.getMessage());
         }
@@ -110,7 +100,7 @@ public class AuthRoleController extends BaseController {
         log.info("AuthRoleController permTree.........");
         Response result = new Response();
         try {
-            result.data = authPermService.findDataTree(new AuthPerm());
+            result.data = authPermService.findDataIsTree(new AuthPermDto());
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -127,9 +117,9 @@ public class AuthRoleController extends BaseController {
         log.info("AuthRoleController del.........");
         Response result = new Response();
         try {
-            AuthRole bean1 = new AuthRole();
-            bean1.setId(id);//角色ID
-            result.message = authRoleService.deleteDataById(bean1);
+            AuthRoleDto dto = new AuthRoleDto();
+            dto.setId(id);//角色ID
+            result.message = authRoleService.deleteDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -144,12 +134,12 @@ public class AuthRoleController extends BaseController {
     @RfAccount2Bean
     @ALogOperation(type = "修改", desc = "角色信息")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated @RequestBody AuthRole bean, BindingResult bindingResult) {
+    public Response save(@Validated @RequestBody AuthRoleDto dto, BindingResult bindingResult) {
         log.info("AuthRoleController save.........");
         Response result = new Response();
         try {
-            if (bean == null)throw new RuntimeException("参数异常");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + bean.getToken()))) {
+            if (dto == null)throw new RuntimeException("参数异常");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {
@@ -160,8 +150,8 @@ public class AuthRoleController extends BaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
-                result = authRoleService.saveOrUpdateData(bean);
-                request.getSession().setAttribute(acPrefix + "save." + bean.getToken(), "1");
+                result = authRoleService.saveOrUpdateData(dto);
+                request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());

@@ -36,7 +36,7 @@ import java.lang.reflect.Method;
 @EnableCaching
 @EnableRedisHttpSession
 @Slf4j
-public class SecondaryRedisConfig extends CachingConfigurerSupport {
+public class RedisConfig extends CachingConfigurerSupport {
 
 	/**
 	 * 加载属性文件数据

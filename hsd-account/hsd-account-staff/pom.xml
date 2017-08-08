@@ -3,14 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.hsd.framework</groupId>
+        <artifactId>hsd-framework-starter</artifactId>
+        <version>1.0</version>
+        <relativePath />
+    </parent>
 
     <groupId>com.hsd.account</groupId>
-    <artifactId>hsd-account</artifactId>
+    <artifactId>hsd-account-staff</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
 
     <modules>
-        <module>hsd-account-staff</module>
-        <!--<module>hsd-account-channel</module>-->
+        <module>hsd-account-staff-api</module>
+        <module>hsd-account-staff-services</module>
+        <module>hsd-account-staff-web-boss</module>
+        <module>hsd-account-staff-web-portal</module>
     </modules>
 </project>

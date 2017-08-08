@@ -2,7 +2,6 @@ package com.hsd.web.controller;
 
 
 import com.github.pagehelper.PageInfo;
-import com.hsd.dto.org.OrgUserDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.page.PageDto;
 import com.hsd.framework.util.CommonConstant;
@@ -71,8 +70,9 @@ public class BaseController {
         } else {
             basePath = request.getScheme() + "://" + request.getServerName() + path;
         }
-        return basePath+"/";
+        return basePath + "/";
     }
+
     /**
      * 权限验证框架取得
      */
@@ -81,23 +81,16 @@ public class BaseController {
     }
 
 
-    public OrgUserDto getUser(){
-        return (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-    }
-    public OrgUserDto getMember(){
-        return (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_MEMBER);
-    }
-    public void setMember(Object obj){
-        ReflectUtil.setValueByFieldName(obj,"isMember",true);
-        ReflectUtil.setValueByFieldName(obj,"createId",getMember().getId());
+    public Object getUser() {
+        return SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
     }
 
-    public Integer getPageNum(Object obj){
-        Object pageNum = ReflectUtil.getValueByFieldName(obj,"pageNum");
-        return ValidatorUtil.notEmpty(""+pageNum)?Integer.parseInt(""+pageNum):1;
+    public Integer getPageNum(Object obj) {
+        Object pageNum = ReflectUtil.getValueByFieldName(obj, "pageNum");
+        return ValidatorUtil.notEmpty("" + pageNum) ? Integer.parseInt("" + pageNum) : 1;
     }
 
-    public PageDto getPageDto(PageInfo pageInfo){
+    public PageDto getPageDto(PageInfo pageInfo) {
         return PageUtil.copy(pageInfo);
     }
 }

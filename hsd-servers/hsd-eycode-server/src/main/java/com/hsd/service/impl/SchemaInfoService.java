@@ -139,12 +139,12 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                 }
                 //view.ng
                 if ("1".equals(tableConf.getSchemaConf().get_view_ng())) {
-                    BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/init.html.btl", context, resouseDir + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + ".html");
+                    BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/init.html.btl", context, resouseDir + "html/" + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + ".html");
                     if ("1".equals(tableConf.getSchemaConf().get_insert()) || "1".equals(tableConf.getSchemaConf().get_update())) {
-                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/edit.html.btl", context, resouseDir + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_edit.html");
+                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/edit.html.btl", context, resouseDir + "html/" + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_edit.html");
                     }
                     if ("1".equals(tableConf.getSchemaConf().get_page())) {
-                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/info.html.btl", context, resouseDir + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_info.html");
+                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/info.html.btl", context, resouseDir + "html/" + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_info.html");
                     }
                 }
 

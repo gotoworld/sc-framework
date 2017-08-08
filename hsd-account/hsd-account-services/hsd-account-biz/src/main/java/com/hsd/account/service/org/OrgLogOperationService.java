@@ -1,10 +1,10 @@
 package com.hsd.account.service.org;
 
 import com.github.pagehelper.PageHelper;
-import com.hsd.api.org.IOrgLogOperationService;
+import com.hsd.account.api.org.IOrgLogOperationService;
 import com.hsd.account.dao.org.IOrgLogOperationDao;
 import com.hsd.account.entity.org.OrgLogOperation;
-import com.hsd.dto.org.OrgLogOperationDto;
+import com.hsd.account.dto.org.OrgLogOperationDto;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;

@@ -1,21 +1,19 @@
 package com.hsd.framework.filter;
 
 
+import org.springframework.core.annotation.Order;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletResponse;
-
-@WebFilter(filterName = "crossFilter", urlPatterns = {"/api/*"})
+@WebFilter(filterName = "crossFilter", urlPatterns = {"/api/*","/boss/*"})
+@Order(-99999999)
 public class CrossFilter implements Filter {
     private static final boolean debug = true;
     private FilterConfig filterConfig = null;
@@ -54,10 +52,9 @@ public class CrossFilter implements Filter {
         }
 
         if (response instanceof HttpServletResponse) {
+            HttpServletRequest alteredRequest = ((HttpServletRequest) request);
             HttpServletResponse alteredResponse = ((HttpServletResponse) response);
-            // I need to find a way to make sure this only gets called on 200-300 http responses
-            // TODO: see above comment
-            addHeadersFor200Response(alteredResponse);
+            addHeadersFor200Response(alteredRequest,alteredResponse);
         }
         doBeforeProcessing(request, response);
 
@@ -65,17 +62,12 @@ public class CrossFilter implements Filter {
         try {
             chain.doFilter(request, response);
         } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
             problem = t;
             t.printStackTrace();
         }
 
         doAfterProcessing(request, response);
 
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
         if (problem != null) {
             if (problem instanceof ServletException) {
                 throw (ServletException) problem;
@@ -109,14 +101,14 @@ public class CrossFilter implements Filter {
         }
     }
 
-    private void addHeadersFor200Response(HttpServletResponse response) {
-        //TODO: externalize the Allow-Origin
-//        res.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+    private void addHeadersFor200Response(HttpServletRequest request,HttpServletResponse response) {
+        String origin=request.getHeader("Origin");
+        response.setHeader("Access-Control-Allow-Origin", origin==null?"*":origin);
+//        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, HEAD");
         response.setHeader("Access-Control-Max-Age", "0");
-        response.setHeader("Access-Control-Allow-Headers", "X-PINGOTHER,Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Headers", "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,sid");
+        response.setHeader("Access-Control-Allow-Credentials", "true");// 允许cookies跨域
         response.setHeader("XDomainRequestAllowed","1");
     }
 

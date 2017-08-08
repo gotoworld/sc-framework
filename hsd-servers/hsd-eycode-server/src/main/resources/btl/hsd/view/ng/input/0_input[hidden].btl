@@ -1,0 +1,2 @@
+
+					<input type="hidden" name="${t.columnNameFormat}" value="{{item.${t.columnNameFormat}}}">

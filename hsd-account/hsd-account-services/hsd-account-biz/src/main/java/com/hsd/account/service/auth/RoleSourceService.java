@@ -1,13 +1,13 @@
 package com.hsd.account.service.auth;
 
-import com.hsd.api.auth.IRoleSourceService;
+import com.hsd.account.api.auth.IRoleSourceService;
 import com.hsd.account.dao.auth.IAuthPermDao;
 import com.hsd.account.dao.auth.IAuthRoleDao;
 import com.hsd.account.dao.org.IOrgUserDao;
 import com.hsd.account.entity.org.OrgUser;
-import com.hsd.dto.auth.AuthPermDto;
-import com.hsd.dto.auth.AuthRoleDto;
-import com.hsd.dto.org.OrgUserDto;
+import com.hsd.account.dto.auth.AuthPermDto;
+import com.hsd.account.dto.auth.AuthRoleDto;
+import com.hsd.account.dto.org.OrgUserDto;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.service.BaseService;
 import lombok.extern.slf4j.Slf4j;

@@ -2,8 +2,8 @@ package com.hsd.account.api.org;
 
 
 import com.hsd.account.dto.org.OrgInfoDto;
-import com.hsd.dto.auth.AuthRoleDto;
-import com.hsd.dto.org.OrgUserDto;
+import com.hsd.account.dto.auth.AuthRoleDto;
+import com.hsd.account.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

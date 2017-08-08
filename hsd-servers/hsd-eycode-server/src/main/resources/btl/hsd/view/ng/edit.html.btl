@@ -1,78 +1,269 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
-
+<html lang="zh" ng-app="app">
+@[
+var isRichFlag=0;
+var isDateFlag=0;
+var isImgFlag=0;
+var isFileFlag=0;
+var isBGMFlag=0;
+var isSelectFlag=0;
+for(t in columns){
+	if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+		switch(scfg._edit_type[t.columnNameFormat]){
+			case "3":{ isDateFlag=1;break;}
+			case "5":{isSelectFlag=1;break;}
+			case "8":{isImgFlag=1;break;}
+			case "9":{isFileFlag=1;break;}
+			case "10":{isRichFlag=1;break;}
+			case "11":{isRichFlag=1;break;}
+			case "12":{isBGMFlag=1;break;}
+		}
+	}
+}
+ /]
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>demo edit</title>
-    <link rel="stylesheet" href="css/weui.min.css"/>
-    <link rel="stylesheet" href="css/common.css"/>
-</head>
-<style type="text/css">
-</style>
+<meta charset="utf-8" />
+<title>//TODO ${tcfg.tableComment} 新增/编辑</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description" content="memo of your site" />
+<meta name="author" content="author of the site" />
+<link rel="shortcut icon" href="/favicon.ico">
 
-<body ng-controller="app-ctrl" class="ng-cloak" ng-cloak>
-<div class="page">
-    <div class="hd">
-        <h1 class="page_title">示例 {{userName}}</h1>
-    </div>
-    <div class="bd">
-        <form id="form1" class="weui_cells weui_cells_form">
-            <input type="hidden" name="id" ng-value="item.id">
-            <input type="hidden" name="token" ng-value="item.token">
-            <div class="weui_cell" ng-if="item.id>0">
-                <div class="weui_cell_hd">
-                    <label class="weui_label">ID</label>
-                </div>
-                <div class="weui_cell_bd weui_cell_primary" ng-bind="item.id">
-                </div>
-            </div>
-            <div class="weui_cell">
-                <div class="weui_cell_hd">
-                    <label class="weui_label">姓名</label>
-                </div>
-                <div class="weui_cell_bd weui_cell_primary">
-                    <input class="weui_input" type="text" name="name" placeholder="请输入姓名" ng-value="item.name"/>
-                </div>
-            </div>
-            <div class="weui_cell">
-                <div class="weui_cell_hd">
-                    <label class="weui_label">年龄</label>
-                </div>
-                <div class="weui_cell_bd weui_cell_primary">
-                    <input class="weui_input" type="text" name="age" placeholder="请输入年龄" ng-value="item.age"/>
-                </div>
-            </div>
-            <a href="javascript:void(0);" ng-click="save()">保存</a>
-            |
-            <a href="index.html">返回</a>
-        </form>
-    </div>
-</div>
-<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/angular.min.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript">
-    var $data;
-    angular.module("app", [ /]).controller("app-ctrl", function ($scope, $http) {
-        $data = $scope;
-        user.info();
-        $scope.save = function () {
-            $.post(site.demo.save, $('#form1').serialize(),
-                function (result) {
-//                    console.info("获取数据.." + JSON.stringify(result));
-                    if (result.code == 0) {
-                        alert('保存成功!');
-                        location.href = './index.html';
-                    } else {
-                        alert(result.message);
-                    }
-                }, 'json');
+<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+<link href="/css/common.css" rel="stylesheet">
+
+@[ if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){ /]
+<link href="/css/upload.css" rel="stylesheet">
+@[ } /]
+@[ if(isBGMFlag==1){ /]
+<link href="/plugins/hplus/css/plugins/plyr/plyr.css" rel="stylesheet">
+@[ } /]
+@[ if(isSelectFlag==1){ /]
+<link href="/plugins/hplus/css/plugins/chosen/chosen.css" rel="stylesheet">
+@[ } /]
+@[ if(isRichFlag==1){ /]
+<link rel="stylesheet" href="/plugins/editor/themes/default/default.css" />
+<link rel="stylesheet" href="/plugins/editor/plugins/code/prettify.css" />
+@[ } /]
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-md-12">
+				<form id="${tableNameL}_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+					<div class="col-md-12" style="height: 50px;">
+						<div style="float:right;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+					<input type="hidden" name="pageNum" id="bean-pageNum" value="{{item.pageNum}}">
+					@[ for(t in pks){ /]
+					<input type="hidden" name="${t.columnNameFormat}" value="{{item.${t.columnNameFormat}}}" />
+					@[ } /]
+					<input type="hidden" name="token" value="{{item.token}}" />
+					<input type="hidden" name="newFlag" value="{{item.newFlag}}" />
+					<div class="clearfix "></div>
+					<div class="col-sm-6 b-r">
+	@[
+		var _col_edit_count=0;
+		for(t in columns){
+		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+			_col_edit_count++;
+			switch(scfg._edit_type[t.columnNameFormat]){
+				case "0":{ layout("input/0_input[hidden].btl",{t:t}){};break;}
+				case "1":{ layout("input/1_input[text].btl",{t:t}){};break;}
+				case "2":{ layout("input/2_textarea.btl",{t:t}){};break;}
+				case "3":{ layout("input/3_input[date].btl",{t:t}){};break;}
+				case "4":{ layout("input/4_select.btl",{t:t}){};break;}
+				case "5":{ layout("input/5_select[multiple].btl",{t:t}){};break;}
+				case "6":{ layout("input/6_input[radio].btl",{t:t}){};break;}
+				case "7":{ layout("input/7_input[checkbox].btl",{t:t}){};break;}
+				case "8":{ layout("input/8_upload[image].btl",{t:t}){};break;}
+				case "9":{ layout("input/9_upload[file].btl",{t:t}){};break;}
+				case "12":{ layout("input/12_upload[BGM].btl",{t:t}){};break;}
+				case "13":{ layout("input/13_show[text].btl",{t:t}){};break;}
+				case "14":{ layout("input/14_show[html].btl",{t:t}){};break;}
+			}
+		   if(_col_edit_count==scfg._col_edit.~size/2){
+	 /]
+
+					</div>
+					<div class="col-sm-6">
+    @[
+            }
         }
-    })
-    $(function () {
-        demo.info(sessionStorage.getItem(site.demo.info));
-    });
+    } /]
+
+					</div>
+	@[
+	for(t in columns){
+		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+			switch(scfg._edit_type[t.columnNameFormat]){
+				case "10":{
+					 /]
+
+					<div class="clearfix "></div>
+					<div class="col-md-12">
+					@[
+					layout("input/10_editor[simple].btl",{t:t}){};
+					 /]
+
+					</div>
+					@[
+					break;
+				}
+				case "11":{
+					 /]
+
+					<div class="clearfix "></div>
+					<div class="col-md-12">
+					@[
+					layout("input/11_editor[full].btl",{t:t}){};
+					 /]
+
+					</div>
+					@[
+					break;
+				}
+			}
+		}
+	}
+	 /]
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
+						<div style="width: 200px; margin: 0 auto;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+@[ if(isDateFlag==1){ /]
+<script src="/plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
+@[ } /]
+@[ if(isRichFlag==1){ /]
+<script charset="utf-8" src="/plugins/editor/kindeditor-all-min.js"></script>
+@[ } /]
+@[ if(isImgFlag==1||isFileFlag==1||isBGMFlag==1){ /]
+<script type="text/javascript" src="/plugins/plupload/js/plupload.min.js"></script>
+@[ } /]
+@[ if(isBGMFlag==1){ /]
+<script type="text/javascript" src="/plugins/hplus/js/plugins/plyr/plyr.js"></script>
+<script type="text/javascript" src="/js/upload_single_bgm.js"></script>
+@[ } /]
+@[ if(isSelectFlag==1){ /]
+<script type="text/javascript" src="/plugins/hplus/js/plugins/chosen/chosen.jquery.js"></script>
+@[ } /]
+@[ if(isImgFlag==1){ /]
+<script type="text/javascript" src="/js/upload_single_pic.js"></script>
+@[ } /]
+@[ if(isFileFlag==1){ /]
+<script type="text/javascript" src="/js/upload_single_file.js"></script>
+@[ } /]
+<script type="text/javascript">
+@[ if(isRichFlag==1){ /]
+KindEditor.ready(function(K) {
+	@[ for(t in columns){
+		if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+			switch(scfg._edit_type[t.columnNameFormat]){
+				case "10":{ layout("js/10_editor[simple].btl",{t:t}){};break;}
+				case "11":{ layout("js/11_editor[full].btl",{t:t}){};break;}
+			}
+		}
+	} /]
+});
+@[ } /]
+function formValidate(){
+	setTimeout(function(){
+		$("#${tableNameL}_01").validate();
+	},1000);
+}
+
+angular.module("app", [ ]).controller("app-ctrl", ['$scope', function ($scope) {
+    $data = $scope;
+    $scope.save = function () {
+        $.post(site.${tableNameL}.save, $('#${tableNameL}_01').serialize(),function (result) {
+                //console.info("获取数据.." + JSON.stringify(result));
+                if (result.code == 0) {
+                    alert('保存成功!');
+                    parent.location.href = site.${tableNameL}.view+'.html';
+                } else {
+                    alert(result.message);
+                }
+        }, 'json');
+    }
+} ]);
+$(function () {
+    loadInfo(sessionStorage.getItem(site.${tableNameL}.info));
+});
+
+var loadInfo=function(id){
+    $.get(site.${tableNameL}.info + id, {},function (result) {
+         //console.info("获取数据.." + JSON.stringify(result));
+         if (result.code == 0) {
+             $data.item = result.data;
+         } else {
+             $data.message = result.message;
+         }
+         $data.$apply();
+     }, 'json');
+}
+
+$(document).ready(function(){
+	formValidate();
+	@[  for(t in columns){
+    	if(scfg._col_edit!=null && scfg._col_edit[t.columnNameFormat]!=null){
+    		switch(scfg._edit_type[t.columnNameFormat]){
+    			case "0":{ layout("js/0_input[hidden].btl",{t:t}){};break;}
+    			case "1":{ layout("js/1_input[text].btl",{t:t}){};break;}
+    			case "2":{ layout("js/2_textarea.btl",{t:t}){};break;}
+    			case "3":{ layout("js/3_input[date].btl",{t:t}){};break;}
+    			case "4":{ layout("js/4_select.btl",{t:t}){};break;}
+    			case "5":{ layout("js/5_select[multiple].btl",{t:t}){};break;}
+    			case "6":{ layout("js/6_input[radio].btl",{t:t}){};break;}
+    			case "7":{ layout("js/7_input[checkbox].btl",{t:t}){};break;}
+    			case "8":{ layout("js/8_upload[image].btl",{t:t}){};break;}
+    			case "9":{ layout("js/9_upload[file].btl",{t:t}){};break;}
+
+
+    			case "12":{layout("js/12_upload[BGM].btl",{t:t}){};break;}
+    			case "13":{layout("js/input/13_show[text].btl",{t:t}){};break;}
+                case "14":{layout("js/input/14_show[html].btl",{t:t}){};break;}
+    		}
+    	}
+    } /]
+});
 </script>
 </body>
 </html>
+

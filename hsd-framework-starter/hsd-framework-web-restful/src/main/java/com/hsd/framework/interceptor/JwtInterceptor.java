@@ -14,6 +14,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -53,6 +54,10 @@ public class JwtInterceptor implements HandlerInterceptor {
 //                log.error("jwt访问授权验证失败! ");
 //                response.getWriter().print(JSON.toJSONString(Response.error(403, "访问授权验证失败!")));
 //            }
+            response.setHeader("sid",""+claims.get("sid"));
+            Cookie cookie = new Cookie("sid",""+claims.get("sid"));
+            response.addCookie(cookie);
+
             return true;
         } catch (final SignatureException e) {
             responseOutWithJson(response,Response.error(403, "签名验证失败!" + e.getMessage()));

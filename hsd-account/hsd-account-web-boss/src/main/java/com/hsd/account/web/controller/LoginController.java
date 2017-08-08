@@ -11,11 +11,11 @@
 package com.hsd.account.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hsd.api.auth.IRoleSourceService;
-import com.hsd.dto.auth.AuthPermDto;
-import com.hsd.dto.auth.AuthRoleDto;
-import com.hsd.dto.org.OrgUserDto;
-import com.hsd.dto.shiro.MyShiroUserToken;
+import com.hsd.account.api.auth.IRoleSourceService;
+import com.hsd.account.dto.auth.AuthPermDto;
+import com.hsd.account.dto.auth.AuthRoleDto;
+import com.hsd.account.dto.org.OrgUserDto;
+import com.hsd.account.dto.shiro.MyShiroUserToken;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.CommonConstant;
@@ -78,9 +78,9 @@ public class LoginController extends BaseController {
                     SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
                     roleSourceService.lastLogin(orgUser);
                 }
-
+                orgUser.setSid((String) getAuth().getSession().getId());
                 String subject = JwtUtil.generalSubject(orgUser);
-                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL,(String) getAuth().getSession().getId());
 
                 SimpleAuthorizationInfo authorizationInfo= (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
                 if(authorizationInfo==null){
@@ -163,7 +163,7 @@ public class LoginController extends BaseController {
             String json = claims.getSubject();
             OrgUserDto user = JSONObject.parseObject(json, OrgUserDto.class);
             String subject = JwtUtil.generalSubject(user);
-            String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+            String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL,(String) getAuth().getSession().getId());
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);

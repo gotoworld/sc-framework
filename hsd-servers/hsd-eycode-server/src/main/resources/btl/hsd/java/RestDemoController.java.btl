@@ -5,7 +5,8 @@ import ${scfg._dto_pkg}.${tcfg.tableNameFormat!}Dto;
 import com.hsd.framework.Response;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.framework.web.controller.BaseController;
+import com.hsd.framework.util.CommonConstant;
+import com.hsd.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,7 +41,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         try {
             if (dto == null) {
                dto = new ${tcfg.tableNameFormat!}Dto();
-               dto.setPageSize(PortalConstant.PAGEROW_DEFAULT_COUNT);
+               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
             }
             dto.setPageNum(pageNum);
             dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);

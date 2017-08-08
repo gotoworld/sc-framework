@@ -11,11 +11,11 @@
 package com.hsd.account.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hsd.api.auth.IRoleSourceService;
-import com.hsd.dto.auth.AuthPermDto;
-import com.hsd.dto.auth.AuthRoleDto;
-import com.hsd.dto.org.OrgUserDto;
-import com.hsd.dto.shiro.MyShiroUserToken;
+import com.hsd.account.api.auth.IRoleSourceService;
+import com.hsd.account.dto.auth.AuthPermDto;
+import com.hsd.account.dto.auth.AuthRoleDto;
+import com.hsd.account.dto.org.OrgUserDto;
+import com.hsd.account.dto.shiro.MyShiroUserToken;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.CommonConstant;

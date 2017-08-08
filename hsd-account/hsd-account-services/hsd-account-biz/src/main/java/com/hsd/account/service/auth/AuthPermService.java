@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.hsd.account.api.auth.IAuthPermService;
 import com.hsd.account.dao.auth.IAuthPermDao;
 import com.hsd.account.entity.auth.AuthPerm;
-import com.hsd.dto.auth.AuthPermDto;
+import com.hsd.account.dto.auth.AuthPermDto;
 import com.hsd.framework.NodeTree;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;

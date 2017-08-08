@@ -1,9 +1,11 @@
 package com.hsd.framework.util;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -456,7 +458,27 @@ public class WebUtil {
         }
 
     }
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        String header = request.getHeader("X-Requested-With");
+        boolean isAjax = "XMLHttpRequest".equals(header) ? true : false;
+        return isAjax;
+    }
 
+    public static void sendJson(HttpServletResponse response, Object obj) {
+        //将实体对象转换为JSON Object转换
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+            out.append(JSON.toJSONString(obj));
+        } catch (IOException e) {
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
     //    /**
 //     * 简单的代码为文件设置版本号，这个版本号其实就是最后修改的日期
 //     * @param filePath

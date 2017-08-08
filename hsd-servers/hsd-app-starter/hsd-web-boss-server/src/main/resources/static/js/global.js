@@ -31,6 +31,9 @@ function openMyBoxLayer(mytitle, myurl) {
     if (mytitle == 'e') {
         mytitle = '信息修改';
     }
+    if (mytitle == 'i') {
+        mytitle = '信息查看';
+    }
     layer.open({
         type: 2,
         title: [mytitle,
@@ -59,23 +62,4 @@ function closeMyBoxLayer() {
         parent.layer.close(index);
     } catch (e) {
     }
-}
-function loadUrlPage(pageNumA, formId, divId) {
-    // console.info('pageNumA='+pageNumA+',formId='+formId+',divId='+divId)
-    if (pageNumA != null) {
-        $('#pageNumA').val(pageNumA);
-    }
-    $("#" + formId).ajaxSubmit({
-        type: "post",  //提交方式
-        //dataType:"json", //数据类型
-        url: $("#" + formId).attr('data-action'), //请求url
-        success: function (data) {
-            $('#' + divId).html(data);
-        }, error: function (e) {
-            alert(JSON.stringify(e));
-        }
-    });
-}
-function delInfoData(myurl) {
-    location.href = myurl;
 }

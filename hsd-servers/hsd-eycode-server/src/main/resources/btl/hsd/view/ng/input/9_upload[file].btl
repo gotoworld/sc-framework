@@ -1,0 +1,15 @@
+                        <div class="col-md-8">
+                            <div class="input-append input-group">
+                                <label class="col-md-3 control-label">${t.columnComment}：</label>
+                                <div class="col-md-8">
+                                    <span  class="input-group-btn"><button type="button" id="upload_btn_${t.columnNameFormat}" class="btn btn-white">点击上传</button></span>
+                                    <div id="upload_div_${t.columnNameFormat}" style="">
+                                        \@[  if(isNotEmpty(bean.${t.columnNameFormat})){ /]
+                                        <div class="file-grid-2">
+                                            <input name="${t.columnNameFormat}" value="{{item.${t.columnNameFormat}}}" class="input-large form-control" type="text">
+                                        </div>
+                                        \@[ } /]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>

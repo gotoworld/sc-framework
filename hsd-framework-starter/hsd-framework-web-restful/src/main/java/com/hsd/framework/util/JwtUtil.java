@@ -27,11 +27,10 @@ public class JwtUtil {
         SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
         return key;
     }
-
     /**
      * 创建jwt
      */
-    public static String createJWT(String id, String subject, long ttlMillis) throws Exception {
+    public static String createJWT(String id, String subject, long ttlMillis,String sid) throws Exception {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         SecretKey key = generalKey();
@@ -39,6 +38,7 @@ public class JwtUtil {
                 .setId(id)
                 .setIssuedAt(now)
                 .setSubject(subject)
+                .claim(CommonConstant.JWT_HEADER_SHIRO_KEY,sid)
                 .signWith(SignatureAlgorithm.HS256, key);
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;
@@ -66,6 +66,7 @@ public class JwtUtil {
         JSONObject jo = new JSONObject();
         jo.put("id", ReflectUtil.getValueByFieldName(user,"id"));
         jo.put("name", ReflectUtil.getValueByFieldName(user,"name"));
+//        jo.put("sid", ReflectUtil.getValueByFieldName(user,"sid"));
         return jo.toJSONString();
     }
 }

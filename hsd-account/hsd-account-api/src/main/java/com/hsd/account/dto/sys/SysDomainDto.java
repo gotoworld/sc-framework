@@ -32,13 +32,11 @@ public class SysDomainDto extends BaseDto {
      /**排序*/
      private Integer orderNo;
      /**版本号*/
-	@NotNull(message="version不能为空")
      private Integer version;
      /**关键字*/
 	@Size(max=255,message="keyword最大255字符")
      private String keyword;
      /**是否删除*/
-	@NotNull(message="del_flag不能为空")
      private Integer delFlag;
      /**建立者ID*/
      private Long createId;

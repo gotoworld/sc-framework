@@ -6,7 +6,7 @@ import com.hsd.account.dao.auth.IAuthRoleDao;
 import com.hsd.account.dao.auth.IAuthRoleVsPermDao;
 import com.hsd.account.entity.auth.AuthRole;
 import com.hsd.account.entity.auth.AuthRoleVsPerm;
-import com.hsd.dto.auth.AuthRoleDto;
+import com.hsd.account.dto.auth.AuthRoleDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;

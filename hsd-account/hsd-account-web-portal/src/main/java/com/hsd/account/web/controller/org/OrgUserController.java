@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.hsd.account.api.auth.IAuthRoleService;
 import com.hsd.account.api.org.IOrgInfoService;
 import com.hsd.account.api.org.IOrgUserService;
-import com.hsd.dto.org.OrgUserDto;
+import com.hsd.account.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;

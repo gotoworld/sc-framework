@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.hsd.account.api.auth.IAuthRoleService;
 import com.hsd.account.api.org.IOrgInfoService;
 import com.hsd.account.api.org.IOrgUserService;
-import com.hsd.dto.org.OrgUserDto;
+import com.hsd.account.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
@@ -165,7 +165,7 @@ public class OrgUserController extends BaseController {
 				if(null==dto.getState()) dto.setState(1);//禁用
 				result=orgUserService.saveOrUpdateData(dto);
 				try {
-					if(dto.getId()==getUser().getId()) {
+					if(dto.getId()==((OrgUserDto)getUser()).getId()) {
 						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
 						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
 					}

@@ -1,6 +1,6 @@
 package com.hsd.account.api.auth;
 
-import com.hsd.dto.auth.AuthPermDto;
+import com.hsd.account.dto.auth.AuthPermDto;
 import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

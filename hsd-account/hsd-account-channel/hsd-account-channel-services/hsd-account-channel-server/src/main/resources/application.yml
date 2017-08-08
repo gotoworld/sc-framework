@@ -1,0 +1,100 @@
+#定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
+info:
+  description: ${pom.description}
+  version: v${pom.version}
+# HTTP Server
+server:
+  port: 6060
+  context-path: /
+spring:
+  application:
+    name: hsd-account-channel-server
+  profiles:
+    active: dev
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://192.168.101.100:8889/turbine.stream
+
+  datasource:
+    driverClass: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+    username: root
+    password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+#    # 下面为连接池的补充设置，应用到上面所有数据源中
+#    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 300000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 600000
+    #validationQuery: select "1"
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: "druid.stat.mergeSql:true;druid.stat.slowSqlMillis:5000"
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+#    password:
+    timeout: 1800000
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 1800000
+
+security:
+  basic:
+    enabled: false
+  user:
+    name: admin
+    password: admin
+
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
+feign:
+  name:
+    account.channel: hsd-account-staff-server
+    account.channel: ${spring.application.name}
+
+#
+logging:
+  file: "d:/logs/${spring.application.name}.log"
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

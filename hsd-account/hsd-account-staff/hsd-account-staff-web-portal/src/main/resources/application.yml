@@ -8,7 +8,7 @@ server:
   context-path: /
 spring:
   application:
-    name: hsd-account-web-portal
+    name: hsd-account-staff-web-portal
   profiles:
     active: dev
   boot:
@@ -56,8 +56,7 @@ logging:
 #服务名
 feign:
   name:
-    common: hsd-common-server
-    account: hsd-account-server
+    account.staff: hsd-account-staff-server
 
 #shiro
 shiro:

@@ -8,7 +8,7 @@ server:
   context-path: /
 spring:
   application:
-    name: hsd-account-server
+    name: hsd-account-staff-server
   profiles:
     active: dev
   boot:
@@ -87,8 +87,7 @@ management.security.enabled: false
 
 feign:
   name:
-    common: hsd-common-server
-    account: ${spring.application.name}
+    account.staff: ${spring.application.name}
 
 #
 logging:

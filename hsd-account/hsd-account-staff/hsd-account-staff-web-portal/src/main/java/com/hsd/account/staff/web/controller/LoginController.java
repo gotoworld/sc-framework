@@ -48,7 +48,7 @@ import java.util.Map;
 @Slf4j
 @NoAuthorize
 public class LoginController extends BaseController {
-    private static final String acPrefix = "/api/account/sign/";
+    private static final String acPrefix = "/api/account/staff/sign/";
     @Autowired
     private IRoleSourceService roleSourceService;
     /**
@@ -77,7 +77,7 @@ public class LoginController extends BaseController {
                     roleSourceService.lastLogin(orgUser);
                 }
                 String subject = JwtUtil.generalSubject(orgUser);
-                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL,""+getAuth().getSession().getId());
 
                 SimpleAuthorizationInfo authorizationInfo= (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
                 if(authorizationInfo==null){
@@ -153,7 +153,7 @@ public class LoginController extends BaseController {
             String json = claims.getSubject();
             OrgUserDto user = JSONObject.parseObject(json, OrgUserDto.class);
             String subject = JwtUtil.generalSubject(user);
-            String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+            String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL,""+getAuth().getSession().getId());
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);

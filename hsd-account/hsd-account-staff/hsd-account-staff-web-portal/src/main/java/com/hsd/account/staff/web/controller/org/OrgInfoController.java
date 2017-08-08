@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @Slf4j
 public class OrgInfoController extends BaseController {
-    private static final String acPrefix = "/api/account/org/";
+    private static final String acPrefix = "/api/account/staff/org/";
 
     @Autowired
     private IOrgInfoService orgDeptService;

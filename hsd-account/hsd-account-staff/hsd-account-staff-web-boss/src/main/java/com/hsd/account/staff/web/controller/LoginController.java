@@ -48,7 +48,7 @@ import java.util.Map;
 @Slf4j
 @NoAuthorize
 public class LoginController extends BaseController {
-    private static final String acPrefix = "/boss/account/sign/";
+    private static final String acPrefix = "/boss/account/staff/sign/";
     @Autowired
     private IRoleSourceService roleSourceService;
     /**

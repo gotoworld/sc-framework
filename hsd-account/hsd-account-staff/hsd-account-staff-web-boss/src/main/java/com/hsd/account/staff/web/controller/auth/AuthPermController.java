@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 public class AuthPermController extends BaseController {
 
-	private static final String acPrefix="/boss/account/auth/perm/";
+	private static final String acPrefix="/boss/account/staff/auth/perm/";
 
 	@Autowired
 	private IAuthPermService AuthPermService;

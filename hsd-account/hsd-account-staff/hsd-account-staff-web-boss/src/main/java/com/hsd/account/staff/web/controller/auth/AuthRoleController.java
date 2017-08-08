@@ -29,7 +29,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 public class AuthRoleController extends BaseController {
-    private static final String acPrefix = "/boss/account/auth/role/";
+    private static final String acPrefix = "/boss/account/staff/auth/role/";
 
     @Autowired
     private IAuthRoleService authRoleService;

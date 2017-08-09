@@ -1,24 +1,24 @@
 var basePath="http://localhost";
 var apiPath={
-    account:"http://localhost"
+    account:{
+        staff:"http://localhost"
+    }
 }
 var site = {
     user: {
-         login: apiPath.account + "/boss/account/sign/login" //登录
-        ,refreshToken: apiPath.account + "/boss/account/sign/refreshToken" //刷新token
+         login: apiPath.account.staff + "/boss/account/staff/sign/login" //登录
+        ,refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
     }
     ,sysDomain: {
-         view: basePath + "/html/account/sys/sys_domain"
-        ,page: apiPath.account + "/boss/account/sys/sysDomain/page/"
-        ,save: apiPath.account + "/boss/account/sys/sysDomain/save"
-        ,info: apiPath.account + "/boss/account/sys/sysDomain/info/"
-        ,del: apiPath.account + "/boss/account/sys/sysDomain/del/"
+         view: basePath + "/html/account/staff/sys/sys_domain"
+        ,page: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/page/"
+        ,save: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/save"
+        ,info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
+        ,del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"
     }
 }
 var $data;
-var pageSize = 15;
 var page;
-var isPageReady = false;//标记防止重复加载
 
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -29,7 +29,7 @@ function getQueryString(name) {
 /**用户登录信息验证头*/
 $.ajaxSetup({
     headers: {
-        "Authorization": sessionStorage.getItem("hsd_authorizationToken")
+        "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken")
     }
     , xhrFields: {
         withCredentials: true
@@ -55,12 +55,12 @@ var user = {
             function (result) {
                 if (result.code == 0) {
                     if (result.data) {
-                        sessionStorage.setItem('hsd_user', JSON.stringify(result.data.user));
+                        sessionStorage.setItem('hsd_staff_user', JSON.stringify(result.data.user));
                         if (result.data.authorizationToken) {
-                            sessionStorage.setItem('hsd_tokenExpMillis', result.data.tokenExpMillis);
-                            sessionStorage.setItem("hsd_authorizationToken", result.data.authorizationToken);
-                            sessionStorage.setItem("hsd_authorizationInfoPerms", result.data.authorizationInfoPerms);
-                            sessionStorage.setItem("hsd_authorizationInfoRoles", result.data.authorizationInfoRoles);
+                            sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
+                            sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
+                            sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.authorizationInfoPerms);
+                            sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.authorizationInfoRoles);
                             document.cookie = "sid=" + result.data.sid + ";expires=Session;";
                         }
                     }
@@ -78,8 +78,8 @@ var user = {
                 if (result.code == 0) {
                     if (result.data) {
                         if (result.data.authorizationToken) {
-                            sessionStorage.setItem('hsd_tokenExpMillis', result.data.tokenExpMillis);
-                            sessionStorage.setItem("hsd_authorizationToken", result.data.authorizationToken)
+                            sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
+                            sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken)
                         }
                     }
                     callback && callback();
@@ -89,16 +89,16 @@ var user = {
             }, 'json');
     },
     logout: function (callback) {
-        sessionStorage.removeItem('hsd_tokenExpMillis');
-        sessionStorage.removeItem('hsd_user');
-        sessionStorage.removeItem("hsd_authorizationToken");
-        sessionStorage.removeItem("hsd_authorizationInfoPerms");
-        sessionStorage.removeItem("hsd_authorizationInfoRoles");
+        sessionStorage.removeItem('hsd_staff_tokenExpMillis');
+        sessionStorage.removeItem('hsd_staff_user');
+        sessionStorage.removeItem("hsd_staff_authorizationToken");
+        sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
+        sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
 
         location.href = '/login.html';
     },
     info: function (callback) {
-        var userJson = sessionStorage.getItem('hsd_user');
+        var userJson = sessionStorage.getItem('hsd_staff_user');
         if (userJson) {
             var userInfo = JSON.parse(userJson);
             $data.userInfo = userInfo;
@@ -108,13 +108,13 @@ var user = {
     init: function (callback) {
         try {
             var expMillis = 0;
-            if (sessionStorage.getItem('hsd_tokenExpMillis')) {
-                expMillis = sessionStorage.getItem('hsd_tokenExpMillis') - (new Date().getTime());
+            if (sessionStorage.getItem('hsd_staff_tokenExpMillis')) {
+                expMillis = sessionStorage.getItem('hsd_staff_tokenExpMillis') - (new Date().getTime());
             }
             if (expMillis > 0 && expMillis < (10 * 60 * 1000)) {//还有10分钟过期
                 this.refreshToken();
             } else {
-                if (sessionStorage.getItem('hsd_user') && expMillis > 0) {
+                if (sessionStorage.getItem('hsd_staff_user') && expMillis > 0) {
                     user.info(callback);
                 } else {
                     // this.login(function () {
@@ -144,9 +144,9 @@ var user = {
     //-- shiro 权限
     , hasPermission: function (str) {
         return true;
-        var hsd_authorizationInfo = sessionStorage.getItem("hsd_authorizationInfoPerms");
-        if (hsd_authorizationInfo) {
-            var permsArr = hsd_authorizationInfo.split(",");
+        var hsd_staff_authorizationInfo = sessionStorage.getItem("hsd_staff_authorizationInfoPerms");
+        if (hsd_staff_authorizationInfo) {
+            var permsArr = hsd_staff_authorizationInfo.split(",");
             if (permsArr && permsArr.indexOf(str) != -1) {
                 return true;
             } else {
@@ -156,9 +156,9 @@ var user = {
         return false;
     }
     , hasRole: function (str) {
-        var hsd_authorizationInfo = sessionStorage.getItem("hsd_authorizationInfoRoles");
-        if (hsd_authorizationInfo) {
-            var permsArr = hsd_authorizationInfo.split(",");
+        var hsd_staff_authorizationInfo = sessionStorage.getItem("hsd_staff_authorizationInfoRoles");
+        if (hsd_staff_authorizationInfo) {
+            var permsArr = hsd_staff_authorizationInfo.split(",");
             if (permsArr && permsArr.indexOf(str) != -1) {
                 return true;
             } else {

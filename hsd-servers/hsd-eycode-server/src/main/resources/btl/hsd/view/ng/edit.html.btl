@@ -67,10 +67,17 @@ for(t in columns){
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
-					<input type="hidden" name="pageNum" id="bean-pageNum" value="{{item.pageNum}}">
-					@[ for(t in pks){ /]
+					@[ for(t in pks){
+					    var mPk=true;
+					    for(t2 in columns){
+                            if(scfg._col_edit!=null && scfg._col_edit[t2.columnNameFormat]!=null && t.columnNameFormat==t2.columnNameFormat){
+                                mPk=false;
+                            }
+					    }
+					    if(mPk){
+					/]
 					<input type="hidden" name="${t.columnNameFormat}" value="{{item.${t.columnNameFormat}}}" />
-					@[ } /]
+					@[ }} /]
 					<input type="hidden" name="token" value="{{item.token}}" />
 					<input type="hidden" name="newFlag" value="{{item.newFlag}}" />
 					<div class="clearfix "></div>

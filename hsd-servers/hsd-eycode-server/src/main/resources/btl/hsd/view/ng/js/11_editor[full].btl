@@ -4,5 +4,6 @@
             resizeType : 2,
             uploadJson : '/fileUpload?isrich=1',
             fileManagerJson : '/fileManagerServlet',
-            allowFileManager : true
+            allowFileManager : true,
+            afterBlur: function () { this.sync();}
         });

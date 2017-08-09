@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @FeignClient(value = "\${feign.name.${scfg._my_project!}}")
 public interface I${tcfg.tableNameFormat!}Service {
-    String acPrefix = "/feign/I${tcfg.tableNameFormat!}Service";
+    String acPrefix = "/feign/${strUtil.getDir(scfg._my_project)}/I${tcfg.tableNameFormat!}Service";
     @[ if ("1"==scfg._insert||"1"==scfg._update) { /]
     /**
      * <p>信息编辑。

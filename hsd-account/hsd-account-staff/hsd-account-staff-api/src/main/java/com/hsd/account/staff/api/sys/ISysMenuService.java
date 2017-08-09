@@ -50,7 +50,7 @@ public interface ISysMenuService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsTree")
     public List<SysMenuDto> findDataIsTree(SysMenuDto dto);
-    
+
     /**
      * <p>信息详情。
      */

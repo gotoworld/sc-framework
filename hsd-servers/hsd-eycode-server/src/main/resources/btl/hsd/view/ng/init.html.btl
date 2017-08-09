@@ -21,7 +21,6 @@
     <link href="/css/common.css" rel="stylesheet">
 </head>
 
-
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
@@ -34,21 +33,13 @@
 						<div id="tab-1" class="tab-pane active">
 							<div class="ibox float-e-margins">
 								<div class="ibox-content">
-                                    <div class="alert alert-success alert-dismissable" ng-show="infoSuccess" >
-                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                        <strong ng-bind="message">Success!</strong> 操作成功。
-                                    </div>
-                                    <div class="alert alert-danger alert-dismissable" ng-show="infoError" >
-                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                        <strong ng-bind="message"></strong>
-                                    </div>
 									<table class="table">
 										<tr>
 											<td>
 												<form id="info_search_form"
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
-													ng-submit="loadPage(1)">
+													ng-submit="page()">
 													<input type="hidden" name="pageNum" id="pageNumA" value="1">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
@@ -69,7 +60,7 @@
 										</tr>
 									</table>
 									@[ if ("1"==scfg._insert){ /]
-									<a href="#" onclick="openMyBoxLayer('a','');" ng-show='user.hasPermission("${tableNameL}:add")' class="hid btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="#" onclick="openMyBoxLayer('a','');" ng-show='user.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									@[ } /]
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
@@ -83,17 +74,17 @@
                                     			</tr>
                                     		</thead>
                                     		<tbody>
-                                    			<tr ng-if="result.data && result.data.length>0" ng-repeat="item in result.data">
+                                    			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{item.index}}</td>
                                     				@[ for(t in scfg._col_show){ /]
                                     				<td>{{item.${t.key}}}</td>
                                     				@[ } /]
                                     				<td>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:edit")'  ng-click="edit('@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /]')" class="label label-success hid" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:del")'  ng-click="del('@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /]');};" rel="nofollow" class="label label-danger hid" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:edit")'  ng-click="edit('@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /]')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:del")'  ng-click="del('@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /]');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     </td>
                                     			</tr>
-                                    			<tr ng-if="result.data==null || result.data.length==0">
+                                    			<tr ng-if="result.data.data==null || result.data.data.length==0">
                                     				<td colspan="${scfg._col_show.~size+2}">
                                     				<div class="alert"><strong>{{result.message}}</strong></div>
                                     				</td>
@@ -128,14 +119,14 @@
 <script type="text/javascript" src="/js/common.js"></script>
 
 <script type="text/javascript">
-    /*
+    /* copy to common.js
     var site={
         ${tableNameL}: {
-             view: basePath + "/html${strUtil.getDir(tcfg.schemaConf._view_pkg)}/${tcfg.tableName}"
-            ,page: apiPath.account + "${scfg._web_http}/page/"
-            ,save: apiPath.account + "${scfg._web_http}/save"
-            ,info: apiPath.account + "${scfg._web_http}/info/"
-            ,del: apiPath.account + "${scfg._web_http}/del/"
+             view: basePath + "/html/${strUtil.getDir(tcfg.schemaConf._view_pkg)}/${tcfg.tableName}"
+            ,page: apiPath.${scfg._my_project} + "${scfg._web_http}/page/"
+            ,save: apiPath.${scfg._my_project} + "${scfg._web_http}/save"
+            ,info: apiPath.${scfg._my_project} + "${scfg._web_http}/info/"
+            ,del: apiPath.${scfg._my_project} + "${scfg._web_http}/del/"
         }
     }
     */
@@ -160,8 +151,8 @@
                 $.post( site.${tableNameL}.del + id,{}, function (result) {
                     $data.feedback=true;
                     if(result.code==0){
-                        alert('删除成功');
                         loadPage($('#pageNumA').val());
+                        alert('删除成功');
                     }else{
                         alert(result.message);
                     }
@@ -178,8 +169,13 @@
         });
     });
     var loadPage = function (pageIndex) {
-        $('#pageNumA').val(pageIndex);
-        $.post( site.${tableNameL}.page+pageIndex,$('#info_search_form').serialize(), function (result) {
+        if(pageIndex){
+            $('#pageNumA').val(pageIndex);
+        }else{
+            pageIndex=$('#pageNumA').val();
+        }
+        console.info("加载页码"+pageIndex)
+        $.post( site.sysDomain.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             $data.feedback=false;
             $data.result=result;
             $data.$apply();

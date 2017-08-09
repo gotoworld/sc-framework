@@ -94,7 +94,7 @@ public class SchemaInfo extends BaseDto implements IEntity {
 
     public String getJSR303() {
         String _jsr303 = "";
-        if (!columnName.equals("id") && isNullable.equals("NO") && !("#datetime#timestamp#".contains("#" + dataType + "#"))) {
+        if (!columnName.equals("id") && isNullable.equals("NO") && !("#datetime#timestamp#".contains("#" + dataType + "#")) && !("#id#version#keyword#del_flag#create_id#date_created#date_updated#bi_update_ts#".contains("#"+columnName+"#"))) {
             _jsr303 += "@NotNull(message=\"" + columnName + "不能为空\")";
         }
         if (!("#date#time#datetime#timestamp#year#tinyint#smallint#mediumint#int#bigint#float#double#decimal#".contains("#" + dataType + "#"))) {

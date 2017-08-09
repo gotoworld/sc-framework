@@ -21,7 +21,7 @@
         <!--</dependency>-->
         <dependency>
             <groupId>com.hsd.account</groupId>
-            <artifactId>hsd-account-web-portal</artifactId>
+            <artifactId>hsd-account-staff-web-portal</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

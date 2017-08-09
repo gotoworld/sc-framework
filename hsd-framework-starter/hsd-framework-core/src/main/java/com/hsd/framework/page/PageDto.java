@@ -13,19 +13,18 @@ import java.util.concurrent.ConcurrentHashMap;
 @Data
 public class PageDto {
 
-    /**
-     * 当前第几页
-     */
+    /** 当前第几页 */
     private int pageIndex = 0;
-    /**
-     * 每页数据条数
-     */
+    /** 每页数据条数 */
     private int pageSize = 10;
-
-    /**
-     * 数据总数
-     */
+    /** 数据总数 */
     private int dataCount = 0;
+    /** 总页数 */
+    private int pageCount;
+    /** 上一页 */
+    private int prePage;
+    /** 下一页 */
+    private int nextPage;
 
     private List data = new ArrayList<>(0);
 

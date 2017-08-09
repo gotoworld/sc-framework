@@ -15,6 +15,10 @@ public class PageUtil {
         pageDto.setDataCount((int) pageInfo.getTotal());
         pageDto.setPageIndex(pageInfo.getPageNum());
         pageDto.setPageSize(pageInfo.getPageSize());
+        pageDto.setPageCount(pageInfo.getPages());
+        pageDto.setPrePage(pageInfo.getPrePage());
+        pageDto.setNextPage(pageInfo.getNextPage());
+
     }
     public static PageDto copy(PageInfo pageInfo){
         PageDto pageDto=new PageDto();

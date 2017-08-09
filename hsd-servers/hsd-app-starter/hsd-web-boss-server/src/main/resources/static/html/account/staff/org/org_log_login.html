@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>//TODO 组织架构_员工登录日志</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="memo of your site" />
+    <meta name="author" content="author of the site" />
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+    <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+    <link href="/css/common.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="clients-list">
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="tab-1" class="tab-pane active">
+							<div class="ibox float-e-margins">
+								<div class="ibox-content">
+									<table class="table">
+										<tr>
+											<td>
+												<form id="info_search_form"
+													role="form" class="form-inline"
+													method="post"  accept-charset="UTF-8"
+													ng-submit="page()">
+													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
+													<div class="form-group" id="data_5">
+														<label class="font-noraml">创建时间</label>
+														<div class="input-daterange input-group" id="datepicker">
+															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+															<span class="input-group-addon">到</span>
+															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+														</div>
+													</div>
+													<div class="input-group">
+														<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+														</span>
+													</div>
+												</form>
+											</td>
+										</tr>
+									</table>
+									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("orgLogLogin:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<div class="table-responsive table-scrollable">
+                                    	<table class="table table-bordered table-striped  table-hover">
+                                    		<thead>
+                                    			<tr>
+                                    				<th style="width:20px;">#</th>
+                                    				<th>创建时间</th>
+                                    				<th>MAC地址</th>
+                                    				<th>员工名称</th>
+                                    				<th>类型0登录1登出</th>
+                                    				<th>用户ID</th>
+                                    				<th>IP地址</th>
+                                    				<th>操作</th>
+                                    			</tr>
+                                    		</thead>
+                                    		<tbody>
+                                    			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
+                                    				<td>{{$index+1}}</td>
+                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.deviceMac}}</td>
+                                    				<td>{{item.userName}}</td>
+                                    				<td>{{item.type}}</td>
+                                    				<td>{{item.userId}}</td>
+                                    				<td>{{item.ipAddr}}</td>
+                                    				<td>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("orgLogLogin:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                    </td>
+                                    			</tr>
+                                    			<tr ng-if="result.data.data==null || result.data.data.length==0">
+                                    				<td colspan="8">
+                                    				<div class="alert"><strong>{{result.message}}</strong></div>
+                                    				</td>
+                                    			</tr>
+                                    		</tbody>
+                                    	</table>
+										<div class="b_page" ng-bind-html="tagPages"></div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/pageTag.js"></script>
+
+<script type="text/javascript">
+    /* copy to common.js
+    var site={
+        orgLogLogin: {
+             view: basePath + "/html/account/staff/org/org_log_login"
+            ,page: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/page/"
+            ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/save"
+            ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/info/"
+            ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/del/"
+        }
+    }
+    */
+    $("#data_5 .input-daterange").datepicker({
+        keyboardNavigation : !1,
+        forceParse : !1,
+        autoclose : !0
+    });
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
+        $data = $scope;
+        $scope.edit = function (title,id) {
+            $data.feedback=true;
+            sessionStorage.setItem(site.orgLogLogin.info,id);
+            openMyBoxLayer(title,site.orgLogLogin.view+'_edit.html');
+        }
+        $scope.info = function (title,id) {
+            sessionStorage.setItem(site.orgLogLogin.info,id);
+            openMyBoxLayer(title,site.orgLogLogin.view+'_info.html');
+        }
+        $scope.del = function (id) {
+            if(confirm('确认删除吗?')) {
+                $.post( site.orgLogLogin.del + id,{}, function (result) {
+                    $data.feedback=true;
+                    if(result.code==0){
+                        loadPage($('#pageNumA').val());
+                        alert('删除成功');
+                    }else{
+                        alert(result.message);
+                    }
+                });
+            }
+        }
+        $scope.page = function (pageIndex) {
+            loadPage(pageIndex);
+        }
+    } ]);
+
+    var loadPage = function (pageIndex) {
+        if(pageIndex){
+            $('#pageNumA').val(pageIndex);
+        }else{
+            pageIndex=$('#pageNumA').val();
+        }
+        console.info("加载页码"+pageIndex)
+        $.post( site.orgLogLogin.page+pageIndex,$('#info_search_form').serialize(), function (result) {
+            $data.feedback=false;
+            $data.result=result;
+            $data.tagPages=tag.page(result.data);
+            $data.$apply();
+        }, 'json');
+    }
+     $(function () {
+        user.init(function(){
+            loadPage(1);
+        });
+     });
+</script>
+</body>
+</html>

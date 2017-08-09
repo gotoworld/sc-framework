@@ -33,14 +33,6 @@
 						<div id="tab-1" class="tab-pane active">
 							<div class="ibox float-e-margins">
 								<div class="ibox-content">
-                                    <div class="alert alert-success alert-dismissable" ng-show="infoSuccess" >
-                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                        <strong ng-bind="message">Success!</strong> 操作成功。
-                                    </div>
-                                    <div class="alert alert-danger alert-dismissable" ng-show="infoError" >
-                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                        <strong ng-bind="message"></strong>
-                                    </div>
 									<table class="table">
 										<tr>
 											<td>

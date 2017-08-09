@@ -19,31 +19,29 @@ public class OrgInfoDto extends BaseDto {
      /**ID*/
      private Long id;
      /**编码*/
-	@Size(max=32,message="code最大32字符")
+	 @Size(max=32,message="code最大32字符")
      private String code;
      /**类型0企业1部门2组*/
-	@NotNull(message="type不能为空")
+	 @NotNull(message="type不能为空")
      private Integer type;
      /**名称*/
-	@NotNull(message="name不能为空")@Size(max=100,message="name最大100字符")
+	 @NotNull(message="name不能为空")@Size(max=100,message="name最大100字符")
      private String name;
      /**父级ID*/
      private Long parentId;
      /**状态0启动*/
      private Integer state;
      /**备注*/
-	@Size(max=255,message="memo最大255字符")
+	 @Size(max=255,message="memo最大255字符")
      private String memo;
      /**版本号*/
-	@NotNull(message="version不能为空")
      private Integer version;
      /**排序*/
      private Integer orderNo;
      /**关键字*/
-	@Size(max=255,message="keyword最大255字符")
+	 @Size(max=255,message="keyword最大255字符")
      private String keyword;
      /**删除标记(0正常1删除)*/
-	@NotNull(message="del_flag不能为空")
      private Integer delFlag;
      /**建立者ID*/
      private Long createId;
@@ -52,11 +50,8 @@ public class OrgInfoDto extends BaseDto {
      /**更新时间*/
      private Date dateUpdated;
 
-    /**
-     * 子对象集合
-     */
+    /** 子对象集合 */
     private List<OrgInfoDto> nodes;
-
     private String text;
     private Integer[] tags;
     public String getText(){

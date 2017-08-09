@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hsd.account.staff.dao.auth.IAuthRoleVsMenuDao">
 
-
-
     <!-- 新增 批量数据 -->
     <insert id="insertBatch"  >
         insert into auth_role_vs_menu (
@@ -21,6 +19,5 @@
             )
         </foreach>
     </insert>
-
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.hsd.account.staff.api.org;
 
 
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -44,7 +45,7 @@ public interface IOrgInfoService {
      * <p>信息列表 分页。
      */
     @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsPage")
-    public List<OrgInfoDto> findDataIsPage(OrgInfoDto dto);
+    public PageInfo findDataIsPage(OrgInfoDto dto);
 
     /**
      * <p>信息列表。

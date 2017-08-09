@@ -47,7 +47,7 @@
 												<form id="info_search_form"
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
-													ng-submit="loadPage(1)">
+													ng-submit="page()">
 													<input type="hidden" name="pageNum" id="pageNumA" value="1">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
@@ -177,8 +177,13 @@
         });
     });
     var loadPage = function (pageIndex) {
-        $('#pageNumA').val(pageIndex);
-        $.post( site.${tableNameL}.page+pageIndex,$('#info_search_form').serialize(), function (result) {
+        if(pageIndex){
+            $('#pageNumA').val(pageIndex);
+        }else{
+            pageIndex=$('#pageNumA').val();
+        }
+        console.info("加载页码"+pageIndex)
+        $.post( site.sysDomain.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             $data.feedback=false;
             $data.result=result;
             $data.$apply();

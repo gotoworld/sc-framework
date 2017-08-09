@@ -31,7 +31,7 @@ import java.util.List;
 @RestController
 @Slf4j
 public class OrgUserController extends BaseController {
-	private static final String acPrefix="/api/account/org/user/";
+	private static final String acPrefix="/api/account/staff/org/user/";
 
 	@Autowired
 	private IOrgUserService orgUserService;

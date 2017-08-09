@@ -28,7 +28,7 @@ public class SysDomainController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private ISysDomainService sysDomainService;
-    private static final String acPrefix = "/boss/account/sys/sysDomain/";
+    private static final String acPrefix = "/boss/account/staff/sys/sysDomain/";
 
     /**
      * <p>信息分页 (未删除)。

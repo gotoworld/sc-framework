@@ -90,7 +90,7 @@ for(t in columns){
 				case "13":{ layout("input/13_show[text].btl",{t:t}){};break;}
 				case "14":{ layout("input/14_show[html].btl",{t:t}){};break;}
 			}
-		   if(_col_edit_count==scfg._col_edit.~size/2){
+		   if(_col_edit_count==parseInt(scfg._col_edit.~size/2)-1){
 	 /]
 
 					</div>

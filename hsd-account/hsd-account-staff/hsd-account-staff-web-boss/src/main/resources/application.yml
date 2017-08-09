@@ -64,7 +64,7 @@ shiro:
   success-url: /info
   unauthorized-url: /error/noauth
   filterChainDefinitionMap:
-    /boss/account/sign/**: anon
+    /boss/account/staff/sign/**: anon
     /boss/**: authc
 
 # 自定义配置

@@ -21,7 +21,6 @@
     <link href="/css/common.css" rel="stylesheet">
 </head>
 
-
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
@@ -69,7 +68,7 @@
 										</tr>
 									</table>
 									@[ if ("1"==scfg._insert){ /]
-									<a href="#" onclick="openMyBoxLayer('a','');" ng-show='user.hasPermission("${tableNameL}:add")' class="hid btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="#" onclick="openMyBoxLayer('a','');" ng-show='user.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									@[ } /]
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
@@ -89,8 +88,8 @@
                                     				<td>{{item.${t.key}}}</td>
                                     				@[ } /]
                                     				<td>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:edit")'  ng-click="edit('@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /]')" class="label label-success hid" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:del")'  ng-click="del('@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /]');};" rel="nofollow" class="label label-danger hid" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:edit")'  ng-click="edit('@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /]')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:del")'  ng-click="del('@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /]');};" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data==null || result.data.length==0">
@@ -128,14 +127,14 @@
 <script type="text/javascript" src="/js/common.js"></script>
 
 <script type="text/javascript">
-    /*
+    /* copy to common.js
     var site={
         ${tableNameL}: {
-             view: basePath + "/html${strUtil.getDir(tcfg.schemaConf._view_pkg)}/${tcfg.tableName}"
-            ,page: apiPath.account + "${scfg._web_http}/page/"
-            ,save: apiPath.account + "${scfg._web_http}/save"
-            ,info: apiPath.account + "${scfg._web_http}/info/"
-            ,del: apiPath.account + "${scfg._web_http}/del/"
+             view: basePath + "/html/${strUtil.getDir(tcfg.schemaConf._view_pkg)}/${tcfg.tableName}"
+            ,page: apiPath.${scfg._my_project} + "${scfg._web_http}/page/"
+            ,save: apiPath.${scfg._my_project} + "${scfg._web_http}/save"
+            ,info: apiPath.${scfg._my_project} + "${scfg._web_http}/info/"
+            ,del: apiPath.${scfg._my_project} + "${scfg._web_http}/del/"
         }
     }
     */
@@ -160,8 +159,8 @@
                 $.post( site.${tableNameL}.del + id,{}, function (result) {
                     $data.feedback=true;
                     if(result.code==0){
-                        alert('删除成功');
                         loadPage($('#pageNumA').val());
+                        alert('删除成功');
                     }else{
                         alert(result.message);
                     }

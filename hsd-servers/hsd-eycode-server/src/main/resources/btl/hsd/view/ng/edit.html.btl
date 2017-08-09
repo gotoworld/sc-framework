@@ -219,15 +219,17 @@ for(t in columns){
     angular.module("app", [ ]).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
         $scope.save = function () {
-            $.post(site.${tableNameL}.save, $('#${tableNameL}_01').serialize(),function (result) {
-                    //console.info("获取数据.." + JSON.stringify(result));
-                    if (result.code == 0) {
-                        alert('保存成功!');
-                        parent.location.href = site.${tableNameL}.view+'.html';
-                    } else {
-                        alert(result.message);
-                    }
-            }, 'json');
+            if($("##${tableNameL}_01").valid()){
+                $.post(site.${tableNameL}.save, $('#${tableNameL}_01').serialize(),function (result) {
+                        //console.info("获取数据.." + JSON.stringify(result));
+                        if (result.code == 0) {
+                            alert('保存成功!');
+                            parent.location.href = site.${tableNameL}.view+'.html';
+                        } else {
+                            alert(result.message);
+                        }
+                }, 'json');
+            }
         }
     } ]);
     $(function () {

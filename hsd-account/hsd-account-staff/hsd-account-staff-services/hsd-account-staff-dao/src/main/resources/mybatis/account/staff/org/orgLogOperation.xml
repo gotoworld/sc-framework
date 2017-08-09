@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.staff.dao.org.IOrgLogOperationDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.type as "type"
+        ,t1.domain_code as "domainCode"
+        ,t1.memo as "memo"
+        ,t1.detail_info as "detailInfo"
+        ,t1.date_created as "dateCreated"
+        ,t1.create_id as "createId"
+        ,t1.create_name as "createName"
+        ,t1.create_ip as "createIp"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.staff.entity.org.OrgLogOperation" parameterType="com.hsd.account.staff.entity.org.OrgLogOperation">
+        select
+        <include refid="Base_Column_List"/>
+        from org_log_operation t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgLogOperation"  useGeneratedKeys="true" keyProperty="id"  >
+        insert into org_log_operation (
+         
+            type 
+           ,domain_code 
+           ,memo 
+           ,detail_info 
+           ,date_created 
+           ,create_id 
+           ,create_name 
+           ,create_ip 
+        ) values (
+         
+            #{type} 
+           ,#{domainCode} 
+           ,#{memo} 
+           ,#{detailInfo} 
+           ,now()
+           ,#{createId} 
+           ,#{createName} 
+           ,#{createIp} 
+        )
+    </insert>
+
+
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.staff.entity.org.OrgLogOperation" resultType="com.hsd.account.staff.entity.org.OrgLogOperation">
+        select
+        <include refid="Base_Column_List"/>
+        from org_log_operation t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+</mapper>

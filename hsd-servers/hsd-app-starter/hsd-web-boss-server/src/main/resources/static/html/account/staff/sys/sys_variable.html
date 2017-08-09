@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
     <meta charset="UTF-8">
-    <title>//TODO ${tcfg.tableComment}</title>
+    <title>//TODO 系统_数据字典表</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta name="description" content="memo of your site" />
@@ -18,9 +18,7 @@
     <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
-    @[ if ("1"==scfg._tree) { /]
     <link href="/plugins/hplus/css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
-    @[ } /]
     <link href="/css/common.css" rel="stylesheet">
 </head>
 
@@ -30,13 +28,10 @@
 			<div class="col-md-12">
 				<div class="clients-list">
 					<ul class="nav nav-tabs">
-					@[ if ("1"==scfg._tree) { /]
 					    <li class="active"><a data-toggle="tab" href="#tab-0" aria-expanded="true">信息树</a></li>
-					@[ } /]
-						<li class="${'1'==scfg._tree?'':'active'}"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
 					</ul>
 					<div class="tab-content">
-					@[ if ("1"==scfg._tree) { /]
 					    <div id="tab-0" class="tab-pane">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content">
@@ -45,9 +40,7 @@
                                             <div class="col-md-4">
                                                 <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
-                                                        @[ if ("1"==scfg._insert){ /]
-                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-                                                        @[ } /]
+                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("sysVariable:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
                                                         <div class="ibox-tools">
                                                             <a href="#" ng-click="loadTree()">
                                                                 <i class="glyphicon glyphicon-refresh"></i>
@@ -62,9 +55,9 @@
                                             <div class="col-md-8">
                                                 <table class="table table-bordered table-striped  table-hover" style="min-width:500px;width: 500px;">
                                                     <thead  id="event_output">
-                                                    @[ for(t in scfg._col_show){ /]
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    @[ } /]
+                                                    <tr><th class="col-md-2">#</th><th></th></tr>
+                                                    <tr><th class="col-md-2">#</th><th></th></tr>
                                                     </thead>
                                                 </table>
                                             </div>
@@ -74,8 +67,7 @@
                                 </div>
                             </div>
                         </div>
-                    @[ } /]
-						<div id="tab-1" class="tab-pane ${'1'==scfg._tree?'':'active'}">
+						<div id="tab-1" class="tab-pane ">
 							<div class="ibox float-e-margins">
 								<div class="ibox-content">
 									<table class="table">
@@ -104,40 +96,32 @@
 											</td>
 										</tr>
 									</table>
-									@[ if ("1"==scfg._insert){ /]
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									@[ } /]
+									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("sysVariable:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				@[ for(t in scfg._col_show){ /]
-                                    				<th>${t.value}</th>
-                                    				@[ } /]
+                                    				<th>编码</th>
+                                    				<th>创建时间</th>
+                                    				<th>名称</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{$index+1}}</td>
-                                    				@[ for(t in scfg._col_show){ /]
-                                    				<td>{{item.${t.key}${columnMap[t.key]=='Date'?" | date:'yyyy-MM-dd HH:mm:ss'":""}}}</td>
-                                    				@[ } /]
+                                    				<td>{{item.code}}</td>
+                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.name}}</td>
                                     				<td>
-                                    				@[ if ("1"==scfg._detail) { /]
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:info")'  ng-click="info('i',@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                    @[ } /]
-                                                    @[ if("1"==scfg._update){ /]
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:edit")'  ng-click="edit('e',@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                    @[ } /]
-                                                    @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:del")'   ng-click="del(@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-                                                    @[ } /]
+                                                      <a href="javascript:;" ng-show='user.hasPermission("sysVariable:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("sysVariable:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("sysVariable:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="${scfg._col_show.~size+2}">
+                                    				<td colspan="5">
                                     				<div class="alert"><strong>{{result.message}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -167,29 +151,13 @@
 <script src="/plugins/layer/layer.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 
-@[ if ("1"==scfg._tree) { /]
 <script type="text/javascript" src="/plugins/hplus/js/plugins/treeview/bootstrap-treeview.js"></script>
-@[ } /]
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-    /* copy to common.js
-    var site={
-        ${tableNameL}: {
-             view: basePath + "/html/${strUtil.getDir(tcfg.schemaConf._view_pkg)}/${tcfg.tableName}"
-            ,page: apiPath.${scfg._my_project} + "${scfg._web_http}/page/"
-            @[ if ("1"==scfg._tree) { /]
-            ,tree: apiPath.${scfg._my_project} + "${scfg._web_http}/tree"
-            @[ } /]
-            ,save: apiPath.${scfg._my_project} + "${scfg._web_http}/save"
-            ,info: apiPath.${scfg._my_project} + "${scfg._web_http}/info/"
-            ,del: apiPath.${scfg._my_project} + "${scfg._web_http}/del/"
-        }
-    }
-    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -199,16 +167,16 @@
         $data = $scope;
         $scope.edit = function (title,id) {
             $data.feedback=true;
-            sessionStorage.setItem(site.${tableNameL}.info,id);
-            openMyBoxLayer(title,site.${tableNameL}.view+'_edit.html');
+            sessionStorage.setItem(site.sysVariable.info,id);
+            openMyBoxLayer(title,site.sysVariable.view+'_edit.html');
         }
         $scope.info = function (title,id) {
-            sessionStorage.setItem(site.${tableNameL}.info,id);
-            openMyBoxLayer(title,site.${tableNameL}.view+'_info.html');
+            sessionStorage.setItem(site.sysVariable.info,id);
+            openMyBoxLayer(title,site.sysVariable.view+'_info.html');
         }
         $scope.del = function (id) {
             if(confirm('确认删除吗?')) {
-                $.post( site.${tableNameL}.del + id,{}, function (result) {
+                $.post( site.sysVariable.del + id,{}, function (result) {
                     $data.feedback=true;
                     if(result.code==0){
                         loadPage($('#pageNumA').val());
@@ -231,14 +199,13 @@
             pageIndex=$('#pageNumA').val();
         }
         console.info("加载页码"+pageIndex)
-        $.post( site.${tableNameL}.page+pageIndex,$('#info_search_form').serialize(), function (result) {
+        $.post( site.sysVariable.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             $data.feedback=false;
             $data.result=result;
             $data.tagPages=tag.page(result.data);
             $data.$apply();
         }, 'json');
     }
-    @[ if ("1"==scfg._tree) { /]
     var treeviewA=$('#disTree').treeview({
         color: "#428bca",
         showTags: true,
@@ -247,15 +214,15 @@
             var trStr ='';
                 trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
                 trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
-                if(user.hasPermission("${tableNameL}:info") || user.hasPermission("${tableNameL}:edit") || user.hasPermission("${tableNameL}:del")){
+                if(user.hasPermission("sysVariable:info") || user.hasPermission("sysVariable:edit") || user.hasPermission("sysVariable:del")){
                     trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
-                    if(user.hasPermission("${tableNameL}:info")){
+                    if(user.hasPermission("sysVariable:info")){
                         trStr+=' <a href="javascript:;"  ng-click="info(\'i\','+node.id+')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
                     }
-                    if(user.hasPermission("${tableNameL}:edit")){
+                    if(user.hasPermission("sysVariable:edit")){
                         trStr+=' <a href="javascript:;"  ng-click="edit(\'e\','+node.id+')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
                     }
-                    if(user.hasPermission("${tableNameL}:del") && node.nodes==undefined && node.tags[0]==0){
+                    if(user.hasPermission("sysVariable:del") && node.nodes==undefined && node.tags[0]==0){
                         trStr += ' <a href="javascript:;"  ng-click="del('+ node.id + ')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
                     }
                     trStr+=' </th></tr>';
@@ -264,7 +231,7 @@
         }
     });
     function loadTree(){
-        $.get(site.${tableNameL}.tree, {},function (result) {
+        $.get(site.sysVariable.tree, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 treeviewA.treeview({ data:result.data });
@@ -273,13 +240,10 @@
             }
         }, 'json');
     }
-    @[ } /]
      $(function () {
         user.init(function(){
             loadPage(1);
-            @[ if ("1"==scfg._tree) { /]
             loadTree();
-            @[ } /]
         });
      });
 </script>

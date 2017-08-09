@@ -99,8 +99,8 @@
                            @[ if(beanLP.index==1){ /] <input type="hidden" name="${bean.tableName!}_db" value="${bean.dbName!}">@[ } /]
                             ${beanLP.index<10?'0'+beanLP.index:beanLP.index}#
                             <input type="hidden" name="tsuffix_${table}_${bean.columnNameFormat}_comment" value="${bean.columnComment!}">
-                            @[ if(bean.pk!='PRI'){ /]
-                            <label style="color: red;"><input type="checkbox" onclick="ec.clickCheck2(this)" ${strUtil.containsStr(' version keyword del_flag create_id date_created date_updated bi_update_ts ',bean.columnName)?'':'checked'} name="tsuffix_${table}_col_edit" value="${bean.columnNameFormat}">编辑</label>
+                            @[ if(!(isAutoPk==1 && bean.pk=='PRI')){ /]
+                            <label style="color: red;"><input type="checkbox" onclick="ec.clickCheck2(this)" ${strUtil.containsStr(' id version keyword del_flag create_id date_created date_updated bi_update_ts ',bean.columnName)?'':'checked'} name="tsuffix_${table}_col_edit" value="${bean.columnNameFormat}">编辑</label>
                             <select name="tsuffix_${table}_${bean.columnNameFormat}_edit_type" style="width: 130px;">
                                 <option value="1">--input[text]--</option>
                                 <option value="0">--input[hidden]--</option>

@@ -187,7 +187,7 @@
             }
             switch(tempName){
                 case 'hsd':{
-                    $('._view_pkg').val(_my_project+'/'+_my_pkg);
+                    $('._view_pkg').val(_my_project.replace(/\./g,"/")+'/'+_my_pkg);
 
                     _my_pkg='.'+_my_pkg;
                     _my_project='.'+_my_project;
@@ -200,7 +200,7 @@
                     $('._biz_pkg').val('com.hsd'+_my_project+'.service'+_my_pkg);
                     $('._web_pkg').val('com.hsd'+_my_project+'.web.controller'+_my_pkg);
                     $('._web_http').each(function(){
-                        $(this).val('/boss/'+httpMyPkg+'/'+$(this).attr('data'));
+                        $(this).val('/boss/'+httpMyPkg.replace(/\./g,"/")+'/'+$(this).attr('data'));
                     });
                     break;
                 }

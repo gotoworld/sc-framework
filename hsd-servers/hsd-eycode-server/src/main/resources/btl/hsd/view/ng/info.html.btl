@@ -27,9 +27,9 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
 
-            @[ for( t in beanVo!){ /]
+            @[ for( t in beanVo!){
                  layout("input/14_show[html].btl",{t:t}){};
-            @[ } /]
+             } /]
 
             <div class="clearfix "></div>
             <div class="col-md-12" style="height: 50px;">

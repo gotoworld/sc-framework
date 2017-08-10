@@ -45,12 +45,10 @@ public class SysVariableDto extends BaseDto {
     @Size(max=255,message="memo最大255字符")
     private String memo;
     /**版本号*/
-    @NotNull(message="version不能为空")
     private Integer version;
     /**排序*/
     private Integer orderNo;
     /**删除标记(0正常1删除)*/
-    @NotNull(message="del_flag不能为空")
     private Integer delFlag;
     /**建立者ID*/
     private Long createId;

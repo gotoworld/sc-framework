@@ -34,10 +34,8 @@ public class SysMenuDto extends BaseDto {
      /**排序*/
      private Integer orderNo;
      /**版本号*/
-	@NotNull(message="version不能为空")
      private Integer version;
      /**是否删除*/
-	@NotNull(message="del_flag不能为空")
      private Integer delFlag;
      /**创建时间*/
      private Date dateCreated;

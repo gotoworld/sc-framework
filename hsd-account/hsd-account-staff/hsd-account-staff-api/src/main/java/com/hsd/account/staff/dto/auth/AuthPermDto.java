@@ -42,7 +42,6 @@ public class AuthPermDto extends BaseDto {
 	@Size(max=255,message="keyword最大255字符")
      private String keyword;
      /**是否删除*/
-	@NotNull(message="del_flag不能为空")
      private Integer delFlag;
      /**建立者ID*/
      private Long createId;

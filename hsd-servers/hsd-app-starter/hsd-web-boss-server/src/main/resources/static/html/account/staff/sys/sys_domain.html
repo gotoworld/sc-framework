@@ -40,7 +40,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="page()">
-													<input type="hidden" name="pageNum" id="pageNumA" value="1" ng-bind="result.data.pageIndex?result.data.pageIndex:1">
+													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
@@ -69,7 +69,7 @@
                                     				<th>创建时间</th>
                                     				<th>系统名称</th>
                                     				<th>DNS</th>
-                                    				<th>是否展示</th>
+                                    				<th>是否展示0否1是</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
@@ -84,11 +84,11 @@
                                     				<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysDomain:info")'  ng-click="info('i',item.code)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysDomain:edit")'  ng-click="edit('e',item.code)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("sysDomain:del")'  ng-click="del(item.code)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("sysDomain:del")'   ng-click="del(item.code)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="8">
+                                    				<td colspan="7">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -124,6 +124,17 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
+    /* copy to common.js
+    var site={
+        sysDomain: {//系统_域
+             view: basePath + "/html/account/staff/sys/sys_domain"
+            ,page: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/page/"
+            ,save: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/save"
+            ,info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
+            ,del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"
+        }
+    }
+    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -131,6 +142,7 @@
     });
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
             loadPage(1);
         });
@@ -160,6 +172,7 @@
             loadPage(pageIndex);
         }
     });
+
     var loadPage = function (pageIndex) {
         if(pageIndex){
             $('#pageNumA').val(pageIndex);
@@ -171,7 +184,7 @@
             $data.feedback=false;
             $data.result=result;
             $data.tagPages=tag.page(result.data);
-            if(!$data.$$phase) $data.$apply();
+            $data.$apply();
         }, 'json');
     }
 </script>

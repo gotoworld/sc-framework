@@ -34,8 +34,8 @@
 						</div>
 					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
-					<input type="hidden" name="token" value="{{item.token}}" />
-					<input type="hidden" name="newFlag" value="{{item.newFlag}}" />
+					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
+					<input type="hidden" name="newFlag" value="{{newFlag}}" />
 					<div class="clearfix "></div>
 					<div class="col-sm-6 b-r">
 
@@ -121,6 +121,11 @@
 
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        user.init(function(){
+            $data.newFlag=sessionStorage.getItem(site.authPerm.info);
+            if($data.newFlag) $data.uuidToken=util.guid();
+            loadInfo(sessionStorage.getItem(site.authRole.info));
+        });
         $scope.save = function () {
             if($("#authRole_01").valid()){
                 $.post(site.authRole.save, $('#authRole_01').serialize(),function (result) {
@@ -139,12 +144,6 @@
             return val;
         }
     });
-    $(function () {
-       user.init(function(){
-           loadInfo(sessionStorage.getItem(site.authRole.info));
-       });
-    });
-
     var loadInfo=function(id){
         $.get(site.authRole.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));

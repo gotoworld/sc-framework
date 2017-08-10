@@ -37,7 +37,7 @@
 					</ul>
 					<div class="tab-content">
 					@[ if ("1"==scfg._tree) { /]
-					    <div id="tab-0" class="tab-pane">
+					    <div id="tab-0" class="tab-pane active">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content">
                                     <div class="row">

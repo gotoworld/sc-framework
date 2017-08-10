@@ -2,6 +2,7 @@ package ${scfg._api_pkg};
 
 import ${scfg._dto_pkg}.${tcfg.tableNameFormat!}Dto;
 import com.hsd.framework.Response;
+import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * <p>${tcfg.tableComment} 业务处理接口类。
  */
-@FeignClient(value = "\${feign.name.${scfg._my_project!}}")
+@FeignClient(value = "\${feign.name.${scfg._my_project!}}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface I${tcfg.tableNameFormat!}Service {
     String acPrefix = "/feign/${strUtil.getDir(scfg._my_project)}/I${tcfg.tableNameFormat!}Service";
     @[ if ("1"==scfg._insert||"1"==scfg._update) { /]

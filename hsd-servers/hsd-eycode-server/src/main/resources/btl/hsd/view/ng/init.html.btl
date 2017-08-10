@@ -138,7 +138,7 @@
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
                                     				<td colspan="${scfg._col_show.~size+2}">
-                                    				<div class="alert"><strong>{{result.message}}</strong></div>
+                                    				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
                                     		</tbody>

@@ -125,7 +125,7 @@
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
                                     				<td colspan="6">
-                                    				<div class="alert"><strong>{{result.message}}</strong></div>
+                                    				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
                                     		</tbody>
@@ -161,18 +161,6 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-    /* copy to common.js
-    var site={
-        orgInfo: {
-             view: basePath + "/html/account/staff/org/org_info"
-            ,page: apiPath.account.staff + "/boss/account/staff/org/orgInfo/page/"
-            ,tree: apiPath.account.staff + "/boss/account/staff/org/orgInfo/tree"
-            ,save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
-            ,info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
-            ,del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
-        }
-    }
-    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -180,6 +168,10 @@
     });
     angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
+        user.init(function(){
+            loadPage(1);
+            loadTree();
+        });
         $scope.edit = function (title,id) {
             $data.feedback=true;
             sessionStorage.setItem(site.orgInfo.info,id);
@@ -255,12 +247,6 @@
             }
         }, 'json');
     }
-     $(function () {
-        user.init(function(){
-            loadPage(1);
-            loadTree();
-        });
-     });
 </script>
 </body>
 </html>

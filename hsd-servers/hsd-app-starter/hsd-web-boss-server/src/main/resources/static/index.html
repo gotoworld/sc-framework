@@ -60,16 +60,17 @@
                     <a class="J_menuItem" href="/html/home.html"> <i class="fa fa-home"></i> <span class="nav-label">我的首页</span></a>
                 </li>
 
-                <li ng-show='user.hasPermission("memCategory:menu")' ><a href="#"><i class="glyphicon glyphicon-credit-card"></i> <span class="nav-label"> </span><span class="fa arrow"></span>系统管理</a>
+                <li ng-show='user.hasPermission("sys:menu")' ><a href="#"><i class="glyphicon glyphicon-credit-card"></i> <span class="nav-label"> </span><span class="fa arrow"></span>系统管理</a>
                     <ul class="nav nav-second-level">
                         <li ng-show='user.hasPermission("sysDomain:menu")' ><a class="J_menuItem" href="/html/account/staff/sys/sys_domain.html">系统域</a></li>
-                        <li ng-show='user.hasPermission("x:menu")' ><a class="J_menuItem" href="/html/l">组织机构</a></li>
-                        <li ng-show='user.hasPermission("x:menu")' ><a class="J_menuItem" href="/html/l">用户管理</a></li>
-                        <li ng-show='user.hasPermission("x:menu")' ><a class="J_menuItem" href="/html/l">功能(权限)</a></li>
+                        <li ng-show='user.hasPermission("orgInfo:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_info.html">组织机构</a></li>
+                        <li ng-show='user.hasPermission("orgUser:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_user.html">用户管理</a></li>
+                        <li ng-show='user.hasPermission("authPerm:menu")' ><a class="J_menuItem" href="/html/account/staff/auth/auth_perm.html">功能(权限)</a></li>
                         <li ng-show='user.hasPermission("sysMenu:menu")' ><a class="J_menuItem" href="/html/account/staff/sys/sys_menu.html">菜单管理</a></li>
-                        <li ng-show='user.hasPermission("x:menu")' ><a class="J_menuItem" href="/html/l">角色管理</a></li>
+                        <li ng-show='user.hasPermission("authRole:menu")' ><a class="J_menuItem" href="/html/account/staff/auth/auth_role.html">角色管理</a></li>
                         <li ng-show='user.hasPermission("sysVariable:menu")' ><a class="J_menuItem" href="/html/account/staff/sys/sys_variable.html">数据字典</a></li>
-                        <li ng-show='user.hasPermission("x:menu")' ><a class="J_menuItem" href="/html/l">日志管理</a></li>
+                        <li ng-show='user.hasPermission("orgLogLogin:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_log_login.html">员工登录日志</a></li>
+                        <li ng-show='user.hasPermission("orgLogOperation:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_log_operation.html">员工操作日志</a></li>
                     </ul>
                 </li>
             </ul>
@@ -243,12 +244,10 @@
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
-    angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
+    angular.module("app", []).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
-        user.init(function () {
-
-        });
-    });
+        user.init(function(){});
+    }]);
 </script>
 </body>
 </html>

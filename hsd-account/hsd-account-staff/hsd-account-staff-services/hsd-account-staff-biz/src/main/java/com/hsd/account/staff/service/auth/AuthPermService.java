@@ -1,10 +1,11 @@
 package com.hsd.account.staff.service.auth;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.auth.IAuthPermService;
 import com.hsd.account.staff.dao.auth.IAuthPermDao;
-import com.hsd.account.staff.entity.auth.AuthPerm;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
+import com.hsd.account.staff.entity.auth.AuthPerm;
 import com.hsd.framework.NodeTree;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -79,17 +80,21 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         }
         return result;
     }
-
-    public List<AuthPermDto> findDataIsPage(@RequestBody AuthPermDto dto) {
-        List<AuthPermDto> results = null;
+    @Override
+    public PageInfo findDataIsPage(@RequestBody AuthPermDto dto) throws Exception {
+        PageInfo pageInfo=null;
         try {
-            PageHelper.startPage(PN(dto.getPageNum()), PS( dto.getPageSize()));
-            results = copyTo(authPermDao.findDataIsPage(copyTo(dto,AuthPerm.class)),AuthPermDto.class);
+            if (dto == null)throw new RuntimeException("参数异常!");
+            AuthPerm entity = copyTo(dto, AuthPerm.class);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            List list = authPermDao.findDataIsPage(entity);
+            pageInfo=new PageInfo(list);
+            pageInfo.setList(copyTo(pageInfo.getList(), AuthPermDto.class));
         } catch (Exception e) {
             log.error("信息[分页]查询失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
-        return results;
+        return pageInfo;
     }
 
     public List<AuthPermDto> findDataIsList(@RequestBody AuthPermDto dto) {

@@ -1,18 +1,19 @@
 package com.hsd.account.staff.service.org;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.org.IOrgUserService;
 import com.hsd.account.staff.dao.auth.IAuthRoleDao;
-import com.hsd.account.staff.entity.org.OrgOrgVsUser;
 import com.hsd.account.staff.dao.auth.IAuthUserVsRoleDao;
 import com.hsd.account.staff.dao.org.IOrgInfoDao;
 import com.hsd.account.staff.dao.org.IOrgOrgVsUserDao;
 import com.hsd.account.staff.dao.org.IOrgUserDao;
-import com.hsd.account.staff.dto.org.OrgInfoDto;
-import com.hsd.account.staff.entity.auth.AuthUserVsRole;
-import com.hsd.account.staff.entity.org.OrgUser;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
+import com.hsd.account.staff.entity.auth.AuthUserVsRole;
+import com.hsd.account.staff.entity.org.OrgOrgVsUser;
+import com.hsd.account.staff.entity.org.OrgUser;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
@@ -152,16 +153,21 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 
-    public List<OrgUserDto> findDataIsPage(@RequestBody OrgUserDto dto) {
-        List<OrgUserDto> results = null;
+    @Override
+    public PageInfo findDataIsPage(@RequestBody OrgUserDto dto) throws Exception {
+        PageInfo pageInfo=null;
         try {
+            if (dto == null)throw new RuntimeException("参数异常!");
+            OrgUser entity = copyTo(dto, OrgUser.class);
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            results = copyTo(orgUserDao.findDataIsPage(copyTo(dto,OrgUser.class)),OrgUserDto.class);
+            List list = orgUserDao.findDataIsPage(entity);
+            pageInfo=new PageInfo(list);
+            pageInfo.setList(copyTo(pageInfo.getList(), OrgUserDto.class));
         } catch (Exception e) {
-            log.error("信息查询失败!", e);
+            log.error("信息[分页]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
-        return results;
+        return pageInfo;
     }
 
     public List<OrgUserDto> findDataIsList(@RequestBody OrgUserDto dto) {

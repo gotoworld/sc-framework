@@ -1,14 +1,15 @@
 package com.hsd.account.staff.dto.org;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.dto.BaseDto;
-import javax.validation.constraints.Max;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -68,5 +69,22 @@ public class OrgUserDto extends BaseDto {
      private Date dateUpdated;
      /**BI时间戳*/
      private Date biUpdateTs;
+
+
+
+     /** 用户角色id集合*/
+     private List<Long> roleIdArray;
+     /**用户角色名称集合*/
+     private String roleNames;
+     /**部门id集合*/
+     private List<Long> orgIdArray;
+
+     private String oldpwd;
+     private String newpwd;
+     private String confirmpwd;
+     /**超级管理员标记*/
+     private Integer iissuperman;
+     /**sessionid*/
+     private String sid;
 
 }

@@ -122,7 +122,7 @@
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
                                     				<td colspan="5">
-                                    				<div class="alert"><strong>{{result.message}}</strong></div>
+                                    				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
                                     		</tbody>
@@ -165,6 +165,10 @@
     });
     angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
+        user.init(function(){
+            loadPage(1);
+            loadTree();
+        });
         $scope.edit = function (title,id) {
             $data.feedback=true;
             sessionStorage.setItem(site.sysVariable.info,id);
@@ -240,12 +244,6 @@
             }
         }, 'json');
     }
-     $(function () {
-        user.init(function(){
-            loadPage(1);
-            loadTree();
-        });
-     });
 </script>
 </body>
 </html>

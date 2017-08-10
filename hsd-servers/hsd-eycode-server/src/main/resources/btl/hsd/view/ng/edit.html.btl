@@ -217,8 +217,9 @@ for(t in columns){
         },1000);
     }
 
-    angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
            loadInfo(sessionStorage.getItem(site.${tableNameL}.info));
         });
@@ -239,7 +240,7 @@ for(t in columns){
             KindEditor.html('#'+key,val);
             return val;
         }
-    } ]);
+    });
     var loadInfo=function(id){
         $.get(site.${tableNameL}.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));

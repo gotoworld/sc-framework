@@ -78,7 +78,7 @@ for(t in columns){
 					/]
 					<input type="hidden" name="${t.columnNameFormat}" value="{{item.${t.columnNameFormat}}}" />
 					@[ }} /]
-					<input type="hidden" name="token" value="{{item.token}}" />
+					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag}}" />
 					<div class="clearfix "></div>
 					<div class="col-sm-6 b-r">
@@ -222,6 +222,7 @@ for(t in columns){
         $ngCompile=$compile;
         user.init(function(){
            $data.newFlag=sessionStorage.getItem(site.${tableNameL}.info);
+           if($data.newFlag) $data.uuidToken=util.guid();
            loadInfo(sessionStorage.getItem(site.${tableNameL}.info));
         });
         $scope.save = function () {

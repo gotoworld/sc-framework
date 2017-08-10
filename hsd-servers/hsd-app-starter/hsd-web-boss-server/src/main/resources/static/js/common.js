@@ -100,7 +100,7 @@ $.ajaxSetup({
 $(document).ajaxComplete(function (event, xhr, settings) {
     if (xhr && xhr.responseText) {
         var result = JSON.parse(xhr.responseText);
-        console.info("result=="+JSON.stringify(result))
+        //console.info("result=="+JSON.stringify(result))
         if (result.code == 403) {//授权验证失败!
             // console.info('授权验证失败!需跳转到登陆界面');
             alert('授权验证失败,请重新登陆!');
@@ -203,14 +203,14 @@ var user = {
     }
     //-- shiro 权限
     , hasPermission: function (str) {
-        console.info("permsstr="+str)
+        //console.info("permsstr="+str)
         return true;
         var hsd_staff_authorizationInfo = sessionStorage.getItem("hsd_staff_authorizationInfoPerms");
-        console.info("hsd_staff_authorizationInfo="+hsd_staff_authorizationInfo)
+        //console.info("hsd_staff_authorizationInfo="+hsd_staff_authorizationInfo)
         if (hsd_staff_authorizationInfo) {
             var permsArr = hsd_staff_authorizationInfo.split(",");
-            console.info("permsArr="+permsArr)
-            console.info("permsstr="+str)
+            //console.info("permsArr="+permsArr)
+            //console.info("permsstr="+str)
             if (permsArr && permsArr.indexOf(str) != -1) {
                 return true;
             } else {

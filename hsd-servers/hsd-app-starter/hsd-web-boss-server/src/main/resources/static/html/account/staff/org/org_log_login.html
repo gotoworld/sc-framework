@@ -59,7 +59,6 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("orgLogLogin:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -134,27 +133,9 @@
         user.init(function(){
             loadPage(1);
         });
-        $scope.edit = function (title,id) {
-            $data.feedback=true;
-            sessionStorage.setItem(site.orgLogLogin.info,id);
-            openMyBoxLayer(title,site.orgLogLogin.view+'_edit.html');
-        }
         $scope.info = function (title,id) {
             sessionStorage.setItem(site.orgLogLogin.info,id);
             openMyBoxLayer(title,site.orgLogLogin.view+'_info.html');
-        }
-        $scope.del = function (id) {
-            if(confirm('确认删除吗?')) {
-                $.post( site.orgLogLogin.del + id,{}, function (result) {
-                    $data.feedback=true;
-                    if(result.code==0){
-                        loadPage($('#pageNumA').val());
-                        alert('删除成功');
-                    }else{
-                        alert(result.message);
-                    }
-                });
-            }
         }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);

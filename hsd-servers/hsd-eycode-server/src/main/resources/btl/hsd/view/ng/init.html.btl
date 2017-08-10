@@ -197,6 +197,12 @@
     });
     angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
+        user.init(function(){
+            loadPage(1);
+            @[ if ("1"==scfg._tree) { /]
+            loadTree();
+            @[ } /]
+        });
         $scope.edit = function (title,id) {
             $data.feedback=true;
             sessionStorage.setItem(site.${tableNameL}.info,id);
@@ -274,14 +280,6 @@
         }, 'json');
     }
     @[ } /]
-     $(function () {
-        user.init(function(){
-            loadPage(1);
-            @[ if ("1"==scfg._tree) { /]
-            loadTree();
-            @[ } /]
-        });
-     });
 </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -86,5 +87,8 @@ public class OrgUserDto extends BaseDto {
      private Integer iissuperman;
      /**sessionid*/
      private String sid;
-
+     /**用户权限,匹配字符集合*/
+     private Set<String> authorizationInfoPerms;
+     /**用户角色,匹配字符集合*/
+     private Set<String> authorizationInfoRoles;
 }

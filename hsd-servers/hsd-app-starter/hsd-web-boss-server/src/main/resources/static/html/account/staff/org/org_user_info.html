@@ -187,9 +187,9 @@
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
-    angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
-    } ]);
+    });
     $(function () {
         user.init(function(){
            loadInfo(sessionStorage.getItem(site.orgUser.info));

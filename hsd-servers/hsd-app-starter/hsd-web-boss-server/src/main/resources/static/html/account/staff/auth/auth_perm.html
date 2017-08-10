@@ -32,7 +32,7 @@
 						<li class=""><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
 					</ul>
 					<div class="tab-content">
-					    <div id="tab-0" class="tab-pane">
+					    <div id="tab-0" class="tab-pane active">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content">
                                     <div class="row">
@@ -78,7 +78,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="page()">
-													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
+													<input type="hidden" name="pageNum" id="pageNumA" value="1" ng-bind="result.data.pageIndex?result.data.pageIndex:1">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
@@ -167,8 +167,9 @@
         forceParse : !1,
         autoclose : !0
     });
-    angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
             loadPage(1);
             loadTree();
@@ -198,7 +199,7 @@
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }
-    } ]);
+    });
 
     var loadPage = function (pageIndex) {
         if(pageIndex){
@@ -235,7 +236,7 @@
                     }
                     trStr+=' </th></tr>';
                 }
-            $('#event_output').html(trStr);
+            $('#event_output').html($ngCompile(trStr)($data));
         }
     });
     function loadTree(){

@@ -1,12 +1,13 @@
 package com.hsd.account.staff.service.auth;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.auth.IAuthRoleService;
 import com.hsd.account.staff.dao.auth.IAuthRoleDao;
 import com.hsd.account.staff.dao.auth.IAuthRoleVsPermDao;
+import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.entity.auth.AuthRole;
 import com.hsd.account.staff.entity.auth.AuthRoleVsPerm;
-import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
@@ -101,16 +102,21 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return result;
     }
 
-    public List<AuthRoleDto> findDataIsPage(@RequestBody AuthRoleDto dto) {
-        List<AuthRoleDto> results = null;
+    @Override
+    public PageInfo findDataIsPage(@RequestBody AuthRoleDto dto) {
+        PageInfo pageInfo=null;
         try {
-            PageHelper.startPage(PN(dto.getPageNum()), PS( dto.getPageSize()));
-            results = copyTo(authRoleDao.findDataIsPage(copyTo(dto,AuthRole.class)),AuthRoleDto.class);
+            if (dto == null)throw new RuntimeException("参数异常!");
+            AuthRole entity = copyTo(dto, AuthRole.class);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            List list = authRoleDao.findDataIsPage(entity);
+            pageInfo=new PageInfo(list);
+            pageInfo.setList(copyTo(pageInfo.getList(), AuthRoleDto.class));
         } catch (Exception e) {
-            log.error("信息查询失败!", e);
+            log.error("信息[分页]查询失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
-        return results;
+        return pageInfo;
     }
 
     public List<AuthRoleDto> findDataIsList(@RequestBody AuthRoleDto dto) {

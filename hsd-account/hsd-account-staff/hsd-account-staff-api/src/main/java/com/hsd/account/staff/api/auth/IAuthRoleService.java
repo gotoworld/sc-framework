@@ -1,6 +1,7 @@
 package com.hsd.account.staff.api.auth;
 
 
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -14,40 +15,40 @@ import java.util.List;
  */
 @FeignClient(name = "${feign.name.account.staff}")//, fallback = TestServiceHystrix.class)
 public interface IAuthRoleService {
-    String actPrefix = "/feign/account/staff/IAuthRoleService";
+    String acPrefix = "/feign/account/staff/IAuthRoleService";
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     public Response saveOrUpdateData(AuthRoleDto dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteData")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteData")
     public String deleteData(AuthRoleDto dto) throws Exception;
 
     /**
      * <p>逻辑删除。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteDataById")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteDataById")
     public String deleteDataById(AuthRoleDto dto) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsPage")
-    public List<AuthRoleDto> findDataIsPage(AuthRoleDto dto);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
+    public PageInfo findDataIsPage(AuthRoleDto dto);
 
     /**
      * <p>信息列表。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsList")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
     public List<AuthRoleDto> findDataIsList(AuthRoleDto dto);
 
     /**
      * <p>信息详情。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataById")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public AuthRoleDto findDataById(AuthRoleDto dto);
 }

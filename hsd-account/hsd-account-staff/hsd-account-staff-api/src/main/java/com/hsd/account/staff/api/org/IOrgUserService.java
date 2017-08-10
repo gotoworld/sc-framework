@@ -1,8 +1,9 @@
 package com.hsd.account.staff.api.org;
 
 
-import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -16,88 +17,88 @@ import java.util.List;
  */
 @FeignClient(name = "${feign.name.account.staff}")//, fallback = TestServiceHystrix.class)
 public interface IOrgUserService {
-    String actPrefix = "/feign/account/staff/IOrgUserService";
+    String acPrefix = "/feign/account/staff/IOrgUserService";
 
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/saveOrUpdateData")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     public Response saveOrUpdateData(OrgUserDto dto) throws Exception;
 
     /**
      * <p>信息编辑。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/updateData")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updateData")
     public String updateData(OrgUserDto dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteData")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteData")
     public String deleteData(OrgUserDto dto) throws Exception;
 
     /**
      * <p>恢复逻辑删除的数据 单条。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/recoveryDataById")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/recoveryDataById")
     public String recoveryDataById(OrgUserDto dto) throws Exception;
 
     /**
      * <p>逻辑删除 单条。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/deleteDataById")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteDataById")
     public String deleteDataById(OrgUserDto dto) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsPage")
-    public List<OrgUserDto> findDataIsPage(OrgUserDto dto);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
+    public PageInfo findDataIsPage(OrgUserDto dto) throws Exception;
 
     /**
      * <p>信息列表。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataIsList")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
     public List<OrgUserDto> findDataIsList(OrgUserDto dto);
 
     /**
      * <p>信息详情。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDataById")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public OrgUserDto findDataById(OrgUserDto dto);
 
     /**
      * <p>获取用户角色集合。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findRoleDataIsList")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findRoleDataIsList")
     public List<AuthRoleDto> findRoleDataIsList(OrgUserDto dto);
 
     /**
      * <p>获取用户所在部门集合。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findDeptDataIsList")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDeptDataIsList")
     public List<OrgInfoDto> findDeptDataIsList(OrgUserDto dto);
 
     /**
      * <p>某一种角色所有用户。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserList")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserList")
     public List<OrgUserDto> findUserList(OrgUserDto orgUserBean);
 
     /**
      * <p>某一种角色所有用户。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserIsPage")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserIsPage")
     public List<OrgUserDto> findUserIsPage(OrgUserDto orgUserBean);
 
     /**
      * <p>判断用户id是否存在
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/isUidYN")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isUidYN")
     public String isUidYN(String uid);
     /**
      * <p>密码修改
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/updatePwd")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updatePwd")
     public String updatePwd(OrgUserDto dto) throws Exception;
 }

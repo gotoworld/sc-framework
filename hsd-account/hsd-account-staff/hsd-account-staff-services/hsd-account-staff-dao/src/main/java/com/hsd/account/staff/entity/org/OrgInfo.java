@@ -41,4 +41,6 @@ public class OrgInfo extends BaseEntity {
      private Date dateCreated;
      /**更新时间*/
      private Date dateUpdated;
+
+
 }

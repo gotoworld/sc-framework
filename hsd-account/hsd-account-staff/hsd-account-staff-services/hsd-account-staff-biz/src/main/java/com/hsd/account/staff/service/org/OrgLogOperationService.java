@@ -1,6 +1,7 @@
 package com.hsd.account.staff.service.org;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.org.IOrgLogOperationService;
 import com.hsd.account.staff.dao.org.IOrgLogOperationDao;
 import com.hsd.account.staff.dto.org.OrgLogOperationDto;
@@ -23,16 +24,21 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
     @Autowired
     private IOrgLogOperationDao logOperationDao;
 
-    public List<OrgLogOperationDto> findDataIsPage(@RequestBody OrgLogOperationDto dto) {
-        List<OrgLogOperationDto> results = null;
+    @Override
+    public PageInfo findDataIsPage(@RequestBody OrgLogOperationDto dto) {
+        PageInfo pageInfo=null;
         try {
-            PageHelper.startPage(PN(dto.getPageNum()), PS( dto.getPageSize()));
-            results = copyTo(logOperationDao.findDataIsPage(copyTo(dto,OrgLogOperation.class)),OrgLogOperationDto.class);
+            if (dto == null)throw new RuntimeException("参数异常!");
+            OrgLogOperation entity = copyTo(dto, OrgLogOperation.class);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            List list = logOperationDao.findDataIsPage(entity);
+            pageInfo=new PageInfo(list);
+            pageInfo.setList(copyTo(pageInfo.getList(), OrgLogOperationDto.class));
         } catch (Exception e) {
-            log.error("信息查询失败!", e);
+            log.error("信息[分页]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
-        return results;
+        return pageInfo;
     }
     public void info(@RequestParam("type") String type,
                      @RequestParam("memo")String memo,
@@ -55,5 +61,17 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
         } catch (Exception e) {
             log.error("操作日志信息保存失败!", e);
         }
+    }
+    @Override
+    public OrgLogOperationDto findDataById(@RequestBody OrgLogOperationDto dto) throws Exception {
+        OrgLogOperationDto result = null;
+        try {
+            OrgLogOperation entity = copyTo(dto, OrgLogOperation.class);
+            result = copyTo(logOperationDao.selectByPrimaryKey(entity),OrgLogOperationDto.class);
+        } catch (Exception e) {
+            log.error("信息[详情]查询异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
     }
 }

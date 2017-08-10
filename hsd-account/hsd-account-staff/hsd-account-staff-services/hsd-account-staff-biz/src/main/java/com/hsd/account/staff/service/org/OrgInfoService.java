@@ -1,9 +1,10 @@
 package com.hsd.account.staff.service.org;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.org.IOrgInfoService;
-import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dao.org.IOrgInfoDao;
+import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.entity.org.OrgInfo;
 import com.hsd.framework.NodeTree;
 import com.hsd.framework.Response;
@@ -78,16 +79,21 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
 
-    public List<OrgInfoDto> findDataIsPage(@RequestBody OrgInfoDto dto) {
-        List<OrgInfoDto> results = null;
+    @Override
+    public PageInfo findDataIsPage(@RequestBody OrgInfoDto dto) throws Exception {
+        PageInfo pageInfo=null;
         try {
-            PageHelper.startPage(PN(dto.getPageNum()), PS( dto.getPageSize()));
-            results = copyTo(orgInfoDao.findDataIsPage(copyTo(dto,OrgInfo.class)),OrgInfoDto.class);
+            if (dto == null)throw new RuntimeException("参数异常!");
+            OrgInfo entity = copyTo(dto, OrgInfo.class);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            List list = orgInfoDao.findDataIsPage(entity);
+            pageInfo=new PageInfo(list);
+            pageInfo.setList(copyTo(pageInfo.getList(), OrgInfoDto.class));
         } catch (Exception e) {
-            log.error("信息分页获取失败!", e);
+            log.error("信息[分页]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
-        return results;
+        return pageInfo;
     }
 
     public List<OrgInfoDto> findDataIsList(@RequestBody OrgInfoDto dto) {

@@ -40,7 +40,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="page()">
-													<input type="hidden" name="pageNum" id="pageNumA" value="1" ng-bind="result.data.pageIndex?result.data.pageIndex:1">
+													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
@@ -59,26 +59,35 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("orgLogOperation:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
+                                    				<th>所属系统域</th>
+                                    				<th>操作人IP</th>
                                     				<th>操作时间</th>
+                                    				<th>描述</th>
+                                    				<th>操作类型</th>
+                                    				<th>操作人姓名</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
+                                    				<td>{{item.domainCode}}</td>
+                                    				<td>{{item.createIp}}</td>
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.memo}}</td>
+                                    				<td>{{item.type}}</td>
+                                    				<td>{{item.createName}}</td>
                                     				<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgLogOperation:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="3">
+                                    				<td colspan="8">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -114,6 +123,17 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
+    /* copy to common.js
+    var site={
+        orgLogOperation: {//组织架构_员工操作日志
+             view: basePath + "/html/account/staff/org/org_log_operation"
+            ,page: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/page/"
+            ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/save"
+            ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/info/"
+            ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
+        }
+    }
+    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -121,30 +141,13 @@
     });
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
             loadPage(1);
         });
-        $scope.edit = function (title,id) {
-            $data.feedback=true;
-            sessionStorage.setItem(site.orgLogOperation.info,id);
-            openMyBoxLayer(title,site.orgLogOperation.view+'_edit.html');
-        }
         $scope.info = function (title,id) {
             sessionStorage.setItem(site.orgLogOperation.info,id);
             openMyBoxLayer(title,site.orgLogOperation.view+'_info.html');
-        }
-        $scope.del = function (id) {
-            if(confirm('确认删除吗?')) {
-                $.post( site.orgLogOperation.del + id,{}, function (result) {
-                    $data.feedback=true;
-                    if(result.code==0){
-                        loadPage($('#pageNumA').val());
-                        alert('删除成功');
-                    }else{
-                        alert(result.message);
-                    }
-                });
-            }
         }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);

@@ -242,7 +242,7 @@
             $data.feedback=false;
             $data.result=result;
             $data.tagPages=tag.page(result.data);
-            $data.$apply();
+            if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
     @[ if ("1"==scfg._tree) { /]

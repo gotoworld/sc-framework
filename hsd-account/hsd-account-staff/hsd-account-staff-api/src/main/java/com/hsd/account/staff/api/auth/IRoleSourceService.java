@@ -26,33 +26,33 @@ import java.util.List;
  */
 @FeignClient(name = "${feign.name.account.staff}")//, fallback = TestServiceHystrix.class)
 public interface IRoleSourceService {
-    String actPrefix = "/feign/account/staff/IRoleSourceService";
+    String acPrefix = "/feign/account/staff/IRoleSourceService";
     /**
      * 根据用户id,判断用户是否为超级管理员,要的就是特权.
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/isSuperAdmin")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isSuperAdmin")
     public Integer isSuperAdmin(OrgUserDto orgUser);
     /**
      * <p>角色信息列表>根据用户id。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/getRoleListByUId")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getRoleListByUId")
     public List<AuthRoleDto> getRoleListByUId(OrgUserDto orgUser);
 
     /**
      * <p>角色权限信息列表>根据用户id。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/getPermListByUId")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getPermListByUId")
     public List<AuthPermDto> getPermListByUId(OrgUserDto orgUser);
 
     /**
      * <p>用户信息。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/findUserByLoginName")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByLoginName")
     public OrgUserDto findUserByLoginName(@RequestParam("account") String account, @RequestParam("userType")  Integer userType);
 
     /**
      * 更新用户登陆信息
      */
-    @RequestMapping(method = {RequestMethod.POST},value = actPrefix + "/lastLogin")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/lastLogin")
     public Integer lastLogin(OrgUserDto orgUser);
 }

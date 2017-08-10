@@ -2,15 +2,17 @@ package com.hsd.account.staff.web.controller.org;
 
 import com.hsd.account.staff.api.org.IOrgLogLoginService;
 import com.hsd.account.staff.dto.org.OrgLogLoginDto;
-import com.hsd.framework.Response;
 import com.hsd.framework.PageUtil;
+import com.hsd.framework.Response;
+import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.web.controller.BaseController;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -43,7 +45,6 @@ public class OrgLogLoginController extends BaseController {
                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
             }
             dto.setPageNum(pageNum);
-            dto.set(0);
             // 信息列表
             result.data = PageUtil.copy(orgLogLoginService.findDataIsPage(dto));
         } catch (Exception e) {
@@ -67,7 +68,6 @@ public class OrgLogLoginController extends BaseController {
             OrgLogLoginDto dto = new OrgLogLoginDto();
             if (id!=null) {
                 dto.setId(id);
-                dto.set(0);
                 result.data = orgLogLoginService.findDataById(dto);
             }
         } catch (Exception e) {

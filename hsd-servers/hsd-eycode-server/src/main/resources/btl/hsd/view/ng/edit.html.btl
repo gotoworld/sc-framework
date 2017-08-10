@@ -219,6 +219,9 @@ for(t in columns){
 
     angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
+        user.init(function(){
+           loadInfo(sessionStorage.getItem(site.${tableNameL}.info));
+        });
         $scope.save = function () {
             if($("#${tableNameL}_01").valid()){
                 $.post(site.${tableNameL}.save, $('#${tableNameL}_01').serialize(),function (result) {
@@ -237,12 +240,6 @@ for(t in columns){
             return val;
         }
     } ]);
-    $(function () {
-       user.init(function(){
-           loadInfo(sessionStorage.getItem(site.${tableNameL}.info));
-       });
-    });
-
     var loadInfo=function(id){
         $.get(site.${tableNameL}.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));

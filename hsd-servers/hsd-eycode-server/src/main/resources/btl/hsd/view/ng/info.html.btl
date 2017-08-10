@@ -65,12 +65,10 @@
 <script type="text/javascript">
     angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
-    } ]);
-    $(function () {
         user.init(function(){
            loadInfo(sessionStorage.getItem(site.${tableNameL}.info));
         });
-    });
+    } ]);
     var loadInfo=function(id){
         $.get(site.${tableNameL}.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));

@@ -129,7 +129,7 @@ var user = {
                 } else {
                     $data.result = result;
                     // alert(result.message);
-                    $data.$apply();
+                    if(!$data.$$phase) $data.$apply();
                 }
             }, 'json');
     },
@@ -166,7 +166,7 @@ var user = {
             $data.userInfo = userInfo;
         }
         callback && callback();
-        try {if ($data) $data.$apply();} catch (e) {}
+        try {if ($data){if(!$data.$$phase) $data.$apply();}} catch (e) {}
     },
     init: function (callback) {
         try {

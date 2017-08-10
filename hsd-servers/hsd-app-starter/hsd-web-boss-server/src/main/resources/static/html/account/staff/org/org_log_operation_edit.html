@@ -181,7 +181,7 @@
                  $data.message = result.message;
                  alert( result.message);
              }
-             $data.$apply();
+             if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
 

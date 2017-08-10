@@ -220,7 +220,7 @@
             $data.feedback=false;
             $data.result=result;
             $data.tagPages=tag.page(result.data);
-            $data.$apply();
+            if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
     var treeviewA=$('#disTree').treeview({

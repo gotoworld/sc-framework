@@ -60,8 +60,6 @@
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
                                                     </thead>
                                                 </table>
                                             </div>
@@ -81,7 +79,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="page()">
-													<input type="hidden" name="pageNum" id="pageNumA" value="1" ng-bind="result.data.pageIndex?result.data.pageIndex:1">
+													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
@@ -107,11 +105,9 @@
                                     			<tr>
                                     				<th style="width:20px;">#</th>
                                     				<th>所属系统域</th>
-                                    				<th>排序</th>
                                     				<th>创建时间</th>
                                     				<th>是否根节点</th>
                                     				<th>名称</th>
-                                    				<th>父节点</th>
                                     				<th>页面链接</th>
                                     				<th>操作</th>
                                     			</tr>
@@ -120,11 +116,9 @@
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.domainCode}}</td>
-                                    				<td>{{item.orderNo}}</td>
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.root}}</td>
                                     				<td>{{item.name}}</td>
-                                    				<td>{{item.parentId}}</td>
                                     				<td>{{item.url}}</td>
                                     				<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysMenu:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
@@ -133,7 +127,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="9">
+                                    				<td colspan="7">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -170,6 +164,18 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
+    /* copy to common.js
+    var site={
+        sysMenu: {//系统_菜单
+             view: basePath + "/html/account/staff/sys/sys_menu"
+            ,page: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/page/"
+            ,tree: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/tree"
+            ,save: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/save"
+            ,info: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/info/"
+            ,del: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/del/"
+        }
+    }
+    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -229,8 +235,11 @@
         data: [],
         onNodeSelected: function (event, node) {
             var trStr ='';
-                trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
-                trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">所属系统域:</th><th class="">'+node.domainCode+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">是否根节点:</th><th class="">'+node.root+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">页面链接:</th><th class="">'+node.url+'</th></tr>';
                 if(user.hasPermission("sysMenu:info") || user.hasPermission("sysMenu:edit") || user.hasPermission("sysMenu:del")){
                     trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
                     if(user.hasPermission("sysMenu:info")){

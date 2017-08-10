@@ -129,8 +129,9 @@
 <script type="text/javascript">
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
-            loadInfo(sessionStorage.getItem(site.sysVariable.info));
+           loadInfo(sessionStorage.getItem(site.sysVariable.info));
         });
     });
     var loadInfo=function(id){

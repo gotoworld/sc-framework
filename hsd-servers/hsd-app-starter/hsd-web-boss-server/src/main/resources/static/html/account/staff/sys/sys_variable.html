@@ -58,6 +58,8 @@
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
+                                                    <tr><th class="col-md-2">#</th><th></th></tr>
+                                                    <tr><th class="col-md-2">#</th><th></th></tr>
                                                     </thead>
                                                 </table>
                                             </div>
@@ -77,7 +79,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="page()">
-													<input type="hidden" name="pageNum" id="pageNumA" value="1" ng-bind="result.data.pageIndex?result.data.pageIndex:1">
+													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
@@ -102,18 +104,22 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
+                                    				<th>所属系统域</th>
                                     				<th>编码</th>
                                     				<th>创建时间</th>
                                     				<th>名称</th>
+                                    				<th>备注</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
+                                    				<td>{{item.domainCode}}</td>
                                     				<td>{{item.code}}</td>
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.name}}</td>
+                                    				<td>{{item.memo}}</td>
                                     				<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysVariable:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysVariable:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
@@ -121,7 +127,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="5">
+                                    				<td colspan="7">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -158,6 +164,18 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
+    /* copy to common.js
+    var site={
+        sysVariable: {//系统_数据字典表
+             view: basePath + "/html/account/staff/sys/sys_variable"
+            ,page: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/page/"
+            ,tree: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/tree"
+            ,save: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/save"
+            ,info: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/info/"
+            ,del: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/del/"
+        }
+    }
+    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -217,8 +235,11 @@
         data: [],
         onNodeSelected: function (event, node) {
             var trStr ='';
-                trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
-                trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">所属系统域:</th><th class="">'+node.domainCode+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">备注:</th><th class="">'+node.memo+'</th></tr>';
                 if(user.hasPermission("sysVariable:info") || user.hasPermission("sysVariable:edit") || user.hasPermission("sysVariable:del")){
                     trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
                     if(user.hasPermission("sysVariable:info")){

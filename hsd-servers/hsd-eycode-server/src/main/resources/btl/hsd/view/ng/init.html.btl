@@ -195,8 +195,9 @@
         forceParse : !1,
         autoclose : !0
     });
-    angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
             loadPage(1);
             @[ if ("1"==scfg._tree) { /]
@@ -228,7 +229,7 @@
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }
-    } ]);
+    });
 
     var loadPage = function (pageIndex) {
         if(pageIndex){
@@ -266,7 +267,7 @@
                     }
                     trStr+=' </th></tr>';
                 }
-            $('#event_output').html(trStr);
+            $('#event_output').html($ngCompile(trStr)($data));
         }
     });
     function loadTree(){

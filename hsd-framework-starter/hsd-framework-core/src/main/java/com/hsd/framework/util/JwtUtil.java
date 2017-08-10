@@ -65,7 +65,10 @@ public class JwtUtil {
     public static String generalSubject(Object user) {
         JSONObject jo = new JSONObject();
         jo.put("id", ReflectUtil.getValueByFieldName(user,"id"));
+        jo.put("account", ReflectUtil.getValueByFieldName(user,"account"));
         jo.put("name", ReflectUtil.getValueByFieldName(user,"name"));
+        jo.put("authorizationInfoPerms", ReflectUtil.getValueByFieldName(user,"authorizationInfoPerms"));
+        jo.put("authorizationInfoRoles", ReflectUtil.getValueByFieldName(user,"authorizationInfoRoles"));
 //        jo.put("sid", ReflectUtil.getValueByFieldName(user,"sid"));
         return jo.toJSONString();
     }

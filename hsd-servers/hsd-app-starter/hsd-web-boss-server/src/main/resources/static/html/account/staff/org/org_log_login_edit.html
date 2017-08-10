@@ -76,7 +76,7 @@
         },1000);
     }
 
-    angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $scope.save = function () {
             if($("#orgLogLogin_01").valid()){
@@ -95,7 +95,7 @@
             KindEditor.html('#'+key,val);
             return val;
         }
-    } ]);
+    });
     $(function () {
        user.init(function(){
            loadInfo(sessionStorage.getItem(site.orgLogLogin.info));

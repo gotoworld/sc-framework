@@ -44,13 +44,18 @@ public class OrgUserController extends BaseController {
 	 * <p> 信息分页 (未删除)。
 	 */
 	@RequiresPermissions("orgUser:menu")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page/{pageNum}")
 	@ApiOperation(value = "信息分页")
-	public Response page(@RequestBody OrgUserDto dto) {
+	public Response page(@RequestBody OrgUserDto dto, @PathVariable("pageNum") Integer pageNum) {
 		log.info("OrgUserController page.........");
 		Response result = new Response();
 		try {
-			if (dto == null)throw new RuntimeException("参数异常");
+			if (dto == null) {
+				dto = new OrgUserDto();
+				dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+			}
+			dto.setPageNum(pageNum);
+			dto.setDelFlag(0);
 			result.data=getPageDto(orgUserService.findDataIsPage(dto));
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());

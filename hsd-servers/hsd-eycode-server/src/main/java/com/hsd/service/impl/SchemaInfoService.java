@@ -56,7 +56,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
         String msg = "success";
         String srcDir = "d:/schema_make_file/src/main/java/";
         String resouseDir = "d:/schema_make_file/src/main/resources/";
-        final int[] menunum = {0};
+        final int[] menunum = {0,0,0};//总,ng,btl
         final int[] sqlnum = { 0 };
         //1.遍历表配置集合
         //2.获取表字段详情
@@ -146,8 +146,7 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                     if ("1".equals(tableConf.getSchemaConf().get_page())) {
                         BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/info.html.btl", context, resouseDir + "html/" + StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_info.html");
                     }
-                    if(++menunum[0]==dto.getTablesConf().size())
-                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/menu.html.btl", context, resouseDir+"/"+ schemaConf.get_my_pkg()+".menu.html");
+                    ++menunum[1];
                 }
 
                 //view.btl
@@ -159,12 +158,19 @@ public class SchemaInfoService extends BaseService implements ISchemaInfoService
                     if ("1".equals(tableConf.getSchemaConf().get_page())) {
                         BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/list.html.btl", context, resouseDir +"/template/"+ StrUtil.getDir(schemaConf.get_view_pkg()) + "/" + tableConf.getTableName() + "_list.html");
                     }
-                    if(++menunum[0]==dto.getTablesConf().size())
-                    BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/menu.html.btl", context, resouseDir+"/"+ schemaConf.get_my_pkg()+".menu.html");
+                    ++menunum[2];
                 }
                 //auth.sql
                 if(++sqlnum[0]==dto.getTablesConf().size())
                 BeetlUtils.renderToFile("/btl/" + verDir + "/java/auth.sql.btl", context, resouseDir+"/"+ schemaConf.get_my_pkg()+"_auth.sql");
+                if(++menunum[0]==dto.getTablesConf().size()){
+                    if(menunum[1]>0){
+                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/ng/menu.html.btl", context, resouseDir+"/"+ schemaConf.get_my_pkg()+".ngmenu.html");
+                    }
+                    if(menunum[2]>0) {
+                        BeetlUtils.renderToFile("/btl/" + verDir + "/view/btl/menu.html.btl", context, resouseDir + "/" + schemaConf.get_my_pkg() + ".btlmenu.html");
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

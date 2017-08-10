@@ -252,19 +252,26 @@
         data: [],
         onNodeSelected: function (event, node) {
             var trStr ='';
-                trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
-                trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+            @[ for(t in scfg._col_show){ /]
+                 trStr+=' <tr><th class="col-md-2">${t.value}:</th><th class="">'+${columnMap[t.key]=='Date'?"util.dateTimeFormat(node."+t.key+")":"node."+t.key}+'</th></tr>';
+            @[ } /]
                 if(user.hasPermission("${tableNameL}:info") || user.hasPermission("${tableNameL}:edit") || user.hasPermission("${tableNameL}:del")){
                     trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
+                    @[ if ("1"==scfg._detail) { /]
                     if(user.hasPermission("${tableNameL}:info")){
                         trStr+=' <a href="javascript:;"  ng-click="info(\'i\','+node.id+')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
                     }
+                    @[ } /]
+                    @[ if("1"==scfg._update){ /]
                     if(user.hasPermission("${tableNameL}:edit")){
                         trStr+=' <a href="javascript:;"  ng-click="edit(\'e\','+node.id+')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
                     }
+                    @[ } /]
+                    @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
                     if(user.hasPermission("${tableNameL}:del") && node.nodes==undefined && node.tags[0]==0){
                         trStr += ' <a href="javascript:;"  ng-click="del('+ node.id + ')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
                     }
+                    @[ } /]
                     trStr+=' </th></tr>';
                 }
             $('#event_output').html($ngCompile(trStr)($data));

@@ -59,6 +59,8 @@
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
                                                     <tr><th class="col-md-2">#</th><th></th></tr>
+                                                    <tr><th class="col-md-2">#</th><th></th></tr>
+                                                    <tr><th class="col-md-2">#</th><th></th></tr>
                                                     </thead>
                                                 </table>
                                             </div>
@@ -78,7 +80,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="page()">
-													<input type="hidden" name="pageNum" id="pageNumA" value="1" ng-bind="result.data.pageIndex?result.data.pageIndex:1">
+													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
@@ -106,6 +108,8 @@
                                     				<th>编码</th>
                                     				<th>创建时间</th>
                                     				<th>名称</th>
+                                    				<th>备注</th>
+                                    				<th>状态0启动</th>
                                     				<th>类型0企业1部门2组</th>
                                     				<th>操作</th>
                                     			</tr>
@@ -116,6 +120,8 @@
                                     				<td>{{item.code}}</td>
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.name}}</td>
+                                    				<td>{{item.memo}}</td>
+                                    				<td>{{item.state}}</td>
                                     				<td>{{item.type}}</td>
                                     				<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
@@ -124,7 +130,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="6">
+                                    				<td colspan="8">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -161,6 +167,18 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
+    /* copy to common.js
+    var site={
+        orgInfo: {//组织架构
+             view: basePath + "/html/account/staff/org/org_info"
+            ,page: apiPath.account.staff + "/boss/account/staff/org/orgInfo/page/"
+            ,tree: apiPath.account.staff + "/boss/account/staff/org/orgInfo/tree"
+            ,save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
+            ,info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
+            ,del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
+        }
+    }
+    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -211,6 +229,7 @@
             $data.feedback=false;
             $data.result=result;
             $data.tagPages=tag.page(result.data);
+            if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
     var treeviewA=$('#disTree').treeview({
@@ -219,9 +238,13 @@
         data: [],
         onNodeSelected: function (event, node) {
             var trStr ='';
-                trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
-                trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
-                if(user.hasPermission("orgInfo:info") || user.hasPermission("orgInfo:edit") || user.hasPermission("orgInfo:del")){
+                 trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
+				trStr+=' <tr><th class="col-md-2">状态:</th><th class="">'+node.state+'</th></tr>';
+            trStr+=' <tr><th class="col-md-2">类型:</th><th class="">'+node.type+'</th></tr>';
+            trStr+=' <tr><th class="col-md-2">备注:</th><th class="">'+node.memo+'</th></tr>';
+            trStr+=' <tr><th class="col-md-2">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
+            if(user.hasPermission("orgInfo:info") || user.hasPermission("orgInfo:edit") || user.hasPermission("orgInfo:del")){
                     trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
                     if(user.hasPermission("orgInfo:info")){
                         trStr+=' <a href="javascript:;"  ng-click="info(\'i\','+node.id+')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
@@ -239,7 +262,7 @@
     });
     function loadTree(){
         $.get(site.orgInfo.tree, {},function (result) {
-            console.info("获取数据.." + JSON.stringify(result));
+            //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 treeviewA.treeview({ data:result.data });
             } else {

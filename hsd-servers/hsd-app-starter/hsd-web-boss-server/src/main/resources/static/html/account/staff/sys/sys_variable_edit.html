@@ -34,7 +34,7 @@
 						</div>
 					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
-					<input type="hidden" name="token" value="" ng-bind="item.token || uuidToken" />
+					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag}}" />
 					<div class="clearfix "></div>
 					<div class="col-sm-6 b-r">
@@ -46,9 +46,6 @@
                                 <span id="bean-code-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
-					</div>
-					<div class="col-sm-6">
 
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">名称：</label>
@@ -67,6 +64,9 @@
                                 <span id="bean-parentId-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
+
+					</div>
+					<div class="col-sm-6">
 
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">所属系统域：</label>
@@ -125,10 +125,11 @@
 
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
-            $data.newFlag=sessionStorage.getItem(site.sysVariable.info);
-            if($data.newFlag) $data.uuidToken=util.guid();
-            loadInfo(sessionStorage.getItem(site.sysVariable.info));
+           $data.newFlag=sessionStorage.getItem(site.sysVariable.info);
+           if($data.newFlag) $data.uuidToken=util.guid();
+           loadInfo(sessionStorage.getItem(site.sysVariable.info));
         });
         $scope.save = function () {
             if($("#sysVariable_01").valid()){
@@ -148,7 +149,6 @@
             return val;
         }
     });
-
     var loadInfo=function(id){
         $.get(site.sysVariable.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));

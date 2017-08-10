@@ -1,6 +1,9 @@
 var tag= {
     page:function (pageInfo) {
         var HTML_3DOT_STRING = "<a class=\"dot\">...</a>";
+        if(!(pageInfo)){
+            return HTML_3DOT_STRING;
+        }
         /** 当前页码 */
         var currentPageNo = pageInfo.pageIndex;
         /** 总页数 */

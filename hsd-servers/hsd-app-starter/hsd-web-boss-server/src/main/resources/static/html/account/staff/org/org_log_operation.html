@@ -79,7 +79,7 @@
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
                                     				<td colspan="3">
-                                    				<div class="alert"><strong>{{result.message}}</strong></div>
+                                    				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
                                     		</tbody>
@@ -114,17 +114,6 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-    /* copy to common.js
-    var site={
-        orgLogOperation: {
-             view: basePath + "/html/account/staff/org/org_log_operation"
-            ,page: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/page/"
-            ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/save"
-            ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/info/"
-            ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
-        }
-    }
-    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -132,6 +121,9 @@
     });
     angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
         $data = $scope;
+        user.init(function(){
+            loadPage(1);
+        });
         $scope.edit = function (title,id) {
             $data.feedback=true;
             sessionStorage.setItem(site.orgLogOperation.info,id);
@@ -173,11 +165,6 @@
             $data.$apply();
         }, 'json');
     }
-     $(function () {
-        user.init(function(){
-            loadPage(1);
-        });
-     });
 </script>
 </body>
 </html>

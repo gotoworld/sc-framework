@@ -45,7 +45,6 @@ public class OrgUserDto extends BaseDto {
      /**最后登录日期*/
      private Date lastLogin;
      /**登录次数*/
-	 @NotNull(message="count不能为空")
      private Integer count;
      /**状态0启用1禁用*/
      private Integer state;

@@ -178,7 +178,7 @@
 <script type="text/javascript">
     /* copy to common.js
     var site={
-        ${tableNameL}: {
+        ${tableNameL}: {//${tcfg.tableComment}
              view: basePath + "/html/${strUtil.getDir(tcfg.schemaConf._view_pkg)}/${tcfg.tableName}"
             ,page: apiPath.${scfg._my_project} + "${scfg._web_http}/page/"
             @[ if ("1"==scfg._tree) { /]

@@ -2,6 +2,7 @@ package com.hsd.account.staff.web.controller.org;
 
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
@@ -25,7 +26,7 @@ import java.util.List;
 @RestController
 @Slf4j
 public class OrgInfoController extends BaseController {
-    private static final String acPrefix = "/boss/account/staff/org/";
+    private static final String acPrefix = "/boss/account/staff/org/orgInfo/";
 
     @Autowired
     private IOrgInfoService orgInfoService;
@@ -44,6 +45,9 @@ public class OrgInfoController extends BaseController {
                 dto = new OrgInfoDto();
                 dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
             }
+
+            OrgUserDto orgUserDto= (OrgUserDto) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+
             dto.setPageNum(pageNum);
             dto.setDelFlag(0);
             // 信息列表

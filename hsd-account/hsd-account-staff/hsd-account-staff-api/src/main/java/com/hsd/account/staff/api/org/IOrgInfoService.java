@@ -4,6 +4,7 @@ package com.hsd.account.staff.api.org;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.framework.Response;
+import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * <p>组织架构   业务处理接口类。
  */
-@FeignClient(name = "${feign.name.account.staff}")//, fallback = TestServiceHystrix.class)
+@FeignClient(name = "${feign.name.account.staff}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IOrgInfoService {
     String acPrefix = "/feign/account/staff/IOrgInfoService";
 

@@ -2,6 +2,9 @@ package com.hsd.config.shiro;
 
 
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
+import com.hsd.framework.util.ValidatorUtil;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
@@ -31,16 +34,16 @@ public class SessionManager extends DefaultWebSessionManager {
         } else {
             id = this.getUriPathSegmentParamValue(request, CommonConstant.JWT_HEADER_SHIRO_KEY);
             if (id == null) {
-//                if(id==null) id = WebUtils.toHttp(request).getHeader(CommonConstant.JWT_HEADER_SHIRO_KEY);
-//                if(id==null){
-//                    String authorizationToken = WebUtils.toHttp(request).getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
-//                    if (!ValidatorUtil.isEmpty(authorizationToken)) {
-//                        try {
-//                            final Claims claims = JwtUtil.parseJWT(authorizationToken);
-//                            id = (String) claims.get(CommonConstant.JWT_HEADER_SHIRO_KEY);
-//                        } catch (Exception e) {}
-//                    }
-//                }
+                if(id==null) id = WebUtils.toHttp(request).getHeader(CommonConstant.JWT_HEADER_SHIRO_KEY);
+                if(id==null){
+                    String authorizationToken = WebUtils.toHttp(request).getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+                    if (!ValidatorUtil.isEmpty(authorizationToken)) {
+                        try {
+                            final Claims claims = JwtUtil.parseJWT(authorizationToken);
+                            id = (String) claims.get(CommonConstant.JWT_HEADER_SHIRO_KEY);
+                        } catch (Exception e) {}
+                    }
+                }
                 if (id == null) {
                     String name = this.getSessionIdName();
                     id = request.getParameter(name);

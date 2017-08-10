@@ -7,6 +7,7 @@ var apiPath={
 var site = {
     user: {
          login: apiPath.account.staff + "/boss/account/staff/sign/login" //登录
+        ,logout: apiPath.account.staff + "/boss/account/staff/sign/logout" //登出
         ,refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
     }
     ,sysDomain: {
@@ -16,6 +17,29 @@ var site = {
         ,info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"
     }
+    ,orgInfo: {
+        view: basePath + "/html/account/staff/org/org_info"
+        ,page: apiPath.account.staff + "/boss/account/staff/org/orgInfo/page/"
+        ,tree: apiPath.account.staff + "/boss/account/staff/org/orgInfo/tree"
+        ,save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
+        ,info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
+        ,del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
+    }
+    ,orgUser: {
+        view: basePath + "/html/account/staff/org/org_user"
+        ,page: apiPath.account.staff + "/boss/account/staff/org/orgUser/page/"
+        ,save: apiPath.account.staff + "/boss/account/staff/org/orgUser/save"
+        ,info: apiPath.account.staff + "/boss/account/staff/org/orgUser/info/"
+        ,del: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/"
+    }
+    ,authPerm: {
+        view: basePath + "/html/account/staff/auth/auth_perm"
+        ,page: apiPath.account.staff + "/boss/account/staff/auth/authPerm/page/"
+        ,tree: apiPath.account.staff + "/boss/account/staff/auth/authPerm/tree"
+        ,save: apiPath.account.staff + "/boss/account/staff/auth/authPerm/save"
+        ,info: apiPath.account.staff + "/boss/account/staff/auth/authPerm/info/"
+        ,del: apiPath.account.staff + "/boss/account/staff/auth/authPerm/del/"
+    }
     ,sysMenu: {
         view: basePath + "/html/account/staff/sys/sys_menu"
         ,page: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/page/"
@@ -24,6 +48,13 @@ var site = {
         ,info: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/del/"
     }
+    ,authRole: {
+        view: basePath + "/html/account/staff/auth/auth_role"
+        ,page: apiPath.account.staff + "/boss/account/staff/auth/authRole/page/"
+        ,save: apiPath.account.staff + "/boss/account/staff/auth/authRole/save"
+        ,info: apiPath.account.staff + "/boss/account/staff/auth/authRole/info/"
+        ,del: apiPath.account.staff + "/boss/account/staff/auth/authRole/del/"
+    }
     ,sysVariable: {
         view: basePath + "/html/account/staff/sys/sys_variable"
         ,page: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/page/"
@@ -31,6 +62,20 @@ var site = {
         ,save: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/save"
         ,info: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/del/"
+    }
+    ,orgLogLogin: {
+        view: basePath + "/html/account/staff/org/org_log_login"
+        ,page: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/page/"
+        ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/save"
+        ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/info/"
+        ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/del/"
+    }
+    ,orgLogOperation: {
+        view: basePath + "/html/account/staff/org/org_log_operation"
+        ,page: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/page/"
+        ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/save"
+        ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/info/"
+        ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
     }
 }
 var $data;
@@ -89,20 +134,19 @@ var user = {
             }, 'json');
     },
     refreshToken: function (callback) {
-        $.get(site.user.refreshToken, {},
-            function (result) {
-                if (result.code == 0) {
-                    if (result.data) {
-                        if (result.data.authorizationToken) {
-                            sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
-                            sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken)
-                        }
+        $.get(site.user.refreshToken, {},function (result) {
+            if (result.code == 0) {
+                if (result.data) {
+                    if (result.data.authorizationToken) {
+                        sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
+                        sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken)
                     }
-                    callback && callback();
-                } else {
-                    alert(result.message);
                 }
-            }, 'json');
+                callback && callback();
+            } else {
+                alert(result.message);
+            }
+        }, 'json');
     },
     logout: function (callback) {
         sessionStorage.removeItem('hsd_staff_tokenExpMillis');
@@ -110,8 +154,10 @@ var user = {
         sessionStorage.removeItem("hsd_staff_authorizationToken");
         sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
         sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
-
-        location.href = '/login.html';
+        $.get(site.user.logout, {},function (result) {
+            callback && callback();
+            location.href = '/login.html';
+        }, 'json');
     },
     info: function (callback) {
         var userJson = sessionStorage.getItem('hsd_staff_user');
@@ -120,6 +166,7 @@ var user = {
             $data.userInfo = userInfo;
         }
         callback && callback();
+        try {if ($data) $data.$apply();} catch (e) {}
     },
     init: function (callback) {
         try {
@@ -150,19 +197,20 @@ var user = {
                 $data.closeMyBoxLayer = function () {
                     closeMyBoxLayer();
                 }
-                $data.loadUrlPage = function (pageNumA, formId, divId) {
-                    loadUrlPage(pageNumA, formId, divId);
-                }
                 $data.user=user;
             }
         }
     }
     //-- shiro 权限
     , hasPermission: function (str) {
+        console.info("permsstr="+str)
         return true;
         var hsd_staff_authorizationInfo = sessionStorage.getItem("hsd_staff_authorizationInfoPerms");
+        console.info("hsd_staff_authorizationInfo="+hsd_staff_authorizationInfo)
         if (hsd_staff_authorizationInfo) {
             var permsArr = hsd_staff_authorizationInfo.split(",");
+            console.info("permsArr="+permsArr)
+            console.info("permsstr="+str)
             if (permsArr && permsArr.indexOf(str) != -1) {
                 return true;
             } else {

@@ -73,5 +73,16 @@
 <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
 <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    angular.module("app", []).controller("app-ctrl", ['$scope', function ($scope) {
+        $data = $scope;
+    }]);
+    $(function () {
+        user.init(function(){});
+    });
+</script>
 </body>
 </html>

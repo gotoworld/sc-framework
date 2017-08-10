@@ -1,5 +1,6 @@
 package com.hsd.account.staff.config;
 
+import com.hsd.config.shiro.SessionManager;
 import com.hsd.config.shiro.ShrioRedisCacheManager;
 import com.hsd.framework.cache.config.RedisProperties;
 import com.hsd.framework.filter.MyFormAuthenticationFilter;
@@ -12,7 +13,6 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.session.mgt.WebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -62,14 +62,14 @@ public class ShiroConfig {
 //		filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
 //		return filterRegistration;
 //	}
-	@Bean(name = "sessionIdCookie")
-	public SimpleCookie getSessionIdCookie() {
-		SimpleCookie cookie = new SimpleCookie("sid");
-		cookie.setPath("/");
-		cookie.setMaxAge(1800000);
-		cookie.setHttpOnly(true);
-		return cookie;
-	}
+//	@Bean(name = "sessionIdCookie")
+//	public SimpleCookie getSessionIdCookie() {
+//		SimpleCookie cookie = new SimpleCookie("sid");
+//		cookie.setPath("/");
+//		cookie.setMaxAge(1800000);
+//		cookie.setHttpOnly(true);
+//		return cookie;
+//	}
 
 	/**
 	 * 权限管理器
@@ -88,12 +88,12 @@ public class ShiroConfig {
 
 	@Bean(name = "sessionManager")
 	public WebSessionManager sessionManager() {
-		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+		DefaultWebSessionManager sessionManager = new SessionManager();
 		sessionManager.setGlobalSessionTimeout(1800000);//设置全局会话超时时间，默认30分钟(1800000)
 		sessionManager.setDeleteInvalidSessions(true);//是否在会话过期后会调用SessionDAO的delete方法删除会话 默认true
 		sessionManager.setSessionValidationInterval(1800000/2);//会话验证器调度时间
 		sessionManager.setSessionValidationSchedulerEnabled(true);//定时检查失效的session
-		sessionManager.setSessionIdCookie(getSessionIdCookie());//sessionIdCookie的实现,用于重写覆盖容器默认的JSESSIONID
+//		sessionManager.setSessionIdCookie(getSessionIdCookie());//sessionIdCookie的实现,用于重写覆盖容器默认的JSESSIONID
 //		ServletContainerSessionManager sessionManager = new ServletContainerSessionManager();
 		return sessionManager;
 	}

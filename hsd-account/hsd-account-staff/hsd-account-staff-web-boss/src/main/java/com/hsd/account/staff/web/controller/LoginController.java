@@ -79,8 +79,6 @@ public class LoginController extends BaseController {
                     roleSourceService.lastLogin(orgUser);
                 }
                 orgUser.setSid((String) getAuth().getSession().getId());
-                String subject = JwtUtil.generalSubject(orgUser);
-                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL,(String) getAuth().getSession().getId());
 
                 SimpleAuthorizationInfo authorizationInfo= (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
                 if(authorizationInfo==null){
@@ -108,6 +106,10 @@ public class LoginController extends BaseController {
                     }
                     SecurityUtils.getSubject().getSession().setAttribute("SimpleAuthorizationInfo", authorizationInfo);
                 }
+                orgUser.setAuthorizationInfoPerms( authorizationInfo.getStringPermissions());
+                orgUser.setAuthorizationInfoRoles( authorizationInfo.getRoles());
+                String subject = JwtUtil.generalSubject(orgUser);
+                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL,(String) getAuth().getSession().getId());
 
                 Map<String,Object> data = new HashMap<>();
                 data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);

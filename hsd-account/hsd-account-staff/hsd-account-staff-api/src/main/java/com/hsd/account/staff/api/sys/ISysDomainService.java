@@ -3,6 +3,7 @@ package com.hsd.account.staff.api.sys;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.sys.SysDomainDto;
 import com.hsd.framework.Response;
+import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * <p>系统_域 业务处理接口类。
  */
-@FeignClient(value = "${feign.name.account.staff}")
+@FeignClient(value = "${feign.name.account.staff}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface ISysDomainService {
     String acPrefix = "/feign/account/staff/ISysDomainService";
     /**

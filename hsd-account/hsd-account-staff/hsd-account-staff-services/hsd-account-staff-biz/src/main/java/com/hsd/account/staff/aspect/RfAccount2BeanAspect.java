@@ -1,12 +1,12 @@
 package com.hsd.account.staff.aspect;
 
+import com.alibaba.fastjson.JSON;
 import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.IDto;
-import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.IpUtil;
-import com.hsd.framework.util.ReflectUtil;
+import com.hsd.framework.util.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -30,21 +30,28 @@ public class RfAccount2BeanAspect {
     }
 
     /**
-     * 用于 将用户信息写入实体对象
+     * 用于 将当前操作人员的信息写入实体对象
      */
     @Before("account2BeanAspect()")
     public void doBefore(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        //读取session中的用户
-        OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+        final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+        log.info("authHeader=" + authorizationToken);
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            throw new SignatureException("token头缺失");
+        }
+        final Claims claims = JwtUtil.parseJWT(authorizationToken);
+        OrgUserDto orgUser=JSON.parseObject(claims.getSubject(), OrgUserDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         try {
-            //*========控制台输出=========*//
-            log.debug("=====前置通知开始=====");
-            log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-            log.debug("请求人:" + orgUser.getName());
-            log.debug("请求IP:" + ip);
+            if(log.isDebugEnabled()) {
+                //*========控制台输出=========*//
+                log.debug("=====前置通知开始=====");
+                log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
+                log.debug("请求人:" + orgUser.getName());
+                log.debug("请求IP:" + ip);
+            }
             Object[] objArr=joinPoint.getArgs();
             if(objArr!=null){
                 for(Object obj:objArr){

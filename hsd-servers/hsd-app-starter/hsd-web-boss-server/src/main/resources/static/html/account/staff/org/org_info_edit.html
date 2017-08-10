@@ -46,20 +46,6 @@
                                 <span id="bean-code-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">类型0企业1部门2组：</label>
-                            <div class="col-md-12">
-                                <select data-placeholder="选择类型0企业1部门2组" id="bean-type" name="type" class="form-control"   required="" aria-required="true"  aria-describedby="bean-type-error"   aria-invalid="true">
-                                    <option value="">--请选择类型0企业1部门2组--</option>
-                                </select>
-                                <span id="bean-type-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
-					</div>
-					<div class="col-sm-6">
-
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">名称：</label>
                             <div class="col-md-12">
@@ -67,6 +53,21 @@
                                 <span id="bean-name-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">类型：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择类型" id="bean-type" name="type" class="form-control"   required="" aria-required="true"  aria-describedby="bean-type-error"   aria-invalid="true">
+                                    <option value="">--请选择类型--</option>
+                                    <option value="0">--企业--</option>
+                                    <option value="1">--部门--</option>
+                                    <option value="2">--组--</option>
+                                </select>
+                                <span id="bean-type-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+					</div>
+					<div class="col-sm-6">
 
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">父级ID：</label>
@@ -79,10 +80,10 @@
                         </div>
 
                         <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">状态0启动：</label>
+                            <label class="col-sm-3 control-label">状态：</label>
                             <div class="col-sm-9">
                                 <label class="">
-                                    <input type="checkbox" name="state" value="option1">启用状态0启动</label>
+                                    <input type="checkbox" name="state" value="1">启用</label>
                                 <span id="bean-state-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -131,7 +132,7 @@
         },1000);
     }
 
-    angular.module("app", ['ngSanitize']).controller("app-ctrl", ['$scope', function ($scope) {
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $scope.save = function () {
             if($("#orgInfo_01").valid()){
@@ -150,7 +151,7 @@
             KindEditor.html('#'+key,val);
             return val;
         }
-    } ]);
+    });
     $(function () {
        user.init(function(){
            loadInfo(sessionStorage.getItem(site.orgInfo.info));

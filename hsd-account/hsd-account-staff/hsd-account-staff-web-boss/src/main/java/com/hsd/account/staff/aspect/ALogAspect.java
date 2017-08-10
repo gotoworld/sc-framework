@@ -47,7 +47,6 @@ public class ALogAspect {
     @After("alogOperationAspect()")
     public void doAfter(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//        HttpSession session = request.getSession();
         //读取session中的用户
         OrgUserDto user = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
         //请求的IP
@@ -125,7 +124,7 @@ public class ALogAspect {
 //            log.debug("请求人:" + user.getName());
 //            log.debug("请求IP:" + ip);
 //            log.debug("请求参数:" + params);
-            sysUserLogService.info(logArr[0], logArr[1],""+SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), user.getId(),user.getName(), ip);
+            sysUserLogService.info(logArr[0], logArr[1],""+ SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), user.getId(),user.getName(), ip);
 //            log.debug("=====异常通知结束=====");
         } catch (Exception ex) {
             //记录本地异常日志

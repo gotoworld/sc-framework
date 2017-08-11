@@ -58,34 +58,15 @@
                             <div class="col-md-12">
                                 <select data-placeholder="选择类型" id="bean-type" name="type" class="form-control"   required="" aria-required="true"  aria-describedby="bean-type-error"   aria-invalid="true">
                                     <option value="">--请选择类型--</option>
-                                    <option value="0">--企业--</option>
-                                    <option value="1">--部门--</option>
-                                    <option value="2">--组--</option>
+                                    <option value="0" ng-selected="selected(0,item.type)">企业</option>
+                                    <option value="1" ng-selected="selected(1,item.type)">部门</option>
+                                    <option value="2" ng-selected="selected(2,item.type)">组</option>
                                 </select>
                                 <span id="bean-type-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
-					</div>
-					<div class="col-sm-6">
-
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">父级ID：</label>
-                            <div class="col-md-12">
-                                <select data-placeholder="选择父级ID" id="bean-parentId" name="parentId" class="form-control"   aria-describedby="bean-parentId-error"   aria-invalid="true">
-                                    <option value="">--请选择父级ID--</option>
-                                </select>
-                                <span id="bean-parentId-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">状态：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="state" value="1">启用</label>
-                                <span id="bean-state-error" class="help-block m-b-none"></span>
-                            </div>
+                            <label class="col-sm-3 control-label"><input type="checkbox" name="state" value="1" ng-checked="item.state==1">启用</label>
                         </div>
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">备注：</label>
@@ -94,7 +75,20 @@
                                 <span id="bean-memo-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
+					</div>
+					<div class="col-sm-6">
+                        <div class="form-group clearfix" style="height: 400px;overflow-y: scroll;">
+                            <label class="col-md-12 control-label">--请选择父级机构--</label>
+                            <div class="col-md-12">
+                                <ul>
+                                    <li ng-repeat="t in nodes">
+                                        <label><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
+                                        <ul ng-include="'../tree_select.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id"></ul>
+                                    </li>
+                                </ul>
+                                <span id="bean-parentId-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
 					</div>
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
@@ -137,6 +131,7 @@
         user.init(function(){
             $data.newFlag=sessionStorage.getItem(site.orgInfo.info);
             if($data.newFlag) $data.uuidToken=util.guid();
+            loadTree();
             loadInfo(sessionStorage.getItem(site.orgInfo.info));
         });
         $scope.save = function () {
@@ -156,6 +151,12 @@
             KindEditor.html('#'+key,val);
             return val;
         }
+        $scope.selected=function(val,val2){
+            if(val==val2){
+                return true
+            }
+            return false;
+        }
     });
 
     var loadInfo=function(id){
@@ -170,7 +171,17 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
-
+    function loadTree(){
+        $.get(site.orgInfo.tree, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.nodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
     $(document).ready(function(){
         formValidate();
     });

@@ -5,6 +5,7 @@
     <sql id="Base_Column_List">
 		 t1.id as  "id"
         ,t1.code as  "code"
+        ,t1.type as  "type"
         ,t1.name as  "name"
         ,t1.parent_id as  "parentId"
         ,t1.state as  "state"
@@ -29,6 +30,7 @@
 		insert into org_info (
              code
             ,name
+            ,type
             ,parent_id
             ,state
             ,memo
@@ -42,6 +44,7 @@
         ) values (
              #{code}
             ,#{name}
+            ,#{type}
             ,#{parentId}
             ,#{state}
             ,#{memo}
@@ -59,6 +62,7 @@
         update org_info set
         version=version+1,date_updated=now()
         <if test="name!= null">,name=#{name}</if>
+        <if test="type!= null">,type=#{type}</if>
         <if test="code!= null">,code=#{code}</if>
         ,parent_id=#{parentId}
         <if test="state!= null">,state=#{state}</if>
@@ -77,6 +81,12 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
+        <if test="type!=null and type!=''">
+            and t1.type = #{type}
+        </if>
+        <if test="keyword!=null and keyword!=''">
+            and (t1.code like concat('%',#{keyword},'%') or t1.name like concat('%',#{keyword},'%'))
+        </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
         </if>
@@ -97,9 +107,12 @@
         select
          t1.id as  "id"
         ,t1.code as  "code"
+        ,t1.type as  "type"
         ,t1.name as  "name"
         ,t1.parent_id as  "parentId"
         ,t1.memo as  "memo"
+        ,t1.state as  "state"
+        ,t1.date_created as  "dateCreated"
         from org_info t1
         where 1=1
         <include refid="list_where_sql"/>

@@ -21,13 +21,6 @@ public interface IOrgLogLoginService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     public Response saveOrUpdateData(OrgLogLoginDto dto) throws Exception;
 
-    /**
-     * <p>物理删除。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteData")
-    public String deleteData(OrgLogLoginDto dto) throws Exception;
-
-
 
     /**
      * <p>信息列表 分页。

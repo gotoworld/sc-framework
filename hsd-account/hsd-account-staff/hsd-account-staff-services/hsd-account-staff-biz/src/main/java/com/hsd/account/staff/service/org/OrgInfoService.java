@@ -35,6 +35,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
+            dto.setState(dto.getState()==null?0:dto.getState());
             OrgInfo entity=copyTo(dto,OrgInfo.class);
             // 判断数据是否存在
             if (orgInfoDao.isDataYN(entity) != 0) {

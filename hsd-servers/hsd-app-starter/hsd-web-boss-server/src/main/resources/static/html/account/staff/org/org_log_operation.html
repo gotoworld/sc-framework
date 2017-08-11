@@ -49,8 +49,19 @@
 															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
 														</div>
 													</div>
+													<div class="form-group">
+														<label class="font-noraml">类型</label>
+														<div class=" input-group">
+															<select data-placeholder="选择类型" id="bean-type" name="type" class="form-control">
+																<option value="">--全部--</option>
+																<option value="新增">新增</option>
+																<option value="修改">修改</option>
+																<option value="删除">删除</option>
+															</select>
+														</div>
+													</div>
 													<div class="input-group">
-														<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+														<input type="text" name="memo" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
 														</span>
@@ -65,24 +76,24 @@
                                     			<tr>
                                     				<th style="width:20px;">#</th>
                                     				<th>所属系统域</th>
-                                    				<th>操作人IP</th>
-                                    				<th>操作时间</th>
-                                    				<th>描述</th>
-                                    				<th>操作类型</th>
-                                    				<th>操作人姓名</th>
-                                    				<th>操作</th>
+													<th>操作类型</th>
+													<th>描述</th>
+                                    				<th>操作人</th>
+													<th>操作人IP</th>
+													<th>操作时间</th>
+													<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.domainCode}}</td>
-                                    				<td>{{item.createIp}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                    				<td>{{item.memo}}</td>
-                                    				<td>{{item.type}}</td>
+													<td>{{item.type}}</td>
+													<td>{{item.memo}}</td>
                                     				<td>{{item.createName}}</td>
-                                    				<td>
+													<td>{{item.createIp}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgLogOperation:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                     </td>
                                     			</tr>
@@ -93,7 +104,7 @@
                                     			</tr>
                                     		</tbody>
                                     	</table>
-										<div class="b_page" ng-bind-html="tagPages"></div>
+										<div class="b_page" ng-bind-html="tagPages|trust2Html"></div>
                                     </div>
 								</div>
 							</div>
@@ -123,23 +134,16 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-    /* copy to common.js
-    var site={
-        orgLogOperation: {//组织架构_员工操作日志
-             view: basePath + "/html/account/staff/org/org_log_operation"
-            ,page: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/page/"
-            ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/save"
-            ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/info/"
-            ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
-        }
-    }
-    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
         autoclose : !0
     });
-    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
+    angular.module("app", ['ngSanitize']).filter('trust2Html', ['$sce',function($sce) {
+        return function(val) {
+            return $sce.trustAsHtml(val);
+        };
+	}]).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
         user.init(function(){

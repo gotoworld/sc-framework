@@ -42,7 +42,7 @@
                                                     <div class="ibox-title">
                                                         <a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("orgInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
                                                         <div class="ibox-tools">
-                                                            <a href="#" ng-click="loadTree()">
+                                                            <a href="#" onclick="loadTree()">
                                                                 <i class="glyphicon glyphicon-refresh"></i>
                                                             </a>
                                                         </div>
@@ -89,8 +89,19 @@
 															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
 														</div>
 													</div>
+													<div class="form-group">
+														<label class="font-noraml">组织类型</label>
+														<div class=" input-group">
+															<select data-placeholder="选择组织类型" id="bean-type" name="type" class="form-control">
+																<option value="">--全部--</option>
+																<option value="0">企业</option>
+																<option value="1">部门</option>
+																<option value="2">组</option>
+															</select>
+														</div>
+													</div>
 													<div class="input-group">
-														<input type="text" name="name" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
 														</span>
@@ -106,24 +117,24 @@
                                     			<tr>
                                     				<th style="width:20px;">#</th>
                                     				<th>编码</th>
-                                    				<th>创建时间</th>
                                     				<th>名称</th>
-                                    				<th>备注</th>
-                                    				<th>状态0启动</th>
-                                    				<th>类型0企业1部门2组</th>
-                                    				<th>操作</th>
-                                    			</tr>
+													<th>类型</th>
+													<th>状态</th>
+													<th>备注</th>
+													<th>创建时间</th>
+													<th>操作</th>
+												</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.code}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.name}}</td>
-                                    				<td>{{item.memo}}</td>
-                                    				<td>{{item.state}}</td>
-                                    				<td>{{item.type}}</td>
-                                    				<td>
+													<td>{{typeEnum(item.type)}}</td>
+													<td>{{stateEnum(item.state)}}</td>
+													<td>{{item.memo}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
@@ -216,6 +227,23 @@
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }
+        $scope.typeEnum=function(key){
+            var value='未知';
+            switch (key){
+				case 0:value='企业';break;
+				case 1:value='部门';break;
+				case 2:value='组';break;
+			}
+			return value;
+		}
+        $scope.stateEnum=function(key){
+            var value='未知';
+            switch (key){
+				case 0:value='禁用';break;
+				case 1:value='启用';break;
+			}
+			return value;
+		}
     });
 
     var loadPage = function (pageIndex) {
@@ -240,8 +268,8 @@
             var trStr ='';
                  trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
                  trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
-				trStr+=' <tr><th class="col-md-2">状态:</th><th class="">'+node.state+'</th></tr>';
-            trStr+=' <tr><th class="col-md-2">类型:</th><th class="">'+node.type+'</th></tr>';
+				trStr+=' <tr><th class="col-md-2">状态:</th><th class="">'+$data.stateEnum(node.state)+'</th></tr>';
+            trStr+=' <tr><th class="col-md-2">类型:</th><th class="">'+$data.typeEnum(node.type)+'</th></tr>';
             trStr+=' <tr><th class="col-md-2">备注:</th><th class="">'+node.memo+'</th></tr>';
             trStr+=' <tr><th class="col-md-2">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
             if(user.hasPermission("orgInfo:info") || user.hasPermission("orgInfo:edit") || user.hasPermission("orgInfo:del")){

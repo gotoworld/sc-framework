@@ -46,6 +46,9 @@
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
+        <if test="type!=null">
+            and t1.type=#{type}
+        </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
         </if>

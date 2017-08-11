@@ -12,13 +12,16 @@ package com.hsd.account.staff.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hsd.account.staff.api.auth.IRoleSourceService;
+import com.hsd.account.staff.api.org.IOrgLogLoginService;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.account.staff.dto.org.OrgLogLoginDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.account.staff.dto.shiro.MyShiroUserToken;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.web.controller.BaseController;
@@ -51,6 +54,8 @@ public class LoginController extends BaseController {
     private static final String acPrefix = "/boss/account/staff/sign/";
     @Autowired
     private IRoleSourceService roleSourceService;
+    @Autowired
+    private IOrgLogLoginService logLoginService;
     /**
      * <p>用户登录
      */
@@ -119,8 +124,20 @@ public class LoginController extends BaseController {
                 data.put("authorizationInfoPerms", authorizationInfo.getStringPermissions());
                 data.put("authorizationInfoRoles",authorizationInfo.getRoles());
                 data.put("sid",getAuth().getSession().getId());
+
+                try {
+                    //读取session中的用户
+                    OrgUserDto user = orgUser;
+                    OrgLogLoginDto logDto=new OrgLogLoginDto();
+                    logDto.setType(0);//类型0登录1登出
+                    logDto.setIpAddr(IpUtil.getIpAddr(request));//请求的IP
+                    logDto.setUserId(user.getId());//用户id
+                    logDto.setUserName(user.getName());//员工名称
+//                logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
+                    logLoginService.saveOrUpdateData(logDto);
+                } catch (Exception e) {
+                }
                 result.data = data;
-                return result;
             } catch (UnknownAccountException | IncorrectCredentialsException ex) {
                 try {getAuth().logout();} catch (Exception e1) {}
                 result = Response.error("登录失败,用户名或密码错误1!");
@@ -141,6 +158,18 @@ public class LoginController extends BaseController {
         Response result = new Response();
         try {
             log.debug(getAuth().getPrincipal() + "准备退出!");
+            try {
+                //读取session中的用户
+                OrgUserDto user = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+                OrgLogLoginDto logDto=new OrgLogLoginDto();
+                logDto.setType(1);//类型0登录1登出
+                logDto.setIpAddr(IpUtil.getIpAddr(request));//请求的IP
+                logDto.setUserId(user.getId());//用户id
+                logDto.setUserName(user.getName());//员工名称
+//            logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
+                logLoginService.saveOrUpdateData(logDto);
+            } catch (Exception e) {
+            }
             try { request.getSession().invalidate(); } catch (Exception e) {}
             try { getAuth().logout();} catch (Exception e) {}
         } catch (Exception e) {

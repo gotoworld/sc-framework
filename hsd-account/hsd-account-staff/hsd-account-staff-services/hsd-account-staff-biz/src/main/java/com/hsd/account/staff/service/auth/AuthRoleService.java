@@ -14,6 +14,7 @@ import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -38,7 +39,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             AuthRole entity=copyTo(dto,AuthRole.class);
-            if (getAuth().isPermitted("authRole:super")) {
+            if (JwtUtil.isPermitted("authRole:super")) {
                 entity.setIsSuper(dto.getIsSuper() == null ? 0 : 1);// 超级管理员0否1是
             } else {
                 entity.setIsSuper(0);// 超级管理员0否1是
@@ -47,7 +48,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             if (authRoleDao.isDataYN(entity) != 0) {
                 // 数据存在
                 authRoleDao.update(entity);
-                if (getAuth().isPermitted("authRole:parm")) {
+                if (JwtUtil.isPermitted("authRole:parm")) {
                     // 1.清空当前角色权限关联信息
                     AuthRoleVsPerm roleVsPerm = new AuthRoleVsPerm();
                     roleVsPerm.setRoleId(entity.getId());
@@ -58,7 +59,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                 authRoleDao.insert(entity);
                 result.data=entity.getId();
             }
-            if (getAuth().isPermitted("authRole:parm")) {
+            if (JwtUtil.isPermitted("authRole:parm")) {
                 // 2.新增角色权限关联信息
                 if (dto.getPermIdArray() != null) {
                     List<AuthRoleVsPerm> xdtos = new ArrayList<>();

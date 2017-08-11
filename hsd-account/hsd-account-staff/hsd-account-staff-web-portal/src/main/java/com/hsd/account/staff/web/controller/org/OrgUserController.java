@@ -135,7 +135,6 @@ public class OrgUserController extends BaseController {
 	 */
 	@RequiresPermissions(value={"orgUser:add","orgUser:edit"},logical=Logical.OR)
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
-	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
 	@ApiOperation(value = "信息保存")
 	public Response save(@Validated OrgUserDto dto, BindingResult bindingResult) {

@@ -1,8 +1,6 @@
 package com.hsd.framework.service;
 
 import com.hsd.framework.ObjectCopy;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -16,19 +14,6 @@ public abstract class BaseService extends Observable {
 	/** 线程池 */
 	@Autowired
 	protected ThreadPoolTaskExecutor taskExecutor;
-    /**
-     * 权限验证框架
-     */
-    private Subject auth;
-    /**
-     * 权限验证框架取得
-     */
-    public Subject getAuth() {
-        if (auth == null) {
-            auth = SecurityUtils.getSubject();
-        }
-        return auth;
-    }
 
     protected Integer PN(Integer pageNum) {
         if (pageNum == null || pageNum == 0) {

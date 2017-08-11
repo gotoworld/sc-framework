@@ -30,7 +30,7 @@
             @[ for( t in beanVo!){ /]
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">${t.columnComment}：</label>
-                    <div class="col-md-9">
+                    <div class="col-md-9 form-control-static">
                     {{item.${t.columnNameFormat}${columnMap[t.columnNameFormat]=='Date'?" | date:'yyyy-MM-dd HH:mm:ss'":""}}}
                     </div>
                 </div>

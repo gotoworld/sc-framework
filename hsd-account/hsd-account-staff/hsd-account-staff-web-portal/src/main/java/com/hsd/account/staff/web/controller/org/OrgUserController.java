@@ -1,6 +1,5 @@
 package com.hsd.account.staff.web.controller.org;
 
-import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.auth.IAuthRoleService;
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.api.org.IOrgUserService;
@@ -52,8 +51,7 @@ public class OrgUserController extends BaseController {
 		Response result = new Response();
 		try {
 			if (dto == null)throw new RuntimeException("参数异常");
-			PageInfo<?> page=new PageInfo<>(orgUserService.findDataIsPage(dto));
-			result.data=getPageDto(page);
+			result.data=getPageDto(orgUserService.findDataIsPage(dto));
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -165,7 +163,7 @@ public class OrgUserController extends BaseController {
 				if(null==dto.getState()) dto.setState(1);//禁用
 				result=orgUserService.saveOrUpdateData(dto);
 				try {
-					if(dto.getId()==getUser().getId()) {
+					if(dto.getId()==((OrgUserDto)getUser()).getId()) {
 						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
 						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
 					}

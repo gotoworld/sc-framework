@@ -34,38 +34,15 @@ public class OrgLogLoginService extends BaseService implements IOrgLogLoginServi
             try {
                 if (dto == null) throw new RuntimeException("参数异常!");
                 OrgLogLogin entity = copyTo(dto, OrgLogLogin.class);
-                //判断数据是否存在
-                if (orgLogLoginDao.isDataYN(entity) != 0) {
-                    //数据存在
-                    orgLogLoginDao.update(entity);
-                } else {
-                    //新增
-                    orgLogLoginDao.insert(entity);
-                    dto.setId(entity.getId());
-                }
+                //新增
+                orgLogLoginDao.insert(entity);
+                dto.setId(entity.getId());
             } catch (Exception e) {
                 log.error("信息保存异常!", e);
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
             }
             return result;
         }
-
-        @Override
-        public String deleteData(@RequestBody OrgLogLoginDto dto) throws Exception {
-            String result = "seccuss";
-            try {
-                if (dto == null)throw new RuntimeException("参数异常!");
-                OrgLogLogin entity = copyTo(dto, OrgLogLogin.class);
-                if(orgLogLoginDao.deleteByPrimaryKey(entity)==0){
-                    throw new RuntimeException("数据不存在!");
-                }
-            } catch (Exception e) {
-                log.error("物理删除异常!", e);
-                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-            }
-            return result;
-        }
-
 
         @Override
         public PageInfo findDataIsPage(@RequestBody OrgLogLoginDto dto) throws Exception {

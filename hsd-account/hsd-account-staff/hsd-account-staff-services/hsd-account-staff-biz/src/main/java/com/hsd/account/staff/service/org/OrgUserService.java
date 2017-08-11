@@ -21,6 +21,7 @@ import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,13 +60,13 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             if (orgUserDao.isDataYN(entity) != 0) {
                 // 数据存在
                 orgUserDao.update(entity);
-                if (getAuth().isPermitted("orgUser:role.edit") && 1!=(entity.getId())) {
+                if (JwtUtil.isPermitted("orgUser:role.edit") && 1!=(entity.getId())) {
                     AuthUserVsRole userVsRole = new AuthUserVsRole();
                     userVsRole.setUserId(entity.getId());
                     // 1.根据用户id清空用户角色关联表
                     authUserVsRoleDao.deleteBulkDataByUserId(userVsRole);
                 }
-                if (getAuth().isPermitted("orgUser:dept.edit")) {
+                if (JwtUtil.isPermitted("orgUser:dept.edit")) {
                     OrgOrgVsUser orgVsUser = new OrgOrgVsUser();
                     orgVsUser.setUserId(entity.getId());
                     // 1.根据用户id清空用户部门关联表
@@ -76,7 +77,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 orgUserDao.insert(entity);
                 result.data=entity.getId();
             }
-            if (getAuth().isPermitted("orgUser:role.edit")) {
+            if (JwtUtil.isPermitted("orgUser:role.edit")) {
                 // 2.新增用户角色关联信息
                 if (dto.getRoleIdArray() != null) {
                     List<AuthUserVsRole> xEntityList = new ArrayList<>();
@@ -89,7 +90,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     authUserVsRoleDao.insertBatch(xEntityList);
                 }
             }
-            if (getAuth().isPermitted("orgUser:dept.edit")) {
+            if (JwtUtil.isPermitted("orgUser:dept.edit")) {
                 // 2.新增用户部门关联信息
                 if (dto.getOrgIdArray() != null) {
                     List<OrgOrgVsUser> xEntityList = new ArrayList<>();

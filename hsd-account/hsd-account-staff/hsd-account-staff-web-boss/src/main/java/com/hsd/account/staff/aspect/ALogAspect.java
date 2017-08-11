@@ -2,13 +2,12 @@ package com.hsd.account.staff.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.hsd.account.staff.api.org.IOrgLogOperationService;
+import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.IDto;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
-import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.account.staff.dto.org.OrgUserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
@@ -53,39 +52,36 @@ public class ALogAspect {
         String ip = IpUtil.getIpAddr(request);
         String[] logArr = getMethodDesc(joinPoint);
         try {
-            //*========控制台输出=========*//
-//            log.debug("=====前置通知开始=====");
-//            log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-//            log.debug("方法描述:" + logArr[1]);
-//            log.debug("请求人:" + user.getName());
-//            log.debug("请求IP:" + ip);
-            Object object=null;
-            Object[] objArr=joinPoint.getArgs();
-            if(objArr!=null){
-                for(Object obj:objArr){
-                    if(obj instanceof IDto){
-//                        log.debug(JSON.toJSONString(obj));
-                        object=obj;
+            if (log.isDebugEnabled()) {
+                /*========控制台输出=========*/
+                log.debug("=====前置通知开始=====");
+                log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
+                log.debug("方法描述:" + logArr[1]);
+                log.debug("请求人:" + user.getName());
+                log.debug("请求IP:" + ip);
+            }
+            Object object = new Object();
+            Object[] objArr = joinPoint.getArgs();
+            if (objArr != null) {
+                for (Object obj : objArr) {
+                    if (obj instanceof IDto) {
+                        log.debug(JSON.toJSONString(obj));
+                        object = obj;
                         break;
                     }
                 }
             }
-            String id="";
-            String newFlag="";
+            String newFlag;
             try {
-                id=(String) ReflectUtil.getValueByFieldName(object,"id");
-                newFlag=(String) ReflectUtil.getValueByFieldName(object,"newFlag");
-                if("1".equals(newFlag)){
-                    logArr[0]="新增";
-                }
-                if(ValidatorUtil.notEmpty(id)){
-                    id="["+id+"]";
+                String id = "" + ReflectUtil.getValueByFieldName(object, "id");
+                newFlag = "" + ReflectUtil.getValueByFieldName(object, "newFlag");
+                if ("0".equals(id) || "1".equals(newFlag)) {
+                    logArr[0] = "新增";
                 }
             } catch (Exception e) {
-                id="["+objArr[0]+"]";
             }
 //            //*========数据库日志=========*//
-            sysUserLogService.info(logArr[0],logArr[1],""+SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE),id, user.getId(), user.getName(), ip);
+            sysUserLogService.info(logArr[0], logArr[1], "" + SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), object.toString(), user.getId(), user.getName(), ip);
 //            log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -95,6 +91,7 @@ public class ALogAspect {
 
     /**
      * 记录操作异常日志
+     *
      * @param joinPoint
      * @param e
      */
@@ -124,7 +121,7 @@ public class ALogAspect {
 //            log.debug("请求人:" + user.getName());
 //            log.debug("请求IP:" + ip);
 //            log.debug("请求参数:" + params);
-            sysUserLogService.info(logArr[0], logArr[1],""+ SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), user.getId(),user.getName(), ip);
+            sysUserLogService.info(logArr[0], logArr[1], "" + SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), user.getId(), user.getName(), ip);
 //            log.debug("=====异常通知结束=====");
         } catch (Exception ex) {
             //记录本地异常日志
@@ -134,6 +131,7 @@ public class ALogAspect {
          /*==========记录本地异常日志==========*/
         log.error("异常方法:{}异常代码:{}异常信息:{}参数:{}", joinPoint.getTarget().getClass().getName() + joinPoint.getSignature().getName(), e.getClass().getName(), e.getMessage(), params);
     }
+
     /**
      * 获取注解中对方法的描述信息
      */

@@ -13,6 +13,7 @@ var site = {
     ,sysDomain: {
          view: basePath + "/html/account/staff/sys/sys_domain"
         ,page: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/page/"
+        ,list: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/list"
         ,save: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/save"
         ,info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"

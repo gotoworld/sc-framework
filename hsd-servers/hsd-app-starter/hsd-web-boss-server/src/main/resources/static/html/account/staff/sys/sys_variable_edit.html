@@ -60,7 +60,7 @@
                             <div class="col-md-12">
                                 <select data-placeholder="选择所属系统域" id="bean-domainCode" name="domainCode" class="form-control"   aria-describedby="bean-domainCode-error"  maxlength="50"   aria-invalid="true">
                                     <option value="">--请选择所属系统域--</option>
-                                    <option value="test1">--测试--</option>
+                                    <option ng-repeat="d in domainNodes" ng-value="d.code" ng-selected="d.code==item.domainCode" ng-bind="d.name"></option>
                                 </select>
                                 <span id="bean-domainCode-error" class="help-block m-b-none"></span>
                             </div>
@@ -75,13 +75,13 @@
                         </div>
 					</div>
 					<div class="col-sm-6">
-                        <div class="form-group clearfix" style="height: 400px;overflow-y: scroll;">
+                        <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择父级机构--</label>
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in nodes">
                                         <label><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
-                                        <ul ng-include="'../tree_select.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id"></ul>
+                                        <ul ng-include="'../tree_radio.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id;name='parentId'"></ul>
                                     </li>
                                 </ul>
                                 <span id="bean-parentId-error" class="help-block m-b-none"></span>
@@ -131,6 +131,7 @@
            $data.newFlag=sessionStorage.getItem(site.sysVariable.info);
            if($data.newFlag) $data.uuidToken=util.guid();
             loadTree();
+            loadDomainList();
            loadInfo(sessionStorage.getItem(site.sysVariable.info));
         });
         $scope.save = function () {
@@ -176,6 +177,17 @@
         }, 'json');
     }
 
+    function loadDomainList(){
+        $.get(site.sysDomain.list, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.domainNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
     $(document).ready(function(){
         formValidate();
     });

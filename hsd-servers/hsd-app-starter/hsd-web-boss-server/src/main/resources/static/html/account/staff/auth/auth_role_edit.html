@@ -50,15 +50,12 @@
                         <div class="form-group clearfix">
                             <label class="col-sm-3 control-label"><input type="checkbox" name="isSuper" value="1">超级管理员</label>
                         </div>
-
-					</div>
-					<div class="col-sm-6">
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">所属系统域：</label>
                             <div class="col-md-12">
                                 <select data-placeholder="选择所属系统域" id="bean-domainCode" name="domainCode" class="form-control"   required="" aria-required="true"  aria-describedby="bean-domainCode-error"  maxlength="50"   aria-invalid="true">
                                     <option value="">--请选择所属系统域--</option>
-                                    <option value="ceshi">--测试--</option>
+                                    <option ng-repeat="d in domainNodes" ng-value="d.code" ng-selected="d.code==item.domainCode" ng-bind="d.name"></option>
                                 </select>
                                 <span id="bean-domainCode-error" class="help-block m-b-none"></span>
                             </div>
@@ -68,6 +65,20 @@
                             <div class="col-md-12">
                                 <input id="bean-memo" name="memo" value="{{item.memo}}" class="form-control" type="text"  placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
                                 <span id="bean-memo-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-sm-6">
+                        <div class="form-group clearfix" >
+                            <label class="col-md-12 control-label">--请选择所属功能--</label>
+                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
+                                <ul>
+                                    <li ng-repeat="t in permNodes">
+                                        <label><input ng-if="item.id!=t.id" type="checkbox" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
+                                        <ul ng-include="'../tree_checkbox.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id;name='parentId2'"></ul>
+                                    </li>
+                                </ul>
+                                <span id="bean-parentId-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
 
@@ -114,6 +125,8 @@
         user.init(function(){
            $data.newFlag=sessionStorage.getItem(site.authRole.info);
            if($data.newFlag) $data.uuidToken=util.guid();
+            loadDomainList();
+            loadPermTree();
            loadInfo(sessionStorage.getItem(site.authRole.info));
         });
         $scope.save = function () {
@@ -147,6 +160,28 @@
          }, 'json');
     }
 
+    function loadDomainList(){
+        $.get(site.sysDomain.list, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.domainNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+    function loadPermTree(){
+        $.get(site.authPerm.tree, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.permNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
     $(document).ready(function(){
         formValidate();
     });

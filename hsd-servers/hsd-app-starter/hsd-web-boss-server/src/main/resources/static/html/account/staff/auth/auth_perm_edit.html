@@ -54,20 +54,6 @@
                                 <span id="bean-matchStr-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">父级ID：</label>
-                            <div class="col-md-12">
-                                <select data-placeholder="选择父级ID" id="bean-parentId" name="parentId" class="form-control"   aria-describedby="bean-parentId-error"  maxlength="32"   aria-invalid="true">
-                                    <option value="">--请选择父级ID--</option>
-                                </select>
-                                <span id="bean-parentId-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
-					</div>
-					<div class="col-sm-6">
-
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">所属系统域：</label>
                             <div class="col-md-12">
@@ -86,6 +72,22 @@
                             </div>
                         </div>
 
+					</div>
+					<div class="col-sm-6">
+
+
+                        <div class="form-group clearfix" style="height: 400px;overflow-y: scroll;">
+                            <label class="col-md-12 control-label">--请选择父级功能--</label>
+                            <div class="col-md-12">
+                                <ul>
+                                    <li ng-repeat="t in nodes">
+                                        <label><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
+                                        <ul ng-include="'../tree_select.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id"></ul>
+                                    </li>
+                                </ul>
+                                <span id="bean-parentId-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
 					</div>
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
@@ -129,7 +131,8 @@
         user.init(function(){
            $data.newFlag=sessionStorage.getItem(site.authPerm.info);
            if($data.newFlag) $data.uuidToken=util.guid();
-           loadInfo(sessionStorage.getItem(site.authPerm.info));
+            loadTree();
+            loadInfo(sessionStorage.getItem(site.authPerm.info));
         });
         $scope.save = function () {
             if($("#authPerm_01").valid()){
@@ -161,7 +164,17 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
-
+    function loadTree(){
+        $.get(site.authPerm.tree, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.nodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
     $(document).ready(function(){
         formValidate();
     });

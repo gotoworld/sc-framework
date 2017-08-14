@@ -1,11 +1,8 @@
 package com.hsd.framework.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,17 +19,17 @@ import java.util.Date;
 @ControllerAdvice
 @Slf4j
 public class WebExceptionHandler {
-    /*
-     * 如果抛出UnauthorizedException，将被该异常处理器截获来显示没有权限信息
-     */
-    @ExceptionHandler({org.apache.shiro.authz.AuthorizationException.class})
-    public ModelAndView unauthenticatedException(NativeWebRequest request, UnauthorizedException e) {
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("exception", e);
-        mv.setViewName("error/noauth");
-        log.error("没有权限！" + request.getParameter("url_427d668497464195893069825e272146"));
-        return mv;
-    }
+//    /*
+//     * 如果抛出UnauthorizedException，将被该异常处理器截获来显示没有权限信息
+//     */
+//    @ExceptionHandler({org.apache.shiro.authz.AuthorizationException.class})
+//    public ModelAndView unauthenticatedException(NativeWebRequest request, UnauthorizedException e) {
+//        ModelAndView mv = new ModelAndView();
+//        mv.addObject("exception", e);
+//        mv.setViewName("error/noauth");
+//        log.error("没有权限！" + request.getParameter("url_427d668497464195893069825e272146"));
+//        return mv;
+//    }
 
     /**
      * @param ex

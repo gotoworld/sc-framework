@@ -7,9 +7,9 @@ import com.hsd.framework.IDto;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
+import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -47,7 +47,7 @@ public class ALogAspect {
     public void doAfter(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //读取session中的用户
-        OrgUserDto user = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+        OrgUserDto user = JwtUtil.getSubject(OrgUserDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         String[] logArr = getMethodDesc(joinPoint);
@@ -81,7 +81,7 @@ public class ALogAspect {
             } catch (Exception e) {
             }
 //            //*========数据库日志=========*//
-            sysUserLogService.info(logArr[0], logArr[1], "" + SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), object.toString(), user.getId(), user.getName(), ip);
+            sysUserLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), object.toString(), user.getId(), user.getName(), ip);
 //            log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -108,7 +108,7 @@ public class ALogAspect {
         }
         try {
             //读取session中的用户
-            OrgUserDto user = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+            OrgUserDto user = JwtUtil.getSubject(OrgUserDto.class);
             //获取请求ip
             String ip = IpUtil.getIpAddr(request);
             String[] logArr = getMethodDesc(joinPoint);
@@ -121,7 +121,7 @@ public class ALogAspect {
 //            log.debug("请求人:" + user.getName());
 //            log.debug("请求IP:" + ip);
 //            log.debug("请求参数:" + params);
-            sysUserLogService.info(logArr[0], logArr[1], "" + SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), user.getId(), user.getName(), ip);
+            sysUserLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), user.getId(), user.getName(), ip);
 //            log.debug("=====异常通知结束=====");
         } catch (Exception ex) {
             //记录本地异常日志

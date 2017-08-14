@@ -1,13 +1,11 @@
 package com.hsd.account.staff.aspect;
 
-import com.alibaba.fastjson.JSON;
 import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.IDto;
-import com.hsd.framework.util.*;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.SignatureException;
+import com.hsd.framework.util.IpUtil;
+import com.hsd.framework.util.JwtUtil;
+import com.hsd.framework.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -37,16 +35,7 @@ public class RfAccount2BeanAspect {
     public void doBefore(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //读取session中的用户
-        OrgUserDto user = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
-        if(user==null){
-            final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
-            log.info("authHeader=" + authorizationToken);
-            if (ValidatorUtil.isEmpty(authorizationToken)) {
-                throw new SignatureException("token头缺失");
-            }
-            final Claims claims = JwtUtil.parseJWT(authorizationToken);
-            user=JSON.parseObject(claims.getSubject(), OrgUserDto.class);
-        }
+        OrgUserDto user = JwtUtil.getSubject(OrgUserDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         try {

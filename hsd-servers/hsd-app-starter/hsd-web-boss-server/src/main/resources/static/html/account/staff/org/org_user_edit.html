@@ -20,6 +20,7 @@
 
 <link href="/css/common.css" rel="stylesheet">
 
+<link href="/css/upload.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
@@ -64,10 +65,13 @@
                         </div>
 
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">性别[0男1女3保密]：</label>
+                            <label class="col-md-3 control-label">性别：</label>
                             <div class="col-md-12">
-                                <select data-placeholder="选择性别[0男1女3保密]" id="bean-gender" name="gender" class="form-control"   aria-describedby="bean-gender-error"   aria-invalid="true">
-                                    <option value="">--请选择性别[0男1女3保密]--</option>
+                                <select data-placeholder="选择性别" id="bean-gender" name="gender" class="form-control"   aria-describedby="bean-gender-error"   aria-invalid="true">
+                                    <option value="">--请选择性别--</option>
+                                    <option value="0">男</option>
+                                    <option value="1">女</option>
+                                    <option value="2">保密</option>
                                 </select>
                                 <span id="bean-gender-error" class="help-block m-b-none"></span>
                             </div>
@@ -81,17 +85,12 @@
                             </div>
                         </div>
 
+
 					</div>
 					<div class="col-sm-6">
-
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">头像url：</label>
-                            <div class="col-md-12">
-                                <input id="bean-avatar" name="avatar" value="{{item.avatar}}" class="form-control" type="text"  placeholder="请输入头像url"  aria-describedby="bean-avatar-error"  maxlength="255"   aria-invalid="true">
-                                <span id="bean-avatar-error" class="help-block m-b-none"></span>
-                            </div>
+                            <label class="col-sm-3 control-label"><input type="checkbox" name="state" value="1">启用</label>
                         </div>
-
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">邮箱：</label>
                             <div class="col-md-12">
@@ -99,35 +98,16 @@
                                 <span id="bean-email-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
                         <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">用户类型0管理员1普通用户：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="type" value="option1">启用用户类型0管理员1普通用户</label>
-                                <span id="bean-type-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">状态0启用1禁用：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="state" value="option1">启用状态0启用1禁用</label>
-                                <span id="bean-state-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">生效时间：</label>
+                            <label class="col-md-3 control-label">头像url：</label>
                             <div class="col-md-12">
-                                <input id="bean-effDate" name="effDate" value="{{item.effDate | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入生效时间"  aria-describedby="bean-effDate-error"   aria-invalid="true">
-                                <span id="bean-effDate-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">失效时间：</label>
-                            <div class="col-md-12">
-                                <input id="bean-expDate" name="expDate" value="{{item.expDate | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入失效时间"  aria-describedby="bean-expDate-error"   aria-invalid="true">
-                                <span id="bean-expDate-error" class="help-block m-b-none"></span>
+                                <span  class="help-block m-b-none"><button type="button" id="upload_btn_avatar">点击上传</button></span>
+                                <div id="upload_div_avatar" style="">
+                                    <div class="img-grid-2">
+                                        <input name="avatar" value="{{item.avatar}}" type="hidden">
+                                        <img src="{{item.avatar}}" style="max-width:264px;max-height:264px">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group clearfix">
@@ -169,6 +149,8 @@
 <script type="text/javascript" src="/js/common.js"></script>
 
 <script src="/plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
+<script type="text/javascript" src="/plugins/plupload/js/plupload.min.js"></script>
+<script type="text/javascript" src="/js/upload_single_pic.js"></script>
 <script type="text/javascript">
     function formValidate(){
         setTimeout(function(){
@@ -178,10 +160,11 @@
 
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
-            $data.newFlag=sessionStorage.getItem(site.orgInfo.info);
-            if($data.newFlag) $data.uuidToken=util.guid();
-            loadInfo(sessionStorage.getItem(site.orgInfo.info));
+           $data.newFlag=sessionStorage.getItem(site.orgUser.info);
+           if($data.newFlag) $data.uuidToken=util.guid();
+           loadInfo(sessionStorage.getItem(site.orgUser.info));
         });
         $scope.save = function () {
             if($("#orgUser_01").valid()){
@@ -201,7 +184,6 @@
             return val;
         }
     });
-
     var loadInfo=function(id){
         $.get(site.orgUser.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
@@ -217,10 +199,7 @@
 
     $(document).ready(function(){
         formValidate();
-
-    laydate({elem: '#bean-effDate',event: 'click'});
-
-    laydate({elem: '#bean-expDate',event: 'click'});
+        upload_single_pic('upload_btn_avatar','upload_div_avatar','png,jpg,gif,bmp','avatar');
     });
 </script>
 </body>

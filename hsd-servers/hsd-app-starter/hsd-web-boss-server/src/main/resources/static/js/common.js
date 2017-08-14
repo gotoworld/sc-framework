@@ -1,7 +1,7 @@
-var basePath="http://localhost";
+var basePath="http://localhost/";
 var apiPath={
     account:{
-        staff:"http://localhost"
+        staff:"http://localhost:6061"
     }
 }
 var site = {
@@ -93,10 +93,6 @@ $.ajaxSetup({
     headers: {
         "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken")
     }
-    , xhrFields: {
-        withCredentials: true
-    }
-    , crossDomain: true
 })
 $(document).ajaxComplete(function (event, xhr, settings) {
     if (xhr && xhr.responseText) {

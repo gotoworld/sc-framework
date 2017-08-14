@@ -94,7 +94,7 @@
                                     			</tr>
                                     		</tbody>
                                     	</table>
-										<div class="b_page" ng-bind-html="tagPages"></div>
+										<div class="b_page" id="tagPages"></div>
                                     </div>
 								</div>
 							</div>
@@ -183,7 +183,7 @@
         $.post( site.sysDomain.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             $data.feedback=false;
             $data.result=result;
-            $data.tagPages=tag.page(result.data);
+            $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             $data.$apply();
         }, 'json');
     }

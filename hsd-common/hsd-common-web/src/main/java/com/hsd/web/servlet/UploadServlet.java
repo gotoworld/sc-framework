@@ -30,7 +30,7 @@ import java.util.*;
  * Servlet implementation class upload
  */
 @AutoConfigureBefore(AppConfig.class)
-@WebServlet(urlPatterns = "/fileUpload", description = "文件上传")
+@WebServlet(urlPatterns = "/file/fileUpload", description = "文件上传")
 @Slf4j
 public class UploadServlet extends HttpServlet{
     private final long serialVersionUID = 1L;

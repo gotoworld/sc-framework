@@ -8,7 +8,7 @@ function updte_single_bgm(btn, divId, _fileExt, name) {
         container: document.getElementById('' + divId),
         flash_swf_url: basePath + 'plugins/plupload/js/Moxie.swf',
         silverlight_xap_url: basePath + 'plugins/plupload/js/Moxie.xap',
-        url: basePath + 'fileUpload?dir=audio',
+        url: basePath + '/file/fileUpload?dir=audio',
 
         filters: {
             mime_types: [ //只允许上传图片

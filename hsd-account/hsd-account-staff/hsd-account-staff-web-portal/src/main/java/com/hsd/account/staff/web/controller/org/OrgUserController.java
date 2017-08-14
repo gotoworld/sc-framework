@@ -7,16 +7,15 @@ import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.annotation.auth.Logical;
+import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.session.InvalidSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -30,7 +29,7 @@ import java.util.List;
 @RestController
 @Slf4j
 public class OrgUserController extends BaseController {
-	private static final String acPrefix="/api/account/staff/org/user/";
+	private static final String acPrefix="/api/account/staff/org/orgUser/";
 
 	@Autowired
 	private IOrgUserService orgUserService;
@@ -38,19 +37,24 @@ public class OrgUserController extends BaseController {
 	private IAuthRoleService authRoleService;
 
 	@Autowired
-	private IOrgInfoService orgInfoService;
+	private IOrgInfoService orgDepartmentService;
 
 	/**
 	 * <p> 信息分页 (未删除)。
 	 */
 	@RequiresPermissions("orgUser:menu")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page/{pageNum}")
 	@ApiOperation(value = "信息分页")
-	public Response page(@RequestBody OrgUserDto dto) {
+	public Response page(@RequestBody OrgUserDto dto, @PathVariable("pageNum") Integer pageNum) {
 		log.info("OrgUserController page.........");
 		Response result = new Response();
 		try {
-			if (dto == null)throw new RuntimeException("参数异常");
+			if (dto == null) {
+				dto = new OrgUserDto();
+				dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+			}
+			dto.setPageNum(pageNum);
+			dto.setDelFlag(0);
 			result.data=getPageDto(orgUserService.findDataIsPage(dto));
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
@@ -104,7 +108,7 @@ public class OrgUserController extends BaseController {
 		log.info("OrgUserController del.........");
 		Response result = new Response();
 		try {
-			OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+			OrgUserDto orgUser = JwtUtil.getSubject(OrgUserDto.class);
 			if(orgUser.getId().equals(id)){
 				throw new RuntimeException("不能删除自己!");
 			}
@@ -128,13 +132,14 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
-	
-	
+
+
 	/**
 	 * <p> 信息保存
 	 */
 	@RequiresPermissions(value={"orgUser:add","orgUser:edit"},logical=Logical.OR)
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
+	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="权限信息")
 	@ApiOperation(value = "信息保存")
 	public Response save(@Validated OrgUserDto dto, BindingResult bindingResult) {
@@ -153,7 +158,7 @@ public class OrgUserController extends BaseController {
 				}
 				result = Response.error(errorresult);
 			}else{
-				OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+				OrgUserDto orgUser = (OrgUserDto) JwtUtil.getSubject(OrgUserDto.class);
 				if(orgUser !=null){
 					if(ValidatorUtil.isEmpty(dto.getAccount())){
 						dto.setAccount(orgUser.getAccount());
@@ -161,12 +166,9 @@ public class OrgUserController extends BaseController {
 				}
 				if(null==dto.getState()) dto.setState(1);//禁用
 				result=orgUserService.saveOrUpdateData(dto);
-				try {
-					if(dto.getId()==((OrgUserDto)getUser()).getId()) {
-						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
-						getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
-					}
-				} catch (InvalidSessionException e) {
+				if(dto.getId()==((OrgUserDto)getUser()).getId()) {
+					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
+					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
 				}
 				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}
@@ -198,19 +200,16 @@ public class OrgUserController extends BaseController {
 				}
 				result = Response.error(errorresult);
 			}else{
-				OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+				OrgUserDto orgUser = JwtUtil.getSubject(OrgUserDto.class);
 				if(orgUser !=null){
 					if(ValidatorUtil.isEmpty(dto.getAccount())){
 						dto.setAccount(orgUser.getAccount());
 					}
 				}
 				result.message=orgUserService.updateData(dto);
-				try {
-					OrgUserDto newOrgUser=orgUserService.findDataById(dto);
-					getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER,newOrgUser);
-					getAuth().getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN,newOrgUser);
-				} catch (InvalidSessionException e) {
-				}
+				OrgUserDto newOrgUser=orgUserService.findDataById(dto);
+				request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER,newOrgUser);
+				request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN,newOrgUser);
 				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}
 		} catch (Exception e) {
@@ -236,7 +235,7 @@ public class OrgUserController extends BaseController {
 			if ("1".equals(request.getSession().getAttribute(acPrefix + "updatePwd." + dto.getToken()))) {
 				throw new RuntimeException("请不要重复提交!");
 			}
-			OrgUserDto orgUser = (OrgUserDto) SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER_ADMIN);
+			OrgUserDto orgUser =JwtUtil.getSubject(OrgUserDto.class);
 			if(orgUser ==null){
 				throw new RuntimeException("登陆超时!");
 			}

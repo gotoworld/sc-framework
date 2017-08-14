@@ -58,15 +58,6 @@ feign:
   name:
     account.channel: hsd-account-channel-server
 
-#shiro
-shiro:
-  login-url: /error/403
-  success-url: /info
-  unauthorized-url: /error/noauth
-  filterf-chain-definition-map:
-    /api/account/sign/**: anon
-    /api/**: authc
-
 # 自定义配置
 hsd:
   common:

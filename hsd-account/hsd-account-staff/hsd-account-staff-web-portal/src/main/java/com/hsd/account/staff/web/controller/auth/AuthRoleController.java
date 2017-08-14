@@ -1,124 +1,96 @@
 package com.hsd.account.staff.web.controller.auth;
 
-import com.github.pagehelper.PageInfo;
-import com.hsd.account.staff.api.auth.IAuthPermService;
 import com.hsd.account.staff.api.auth.IAuthRoleService;
-import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.util.CommonConstant;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.hsd.framework.annotation.auth.Logical;
+import com.hsd.framework.annotation.auth.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Api(description = "权限_角色信息")
 @RestController
 @Slf4j
 public class AuthRoleController extends BaseController {
-    private static final String acPrefix = "/api/account/staff/auth/role/";
-
+    private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IAuthRoleService authRoleService;
-    @Autowired
-    private IAuthPermService authPermService;
+    private static final String acPrefix = "/api/account/staff/auth/authRole/";
 
     /**
-     * <p> 信息分页 (未删除)。
+     * <p>信息分页 (未删除)。
      */
     @RequiresPermissions("authRole:menu")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
-    public Response page(AuthRoleDto dto) {
+    public Response page(@ModelAttribute AuthRoleDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AuthRoleController page.........");
-        Response result = new Response(0,"seccuss");
-        try {
-            if (dto == null)throw new RuntimeException("参数异常");
-            //--超级管理员标记
-            dto.setIsSuper("1".equals(SecurityUtils.getSubject().getSession().getAttribute("isSuper")) ? 1 : 0);
-            PageInfo<?> page = new PageInfo<>(authRoleService.findDataIsPage(dto));
-            result.data=getPageDto(page);
-        } catch (Exception e) {
-            result=Response.error(e.getMessage());
-        }
-        return result;
-    }
-    /**
-     * <p> 详情。
-     */
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
-    @ApiOperation(value = "详情")
-    public Response info(@PathVariable("id") Long id) {
-        log.info("AuthRoleController info.........");
         Response result = new Response();
         try {
-            AuthRoleDto dto=new AuthRoleDto();
-            dto.setId(id);
-            result.data=authRoleService.findDataById(dto);
-        } catch (Exception e) {
-            result=Response.error(e.getMessage());
-        }
-        return result;
-    }
-    /**
-     * <p> 当前角色已有权限。
-     */
-    @RequiresPermissions("authRole:edit")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "authPerm/{id}")
-    @ApiOperation(value = "当前角色已有权限")
-    public Response authPerm(@PathVariable("id") Long id) {
-        log.info("AuthRoleController authPerm.........");
-        Response result = new Response();
-        try {
-            Map xdto = new HashMap();
-            xdto.put("roleId", id);
-            result.data=authPermService.findPermDataIsListByRoleId(xdto);
-        } catch (Exception e) {
-            result=Response.error(e.getMessage());
-        }
-        return result;
-    }
-    /**
-     * <li>权限信息树。
-     */
-    @RequiresPermissions("authRole:del")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "permTree")
-    public Response permTree() {
-        log.info("AuthRoleController permTree.........");
-        Response result = new Response();
-        try {
-            result.data = authPermService.findDataIsTree(new AuthPermDto());
+            if (dto == null) {
+                dto = new AuthRoleDto();
+                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+            }
+            dto.setPageNum(pageNum);
+            dto.setDelFlag(0);
+            // 信息列表
+            result.data = PageUtil.copy(authRoleService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
+
+
+
     /**
-     * <li>逻辑删除。
+     * <p> 信息详情。
+     */
+    @RequiresPermissions("authRole:edit")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
+    @ApiOperation(value = "信息详情")
+    public Response info(@PathVariable("id") Long id) {
+        log.info("AuthRoleController info.........");
+        Response result = new Response();
+        try {
+            AuthRoleDto dto = new AuthRoleDto();
+            if (id!=null) {
+                dto.setId(id);
+                dto.setDelFlag(0);
+                result.data = authRoleService.findDataById(dto);
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * <p>删除。
      */
     @RequiresPermissions("authRole:del")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "del/{id}")
-    @ALogOperation(type = "删除", desc = "角色信息")
-    @ApiOperation(value = "逻辑删除")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
+    @ALogOperation(type = "删除", desc = "权限_角色信息")
+    @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("AuthRoleController del.........");
         Response result = new Response();
         try {
             AuthRoleDto dto = new AuthRoleDto();
-            dto.setId(id);//角色ID
+            dto.setId(id);
             result.message = authRoleService.deleteDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -130,15 +102,15 @@ public class AuthRoleController extends BaseController {
      * <p> 信息保存
      */
     @RequiresPermissions(value = {"authRole:add", "authRole:edit"}, logical = Logical.OR)
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "save")
+    @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "角色信息")
+    @ALogOperation(type = "修改", desc = "权限_角色信息")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated @RequestBody AuthRoleDto dto, BindingResult bindingResult) {
+    public Response save(@Validated @ModelAttribute AuthRoleDto dto, BindingResult bindingResult) {
         log.info("AuthRoleController save.........");
         Response result = new Response();
         try {
-            if (dto == null)throw new RuntimeException("参数异常");
+            if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }

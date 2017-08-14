@@ -201,7 +201,6 @@ var user = {
     //-- shiro 权限
     , hasPermission: function (str) {
         //console.info("permsstr="+str)
-        return true;
         var hsd_staff_authorizationInfo = sessionStorage.getItem("hsd_staff_authorizationInfoPerms");
         //console.info("hsd_staff_authorizationInfo="+hsd_staff_authorizationInfo)
         if (hsd_staff_authorizationInfo) {

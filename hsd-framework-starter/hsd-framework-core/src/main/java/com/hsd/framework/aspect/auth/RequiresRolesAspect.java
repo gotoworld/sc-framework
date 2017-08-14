@@ -49,11 +49,11 @@ public class RequiresRolesAspect {
         }
         final Claims claims = JwtUtil.parseJWT(authorizationToken);
         JSONObject jobj = JSON.parseObject(claims.getSubject());
-        String authorizationInfoPerms = jobj.getString("authorizationInfoRoles");
+        String authorizationInfoRoles = jobj.getString("authorizationInfoRoles");
         boolean flag = false;
         String[] permStrArr = requiresRoles.value();
-        if (authorizationInfoPerms != null) {
-            List<String> userPermsArr = Arrays.asList(authorizationInfoPerms.split(","));
+        if (authorizationInfoRoles != null) {
+            List<String> userPermsArr = Arrays.asList(authorizationInfoRoles.split(","));
             if (userPermsArr != null) {
                 if (Logical.OR.equals(requiresRoles.logical())) {
                     flag = false;

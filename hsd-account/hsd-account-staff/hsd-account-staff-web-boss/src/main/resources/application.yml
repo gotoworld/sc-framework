@@ -58,15 +58,6 @@ feign:
   name:
     account.staff: hsd-account-staff-server
 
-#shiro
-shiro:
-  login-url: /error/403
-  success-url: /info
-  unauthorized-url: /error/noauth
-  filterChainDefinitionMap:
-    /boss/account/staff/sign/**: anon
-    /boss/**: authc
-
 # 自定义配置
 hsd:
   common:

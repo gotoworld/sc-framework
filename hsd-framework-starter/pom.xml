@@ -23,7 +23,6 @@
         <mysql.version>6.0.6</mysql.version>
         <druid.version>1.1.1</druid.version>
         <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
-        <shiro.version>1.4.0</shiro.version>
         <spring.cloud.version>Dalston.RELEASE</spring.cloud.version>
         <docker.image.prefix>hsd</docker.image.prefix>
     </properties>
@@ -91,23 +90,6 @@
             <artifactId>spring-boot-starter-fastjson</artifactId>
             <version>2.0.0</version>
         </dependency>
-        <!-- Shiro security -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-aspectj</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-quartz</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <!-- end of Shiro security -->
 
         <dependency>
             <groupId>org.springframework.session</groupId>
@@ -183,6 +165,7 @@
                 <configuration>
                     <serverId>docker-hub</serverId>
                     <registryUrl>http://192.168.101.150</registryUrl>
+                    <!--<dockerHost>tcp://192.168.101.150:2375</dockerHost>-->
                     <exposes>80</exposes>
                     <pushImage>true</pushImage>
                     <imageName>192.168.101.150/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>

@@ -79,7 +79,7 @@ var site = {
         ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
     }
 }
-var $data,$ngHttp,$ngCompile;
+var $data,$ngHttp,$ngCompile,$ngSce;
 var page;
 
 function getQueryString(name) {

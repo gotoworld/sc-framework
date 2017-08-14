@@ -146,12 +146,12 @@ var user = {
         }, 'json');
     },
     logout: function (callback) {
-        sessionStorage.removeItem('hsd_staff_tokenExpMillis');
-        sessionStorage.removeItem('hsd_staff_user');
-        sessionStorage.removeItem("hsd_staff_authorizationToken");
-        sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
-        sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
         $.get(site.user.logout, {},function (result) {
+            sessionStorage.removeItem('hsd_staff_tokenExpMillis');
+            sessionStorage.removeItem('hsd_staff_user');
+            sessionStorage.removeItem("hsd_staff_authorizationToken");
+            sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
+            sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
             callback && callback();
             location.href = '/login.html';
         }, 'json');

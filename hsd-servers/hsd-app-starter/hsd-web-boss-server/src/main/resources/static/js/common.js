@@ -176,7 +176,7 @@ var user = {
                 expMillis = sessionStorage.getItem('hsd_staff_tokenExpMillis') - (new Date().getTime());
             }
             if (expMillis > 0 && expMillis < (10 * 60 * 1000)) {//还有10分钟过期
-                this.refreshToken();
+                this.refreshToken(callback);
             } else {
                 if (sessionStorage.getItem('hsd_staff_user') && expMillis > 0) {
                     user.info(callback);

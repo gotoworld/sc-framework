@@ -34,7 +34,7 @@ public class JwtUtil {
     /**
      * 创建jwt
      */
-    public static String createJWT(String id, String subject, long ttlMillis, String sid) throws Exception {
+    public static String createJWT(String id, String subject, long ttlMillis) throws Exception {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         SecretKey key = generalKey();
@@ -42,7 +42,6 @@ public class JwtUtil {
                 .setId(id)
                 .setIssuedAt(now)
                 .setSubject(subject)
-                .claim(CommonConstant.JWT_HEADER_SHIRO_KEY, sid)
                 .signWith(SignatureAlgorithm.HS256, key);
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;
@@ -76,7 +75,15 @@ public class JwtUtil {
 //        jo.put("sid", ReflectUtil.getValueByFieldName(user,"sid"));
         return jo.toJSONString();
     }
-
+    public static <T>T getSubject(Class<T> obj) throws Exception {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            throw new SignatureException("token头缺失");
+        }
+        final Claims claims = parseJWT(authorizationToken);
+        return JSONObject.parseObject(claims.getSubject(),obj);
+    }
     public static boolean isPermitted(String authStr) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);

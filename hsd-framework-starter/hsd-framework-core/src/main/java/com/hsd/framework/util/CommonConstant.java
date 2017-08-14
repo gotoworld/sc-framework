@@ -41,7 +41,6 @@ public class CommonConstant {
 
 
 	public static final String JWT_HEADER_TOKEN_KEY = "Authorization";
-	public static final String JWT_HEADER_SHIRO_KEY = "sid";
 	public static final String JWT_ID = "jwt";
 	public static final String JWT_SECRET_KEY = "43455454gjixiuowrmkhdiuhs#^&(klefk!";
 	public static final long JWT_TTL = 2 * 60 * 60 * 1000;  //jwt过期时间 毫秒

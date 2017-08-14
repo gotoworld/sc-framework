@@ -1,15 +1,13 @@
 package com.hsd.web.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.page.PageDto;
-import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.IpUtil;
-import com.hsd.framework.util.ReflectUtil;
-import com.hsd.framework.util.ValidatorUtil;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
+import com.hsd.framework.util.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,16 +71,20 @@ public class BaseController {
         return basePath + "/";
     }
 
-    /**
-     * 权限验证框架取得
-     */
-    public Subject getAuth() {
-        return SecurityUtils.getSubject();
-    }
-
-
     public Object getUser() {
-        return SecurityUtils.getSubject().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
+        Object orgUser= null;
+        try {
+            final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+//        log.info("authHeader=" + authorizationToken);
+            if (ValidatorUtil.isEmpty(authorizationToken)) {
+                throw new SignatureException("token头缺失");
+            }
+            final Claims claims = JwtUtil.parseJWT(authorizationToken);
+            orgUser = JSON.parseObject(claims.getSubject(), Object.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orgUser;
     }
 
     public Integer getPageNum(Object obj) {

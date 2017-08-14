@@ -168,7 +168,7 @@
         $.post( site.orgLogOperation.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             $data.feedback=false;
             $data.result=result;
-            $data.tagPages=tag.page(result.data);
+            $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }

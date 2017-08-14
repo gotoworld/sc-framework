@@ -1,5 +1,6 @@
-package com.hsd.exception;
+package com.hsd.framework.exception;
 
+import com.hsd.framework.FeignErrorDTO;
 import com.hsd.framework.util.Converter;
 import feign.Response;
 import feign.Util;
@@ -12,7 +13,6 @@ import java.io.IOException;
 import static java.lang.String.format;
 
 /** 服务发现错误、例外处理
- * Created by Administrator on 17-6-1.
  */
 @Configuration
 @Slf4j
@@ -35,9 +35,9 @@ public class FeignErrorDecoder implements ErrorDecoder {
                     data = message;
                     int idx = data.indexOf(":");
                     if (idx >= 0) {
-                        code = Integer.parseInt(data.substring(0, idx));
+                        code = Integer.parseInt(data.substring(idx+1,data.lastIndexOf(":")).trim());
                         if (data.length() > idx + 1)
-                            message = data.substring(idx + 1);
+                            message = data.substring(data.lastIndexOf(":") + 1);
                     }
                 }
 

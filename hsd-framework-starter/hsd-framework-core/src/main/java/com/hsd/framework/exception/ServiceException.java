@@ -14,8 +14,4 @@ public class ServiceException extends BaseException {
 	public ServiceException(ErrorCode error) {
 		super(error, error.getCode() + ":");
 	}
-	
-	public ServiceException(ErrorCode error, String msg, Object data) {
-		super(error, error.getCode() + ":" + msg, data);
-	}
 }

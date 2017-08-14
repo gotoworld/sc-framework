@@ -1,5 +1,11 @@
-package com.hsd.exception;
+/**
+ *
+ */
+package com.hsd.framework.exception;
 
+/**
+ * @Description: 异常基类
+ */
 public class ServiceFeignException extends RuntimeException  {
     private static final long serialVersionUID = 5692243177785821696L;
 

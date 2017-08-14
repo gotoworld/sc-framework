@@ -1,10 +1,7 @@
-package com.hsd.exception;
+package com.hsd.framework;
 
 import lombok.Data;
 
-/**
- * Created by Administrator on 17-6-1.
- */
 @Data
 public class FeignErrorDTO {
     private Long timestamp;

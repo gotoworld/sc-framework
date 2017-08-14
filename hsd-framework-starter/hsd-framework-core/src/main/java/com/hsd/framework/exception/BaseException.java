@@ -10,23 +10,19 @@ public abstract class BaseException extends RuntimeException {
     private Object data = "";
 
     public BaseException() {
+        super();
     }
 
     public BaseException(ErrorCode error) {
         this.error = error;
     }
 
-    public BaseException(ErrorCode error, Object data) {
+    public BaseException(ErrorCode error, String msg) {
+        super(msg);
         this.error = error;
-        this.data = data;
+        this.data=msg;
     }
     
-    public BaseException(ErrorCode error, String msg, Object data) {
-    	this.error = error;
-    	this.error.setMessage(msg);
-    	this.data = data;
-    }
-
     public ErrorCode getError() {
         return error;
     }

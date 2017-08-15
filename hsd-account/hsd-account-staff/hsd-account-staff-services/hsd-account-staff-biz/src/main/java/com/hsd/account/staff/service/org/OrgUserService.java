@@ -73,6 +73,9 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     orgOrgVsUserDao.deleteBulkDataByUserId(orgVsUser);
                 }
             } else {
+                if(orgUserDao.isAccountYN(dto.getAccount())>0){
+                    throw new RuntimeException("账号已存在!");
+                }
                 // 新增
                 orgUserDao.insert(entity);
                 result.data=entity.getId();
@@ -266,7 +269,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         String result = "seccuss";
         try {
             if (ValidatorUtil.notEmpty(uid)) {
-                if (orgUserDao.isUidYN(uid) == 0) {
+                if (orgUserDao.isAccountYN(uid) == 0) {
                     result = "0";
                 }
             }

@@ -82,10 +82,10 @@ public class OrgUserDto extends BaseDto {
      private String oldpwd;
      private String newpwd;
      private String confirmpwd;
+     /**机构id*/
+     private String orgId;
      /**超级管理员标记*/
      private Integer iissuperman;
-     /**sessionid*/
-     private String sid;
      /**用户权限,匹配字符集合*/
      private Set<String> authorizationInfoPerms;
      /**用户角色,匹配字符集合*/

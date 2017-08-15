@@ -108,6 +108,8 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         user.init(function(){
+            loadUser(sessionStorage.getItem(site.orgInfo.info));
+            loadOrgUser(sessionStorage.getItem(site.orgInfo.info));
             loadInfo(sessionStorage.getItem(site.orgInfo.info));
         });
         $scope.save = function () {
@@ -143,6 +145,30 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
+    function loadUser(orgId){
+        $.post(site.orgUser.list, {"orgId":orgId},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.roleNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+        function loadOrgUser(orgId){
+            $data.orgUserNodes=[];
+            $.post(site.orgInfo.getUser, {"orgId":orgId},function (result) {
+                //console.info("获取数据.." + JSON.stringify(result));
+                if (result.code == 0) {
+                    for(var i=0;i<result.data.length;i++){
+                        $data.orgUserNodes.push(result.data[i].id);
+                    }
+                } else {
+                    alert(result.message);
+                }
+                if(!$data.$$phase) $data.$apply();
+            }, 'json');
+        }
     $(document).ready(function(){
         formValidate();
     });

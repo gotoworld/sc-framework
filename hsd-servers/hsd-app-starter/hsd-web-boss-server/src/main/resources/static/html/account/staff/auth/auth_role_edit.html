@@ -37,7 +37,7 @@
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
 					<div class="clearfix "></div>
-					<div class="col-sm-6 b-r">
+					<div class="col-sm-4 b-r">
 
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">角色名称：</label>
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label"><input type="checkbox" name="isSuper" value="1">超级管理员</label>
+                            <label class="col-sm-12 control-label"><input type="checkbox" name="isSuper" value="1">超级管理员</label>
                         </div>
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">备注：</label>
@@ -58,21 +58,34 @@
                             </div>
                         </div>
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-4 b-r" ng-if="user.hasPermission('authRole:edit:perm')">
                         <div class="form-group clearfix" >
-                            <label class="col-md-12 control-label">--请选择所属功能--</label>
+                            <label class="col-md-12 control-label">--请选择角色功能--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in permNodes">
-                                        <label style="{{checkPermId(t.id)?'color:red':''}}"><input ng-if="item.id!=t.id" type="checkbox" name="permIds" ng-value="t.id" ng-checked="checkPermId(t.id)">{{t.name}}</label>
-                                        <ul ng-include="'tree_checkbox_role_vs_perm.html'" ng-init="child=t.nodes;_self_id=item.id;name='permIds'"></ul>
+                                        <label style="{{checkPermId(t.id)?'color:red':''}}"><input type="checkbox" name="permIds" ng-value="t.id" ng-checked="checkPermId(t.id)">{{t.name}}</label>
+                                        <ul ng-include="'tree_checkbox_role_vs_perm.html'" ng-init="child=t.nodes;name='permIds'"></ul>
                                     </li>
                                 </ul>
-                                <span id="bean-parentId-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
 
 					</div>
+                    <div class="col-sm-4" ng-if="user.hasPermission('authRole:edit:menu')">
+                        <div class="form-group clearfix" >
+                            <label class="col-md-12 control-label">--请选择角色菜单--</label>
+                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
+                                <ul>
+                                    <li ng-repeat="t in menuNodes">
+                                        <label style="{{checkMenuId(t.id)?'color:red':''}}"><input type="checkbox" name="menuIds" ng-value="t.id" ng-checked="checkMenuId(t.id)">{{t.name}}</label>
+                                        <ul ng-include="'tree_checkbox_role_vs_menu.html'" ng-init="child=t.nodes;name='menuIds'"></ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
@@ -115,10 +128,15 @@
         user.init(function(){
            $data.newFlag=sessionStorage.getItem(site.authRole.info);
            if($data.newFlag) $data.uuidToken=util.guid();
-            loadDomainList();
             if(sessionStorage.getItem(site.authRole.info) && sessionStorage.getItem(site.authRole.info)!=0){
-                loadPermTree();
-                loadRolePermList(sessionStorage.getItem(site.authRole.info));
+                if(user.hasPermission('authRole:edit:perm')){
+                    loadPermTree();
+                    loadRolePermList(sessionStorage.getItem(site.authRole.info));
+                }
+                if(user.hasPermission('authRole:edit:menu')){
+                    loadMenuTree();
+                    loadRoleMenuList(sessionStorage.getItem(site.authRole.info));
+                }
                 loadInfo(sessionStorage.getItem(site.authRole.info));
             }
         });
@@ -140,9 +158,13 @@
             return val;
         }
         $scope.checkPermId=function(permId){
-            console.info("permId=="+permId);
-            console.info("$data.rolePermNodes=="+JSON.stringify($data.rolePermNodes));
             if($data.rolePermNodes && $data.rolePermNodes.indexOf(permId)!=-1){
+                return true;
+            }
+            return false;
+        }
+        $scope.checkMenuId=function(menuId){
+            if($data.roleMenuNodes && $data.roleMenuNodes.indexOf(menuId)!=-1){
                 return true;
             }
             return false;
@@ -161,17 +183,6 @@
          }, 'json');
     }
 
-    function loadDomainList(){
-        $.get(site.sysDomain.list, {},function (result) {
-            //console.info("获取数据.." + JSON.stringify(result));
-            if (result.code == 0) {
-                $data.domainNodes=result.data;
-            } else {
-                alert(result.message);
-            }
-            if(!$data.$$phase) $data.$apply();
-        }, 'json');
-    }
     function loadPermTree(){
         $.get(site.authPerm.tree, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
@@ -192,6 +203,34 @@
                 if(result.data){
                     for(var i=0;i<result.data.length;i++){
                         $data.rolePermNodes.push(result.data[i].id);
+                    }
+                }
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+    function loadMenuTree(){
+        $.get(site.sysMenu.tree, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.menuNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+
+    function loadRoleMenuList(roleId){
+        $data.roleMenuNodes=[];
+        $.post(site.authRole.menu, {"roleId":roleId},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                if(result.data){
+                    for(var i=0;i<result.data.length;i++){
+                        $data.roleMenuNodes.push(result.data[i].id);
                     }
                 }
             } else {

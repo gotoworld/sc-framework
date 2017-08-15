@@ -129,7 +129,7 @@ public class AuthRoleController extends BaseController {
         return result;
     }
 
-    @RequiresPermissions(value = {"authRole:add", "authRole:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"authRole:menu"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "perm")
     @ApiOperation(value = "获取当前角色已有(功能/权限)")
     public Response perm(@RequestParam(name = "roleId") Long roleId) {
@@ -139,6 +139,21 @@ public class AuthRoleController extends BaseController {
             AuthRoleDto dto=new AuthRoleDto();
             dto.setId(roleId);
             result.data = authRoleService.findPermIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequiresPermissions(value = {"authRole:menu"}, logical = Logical.OR)
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "menu")
+    @ApiOperation(value = "获取当前角色已有(菜单)")
+    public Response menu(@RequestParam(name = "roleId") Long roleId) {
+        log.info("AuthRoleController menu.........");
+        Response result = new Response();
+        try {
+            AuthRoleDto dto=new AuthRoleDto();
+            dto.setId(roleId);
+            result.data = authRoleService.findMenuIsList(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

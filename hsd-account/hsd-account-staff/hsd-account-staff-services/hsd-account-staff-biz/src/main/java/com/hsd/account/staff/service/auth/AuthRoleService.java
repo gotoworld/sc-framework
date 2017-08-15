@@ -4,10 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.auth.IAuthRoleService;
 import com.hsd.account.staff.dao.auth.IAuthRoleDao;
+import com.hsd.account.staff.dao.auth.IAuthRoleVsMenuDao;
 import com.hsd.account.staff.dao.auth.IAuthRoleVsPermDao;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.account.staff.dto.sys.SysMenuDto;
 import com.hsd.account.staff.entity.auth.AuthRole;
+import com.hsd.account.staff.entity.auth.AuthRoleVsMenu;
 import com.hsd.account.staff.entity.auth.AuthRoleVsPerm;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -33,6 +36,8 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     private IAuthRoleDao authRoleDao;
     @Autowired
     private IAuthRoleVsPermDao authRoleVsPermDao;
+    @Autowired
+    private IAuthRoleVsMenuDao authRoleVsMenuDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response saveOrUpdateData(@RequestBody AuthRoleDto dto) throws Exception {
@@ -55,6 +60,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                     roleVsPerm.setRoleId(entity.getId());
                     authRoleVsPermDao.deleteBulkDataByRoleId(roleVsPerm);
                 }
+                if (JwtUtil.isPermitted("authRole:edit:menu")) {
+                    // 1.清空当前角色菜单关联信息
+                    AuthRoleVsMenu roleVsMenu = new AuthRoleVsMenu();
+                    roleVsMenu.setRoleId(entity.getId());
+                    authRoleVsMenuDao.deleteBulkDataByRoleId(roleVsMenu);
+                }
             } else {
                 // 新增
                 authRoleDao.insert(entity);
@@ -71,6 +82,19 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                         xdtos.add(authRoleVsPerm);
                     }
                     authRoleVsPermDao.insertBatch(xdtos);
+                }
+            }
+            if (JwtUtil.isPermitted("authRole:edit:menu")) {
+                // 2.新增角色菜单关联信息
+                if (dto.getMenuIds() != null) {
+                    List<AuthRoleVsMenu> xdtos = new ArrayList<>();
+                    for (Long menuId : dto.getMenuIds()) {
+                        AuthRoleVsMenu authRoleVsMenu = new AuthRoleVsMenu();
+                        authRoleVsMenu.setRoleId(entity.getId());
+                        authRoleVsMenu.setMenuId(menuId);
+                        xdtos.add(authRoleVsMenu);
+                    }
+                    authRoleVsMenuDao.insertBatch(xdtos);
                 }
             }
         } catch (Exception e) {
@@ -148,6 +172,18 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             AuthRoleVsPerm authRoleVsPerm=new AuthRoleVsPerm();
             authRoleVsPerm.setRoleId(dto.getId());
             results = copyTo(authRoleVsPermDao.findPermIsList(authRoleVsPerm),AuthPermDto.class);
+        } catch (Exception e) {
+            log.error("信息查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
+    public List<SysMenuDto> findMenuIsList(@RequestBody AuthRoleDto dto) {
+        List<SysMenuDto> results = null;
+        try {
+            AuthRoleVsMenu authRoleVsMenu=new AuthRoleVsMenu();
+            authRoleVsMenu.setRoleId(dto.getId());
+            results = copyTo(authRoleVsMenuDao.findMenuIsList(authRoleVsMenu),SysMenuDto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

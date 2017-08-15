@@ -4,8 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.dao.org.IOrgInfoDao;
+import com.hsd.account.staff.dao.org.IOrgOrgVsRoleDao;
+import com.hsd.account.staff.dao.org.IOrgOrgVsUserDao;
+import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.account.staff.entity.org.OrgInfo;
+import com.hsd.account.staff.entity.org.OrgOrgVsRole;
+import com.hsd.account.staff.entity.org.OrgOrgVsUser;
 import com.hsd.framework.NodeTree;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -14,6 +20,7 @@ import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,6 +28,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @FeignService
@@ -28,6 +36,10 @@ import java.util.List;
 public class OrgInfoService extends BaseService implements IOrgInfoService {
     @Autowired
     private IOrgInfoDao orgInfoDao;
+    @Autowired
+    private IOrgOrgVsUserDao orgOrgVsUserDao;
+    @Autowired
+    private IOrgOrgVsRoleDao orgOrgVsRoleDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
@@ -52,7 +64,6 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return result;
     }
-
     @RfAccount2Bean
     public String deleteData(@RequestBody OrgInfoDto dto) throws Exception {
         String result = "seccuss";
@@ -144,5 +155,88 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
             log.error("信息树获取失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
+    }
+    public List<OrgUserDto> findUserIsList(@RequestBody OrgInfoDto dto) {
+        List<OrgUserDto> results = null;
+        try {
+            OrgOrgVsUser orgVsUser=new OrgOrgVsUser();
+            orgVsUser.setOrgId(dto.getId());
+            results = copyTo(orgOrgVsUserDao.findUserIsList(orgVsUser),OrgUserDto.class);
+        } catch (Exception e) {
+            log.error("获取组织->人员 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
+    public List<AuthRoleDto> findRoleIsList(@RequestBody OrgInfoDto dto) {
+        List<AuthRoleDto> results = null;
+        try {
+            OrgOrgVsRole orgVsUser=new OrgOrgVsRole();
+            orgVsUser.setOrgId(dto.getId());
+            results = copyTo(orgOrgVsRoleDao.findRoleIsList(orgVsUser),AuthRoleDto.class);
+        } catch (Exception e) {
+            log.error("获取组织->角色 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    @RfAccount2Bean
+    public Response setUser(@RequestBody OrgInfoDto dto) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            if(JwtUtil.isPermitted("orgInfo:edit:user")){
+                OrgOrgVsUser orgVsUser = new OrgOrgVsUser();
+                orgVsUser.setOrgId(dto.getId());
+                // 1.根据组织id清除人员关联表
+                orgOrgVsUserDao.deleteBulkDataByOrgId(orgVsUser);
+                // 2.新增组织用户关联信息
+                if (dto.getUserIds() != null) {
+                    List<OrgOrgVsUser> xEntityList = new ArrayList<>();
+                    for (Long userId : dto.getUserIds()) {
+                        OrgOrgVsUser authUserVsRole = new OrgOrgVsUser();
+                        authUserVsRole.setOrgId(dto.getId());
+                        authUserVsRole.setUserId(userId);
+                        xEntityList.add(authUserVsRole);
+                    }
+                    orgOrgVsUserDao.insertBatch(xEntityList);
+                }
+            }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    @RfAccount2Bean
+    public Response setRole(@RequestBody OrgInfoDto dto) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            if(JwtUtil.isPermitted("orgInfo:edit:user")){
+                OrgOrgVsRole orgOrgVsRole = new OrgOrgVsRole();
+                orgOrgVsRole.setOrgId(dto.getId());
+                // 1.根据组织id清除角色关联表
+                orgOrgVsRoleDao.deleteBulkDataByOrgId(orgOrgVsRole);
+                // 2.新增组织用户关联信息
+                if (dto.getUserIds() != null) {
+                    List<OrgOrgVsRole> xEntityList = new ArrayList<>();
+                    for (Long roleId : dto.getRoleIds()) {
+                        OrgOrgVsRole orgVsRole = new OrgOrgVsRole();
+                        orgVsRole.setOrgId(dto.getId());
+                        orgVsRole.setRoleId(roleId);
+                        xEntityList.add(orgVsRole);
+                    }
+                    orgOrgVsRoleDao.insertBatch(xEntityList);
+                }
+            }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
     }
 }

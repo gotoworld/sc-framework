@@ -60,4 +60,7 @@ public class OrgInfoDto extends BaseDto {
     public Integer[] getTags(){
         return new Integer[]{nodes!=null?nodes.size():0};
     }
+
+    private List<Long> roleIds;
+    private List<Long> userIds;
 }

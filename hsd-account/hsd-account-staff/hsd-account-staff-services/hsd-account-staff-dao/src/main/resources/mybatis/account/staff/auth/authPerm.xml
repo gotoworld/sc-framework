@@ -7,7 +7,6 @@
         ,t1.name as "name"
         ,t1.match_str as "matchStr"
         ,t1.parent_id as "parentId"
-        ,t1.domain_code as "domainCode"
         ,t1.memo as "memo"
         ,t1.order_no as "orderNo"
         ,t1.version as "version"
@@ -31,7 +30,6 @@
            ,name
            ,match_str
            ,parent_id
-           ,domain_code
            ,memo
            ,order_no
            ,version
@@ -45,7 +43,6 @@
            ,#{name}
            ,#{matchStr}
            ,#{parentId}
-           ,#{domainCode}
            ,#{memo}
            ,#{orderNo}
            ,0
@@ -61,7 +58,6 @@
         update auth_perm set version=version+1,date_updated=now(),parent_id=#{parentId}
         <if test="name!=null">,name = #{name}</if>
         <if test="matchStr!=null">,match_str = #{matchStr}</if>
-        <if test="domainCode!=null">,domain_code = #{domainCode}</if>
         <if test="memo!=null">,memo = #{memo}</if>
         <if test="orderNo!=null">,order_no = #{orderNo}</if>
         <if test="keyword!=null">,keyword = #{keyword}</if>
@@ -103,7 +99,6 @@
          t1.id as  "id"
         ,t1.name as  "name"
         ,t1.match_str as  "matchStr"
-        ,t1.domain_code as "domainCode"
         ,t1.parent_id as  "parentId"
         ,t1.memo as  "memo"
         from auth_perm t1

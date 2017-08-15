@@ -55,11 +55,10 @@
                                             <div class="col-md-8">
                                                 <table class="table table-bordered table-striped  table-hover" style="min-width:500px;width: 500px;">
                                                     <thead  id="event_output">
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
                                                     </thead>
                                                 </table>
                                             </div>
@@ -104,7 +103,6 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>所属系统域</th>
                                     				<th>创建时间</th>
                                     				<th>权限名称</th>
                                     				<th>备注</th>
@@ -115,7 +113,6 @@
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.domainCode}}</td>
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.name}}</td>
                                     				<td>{{item.memo}}</td>
@@ -223,13 +220,12 @@
         data: [],
         onNodeSelected: function (event, node) {
             var trStr ='';
-                 trStr+=' <tr><th class="col-md-2">所属系统域:</th><th class="">'+node.domainCode+'</th></tr>';
-                 trStr+=' <tr><th class="col-md-2">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
-                 trStr+=' <tr><th class="col-md-2">权限名称:</th><th class="">'+node.name+'</th></tr>';
-                 trStr+=' <tr><th class="col-md-2">备注:</th><th class="">'+node.memo+'</th></tr>';
-                 trStr+=' <tr><th class="col-md-2">权限匹配符:</th><th class="">'+node.matchStr+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-3">权限名称:</th><th class="">'+node.name+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-3">备注:</th><th class="">'+node.memo+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-3">权限匹配符:</th><th class="">'+node.matchStr+'</th></tr>';
                 if(user.hasPermission("authPerm:info") || user.hasPermission("authPerm:edit") || user.hasPermission("authPerm:del")){
-                    trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
+                    trStr+=' <tr><th class="col-md-3">操作:</th><th> ';
                     if(user.hasPermission("authPerm:info")){
                         trStr+=' <a href="javascript:;"  ng-click="info(\'i\',\''+node.id+'\')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
                     }

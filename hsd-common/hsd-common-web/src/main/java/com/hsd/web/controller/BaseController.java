@@ -71,22 +71,6 @@ public class BaseController {
         return basePath + "/";
     }
 
-    public Object getUser() {
-        Object orgUser= null;
-        try {
-            final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
-//        log.info("authHeader=" + authorizationToken);
-            if (ValidatorUtil.isEmpty(authorizationToken)) {
-                throw new SignatureException("token头缺失");
-            }
-            final Claims claims = JwtUtil.parseJWT(authorizationToken);
-            orgUser = JSON.parseObject(claims.getSubject(), Object.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return orgUser;
-    }
-
     public Integer getPageNum(Object obj) {
         Object pageNum = ReflectUtil.getValueByFieldName(obj, "pageNum");
         return ValidatorUtil.notEmpty("" + pageNum) ? Integer.parseInt("" + pageNum) : 1;

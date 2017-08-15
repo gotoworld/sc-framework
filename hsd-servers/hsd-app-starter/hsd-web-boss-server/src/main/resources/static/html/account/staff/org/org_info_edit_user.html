@@ -26,7 +26,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="ibox float-e-margins">
-			<div class="ibox-content col-md-12">
+            <div class="ibox-content col-md-12">
 				<form id="orgInfo_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
@@ -35,37 +35,68 @@
 					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
 					<div class="clearfix "></div>
-                    <div class="col-sm-5 b-r">
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">编码：</label>
-                            <div class="col-md-9">
-                                {{item.code}}
-                            </div>
-                        </div>
+                    <div class="col-sm-12">
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">名称：</label>
-                            <div class="col-md-9">
+                            <div class="col-md-9 form-control-static">
                                 {{item.name}}
                             </div>
                         </div>
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">备注：</label>
-                            <div class="col-md-9 form-control-static">
-                                {{item.memo}}
-                            </div>
-                        </div>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="clearfix "></div>
+                    <div class="col-sm-6 b-r">
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择组织人员--</label>
+                            <div class="col-md-12">
+                                    <input type="hidden" name="pageNum" id="pageNumA"  value="1">
+                                    <div class="input-group">
+                                        <input type="text" name="bean_name" id="bean_name" placeholder="请输入关键词" class="input-sm form-control">
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="page();" class="btn btn-sm btn-primary">搜索</button>
+                                        </span>
+                                    </div>
+                            </div>
+                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
+                                <div class="table-responsive table-scrollable">
+                                    <table class="table table-bordered table-striped  table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:20px;">#</th>
+                                            <th>账号</th>
+                                            <th>姓名</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-if="userResult.data.data && userResult.data.data.length>0" ng-repeat="item in userResult.data.data">
+                                            <td>{{(userResult.data.pageIndex-1)*userResult.data.pageSize + $index+1}}</td>
+                                            <td>{{item.account}}</td>
+                                            <td>{{item.name}}</td>
+                                            <td>
+                                                <a href="javascript:;" ng-click="addUser(item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 添加</a>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="userResult.data.data==null || userResult.data.data==0">
+                                            <td colspan="4">
+                                                <div class="alert"><strong>{{userResult.message||'暂无数据'}}</strong></div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="b_page" id="tagPages"></div>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+                    <div class="col-sm-6">
+                        <div class="form-group clearfix" >
+                            <label class="col-md-12 control-label">--已选组织人员--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
-                                    <li ng-repeat="t in nodes">
-                                        <label style="{{item.parentId==t.id?'color:red':''}}"><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
-                                        <ul ng-include="'../tree_radio.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id;name='parentId'"></ul>
+                                    <li ng-repeat="t in orgUserNodes">
+                                        <label><input type="hidden" name="userIds" id="bean_userIds" ng-value="t.id">{{t.name}}</label>
                                     </li>
                                 </ul>
-                                <span id="bean-parentId-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
 					</div>
@@ -97,6 +128,7 @@
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
     function formValidate(){
@@ -107,14 +139,14 @@
 
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
         user.init(function(){
-            loadUser(sessionStorage.getItem(site.orgInfo.info));
-            loadOrgUser(sessionStorage.getItem(site.orgInfo.info));
-            loadInfo(sessionStorage.getItem(site.orgInfo.info));
+            loadOrgUser();
+            loadInfo();
         });
         $scope.save = function () {
             if($("#orgInfo_01").valid()){
-                $.post(site.orgInfo.save, $('#orgInfo_01').serialize(),function (result) {
+                $.post(site.orgInfo.setUser, $('#orgInfo_01').serialize(),function (result) {
                         //console.info("获取数据.." + JSON.stringify(result));
                         if (result.code == 0) {
                             alert('保存成功!');
@@ -125,16 +157,16 @@
                 }, 'json');
             }
         }
-        $scope.selected=function(val,val2){
-            if(val==val2){
-                return true
-            }
-            return false;
+        $scope.addUser = function (uid) {
+
+        }
+        $scope.page = function () {
+            loadUserPage();
         }
     });
 
-    var loadInfo=function(id){
-        $.get(site.orgInfo.info + id, {},function (result) {
+    var loadInfo=function(){
+        $.get(site.orgInfo.info + sessionStorage.getItem(site.orgInfo.info), {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
              if (result.code == 0) {
                  $data.item = result.data;
@@ -145,30 +177,31 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
-    function loadUser(orgId){
-        $.post(site.orgUser.list, {"orgId":orgId},function (result) {
+    function loadUserPage() {
+        $.post( site.orgUser.page+$('#pageNumA').val(),{"orgId": sessionStorage.getItem(site.orgInfo.info),"name":$('#bean_name').val()}, function (result) {
+            if (result.code == 0) {
+                $data.userResult = result;
+                $('#tagPages').html($ngCompile(tag.page(result.data))($data));
+            } else {
+                alert(result.message);
+            }
+            if (!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+    function loadOrgUser(){
+        $data.orgUserNodes=[];
+        $.get(site.orgInfo.getUser+sessionStorage.getItem(site.orgInfo.info), {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-                $data.roleNodes=result.data;
+                for(var i=0;i<result.data.length;i++){
+                    $data.orgUserNodes.push(result.data[i].id);
+                }
             } else {
                 alert(result.message);
             }
             if(!$data.$$phase) $data.$apply();
         }, 'json');
-        function loadOrgUser(orgId){
-            $data.orgUserNodes=[];
-            $.post(site.orgInfo.getUser, {"orgId":orgId},function (result) {
-                //console.info("获取数据.." + JSON.stringify(result));
-                if (result.code == 0) {
-                    for(var i=0;i<result.data.length;i++){
-                        $data.orgUserNodes.push(result.data[i].id);
-                    }
-                } else {
-                    alert(result.message);
-                }
-                if(!$data.$$phase) $data.$apply();
-            }, 'json');
-        }
+    }
     $(document).ready(function(){
         formValidate();
     });

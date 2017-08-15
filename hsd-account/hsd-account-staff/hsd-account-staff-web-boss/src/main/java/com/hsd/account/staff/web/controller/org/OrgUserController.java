@@ -45,7 +45,7 @@ public class OrgUserController extends BaseController {
 	@RequiresPermissions("orgUser:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page/{pageNum}")
 	@ApiOperation(value = "信息分页")
-	public Response page(@RequestBody OrgUserDto dto, @PathVariable("pageNum") Integer pageNum) {
+	public Response page(@ModelAttribute OrgUserDto dto, @PathVariable("pageNum") Integer pageNum) {
 		log.info("OrgUserController page.........");
 		Response result = new Response();
 		try {
@@ -166,7 +166,7 @@ public class OrgUserController extends BaseController {
 				}
 				if(null==dto.getState()) dto.setState(1);//禁用
 				result=orgUserService.saveOrUpdateData(dto);
-				if(dto.getId()==((OrgUserDto)getUser()).getId()) {
+				if(dto.getId()==orgUser.getId()) {
 					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
 					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
 				}

@@ -55,7 +55,7 @@ public interface IOrgUserDao extends IBaseDao {
      * <p>判断用户id是否存在
      */
     @Select(" select count(0) from org_user where  account=#{account} ")
-    int isUidYN(@Param("UserId") String uid) throws Exception;
+    int isAccountYN(@Param("account") String account) throws Exception;
     /**
      * <p>密码修改
      */

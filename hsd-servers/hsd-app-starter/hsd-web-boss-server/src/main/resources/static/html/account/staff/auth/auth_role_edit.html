@@ -74,8 +74,8 @@
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in permNodes">
-                                        <label><input ng-if="item.id!=t.id" type="checkbox" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
-                                        <ul ng-include="'../tree_checkbox.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id;name='parentId2'"></ul>
+                                        <label><input ng-if="item.id!=t.id" type="checkbox" name="permIds" ng-value="t.id" ng-checked="checkPermId(t.id)">{{t.name}}</label>
+                                        <ul ng-include="'../tree_checkbox_role_vs_perm.html'" ng-init="child=t.nodes;_self_id=item.id;name='permIds'"></ul>
                                     </li>
                                 </ul>
                                 <span id="bean-parentId-error" class="help-block m-b-none"></span>
@@ -126,8 +126,12 @@
            $data.newFlag=sessionStorage.getItem(site.authRole.info);
            if($data.newFlag) $data.uuidToken=util.guid();
             loadDomainList();
-            loadPermTree();
-           loadInfo(sessionStorage.getItem(site.authRole.info));
+            if(sessionStorage.getItem(site.authRole.info) && sessionStorage.getItem(site.authRole.info)!=0){
+                loadRolePermList(sessionStorage.getItem(site.authRole.info),function(){loadPermTree();});
+                loadInfo(sessionStorage.getItem(site.authRole.info));
+            }else{
+                loadPermTree();
+            }
         });
         $scope.save = function () {
             if($("#authRole_01").valid()){
@@ -145,6 +149,12 @@
         $scope.kfReady=function(key,val){
             KindEditor.html('#'+key,val);
             return val;
+        }
+        $scope.checkPermId=function(permId){
+            if($data.rolePermNodes && $data.rolePermNodes.indexOf(permId)!=-1){
+                return true;
+            }
+            return false;
         }
     });
     var loadInfo=function(id){
@@ -182,6 +192,21 @@
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
+
+    function loadRolePermList(roleId,callback){
+        $.post(site.authRole.perm, {"roleId":roleId},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.rolePermNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            callback && callback();
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+
+
     $(document).ready(function(){
         formValidate();
     });

@@ -2,10 +2,11 @@ package com.hsd.framework;
 
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 public class NodeTree<T> {
     private List<T> new_nodes = new ArrayList<>();
     private List<T> nodes;
@@ -46,6 +47,7 @@ public class NodeTree<T> {
         List<T> children = new ArrayList<>();
         Object id = ReflectUtil.getValueByFieldName(node, attr_id);
         for (T child : nodes) {
+//            log.info("======"+id+":"+ReflectUtil.getValueByFieldName(child, attr_parentId)+"======");
             if (id.equals(ReflectUtil.getValueByFieldName(child, attr_parentId))) {
                 children.add(child);
             }

@@ -223,7 +223,9 @@ for(t in columns){
         user.init(function(){
            $data.newFlag=sessionStorage.getItem(site.${tableNameL}.info);
            if($data.newFlag) $data.uuidToken=util.guid();
-           loadInfo(sessionStorage.getItem(site.${tableNameL}.info));
+           if(sessionStorage.getItem(site.${tableNameL}.info) && sessionStorage.getItem(site.${tableNameL}.info)!=0){
+               loadInfo(sessionStorage.getItem(site.${tableNameL}.info));
+           }
         });
         $scope.save = function () {
             if($("#${tableNameL}_01").valid()){

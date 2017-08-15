@@ -6,7 +6,6 @@
 		 t1.id as "id"
         ,t1.name as "name"
         ,t1.is_super as "isSuper"
-        ,t1.domain_code as "domainCode"
         ,t1.memo as "memo"
         ,t1.order_no as "orderNo"
         ,t1.version as "version"
@@ -27,7 +26,6 @@
 		insert into auth_role (
             name
            ,is_super
-           ,domain_code
            ,memo
            ,order_no
            ,version
@@ -38,7 +36,6 @@
         ) values (
             #{name}
            ,#{isSuper}
-           ,#{domainCode}
            ,#{memo}
            ,#{orderNo}
            ,0
@@ -53,7 +50,6 @@
         update auth_role set version=version+1,date_updated=now()
         <if test="name!= null" >,name=#{name}</if>
         <!--<if test="isSuper!= null" >,is_super=#{isSuper}</if>-->
-        <if test="domainCode!=null">,domain_code = #{domainCode}</if>
         <if test="memo!= null" >,memo=#{memo}</if>
         <if test="orderNo!= null" >,order_no=#{orderNo}</if>
         <if test="keyword!= null" >,keyword=#{keyword}</if>
@@ -75,7 +71,6 @@
         <if test="isSuper!=null and isSuper==0">
             and t1.is_super!=1
         </if>
-        <if test="domainCode!=null"> and t1.domain_code = #{domainCode}</if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
         </if>

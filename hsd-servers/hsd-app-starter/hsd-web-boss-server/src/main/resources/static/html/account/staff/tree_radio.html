@@ -1,4 +1,4 @@
 <li ng-repeat="t in child">
-    <label><input ng-if="_self_id!=t.id" type="radio" name="{{name}}" ng-value="t.id" ng-checked="parentId==t.id">{{t.name}}</label>
+    <label style="{{parentId==t.id?'color:red':''}}"><input ng-if="_self_id!=t.id" type="radio" name="{{name}}" ng-value="t.id" ng-checked="parentId==t.id">{{t.name}}</label>
     <ul ng-include="'../tree_radio.html'" ng-init="child=t.nodes;parentId=parentId;_self_id=_self_id;name=name"></ul>
 </li>

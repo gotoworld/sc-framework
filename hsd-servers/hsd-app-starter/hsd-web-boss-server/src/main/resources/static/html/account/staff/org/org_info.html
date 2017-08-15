@@ -55,12 +55,12 @@
                                             <div class="col-md-8">
                                                 <table class="table table-bordered table-striped  table-hover" style="min-width:500px;width: 500px;">
                                                     <thead  id="event_output">
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
                                                     </thead>
                                                 </table>
                                             </div>
@@ -267,14 +267,14 @@
         data: [],
         onNodeSelected: function (event, node) {
             var trStr ='';
-                 trStr+=' <tr><th class="col-md-2">编码:</th><th class="">'+node.code+'</th></tr>';
-                 trStr+=' <tr><th class="col-md-2">名称:</th><th class="">'+node.name+'</th></tr>';
-				trStr+=' <tr><th class="col-md-2">状态:</th><th class="">'+$data.stateEnum(node.state)+'</th></tr>';
-            trStr+=' <tr><th class="col-md-2">类型:</th><th class="">'+$data.typeEnum(node.type)+'</th></tr>';
-            trStr+=' <tr><th class="col-md-2">备注:</th><th class="">'+node.memo+'</th></tr>';
-            trStr+=' <tr><th class="col-md-2">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-3">编码:</th><th class="">'+node.code+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-3">名称:</th><th class="">'+node.name+'</th></tr>';
+				trStr+=' <tr><th class="col-md-3">状态:</th><th class="">'+$data.stateEnum(node.state)+'</th></tr>';
+            trStr+=' <tr><th class="col-md-3">类型:</th><th class="">'+$data.typeEnum(node.type)+'</th></tr>';
+            trStr+=' <tr><th class="col-md-3">备注:</th><th class="">'+node.memo+'</th></tr>';
+            trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
             if(user.hasPermission("orgInfo:info") || user.hasPermission("orgInfo:edit") || user.hasPermission("orgInfo:del")){
-                    trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
+                    trStr+=' <tr><th class="col-md-3">操作:</th><th> ';
                     if(user.hasPermission("orgInfo:info")){
                         trStr+=' <a href="javascript:;"  ng-click="info(\'i\','+node.id+')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
                     }

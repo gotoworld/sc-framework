@@ -23,9 +23,6 @@ public class AuthRoleDto extends BaseDto {
      private String name;
      /**超级管理员0否1是*/
      private Integer isSuper;
-     /**所属系统域*/
-	@NotNull(message="domain_code不能为空")@Size(max=50,message="domain_code最大50字符")
-     private String domainCode;
      /**备注*/
 	@Size(max=255,message="memo最大255字符")
      private String memo;

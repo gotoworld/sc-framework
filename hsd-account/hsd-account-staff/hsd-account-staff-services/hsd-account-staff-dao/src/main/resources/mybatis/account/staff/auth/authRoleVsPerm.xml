@@ -19,4 +19,15 @@
             )
         </foreach>
     </insert>
+
+    <select id="findPermIsList" parameterType="com.hsd.account.staff.entity.auth.AuthRoleVsPerm" resultType="com.hsd.account.staff.entity.auth.AuthPerm">
+         select
+         t2.id as "id"
+        ,t2.name as "name"
+        ,t2.match_str as "matchStr"
+        ,t2.parent_id as "parentId"
+        from auth_role_vs_perm t1
+        inner join auth_perm t2 on (t1.perm_id=t2.id)
+        where t2.del_flag=0 and t1.role_id=#{roleId}
+    </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.auth.IAuthRoleService;
 import com.hsd.account.staff.dao.auth.IAuthRoleDao;
 import com.hsd.account.staff.dao.auth.IAuthRoleVsPermDao;
+import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.entity.auth.AuthRole;
 import com.hsd.account.staff.entity.auth.AuthRoleVsPerm;
@@ -48,7 +49,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             if (authRoleDao.isDataYN(entity) != 0) {
                 // 数据存在
                 authRoleDao.update(entity);
-                if (JwtUtil.isPermitted("authRole:parm")) {
+                if (JwtUtil.isPermitted("authRole:perm")) {
                     // 1.清空当前角色权限关联信息
                     AuthRoleVsPerm roleVsPerm = new AuthRoleVsPerm();
                     roleVsPerm.setRoleId(entity.getId());
@@ -59,11 +60,11 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                 authRoleDao.insert(entity);
                 result.data=entity.getId();
             }
-            if (JwtUtil.isPermitted("authRole:parm")) {
+            if (JwtUtil.isPermitted("authRole:perm")) {
                 // 2.新增角色权限关联信息
-                if (dto.getPermIdArray() != null) {
+                if (dto.getPermIds() != null) {
                     List<AuthRoleVsPerm> xdtos = new ArrayList<>();
-                    for (String permId : dto.getPermIdArray()) {
+                    for (String permId : dto.getPermIds()) {
                         AuthRoleVsPerm authRoleVsPerm = new AuthRoleVsPerm();
                         authRoleVsPerm.setRoleId(entity.getId());
                         authRoleVsPerm.setPermId(permId);
@@ -130,7 +131,6 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         }
         return results;
     }
-
     public AuthRoleDto findDataById(@RequestBody AuthRoleDto dto) {
         AuthRoleDto result = null;
         try {
@@ -140,5 +140,18 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
+    }
+
+    public List<AuthPermDto> findPermIsList(@RequestBody AuthRoleDto dto) {
+        List<AuthPermDto> results = null;
+        try {
+            AuthRoleVsPerm authRoleVsPerm=new AuthRoleVsPerm();
+            authRoleVsPerm.setRoleId(dto.getId());
+            results = copyTo(authRoleVsPermDao.findPermIsList(authRoleVsPerm),AuthPermDto.class);
+        } catch (Exception e) {
+            log.error("信息查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
     }
 }

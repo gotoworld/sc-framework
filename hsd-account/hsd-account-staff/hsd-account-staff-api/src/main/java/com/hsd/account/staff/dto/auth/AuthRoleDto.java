@@ -46,5 +46,5 @@ public class AuthRoleDto extends BaseDto {
     /**
      * 权限id集合
      */
-    private List<String> permIdArray;
+    private List<String> permIds;
 }

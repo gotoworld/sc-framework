@@ -2,6 +2,7 @@ package com.hsd.account.staff.api.auth;
 
 
 import com.github.pagehelper.PageInfo;
+import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
@@ -40,7 +41,6 @@ public interface IAuthRoleService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
     public PageInfo findDataIsPage(AuthRoleDto dto);
-
     /**
      * <p>信息列表。
      */
@@ -52,4 +52,10 @@ public interface IAuthRoleService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public AuthRoleDto findDataById(AuthRoleDto dto);
+
+    /**
+     * <p>获取当前角色已有(功能/权限)
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findPermIsList")
+    public List<AuthPermDto> findPermIsList(AuthRoleDto dto);
 }

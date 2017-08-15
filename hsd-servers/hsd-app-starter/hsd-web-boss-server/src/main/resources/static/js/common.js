@@ -1,7 +1,7 @@
 var basePath="http://localhost/";
 var apiPath={
     account:{
-        staff:"http://localhost:6061"
+        staff:"http://192.168.103.236:6061"
     }
 }
 var site = {
@@ -53,6 +53,7 @@ var site = {
         view: basePath + "/html/account/staff/auth/auth_role"
         ,page: apiPath.account.staff + "/boss/account/staff/auth/authRole/page/"
         ,save: apiPath.account.staff + "/boss/account/staff/auth/authRole/save"
+        ,perm: apiPath.account.staff + "/boss/account/staff/auth/authRole/perm"
         ,info: apiPath.account.staff + "/boss/account/staff/auth/authRole/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/auth/authRole/del/"
     }
@@ -119,7 +120,6 @@ var user = {
                             sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
                             sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.authorizationInfoPerms);
                             sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.authorizationInfoRoles);
-                            document.cookie = "sid=" + result.data.sid + ";expires=Session;";
                         }
                     }
                     callback && callback();

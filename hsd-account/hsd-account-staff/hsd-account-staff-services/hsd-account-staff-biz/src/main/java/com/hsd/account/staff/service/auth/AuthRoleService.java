@@ -49,7 +49,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             if (authRoleDao.isDataYN(entity) != 0) {
                 // 数据存在
                 authRoleDao.update(entity);
-                if (JwtUtil.isPermitted("authRole:perm")) {
+                if (JwtUtil.isPermitted("authRole:edit:perm")) {
                     // 1.清空当前角色权限关联信息
                     AuthRoleVsPerm roleVsPerm = new AuthRoleVsPerm();
                     roleVsPerm.setRoleId(entity.getId());
@@ -60,7 +60,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                 authRoleDao.insert(entity);
                 result.data=entity.getId();
             }
-            if (JwtUtil.isPermitted("authRole:perm")) {
+            if (JwtUtil.isPermitted("authRole:edit:perm")) {
                 // 2.新增角色权限关联信息
                 if (dto.getPermIds() != null) {
                     List<AuthRoleVsPerm> xdtos = new ArrayList<>();

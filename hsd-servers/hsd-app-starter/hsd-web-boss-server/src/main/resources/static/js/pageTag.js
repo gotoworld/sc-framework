@@ -127,7 +127,7 @@ var tag= {
             }
             // 没有数据
         } else {
-            midPage += ("");
+            midPage += HTML_3DOT_STRING;
         }
         // 汇总输出
         var pageCom = "";

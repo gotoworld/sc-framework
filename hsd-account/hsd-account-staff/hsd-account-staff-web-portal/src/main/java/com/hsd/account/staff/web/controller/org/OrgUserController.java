@@ -166,7 +166,7 @@ public class OrgUserController extends BaseController {
 				}
 				if(null==dto.getState()) dto.setState(1);//禁用
 				result=orgUserService.saveOrUpdateData(dto);
-				if(dto.getId()==((OrgUserDto)getUser()).getId()) {
+				if(dto.getId()==orgUser.getId()) {
 					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
 					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
 				}

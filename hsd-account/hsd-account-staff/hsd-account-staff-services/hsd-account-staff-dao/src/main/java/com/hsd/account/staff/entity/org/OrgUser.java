@@ -62,4 +62,6 @@ public class OrgUser extends BaseEntity {
      private String oldpwd;
      /**员工密码(新)*/
      private String confirmpwd;
+     /**机构id*/
+     private String orgId;
 }

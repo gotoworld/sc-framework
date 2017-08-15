@@ -106,8 +106,8 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         user.init(function(){
-            loadRole(sessionStorage.getItem(site.orgInfo.info));
-            loadOrgRole(sessionStorage.getItem(site.orgInfo.info));
+            loadRole();
+            loadOrgRole();
             loadInfo(sessionStorage.getItem(site.orgInfo.info));
         });
         $scope.save = function () {
@@ -143,19 +143,19 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
-    function loadRole(orgId){
-        $.post(site.authRole.list, {"orgId":orgId},function (result) {
+    function loadRole(){
+        $.post(site.authRole.list, {"orgId":sessionStorage.getItem(site.orgInfo.info)},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-                $data.roleNodes=result.data;
+                $data.userNodes=result.data;
             } else {
                 alert(result.message);
             }
             if(!$data.$$phase) $data.$apply();
         }, 'json');
-    function loadOrgRole(orgId){
+    function loadOrgRole(){
         $data.orgRoleNodes=[];
-        $.post(site.orgInfo.getRole, {"orgId":orgId},function (result) {
+        $.post(site.orgInfo.getRole+sessionStorage.getItem(site.orgInfo.info), {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 for(var i=0;i<result.data.length;i++){

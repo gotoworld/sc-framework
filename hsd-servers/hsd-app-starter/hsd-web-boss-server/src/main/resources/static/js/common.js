@@ -25,9 +25,9 @@ var site = {
         ,save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
         ,info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
-        ,getUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/user"
+        ,getUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/user/"
         ,setUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/user"
-        ,getRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/role"
+        ,getRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/role/"
         ,setRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/role"
     }
     ,orgUser: {

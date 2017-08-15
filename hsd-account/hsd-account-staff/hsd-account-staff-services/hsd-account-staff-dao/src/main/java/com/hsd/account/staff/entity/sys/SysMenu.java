@@ -20,9 +20,7 @@ public class SysMenu extends BaseEntity {
      /**所属系统域*/
      private String domainCode;
      /**父节点*/
-     private Integer parentId;
-     /**是否根节点*/
-     private Integer root;
+     private Long parentId;
      /**页面链接*/
      private String url;
      /**排序*/

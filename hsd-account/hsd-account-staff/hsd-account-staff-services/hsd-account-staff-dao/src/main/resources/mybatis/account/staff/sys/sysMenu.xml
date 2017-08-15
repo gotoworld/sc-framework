@@ -7,7 +7,6 @@
         ,t1.name as "name"
         ,t1.domain_code as "domainCode"
         ,t1.parent_id as "parentId"
-        ,t1.root as "root"
         ,t1.url as "url"
         ,t1.order_no as "orderNo"
         ,t1.version as "version"
@@ -33,8 +32,7 @@
             name 
            ,domain_code 
            ,parent_id 
-           ,root 
-           ,url 
+           ,url
            ,order_no 
            ,version 
            ,del_flag 
@@ -46,8 +44,7 @@
             #{name} 
            ,#{domainCode} 
            ,#{parentId} 
-           ,#{root} 
-           ,#{url} 
+           ,#{url}
            ,#{orderNo} 
            ,0
            ,0
@@ -64,7 +61,6 @@
              <if test="name!=null">,name = #{name}</if>
              <if test="domainCode!=null">,domain_code = #{domainCode}</if>
              <if test="parentId!=null">,parent_id = #{parentId}</if>
-             <if test="root!=null">,root = #{root}</if>
              <if test="url!=null">,url = #{url}</if>
              <if test="orderNo!=null">,order_no = #{orderNo}</if>
              <if test="dateUpdated!=null">,date_updated = #{dateUpdated}</if>

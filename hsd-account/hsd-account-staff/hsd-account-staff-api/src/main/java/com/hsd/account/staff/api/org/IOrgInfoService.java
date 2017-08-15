@@ -2,7 +2,9 @@ package com.hsd.account.staff.api.org;
 
 
 import com.github.pagehelper.PageInfo;
+import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -23,7 +25,6 @@ public interface IOrgInfoService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     public Response saveOrUpdateData(OrgInfoDto dto) throws Exception;
-
     /**
      * <p>物理删除。
      */
@@ -65,4 +66,22 @@ public interface IOrgInfoService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsTree")
     public List<OrgInfoDto> findDataIsTree(OrgInfoDto dto);
+
+
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByIdIsList")
+    public List<OrgUserDto> findUserIsList(OrgInfoDto dto);
+
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findRoleByIdIsList")
+    public List<AuthRoleDto> findRoleIsList(OrgInfoDto dto);
+
+    /**
+     * <p>设置人员。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setUser")
+    public Response setUser(OrgInfoDto dto) throws Exception;
+    /**
+     * <p>设置角色。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setRole")
+    public Response setRole(OrgInfoDto dto) throws Exception;
 }

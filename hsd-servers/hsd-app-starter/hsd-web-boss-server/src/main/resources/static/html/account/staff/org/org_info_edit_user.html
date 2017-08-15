@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
 <meta charset="utf-8" />
-<title>//TODO 权限_功能信息 新增/编辑</title>
+<title>//TODO 组织架构 新增/编辑-用户</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta name="description" content="memo of your site" />
@@ -27,48 +27,37 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
-				<form id="authPerm_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+				<form id="orgInfo_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
-					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
-					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
 					<div class="clearfix "></div>
-					<div class="col-sm-6 b-r">
-
+                    <div class="col-sm-5 b-r">
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">权限名称：</label>
-                            <div class="col-md-12">
-                                <input id="bean-name" name="name" value="{{item.name}}" class="form-control" type="text"  placeholder="请输入权限名称"  required="" aria-required="true"  aria-describedby="bean-name-error"  maxlength="50"   aria-invalid="true">
-                                <span id="bean-name-error" class="help-block m-b-none"></span>
+                            <label class="col-md-3 control-label">编码：</label>
+                            <div class="col-md-9">
+                                {{item.code}}
                             </div>
                         </div>
-
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">权限匹配符：</label>
-                            <div class="col-md-12">
-                                <input id="bean-matchStr" name="matchStr" value="{{item.matchStr}}" class="form-control" type="text"  placeholder="请输入权限匹配符"  required="" aria-required="true"  aria-describedby="bean-matchStr-error"  maxlength="50"   aria-invalid="true">
-                                <span id="bean-matchStr-error" class="help-block m-b-none"></span>
+                            <label class="col-md-3 control-label">名称：</label>
+                            <div class="col-md-9">
+                                {{item.name}}
                             </div>
                         </div>
-
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">备注：</label>
-                            <div class="col-md-12">
-                                <input id="bean-memo" name="memo" value="{{item.memo}}" class="form-control" type="text"  placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
-                                <span id="bean-memo-error" class="help-block m-b-none"></span>
+                            <div class="col-md-9 form-control-static">
+                                {{item.memo}}
                             </div>
                         </div>
-
-					</div>
-					<div class="col-sm-6">
-
-
+                    </div>
+                    <div class="col-sm-7">
                         <div class="form-group clearfix" >
-                            <label class="col-md-12 control-label">--请选择父级节点--</label>
+                            <label class="col-md-12 control-label">--请选择组织人员--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in nodes">
@@ -112,39 +101,38 @@
 <script type="text/javascript">
     function formValidate(){
         setTimeout(function(){
-            $("#authPerm_01").validate();
+            $("#orgInfo_01").validate();
         },1000);
     }
 
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
-        $ngCompile=$compile;
         user.init(function(){
-           $data.newFlag=sessionStorage.getItem(site.authPerm.info);
-           if($data.newFlag) $data.uuidToken=util.guid();
-            loadTree();
-            loadInfo(sessionStorage.getItem(site.authPerm.info));
+            loadInfo(sessionStorage.getItem(site.orgInfo.info));
         });
         $scope.save = function () {
-            if($("#authPerm_01").valid()){
-                $.post(site.authPerm.save, $('#authPerm_01').serialize(),function (result) {
+            if($("#orgInfo_01").valid()){
+                $.post(site.orgInfo.save, $('#orgInfo_01').serialize(),function (result) {
                         //console.info("获取数据.." + JSON.stringify(result));
                         if (result.code == 0) {
                             alert('保存成功!');
-                            parent.location.href = site.authPerm.view+'.html';
+                            closeMyBoxLayer();
                         } else {
                             alert(result.message);
                         }
                 }, 'json');
             }
         }
-        $scope.kfReady=function(key,val){
-            KindEditor.html('#'+key,val);
-            return val;
+        $scope.selected=function(val,val2){
+            if(val==val2){
+                return true
+            }
+            return false;
         }
     });
+
     var loadInfo=function(id){
-        $.get(site.authPerm.info + id, {},function (result) {
+        $.get(site.orgInfo.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
              if (result.code == 0) {
                  $data.item = result.data;
@@ -155,18 +143,6 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
-    function loadTree(){
-        $.get(site.authPerm.tree, {},function (result) {
-            //console.info("获取数据.." + JSON.stringify(result));
-            if (result.code == 0) {
-                $data.nodes=result.data;
-            } else {
-                alert(result.message);
-            }
-            if(!$data.$$phase) $data.$apply();
-        }, 'json');
-    }
-
     $(document).ready(function(){
         formValidate();
     });

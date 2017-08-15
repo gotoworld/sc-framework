@@ -44,4 +44,8 @@ public class AuthRoleDto extends BaseDto {
      * 权限id集合
      */
     private List<String> permIds;
+    /**
+     * 菜单id集合
+     */
+    private List<Long> menuIds;
 }

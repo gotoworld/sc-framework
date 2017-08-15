@@ -1,6 +1,7 @@
 package com.hsd.framework.util;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.*;
 import org.apache.commons.codec.binary.Base64;
@@ -10,9 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by wu1g119 on 2017/2/8.
@@ -75,7 +74,7 @@ public class JwtUtil {
 //        jo.put("sid", ReflectUtil.getValueByFieldName(user,"sid"));
         return jo.toJSONString();
     }
-    public static <T>T getSubject(Class<T> obj) throws Exception {
+    public static <T> T getSubject(Class<T> obj) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
         if (ValidatorUtil.isEmpty(authorizationToken)) {
@@ -92,16 +91,9 @@ public class JwtUtil {
         }
         final Claims claims = parseJWT(authorizationToken);
         JSONObject jobj = JSON.parseObject(claims.getSubject());
-        String authorizationInfoPerms = jobj.getString("authorizationInfoPerms");
-        if (authorizationInfoPerms != null) {
-            List<String> permsArr = Arrays.asList(authorizationInfoPerms.split(","));
-            //console.info("permsArr="+permsArr)
-            //console.info("permsstr="+str)
-            if (permsArr != null && permsArr.contains(authStr)) {
-                return true;
-            } else {
-                return false;
-            }
+        JSONArray authorizationInfoPerms = jobj.getJSONArray("authorizationInfoPerms");
+        if (authorizationInfoPerms != null && authorizationInfoPerms.contains(authStr)) {
+            return true;
         }
         return false;
     }

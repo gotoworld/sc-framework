@@ -51,16 +51,6 @@
                             <label class="col-sm-3 control-label"><input type="checkbox" name="isSuper" value="1">超级管理员</label>
                         </div>
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">所属系统域：</label>
-                            <div class="col-md-12">
-                                <select data-placeholder="选择所属系统域" id="bean-domainCode" name="domainCode" class="form-control"   required="" aria-required="true"  aria-describedby="bean-domainCode-error"  maxlength="50"   aria-invalid="true">
-                                    <option value="">--请选择所属系统域--</option>
-                                    <option ng-repeat="d in domainNodes" ng-value="d.code" ng-selected="d.code==item.domainCode" ng-bind="d.name"></option>
-                                </select>
-                                <span id="bean-domainCode-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
                             <label class="col-md-3 control-label">备注：</label>
                             <div class="col-md-12">
                                 <input id="bean-memo" name="memo" value="{{item.memo}}" class="form-control" type="text"  placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">

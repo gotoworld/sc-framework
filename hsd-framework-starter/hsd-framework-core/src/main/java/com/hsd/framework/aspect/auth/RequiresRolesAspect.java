@@ -2,6 +2,7 @@ package com.hsd.framework.aspect.auth;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.auth.Logical;
@@ -22,8 +23,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.List;
 
 @Aspect
 @Component
@@ -49,27 +48,24 @@ public class RequiresRolesAspect {
         }
         final Claims claims = JwtUtil.parseJWT(authorizationToken);
         JSONObject jobj = JSON.parseObject(claims.getSubject());
-        String authorizationInfoRoles = jobj.getString("authorizationInfoRoles");
+        JSONArray authorizationInfoRoles = jobj.getJSONArray("authorizationInfoRoles");
         boolean flag = false;
         String[] permStrArr = requiresRoles.value();
         if (authorizationInfoRoles != null) {
-            List<String> userPermsArr = Arrays.asList(authorizationInfoRoles.split(","));
-            if (userPermsArr != null) {
-                if (Logical.OR.equals(requiresRoles.logical())) {
-                    flag = false;
-                    for (int i = 0; i < permStrArr.length; i++) {
-                        if (userPermsArr.contains(permStrArr[i])) {
-                            flag = true;
-                            break;
-                        }
+            if (Logical.OR.equals(requiresRoles.logical())) {
+                flag = false;
+                for (int i = 0; i < permStrArr.length; i++) {
+                    if (authorizationInfoRoles.contains(permStrArr[i])) {
+                        flag = true;
+                        break;
                     }
-                } else {
-                    flag = true;
-                    for (int i = 0; i < permStrArr.length; i++) {
-                        if (!(userPermsArr.contains(permStrArr[i]))) {
-                            flag = false;
-                            break;
-                        }
+                }
+            } else {
+                flag = true;
+                for (int i = 0; i < permStrArr.length; i++) {
+                    if (!(authorizationInfoRoles.contains(permStrArr[i]))) {
+                        flag = false;
+                        break;
                     }
                 }
             }

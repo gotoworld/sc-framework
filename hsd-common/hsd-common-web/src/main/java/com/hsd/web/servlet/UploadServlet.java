@@ -2,6 +2,7 @@ package com.hsd.web.servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.config.AppConfig;
 import com.hsd.framework.util.ImageUtil;
 import com.hsd.framework.util.PathCommonConstant;
@@ -31,6 +32,7 @@ import java.util.*;
  */
 @AutoConfigureBefore(AppConfig.class)
 @WebServlet(urlPatterns = "/file/fileUpload", description = "文件上传")
+@NoAuthorize
 @Slf4j
 public class UploadServlet extends HttpServlet{
     private final long serialVersionUID = 1L;

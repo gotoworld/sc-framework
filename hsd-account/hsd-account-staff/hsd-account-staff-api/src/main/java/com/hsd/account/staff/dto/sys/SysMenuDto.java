@@ -25,9 +25,7 @@ public class SysMenuDto extends BaseDto {
 	@NotNull(message="domain_code不能为空")@Size(max=50,message="domain_code最大50字符")
      private String domainCode;
      /**父节点*/
-     private Integer parentId;
-     /**是否根节点*/
-     private Integer root;
+     private Long parentId;
      /**页面链接*/
 	@NotNull(message="url不能为空")@Size(max=255,message="url最大255字符")
      private String url;

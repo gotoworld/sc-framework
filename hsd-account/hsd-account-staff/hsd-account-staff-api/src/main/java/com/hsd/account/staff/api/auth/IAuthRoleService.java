@@ -4,6 +4,7 @@ package com.hsd.account.staff.api.auth;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.account.staff.dto.sys.SysMenuDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -58,4 +59,9 @@ public interface IAuthRoleService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findPermIsList")
     public List<AuthPermDto> findPermIsList(AuthRoleDto dto);
+    /**
+     * <p>获取当前角色已有(菜单)
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findMenuIsList")
+    public List<SysMenuDto> findMenuIsList(AuthRoleDto dto);
 }

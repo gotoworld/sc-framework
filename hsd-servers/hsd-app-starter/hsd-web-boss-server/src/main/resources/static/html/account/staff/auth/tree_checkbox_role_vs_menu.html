@@ -1,0 +1,4 @@
+<li ng-repeat="t in child">
+    <label style="{{checkMenuId(t.id)?'color:red':''}}"><input type="checkbox" name="{{name}}" ng-value="t.id" ng-checked="checkMenuId(t.id)">{{t.name}}</label>
+    <ul ng-include="'tree_checkbox_role_vs_menu.html'" ng-init="child=t.nodes;name=name"></ul>
+</li>

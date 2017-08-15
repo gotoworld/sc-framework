@@ -63,7 +63,7 @@
                                                 <table class="table table-bordered table-striped  table-hover" style="min-width:500px;width: 500px;">
                                                     <thead  id="event_output">
                                                     @[ for(t in scfg._col_show){ /]
-                                                    <tr><th class="col-md-2">#</th><th></th></tr>
+                                                    <tr><th class="col-md-3">#</th><th></th></tr>
                                                     @[ } /]
                                                     </thead>
                                                 </table>
@@ -253,7 +253,7 @@
         onNodeSelected: function (event, node) {
             var trStr ='';
             @[ for(t in scfg._col_show){ /]
-                 trStr+=' <tr><th class="col-md-2">${t.value}:</th><th class="">'+${columnMap[t.key]=='Date'?"util.dateTimeFormat(node."+t.key+")":"node."+t.key}+'</th></tr>';
+                 trStr+=' <tr><th class="col-md-3">${t.value}:</th><th class="">'+${columnMap[t.key]=='Date'?"util.dateTimeFormat(node."+t.key+")":"node."+t.key}+'</th></tr>';
             @[ } /]
                 if(user.hasPermission("${tableNameL}:info") || user.hasPermission("${tableNameL}:edit") || user.hasPermission("${tableNameL}:del")){
                     trStr+=' <tr><th class="col-md-2">操作:</th><th> ';

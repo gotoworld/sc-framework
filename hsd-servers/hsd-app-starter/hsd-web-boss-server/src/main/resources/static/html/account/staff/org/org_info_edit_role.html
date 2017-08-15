@@ -106,7 +106,8 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         user.init(function(){
-            loadTree();
+            loadRole(sessionStorage.getItem(site.orgInfo.info));
+            loadOrgRole(sessionStorage.getItem(site.orgInfo.info));
             loadInfo(sessionStorage.getItem(site.orgInfo.info));
         });
         $scope.save = function () {
@@ -123,7 +124,7 @@
             }
         }
         $scope.checkRoleId=function(id){
-            if($data.roleNodes && $data.roleNodes.indexOf(id)!=-1){
+            if($data.orgRoleNodes && $data.orgRoleNodes.indexOf(id)!=-1){
                 return true;
             }
             return false;
@@ -142,11 +143,24 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
-    function loadTree(){
-        $.get(site.orgInfo.tree, {},function (result) {
+    function loadRole(orgId){
+        $.post(site.authRole.list, {"orgId":orgId},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 $data.roleNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    function loadOrgRole(orgId){
+        $data.orgRoleNodes=[];
+        $.post(site.orgInfo.getRole, {"orgId":orgId},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                for(var i=0;i<result.data.length;i++){
+                    $data.orgRoleNodes.push(result.data[i].id);
+                }
             } else {
                 alert(result.message);
             }

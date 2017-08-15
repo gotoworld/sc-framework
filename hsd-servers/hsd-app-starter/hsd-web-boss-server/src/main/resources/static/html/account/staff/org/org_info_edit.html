@@ -37,7 +37,7 @@
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
 					<div class="clearfix "></div>
-					<div class="col-sm-6 b-r">
+					<div class="col-sm-4 b-r">
 
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">编码：</label>
@@ -76,7 +76,7 @@
                             </div>
                         </div>
 					</div>
-					<div class="col-sm-6">
+                    <div class="col-sm-4 b-r">
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择父级机构--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
@@ -90,6 +90,9 @@
                             </div>
                         </div>
 					</div>
+                    <div class="col-sm-4">
+
+                    </div>
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
@@ -140,16 +143,12 @@
                         //console.info("获取数据.." + JSON.stringify(result));
                         if (result.code == 0) {
                             alert('保存成功!');
-                            parent.location.href = site.orgInfo.view+'.html';
+                            closeMyBoxLayer();
                         } else {
                             alert(result.message);
                         }
                 }, 'json');
             }
-        }
-        $scope.kfReady=function(key,val){
-            KindEditor.html('#'+key,val);
-            return val;
         }
         $scope.selected=function(val,val2){
             if(val==val2){

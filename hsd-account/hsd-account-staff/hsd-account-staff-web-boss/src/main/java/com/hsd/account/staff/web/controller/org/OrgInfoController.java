@@ -140,4 +140,63 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
+
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/user")
+    @ApiOperation(value = "获取组织已设置人员")
+    public Response getUser(@RequestParam("orgId") Long orgId) {
+        log.info("OrgInfoController getUser.........");
+        Response result=new Response();
+        try {
+            OrgInfoDto orgInfoDto=new OrgInfoDto();
+            orgInfoDto.setId(orgId);
+            result.data=orgInfoService.findUserIsList(orgInfoDto);
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role")
+    @ApiOperation(value = "获取组织已设置角色")
+    public Response getRole(@RequestParam("orgId") Long orgId) {
+        log.info("OrgInfoController getRole.........");
+        Response result=new Response();
+        try {
+            OrgInfoDto orgInfoDto=new OrgInfoDto();
+            orgInfoDto.setId(orgId);
+            result.data=orgInfoService.findRoleIsList(orgInfoDto);
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequiresPermissions("orgInfo:edit:user")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "set/user")
+    @ALogOperation(type = "设置人员", desc = "组织机构")
+    @ApiOperation(value = "设置人员")
+    public Response setUser(@Validated OrgInfoDto dto) {
+        log.info("OrgInfoController setUser.........");
+        Response result = new Response();
+        try {
+            if (dto == null)throw new RuntimeException("参数异常");
+            result = orgInfoService.setUser(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequiresPermissions("orgInfo:edit:role")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "set/role")
+    @ALogOperation(type = "设置角色", desc = "组织机构")
+    @ApiOperation(value = "设置角色")
+    public Response setRole(@Validated OrgInfoDto dto) {
+        log.info("OrgInfoController setRole.........");
+        Response result = new Response();
+        try {
+            if (dto == null)throw new RuntimeException("参数异常");
+            result = orgInfoService.setRole(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 }

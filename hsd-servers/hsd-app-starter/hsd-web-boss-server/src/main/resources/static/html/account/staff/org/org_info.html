@@ -120,7 +120,6 @@
                                     				<th>名称</th>
 													<th>类型</th>
 													<th>状态</th>
-													<th>备注</th>
 													<th>创建时间</th>
 													<th>操作</th>
 												</tr>
@@ -132,17 +131,17 @@
                                     				<td>{{item.name}}</td>
 													<td>{{typeEnum(item.type)}}</td>
 													<td>{{stateEnum(item.state)}}</td>
-													<td>{{item.memo}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("orgInfo:del")' ng-if="item.type==2"  ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 组员设置</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit:user")' ng-if="item.type==2"  ng-click="setUser(item.id)" rel="nofollow" class="label label-primary" ><i class="fa fa-user"></i> 设置组员</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit:role")' ng-if="item.type==2"  ng-click="setRole(item.id)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 设置角色</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="8">
+                                    				<td colspan="7">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -212,6 +211,14 @@
             sessionStorage.setItem(site.orgInfo.info,id);
             openMyBoxLayer(title,site.orgInfo.view+'_info.html');
         }
+        $scope.setUser = function (id) {
+            sessionStorage.setItem(site.orgInfo.info,id);
+            openMyBoxLayer('人员设置',site.orgInfo.view+'_edit_user.html');
+        }
+        $scope.setRole = function (id) {
+            sessionStorage.setItem(site.orgInfo.info,id);
+            openMyBoxLayer('角色设置',site.orgInfo.view+'_edit_role.html');
+        }
         $scope.del = function (id) {
             if(confirm('确认删除吗?')) {
                 $.post( site.orgInfo.del + id,{}, function (result) {
@@ -271,7 +278,6 @@
                  trStr+=' <tr><th class="col-md-3">名称:</th><th class="">'+node.name+'</th></tr>';
 				trStr+=' <tr><th class="col-md-3">状态:</th><th class="">'+$data.stateEnum(node.state)+'</th></tr>';
             trStr+=' <tr><th class="col-md-3">类型:</th><th class="">'+$data.typeEnum(node.type)+'</th></tr>';
-            trStr+=' <tr><th class="col-md-3">备注:</th><th class="">'+node.memo+'</th></tr>';
             trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
             if(user.hasPermission("orgInfo:info") || user.hasPermission("orgInfo:edit") || user.hasPermission("orgInfo:del")){
                     trStr+=' <tr><th class="col-md-3">操作:</th><th> ';

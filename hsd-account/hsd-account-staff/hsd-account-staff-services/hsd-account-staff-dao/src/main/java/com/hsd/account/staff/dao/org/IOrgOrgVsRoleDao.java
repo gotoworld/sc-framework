@@ -1,4 +1,4 @@
-package com.hsd.account.staff.dao.auth;
+package com.hsd.account.staff.dao.org;
 
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
@@ -6,11 +6,13 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * <p>权限_组织vs角色 数据库处理接口类。
  */
 @Mapper
-public interface IAuthOrgVsRoleDao extends IBaseDao {
+public interface IOrgOrgVsRoleDao extends IBaseDao {
 
     /**
      * 判断是否存在
@@ -36,4 +38,6 @@ public interface IAuthOrgVsRoleDao extends IBaseDao {
       */
      @Delete("delete from auth_org_vs_role where  role_id = #{roleId}")
      int deleteBulkDataByRoleId(IEntity entity) throws Exception;
+
+     List<?> findRoleIsList(IEntity entity) throws Exception;
 }

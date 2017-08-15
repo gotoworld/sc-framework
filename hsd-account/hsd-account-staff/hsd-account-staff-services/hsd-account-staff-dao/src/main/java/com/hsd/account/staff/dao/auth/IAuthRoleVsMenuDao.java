@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * <p>权限_角色vs菜单 数据库处理接口类。
  */
@@ -36,4 +38,6 @@ public interface IAuthRoleVsMenuDao extends IBaseDao {
       */
      @Delete("delete from auth_role_vs_menu where  menu_id = #{menuId}")
      int deleteBulkDataByMenuId(IEntity entity) throws Exception;
+
+     List<?> findMenuIsList(IEntity entity) throws Exception;
 }

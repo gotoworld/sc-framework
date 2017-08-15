@@ -1,4 +1,4 @@
-package com.hsd.account.staff.entity.auth;
+package com.hsd.account.staff.entity.org;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hsd.framework.entity.BaseEntity;
@@ -12,9 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AuthOrgVsRole extends BaseEntity {
-     /**用户id*/
-     private Long userId;
+public class OrgOrgVsRole extends BaseEntity {
+     /**角色id*/
+     private Long roleId;
      /**组织id*/
      private Long orgId;
      /**建立者ID*/

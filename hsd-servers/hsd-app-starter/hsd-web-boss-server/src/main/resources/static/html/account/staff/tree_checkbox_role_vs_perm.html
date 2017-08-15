@@ -1,0 +1,4 @@
+<li ng-repeat="t in child">
+    <label><input ng-if="_self_id!=t.id" type="checkbox" name="{{name}}" ng-value="t.id" ng-checked="checkPermId(t.id)">{{t.name}}</label>
+    <ul ng-include="'../tree_checkbox_role_vs_perm.html'" ng-init="child=t.nodes;_self_id=_self_id;name=name"></ul>
+</li>

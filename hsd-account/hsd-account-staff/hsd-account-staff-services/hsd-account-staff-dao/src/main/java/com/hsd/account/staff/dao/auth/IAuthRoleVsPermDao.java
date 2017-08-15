@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * <p>权限_角色vs功能 数据库处理接口类。
  */
@@ -36,4 +38,6 @@ public interface IAuthRoleVsPermDao extends IBaseDao {
       */
      @Delete("delete from auth_role_vs_perm where  perm_id = #{permId}")
      int deleteBulkDataByPermId(IEntity entity) throws Exception;
+     /** 根据角色获取权限列表 */
+     List<?> findPermIsList(IEntity entity) throws Exception;
 }

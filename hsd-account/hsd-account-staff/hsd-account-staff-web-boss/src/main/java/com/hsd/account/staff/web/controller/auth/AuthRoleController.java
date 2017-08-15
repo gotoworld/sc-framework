@@ -54,8 +54,6 @@ public class AuthRoleController extends BaseController {
         return result;
     }
 
-
-
     /**
      * <p> 信息详情。
      */
@@ -81,7 +79,7 @@ public class AuthRoleController extends BaseController {
     /**
      * <p>删除。
      */
-   @RequiresPermissions("authRole:del")
+    @RequiresPermissions("authRole:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "权限_角色信息")
     @ApiOperation(value = "信息删除")
@@ -125,6 +123,22 @@ public class AuthRoleController extends BaseController {
                 result = authRoleService.saveOrUpdateData(dto);
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequiresPermissions(value = {"authRole:add", "authRole:edit"}, logical = Logical.OR)
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "perm")
+    @ApiOperation(value = "获取当前角色已有(功能/权限)")
+    public Response perm(@RequestParam(name = "roleId") Long roleId) {
+        log.info("AuthRoleController perm.........");
+        Response result = new Response();
+        try {
+            AuthRoleDto dto=new AuthRoleDto();
+            dto.setId(roleId);
+            result.data = authRoleService.findPermIsList(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

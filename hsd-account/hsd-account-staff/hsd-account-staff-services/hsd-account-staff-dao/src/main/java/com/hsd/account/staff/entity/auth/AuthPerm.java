@@ -21,8 +21,6 @@ public class AuthPerm extends BaseEntity {
      private String matchStr;
      /**父级ID*/
      private String parentId;
-     /**所属系统域*/
-     private String domainCode;
      /**备注*/
      private String memo;
      /**排序*/

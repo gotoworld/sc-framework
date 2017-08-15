@@ -28,9 +28,6 @@ public class AuthPermDto extends BaseDto {
      /**父级ID*/
 	@Size(max=32,message="parent_id最大32字符")
      private String parentId;
-     /**所属系统域*/
-	@NotNull(message="domain_code不能为空")@Size(max=50,message="domain_code最大50字符")
-     private String domainCode;
      /**备注*/
 	@Size(max=255,message="memo最大255字符")
      private String memo;

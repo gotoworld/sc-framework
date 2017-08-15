@@ -19,8 +19,6 @@ public class AuthRole extends BaseEntity {
      private String name;
      /**超级管理员0否1是*/
      private Integer isSuper;
-     /**所属系统域*/
-     private String domainCode;
      /**备注*/
      private String memo;
      /**排序*/

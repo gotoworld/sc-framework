@@ -60,13 +60,13 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             if (orgUserDao.isDataYN(entity) != 0) {
                 // 数据存在
                 orgUserDao.update(entity);
-                if (JwtUtil.isPermitted("orgUser:role.edit") && 1!=(entity.getId())) {
+                if (JwtUtil.isPermitted("orgUser:edit:role") && 1!=(entity.getId())) {
                     AuthUserVsRole userVsRole = new AuthUserVsRole();
                     userVsRole.setUserId(entity.getId());
                     // 1.根据用户id清空用户角色关联表
                     authUserVsRoleDao.deleteBulkDataByUserId(userVsRole);
                 }
-                if (JwtUtil.isPermitted("orgUser:dept.edit")) {
+                if (JwtUtil.isPermitted("orgUser:edit:org")) {
                     OrgOrgVsUser orgVsUser = new OrgOrgVsUser();
                     orgVsUser.setUserId(entity.getId());
                     // 1.根据用户id清空用户部门关联表
@@ -77,7 +77,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 orgUserDao.insert(entity);
                 result.data=entity.getId();
             }
-            if (JwtUtil.isPermitted("orgUser:role.edit")) {
+            if (JwtUtil.isPermitted("orgUser:edit:role")) {
                 // 2.新增用户角色关联信息
                 if (dto.getRoleIdArray() != null) {
                     List<AuthUserVsRole> xEntityList = new ArrayList<>();
@@ -90,7 +90,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     authUserVsRoleDao.insertBatch(xEntityList);
                 }
             }
-            if (JwtUtil.isPermitted("orgUser:dept.edit")) {
+            if (JwtUtil.isPermitted("orgUser:edit:org")) {
                 // 2.新增用户部门关联信息
                 if (dto.getOrgIdArray() != null) {
                     List<OrgOrgVsUser> xEntityList = new ArrayList<>();

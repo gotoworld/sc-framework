@@ -1,7 +1,6 @@
 package com.hsd.framework.dto;
 
 import com.hsd.framework.IDto;
-import com.hsd.framework.util.IdUtil;
 import lombok.Data;
 
 @Data
@@ -29,10 +28,10 @@ public class BaseDto implements IDto {
     boolean isMember;
 
     String str;
-    public String getToken(){
-        if(token==null){
-            token= IdUtil.createUUID(32);
-        }
-        return token;
-    }
+//    public String getToken(){
+//        if(token==null){
+//            token= IdUtil.createUUID(32);
+//        }
+//        return token;
+//    }
 }

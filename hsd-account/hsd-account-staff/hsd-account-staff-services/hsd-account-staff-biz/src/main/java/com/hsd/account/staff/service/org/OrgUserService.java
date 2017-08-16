@@ -19,6 +19,7 @@ import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.exception.ServiceException;
+import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.JwtUtil;
@@ -76,6 +77,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 if(orgUserDao.isAccountYN(dto.getAccount())>0){
                     throw new RuntimeException("账号已存在!");
                 }
+                entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
                 // 新增
                 orgUserDao.insert(entity);
                 result.data=entity.getId();
@@ -173,7 +175,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         }
         return pageInfo;
     }
-
     public List<OrgUserDto> findDataIsList(@RequestBody OrgUserDto dto) {
         List<OrgUserDto> results = null;
         try {
@@ -252,19 +253,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
 
-    public List<OrgUserDto> findUserIsPage(@RequestBody OrgUserDto dto) {
-        List<OrgUserDto> results = null;
-        try {
-            if (dto == null) throw new RuntimeException("参数对象不能为null");
-            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            results = copyTo(orgUserDao.getUserIsPage(copyTo(dto,OrgUser.class)),OrgUserDto.class);
-        } catch (Exception e) {
-            log.error("获取某一种角色所有用户,数据库处理异常!", e);
-            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-        }
-        return results;
-    }
-
     public String isUidYN(String uid) {
         String result = "seccuss";
         try {
@@ -287,6 +275,11 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             OrgUserDto orgUserDto=findDataById(dto);
             if (orgUserDto==null) throw new RuntimeException("用户不存在!");
+
+            orgUserDto.setOldpwd(MD5.pwdMd5Hex(dto.getOldpwd()));
+//            orgUserDto.setNewpwd(MD5.pwdMd5Hex(dto.getNewpwd()));
+            orgUserDto.setConfirmpwd(MD5.pwdMd5Hex(dto.getConfirmpwd()));
+
             if(!orgUserDto.getPwd().equals(orgUserDto.getOldpwd())) throw new RuntimeException("原密码错误!");
             if(orgUserDao.updatePwd(copyTo(orgUserDto,OrgUser.class))==0) throw new RuntimeException("密码修改失败,请重试!");
         } catch (Exception e) {
@@ -294,5 +287,22 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
+    }
+
+    @Override
+    public PageInfo findUserIsPage(@RequestBody OrgUserDto dto) throws Exception {
+        PageInfo pageInfo=null;
+        try {
+            if (dto == null)throw new RuntimeException("参数异常!");
+            OrgUser entity = copyTo(dto, OrgUser.class);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            List list = orgUserDao.findUserIsPage(entity);
+            pageInfo=new PageInfo(list);
+            pageInfo.setList(copyTo(pageInfo.getList(), OrgUserDto.class));
+        } catch (Exception e) {
+            log.error("信息[分页]查询异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return pageInfo;
     }
 }

@@ -47,24 +47,21 @@ public interface IOrgUserDao extends IBaseDao {
     List<?> getUserList(IEntity dto) throws Exception;
 
     /**
-     * 获取某一种角色所有用户(分页)
-     */
-    List<?> getUserIsPage(IEntity dto) throws Exception;
-
-    /**
      * <p>判断用户id是否存在
      */
     @Select(" select count(0) from org_user where  account=#{account} ")
     int isAccountYN(@Param("account") String account) throws Exception;
+
     /**
      * <p>密码修改
      */
     @Update("update org_user set version=version+1,date_updated=now(),pwd=#{confirmpwd} where id = #{id} and pwd=#{oldpwd}")
     int updatePwd(IEntity entity) throws Exception;
-
     /**
      * <p>最后登陆记录
      */
     @Update("update org_user set count=count+1,last_login=now() where id = #{id}")
     int lastLogin(IEntity entity) throws Exception;
+
+    List<?> findUserIsPage(IEntity dto) throws Exception;
 }

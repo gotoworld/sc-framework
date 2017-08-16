@@ -59,7 +59,28 @@ public class ChannelTypeController extends BaseController {
         }
         return result;
     }
-
+    /**
+     * <p>信息列表 (未删除)。
+     */
+    @RequiresPermissions("channelType:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
+    @ApiOperation(value = "信息列表")
+    public Response list(@ModelAttribute ChannelTypeDto dto) {
+        log.info("SysDomainController list.........");
+        Response result = new Response();
+        try {
+            if (dto == null) {
+                dto = new ChannelTypeDto();
+                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+            }
+            dto.setDelFlag(0);
+            // 信息列表
+            result.data = channelTypeService.findDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
 
     /**
@@ -136,26 +157,5 @@ public class ChannelTypeController extends BaseController {
         }
         return result;
     }
-    /**
-     * <p>信息列表 (未删除)。
-     */
-    @RequiresPermissions("channelType:menu")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
-    @ApiOperation(value = "信息列表")
-    public Response list(@ModelAttribute ChannelTypeDto dto) {
-        log.info("ChannelTypeController list.........");
-        Response result = new Response();
-        try {
-            if (dto == null) {
-                dto = new ChannelTypeDto();
-                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-            }
-            dto.setDelFlag(0);
-            // 信息列表
-            result.data = channelTypeService.findDataIsList(dto);
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
+
 }

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.channel.dao.channel.IChannelInfoDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.channel_name as "channelName"
+        ,t1.channeltype as "channeltype"
+        ,t1.gender as "gender"
+        ,t1.phone1 as "phone1"
+        ,t1.phone2 as "phone2"
+        ,t1.fax as "fax"
+        ,t1.birthday as "birthday"
+        ,t1.marital_status as "maritalStatus"
+        ,t1.id_no as "idNo"
+        ,t1.income as "income"
+        ,t1.inc_verifiable as "incVerifiable"
+        ,t1.other_income as "otherIncome"
+        ,t1.other_income_src as "otherIncomeSrc"
+        ,t1.self_fico as "selfFico"
+        ,t1.cumulative_job_tenure as "cumulativeJobTenure"
+        ,t1.education_level as "educationLevel"
+        ,t1.tax as "tax"
+        ,t1.own_car_num as "ownCarNum"
+        ,t1.own_house_num as "ownHouseNum"
+        ,t1.children_status as "childrenStatus"
+        ,t1.children_num as "childrenNum"
+        ,t1.asset_other as "assetOther"
+        ,t1.debt_status as "debtStatus"
+        ,t1.wechat as "wechat"
+        ,t1.qq as "qq"
+        ,t1.remark as "remark"
+        ,t1.work_start_date as "workStartDate"
+        ,t1.domicile_live_diff as "domicileLiveDiff"
+        ,t1.date_created as "dateCreated"
+        ,t1.relation as "relation"
+        ,t1.staff_no as "staffNo"
+        ,t1.address as "address"
+        ,t1.bi_update_ts as "biUpdateTs"
+        ,t1.del_flag as "delFlag"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.channel.entity.channel.ChannelInfo" parameterType="com.hsd.account.channel.entity.channel.ChannelInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from channel_info t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.channel.entity.channel.ChannelInfo"  useGeneratedKeys="true" keyProperty="id"  >
+        insert into channel_info (
+         
+            channel_name 
+           ,channeltype 
+           ,gender 
+           ,phone1 
+           ,phone2 
+           ,fax 
+           ,birthday 
+           ,marital_status 
+           ,id_no 
+           ,income 
+           ,inc_verifiable 
+           ,other_income 
+           ,other_income_src 
+           ,self_fico 
+           ,cumulative_job_tenure 
+           ,education_level 
+           ,tax 
+           ,own_car_num 
+           ,own_house_num 
+           ,children_status 
+           ,children_num 
+           ,asset_other 
+           ,debt_status 
+           ,wechat 
+           ,qq 
+           ,remark 
+           ,work_start_date 
+           ,domicile_live_diff 
+           ,date_created 
+           ,relation 
+           ,staff_no 
+           ,address 
+           ,bi_update_ts 
+           ,del_flag 
+        ) values (
+         
+            #{channelName} 
+           ,#{channeltype} 
+           ,#{gender} 
+           ,#{phone1} 
+           ,#{phone2} 
+           ,#{fax} 
+           ,#{birthday} 
+           ,#{maritalStatus} 
+           ,#{idNo} 
+           ,#{income} 
+           ,#{incVerifiable} 
+           ,#{otherIncome} 
+           ,#{otherIncomeSrc} 
+           ,#{selfFico} 
+           ,#{cumulativeJobTenure} 
+           ,#{educationLevel} 
+           ,#{tax} 
+           ,#{ownCarNum} 
+           ,#{ownHouseNum} 
+           ,#{childrenStatus} 
+           ,#{childrenNum} 
+           ,#{assetOther} 
+           ,#{debtStatus} 
+           ,#{wechat} 
+           ,#{qq} 
+           ,#{remark} 
+           ,#{workStartDate} 
+           ,#{domicileLiveDiff} 
+           ,now()
+           ,#{relation} 
+           ,#{staffNo} 
+           ,#{address} 
+           ,now()
+           ,0
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.channel.entity.channel.ChannelInfo">
+        update channel_info set bi_update_ts=now() 
+             <if test="channelName!=null">,channel_name = #{channelName}</if>
+             <if test="channeltype!=null">,channeltype = #{channeltype}</if>
+             <if test="gender!=null">,gender = #{gender}</if>
+             <if test="phone1!=null">,phone1 = #{phone1}</if>
+             <if test="phone2!=null">,phone2 = #{phone2}</if>
+             <if test="fax!=null">,fax = #{fax}</if>
+             <if test="birthday!=null">,birthday = #{birthday}</if>
+             <if test="maritalStatus!=null">,marital_status = #{maritalStatus}</if>
+             <if test="idNo!=null">,id_no = #{idNo}</if>
+             <if test="income!=null">,income = #{income}</if>
+             <if test="incVerifiable!=null">,inc_verifiable = #{incVerifiable}</if>
+             <if test="otherIncome!=null">,other_income = #{otherIncome}</if>
+             <if test="otherIncomeSrc!=null">,other_income_src = #{otherIncomeSrc}</if>
+             <if test="selfFico!=null">,self_fico = #{selfFico}</if>
+             <if test="cumulativeJobTenure!=null">,cumulative_job_tenure = #{cumulativeJobTenure}</if>
+             <if test="educationLevel!=null">,education_level = #{educationLevel}</if>
+             <if test="tax!=null">,tax = #{tax}</if>
+             <if test="ownCarNum!=null">,own_car_num = #{ownCarNum}</if>
+             <if test="ownHouseNum!=null">,own_house_num = #{ownHouseNum}</if>
+             <if test="childrenStatus!=null">,children_status = #{childrenStatus}</if>
+             <if test="childrenNum!=null">,children_num = #{childrenNum}</if>
+             <if test="assetOther!=null">,asset_other = #{assetOther}</if>
+             <if test="debtStatus!=null">,debt_status = #{debtStatus}</if>
+             <if test="wechat!=null">,wechat = #{wechat}</if>
+             <if test="qq!=null">,qq = #{qq}</if>
+             <if test="remark!=null">,remark = #{remark}</if>
+             <if test="workStartDate!=null">,work_start_date = #{workStartDate}</if>
+             <if test="domicileLiveDiff!=null">,domicile_live_diff = #{domicileLiveDiff}</if>
+             <if test="relation!=null">,relation = #{relation}</if>
+             <if test="staffNo!=null">,staff_no = #{staffNo}</if>
+             <if test="address!=null">,address = #{address}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.channel.entity.channel.ChannelInfo" resultType="com.hsd.account.channel.entity.channel.ChannelInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from channel_info t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.channel.entity.channel.ChannelInfo" resultType="com.hsd.account.channel.entity.channel.ChannelInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from channel_info t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+</mapper>

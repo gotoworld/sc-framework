@@ -6,7 +6,7 @@
                                 <div id="upload_div_${t.columnNameFormat}" style="">
                                     <div class="img-grid-2">
                                         <input name="${t.columnNameFormat}" value="{{item.${t.columnNameFormat}}}" type="hidden">
-                                        <img src="{{item.${t.columnNameFormat}}}" style="max-width:264px;max-height:264px">
+                                        <img ng-srcset="{{item.${t.columnNameFormat}}}" style="max-width:264px;max-height:264px">
                                     </div>
                                 </div>
                             </div>

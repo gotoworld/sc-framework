@@ -52,7 +52,7 @@
                             <div class="col-md-12">
                                 <select data-placeholder="选择渠道商类型" id="bean-channeltype" name="channeltype" class="form-control"   required="" aria-required="true"  aria-describedby="bean-channeltype-error"   aria-invalid="true">
                                     <option value="">--请选择渠道商类型--</option>
-                                    <option ng-repeat="d in typeNodes" ng-value="d.id" ng-selected="d.id==item.channeltype" ng-bind="d.type"></option>
+                                    <option ng-repeat="t in typeNodes" ng-value="t.id" ng-selected="t.id==item.channeltype" ng-bind="t.type"></option>
                                 </select>
                                 <span id="bean-channeltype-error" class="help-block m-b-none"></span>
                             </div>
@@ -355,7 +355,7 @@
         user.init(function(){
            $data.newFlag=sessionStorage.getItem(site.channelInfo.info);
            if($data.newFlag) $data.uuidToken=util.guid();
-           loadTypeList();
+            loadTypeList();
            if(sessionStorage.getItem(site.channelInfo.info) && sessionStorage.getItem(site.channelInfo.info)!=0){
                loadInfo(sessionStorage.getItem(site.channelInfo.info));
            }
@@ -393,7 +393,11 @@
     function loadTypeList(){
         $.get(site.channelType.list, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
                 $data.typeNodes=result.data;
+            } else {
+                alert(result.message);
+            }
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }

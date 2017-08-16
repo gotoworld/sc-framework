@@ -56,7 +56,7 @@ logging:
 #服务名
 feign:
   name:
-    account.channel: hsd-account-staff-server
+    account.staff: hsd-account-staff-server
     account.channel: ${spring.application.name}
 
 # 自定义配置

@@ -3,8 +3,6 @@ package com.hsd.framework.util;
 import com.hsd.framework.config.AppConfig;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Positions;
-import net.coobird.thumbnailator.name.Rename;
 import org.apache.commons.lang.StringUtils;
 
 import javax.imageio.ImageIO;
@@ -13,8 +11,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Slf4j
 public class ImageUtil {
@@ -59,7 +55,7 @@ public class ImageUtil {
      * @param height  新图高度
      * @return
      */
-    public static void resizeNx(String srcPath, String optPath, String picFrom, String picTo, int width, int height, boolean forceSize)
+    public static void resizeNx(String srcPath, String optPath, String picFrom, String picTo, Integer width, Integer height, boolean forceSize)
             throws IOException {
         File srcImg = new File(srcPath, picFrom);
         File destImg = new File(optPath, picTo);

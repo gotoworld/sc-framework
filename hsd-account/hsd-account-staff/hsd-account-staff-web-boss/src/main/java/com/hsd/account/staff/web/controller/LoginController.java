@@ -56,7 +56,7 @@ public class LoginController extends BaseController {
             OrgUserDto orgUser = roleSourceService.findUserByLoginName(account, 0);
             String salt2 = "wei12es46254ri01i20ijd982e9hadkl12312";
             String pwdhex = MD5.md5Hex(password);
-            if (!(account.equals(orgUser.getAccount()) && pwdhex.equals(orgUser.getPwd()))) {
+            if (orgUser==null || !(account.equals(orgUser.getAccount()) && pwdhex.equals(orgUser.getPwd()))) {
                 return Response.error("登录失败,用户名或密码错误!");
             }
             request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);

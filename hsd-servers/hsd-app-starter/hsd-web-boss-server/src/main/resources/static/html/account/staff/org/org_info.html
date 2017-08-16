@@ -136,8 +136,8 @@
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("orgInfo:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit:user")' ng-if="item.type==2"  ng-click="setUser(item.id)" rel="nofollow" class="label label-primary" ><i class="fa fa-user"></i> 设置组员</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit:role")' ng-if="item.type==2"  ng-click="setRole(item.id)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 设置角色</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit:user")' ng-if="item.type==2"  ng-click="setUser(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-user"></i> 设置组员</a>
+                                                      <a href="javascript:;" ng-show='user.hasPermission("orgInfo:edit:role")' ng-if="item.type==2"  ng-click="setRole(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 设置角色</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -211,13 +211,13 @@
             sessionStorage.setItem(site.orgInfo.info,id);
             openMyBoxLayer(title,site.orgInfo.view+'_info.html');
         }
-        $scope.setUser = function (id) {
-            sessionStorage.setItem(site.orgInfo.info,id);
-            openMyBoxLayer('人员设置',site.orgInfo.view+'_edit_user.html');
+        $scope.setUser = function (item) {
+            sessionStorage.setItem(site.orgInfo.info,item.id);
+            openMyBoxLayer('人员设置-'+item.name,site.orgInfo.view+'_edit_user.html');
         }
-        $scope.setRole = function (id) {
-            sessionStorage.setItem(site.orgInfo.info,id);
-            openMyBoxLayer('角色设置',site.orgInfo.view+'_edit_role.html');
+        $scope.setRole = function (item) {
+            sessionStorage.setItem(site.orgInfo.info,item.id);
+            openMyBoxLayer('角色设置-'+item.name,site.orgInfo.view+'_edit_role.html');
         }
         $scope.del = function (id) {
             if(confirm('确认删除吗?')) {
@@ -290,6 +290,12 @@
                     if(user.hasPermission("orgInfo:del") && node.nodes==undefined && node.tags[0]==0){
                         trStr += ' <a href="javascript:;"  ng-click="del('+ node.id + ')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
                     }
+					if(user.hasPermission("orgInfo:edit:user") && node.type==2) {
+						trStr += ' <a href="javascript:;" ng-show=\'user.hasPermission("orgInfo:edit:user")\'   ng-click=\'setUser('+JSON.stringify(node)+')\' rel="nofollow" class="label label-primary" ><i class="fa fa-user"></i> 设置组员</a>';
+					}
+					if(user.hasPermission("orgInfo:edit:role") && node.type==2){
+						trStr += ' <a href="javascript:;" ng-show=\'user.hasPermission("orgInfo:edit:role")\'   ng-click=\'setRole('+JSON.stringify(node)+')\' rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 设置角色</a>';
+					}
                     trStr+=' </th></tr>';
                 }
             $('#event_output').html($ngCompile(trStr)($data));

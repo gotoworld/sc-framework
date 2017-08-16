@@ -18,6 +18,19 @@
             )
         </foreach>
     </insert>
+    <insert id="insert"  >
+        insert into org_org_vs_user (
+         user_id
+        ,org_id
+        ,create_id
+        ,date_created
+        ) values (
+         #{userId}
+        ,#{orgId}
+        ,#{createId}
+        ,now()
+        )
+    </insert>
     <select id="findUserIsList" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsUser" resultType="com.hsd.account.staff.entity.org.OrgUser">
         SELECT
          t2.id as "id"

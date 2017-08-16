@@ -17,7 +17,7 @@ public interface IOrgOrgVsRoleDao extends IBaseDao {
     /**
      * 判断是否存在
      */
-    @Select("select IFNULL(count(0),0) as count from auth_org_vs_role where  org_id = #{orgId} and  role_id = #{roleId} ")
+    @Select("select IFNULL(count(0),0) as count from org_org_vs_role where  org_id = #{orgId} and  role_id = #{roleId} ")
     int isDataYN(IEntity entity) throws Exception;
 
 
@@ -25,18 +25,18 @@ public interface IOrgOrgVsRoleDao extends IBaseDao {
     /**
      * 根据主键 物理删除
      */
-    @Delete("delete from auth_org_vs_role where  org_id = #{orgId} and  role_id = #{roleId} ")
+    @Delete("delete from org_org_vs_role where  org_id = #{orgId} and  role_id = #{roleId} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
      /**
       * 根据主键org_id 物理删除
       */
-     @Delete("delete from auth_org_vs_role where  org_id = #{orgId}")
+     @Delete("delete from org_org_vs_role where  org_id = #{orgId}")
      int deleteBulkDataByOrgId(IEntity entity) throws Exception;
      /**
       * 根据主键role_id 物理删除
       */
-     @Delete("delete from auth_org_vs_role where  role_id = #{roleId}")
+     @Delete("delete from org_org_vs_role where  role_id = #{roleId}")
      int deleteBulkDataByRoleId(IEntity entity) throws Exception;
 
      List<?> findRoleIsList(IEntity entity) throws Exception;

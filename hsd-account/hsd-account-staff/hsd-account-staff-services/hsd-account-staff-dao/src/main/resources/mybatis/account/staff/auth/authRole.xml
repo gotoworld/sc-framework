@@ -89,7 +89,9 @@
     <!--信息列表 -->
     <select id="findDataIsList" parameterType="com.hsd.account.staff.entity.auth.AuthRole" resultType="com.hsd.account.staff.entity.auth.AuthRole">
         select
-        <include refid="Base_Column_List"/>
+         t1.id as "id"
+        ,t1.name as "name"
+        ,t1.is_super as "isSuper"
         from auth_role t1
         where t1.id!=1
         <include refid="list_where_sql"/>

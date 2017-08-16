@@ -27,13 +27,15 @@ var site = {
         ,info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
         ,getUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/user/"
-        ,setUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/user"
+        ,addUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/user"
+        ,delUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/user"
         ,getRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/role/"
         ,setRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/role"
     }
     ,orgUser: {
         view: basePath + "/html/account/staff/org/org_user"
         ,page: apiPath.account.staff + "/boss/account/staff/org/orgUser/page/"
+        ,briefPage: apiPath.account.staff + "/boss/account/staff/org/orgUser/briefPage/"
         ,save: apiPath.account.staff + "/boss/account/staff/org/orgUser/save"
         ,info: apiPath.account.staff + "/boss/account/staff/org/orgUser/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/"
@@ -57,6 +59,7 @@ var site = {
     ,authRole: {
         view: basePath + "/html/account/staff/auth/auth_role"
         ,page: apiPath.account.staff + "/boss/account/staff/auth/authRole/page/"
+        ,list: apiPath.account.staff + "/boss/account/staff/auth/authRole/list"
         ,save: apiPath.account.staff + "/boss/account/staff/auth/authRole/save"
         ,perm: apiPath.account.staff + "/boss/account/staff/auth/authRole/perm"
         ,menu: apiPath.account.staff + "/boss/account/staff/auth/authRole/menu"
@@ -264,9 +267,7 @@ var util={
         }
     },
     dateTimeFormat:function(value) {
-        if (!value) {
-            return ""
-        } else {
+        if (value) {
             var date = new Date(value); //value为时间戳
             var Y = date.getFullYear() + '-'; //年
             var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'; //月
@@ -276,11 +277,29 @@ var util={
             var s = date.getSeconds(); //秒
             return Y + M + D + " " + h + m + s; // 2016-12-7 16:0:12
         }
+        return "";
     }
     ,guid:function () {
         function S4() {
             return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
         }
         return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    }
+    ,removeArrItem:function (_arr,_obj) {
+        var length = _arr.length;
+        for(var i = 0; i < length; i++){
+            if(_arr[i] == _obj){
+                if(i == 0){
+                    _arr.shift(); //删除并返回数组的第一个元素
+                    return;
+                }else if(i == length-1){
+                    _arr.pop();  //删除并返回数组的最后一个元素
+                    return;
+                }else{
+                    _arr.splice(i,1); //删除下标为i的元素
+                    return;
+                }
+            }
+        }
     }
 }

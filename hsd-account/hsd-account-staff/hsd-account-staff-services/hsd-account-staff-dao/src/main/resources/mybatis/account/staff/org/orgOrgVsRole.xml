@@ -6,7 +6,7 @@
 
     <!-- 新增 批量数据 -->
     <insert id="insertBatch"  >
-        insert into auth_org_vs_role (
+        insert into org_org_vs_role (
         org_id
         ,role_id
         ,create_id
@@ -22,7 +22,13 @@
         </foreach>
     </insert>
 
-
-
-
+    <select id="findRoleIsList" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsRole" resultType="com.hsd.account.staff.entity.auth.AuthRole">
+      select
+         t2.id as "id"
+        ,t2.name as "name"
+        ,t2.is_super as "isSuper"
+      from org_org_vs_role t1
+      inner join auth_role t2 on (t1.role_id=t2.id and t2.del_flag=0)
+      where t1.org_id=#{orgId}
+    </select>
 </mapper>

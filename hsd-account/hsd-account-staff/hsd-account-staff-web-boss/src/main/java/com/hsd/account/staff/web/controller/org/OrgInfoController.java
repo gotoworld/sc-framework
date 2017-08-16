@@ -2,17 +2,18 @@ package com.hsd.account.staff.web.controller.org;
 
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.annotation.auth.Logical;
+import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import com.hsd.framework.annotation.auth.Logical;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -170,15 +171,30 @@ public class OrgInfoController extends BaseController {
         return result;
     }
     @RequiresPermissions("orgInfo:edit:user")
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "set/user")
-    @ALogOperation(type = "设置人员", desc = "组织机构")
-    @ApiOperation(value = "设置人员")
-    public Response setUser(@ModelAttribute OrgInfoDto dto) {
-        log.info("OrgInfoController setUser.........");
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "add/user")
+    @ALogOperation(type = "添加人员", desc = "组织机构")
+    @ApiOperation(value = "添加人员")
+    public Response setUser(@ModelAttribute OrgOrgVsUserDto dto) {
+        log.info("OrgInfoController addUser.........");
         Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
-            result = orgInfoService.setUser(dto);
+            result = orgInfoService.addUser(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequiresPermissions("orgInfo:edit:user")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/user")
+    @ALogOperation(type = "删除人员", desc = "组织机构")
+    @ApiOperation(value = "删除人员")
+    public Response delUser(@ModelAttribute OrgOrgVsUserDto dto) {
+        log.info("OrgInfoController delUser.........");
+        Response result = new Response();
+        try {
+            if (dto == null)throw new RuntimeException("参数异常");
+            result = orgInfoService.delUser(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

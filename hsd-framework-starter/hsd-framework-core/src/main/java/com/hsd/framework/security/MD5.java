@@ -1,6 +1,5 @@
 package com.hsd.framework.security;
 
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -74,5 +73,18 @@ public class MD5 {
      */
     public static String md5Hex(final String data) {
         return DigestUtils.md5Hex(data );
+    }
+    public static String pwdMd5Hex(final String data) {
+        final int hashcode=Math.abs(data.hashCode());
+        final int modulo=hashcode%20;
+        String pwdMd5Hex=data+hashcode;
+        for(int i=0;i<modulo;i++){
+            pwdMd5Hex=DigestUtils.md5Hex(pwdMd5Hex);
+        }
+        return pwdMd5Hex;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(pwdMd5Hex("21232f297a57a5a743894a0e4a801fc3"));
     }
 }

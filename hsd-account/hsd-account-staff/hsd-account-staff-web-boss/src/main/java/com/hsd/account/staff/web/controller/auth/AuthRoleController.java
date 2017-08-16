@@ -53,6 +53,27 @@ public class AuthRoleController extends BaseController {
         }
         return result;
     }
+    /**
+     * <p>信息分页 (未删除)。
+     */
+    @RequiresPermissions("authRole:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
+    @ApiOperation(value = "信息分页")
+    public Response list(@ModelAttribute AuthRoleDto dto) {
+        log.info("AuthRoleController page.........");
+        Response result = new Response();
+        try {
+            if (dto == null) {
+               dto = new AuthRoleDto();
+            }
+            dto.setDelFlag(0);
+            // 信息列表
+            result.data = authRoleService.findDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
     /**
      * <p> 信息详情。

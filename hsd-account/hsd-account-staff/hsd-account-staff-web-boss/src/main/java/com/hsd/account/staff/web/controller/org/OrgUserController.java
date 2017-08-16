@@ -132,8 +132,7 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
-	
-	
+
 	/**
 	 * <p> 信息保存
 	 */
@@ -177,6 +176,7 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
+
 	/**
 	 * <p> 信息修改
 	 */
@@ -243,6 +243,28 @@ public class OrgUserController extends BaseController {
 			request.getSession().setAttribute(acPrefix + "updatePwd." + dto.getToken(), "1");
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**
+	 * <p> 信息分页 (未删除)。
+	 */
+	@RequiresPermissions("orgUser:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"/briefPage/{pageNum}")
+	@ApiOperation(value = "信息分页(精简字段)")
+	public Response briefPage(@ModelAttribute OrgUserDto dto, @PathVariable("pageNum") Integer pageNum) {
+		log.info("OrgUserController briefPage.........");
+		Response result = new Response();
+		try {
+			if (dto == null) {
+				dto = new OrgUserDto();
+				dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+			}
+			dto.setPageNum(pageNum);
+			dto.setDelFlag(0);
+			result.data=getPageDto(orgUserService.findUserIsPage(dto));
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
 		}
 		return result;
 	}

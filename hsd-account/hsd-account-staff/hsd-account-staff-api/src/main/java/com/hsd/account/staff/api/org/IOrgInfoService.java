@@ -4,6 +4,7 @@ package com.hsd.account.staff.api.org;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
@@ -75,10 +76,15 @@ public interface IOrgInfoService {
     public List<AuthRoleDto> findRoleIsList(OrgInfoDto dto);
 
     /**
-     * <p>设置人员。
+     * <p>添加人员。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setUser")
-    public Response setUser(OrgInfoDto dto) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addUser")
+    public Response addUser(OrgOrgVsUserDto dto) throws Exception;
+    /**
+     * <p>删除人员。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delUser")
+    public Response delUser(OrgOrgVsUserDto dto) throws Exception;
     /**
      * <p>设置角色。
      */

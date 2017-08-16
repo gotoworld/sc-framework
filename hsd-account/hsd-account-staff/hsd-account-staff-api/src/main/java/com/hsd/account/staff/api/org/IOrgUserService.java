@@ -55,7 +55,6 @@ public interface IOrgUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
     public PageInfo findDataIsPage(OrgUserDto dto) throws Exception;
-
     /**
      * <p>信息列表。
      */
@@ -87,19 +86,19 @@ public interface IOrgUserService {
     public List<OrgUserDto> findUserList(OrgUserDto orgUserBean);
 
     /**
-     * <p>某一种角色所有用户。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserIsPage")
-    public List<OrgUserDto> findUserIsPage(OrgUserDto orgUserBean);
-
-    /**
      * <p>判断用户id是否存在
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isUidYN")
     public String isUidYN(String uid);
+
     /**
      * <p>密码修改
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updatePwd")
     public String updatePwd(OrgUserDto dto) throws Exception;
+    /**
+     * <p>信息列表 分页。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserIsPage")
+    public PageInfo findUserIsPage(OrgUserDto dto) throws Exception;
 }

@@ -27,22 +27,6 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
             <div class="ibox-content col-md-12">
-				<form id="orgInfo_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
-					<div class="col-md-12" style="height: 50px;">
-						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
-					<input type="hidden" name="id" value="{{item.id}}" />
-					<div class="clearfix "></div>
-                    <div class="col-sm-12">
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">名称：</label>
-                            <div class="col-md-9 form-control-static">
-                                {{item.name}}
-                            </div>
-                        </div>
-                    </div>
                     <div class="clearfix "></div>
                     <div class="col-sm-6 b-r">
                         <div class="form-group clearfix" >
@@ -63,8 +47,8 @@
                                         <tr>
                                             <th style="width:20px;">#</th>
                                             <th>账号</th>
-                                            <th>姓名</th>
-                                            <th></th>
+                                            <th>人员</th>
+                                            <th style="width: 60px;"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -73,7 +57,8 @@
                                             <td>{{item.account}}</td>
                                             <td>{{item.name}}</td>
                                             <td>
-                                                <a href="javascript:;" ng-click="addUser(item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 添加</a>
+                                                <a ng-if="checkAddUser(item)==false" href="javascript:;" ng-click="addUser(item)" rel="nofollow" class="" ><i class="fa fa-user-md"></i> 添加</a>
+                                                <label ng-if="checkAddUser(item)==true" >已存在</label>
                                             </td>
                                         </tr>
                                         <tr ng-if="userResult.data.data==null || userResult.data.data==0">
@@ -87,26 +72,42 @@
                                 </div>
                             </div>
                         </div>
-					</div>
+                    </div>
                     <div class="col-sm-6">
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--已选组织人员--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
-                                <ul>
-                                    <li ng-repeat="t in orgUserNodes">
-                                        <label><input type="hidden" name="userIds" id="bean_userIds" ng-value="t.id">{{t.name}}</label>
-                                    </li>
-                                </ul>
+                                <div class="table-responsive table-scrollable">
+                                    <table class="table table-bordered table-striped  table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:20px;">#</th>
+                                            <th>账号</th>
+                                            <th>人员</th>
+                                            <th style="width: 60px;"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-if="orgUserNodes && orgUserNodes.length>0" ng-repeat="item in orgUserNodes">
+                                            <td>{{ $index+1}}</td>
+                                            <td>{{item.account}}</td>
+                                            <td>{{item.name}}</td>
+                                            <td>
+                                                <a href="javascript:;" ng-click="delUser(item)" rel="nofollow" class="" ><i class="fa fa-close"></i> 删除</a>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="orgUserNodes==null || orgUserNodes==0">
+                                            <td colspan="4">
+                                                <div class="alert"><strong>{{userResult.message||'暂无数据'}}</strong></div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-					</div>
+                    </div>
 					<div class="clearfix "></div>
-					<div class="col-md-12" style="height: 50px;">
-						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
@@ -140,45 +141,54 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
+        $data.orgUserNodes=[];
+        $data.id=sessionStorage.getItem(site.orgInfo.info);
         user.init(function(){
             loadOrgUser();
-            loadInfo();
         });
-        $scope.save = function () {
-            if($("#orgInfo_01").valid()){
-                $.post(site.orgInfo.setUser, $('#orgInfo_01').serialize(),function (result) {
-                        //console.info("获取数据.." + JSON.stringify(result));
-                        if (result.code == 0) {
-                            alert('保存成功!');
-                            closeMyBoxLayer();
-                        } else {
-                            alert(result.message);
-                        }
+        $scope.checkAddUser=function (item) {
+            var flag=false;
+            if($data.orgUserNodes){
+                for(var i=0;i<$data.orgUserNodes.length;i++){
+                    if($data.orgUserNodes[i].id==item.id){
+                        //console.info("--已存在---");
+                        flag= true;
+                    }
+                }
+            }
+            return flag;
+        }
+        $scope.addUser = function (item) {
+            if(!$data.checkAddUser(item)){
+                $.post(site.orgInfo.addUser, {"orgId":$data.id,"userId":item.id},function (result) {
+                    //console.info("获取数据.." + JSON.stringify(result));
+                    if (result.code == 0) {
+                        $data.orgUserNodes.push(item);
+                        if (!$data.$$phase) $data.$apply();
+                    } else {
+                        alert(result.message);
+                    }
                 }, 'json');
             }
         }
-        $scope.addUser = function (uid) {
-
+        $scope.delUser = function (item) {
+            $.post(site.orgInfo.delUser, {"orgId":$data.id,"userId":item.id},function (result) {
+                //console.info("获取数据.." + JSON.stringify(result));
+                if (result.code == 0) {
+                    util.removeArrItem($data.orgUserNodes,item);
+                    if (!$data.$$phase) $data.$apply();
+                } else {
+                    alert(result.message);
+                }
+            }, 'json');
         }
         $scope.page = function () {
             loadUserPage();
         }
     });
 
-    var loadInfo=function(){
-        $.get(site.orgInfo.info + sessionStorage.getItem(site.orgInfo.info), {},function (result) {
-             //console.info("获取数据.." + JSON.stringify(result));
-             if (result.code == 0) {
-                 $data.item = result.data;
-             } else {
-                 $data.message = result.message;
-                 alert( result.message);
-             }
-             if(!$data.$$phase) $data.$apply();
-         }, 'json');
-    }
     function loadUserPage() {
-        $.post( site.orgUser.page+$('#pageNumA').val(),{"orgId": sessionStorage.getItem(site.orgInfo.info),"name":$('#bean_name').val()}, function (result) {
+        $.post( site.orgUser.briefPage+$('#pageNumA').val(),{"orgId": sessionStorage.getItem(site.orgInfo.info),"name":$('#bean_name').val()}, function (result) {
             if (result.code == 0) {
                 $data.userResult = result;
                 $('#tagPages').html($ngCompile(tag.page(result.data))($data));
@@ -189,13 +199,11 @@
         }, 'json');
     }
     function loadOrgUser(){
-        $data.orgUserNodes=[];
         $.get(site.orgInfo.getUser+sessionStorage.getItem(site.orgInfo.info), {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-                for(var i=0;i<result.data.length;i++){
-                    $data.orgUserNodes.push(result.data[i].id);
-                }
+//                    $data.orgUserNodes.push.apply($data.orgUserNodes,result.data);
+                    $data.orgUserNodes=result.data;
             } else {
                 alert(result.message);
             }

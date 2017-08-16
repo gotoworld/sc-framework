@@ -1,7 +1,8 @@
 var basePath="http://localhost/";
 var apiPath={
     account:{
-        staff:"http://192.168.103.236:6061"
+        staff:"http://192.168.103.236:6061",
+        channel:"http://localhost:6061"
     }
 }
 var site = {
@@ -83,6 +84,21 @@ var site = {
         ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/save"
         ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
+    }
+    ,channelInfo: {//渠道商信息
+        view: basePath + "/html/account/channel/channel/channel_info"
+        ,page: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/page/"
+        ,save: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/save"
+        ,info: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/info/"
+        ,del: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/del/"
+    }
+    ,channelType: {//渠道商类型
+        view: basePath + "/html/account/channel/channel/channel_type"
+        ,page: apiPath.account.channel + "/boss/account/channel/channel/channelType/page/"
+        ,list: apiPath.account.channel + "/boss/account/channel/channel/channelType/list"
+        ,save: apiPath.account.channel + "/boss/account/channel/channel/channelType/save"
+        ,info: apiPath.account.channel + "/boss/account/channel/channel/channelType/info/"
+        ,del: apiPath.account.channel + "/boss/account/channel/channel/channelType/del/"
     }
 }
 var $data,$ngHttp,$ngCompile,$ngSce;

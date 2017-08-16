@@ -189,7 +189,7 @@
             loadTree();
         });
         $scope.edit = function (title,id) {
-            $data.feedback=true;
+
             sessionStorage.setItem(site.sysVariable.info,id);
             openMyBoxLayer(title,site.sysVariable.view+'_edit.html');
         }
@@ -200,7 +200,7 @@
         $scope.del = function (id) {
             if(confirm('确认删除吗?')) {
                 $.post( site.sysVariable.del + id,{}, function (result) {
-                    $data.feedback=true;
+
                     if(result.code==0){
                         loadPage($('#pageNumA').val());
                         alert('删除成功');
@@ -223,7 +223,7 @@
         }
         console.info("加载页码"+pageIndex)
         $.post( site.sysVariable.page+pageIndex,$('#info_search_form').serialize(), function (result) {
-            $data.feedback=false;
+
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();

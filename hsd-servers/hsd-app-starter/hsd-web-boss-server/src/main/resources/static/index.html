@@ -73,6 +73,12 @@
                         <li ng-show='user.hasPermission("orgLogOperation:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_log_operation.html">员工操作日志</a></li>
                     </ul>
                 </li>
+                <li ng-show='user.hasPermission("channelInfo:menu")' ><a href="#"><i class="glyphicon glyphicon-credit-card"></i> <span class="nav-label"> </span><span class="fa arrow"></span>渠道管理</a>
+                    <ul class="nav nav-second-level">
+                        <li ng-show='user.hasPermission("channelInfo:menu")' ><a class="J_menuItem" href="/html/account/channel/channel/channel_info.html">渠道商信息</a></li>
+                        <li ng-show='user.hasPermission("channelType:menu")' ><a class="J_menuItem" href="/html/account/channel/channel/channel_type.html">渠道商类型</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>

@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -189,7 +190,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
 
-    public String isAccountYN(String account) {
+    public String isAccountYN(@RequestParam(name ="account") String account) {
         String result = "seccuss";
         try {
             if (ValidatorUtil.notEmpty(account)) {
@@ -257,7 +258,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @Override
-    public List<AuthRoleDto> findRoleIsList(OrgUserDto dto) {
+    public List<AuthRoleDto> findRoleIsList(@RequestBody OrgUserDto dto) {
         List<AuthRoleDto> results = null;
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");

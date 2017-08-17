@@ -315,12 +315,13 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 // 1.根据用户id清空用户角色关联表
                 authUserVsRoleDao.deleteBulkDataByUserId(userVsRole);
                 // 2.新增用户角色关联信息
-                if (dto.getRoleIdArray() != null) {
+                if (dto.getRoleIds() != null) {
                     List<AuthUserVsRole> xEntityList = new ArrayList<>();
-                    for (Long roleId : dto.getRoleIdArray()) {
+                    for (Long roleId : dto.getRoleIds()) {
                         AuthUserVsRole authUserVsRole = new AuthUserVsRole();
                         authUserVsRole.setUserId(dto.getId());
                         authUserVsRole.setRoleId(roleId);
+                        authUserVsRole.setCreateId(dto.getCreateId());
                         xEntityList.add(authUserVsRole);
                     }
                     authUserVsRoleDao.insertBatch(xEntityList);

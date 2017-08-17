@@ -4,6 +4,7 @@ import com.hsd.account.staff.api.auth.IAuthRoleService;
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.api.org.IOrgUserService;
 import com.hsd.account.staff.dto.org.OrgUserDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
@@ -105,6 +106,7 @@ public class OrgUserController extends BaseController {
 	 */
 	@RequiresPermissions("orgUser:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"del/{id}")
+	@ALogOperation(type = "删除", desc = "组织架构_员工/用户")
 	@ApiOperation(value = "逻辑删除")
 	public Response del(@PathVariable("id") Long id) {
 		log.info("OrgUserController del.........");
@@ -127,6 +129,7 @@ public class OrgUserController extends BaseController {
 	 */
 	@RequiresPermissions("orgUser:del")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recovery/{id}")
+	@ALogOperation(type = "恢复", desc = "组织架构_员工/用户")
 	@ApiOperation(value = "恢复")
 	public Response recovery(@PathVariable("id") Long id) {
 		log.info("OrgUserController del.........");
@@ -135,42 +138,6 @@ public class OrgUserController extends BaseController {
 			OrgUserDto dto=new OrgUserDto();
 			dto.setId(id);
 			result.message=orgUserService.recoveryDataById(dto);
-		} catch (Exception e) {
-			result=Response.error(e.getMessage());
-		}
-		return result;
-	}
-	/**
-	 * <p> 获取当前用户的角色集合。
-	 */
-	@RequiresPermissions("orgUser:edit")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/{id}")
-	@ApiOperation(value = "获取当前用户的角色集合")
-	public Response getRoles(@PathVariable("id") Long id) {
-		log.info("OrgUserController getRoles.........");
-		Response result = new Response();
-		try {
-			OrgUserDto dto=new OrgUserDto();
-			dto.setId(id);
-			result.data=orgUserService.findRoleDataIsList(dto);
-		} catch (Exception e) {
-			result=Response.error(e.getMessage());
-		}
-		return result;
-	}
-	/**
-	 * <p> 获取当前用户的组织集合。
-	 */
-	@RequiresPermissions("orgUser:edit")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/org/{id}")
-	@ApiOperation(value = "获取当前用户的组织集合")
-	public Response getOrgs(@PathVariable("id") Long id) {
-		log.info("OrgUserController getOrgs.........");
-		Response result = new Response();
-		try {
-			OrgUserDto dto=new OrgUserDto();
-			dto.setId(id);
-			result.data=orgUserService.findOrgIsList(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -195,7 +162,7 @@ public class OrgUserController extends BaseController {
 	@RequiresPermissions(value={"orgUser:add","orgUser:edit"},logical=Logical.OR)
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"save")
 	@RfAccount2Bean
-	@ALogOperation(type="修改",desc="权限信息")
+	@ALogOperation(type = "修改", desc = "组织架构_员工/用户")
 	@ApiOperation(value = "信息保存")
 	public Response save(@Validated OrgUserDto dto, BindingResult bindingResult) {
 		log.info("OrgUserController save.........");
@@ -290,48 +257,84 @@ public class OrgUserController extends BaseController {
 			}
 			dto.setPageNum(pageNum);
 			dto.setDelFlag(0);
-			result.data=getPageDto(orgUserService.findUserIsPage(dto));
+			result.data=getPageDto(orgUserService.findBriefDataIsPage(dto));
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
 		return result;
 	}
-//	/**
-//	 * <p> 信息修改
-//	 */
-//	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update/info")
-//	@RfAccount2Bean
-//	@ALogOperation(type="修改",desc="用户信息")
-//	@ApiOperation(value = "信息修改")
-//	public Response update(@Validated OrgUserDto dto, BindingResult bindingResult) throws IOException {
-//		log.info("OrgUserController update.........");
-//		Response result = new Response();
-//		try {
-//			if (dto == null)throw new RuntimeException("参数异常");
-//			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
-//				throw new RuntimeException("请不要重复提交!");
-//			}
-//			if (bindingResult.hasErrors()) {
-//				String errorresult = "";
-//				List<ObjectError> errorList = bindingResult.getAllErrors();
-//				for (ObjectError error : errorList) {
-//					errorresult += (error.getDefaultMessage()) + ";";
-//				}
-//				result = Response.error(errorresult);
-//			}else{
-//				OrgUserDto orgUser = JwtUtil.getSubject(OrgUserDto.class);
-//				if(orgUser !=null){
-//					if(ValidatorUtil.isEmpty(dto.getAccount())){
-//						dto.setAccount(orgUser.getAccount());
-//					}
-//				}
-//				result.message=orgUserService.updateData(dto);
-//				OrgUserDto newOrgUser=orgUserService.findDataById(dto);
-//				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
-//			}
-//		} catch (Exception e) {
-//			result = Response.error(e.getMessage());
-//		}
-//		return result;
-//	}
+
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/{userId}")
+	@ApiOperation(value = "获取组织已设置角色")
+	public Response getRole(@PathVariable("userId") Long userId) {
+		log.info("OrgUserController getRole.........");
+		Response result=new Response();
+		try {
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(userId);
+			result.data=orgUserService.findRoleIsList(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequiresPermissions("orgUser:edit:role")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "set/role")
+	@ALogOperation(type = "设置角色", desc = "组织架构_员工/用户")
+	@ApiOperation(value = "设置角色")
+	public Response setRole(@ModelAttribute OrgUserDto dto) {
+		log.info("OrgUserController setRole.........");
+		Response result = new Response();
+		try {
+			if (dto == null)throw new RuntimeException("参数异常");
+			result = orgUserService.setRole(dto);
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/org/{userId}")
+	@ApiOperation(value = "获取所属组织")
+	public Response getUser(@PathVariable("userId") Long userId) {
+		log.info("OrgUserController getUser.........");
+		Response result=new Response();
+		try {
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(userId);
+			result.data=orgUserService.findOrgIsList(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequiresPermissions("orgUser:edit:org")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "add/org")
+	@ALogOperation(type = "添加组织", desc = "组织架构_员工/用户")
+	@ApiOperation(value = "添加组织")
+	public Response addOrg(@ModelAttribute OrgOrgVsUserDto dto) {
+		log.info("OrgUserController addOrg.........");
+		Response result = new Response();
+		try {
+			if (dto == null)throw new RuntimeException("参数异常");
+			result = orgUserService.addOrg(dto);
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequiresPermissions("orgUser:edit:org")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/org")
+	@ALogOperation(type = "删除组织", desc = "组织架构_员工/用户")
+	@ApiOperation(value = "删除组织")
+	public Response delOrg(@ModelAttribute OrgOrgVsUserDto dto) {
+		log.info("OrgUserController delOrg.........");
+		Response result = new Response();
+		try {
+			if (dto == null)throw new RuntimeException("参数异常");
+			result = orgUserService.delOrg(dto);
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
 }

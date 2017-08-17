@@ -84,8 +84,8 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
-        <if test="name!=null and name!=''">
-            and t1.name like concat('%',#{name},'%')
+        <if test="keyword!=null and keyword!=''">
+            and t1.name like concat('%',#{keyword},'%')
         </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>

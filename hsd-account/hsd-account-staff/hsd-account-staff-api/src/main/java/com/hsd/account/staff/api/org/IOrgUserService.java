@@ -4,6 +4,7 @@ package com.hsd.account.staff.api.org;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
@@ -25,7 +26,6 @@ public interface IOrgUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     public Response saveOrUpdateData(OrgUserDto dto) throws Exception;
-
     /**
      * <p>信息编辑。
      */
@@ -55,12 +55,12 @@ public interface IOrgUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
     public PageInfo findDataIsPage(OrgUserDto dto) throws Exception;
+
     /**
      * <p>信息列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
     public List<OrgUserDto> findDataIsList(OrgUserDto dto);
-
     /**
      * <p>信息详情。
      */
@@ -68,22 +68,10 @@ public interface IOrgUserService {
     public OrgUserDto findDataById(OrgUserDto dto);
 
     /**
-     * <p>获取用户角色集合。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findRoleDataIsList")
-    public List<AuthRoleDto> findRoleDataIsList(OrgUserDto dto);
-
-    /**
      * <p>获取用户所在组织集合。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgIsList")
     public List<OrgInfoDto> findOrgIsList(OrgUserDto dto);
-
-    /**
-     * <p>某一种角色所有用户。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserList")
-    public List<OrgUserDto> findUserList(OrgUserDto orgUserBean);
 
     /**
      * <p>判断用户账号是否存在
@@ -96,14 +84,37 @@ public interface IOrgUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updatePwd")
     public String updatePwd(OrgUserDto dto) throws Exception;
+
     /**
      * <p>密码重置
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/resetPwd")
     public String resetPwd(OrgUserDto dto) throws Exception;
+
     /**
-     * <p>信息列表 分页。
+     * <p>信息列表(精简) 分页。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserIsPage")
-    public PageInfo findUserIsPage(OrgUserDto dto) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findBriefDataIsPage")
+    public PageInfo findBriefDataIsPage(OrgUserDto dto) throws Exception;
+    /**
+     * <p>获取用户->角色。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findRoleIsList")
+    public List<AuthRoleDto> findRoleIsList(OrgUserDto dto);
+
+    /**
+     * <p>添加角色。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setRole")
+    public Response setRole(OrgUserDto dto) throws Exception;
+    /**
+     * <p>添加组织。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addOrg")
+    public Response addOrg(OrgOrgVsUserDto dto) throws Exception;
+    /**
+     * <p>删除组织。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delOrg")
+    public Response delOrg(OrgOrgVsUserDto dto) throws Exception;
 }

@@ -20,13 +20,8 @@ public class BaseDto implements IDto {
     String keyword;
     /** 用户名 */
     String account;
-    /** 用户id */
-    Long accid;
     /**  建立者ID */
     private Long createId;
-    /** 会员 */
-    boolean isMember;
-
     String str;
 //    public String getToken(){
 //        if(token==null){

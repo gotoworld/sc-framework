@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+<meta charset="utf-8" />
+<title>//TODO 组织架构_员工/用户 新增/编辑-角色</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description" content="memo of your site" />
+<meta name="author" content="author of the site" />
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+<link href="/css/common.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-md-12">
+				<form id="userInfo_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+					<input type="hidden" name="id" value="{{id}}" />
+					<div class="clearfix "></div>
+                    <div class="col-sm-12">
+                        <div class="form-group clearfix" >
+                            <label class="col-md-12 control-label">--请选择组织角色--</label>
+                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
+                                <ul>
+                                    <li ng-repeat="t in roleNodes">
+                                        <label style="{{checkRoleId(t.id)?'color:red':''}}"><input type="checkbox" name="roleIds" ng-value="t.id" ng-checked="checkRoleId(t.id)">{{t.name}}</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+					</div>
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
+						<div style="width: 200px; margin: 0 auto;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+<script type="text/javascript">
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
+        $data = $scope;
+        $data.id=sessionStorage.getItem(site.userInfo.info);
+        user.init(function(){
+            loadRole();
+            loadUserRole();
+        });
+        $scope.save = function () {
+			$.post(site.userInfo.setRole, $('#userInfo_01').serialize(),function (result) {
+					//console.info("获取数据.." + JSON.stringify(result));
+					if (result.code == 0) {
+						alert('保存成功!');
+						closeMyBoxLayer();
+					} else {
+						alert(result.message);
+					}
+			}, 'json');
+        }
+        $scope.checkRoleId=function(id){
+            if($data.userRoleNodes && $data.userRoleNodes.indexOf(id)!=-1){
+                return true;
+            }
+            return false;
+        }
+    });
+
+    function loadRole() {
+        $.post(site.authRole.list, {}, function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.roleNodes = result.data;
+            } else {
+                alert(result.message);
+            }
+            if (!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+    function loadUserRole(){
+        $data.userRoleNodes=[];
+        $.post(site.orgUser.getRole+$data.id, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                for(var i=0;i<result.data.length;i++){
+                    $data.userRoleNodes.push(result.data[i].id);
+                }
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+</script>
+</body>
+</html>
+

@@ -42,11 +42,6 @@ public interface IOrgUserDao extends IBaseDao {
     Object findUserByAccount(Map dto) throws Exception;
 
     /**
-     * 获取某一种角色所有用户
-     */
-    List<?> getUserList(IEntity dto) throws Exception;
-
-    /**
      * <p>判断用户账号是否存在
      */
     @Select(" select count(0) from org_user where  account=#{account} ")
@@ -68,5 +63,5 @@ public interface IOrgUserDao extends IBaseDao {
     @Update("update org_user set count=count+1,last_login=now() where id = #{id}")
     int lastLogin(IEntity entity) throws Exception;
 
-    List<?> findUserIsPage(IEntity dto) throws Exception;
+    List<?> findBriefDataIsPage(IEntity dto) throws Exception;
 }

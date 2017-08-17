@@ -34,7 +34,7 @@
                             <div class="col-md-12">
                                     <input type="hidden" name="pageNum" id="pageNumA"  value="1">
                                     <div class="input-group">
-                                        <input type="text" name="bean_name" id="bean_name" placeholder="请输入关键词" class="input-sm form-control">
+                                        <input type="text" name="keyword" id="bean_name" placeholder="请输入关键词" class="input-sm form-control">
                                         <span class="input-group-btn">
                                             <button type="button" ng-click="page();" class="btn btn-sm btn-primary">搜索</button>
                                         </span>
@@ -98,7 +98,7 @@
                                         </tr>
                                         <tr ng-if="orgUserNodes==null || orgUserNodes==0">
                                             <td colspan="4">
-                                                <div class="alert"><strong>{{userResult.message||'暂无数据'}}</strong></div>
+                                                <div class="alert"><strong>{{orgUserMessage||'暂无数据'}}</strong></div>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -107,7 +107,12 @@
                             </div>
                         </div>
                     </div>
-					<div class="clearfix "></div>
+                <div class="clearfix "></div>
+                <div class="col-md-12" style="height: 50px;">
+                    <div style="width: 200px; margin: 0 auto;">
+                        <a href="javascript:;" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -188,7 +193,7 @@
     });
 
     function loadUserPage() {
-        $.post( site.orgUser.briefPage+$('#pageNumA').val(),{"orgId": sessionStorage.getItem(site.orgInfo.info),"name":$('#bean_name').val()}, function (result) {
+        $.post( site.orgUser.briefPage+$('#pageNumA').val(),{"name":$('#bean_name').val()}, function (result) {
             if (result.code == 0) {
                 $data.userResult = result;
                 $('#tagPages').html($ngCompile(tag.page(result.data))($data));
@@ -204,6 +209,7 @@
             if (result.code == 0) {
 //                    $data.orgUserNodes.push.apply($data.orgUserNodes,result.data);
                     $data.orgUserNodes=result.data;
+                    $data.orgUserMessage=result.message;
             } else {
                 alert(result.message);
             }

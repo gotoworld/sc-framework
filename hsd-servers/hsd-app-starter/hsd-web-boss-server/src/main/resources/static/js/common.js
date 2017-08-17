@@ -1,117 +1,120 @@
-var basePath="http://localhost/";
-var apiPath={
-    account:{
-        staff:"http://192.168.103.236:6061",
-        channel:"http://localhost:6061"
+var basePath = "http://localhost/";
+var apiPath = {
+    account: {
+        staff: "http://192.168.103.236:6061",
+        channel: "http://localhost:6061"
     }
 }
 var site = {
     user: {
-         login: apiPath.account.staff + "/boss/account/staff/sign/login" //登录
-        ,logout: apiPath.account.staff + "/boss/account/staff/sign/logout" //登出
-        ,refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
-        ,updatePwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/update/pwd" //密码更新
+        login: apiPath.account.staff + "/boss/account/staff/sign/login" //登录
+        , logout: apiPath.account.staff + "/boss/account/staff/sign/logout" //登出
+        , refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
+        , updatePwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/update/pwd" //密码更新
     }
-    ,sysDomain: {
-         view: basePath + "/html/account/staff/sys/sys_domain"
-        ,page: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/page/"
-        ,list: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/list"
-        ,save: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/save"
-        ,info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"
+    , sysDomain: {
+        view: basePath + "/html/account/staff/sys/sys_domain"
+        , page: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/page/"
+        , list: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/list"
+        , save: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/save"
+        , info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"
     }
-    ,orgInfo: {
+    , orgInfo: {
         view: basePath + "/html/account/staff/org/org_info"
-        ,page: apiPath.account.staff + "/boss/account/staff/org/orgInfo/page/"
-        ,tree: apiPath.account.staff + "/boss/account/staff/org/orgInfo/tree"
-        ,save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
-        ,info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
-        ,getUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/user/"
-        ,addUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/user"
-        ,delUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/user"
-        ,getRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/role/"
-        ,setRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/role"
+        , page: apiPath.account.staff + "/boss/account/staff/org/orgInfo/page/"
+        , briefPage: apiPath.account.staff + "/boss/account/staff/org/orgInfo/briefPage/"
+        , tree: apiPath.account.staff + "/boss/account/staff/org/orgInfo/tree"
+        , save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
+        , info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
+        , getUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/user/"
+        , addUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/user"
+        , delUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/user"
+        , getRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/role/"
+        , setRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/role"
     }
-    ,orgUser: {
-         view: basePath + "/html/account/staff/org/org_user"
-        ,page: apiPath.account.staff + "/boss/account/staff/org/orgUser/page/"
-        ,recyclePage: apiPath.account.staff + "/boss/account/staff/org/orgUser/recyclePage/"
-        ,briefPage: apiPath.account.staff + "/boss/account/staff/org/orgUser/briefPage/"
-        ,save: apiPath.account.staff + "/boss/account/staff/org/orgUser/save"
-        ,isAccountYN: apiPath.account.staff + "/boss/account/staff/org/orgUser/isAccountYN/"
-        ,getOrgs: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/org/"
-        ,getRoles: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/role/"
-        ,resetpwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/reset/pwd/"
-        ,recovery: apiPath.account.staff + "/boss/account/staff/org/orgUser/recovery/"
-        ,info: apiPath.account.staff + "/boss/account/staff/org/orgUser/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/"
+    , orgUser: {
+        view: basePath + "/html/account/staff/org/org_user"
+        , page: apiPath.account.staff + "/boss/account/staff/org/orgUser/page/"
+        , recyclePage: apiPath.account.staff + "/boss/account/staff/org/orgUser/recyclePage/"
+        , briefPage: apiPath.account.staff + "/boss/account/staff/org/orgUser/briefPage/"
+        , save: apiPath.account.staff + "/boss/account/staff/org/orgUser/save"
+        , isAccountYN: apiPath.account.staff + "/boss/account/staff/org/orgUser/isAccountYN/"
+        , getOrg: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/org/"
+        , addOrg: apiPath.account.staff + "/boss/account/staff/org/orgUser/add/org"
+        , delOrg: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/org"
+        , getRole: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/role/"
+        , resetpwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/reset/pwd/"
+        , recovery: apiPath.account.staff + "/boss/account/staff/org/orgUser/recovery/"
+        , info: apiPath.account.staff + "/boss/account/staff/org/orgUser/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/"
     }
-    ,authPerm: {
+    , authPerm: {
         view: basePath + "/html/account/staff/auth/auth_perm"
-        ,page: apiPath.account.staff + "/boss/account/staff/auth/authPerm/page/"
-        ,tree: apiPath.account.staff + "/boss/account/staff/auth/authPerm/tree"
-        ,save: apiPath.account.staff + "/boss/account/staff/auth/authPerm/save"
-        ,info: apiPath.account.staff + "/boss/account/staff/auth/authPerm/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/auth/authPerm/del/"
+        , page: apiPath.account.staff + "/boss/account/staff/auth/authPerm/page/"
+        , tree: apiPath.account.staff + "/boss/account/staff/auth/authPerm/tree"
+        , save: apiPath.account.staff + "/boss/account/staff/auth/authPerm/save"
+        , info: apiPath.account.staff + "/boss/account/staff/auth/authPerm/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/auth/authPerm/del/"
     }
-    ,sysMenu: {
+    , sysMenu: {
         view: basePath + "/html/account/staff/sys/sys_menu"
-        ,page: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/page/"
-        ,tree: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/tree"
-        ,save: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/save"
-        ,info: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/del/"
+        , page: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/page/"
+        , tree: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/tree"
+        , save: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/save"
+        , info: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/del/"
     }
-    ,authRole: {
+    , authRole: {
         view: basePath + "/html/account/staff/auth/auth_role"
-        ,page: apiPath.account.staff + "/boss/account/staff/auth/authRole/page/"
-        ,list: apiPath.account.staff + "/boss/account/staff/auth/authRole/list"
-        ,save: apiPath.account.staff + "/boss/account/staff/auth/authRole/save"
-        ,perm: apiPath.account.staff + "/boss/account/staff/auth/authRole/perm"
-        ,menu: apiPath.account.staff + "/boss/account/staff/auth/authRole/menu"
-        ,info: apiPath.account.staff + "/boss/account/staff/auth/authRole/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/auth/authRole/del/"
+        , page: apiPath.account.staff + "/boss/account/staff/auth/authRole/page/"
+        , list: apiPath.account.staff + "/boss/account/staff/auth/authRole/list"
+        , save: apiPath.account.staff + "/boss/account/staff/auth/authRole/save"
+        , perm: apiPath.account.staff + "/boss/account/staff/auth/authRole/perm"
+        , menu: apiPath.account.staff + "/boss/account/staff/auth/authRole/menu"
+        , info: apiPath.account.staff + "/boss/account/staff/auth/authRole/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/auth/authRole/del/"
     }
-    ,sysVariable: {
+    , sysVariable: {
         view: basePath + "/html/account/staff/sys/sys_variable"
-        ,page: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/page/"
-        ,tree: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/tree"
-        ,save: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/save"
-        ,info: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/del/"
+        , page: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/page/"
+        , tree: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/tree"
+        , save: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/save"
+        , info: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/del/"
     }
-    ,orgLogLogin: {
+    , orgLogLogin: {
         view: basePath + "/html/account/staff/org/org_log_login"
-        ,page: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/page/"
-        ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/save"
-        ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/del/"
+        , page: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/page/"
+        , save: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/save"
+        , info: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/del/"
     }
-    ,orgLogOperation: {
+    , orgLogOperation: {
         view: basePath + "/html/account/staff/org/org_log_operation"
-        ,page: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/page/"
-        ,save: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/save"
-        ,info: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/info/"
-        ,del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
+        , page: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/page/"
+        , save: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/save"
+        , info: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
     }
-    ,channelInfo: {//渠道商信息
+    , channelInfo: {//渠道商信息
         view: basePath + "/html/account/channel/channel/channel_info"
-        ,page: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/page/"
-        ,save: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/save"
-        ,info: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/info/"
-        ,del: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/del/"
+        , page: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/page/"
+        , save: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/save"
+        , info: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/info/"
+        , del: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/del/"
     }
-    ,channelType: {//渠道商类型
+    , channelType: {//渠道商类型
         view: basePath + "/html/account/channel/channel/channel_type"
-        ,page: apiPath.account.channel + "/boss/account/channel/channel/channelType/page/"
-        ,list: apiPath.account.channel + "/boss/account/channel/channel/channelType/list"
-        ,save: apiPath.account.channel + "/boss/account/channel/channel/channelType/save"
-        ,info: apiPath.account.channel + "/boss/account/channel/channel/channelType/info/"
-        ,del: apiPath.account.channel + "/boss/account/channel/channel/channelType/del/"
+        , page: apiPath.account.channel + "/boss/account/channel/channel/channelType/page/"
+        , list: apiPath.account.channel + "/boss/account/channel/channel/channelType/list"
+        , save: apiPath.account.channel + "/boss/account/channel/channel/channelType/save"
+        , info: apiPath.account.channel + "/boss/account/channel/channel/channelType/info/"
+        , del: apiPath.account.channel + "/boss/account/channel/channel/channelType/del/"
     }
 }
-var $data,$ngHttp,$ngCompile,$ngSce;
+var $data, $ngHttp, $ngCompile, $ngSce;
 var page;
 
 function getQueryString(name) {
@@ -120,6 +123,7 @@ function getQueryString(name) {
     if (r != null) return unescape(r[2]);
     return null;
 }
+
 /**用户登录信息验证头*/
 $.ajaxSetup({
     headers: {
@@ -157,12 +161,12 @@ var user = {
                 } else {
                     $data.result = result;
                     // alert(result.message);
-                    if(!$data.$$phase) $data.$apply();
+                    if (!$data.$$phase) $data.$apply();
                 }
             }, 'json');
     },
     refreshToken: function (callback) {
-        $.get(site.user.refreshToken, {},function (result) {
+        $.get(site.user.refreshToken, {}, function (result) {
             if (result.code == 0) {
                 if (result.data) {
                     if (result.data.authorizationToken) {
@@ -177,7 +181,7 @@ var user = {
         }, 'json');
     },
     logout: function (callback) {
-        $.get(site.user.logout, {},function (result) {
+        $.get(site.user.logout, {}, function (result) {
             sessionStorage.removeItem('hsd_staff_tokenExpMillis');
             sessionStorage.removeItem('hsd_staff_user');
             sessionStorage.removeItem("hsd_staff_authorizationToken");
@@ -194,7 +198,12 @@ var user = {
             $data.userInfo = userInfo;
         }
         callback && callback();
-        try {if ($data){if(!$data.$$phase) $data.$apply();}} catch (e) {}
+        try {
+            if ($data) {
+                if (!$data.$$phase) $data.$apply();
+            }
+        } catch (e) {
+        }
     },
     init: function (callback) {
         try {
@@ -216,8 +225,8 @@ var user = {
                 }
             }
         } catch (e) {
-        }finally {
-            if($data){
+        } finally {
+            if ($data) {
                 //定义全局函数
                 $data.openMyBoxLayer = function (mytitle, myurl) {
                     openMyBoxLayer(mytitle, myurl);
@@ -225,7 +234,7 @@ var user = {
                 $data.closeMyBoxLayer = function () {
                     closeMyBoxLayer();
                 }
-                $data.user=user;
+                $data.user = user;
             }
         }
     }
@@ -265,15 +274,15 @@ var user = {
  */
 
 //工具类
-var util={
-    notEmpty:function (p){
-        if(p==null || p=='' || p== 'null' || p==undefined || p== 'undefined'){
+var util = {
+    notEmpty: function (p) {
+        if (p == null || p == '' || p == 'null' || p == undefined || p == 'undefined') {
             return true;
-        }else{
+        } else {
             return false;
         }
     },
-    dateTimeFormat:function(value) {
+    dateTimeFormat: function (value) {
         if (value) {
             var date = new Date(value); //value为时间戳
             var Y = date.getFullYear() + '-'; //年
@@ -286,24 +295,25 @@ var util={
         }
         return "";
     }
-    ,guid:function () {
+    , guid: function () {
         function S4() {
-            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
         }
-        return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+
+        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     }
-    ,removeArrItem:function (_arr,_obj) {
+    , removeArrItem: function (_arr, _obj) {
         var length = _arr.length;
-        for(var i = 0; i < length; i++){
-            if(_arr[i] == _obj){
-                if(i == 0){
+        for (var i = 0; i < length; i++) {
+            if (_arr[i] == _obj) {
+                if (i == 0) {
                     _arr.shift(); //删除并返回数组的第一个元素
                     return;
-                }else if(i == length-1){
+                } else if (i == length - 1) {
                     _arr.pop();  //删除并返回数组的最后一个元素
                     return;
-                }else{
-                    _arr.splice(i,1); //删除下标为i的元素
+                } else {
+                    _arr.splice(i, 1); //删除下标为i的元素
                     return;
                 }
             }

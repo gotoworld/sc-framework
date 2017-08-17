@@ -102,6 +102,17 @@
         where 1=1
         <include refid="list_where_sql"/>
     </select>
+    <!--信息列表 分页 -->
+    <select id="findBriefDataIsPage" parameterType="com.hsd.account.staff.entity.org.OrgInfo" resultType="com.hsd.account.staff.entity.org.OrgInfo">
+        select
+         t1.id as  "id"
+        ,t1.code as  "code"
+        ,t1.type as  "type"
+        ,t1.name as  "name"
+        from org_info t1
+        where 1=1
+        <include refid="list_where_sql"/>
+    </select>
     <!--信息列表 -->
     <select id="findDataIsList" parameterType="com.hsd.account.staff.entity.org.OrgInfo" resultType="com.hsd.account.staff.entity.org.OrgInfo">
         select
@@ -125,7 +136,7 @@
         ,t1.type as  "type"
         ,t1.name as  "name"
         from org_info t1
-        left join org_info_vs_user t2 on (t1.id=t2.dept_id)
+        left join org_org_vs_user t2 on (t1.id=t2.org_id)
         where t1.del_flag=0 and t2.user_id=#{userId}
     </select>
 </mapper>

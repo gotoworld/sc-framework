@@ -49,6 +49,11 @@ public interface IOrgInfoService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
     public PageInfo findDataIsPage(OrgInfoDto dto) throws Exception;
+    /**
+     * <p>信息列表 分页。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findBriefDataIsPage")
+    public PageInfo findBriefDataIsPage(OrgInfoDto dto) throws Exception;
 
     /**
      * <p>信息列表。

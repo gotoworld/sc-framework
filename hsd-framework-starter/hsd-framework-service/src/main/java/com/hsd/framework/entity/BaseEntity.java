@@ -9,4 +9,10 @@ public class BaseEntity implements IEntity {
     private String dateBegin;
     /** 结束时间 */
     private String dateEnd;
+    /** 关键字 */
+    String keyword;
+    /** 用户名 */
+    String account;
+    /**  建立者ID */
+    private Long createId;
 }

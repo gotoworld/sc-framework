@@ -71,13 +71,8 @@ public class OrgUserDto extends BaseDto {
 
 
 
-     /** 用户角色id集合*/
-     private List<Long> roleIdArray;
      /**用户角色名称集合*/
      private String roleNames;
-     /**部门id集合*/
-     private List<Long> orgIdArray;
-
      private String oldpwd;
      private String newpwd;
      private String confirmpwd;

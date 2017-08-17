@@ -127,18 +127,17 @@
         $ngCompile=$compile;
         user.init(function(){
            $data.newFlag=sessionStorage.getItem(site.authRole.info);
+           var flag=sessionStorage.getItem(site.authRole.info) && sessionStorage.getItem(site.authRole.info)!=0;
            if($data.newFlag) $data.uuidToken=util.guid();
-            if(sessionStorage.getItem(site.authRole.info) && sessionStorage.getItem(site.authRole.info)!=0){
                 if(user.hasPermission('authRole:edit:perm')){
                     loadPermTree();
-                    loadRolePermList(sessionStorage.getItem(site.authRole.info));
+                    if(flag) loadRolePermList(sessionStorage.getItem(site.authRole.info));
                 }
                 if(user.hasPermission('authRole:edit:menu')){
                     loadMenuTree();
-                    loadRoleMenuList(sessionStorage.getItem(site.authRole.info));
+                    if(flag) loadRoleMenuList(sessionStorage.getItem(site.authRole.info));
                 }
-                loadInfo(sessionStorage.getItem(site.authRole.info));
-            }
+                if(flag) loadInfo(sessionStorage.getItem(site.authRole.info));
         });
         $scope.save = function () {
             if($("#authRole_01").valid()){

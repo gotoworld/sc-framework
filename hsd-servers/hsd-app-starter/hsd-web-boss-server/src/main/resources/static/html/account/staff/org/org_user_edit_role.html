@@ -32,7 +32,7 @@
 					<div class="clearfix "></div>
                     <div class="col-sm-12">
                         <div class="form-group clearfix" >
-                            <label class="col-md-12 control-label">--请选择组织角色--</label>
+                            <label class="col-md-12 control-label">--请选择角色--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in roleNodes">
@@ -74,13 +74,13 @@
 <script type="text/javascript">
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
-        $data.id=sessionStorage.getItem(site.userInfo.info);
+        $data.id=sessionStorage.getItem(site.orgUser.info);
         user.init(function(){
             loadRole();
             loadUserRole();
         });
         $scope.save = function () {
-			$.post(site.userInfo.setRole, $('#userInfo_01').serialize(),function (result) {
+			$.post(site.orgUser.setRole, $('#userInfo_01').serialize(),function (result) {
 					//console.info("获取数据.." + JSON.stringify(result));
 					if (result.code == 0) {
 						alert('保存成功!');

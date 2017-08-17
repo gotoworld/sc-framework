@@ -108,6 +108,22 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return pageInfo;
     }
+    @Override
+    public PageInfo findBriefDataIsPage(@RequestBody OrgInfoDto dto) throws Exception {
+        PageInfo pageInfo=null;
+        try {
+            if (dto == null)throw new RuntimeException("参数异常!");
+            OrgInfo entity = copyTo(dto, OrgInfo.class);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            List list = orgInfoDao.findBriefDataIsPage(entity);
+            pageInfo=new PageInfo(list);
+            pageInfo.setList(copyTo(pageInfo.getList(), OrgInfoDto.class));
+        } catch (Exception e) {
+            log.error("精简信息[分页]查询异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return pageInfo;
+    }
 
     public List<OrgInfoDto> findDataIsList(@RequestBody OrgInfoDto dto) {
         List<OrgInfoDto> results = null;
@@ -189,6 +205,8 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             if(JwtUtil.isPermitted("orgInfo:edit:user")){
                 orgOrgVsUserDao.insert(copyTo(dto,OrgOrgVsUser.class));
+            }else{
+                throw new RuntimeException("权限不足!");
             }
         } catch (Exception e) {
             log.error("信息保存失败!", e);
@@ -202,6 +220,8 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             if(JwtUtil.isPermitted("orgInfo:edit:user")){
                 orgOrgVsUserDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsUser.class));
+            }else{
+                throw new RuntimeException("权限不足!");
             }
         } catch (Exception e) {
             log.error("信息保存失败!", e);
@@ -231,6 +251,8 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
                     }
                     orgOrgVsRoleDao.insertBatch(xEntityList);
                 }
+            }else{
+                throw new RuntimeException("权限不足!");
             }
         } catch (Exception e) {
             log.error("信息保存失败!", e);

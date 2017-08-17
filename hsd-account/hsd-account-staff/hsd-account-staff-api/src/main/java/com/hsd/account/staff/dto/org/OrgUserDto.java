@@ -40,7 +40,6 @@ public class OrgUserDto extends BaseDto {
 	 @Size(max=64,message="email最大64字符")
      private String email;
      /**用户类型0管理员1普通用户*/
-	 @Size(max=1,message="type最大1字符")
      private Integer type;
      /**最后登录日期*/
      private Date lastLogin;
@@ -90,4 +89,7 @@ public class OrgUserDto extends BaseDto {
      private Set<String> authorizationInfoPerms;
      /**用户角色,匹配字符集合*/
      private Set<String> authorizationInfoRoles;
+
+     private List<Long> roleIds;
+     private List<Long> orgIds;
 }

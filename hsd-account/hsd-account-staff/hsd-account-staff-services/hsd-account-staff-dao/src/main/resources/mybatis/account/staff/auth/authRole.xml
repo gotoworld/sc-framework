@@ -65,8 +65,8 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
-        <if test="name!=null and name!=''">
-            and t1.name like CONCAT('%',#{name},'%')
+        <if test="keyword!=null and keyword!=''">
+            and t1.name like concat('%',#{keyword},'%')
         </if>
         <if test="isSuper!=null and isSuper==0">
             and t1.is_super!=1

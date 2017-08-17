@@ -43,4 +43,6 @@ public interface IOrgInfoDao extends IBaseDao {
      * 获取用户所在组织集合>根据用户id
      */
     List<?> getOrgListByUserId(Map dto) throws Exception;
+
+    List<?> findBriefDataIsPage(IEntity dto) throws Exception;
 }

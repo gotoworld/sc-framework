@@ -45,6 +45,7 @@ var site = {
         , addOrg: apiPath.account.staff + "/boss/account/staff/org/orgUser/add/org"
         , delOrg: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/org"
         , getRole: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/role/"
+        , setRole: apiPath.account.staff + "/boss/account/staff/org/orgUser/set/role"
         , resetpwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/reset/pwd/"
         , recovery: apiPath.account.staff + "/boss/account/staff/org/orgUser/recovery/"
         , info: apiPath.account.staff + "/boss/account/staff/org/orgUser/info/"

@@ -247,6 +247,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
                         OrgOrgVsRole orgVsRole = new OrgOrgVsRole();
                         orgVsRole.setOrgId(dto.getId());
                         orgVsRole.setRoleId(roleId);
+                        orgVsRole.setCreateId(dto.getCreateId());
                         xEntityList.add(orgVsRole);
                     }
                     orgOrgVsRoleDao.insertBatch(xEntityList);

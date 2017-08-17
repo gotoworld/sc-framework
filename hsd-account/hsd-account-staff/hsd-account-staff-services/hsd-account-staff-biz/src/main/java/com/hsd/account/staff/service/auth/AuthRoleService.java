@@ -79,6 +79,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                         AuthRoleVsPerm authRoleVsPerm = new AuthRoleVsPerm();
                         authRoleVsPerm.setRoleId(entity.getId());
                         authRoleVsPerm.setPermId(permId);
+                        authRoleVsPerm.setCreateId(dto.getCreateId());
                         xdtos.add(authRoleVsPerm);
                     }
                     authRoleVsPermDao.insertBatch(xdtos);
@@ -92,6 +93,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                         AuthRoleVsMenu authRoleVsMenu = new AuthRoleVsMenu();
                         authRoleVsMenu.setRoleId(entity.getId());
                         authRoleVsMenu.setMenuId(menuId);
+                        authRoleVsMenu.setCreateId(dto.getCreateId());
                         xdtos.add(authRoleVsMenu);
                     }
                     authRoleVsMenuDao.insertBatch(xdtos);

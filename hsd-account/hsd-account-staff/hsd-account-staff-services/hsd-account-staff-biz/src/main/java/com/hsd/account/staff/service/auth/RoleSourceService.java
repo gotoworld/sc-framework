@@ -34,7 +34,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     public Integer isSuperAdmin(@RequestBody OrgUserDto dto) {
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("uid", dto.getId());
+            map.put("userId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
             return authRoleDao.isSuperAdmin(map);
         } catch (Exception e) {
@@ -44,12 +44,12 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public List<AuthRoleDto> getRoleListByUId(@RequestBody OrgUserDto dto) {
+    public List<AuthRoleDto> getRoleListByUserId(@RequestBody OrgUserDto dto) {
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("uid", dto.getId());
+            map.put("userId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
-            return copyTo(authRoleDao.getRoleListByUId(map),AuthRoleDto.class);
+            return copyTo(authRoleDao.getRoleListByUserId(map),AuthRoleDto.class);
         } catch (Exception e) {
             log.error("角色信息列表>根据用户id,数据库处理异常!", e);
         }
@@ -57,12 +57,12 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public List<AuthPermDto> getPermListByUId(@RequestBody OrgUserDto dto) {
+    public List<AuthPermDto> getPermListByUserId(@RequestBody OrgUserDto dto) {
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("uid", dto.getId());
+            map.put("userId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
-            return copyTo(authPermDao.getPermListByUId(map),AuthPermDto.class);
+            return copyTo(authPermDao.getPermListByUserId(map),AuthPermDto.class);
         } catch (Exception e) {
             log.error("角色权限信息列表>根据用户id,数据库处理异常!", e);
         }
@@ -70,12 +70,12 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     }
 
     @Override
-    public OrgUserDto findUserByLoginName(@RequestParam("account") String account, @RequestParam("userType")  Integer userType) {
+    public OrgUserDto findUserByAccount(@RequestParam("account") String account, @RequestParam("userType")  Integer userType) {
         try {
             Map dto = new HashMap();
             dto.put("account", account);
             dto.put("userType", userType);
-            return copyTo(orgUserDao.findUserByLoginName(dto),OrgUserDto.class);
+            return copyTo(orgUserDao.findUserByAccount(dto),OrgUserDto.class);
         } catch (Exception e) {
             log.error("用户信息>根据用户登录名,数据库处理异常!", e);
         }

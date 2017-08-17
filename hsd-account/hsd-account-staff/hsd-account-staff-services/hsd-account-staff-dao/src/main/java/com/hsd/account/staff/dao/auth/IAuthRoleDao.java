@@ -36,7 +36,7 @@ public interface IAuthRoleDao extends IBaseDao {
     /**
      * 角色信息列表>根据用户id。
      */
-    List<?> getRoleListByUId(Map dto) throws Exception;
+    List<?> getRoleListByUserId(Map dto) throws Exception;
 
     /**
      * 根据用户id,判断用户是否为超级管理员,要的就是特权.

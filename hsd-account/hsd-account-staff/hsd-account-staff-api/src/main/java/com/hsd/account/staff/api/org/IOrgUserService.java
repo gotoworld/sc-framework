@@ -11,6 +11,7 @@ import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -77,7 +78,7 @@ public interface IOrgUserService {
      * <p>判断用户账号是否存在
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isAccountYN")
-    public String isAccountYN(String account);
+    public String isAccountYN(@RequestParam(name ="account") String account);
 
     /**
      * <p>密码修改

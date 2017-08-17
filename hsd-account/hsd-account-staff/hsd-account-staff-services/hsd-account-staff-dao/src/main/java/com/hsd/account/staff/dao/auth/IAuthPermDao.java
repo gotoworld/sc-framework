@@ -40,7 +40,7 @@ public interface IAuthPermDao extends IBaseDao {
     /**
      * 角色权限信息列表>根据用户id。
      */
-    List getPermListByUId(Map dto) throws Exception;
+    List getPermListByUserId(Map dto) throws Exception;
 
     /**
      * <p>根据角色id获取对应的权限信息列表。

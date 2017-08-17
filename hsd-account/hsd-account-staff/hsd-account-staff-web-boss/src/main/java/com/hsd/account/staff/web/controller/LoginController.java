@@ -53,13 +53,11 @@ public class LoginController extends BaseController {
             if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                 return Response.error("用户名或密码不能为空!");
             }
-            OrgUserDto orgUser = roleSourceService.findUserByLoginName(account, 0);
+            OrgUserDto orgUser = roleSourceService.findUserByAccount(account, 0);
             String pwdhex = MD5.pwdMd5Hex(password);
             if (orgUser==null || !(account.equals(orgUser.getAccount()) && pwdhex.equals(orgUser.getPwd()))) {
                 return Response.error("登录失败,用户名或密码错误!");
             }
-            request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
-            request.getSession().setAttribute(CommonConstant.SESSION_KEY_USERNAME, orgUser.getAccount() + ":" + orgUser.getName());
             roleSourceService.lastLogin(orgUser);
 
             Map<String, Set<String>> authorizationInfo = new HashMap();
@@ -71,14 +69,14 @@ public class LoginController extends BaseController {
                 request.getSession().setAttribute("isSuper", "1");
             }
             //2.获取角色集合
-            List<AuthRoleDto> roleList = roleSourceService.getRoleListByUId(orgUser);
+            List<AuthRoleDto> roleList = roleSourceService.getRoleListByUserId(orgUser);
             if (roleList != null) {
                 for (AuthRoleDto role : roleList) {
                     authorizationInfo.get("roles").add(role.getName());
                 }
             }
             //3.获取功能集合
-            List<AuthPermDto> permList = roleSourceService.getPermListByUId(orgUser);
+            List<AuthPermDto> permList = roleSourceService.getPermListByUserId(orgUser);
             if (permList != null) {
                 for (AuthPermDto perm : permList) {
                     if (perm.getMatchStr() != null && !"".equals(perm.getMatchStr())) {

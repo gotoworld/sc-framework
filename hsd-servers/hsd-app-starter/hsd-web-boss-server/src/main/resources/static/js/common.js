@@ -10,6 +10,7 @@ var site = {
          login: apiPath.account.staff + "/boss/account/staff/sign/login" //登录
         ,logout: apiPath.account.staff + "/boss/account/staff/sign/logout" //登出
         ,refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
+        ,updatePwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/update/pwd" //密码更新
     }
     ,sysDomain: {
          view: basePath + "/html/account/staff/sys/sys_domain"
@@ -33,10 +34,16 @@ var site = {
         ,setRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/role"
     }
     ,orgUser: {
-        view: basePath + "/html/account/staff/org/org_user"
+         view: basePath + "/html/account/staff/org/org_user"
         ,page: apiPath.account.staff + "/boss/account/staff/org/orgUser/page/"
+        ,recyclePage: apiPath.account.staff + "/boss/account/staff/org/orgUser/recyclePage/"
         ,briefPage: apiPath.account.staff + "/boss/account/staff/org/orgUser/briefPage/"
         ,save: apiPath.account.staff + "/boss/account/staff/org/orgUser/save"
+        ,isAccountYN: apiPath.account.staff + "/boss/account/staff/org/orgUser/isAccountYN/"
+        ,getOrgs: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/org/"
+        ,getRoles: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/role/"
+        ,resetpwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/reset/pwd/"
+        ,recovery: apiPath.account.staff + "/boss/account/staff/org/orgUser/recovery/"
         ,info: apiPath.account.staff + "/boss/account/staff/org/orgUser/info/"
         ,del: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/"
     }

@@ -173,6 +173,14 @@
            if($data.newFlag) $data.uuidToken=util.guid();
            loadInfo(sessionStorage.getItem(site.orgUser.info));
         });
+        $scope.isAccountYN=function (account){
+            $.post(site.orgUser.isAccountYN, $('#orgUser_01').serialize(),function (result) {
+                //console.info("获取数据.." + JSON.stringify(result));
+                if (result.code != 0) {
+                    alert(result.message);
+                }
+            }, 'json');
+        }
         $scope.save = function () {
             if($("#orgUser_01").valid()){
                 $.post(site.orgUser.save, $('#orgUser_01').serialize(),function (result) {

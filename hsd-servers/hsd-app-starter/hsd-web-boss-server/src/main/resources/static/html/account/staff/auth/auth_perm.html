@@ -202,7 +202,7 @@
         }else{
             pageIndex=$('#pageNumA').val();
         }
-        console.info("加载页码"+pageIndex)
+        //console.info("加载页码"+pageIndex)
         $.post( site.authPerm.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));

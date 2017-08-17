@@ -74,10 +74,10 @@ public interface IOrgUserService {
     public List<AuthRoleDto> findRoleDataIsList(OrgUserDto dto);
 
     /**
-     * <p>获取用户所在部门集合。
+     * <p>获取用户所在组织集合。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDeptDataIsList")
-    public List<OrgInfoDto> findDeptDataIsList(OrgUserDto dto);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgIsList")
+    public List<OrgInfoDto> findOrgIsList(OrgUserDto dto);
 
     /**
      * <p>某一种角色所有用户。
@@ -86,16 +86,21 @@ public interface IOrgUserService {
     public List<OrgUserDto> findUserList(OrgUserDto orgUserBean);
 
     /**
-     * <p>判断用户id是否存在
+     * <p>判断用户账号是否存在
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isUidYN")
-    public String isUidYN(String uid);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isAccountYN")
+    public String isAccountYN(String account);
 
     /**
      * <p>密码修改
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updatePwd")
     public String updatePwd(OrgUserDto dto) throws Exception;
+    /**
+     * <p>密码重置
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/resetPwd")
+    public String resetPwd(OrgUserDto dto) throws Exception;
     /**
      * <p>信息列表 分页。
      */

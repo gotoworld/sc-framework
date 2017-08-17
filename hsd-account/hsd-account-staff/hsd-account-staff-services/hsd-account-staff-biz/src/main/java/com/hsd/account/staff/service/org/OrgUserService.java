@@ -22,6 +22,7 @@ import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.IdUtil;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -215,8 +216,8 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
                 Map entity = new HashMap();
-                entity.put("uid", dto.getId());
-                results = copyTo(authRoleDao.getRoleListByUId(entity),AuthRoleDto.class);
+                entity.put("userId", dto.getId());
+                results = copyTo(authRoleDao.getRoleListByUserId(entity),AuthRoleDto.class);
 
         } catch (Exception e) {
             log.error("获取用户角色集合,数据库处理异常!", e);
@@ -225,16 +226,16 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
 
-    public List<OrgInfoDto> findDeptDataIsList(@RequestBody OrgUserDto dto) {
+    public List<OrgInfoDto> findOrgIsList(@RequestBody OrgUserDto dto) {
         List<OrgInfoDto> results = null;
         try {
             if (dto != null) {
                 Map entity = new HashMap();
-                entity.put("uid", dto.getId());
-                results = copyTo(orgInfoDao.getDeptListByUId(entity),OrgInfoDto.class);
+                entity.put("userId", dto.getId());
+                results = copyTo(orgInfoDao.getOrgListByUserId(entity),OrgInfoDto.class);
             }
         } catch (Exception e) {
-            log.error("获取用户角色集合,数据库处理异常!", e);
+            log.error("获取用户组织集合,数据库处理异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
@@ -253,12 +254,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
 
-    public String isUidYN(String uid) {
+    public String isAccountYN(String account) {
         String result = "seccuss";
         try {
-            if (ValidatorUtil.notEmpty(uid)) {
-                if (orgUserDao.isAccountYN(uid) == 0) {
-                    result = "0";
+            if (ValidatorUtil.notEmpty(account)) {
+                if (orgUserDao.isAccountYN(account) > 0) {
+                    throw new RuntimeException("账号["+account+"]已存在!");
                 }
             }
         } catch (Exception e) {
@@ -288,6 +289,20 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         }
         return result;
     }
+    public String resetPwd(@RequestBody OrgUserDto dto) throws Exception {
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            String newPwd=IdUtil.createUUID(8);
+            dto.setPwd(MD5.pwdMd5Hex(MD5.md5Hex(newPwd)));
+            if(orgUserDao.resetPwd(copyTo(dto,OrgUser.class))==0) throw new RuntimeException("密码重置失败,请重试!");
+            //TODO 给账号发送新密码短信
+
+            return newPwd;
+        } catch (Exception e) {
+            log.error("密码重置失败!",e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+    }
 
     @Override
     public PageInfo findUserIsPage(@RequestBody OrgUserDto dto) throws Exception {
@@ -304,5 +319,13 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return pageInfo;
+    }
+
+    public static void main(String[] args) {
+        for(int i=0;i<20;i++){
+            String x=IdUtil.createUUID(8);
+            System.out.println(x+":"+MD5.pwdMd5Hex(MD5.md5Hex(x)));
+        }
+
     }
 }

@@ -98,7 +98,7 @@
     </select>
 
     <!-- 角色信息列表>根据用户id -->
-    <select id="getRoleListByUId" resultType="com.hsd.account.staff.entity.auth.AuthRole" parameterType="map">
+    <select id="getRoleListByUserId" resultType="com.hsd.account.staff.entity.auth.AuthRole" parameterType="map">
         <choose>
             <when test="iissuperman==1"><!-- i'm superman -->
                 select
@@ -113,7 +113,7 @@
                 ,t1.is_super as "isSuper"
                 from auth_role t1
                 inner join auth_user_vs_role t2 on (t1.id=t2.role_id)
-                where t1.del_flag=0 and t2.user_id=#{uid} and t1.is_super!='1'
+                where t1.del_flag=0 and t2.user_id=#{userId} and t1.is_super!='1'
 
                 union
 
@@ -123,7 +123,7 @@
                 ,t1.is_super as "isSuper"
                 from auth_role t1
                 inner join org_org_vs_role t2 on (t1.id=t2.role_id)
-                inner join org_org_vs_user t3 on (t2.org_id=t3.org_id and t3.user_id=#{uid})
+                inner join org_org_vs_user t3 on (t2.org_id=t3.org_id and t3.user_id=#{userId})
                 where t1.del_flag=0 and t1.is_super!='1'
             </otherwise>
         </choose>
@@ -132,6 +132,6 @@
     <select id="isSuperAdmin" resultType="int" parameterType="map">
 		select count(0) from auth_role t1
 		inner join auth_user_vs_role t2 on (t1.id=t2.role_id)
-		where t2.user_id=#{uid} and t1.is_super=1
+		where t2.user_id=#{userId} and t1.is_super=1
 	</select>
 </mapper>

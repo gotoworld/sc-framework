@@ -36,20 +36,20 @@ public interface IRoleSourceService {
     /**
      * <p>角色信息列表>根据用户id。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getRoleListByUId")
-    public List<AuthRoleDto> getRoleListByUId(OrgUserDto orgUser);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getRoleListByUserId")
+    public List<AuthRoleDto> getRoleListByUserId(OrgUserDto orgUser);
 
     /**
      * <p>角色权限信息列表>根据用户id。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getPermListByUId")
-    public List<AuthPermDto> getPermListByUId(OrgUserDto orgUser);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getPermListByUserId")
+    public List<AuthPermDto> getPermListByUserId(OrgUserDto orgUser);
 
     /**
      * <p>用户信息。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByLoginName")
-    public OrgUserDto findUserByLoginName(@RequestParam("account") String account, @RequestParam("userType")  Integer userType);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByAccount")
+    public OrgUserDto findUserByAccount(@RequestParam("account") String account, @RequestParam("userType")  Integer userType);
 
     /**
      * 更新用户登陆信息

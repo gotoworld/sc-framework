@@ -33,13 +33,13 @@ public interface IOrgUserDao extends IBaseDao {
     /**
      * 恢复逻辑删除的数据
      */
-    @Update("update auth_perm set version=version+1 ,del_flag=0 where  id = #{id} ")
+    @Update("update org_user set version=version+1 ,del_flag=0 where  id = #{id} ")
     int recoveryDataById(IEntity dto) throws Exception;
 
     /**
      * <p>获取用户信息>根据用户登录名。
      */
-    Object findUserByLoginName(Map dto) throws Exception;
+    Object findUserByAccount(Map dto) throws Exception;
 
     /**
      * 获取某一种角色所有用户
@@ -47,7 +47,7 @@ public interface IOrgUserDao extends IBaseDao {
     List<?> getUserList(IEntity dto) throws Exception;
 
     /**
-     * <p>判断用户id是否存在
+     * <p>判断用户账号是否存在
      */
     @Select(" select count(0) from org_user where  account=#{account} ")
     int isAccountYN(@Param("account") String account) throws Exception;
@@ -57,6 +57,11 @@ public interface IOrgUserDao extends IBaseDao {
      */
     @Update("update org_user set version=version+1,date_updated=now(),pwd=#{confirmpwd} where id = #{id} and pwd=#{oldpwd}")
     int updatePwd(IEntity entity) throws Exception;
+    /**
+     * <p>密码重置
+     */
+    @Update("update org_user set version=version+1,date_updated=now(),pwd=#{pwd} where id = #{id}")
+    int resetPwd(IEntity entity) throws Exception;
     /**
      * <p>最后登陆记录
      */

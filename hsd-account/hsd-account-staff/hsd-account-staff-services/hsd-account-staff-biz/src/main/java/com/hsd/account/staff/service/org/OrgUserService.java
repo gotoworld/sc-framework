@@ -63,18 +63,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             if (orgUserDao.isDataYN(entity) != 0) {
                 // 数据存在
                 orgUserDao.update(entity);
-                if (JwtUtil.isPermitted("orgUser:edit:role") && 1!=(entity.getId())) {
-                    AuthUserVsRole userVsRole = new AuthUserVsRole();
-                    userVsRole.setUserId(entity.getId());
-                    // 1.根据用户id清空用户角色关联表
-                    authUserVsRoleDao.deleteBulkDataByUserId(userVsRole);
-                }
-                if (JwtUtil.isPermitted("orgUser:edit:org")) {
-                    OrgOrgVsUser orgVsUser = new OrgOrgVsUser();
-                    orgVsUser.setUserId(entity.getId());
-                    // 1.根据用户id清空用户部门关联表
-                    orgOrgVsUserDao.deleteBulkDataByUserId(orgVsUser);
-                }
             } else {
                 if(orgUserDao.isAccountYN(dto.getAccount())>0){
                     throw new RuntimeException("账号已存在!");
@@ -83,32 +71,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 // 新增
                 orgUserDao.insert(entity);
                 result.data=entity.getId();
-            }
-            if (JwtUtil.isPermitted("orgUser:edit:role")) {
-                // 2.新增用户角色关联信息
-                if (dto.getRoleIdArray() != null) {
-                    List<AuthUserVsRole> xEntityList = new ArrayList<>();
-                    for (Long roleId : dto.getRoleIdArray()) {
-                        AuthUserVsRole authUserVsRole = new AuthUserVsRole();
-                        authUserVsRole.setUserId(entity.getId());
-                        authUserVsRole.setRoleId(roleId);
-                        xEntityList.add(authUserVsRole);
-                    }
-                    authUserVsRoleDao.insertBatch(xEntityList);
-                }
-            }
-            if (JwtUtil.isPermitted("orgUser:edit:org")) {
-                // 2.新增用户部门关联信息
-                if (dto.getOrgIdArray() != null) {
-                    List<OrgOrgVsUser> xEntityList = new ArrayList<>();
-                    for (Long orgId : dto.getOrgIdArray()) {
-                        OrgOrgVsUser OrgOrgVsUser = new OrgOrgVsUser();
-                        OrgOrgVsUser.setUserId(entity.getId());
-                        OrgOrgVsUser.setOrgId(orgId);
-                        xEntityList.add(OrgOrgVsUser);
-                    }
-                    orgOrgVsUserDao.insertBatch(xEntityList);
-                }
             }
         } catch (Exception e) {
             log.error("信息保存失败!", e);
@@ -347,19 +309,19 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgUser:edit:role")){
-                AuthUserVsRole authUserVsRole = new AuthUserVsRole();
-                authUserVsRole.setUserId(dto.getId());
-                // 1.根据用户id清除角色关联表
-                authUserVsRoleDao.deleteBulkDataByUserId(authUserVsRole);
+            if (JwtUtil.isPermitted("orgUser:edit:role")) {
+                AuthUserVsRole userVsRole = new AuthUserVsRole();
+                userVsRole.setUserId(dto.getId());
+                // 1.根据用户id清空用户角色关联表
+                authUserVsRoleDao.deleteBulkDataByUserId(userVsRole);
                 // 2.新增用户角色关联信息
-                if (dto.getRoleIds() != null) {
+                if (dto.getRoleIdArray() != null) {
                     List<AuthUserVsRole> xEntityList = new ArrayList<>();
-                    for (Long roleId : dto.getRoleIds()) {
-                        AuthUserVsRole userVsRole = new AuthUserVsRole();
-                        userVsRole.setUserId(dto.getId());
-                        userVsRole.setRoleId(roleId);
-                        xEntityList.add(userVsRole);
+                    for (Long roleId : dto.getRoleIdArray()) {
+                        AuthUserVsRole authUserVsRole = new AuthUserVsRole();
+                        authUserVsRole.setUserId(dto.getId());
+                        authUserVsRole.setRoleId(roleId);
+                        xEntityList.add(authUserVsRole);
                     }
                     authUserVsRoleDao.insertBatch(xEntityList);
                 }

@@ -66,22 +66,22 @@
                                     			<tr>
                                     				<th style="width:20px;">#</th>
                                     				<th>CODE</th>
-                                    				<th>创建时间</th>
                                     				<th>系统名称</th>
-                                    				<th>DNS</th>
-                                    				<th>展示</th>
-                                    				<th>操作</th>
+													<th>DNS</th>
+													<th>展示</th>
+													<th>创建时间</th>
+													<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.code}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.name}}</td>
-                                    				<td>{{item.dns}}</td>
-                                    				<td>{{item.isShow==1?'是':'否'}}</td>
-                                    				<td>
+													<td>{{item.dns}}</td>
+													<td>{{item.isShow==1?'是':'否'}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysDomain:info")'  ng-click="info('i',item.code)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysDomain:edit")'  ng-click="edit('e',item.code)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysDomain:del")'   ng-click="del(item.code)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>

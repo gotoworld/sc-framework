@@ -106,9 +106,8 @@
                                     				<th style="width:20px;">#</th>
                                     				<th>所属系统域</th>
                                     				<th>编码</th>
-                                    				<th>创建时间</th>
                                     				<th>名称</th>
-                                    				<th>备注</th>
+													<th>创建时间</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
@@ -117,9 +116,8 @@
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.domainCode}}</td>
                                     				<td>{{item.code}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.name}}</td>
-                                    				<td>{{item.memo}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysVariable:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='user.hasPermission("sysVariable:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>

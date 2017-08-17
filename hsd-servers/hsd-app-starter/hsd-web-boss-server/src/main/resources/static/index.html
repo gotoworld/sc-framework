@@ -24,12 +24,11 @@
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden"  ng-controller="app-ctrl" class="ng-cloak" ng-cloak>
+<body class="fixed-sidebar full-height-layout gray-bg ng-cloak" style="overflow: hidden"  ng-controller="app-ctrl" ng-cloak>
 <div id="wrapper">
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="nav-close">
-            <i class="fa fa-times-circle"></i>
+        <div class="nav-close"><i class="fa fa-times-circle"></i>
         </div>
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
@@ -39,28 +38,24 @@
                             <img alt="image" style="width: 64px; height: 64px;" class="img-circle" src="/img/avatar.png"/>
                         </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear">
-                                <span class="block m-t-xs">
-                                      <strong class="font-bold"  ng-bind="userInfo.name">
-							    	  </strong>
-                                    <b class="caret"></b>
-                                </span>
-							</span>
+                            <span class="">
+                                <span class="block m-t-xs"><strong class="font-bold" ng-bind="userInfo.account"></strong></span>
+                                <span class="text-muted text-xs block" ><label ng-bind="userInfo.name"></label><b class="caret"></b></span>
+                            </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li ng-show='user.hasPermission("myinfo:menu")' ><a href="javascript:;"  ng-click="openMyBoxLayer('个人资料','/html/account/org/org_user_myinfo.html')">个人资料</a></li>
-                            <li ng-show='user.hasPermission("memOrgUser:editPwd")' ><a href="javascript:;"  ng-click="openMyBoxLayer('密码修改','/html/account/org/org_user_editpwd.html')">密码修改</a></li>
+                            <li  ><a href="javascript:;"  ng-click="openMyBoxLayer('密码修改','/html/account/staff/staff_edit_pwd.html')">密码修改</a></li>
                             <li class="divider"></li>
                             <li><a href="javascript:;" ng-click="user.logout()">安全退出</a></li>
                         </ul>
                     </div>
-                    <div class="logo-element">W</div>
+                    <div class="logo-element">HSD</div>
                 </li>
                 <li>
                     <a class="J_menuItem" href="/html/home.html"> <i class="fa fa-home"></i> <span class="nav-label">我的首页</span></a>
                 </li>
 
-                <li ng-show='user.hasPermission("sys:menu")' ><a href="#"><i class="glyphicon glyphicon-credit-card"></i> <span class="nav-label"> </span><span class="fa arrow"></span>系统管理</a>
+                <li ng-show='user.hasPermission("sys:menu")' ><a href="#"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label"> 系统管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li ng-show='user.hasPermission("sysDomain:menu")' ><a class="J_menuItem" href="/html/account/staff/sys/sys_domain.html">系统域</a></li>
                         <li ng-show='user.hasPermission("orgInfo:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_info.html">组织机构</a></li>
@@ -73,7 +68,7 @@
                         <li ng-show='user.hasPermission("orgLogOperation:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_log_operation.html">员工操作日志</a></li>
                     </ul>
                 </li>
-                <li ng-show='user.hasPermission("channelInfo:menu")' ><a href="#"><i class="glyphicon glyphicon-credit-card"></i> <span class="nav-label"> </span><span class="fa arrow"></span>渠道管理</a>
+                <li ng-show='user.hasPermission("channelInfo:menu")' ><a href="#"><i class="glyphicon glyphicon-sort-by-attributes-alt"></i> <span class="nav-label">渠道管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li ng-show='user.hasPermission("channelInfo:menu")' ><a class="J_menuItem" href="/html/account/channel/channel/channel_info.html">渠道商信息</a></li>
                         <li ng-show='user.hasPermission("channelType:menu")' ><a class="J_menuItem" href="/html/account/channel/channel/channel_type.html">渠道商类型</a></li>

@@ -1,7 +1,21 @@
-var tag= {
-    page:function (pageInfo) {
+var tag = {
+    page: function (pageInfo) {
+        tag.page(pageInfo, 'page');
+    }
+    , page: function (pageInfo, func) {
+        tag.page(pageInfo, func, null)
+    }
+    , page: function (pageInfo, func, param) {
+        var getPageFunc = function (pageNum) {
+            if(!func)func='page';
+            if (param) {
+                return func + "(" + pageNum + "," + param + ")";
+            } else {
+                return func + "(" + pageNum + ")";
+            }
+        }
         var HTML_3DOT_STRING = "<a class=\"dot\">...</a>";
-        if(!(pageInfo)){
+        if (!(pageInfo)) {
             return HTML_3DOT_STRING;
         }
         /** 当前页码 */
@@ -21,7 +35,7 @@ var tag= {
         // 上一页
         var prePage = "";
         if (hasPrevious) {
-            prePage += ("<a href=\"javascript:;\" ng-click=\"page(" + pageInfo.prePage + ")\">");
+            prePage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(pageInfo.prePage) + "\">");
             prePage += ("上一页");
             prePage += ("</a>");
         } else {
@@ -32,7 +46,7 @@ var tag= {
         // 下一页
         var nextPage = "";
         if (hasNext) {
-            nextPage += ("<a href=\"javascript:;\" ng-click=\"page(" + pageInfo.nextPage + ")\">");
+            nextPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(pageInfo.nextPage) + "\">");
             nextPage += ("下一页");
             nextPage += ("</a>");
         } else {
@@ -53,7 +67,7 @@ var tag= {
                 if (currentPageNo == i) {
                     midPage += ("<a class=\"on\">" + i + "</a>");
                 } else {
-                    midPage += ("<a href=\"javascript:;\" ng-click=\"page(" + i + ")\">");
+                    midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(i) + "\">");
                     midPage += (i);
                     midPage += ("</a>");
                 }
@@ -68,7 +82,7 @@ var tag= {
                     if (currentPageNo == i) {
                         midPage += ("<a class=\"on\">" + i + "</a>");
                     } else {
-                        midPage += ("<a href=\"javascript:;\" ng-click=\"page(" + i + ")\">");
+                        midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(i) + "\">");
                         midPage += (i);
                         midPage += ("</a>");
                     }
@@ -76,7 +90,7 @@ var tag= {
                         // 加上...
                         midPage += (HTML_3DOT_STRING);
                         // 加上末页数字
-                        midPage += ("<a href=\"javascript:;\" ng-click=\"page(" + pageInfo.pageCount + ")\">");
+                        midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(pageInfo.pageCount) + "\">");
                         midPage += (pageCount);
                         midPage += ("</a>");
                         break;
@@ -87,7 +101,7 @@ var tag= {
             } else if (currentPageNo > (pageCount - pageNoCount)) {
 
                 // 加上首页数字
-                midPage += "<a href=\"javascript:;\" ng-click=\"page(1)\">";
+                midPage += "<a href=\"javascript:;\" ng-click=\"" + getPageFunc(1) + "\">";
                 midPage += (1);
                 midPage += ("</a>");
                 // 加上...
@@ -97,14 +111,14 @@ var tag= {
                     if (currentPageNo == i) {
                         midPage += ("<a class=\"on\">" + i + "</a>");
                     } else {
-                        midPage += ("<a href=\"javascript:;\" ng-click=\"page(" + i + ")\">");
+                        midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(i) + "\">");
                         midPage += (i);
                         midPage += ("</a>");
                     }
                 }
             } else {
                 // 加上首页数字
-                midPage += "<a href=\"javascript:;\" ng-click=\"page(1)\">";
+                midPage += "<a href=\"javascript:;\" ng-click=\"" + getPageFunc(1) + "\">";
                 midPage += (1);
                 midPage += ("</a>");
                 // 加上...
@@ -113,7 +127,7 @@ var tag= {
                     if (currentPageNo == i) {
                         midPage += ("<a class=\"on\">" + i + "</a>");
                     } else {
-                        midPage += ("<a href=\"javascript:;\" ng-click=\"page(" + i + ")\">");
+                        midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(i) + "\">");
                         midPage += (i);
                         midPage += ("</a>");
                     }
@@ -121,7 +135,7 @@ var tag= {
                 // 加上...
                 midPage += (HTML_3DOT_STRING);
                 // 加上末页数字
-                midPage += ("<a href=\"javascript:;\" ng-click=\"page(" + pageInfo.pageCount + ")\">");
+                midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(pageInfo.pageCount) + "\">");
                 midPage += (pageCount);
                 midPage += ("</a>");
             }

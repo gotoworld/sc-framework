@@ -62,20 +62,22 @@ public class OrgUserController extends BaseController {
 		return result;
 	}
 	/**
-	 * <p> 获取当前用户的角色集合。
+	 * <p> 回收站 (已删除)。
 	 */
-	@RequiresPermissions("orgUser:edit")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"myRoles/{id}")
-	@ApiOperation(value = "获取当前用户的角色集合")
-	public Response myRoles(@PathVariable("id") Long id) {
-		log.info("OrgUserController myRoles.........");
+	@RequiresPermissions("orgUser:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recyclePage/{pageNum}")
+	@ApiOperation(value = "回收站 分页")
+	public Response recyclePage(@ModelAttribute OrgUserDto dto, @PathVariable("pageNum") Integer pageNum) {
+		log.info("OrgUserController recyclePage.........");
 		Response result = new Response();
 		try {
-			OrgUserDto dto=new OrgUserDto();
-			dto.setId(id);
-			dto=orgUserService.findDataById(dto);
-			if(dto==null)throw new RuntimeException("用户不存在!");
-			result.data=orgUserService.findRoleDataIsList(dto);
+			if (dto == null) {
+				dto = new OrgUserDto();
+				dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+			}
+			dto.setPageNum(pageNum);
+			dto.setDelFlag(1);
+			result.data=getPageDto(orgUserService.findDataIsPage(dto));
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -120,13 +122,67 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
-	/**判断用户id是否存在 */
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isUidYN/{uid}")
-	@ApiOperation(value = "判断用户id是否存在")
-	public Response isUidYN(@PathVariable("uid") String uid) throws IOException{
+	/**
+	 * <li>恢复。
+	 */
+	@RequiresPermissions("orgUser:del")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recovery/{id}")
+	@ApiOperation(value = "恢复")
+	public Response recovery(@PathVariable("id") Long id) {
+		log.info("OrgUserController del.........");
 		Response result = new Response();
 		try {
-			result.data=orgUserService.isUidYN(uid);
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(id);
+			result.message=orgUserService.recoveryDataById(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**
+	 * <p> 获取当前用户的角色集合。
+	 */
+	@RequiresPermissions("orgUser:edit")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/{id}")
+	@ApiOperation(value = "获取当前用户的角色集合")
+	public Response getRoles(@PathVariable("id") Long id) {
+		log.info("OrgUserController getRoles.........");
+		Response result = new Response();
+		try {
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(id);
+			result.data=orgUserService.findRoleDataIsList(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**
+	 * <p> 获取当前用户的组织集合。
+	 */
+	@RequiresPermissions("orgUser:edit")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/org/{id}")
+	@ApiOperation(value = "获取当前用户的组织集合")
+	public Response getOrgs(@PathVariable("id") Long id) {
+		log.info("OrgUserController getOrgs.........");
+		Response result = new Response();
+		try {
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(id);
+			result.data=orgUserService.findOrgIsList(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**判断用户id是否存在 */
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isAccountYN/{account}")
+	@ApiOperation(value = "判断用户id是否存在")
+	public Response isAccountYN(@PathVariable("account") String account) throws IOException{
+		Response result = new Response();
+		try {
+			result.data=orgUserService.isAccountYN(account);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -165,10 +221,6 @@ public class OrgUserController extends BaseController {
 				}
 				if(null==dto.getState()) dto.setState(1);//禁用
 				result=orgUserService.saveOrUpdateData(dto);
-				if(dto.getId()==orgUser.getId()) {
-					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
-					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
-				}
 				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}
 		} catch (Exception e) {
@@ -178,55 +230,15 @@ public class OrgUserController extends BaseController {
 	}
 
 	/**
-	 * <p> 信息修改
-	 */
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update")
-	@RfAccount2Bean
-	@ALogOperation(type="修改",desc="用户信息")
-	@ApiOperation(value = "信息修改")
-	public Response update(@Validated OrgUserDto dto, BindingResult bindingResult) throws IOException {
-		log.info("OrgUserController update.........");
-		Response result = new Response();
-		try {
-			if (dto == null)throw new RuntimeException("参数异常");
-			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
-				throw new RuntimeException("请不要重复提交!");
-			}
-			if (bindingResult.hasErrors()) {
-				String errorresult = "";
-				List<ObjectError> errorList = bindingResult.getAllErrors();
-				for (ObjectError error : errorList) {
-					errorresult += (error.getDefaultMessage()) + ";";
-				}
-				result = Response.error(errorresult);
-			}else{
-				OrgUserDto orgUser = JwtUtil.getSubject(OrgUserDto.class);
-				if(orgUser !=null){
-					if(ValidatorUtil.isEmpty(dto.getAccount())){
-						dto.setAccount(orgUser.getAccount());
-					}
-				}
-				result.message=orgUserService.updateData(dto);
-				OrgUserDto newOrgUser=orgUserService.findDataById(dto);
-				request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER,newOrgUser);
-				request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN,newOrgUser);
-				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
-			}
-		} catch (Exception e) {
-			result = Response.error(e.getMessage());
-		}
-		return result;
-	}
-	/**
 	 * <p> 密码修改
 	 */
-	@RequiresPermissions(value={"orgUser:editPwd"})
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"updatePwd")
+	@RequiresPermissions("orgUser:edit:pwd")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update/pwd")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="用户密码")
 	@ResponseBody
 	@ApiOperation(value = "密码修改")
-	public Response updatePwd(@Validated OrgUserDto dto) throws IOException {
+	public Response updatePwd(@ModelAttribute @Validated OrgUserDto dto) throws IOException {
 		log.info("OrgUserController updatePwd.........");
 		Response result = new Response();
 		try {
@@ -235,11 +247,27 @@ public class OrgUserController extends BaseController {
 			if ("1".equals(request.getSession().getAttribute(acPrefix + "updatePwd." + dto.getToken()))) {
 				throw new RuntimeException("请不要重复提交!");
 			}
-			OrgUserDto orgUser =JwtUtil.getSubject(OrgUserDto.class);
-			if(orgUser ==null){
-				throw new RuntimeException("登陆超时!");
-			}
 			result.message=orgUserService.updatePwd(dto);
+			request.getSession().setAttribute(acPrefix + "updatePwd." + dto.getToken(), "1");
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
+
+	@RequiresPermissions("orgUser:edit:resetpwd")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"reset/pwd/{id}")
+	@RfAccount2Bean
+	@ALogOperation(type="修改",desc="用户密码重置")
+	@ResponseBody
+	@ApiOperation(value = "用户密码重置")
+	public Response resetPwd(@PathVariable("id") Long id) throws IOException {
+		log.info("OrgUserController resetPwd.........");
+		Response result = new Response();
+		try {
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(id);
+			result.data=orgUserService.resetPwd(dto);
 			request.getSession().setAttribute(acPrefix + "updatePwd." + dto.getToken(), "1");
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());
@@ -268,4 +296,42 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
+//	/**
+//	 * <p> 信息修改
+//	 */
+//	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update/info")
+//	@RfAccount2Bean
+//	@ALogOperation(type="修改",desc="用户信息")
+//	@ApiOperation(value = "信息修改")
+//	public Response update(@Validated OrgUserDto dto, BindingResult bindingResult) throws IOException {
+//		log.info("OrgUserController update.........");
+//		Response result = new Response();
+//		try {
+//			if (dto == null)throw new RuntimeException("参数异常");
+//			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
+//				throw new RuntimeException("请不要重复提交!");
+//			}
+//			if (bindingResult.hasErrors()) {
+//				String errorresult = "";
+//				List<ObjectError> errorList = bindingResult.getAllErrors();
+//				for (ObjectError error : errorList) {
+//					errorresult += (error.getDefaultMessage()) + ";";
+//				}
+//				result = Response.error(errorresult);
+//			}else{
+//				OrgUserDto orgUser = JwtUtil.getSubject(OrgUserDto.class);
+//				if(orgUser !=null){
+//					if(ValidatorUtil.isEmpty(dto.getAccount())){
+//						dto.setAccount(orgUser.getAccount());
+//					}
+//				}
+//				result.message=orgUserService.updateData(dto);
+//				OrgUserDto newOrgUser=orgUserService.findDataById(dto);
+//				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
+//			}
+//		} catch (Exception e) {
+//			result = Response.error(e.getMessage());
+//		}
+//		return result;
+//	}
 }

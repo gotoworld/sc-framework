@@ -121,12 +121,12 @@ public class OrgUserController extends BaseController {
 		return result;
 	}
 	/**判断用户id是否存在 */
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isUidYN/{uid}")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isAccountYN/{account}")
 	@ApiOperation(value = "判断用户id是否存在")
-	public Response isUidYN(@PathVariable("uid") String uid) throws IOException{
+	public Response isAccountYN(@PathVariable("account") String account) throws IOException{
 		Response result = new Response();
 		try {
-			result.data=orgUserService.isUidYN(uid);
+			result.data=orgUserService.isAccountYN(account);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -166,10 +166,6 @@ public class OrgUserController extends BaseController {
 				}
 				if(null==dto.getState()) dto.setState(1);//禁用
 				result=orgUserService.saveOrUpdateData(dto);
-				if(dto.getId()==orgUser.getId()) {
-					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER, dto);
-					request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN, dto);
-				}
 				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}
 		} catch (Exception e) {
@@ -177,50 +173,48 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
-	/**
-	 * <p> 信息修改
-	 */
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update")
-	@RfAccount2Bean
-	@ALogOperation(type="修改",desc="用户信息")
-	@ApiOperation(value = "信息修改")
-	public Response update(@Validated OrgUserDto dto, BindingResult bindingResult) throws IOException {
-		log.info("OrgUserController update.........");
-		Response result = new Response();
-		try {
-			if (dto == null)throw new RuntimeException("参数异常");
-			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
-				throw new RuntimeException("请不要重复提交!");
-			}
-			if (bindingResult.hasErrors()) {
-				String errorresult = "";
-				List<ObjectError> errorList = bindingResult.getAllErrors();
-				for (ObjectError error : errorList) {
-					errorresult += (error.getDefaultMessage()) + ";";
-				}
-				result = Response.error(errorresult);
-			}else{
-				OrgUserDto orgUser = JwtUtil.getSubject(OrgUserDto.class);
-				if(orgUser !=null){
-					if(ValidatorUtil.isEmpty(dto.getAccount())){
-						dto.setAccount(orgUser.getAccount());
-					}
-				}
-				result.message=orgUserService.updateData(dto);
-				OrgUserDto newOrgUser=orgUserService.findDataById(dto);
-				request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER,newOrgUser);
-				request.getSession().setAttribute(CommonConstant.SESSION_KEY_USER_ADMIN,newOrgUser);
-				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
-			}
-		} catch (Exception e) {
-			result = Response.error(e.getMessage());
-		}
-		return result;
-	}
+//	/**
+//	 * <p> 信息修改
+//	 */
+//	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update")
+//	@RfAccount2Bean
+//	@ALogOperation(type="修改",desc="用户信息")
+//	@ApiOperation(value = "信息修改")
+//	public Response update(@Validated OrgUserDto dto, BindingResult bindingResult) throws IOException {
+//		log.info("OrgUserController update.........");
+//		Response result = new Response();
+//		try {
+//			if (dto == null)throw new RuntimeException("参数异常");
+//			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
+//				throw new RuntimeException("请不要重复提交!");
+//			}
+//			if (bindingResult.hasErrors()) {
+//				String errorresult = "";
+//				List<ObjectError> errorList = bindingResult.getAllErrors();
+//				for (ObjectError error : errorList) {
+//					errorresult += (error.getDefaultMessage()) + ";";
+//				}
+//				result = Response.error(errorresult);
+//			}else{
+//				OrgUserDto orgUser = JwtUtil.getSubject(OrgUserDto.class);
+//				if(orgUser !=null){
+//					if(ValidatorUtil.isEmpty(dto.getAccount())){
+//						dto.setAccount(orgUser.getAccount());
+//					}
+//				}
+//				result.message=orgUserService.updateData(dto);
+//				OrgUserDto newOrgUser=orgUserService.findDataById(dto);
+//				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
+//			}
+//		} catch (Exception e) {
+//			result = Response.error(e.getMessage());
+//		}
+//		return result;
+//	}
 	/**
 	 * <p> 密码修改
 	 */
-	@RequiresPermissions(value={"orgUser:editPwd"})
+	@RequiresPermissions(value={"orgUser:edit:pwd"})
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"updatePwd")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="用户密码")

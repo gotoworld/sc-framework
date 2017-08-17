@@ -23,7 +23,7 @@ public class OrgUserDto extends BaseDto {
 	 @NotNull(message="account不能为空")@Size(max=55,message="account最大55字符")
      private String account;
      /**员工密码*/
-	 @NotNull(message="pwd不能为空")@Size(max=64,message="pwd最大64字符")
+	 @Size(max=64,message="pwd最大64字符")
      private String pwd;
      /**成员名称*/
 	 @NotNull(message="name不能为空")@Size(max=55,message="name最大55字符")
@@ -40,7 +40,7 @@ public class OrgUserDto extends BaseDto {
 	 @Size(max=64,message="email最大64字符")
      private String email;
      /**用户类型0管理员1普通用户*/
-	 @NotNull(message="type不能为空")
+	 @Size(max=1,message="type最大1字符")
      private Integer type;
      /**最后登录日期*/
      private Date lastLogin;

@@ -194,16 +194,6 @@
                 }, 'json');
             }
         }
-        $scope.kfReady=function(key,val){
-            KindEditor.html('#'+key,val);
-            return val;
-        }
-        $scope.selected=function(val,val2){
-            if(val==val2){
-                return true
-            }
-            return false;
-        }
     });
     var loadInfo=function(id){
         $.get(site.orgUser.info + id, {},function (result) {

@@ -38,7 +38,6 @@ spring:
 
 feign:
   name:
-    common: hsd-common-server
     account: ${spring.application.name}
 
 # 自定义配置

@@ -10,7 +10,6 @@ spring:
     static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
 feign:
   name:
-    common: hsd-common-server
     account: hsd-account-server
 
 # 自定义配置

@@ -35,7 +35,6 @@ spring:
 
 feign:
   name:
-    common: hsd-common-server
     account: hsd-account-server
 
 # 自定义配置

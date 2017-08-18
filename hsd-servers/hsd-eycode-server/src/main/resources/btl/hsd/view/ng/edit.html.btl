@@ -240,10 +240,6 @@ for(t in columns){
                 }, 'json');
             }
         }
-        $scope.kfReady=function(key,val){
-            KindEditor.html('#'+key,val);
-            return val;
-        }
     });
     var loadInfo=function(id){
         $.get(site.${tableNameL}.info + id, {},function (result) {

@@ -20,6 +20,12 @@ import lombok.NoArgsConstructor;
 public class ChannelInfoDto extends BaseDto {
      /**渠道商ID*/
      private Long id;
+     /**渠道商登录账户*/
+	 @NotNull(message="account不能为空")@Size(max=255,message="account最大255字符")
+     private String account;
+     /**渠道商登录密码*/
+	 @NotNull(message="pwd不能为空")@Size(max=255,message="pwd最大255字符")
+     private String pwd;
      /**渠道商名称*/
 	 @NotNull(message="channel_name不能为空")@Size(max=50,message="channel_name最大50字符")
      private String channelName;
@@ -40,7 +46,7 @@ public class ChannelInfoDto extends BaseDto {
      private String fax;
      /**生日*/
      private Date birthday;
-     /**婚姻状态*/
+     /**婚姻状态(0：已婚，1,：未婚）*/
      private Integer maritalStatus;
      /**身份证号*/
 	 @NotNull(message="id_no不能为空")@Size(max=50,message="id_no最大50字符")
@@ -104,6 +110,8 @@ public class ChannelInfoDto extends BaseDto {
      private String address;
      /**BI时间戳*/
      private Date biUpdateTs;
+     /**渠道商状态（0:停用，1：启用）*/
+     private Integer staus;
      /**是否删除*/
      private Integer delFlag;
 

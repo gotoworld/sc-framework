@@ -139,10 +139,6 @@
                 }, 'json');
             }
         }
-        $scope.kfReady=function(key,val){
-            KindEditor.html('#'+key,val);
-            return val;
-        }
     });
     var loadInfo=function(id){
         $.get(site.sysMenu.info + id, {},function (result) {

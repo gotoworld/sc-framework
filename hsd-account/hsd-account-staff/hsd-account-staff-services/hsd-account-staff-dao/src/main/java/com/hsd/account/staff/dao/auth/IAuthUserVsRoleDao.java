@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * <p>权限_用户vs角色 数据库处理接口类。
  */
@@ -36,4 +38,7 @@ public interface IAuthUserVsRoleDao extends IBaseDao {
       */
      @Delete("delete from auth_user_vs_role where  role_id = #{roleId}")
      int deleteBulkDataByRoleId(IEntity entity) throws Exception;
+
+     List<?> findUserRoleIsList(IEntity entity) throws Exception;
+     List<?> findOrgRoleIsList(IEntity entity) throws Exception;
 }

@@ -50,6 +50,7 @@ var site = {
         , recovery: apiPath.account.staff + "/boss/account/staff/org/orgUser/recovery/"
         , info: apiPath.account.staff + "/boss/account/staff/org/orgUser/info/"
         , del: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/"
+        , addBatch: apiPath.account.staff + "/boss/account/staff/org/orgUser/add/batch"
     }
     , authPerm: {
         view: basePath + "/html/account/staff/auth/auth_perm"

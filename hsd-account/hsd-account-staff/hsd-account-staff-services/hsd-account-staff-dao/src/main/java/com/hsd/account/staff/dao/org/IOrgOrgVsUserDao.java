@@ -36,5 +36,5 @@ public interface IOrgOrgVsUserDao extends IBaseDao {
     @Delete("delete from org_org_vs_user where  org_id = #{orgId}")
     int deleteBulkDataByOrgId(IEntity entity) throws Exception;
 
-    List<String> findUserIsList(IEntity entity) throws Exception;
+    List<String> findOrgUserIsList(IEntity entity) throws Exception;
 }

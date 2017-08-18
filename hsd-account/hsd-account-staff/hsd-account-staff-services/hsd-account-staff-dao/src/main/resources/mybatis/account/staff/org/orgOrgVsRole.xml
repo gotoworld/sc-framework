@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hsd.account.staff.dao.org.IOrgOrgVsRoleDao">
-
-
-
     <!-- 新增 批量数据 -->
     <insert id="insertBatch"  >
         insert into org_org_vs_role (
@@ -21,8 +18,21 @@
             )
         </foreach>
     </insert>
+    <insert id="insert"  >
+        insert into org_org_vs_role (
+        org_id
+        ,role_id
+        ,create_id
+        ,date_created
+        ) values (
+         #{orgId}
+        ,#{roleId}
+        ,#{createId}
+        ,now()
+        )
+    </insert>
 
-    <select id="findRoleIsList" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsRole" resultType="com.hsd.account.staff.entity.auth.AuthRole">
+    <select id="findOrgRoleIsList" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsRole" resultType="com.hsd.account.staff.entity.auth.AuthRole">
       select
          t2.id as "id"
         ,t2.name as "name"

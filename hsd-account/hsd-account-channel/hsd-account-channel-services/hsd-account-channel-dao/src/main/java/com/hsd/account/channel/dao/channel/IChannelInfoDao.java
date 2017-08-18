@@ -1,5 +1,6 @@
 package com.hsd.account.channel.dao.channel;
 
+import com.hsd.account.channel.entity.channel.ChannelInfo;
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
 import org.apache.ibatis.annotations.Delete;
@@ -35,6 +36,12 @@ public interface IChannelInfoDao extends IBaseDao {
     /**
      * 信息恢复
      */
-    @Update("update channel_info set  bi_update_ts=now(), del_flag=0 where  id = #{id} ")
+    @Update("update channel_info set  bi_update_ts=now(), staus=1 where  id = #{id} ")
     int recoveryData(IEntity entity) throws Exception;
+
+    /**
+     * 重置密码
+     */
+    @Update("update channel_info set  pwd=#{pwd}, bi_update_ts=now() where  id = #{id} ")
+	int resetPwd(IEntity entity) throws Exception;
 }

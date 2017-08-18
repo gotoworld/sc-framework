@@ -40,7 +40,6 @@ public class RfAccount2BeanAspect {
         String ip = IpUtil.getIpAddr(request);
         try {
             if(log.isDebugEnabled()) {
-                //*========控制台输出=========*//
                 log.debug("=====前置通知开始=====");
                 log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
                 log.debug("请求人:" + user.getName());
@@ -63,7 +62,6 @@ public class RfAccount2BeanAspect {
             log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
-            log.error("==前置通知异常==");
             log.error("异常信息:{}", e.getMessage());
         }
     }

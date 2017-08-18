@@ -187,13 +187,16 @@
                 }
             }, 'json');
         }
-        $scope.page = function () {
-            loadUserPage();
+        $scope.page = function (pageIndex) {
+            loadUserPage(pageIndex);
         }
     });
 
-    function loadUserPage() {
-        $.post( site.orgUser.briefPage+$('#pageNumA').val(),{"name":$('#bean_name').val()}, function (result) {
+    function loadUserPage(pageIndex) {
+        if(!(pageIndex)){
+            pageIndex=$('#pageNumA').val();
+        }
+        $.post( site.orgUser.briefPage+pageIndex,{"name":$('#bean_name').val()}, function (result) {
             if (result.code == 0) {
                 $data.userResult = result;
                 $('#tagPages').html($ngCompile(tag.page(result.data))($data));

@@ -106,6 +106,9 @@ var site = {
         , save: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/save"
         , info: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/info/"
         , del: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/del/"
+        , recovery: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/recovery/"
+        , resetPwd: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/resetPwd/"
+
     }
     , channelType: {//渠道商类型
         view: basePath + "/html/account/channel/channel/channel_type"

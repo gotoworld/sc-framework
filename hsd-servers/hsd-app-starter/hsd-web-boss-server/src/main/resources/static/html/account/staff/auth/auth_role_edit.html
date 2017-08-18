@@ -152,10 +152,6 @@
                 }, 'json');
             }
         }
-        $scope.kfReady=function(key,val){
-            KindEditor.html('#'+key,val);
-            return val;
-        }
         $scope.checkPermId=function(permId){
             if($data.rolePermNodes && $data.rolePermNodes.indexOf(permId)!=-1){
                 return true;

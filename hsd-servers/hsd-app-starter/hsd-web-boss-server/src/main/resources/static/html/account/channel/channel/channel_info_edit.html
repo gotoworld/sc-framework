@@ -42,7 +42,7 @@
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">渠道商名称：</label>
                             <div class="col-md-12">
-                                <input id="bean-channelName" name="channelName" value="{{item.channelName}}" class="form-control" type="text"  placeholder="请输入渠道商名称"  aria-describedby="bean-channelName-error"  maxlength="50"   aria-invalid="true">
+                                <input id="bean-channelName" name="channelName" value="{{item.channelName}}" class="form-control" type="text"  placeholder="请输入渠道商名称"  required="" aria-required="true"  aria-describedby="bean-channelName-error"  maxlength="50"   aria-invalid="true">
                                 <span id="bean-channelName-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">电话1：</label>
                             <div class="col-md-12">
-                                <input id="bean-phone1" name="phone1" value="{{item.phone1}}" class="form-control" type="text"  placeholder="请输入电话1"  aria-describedby="bean-phone1-error"  maxlength="50"   aria-invalid="true">
+                                <input id="bean-phone1" name="phone1" value="{{item.phone1}}" class="form-control" type="text"  placeholder="请输入电话1"  required="" aria-required="true"  aria-describedby="bean-phone1-error"  maxlength="50"   aria-invalid="true">
                                 <span id="bean-phone1-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -98,14 +98,18 @@
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">生日：</label>
                             <div class="col-md-12">
-                                <input id="bean-birthday" name="birthday" value="{{item.birthday | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入生日"  aria-describedby="bean-birthday-error"   aria-invalid="true">
+                                <input id="bean-birthday" name="birthday" value="{{item.birthday | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入生日"  required="" aria-required="true"  aria-describedby="bean-birthday-error"   aria-invalid="true">
                                 <span id="bean-birthday-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">婚姻状态：</label>
                             <div class="col-md-12">
-                                <input id="bean-maritalStatus" name="maritalStatus" value="{{item.maritalStatus}}" class="form-control" type="text"  placeholder="请输入婚姻状态"  aria-describedby="bean-maritalStatus-error"   aria-invalid="true">
+                                <select data-placeholder="选择婚姻状态" id="bean-maritalStatus" name="maritalStatus" class="form-control"   aria-describedby="bean-maritalStatus-error"   aria-invalid="true">
+                                    <option value="">--请选择婚姻状态--</option>
+                                    <option value="0">已婚</option>
+                                    <option value="1">未婚</option>
+                                </select>
                                 <span id="bean-maritalStatus-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -271,7 +275,7 @@
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">开始工作时间：</label>
                             <div class="col-md-12">
-                                <input id="bean-workStartDate" name="workStartDate" value="{{item.workStartDate | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入开始工作时间"  aria-describedby="bean-workStartDate-error"   aria-invalid="true">
+                                <input id="bean-workStartDate" name="workStartDate" value="{{item.workStartDate | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入开始工作时间"  required="" aria-required="true"  aria-describedby="bean-workStartDate-error"   aria-invalid="true">
                                 <span id="bean-workStartDate-error" class="help-block m-b-none"></span>
                             </div>
                         </div>

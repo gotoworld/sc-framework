@@ -20,17 +20,17 @@ import lombok.NoArgsConstructor;
 public class ChannelInfoDto extends BaseDto {
      /**渠道商ID*/
      private Long id;
+     /**渠道商名称*/
+	 @NotNull(message="channel_name不能为空")@Size(max=50,message="channel_name最大50字符")
+     private String channelName;
      /**渠道商类型*/
 	 @NotNull(message="channeltype不能为空")
      private Long channeltype;
-     /**性别*/
+     /**性别(0:男，1：女，2：保密）*/
 	 @NotNull(message="gender不能为空")@Size(max=1,message="gender最大1字符")
      private String gender;
-     /**渠道商名称*/
-	 @Size(max=50,message="channel_name最大50字符")
-     private String channelName;
      /**电话1*/
-	 @Size(max=50,message="phone1最大50字符")
+	 @NotNull(message="phone1不能为空")@Size(max=50,message="phone1最大50字符")
      private String phone1;
      /**电话2*/
 	 @Size(max=50,message="phone2最大50字符")
@@ -47,7 +47,7 @@ public class ChannelInfoDto extends BaseDto {
      private String idNo;
      /**收入*/
      private BigDecimal income;
-     /**收入是否验证*/
+     /**收入是否验证（0：是，1：否）*/
      private Integer incVerifiable;
      /**其他收入*/
      private BigDecimal otherIncome;
@@ -69,14 +69,14 @@ public class ChannelInfoDto extends BaseDto {
      /**房产数*/
 	 @NotNull(message="own_house_num不能为空")
      private Integer ownHouseNum;
-     /**是否有小孩*/
+     /**是否有小孩（0：是，1：否）*/
      private Integer childrenStatus;
      /**孩子数量*/
      private Integer childrenNum;
      /**其他财产备注*/
 	 @Size(max=100,message="asset_other最大100字符")
      private String assetOther;
-     /**贷款状态*/
+     /**贷款状态(0:已贷，1：未贷）*/
      private Integer debtStatus;
      /**微信*/
 	 @Size(max=50,message="wechat最大50字符")
@@ -93,14 +93,14 @@ public class ChannelInfoDto extends BaseDto {
      private Integer domicileLiveDiff;
      /**创建日期*/
      private Date dateCreated;
-     /**是否公司员工*/
+     /**是否公司员工（0：是，1：否）*/
 	 @NotNull(message="relation不能为空")
      private Integer relation;
      /**员工工号*/
 	 @Size(max=50,message="staff_no最大50字符")
      private String staffNo;
      /**地址*/
-	 @Size(max=200,message="address最大200字符")
+	 @NotNull(message="address不能为空")@Size(max=200,message="address最大200字符")
      private String address;
      /**BI时间戳*/
      private Date biUpdateTs;

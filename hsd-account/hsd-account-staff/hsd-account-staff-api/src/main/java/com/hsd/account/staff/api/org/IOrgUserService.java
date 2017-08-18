@@ -3,6 +3,7 @@ package com.hsd.account.staff.api.org;
 
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.account.staff.dto.org.AuthUserVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
@@ -98,16 +99,16 @@ public interface IOrgUserService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findBriefDataIsPage")
     public PageInfo findBriefDataIsPage(OrgUserDto dto) throws Exception;
     /**
-     * <p>获取用户->角色。
+     * <p>获取用户->个人角色。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findRoleIsList")
-    public List<AuthRoleDto> findRoleIsList(OrgUserDto dto);
-
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserRoleIsList")
+    public List<AuthRoleDto> findUserRoleIsList(OrgUserDto dto);
     /**
-     * <p>添加角色。
+     * <p>获取用户->组织角色。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setRole")
-    public Response setRole(OrgUserDto dto) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgRoleIsList")
+    public List<AuthRoleDto> findOrgRoleIsList(OrgUserDto dto);
+
     /**
      * <p>添加组织。
      */
@@ -118,10 +119,20 @@ public interface IOrgUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delOrg")
     public Response delOrg(OrgOrgVsUserDto dto) throws Exception;
-
     /**
      * <p>批量新增。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addBatch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception;
+
+    /**
+     * <p>添加角色。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addRole")
+    public Response addRole(AuthUserVsRoleDto dto) throws Exception;
+    /**
+     * <p>添加角色。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delRole")
+    public Response delRole(AuthUserVsRoleDto dto) throws Exception;
 }

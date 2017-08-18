@@ -3,8 +3,9 @@ package com.hsd.account.staff.web.controller.org;
 import com.hsd.account.staff.api.auth.IAuthRoleService;
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.api.org.IOrgUserService;
-import com.hsd.account.staff.dto.org.OrgUserDto;
+import com.hsd.account.staff.dto.org.AuthUserVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
+import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
@@ -263,36 +264,6 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/{userId}")
-	@ApiOperation(value = "获取组织已设置角色")
-	public Response getRole(@PathVariable("userId") Long userId) {
-		log.info("OrgUserController getRole.........");
-		Response result=new Response();
-		try {
-			OrgUserDto dto=new OrgUserDto();
-			dto.setId(userId);
-			result.data=orgUserService.findRoleIsList(dto);
-		} catch (Exception e) {
-			result=Response.error(e.getMessage());
-		}
-		return result;
-	}
-
-	@RequiresPermissions("orgUser:edit:role")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "set/role")
-	@ALogOperation(type = "设置角色", desc = "组织架构_员工/用户")
-	@ApiOperation(value = "设置角色")
-	public Response setRole(@ModelAttribute OrgUserDto dto) {
-		log.info("OrgUserController setRole.........");
-		Response result = new Response();
-		try {
-			if (dto == null)throw new RuntimeException("参数异常");
-			result = orgUserService.setRole(dto);
-		} catch (Exception e) {
-			result = Response.error(e.getMessage());
-		}
-		return result;
-	}
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/org/{userId}")
 	@ApiOperation(value = "获取所属组织")
 	public Response getUser(@PathVariable("userId") Long userId) {
@@ -350,6 +321,66 @@ public class OrgUserController extends BaseController {
 			result=orgUserService.addBatch(fileUrl);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/user/{userId}")
+	@ApiOperation(value = "获取个人已设置角色")
+	public Response getUserRole(@PathVariable("userId") Long userId) {
+		log.info("OrgUserController getUserRole.........");
+		Response result=new Response();
+		try {
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(userId);
+			result.data=orgUserService.findUserRoleIsList(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/org/{userId}")
+	@ApiOperation(value = "获取组织已设置角色")
+	public Response getOrgRole(@PathVariable("userId") Long userId) {
+		log.info("OrgUserController getOrgRole.........");
+		Response result=new Response();
+		try {
+			OrgUserDto dto=new OrgUserDto();
+			dto.setId(userId);
+			result.data=orgUserService.findOrgRoleIsList(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+
+	@RequiresPermissions("orgUser:edit:role")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "add/role")
+	@ALogOperation(type = "添加角色", desc = "组织架构_员工/用户")
+	@ApiOperation(value = "添加角色")
+	public Response addRole(@ModelAttribute AuthUserVsRoleDto dto) {
+		log.info("OrgUserController addRole.........");
+		Response result = new Response();
+		try {
+			if (dto == null)throw new RuntimeException("参数异常");
+			result = orgUserService.addRole(dto);
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequiresPermissions("orgUser:edit:role")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/role")
+	@ALogOperation(type = "删除角色", desc = "组织架构_员工/用户")
+	@ApiOperation(value = "删除角色")
+	public Response delRole(@ModelAttribute AuthUserVsRoleDto dto) {
+		log.info("OrgUserController delRole.........");
+		Response result = new Response();
+		try {
+			if (dto == null)throw new RuntimeException("参数异常");
+			result = orgUserService.delRole(dto);
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
 		}
 		return result;
 	}

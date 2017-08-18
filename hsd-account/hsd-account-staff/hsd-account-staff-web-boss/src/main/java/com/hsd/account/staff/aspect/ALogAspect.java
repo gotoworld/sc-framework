@@ -79,7 +79,7 @@ public class ALogAspect {
                 }
             } catch (Exception e) {
             }
-            sysUserLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), object.toString(), user.getId(), user.getName(), ip);
+            sysUserLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), JSON.toJSONString(object), user.getId(), user.getName(), ip);
             log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志

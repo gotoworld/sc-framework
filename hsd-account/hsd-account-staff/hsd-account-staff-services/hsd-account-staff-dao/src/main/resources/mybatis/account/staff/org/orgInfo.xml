@@ -101,6 +101,7 @@
         from org_info t1
         where 1=1
         <include refid="list_where_sql"/>
+        order by t1.order_no desc,t1.date_created desc
     </select>
     <!--信息列表 分页 -->
     <select id="findBriefDataIsPage" parameterType="com.hsd.account.staff.entity.org.OrgInfo" resultType="com.hsd.account.staff.entity.org.OrgInfo">
@@ -112,6 +113,7 @@
         from org_info t1
         where 1=1
         <include refid="list_where_sql"/>
+        order by t1.order_no desc,t1.date_created desc
     </select>
     <!--信息列表 -->
     <select id="findDataIsList" parameterType="com.hsd.account.staff.entity.org.OrgInfo" resultType="com.hsd.account.staff.entity.org.OrgInfo">

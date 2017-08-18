@@ -9,6 +9,7 @@ import com.hsd.account.staff.dao.org.IOrgInfoDao;
 import com.hsd.account.staff.dao.org.IOrgOrgVsUserDao;
 import com.hsd.account.staff.dao.org.IOrgUserDao;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.account.staff.dto.org.AuthUserVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
@@ -256,22 +257,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return pageInfo;
     }
 
-    @Override
-    public List<AuthRoleDto> findRoleIsList(@RequestBody OrgUserDto dto) {
-        List<AuthRoleDto> results = null;
-        try {
-            if (dto == null) throw new RuntimeException("参数对象不能为null");
-            Map entity = new HashMap();
-            entity.put("userId", dto.getId());
-            results = copyTo(authRoleDao.getRoleListByUserId(entity),AuthRoleDto.class);
-
-        } catch (Exception e) {
-            log.error("获取用户角色集合,数据库处理异常!", e);
-            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-        }
-        return results;
-    }
-
     @RfAccount2Bean
     public Response addOrg(@RequestBody OrgOrgVsUserDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
@@ -288,6 +273,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         }
         return result;
     }
+
     public Response delOrg(@RequestBody OrgOrgVsUserDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
@@ -303,39 +289,6 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         }
         return result;
     }
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    @RfAccount2Bean
-    public Response setRole(@RequestBody OrgUserDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
-        try {
-            if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if (JwtUtil.isPermitted("orgUser:edit:role")) {
-                AuthUserVsRole userVsRole = new AuthUserVsRole();
-                userVsRole.setUserId(dto.getId());
-                // 1.根据用户id清空用户角色关联表
-                authUserVsRoleDao.deleteBulkDataByUserId(userVsRole);
-                // 2.新增用户角色关联信息
-                if (dto.getRoleIds() != null) {
-                    List<AuthUserVsRole> xEntityList = new ArrayList<>();
-                    for (Long roleId : dto.getRoleIds()) {
-                        AuthUserVsRole authUserVsRole = new AuthUserVsRole();
-                        authUserVsRole.setUserId(dto.getId());
-                        authUserVsRole.setRoleId(roleId);
-                        authUserVsRole.setCreateId(dto.getCreateId());
-                        xEntityList.add(authUserVsRole);
-                    }
-                    authUserVsRoleDao.insertBatch(xEntityList);
-                }
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
-        } catch (Exception e) {
-            log.error("信息保存失败!", e);
-            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-        }
-        return result;
-    }
-
 //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
         Response result = new Response(0,"seccuss");
@@ -393,6 +346,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         }
         return result;
     }
+
     private int getGender(String gender){
         int val=3;
         switch (gender){
@@ -400,6 +354,68 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             case "女":val=1;break;
         }
         return val;
+    }
+
+    @Override
+    public List<AuthRoleDto> findUserRoleIsList(@RequestBody OrgUserDto dto) {
+        List<AuthRoleDto> results = null;
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            AuthUserVsRole userVsRole=new AuthUserVsRole();
+            userVsRole.setUserId(dto.getId());
+            results = copyTo(authUserVsRoleDao.findUserRoleIsList(userVsRole),AuthRoleDto.class);
+
+        } catch (Exception e) {
+            log.error("获取用户->个人角色。异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
+    @Override
+    public List<AuthRoleDto> findOrgRoleIsList(@RequestBody OrgUserDto dto) {
+        List<AuthRoleDto> results = null;
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            AuthUserVsRole userVsRole=new AuthUserVsRole();
+            userVsRole.setUserId(dto.getId());
+            results = copyTo(authUserVsRoleDao.findOrgRoleIsList(userVsRole),AuthRoleDto.class);
+
+        } catch (Exception e) {
+            log.error("获取用户->组织角色。异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
+    @RfAccount2Bean
+    public Response addRole(@RequestBody AuthUserVsRoleDto dto) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            if(JwtUtil.isPermitted("orgUser:edit:role")){
+                authUserVsRoleDao.insert(copyTo(dto,AuthUserVsRole.class));
+            }else{
+                throw new RuntimeException("权限不足!");
+            }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    public Response delRole(@RequestBody AuthUserVsRoleDto dto) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            if(JwtUtil.isPermitted("orgUser:edit:role")){
+                authUserVsRoleDao.deleteByPrimaryKey(copyTo(dto,AuthUserVsRole.class));
+            }else{
+                throw new RuntimeException("权限不足!");
+            }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
     }
     public static void main(String[] args) {
         for(int i=0;i<20;i++){

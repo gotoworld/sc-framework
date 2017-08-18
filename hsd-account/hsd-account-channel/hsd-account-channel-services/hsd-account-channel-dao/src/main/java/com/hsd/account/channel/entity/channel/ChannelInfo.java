@@ -17,6 +17,10 @@ import lombok.NoArgsConstructor;
 public class ChannelInfo extends BaseEntity {
      /**渠道商ID*/
      private Long id;
+     /**渠道商登录账户*/
+     private String account;
+     /**渠道商登录密码*/
+     private String pwd;
      /**渠道商名称*/
      private String channelName;
      /**渠道商类型*/
@@ -31,7 +35,7 @@ public class ChannelInfo extends BaseEntity {
      private String fax;
      /**生日*/
      private Date birthday;
-     /**婚姻状态*/
+     /**婚姻状态(0：已婚，1,：未婚）*/
      private Integer maritalStatus;
      /**身份证号*/
      private String idNo;
@@ -69,7 +73,7 @@ public class ChannelInfo extends BaseEntity {
      private String qq;
      /**备注信息*/
      private String remark;
-     /**开始工作时间*/	
+     /**开始工作时间*/
      private Date workStartDate;
      /**户籍与居住地是否一致*/
      private Integer domicileLiveDiff;
@@ -83,6 +87,8 @@ public class ChannelInfo extends BaseEntity {
      private String address;
      /**BI时间戳*/
      private Date biUpdateTs;
+     /**渠道商状态（0:停用，1：启用）*/
+     private Integer staus;
      /**是否删除*/
      private Integer delFlag;
 }

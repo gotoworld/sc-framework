@@ -59,4 +59,11 @@ public interface IChannelInfoService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/recoveryData")
 	public String recoveryData(ChannelInfoDto dto) throws Exception;
+
+    /**
+     * @param dto
+     * 重置密码
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/resetPwd")
+	public String resetPwd(ChannelInfoDto dto) throws Exception;
 }

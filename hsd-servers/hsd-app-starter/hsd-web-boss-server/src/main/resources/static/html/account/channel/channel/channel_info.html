@@ -1,97 +1,100 @@
 <!DOCTYPE html>
 <html lang="zh" ng-app="app">
 <head>
-    <meta charset="UTF-8">
-    <title>//TODO 渠道商信息</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="description" content="memo of your site" />
-    <meta name="author" content="author of the site" />
-    <link rel="shortcut icon" href="/favicon.ico">
+	<meta charset="UTF-8">
+	<title>//TODO 渠道商信息</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta name="description" content="memo of your site" />
+	<meta name="author" content="author of the site" />
+	<link rel="shortcut icon" href="/favicon.ico">
 
-    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
-    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+	<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+	<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+	<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+	<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
 
-    <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-    <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+	<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
-    <link href="/css/common.css" rel="stylesheet">
+	<link href="/css/common.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
-	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="clients-list">
-					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
-					</ul>
-					<div class="tab-content">
-						<div id="tab-1" class="tab-pane active">
-							<div class="ibox float-e-margins">
-								<div class="ibox-content">
-									<table class="table">
-										<tr>
-											<td>
-												<form id="info_search_form"
-													role="form" class="form-inline"
-													method="post"  accept-charset="UTF-8"
-													ng-submit="page()">
-													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
-													<div class="form-group" id="data_5">
-														<label class="font-noraml">创建时间</label>
-														<div class="input-daterange input-group" id="datepicker">
-															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
-															<span class="input-group-addon">到</span>
-															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
-														</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="clients-list">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="tab-1" class="tab-pane active">
+						<div class="ibox float-e-margins">
+							<div class="ibox-content">
+								<table class="table">
+									<tr>
+										<td>
+											<form id="info_search_form"
+												  role="form" class="form-inline"
+												  method="post"  accept-charset="UTF-8"
+												  ng-submit="page()">
+												<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
+												<div class="form-group" id="data_5">
+													<label class="font-noraml">创建时间</label>
+													<div class="input-daterange input-group" id="datepicker">
+														<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+														<span class="input-group-addon">到</span>
+														<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
 													</div>
-													<div class="input-group">
-														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+												</div>
+												<div class="input-group">
+													<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
 														</span>
-													</div>
-												</form>
+												</div>
+											</form>
+										</td>
+									</tr>
+								</table>
+								<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("channelInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+								<div class="table-responsive table-scrollable">
+									<table class="table table-bordered table-striped  table-hover">
+										<thead>
+										<tr>
+											<th style="width:20px;">#</th>
+											<th>创建日期</th>
+											<th>渠道商名称</th>
+											<th>渠道商登录账户</th>
+											<th>电话1</th>
+											<th>操作</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
+											<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
+											<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+											<td>{{item.channelName}}</td>
+											<td>{{item.account}}</td>
+											<td>{{item.phone1}}</td>
+											<td>
+												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:menu")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:menu")'  ng-click="recovery(item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i>恢复</a>
+												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:menu")'  ng-click="resetPwd(item.id)" class="label label-success" ><i class="fa fa-edit"></i> 重置密码</a>
 											</td>
 										</tr>
+										<tr ng-if="result.data.data==null || result.data.data.length==0">
+											<td colspan="6">
+												<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
+											</td>
+										</tr>
+										</tbody>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("channelInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									<div class="table-responsive table-scrollable">
-                                    	<table class="table table-bordered table-striped  table-hover">
-                                    		<thead>
-                                    			<tr>
-                                    				<th style="width:20px;">#</th>
-                                    				<th>创建日期</th>
-                                    				<th>渠道商名称</th>
-                                    				<th>电话1</th>
-                                    				<th>操作</th>
-                                    			</tr>
-                                    		</thead>
-                                    		<tbody>
-                                    			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
-                                    				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                    				<td>{{item.channelName}}</td>
-                                    				<td>{{item.phone1}}</td>
-                                    				<td>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("channelInfo:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("channelInfo:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("channelInfo:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-                                                    </td>
-                                    			</tr>
-                                    			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="5">
-                                    				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
-                                    				</td>
-                                    			</tr>
-                                    		</tbody>
-                                    	</table>
-										<div class="b_page" id="tagPages"></div>
-                                    </div>
+									<div class="b_page" id="tagPages"></div>
 								</div>
 							</div>
 						</div>
@@ -100,6 +103,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
 <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
@@ -120,17 +124,17 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-    /* copy to common.js
-    var site={
-        channelInfo: {//渠道商信息
-             view: basePath + "/html/account/channel/channel/channel_info"
-            ,page: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/page/"
-            ,save: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/save"
-            ,info: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/info/"
-            ,del: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/del/"
-        }
-    }
-    */
+	/* copy to common.js
+	 var site={
+	 channelInfo: {//渠道商信息
+	 view: basePath + "/html/account/channel/channel/channel_info"
+	 ,page: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/page/"
+	 ,save: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/save"
+	 ,info: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/info/"
+	 ,del: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/del/"
+	 }
+	 }
+	 */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -143,7 +147,7 @@
             loadPage(1);
         });
         $scope.edit = function (title,id) {
-            $data.feedback=true;
+
             sessionStorage.setItem(site.channelInfo.info,id);
             openMyBoxLayer(title,site.channelInfo.view+'_edit.html');
         }
@@ -154,10 +158,36 @@
         $scope.del = function (id) {
             if(confirm('确认删除吗?')) {
                 $.post( site.channelInfo.del + id,{}, function (result) {
-                    $data.feedback=true;
+
                     if(result.code==0){
                         loadPage($('#pageNumA').val());
                         alert('删除成功');
+                    }else{
+                        alert(result.message);
+                    }
+                });
+            }
+        }
+        $scope.recovery = function (id) {
+            if(confirm('确认恢复吗?')) {
+                $.post( site.channelInfo.recovery + id,{}, function (result) {
+
+                    if(result.code==0){
+                        loadPage($('#pageNumA').val());
+                        alert('恢复成功');
+                    }else{
+                        alert(result.message);
+                    }
+                });
+            }
+        }
+        $scope.resetPwd = function (id) {
+            if(confirm('确认重置密码吗?')) {
+                $.post( site.channelInfo.resetPwd + id,{}, function (result) {
+
+                    if(result.code==0){
+                        loadPage($('#pageNumA').val());
+                        alert('重置成功');
                     }else{
                         alert(result.message);
                     }
@@ -175,9 +205,9 @@
         }else{
             pageIndex=$('#pageNumA').val();
         }
-        //console.info("加载页码"+pageIndex)
+        console.info("加载页码"+pageIndex)
         $.post( site.channelInfo.page+pageIndex,$('#info_search_form').serialize(), function (result) {
-            $data.feedback=false;
+
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();

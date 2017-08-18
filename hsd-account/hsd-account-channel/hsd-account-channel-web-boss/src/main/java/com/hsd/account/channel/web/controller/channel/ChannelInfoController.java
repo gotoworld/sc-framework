@@ -64,7 +64,7 @@ public class ChannelInfoController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("channelInfo:edit")
+    @RequiresPermissions("channelInfo:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
@@ -160,5 +160,22 @@ public class ChannelInfoController extends BaseController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }
+    
+    @RequiresPermissions("channelInfo:menu")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "resetPwd/{id}")
+    @ALogOperation(type = "重置", desc = "渠道商信息")
+    @ApiOperation(value = "重置密码")
+    public Response resetPwd(@PathVariable("id") Long id){
+    	log.info("ChannelInfoController resetPwd.........");
+    	 Response result = new Response();
+         try {
+             ChannelInfoDto dto = new ChannelInfoDto();
+             dto.setId(id);
+             result.message = channelInfoService.resetPwd(dto);
+         } catch (Exception e) {
+             result = Response.error(e.getMessage());
+         }
+         return result;
     }
 }

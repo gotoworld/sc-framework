@@ -4,6 +4,8 @@
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
          t1.id as "id"
+        ,t1.account as "account"
+        ,t1.pwd as "pwd"
         ,t1.channel_name as "channelName"
         ,t1.channeltype as "channeltype"
         ,t1.gender as "gender"
@@ -37,6 +39,7 @@
         ,t1.staff_no as "staffNo"
         ,t1.address as "address"
         ,t1.bi_update_ts as "biUpdateTs"
+        ,t1.staus as "staus"
         ,t1.del_flag as "delFlag"
     </sql>
 
@@ -53,7 +56,9 @@
     <insert id="insert" parameterType="com.hsd.account.channel.entity.channel.ChannelInfo"  useGeneratedKeys="true" keyProperty="id"  >
         insert into channel_info (
          
-            channel_name 
+            account 
+           ,pwd 
+           ,channel_name 
            ,channeltype 
            ,gender 
            ,phone1 
@@ -86,10 +91,13 @@
            ,staff_no 
            ,address 
            ,bi_update_ts 
+           ,staus 
            ,del_flag 
         ) values (
          
-            #{channelName} 
+            #{account} 
+           ,#{pwd} 
+           ,#{channelName} 
            ,#{channeltype} 
            ,#{gender} 
            ,#{phone1} 
@@ -122,6 +130,7 @@
            ,#{staffNo} 
            ,#{address} 
            ,now()
+           ,#{staus} 
            ,0
         )
     </insert>
@@ -130,6 +139,8 @@
     <!-- 数据更新 -->
     <update id="update" parameterType="com.hsd.account.channel.entity.channel.ChannelInfo">
         update channel_info set bi_update_ts=now() 
+             <if test="account!=null">,account = #{account}</if>
+             <if test="pwd!=null">,pwd = #{pwd}</if>
              <if test="channelName!=null">,channel_name = #{channelName}</if>
              <if test="channeltype!=null">,channeltype = #{channeltype}</if>
              <if test="gender!=null">,gender = #{gender}</if>
@@ -161,6 +172,7 @@
              <if test="relation!=null">,relation = #{relation}</if>
              <if test="staffNo!=null">,staff_no = #{staffNo}</if>
              <if test="address!=null">,address = #{address}</if>
+             <if test="staus!=null">,staus = #{staus}</if>
         where
         id = #{id}
     </update>

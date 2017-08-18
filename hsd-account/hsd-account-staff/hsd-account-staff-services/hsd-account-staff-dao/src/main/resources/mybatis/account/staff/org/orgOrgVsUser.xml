@@ -31,7 +31,7 @@
         ,now()
         )
     </insert>
-    <select id="findUserIsList" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsUser" resultType="com.hsd.account.staff.entity.org.OrgUser">
+    <select id="findOrgUserIsList" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsUser" resultType="com.hsd.account.staff.entity.org.OrgUser">
         SELECT
          t2.id as "id"
         ,t2.account as "account"

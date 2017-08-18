@@ -2,6 +2,7 @@ package com.hsd.account.staff.web.controller.org;
 
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
@@ -167,28 +168,43 @@ public class OrgInfoController extends BaseController {
 
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/{orgId}")
     @ApiOperation(value = "获取组织已设置角色")
-    public Response getRole(@PathVariable("orgId") Long orgId) {
-        log.info("OrgInfoController getRole.........");
+    public Response getOrgRole(@PathVariable("orgId") Long orgId) {
+        log.info("OrgInfoController getOrgRole.........");
         Response result=new Response();
         try {
             OrgInfoDto orgInfoDto=new OrgInfoDto();
             orgInfoDto.setId(orgId);
-            result.data=orgInfoService.findRoleIsList(orgInfoDto);
+            result.data=orgInfoService.findOrgRoleIsList(orgInfoDto);
         } catch (Exception e) {
             result=Response.error(e.getMessage());
         }
         return result;
     }
     @RequiresPermissions("orgInfo:edit:role")
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "set/role")
-    @ALogOperation(type = "设置角色", desc = "组织机构")
-    @ApiOperation(value = "设置角色")
-    public Response setRole(@ModelAttribute OrgInfoDto dto) {
-        log.info("OrgInfoController setRole.........");
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "add/role")
+    @ALogOperation(type = "添加角色", desc = "组织机构")
+    @ApiOperation(value = "添加角色")
+    public Response addRole(@ModelAttribute OrgOrgVsRoleDto dto) {
+        log.info("OrgInfoController addRole.........");
         Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
-            result = orgInfoService.setRole(dto);
+            result = orgInfoService.addRole(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequiresPermissions("orgInfo:edit:role")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/role")
+    @ALogOperation(type = "删除角色", desc = "组织机构")
+    @ApiOperation(value = "删除角色")
+    public Response delRole(@ModelAttribute OrgOrgVsRoleDto dto) {
+        log.info("OrgInfoController delRole.........");
+        Response result = new Response();
+        try {
+            if (dto == null)throw new RuntimeException("参数异常");
+            result = orgInfoService.addRole(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -202,7 +218,7 @@ public class OrgInfoController extends BaseController {
         try {
             OrgInfoDto orgInfoDto=new OrgInfoDto();
             orgInfoDto.setId(orgId);
-            result.data=orgInfoService.findUserIsList(orgInfoDto);
+            result.data=orgInfoService.findOrgUserIsList(orgInfoDto);
         } catch (Exception e) {
             result=Response.error(e.getMessage());
         }

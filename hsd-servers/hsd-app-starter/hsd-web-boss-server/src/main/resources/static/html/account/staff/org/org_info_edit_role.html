@@ -36,7 +36,7 @@
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in roleNodes">
-                                        <label style="{{checkRoleId(t.id)?'color:red':''}}"><input type="checkbox" name="roleIds" ng-value="t.id" ng-checked="checkRoleId(t.id)">{{t.name}}</label>
+                                        <label style="{{checkRole(t.id)?'color:red':''}}"><input type="checkbox" name="roleIds" ng-value="t.id" ng-checked="checkRole(t.id)">{{t.name}}</label>
                                     </li>
                                 </ul>
                             </div>
@@ -76,21 +76,10 @@
         $data = $scope;
         $data.id=sessionStorage.getItem(site.orgInfo.info);
         user.init(function(){
-            loadRole();
+            loadAllRole();
             loadOrgRole();
         });
-        $scope.save = function () {
-			$.post(site.orgInfo.setRole, $('#orgInfo_01').serialize(),function (result) {
-					//console.info("获取数据.." + JSON.stringify(result));
-					if (result.code == 0) {
-						alert('保存成功!');
-						closeMyBoxLayer();
-					} else {
-						alert(result.message);
-					}
-			}, 'json');
-        }
-        $scope.checkRoleId=function(id){
+        $scope.checkRole=function(id){
             if($data.orgRoleNodes && $data.orgRoleNodes.indexOf(id)!=-1){
                 return true;
             }
@@ -98,7 +87,7 @@
         }
     });
 
-    function loadRole() {
+    function loadAllRole() {
         $.post(site.authRole.list, {}, function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
@@ -115,7 +104,7 @@
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 for(var i=0;i<result.data.length;i++){
-                    $data.orgRoleNodes.push(result.data[i].id);
+                    $data.orgRoleNodes.push(result.data[i].);
                 }
             } else {
                 alert(result.message);

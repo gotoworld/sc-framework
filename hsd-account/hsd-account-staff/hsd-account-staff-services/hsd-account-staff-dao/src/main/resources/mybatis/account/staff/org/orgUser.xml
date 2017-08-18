@@ -30,6 +30,57 @@
         from org_user t1
         where t1.id = #{id}
     </select>
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch"  >
+        insert into org_user (
+            account
+            ,pwd
+            ,name
+            ,gender
+            ,cellphone
+            ,avatar
+            ,email
+            ,type
+            ,last_login
+            ,count
+            ,state
+            ,eff_date
+            ,exp_date
+            ,memo
+            ,version
+            ,order_no
+            ,del_flag
+            ,create_id
+            ,date_created
+            ,date_updated
+            ,bi_update_ts
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+             #{t.account}
+            ,#{t.pwd}
+            ,#{t.name}
+            ,#{t.gender}
+            ,#{t.cellphone}
+            ,#{t.avatar}
+            ,#{t.email}
+            ,#{t.type}
+            ,null
+            ,0
+            ,#{t.state}
+            ,#{t.effDate}
+            ,#{t.expDate}
+            ,#{t.memo}
+            ,0
+            ,#{t.orderNo}
+            ,0
+            ,#{t.createId}
+            ,now()
+            ,now()
+            ,now()
+            )
+        </foreach>
+    </insert>
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgUser" useGeneratedKeys="true" keyProperty="id">
 		insert into org_user (

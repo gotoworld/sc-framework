@@ -29,5 +29,10 @@
             <artifactId>hsd-account-staff-dao</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.hsd.common</groupId>
+            <artifactId>hsd-common-util-excel</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

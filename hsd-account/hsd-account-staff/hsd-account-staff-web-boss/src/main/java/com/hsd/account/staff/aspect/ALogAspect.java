@@ -53,7 +53,6 @@ public class ALogAspect {
         String[] logArr = getMethodDesc(joinPoint);
         try {
             if (log.isDebugEnabled()) {
-                /*========控制台输出=========*/
                 log.debug("=====前置通知开始=====");
                 log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
                 log.debug("方法描述:" + logArr[1]);
@@ -80,9 +79,8 @@ public class ALogAspect {
                 }
             } catch (Exception e) {
             }
-//            //*========数据库日志=========*//
             sysUserLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), object.toString(), user.getId(), user.getName(), ip);
-//            log.debug("=====前置通知结束=====");
+            log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
             log.error("异常信息:{}", e.getMessage());
@@ -98,7 +96,6 @@ public class ALogAspect {
     @AfterThrowing(pointcut = "alogOperationAspect()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//        HttpSession session = request.getSession();
         //获取用户请求方法的参数并序列化为JSON格式字符串
         String params = "";
         if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
@@ -112,23 +109,21 @@ public class ALogAspect {
             //获取请求ip
             String ip = IpUtil.getIpAddr(request);
             String[] logArr = getMethodDesc(joinPoint);
-//              /*========控制台输出=========*/
-//            log.debug("=====异常通知开始=====");
-//            log.debug("异常代码:" + e.getClass().getName());
-//            log.debug("异常信息:" + e.getMessage());
-//            log.debug("异常方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-//            log.debug("方法描述:" + logArr[1]);
-//            log.debug("请求人:" + user.getName());
-//            log.debug("请求IP:" + ip);
-//            log.debug("请求参数:" + params);
+            if (log.isDebugEnabled()) {
+                log.debug("=====异常通知开始=====");
+                log.debug("异常代码:" + e.getClass().getName());
+                log.debug("异常信息:" + e.getMessage());
+                log.debug("异常方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
+                log.debug("方法描述:" + logArr[1]);
+                log.debug("请求人:" + user.getName());
+                log.debug("请求IP:" + ip);
+                log.debug("请求参数:" + params);
+                log.debug("=====异常通知结束=====");
+            }
             sysUserLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), user.getId(), user.getName(), ip);
-//            log.debug("=====异常通知结束=====");
         } catch (Exception ex) {
-            //记录本地异常日志
-            log.error("==异常通知异常==");
             log.error("异常信息:{}", ex.getMessage());
         }
-         /*==========记录本地异常日志==========*/
         log.error("异常方法:{}异常代码:{}异常信息:{}参数:{}", joinPoint.getTarget().getClass().getName() + joinPoint.getSignature().getName(), e.getClass().getName(), e.getMessage(), params);
     }
 

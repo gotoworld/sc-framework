@@ -204,7 +204,7 @@ public class OrgInfoController extends BaseController {
         Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
-            result = orgInfoService.addRole(dto);
+            result = orgInfoService.delRole(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

@@ -16,9 +16,6 @@
     <version>1.0</version>
 
     <modules>
-        <module>hsd-common-api</module>
-        <module>hsd-common-services</module>
-        <module>hsd-common-web</module>
         <module>hsd-common-util-sms</module>
         <module>hsd-common-util-excel</module>
     </modules>

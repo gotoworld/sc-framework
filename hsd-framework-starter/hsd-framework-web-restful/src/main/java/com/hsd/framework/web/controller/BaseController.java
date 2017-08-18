@@ -1,4 +1,4 @@
-package com.hsd.web.controller;
+package com.hsd.framework.web.controller;
 
 
 import com.alibaba.fastjson.JSON;

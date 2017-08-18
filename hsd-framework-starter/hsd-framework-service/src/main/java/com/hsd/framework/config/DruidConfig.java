@@ -22,12 +22,11 @@
  * THE SOFTWARE.
  */
 
-package com.hsd.config;
+package com.hsd.framework.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
-import com.hsd.framework.config.AppConfig;
 import com.hsd.framework.util.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;

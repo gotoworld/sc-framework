@@ -11,7 +11,7 @@
 package com.hsd.account.channel.web.controller;
 
 import com.hsd.framework.annotation.NoAuthorize;
-import com.hsd.web.controller.BaseController;
+import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;

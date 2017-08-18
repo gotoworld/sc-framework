@@ -12,7 +12,7 @@ import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.web.controller.BaseController;
+import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +75,7 @@ public class OrgUserController extends BaseController {
 			dto.setId(id);
 			dto=orgUserService.findDataById(dto);
 			if(dto==null)throw new RuntimeException("用户不存在!");
-			result.data=orgUserService.findRoleDataIsList(dto);
+			result.data=orgUserService.findRoleIsList(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}

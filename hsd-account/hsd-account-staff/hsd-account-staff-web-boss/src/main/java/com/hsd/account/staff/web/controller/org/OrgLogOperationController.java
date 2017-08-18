@@ -5,7 +5,7 @@ import com.hsd.account.staff.dto.org.OrgLogOperationDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.web.controller.BaseController;
+import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

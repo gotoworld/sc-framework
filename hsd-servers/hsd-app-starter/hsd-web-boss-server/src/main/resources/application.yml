@@ -58,7 +58,6 @@ logging:
 #服务名
 feign:
   name:
-    common: hsd-common-server
     account: hsd-account-server
 
 #shiro

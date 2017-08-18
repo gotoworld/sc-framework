@@ -7,7 +7,7 @@ import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.web.controller.BaseController;
+import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

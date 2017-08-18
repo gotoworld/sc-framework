@@ -1,2 +1,2 @@
 
-    $("#bean-${t.columnNameFormat}").chosen({});
+        $("#bean-${t.columnNameFormat}").chosen({});

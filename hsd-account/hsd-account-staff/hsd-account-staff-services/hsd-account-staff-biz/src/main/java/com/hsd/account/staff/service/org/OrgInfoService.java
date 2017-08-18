@@ -8,6 +8,7 @@ import com.hsd.account.staff.dao.org.IOrgOrgVsRoleDao;
 import com.hsd.account.staff.dao.org.IOrgOrgVsUserDao;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.account.staff.entity.org.OrgInfo;
@@ -29,7 +30,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @FeignService
@@ -173,31 +173,18 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
     }
-    public List<OrgUserDto> findUserIsList(@RequestBody OrgInfoDto dto) {
+    public List<OrgUserDto> findOrgUserIsList(@RequestBody OrgInfoDto dto) {
         List<OrgUserDto> results = null;
         try {
             OrgOrgVsUser orgVsUser=new OrgOrgVsUser();
             orgVsUser.setOrgId(dto.getId());
-            results = copyTo(orgOrgVsUserDao.findUserIsList(orgVsUser),OrgUserDto.class);
+            results = copyTo(orgOrgVsUserDao.findOrgUserIsList(orgVsUser),OrgUserDto.class);
         } catch (Exception e) {
             log.error("获取组织->人员 异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
     }
-    public List<AuthRoleDto> findRoleIsList(@RequestBody OrgInfoDto dto) {
-        List<AuthRoleDto> results = null;
-        try {
-            OrgOrgVsRole orgVsUser=new OrgOrgVsRole();
-            orgVsUser.setOrgId(dto.getId());
-            results = copyTo(orgOrgVsRoleDao.findRoleIsList(orgVsUser),AuthRoleDto.class);
-        } catch (Exception e) {
-            log.error("获取组织->角色 异常!", e);
-            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-        }
-        return results;
-    }
-
     @RfAccount2Bean
     public Response addUser(@RequestBody OrgOrgVsUserDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
@@ -214,6 +201,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return result;
     }
+
     public Response delUser(@RequestBody OrgOrgVsUserDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
@@ -229,29 +217,43 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return result;
     }
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+
+    public List<AuthRoleDto> findOrgRoleIsList(@RequestBody OrgInfoDto dto) {
+        List<AuthRoleDto> results = null;
+        try {
+            OrgOrgVsRole orgVsUser=new OrgOrgVsRole();
+            orgVsUser.setOrgId(dto.getId());
+            results = copyTo(orgOrgVsRoleDao.findOrgRoleIsList(orgVsUser),AuthRoleDto.class);
+        } catch (Exception e) {
+            log.error("获取组织->角色 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
+
     @RfAccount2Bean
-    public Response setRole(@RequestBody OrgInfoDto dto) throws Exception {
+    public Response addRole(@RequestBody OrgOrgVsRoleDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             if(JwtUtil.isPermitted("orgInfo:edit:role")){
-                OrgOrgVsRole orgOrgVsRole = new OrgOrgVsRole();
-                orgOrgVsRole.setOrgId(dto.getId());
-                // 1.根据组织id清除角色关联表
-                orgOrgVsRoleDao.deleteBulkDataByOrgId(orgOrgVsRole);
-                // 2.新增组织用户关联信息
-                if (dto.getRoleIds() != null) {
-                    List<OrgOrgVsRole> xEntityList = new ArrayList<>();
-                    for (Long roleId : dto.getRoleIds()) {
-                        OrgOrgVsRole orgVsRole = new OrgOrgVsRole();
-                        orgVsRole.setOrgId(dto.getId());
-                        orgVsRole.setRoleId(roleId);
-                        orgVsRole.setCreateId(dto.getCreateId());
-                        xEntityList.add(orgVsRole);
-                    }
-                    orgOrgVsRoleDao.insertBatch(xEntityList);
-                }
+                orgOrgVsRoleDao.insert(copyTo(dto,OrgOrgVsRole.class));
+            }else{
+                throw new RuntimeException("权限不足!");
+            }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+
+    public Response delRole(@RequestBody OrgOrgVsRoleDto dto) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            if(JwtUtil.isPermitted("orgInfo:edit:role")){
+                orgOrgVsRoleDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsRole.class));
             }else{
                 throw new RuntimeException("权限不足!");
             }

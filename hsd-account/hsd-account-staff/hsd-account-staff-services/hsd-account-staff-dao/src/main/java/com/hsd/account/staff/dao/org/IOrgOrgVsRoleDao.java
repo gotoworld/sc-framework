@@ -39,5 +39,5 @@ public interface IOrgOrgVsRoleDao extends IBaseDao {
      @Delete("delete from org_org_vs_role where  role_id = #{roleId}")
      int deleteBulkDataByRoleId(IEntity entity) throws Exception;
 
-     List<?> findRoleIsList(IEntity entity) throws Exception;
+     List<?> findOrgRoleIsList(IEntity entity) throws Exception;
 }

@@ -4,6 +4,7 @@ package com.hsd.account.staff.api.org;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
 import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.framework.Response;
@@ -75,24 +76,30 @@ public interface IOrgInfoService {
 
 
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByIdIsList")
-    public List<OrgUserDto> findUserIsList(OrgInfoDto dto);
-
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findRoleByIdIsList")
-    public List<AuthRoleDto> findRoleIsList(OrgInfoDto dto);
+    public List<OrgUserDto> findOrgUserIsList(OrgInfoDto dto);
 
     /**
      * <p>添加人员。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addUser")
     public Response addUser(OrgOrgVsUserDto dto) throws Exception;
+
     /**
      * <p>删除人员。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delUser")
     public Response delUser(OrgOrgVsUserDto dto) throws Exception;
+
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgRoleIsList")
+    public List<AuthRoleDto> findOrgRoleIsList(OrgInfoDto dto);
     /**
-     * <p>设置角色。
+     * <p>添加角色。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setRole")
-    public Response setRole(OrgInfoDto dto) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addRole")
+    public Response addRole(OrgOrgVsRoleDto dto) throws Exception;
+    /**
+     * <p>删除角色。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delRole")
+    public Response delRole(OrgOrgVsRoleDto dto) throws Exception;
 }

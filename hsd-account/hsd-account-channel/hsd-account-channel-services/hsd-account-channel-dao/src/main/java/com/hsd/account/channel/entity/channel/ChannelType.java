@@ -17,7 +17,7 @@ import java.util.Date;
 public class ChannelType extends BaseEntity {
      /**类型ID*/
      private Long id;
-     /**类型*/
+     /**类型名称*/
      private String type;
      /**创建时间*/
      private Date dateCreated;

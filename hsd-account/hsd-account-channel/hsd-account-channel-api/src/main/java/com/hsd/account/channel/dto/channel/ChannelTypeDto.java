@@ -18,7 +18,7 @@ import java.util.List;
 public class ChannelTypeDto extends BaseDto {
      /**类型ID*/
      private Long id;
-     /**类型*/
+     /**类型名称*/
 	 @NotNull(message="type不能为空")@Size(max=100,message="type最大100字符")
      private String type;
      /**创建时间*/

@@ -1,4 +1,4 @@
-package com.hsd.web.servlet;
+package com.hsd.framework.web.servlet;
 
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.config.AppConfig;

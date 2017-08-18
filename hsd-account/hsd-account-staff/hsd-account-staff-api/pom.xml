@@ -18,10 +18,5 @@
             <artifactId>hsd-framework-api</artifactId>
             <version>${hsd.framework.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.hsd.common</groupId>
-            <artifactId>hsd-common-api</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 </project>

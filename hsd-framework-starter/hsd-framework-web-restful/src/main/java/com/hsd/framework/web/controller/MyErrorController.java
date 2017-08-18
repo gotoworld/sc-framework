@@ -1,4 +1,4 @@
-package com.hsd.web.controller;
+package com.hsd.framework.web.controller;
 
 import com.hsd.framework.Response;
 import com.hsd.framework.util.ReflectUtil;

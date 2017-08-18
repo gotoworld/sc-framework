@@ -14,7 +14,7 @@ import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.web.controller.BaseController;
+import com.hsd.framework.web.controller.BaseController;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

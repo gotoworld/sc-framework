@@ -118,4 +118,10 @@ public interface IOrgUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delOrg")
     public Response delOrg(OrgOrgVsUserDto dto) throws Exception;
+
+    /**
+     * <p>批量新增。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addBatch")
+    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception;
 }

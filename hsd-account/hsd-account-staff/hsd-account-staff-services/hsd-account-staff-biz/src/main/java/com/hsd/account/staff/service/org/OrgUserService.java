@@ -15,17 +15,16 @@ import com.hsd.account.staff.dto.org.OrgUserDto;
 import com.hsd.account.staff.entity.auth.AuthUserVsRole;
 import com.hsd.account.staff.entity.org.OrgOrgVsUser;
 import com.hsd.account.staff.entity.org.OrgUser;
+import com.hsd.common.util.excel.ExcelUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.config.AppConfig;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
-import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.IdUtil;
-import com.hsd.framework.util.JwtUtil;
-import com.hsd.framework.util.ValidatorUtil;
+import com.hsd.framework.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -337,6 +336,71 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 
+//    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (fileUrl == null) throw new RuntimeException("文件路径不存在!");
+            if(JwtUtil.isPermitted("orgUser:add:batch")){
+                Map<String,List> map= ExcelUtil.readExcelIsList(StrUtil.replaceAll(fileUrl, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload")),true);
+                if(map==null)  throw new RuntimeException("excel读取失败!");
+                List titles=map.get("titles");
+                List datas=map.get("datas");
+                log.info("excel->title->"+titles);
+                Long createId=JwtUtil.getSubject().getLong("id");
+               final StringBuffer finalMessage = new StringBuffer("");
+                if(datas!=null) {
+                    List<OrgUser> orgUsers=new ArrayList<>();
+                    for (int i = 0; i < datas.size(); i++) {
+                        List data= (List) datas.get(i);
+                        OrgUser orgUser=new OrgUser();
+                        orgUser.setAccount((String) data.get(0));
+                        orgUser.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(1))) );
+                        orgUser.setName((String) data.get(2));
+                        orgUser.setGender(getGender((String) data.get(3)));
+                        orgUser.setCellphone((String) data.get(4));
+                        orgUser.setEmail((String) data.get(5));
+                        orgUser.setMemo("批量导入");
+                        orgUser.setOrderNo(i);
+                        orgUser.setType(0);
+                        orgUser.setState(0);
+                        orgUser.setCreateId(createId);
+                        orgUsers.add(orgUser);
+                        if((i+1)%100==0||(i+1)==datas.size()){
+                            try {
+                                orgUserDao.insertBatch(orgUsers);
+                            } catch (Exception e) {
+                                orgUsers.forEach(ou -> {
+                                    try {
+                                        orgUserDao.insert(ou);
+                                    } catch (Exception e1) {
+                                        finalMessage.append("<br/>异常:"+e1.getMessage());
+                                        finalMessage.append("<br/>==>"+ou.getAccount()+","+ou.getName()+","+ou.getCellphone());
+                                    }
+                                });
+                            }
+                            orgUsers=new ArrayList<>();
+                        }
+                    }
+                }
+                result.message=finalMessage.toString();
+            }else{
+                throw new RuntimeException("权限不足!");
+            }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    private int getGender(String gender){
+        int val=3;
+        switch (gender){
+            case "男":val=0;break;
+            case "女":val=1;break;
+        }
+        return val;
+    }
     public static void main(String[] args) {
         for(int i=0;i<20;i++){
             String x=IdUtil.createUUID(8);

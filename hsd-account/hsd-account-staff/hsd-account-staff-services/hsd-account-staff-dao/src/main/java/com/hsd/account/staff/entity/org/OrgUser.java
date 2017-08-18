@@ -27,7 +27,7 @@ public class OrgUser extends BaseEntity {
      private String avatar;
      /**邮箱*/
      private String email;
-     /**用户类型0管理员1普通用户*/
+     /**用户类型0管理员*/
      private Integer type;
      /**最后登录日期*/
      private Date lastLogin;

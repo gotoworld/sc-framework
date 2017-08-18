@@ -155,7 +155,6 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
-
 	/**
 	 * <p> 信息保存
 	 */
@@ -241,6 +240,7 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
+
 	/**
 	 * <p> 信息分页 (未删除)。
 	 */
@@ -263,7 +263,6 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
-
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/{userId}")
 	@ApiOperation(value = "获取组织已设置角色")
 	public Response getRole(@PathVariable("userId") Long userId) {
@@ -278,6 +277,7 @@ public class OrgUserController extends BaseController {
 		}
 		return result;
 	}
+
 	@RequiresPermissions("orgUser:edit:role")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "set/role")
 	@ALogOperation(type = "设置角色", desc = "组织架构_员工/用户")
@@ -334,6 +334,22 @@ public class OrgUserController extends BaseController {
 			result = orgUserService.delOrg(dto);
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**
+	 * <p> 批量新增。
+	 */
+	@RequiresPermissions("orgUser:add:batch")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"add/batch")
+	@ApiOperation(value = "详情")
+	public Response addBatch(@RequestParam("fileUrl") String fileUrl) {
+		log.info("OrgUserController addBatch.........");
+		Response result = new Response();
+		try {
+			result=orgUserService.addBatch(fileUrl);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
 		}
 		return result;
 	}

@@ -21,7 +21,7 @@ public class ChannelInfo extends BaseEntity {
      private String channelName;
      /**渠道商类型*/
      private Long channeltype;
-     /**性别*/
+     /**性别(0:男，1：女，2：保密）*/
      private String gender;
      /**电话1*/
      private String phone1;
@@ -37,7 +37,7 @@ public class ChannelInfo extends BaseEntity {
      private String idNo;
      /**收入*/
      private BigDecimal income;
-     /**收入是否验证*/
+     /**收入是否验证（0：是，1：否）*/
      private Integer incVerifiable;
      /**其他收入*/
      private BigDecimal otherIncome;
@@ -55,13 +55,13 @@ public class ChannelInfo extends BaseEntity {
      private Integer ownCarNum;
      /**房产数*/
      private Integer ownHouseNum;
-     /**是否有小孩*/
+     /**是否有小孩（0：是，1：否）*/
      private Integer childrenStatus;
      /**孩子数量*/
      private Integer childrenNum;
      /**其他财产备注*/
      private String assetOther;
-     /**贷款状态*/
+     /**贷款状态(0:已贷，1：未贷）*/
      private Integer debtStatus;
      /**微信*/
      private String wechat;
@@ -69,13 +69,13 @@ public class ChannelInfo extends BaseEntity {
      private String qq;
      /**备注信息*/
      private String remark;
-     /**开始工作时间*/
+     /**开始工作时间*/	
      private Date workStartDate;
      /**户籍与居住地是否一致*/
      private Integer domicileLiveDiff;
      /**创建日期*/
      private Date dateCreated;
-     /**是否公司员工*/
+     /**是否公司员工（0：是，1：否）*/
      private Integer relation;
      /**员工工号*/
      private String staffNo;

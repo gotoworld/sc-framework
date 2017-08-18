@@ -23,7 +23,7 @@ public class JwtUtil {
     /**
      * 由字符串生成加密key
      */
-    public static SecretKey generalKey() {
+    private static SecretKey generalKey() {
         String stringKey = profiles + CommonConstant.JWT_SECRET_KEY;
         byte[] encodedKey = Base64.decodeBase64(stringKey);
         SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
@@ -71,18 +71,22 @@ public class JwtUtil {
         jo.put("name", ReflectUtil.getValueByFieldName(user, "name"));
         jo.put("authorizationInfoPerms", ReflectUtil.getValueByFieldName(user, "authorizationInfoPerms"));
         jo.put("authorizationInfoRoles", ReflectUtil.getValueByFieldName(user, "authorizationInfoRoles"));
-//        jo.put("sid", ReflectUtil.getValueByFieldName(user,"sid"));
         return jo.toJSONString();
     }
-    public static <T> T getSubject(Class<T> obj) throws Exception {
+    public static JSONObject getSubject() throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
         if (ValidatorUtil.isEmpty(authorizationToken)) {
             throw new SignatureException("token头缺失");
         }
         final Claims claims = parseJWT(authorizationToken);
-        return JSONObject.parseObject(claims.getSubject(),obj);
+        return JSONObject.parseObject(claims.getSubject());
     }
+
+    public static <T> T getSubject(Class<T> obj) throws Exception {
+        return getSubject().toJavaObject(obj);
+    }
+
     public static boolean isPermitted(String authStr) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);

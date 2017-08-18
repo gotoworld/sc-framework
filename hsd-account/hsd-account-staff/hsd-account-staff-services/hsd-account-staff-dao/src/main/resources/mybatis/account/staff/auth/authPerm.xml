@@ -92,6 +92,7 @@
         from auth_perm t1
         where 1=1
         <include refid="list_where_sql"/>
+        order by t1.order_no desc,t1.date_created desc
     </select>
     <!--信息列表 -->
     <select id="findDataIsList" parameterType="com.hsd.account.staff.entity.auth.AuthPerm" resultType="com.hsd.account.staff.entity.auth.AuthPerm">
@@ -105,6 +106,7 @@
         from auth_perm t1
         where 1=1
         <include refid="list_where_sql"/>
+        order by t1.order_no desc,t1.date_created desc
     </select>
     <!-- 角色权限信息列表>根据用户id -->
     <select id="getPermListByUserId" resultType="com.hsd.account.staff.entity.auth.AuthPerm" parameterType="map">

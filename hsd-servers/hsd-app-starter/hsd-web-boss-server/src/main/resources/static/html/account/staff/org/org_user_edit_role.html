@@ -201,6 +201,7 @@
             if (result.code == 0) {
                 $data.roleNodes = result.data;
             } else {
+                $data.roleMessage=result.message;
                 alert(result.message);
             }
             if (!$data.$$phase) $data.$apply();
@@ -212,6 +213,7 @@
             if (result.code == 0) {
                 $data.userRoleNodes = result.data;
             } else {
+                $data.userRoleMessage=result.message;
                 alert(result.message);
             }
             if (!$data.$$phase) $data.$apply();
@@ -223,6 +225,7 @@
             if (result.code == 0) {
                 $data.orgRoleNodes = result.data;
             } else {
+                $data.orgRoleMessage=result.message;
                 alert(result.message);
             }
             if (!$data.$$phase) $data.$apply();

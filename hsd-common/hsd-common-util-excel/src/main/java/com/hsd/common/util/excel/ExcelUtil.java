@@ -25,11 +25,11 @@ public class ExcelUtil {
         }
     }
 
-    private static Map<String, List> readExcelIsMap(String filePath, boolean title) throws Exception {
+    public static Map<String, List> readExcelIsMap(String filePath, boolean title) throws Exception {
         return readExcel(filePath, title, ReturnTypeEnum.MAP);
     }
 
-    private static Map<String, List> readExcelIsList(String filePath, boolean title) throws Exception {
+    public static Map<String, List> readExcelIsList(String filePath, boolean title) throws Exception {
         return readExcel(filePath, title, ReturnTypeEnum.LIST);
     }
 

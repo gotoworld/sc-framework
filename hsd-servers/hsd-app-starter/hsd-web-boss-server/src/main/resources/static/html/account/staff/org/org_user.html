@@ -61,7 +61,7 @@
 										</tr>
 									</table>
 									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("orgUser:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									<a href="javascript:;"  id="upload_btn_name" ng-show='user.hasPermission("orgUser:add:batch")' class="btn btn-xs btn-info"><i class="fa fa-edit"></i> EXCEL导入</a>
+									<a href="javascript:;" ng-click="addBatch();"  ng-show='user.hasPermission("orgUser:add:batch")' class="btn btn-xs btn-info"><i class="fa fa-edit"></i> EXCEL导入</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -82,8 +82,8 @@
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
 													<td>{{item.account}}</td>
 													<td>{{item.name}}</td>
-													<td>{{item.gender}}</td>
-													<td>{{item.state}}</td>
+													<td>{{genderEnum(item.gender)}}</td>
+													<td>{{item.state==0?'启用':'禁用'}}</td>
 													<td>{{item.count}}</td>
 													<td>{{item.lastLogin | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -233,6 +233,9 @@
             sessionStorage.setItem(site.orgUser.info,item.id);
             openMyBoxLayer('设置角色-'+item.name,site.orgUser.view+'_edit_role.html');
         }
+        $scope.addBatch = function () {
+            openMyBoxLayer('用户批量上传',site.orgUser.view+'_edit_batch.html');
+        }
         $scope.del = function (id) {
             if (confirm('确认删除吗?')) {
                 $.post(site.orgUser.del + id, {}, function (result) {
@@ -270,6 +273,15 @@
                 });
             }
         }
+        $scope.genderEnum=function(key){
+            var val='未知';
+            switch(key){
+				case 0:val='男';break;
+				case 1:val='女';break;
+				case 2:val='保密';break;
+			}
+			return val;
+		}
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }

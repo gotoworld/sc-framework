@@ -316,7 +316,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     orgUser.setCellphone((String) data.get(4));
                     orgUser.setEmail((String) data.get(5));
                     orgUser.setMemo("批量导入");
-                    orgUser.setOrderNo(i);
+//                    orgUser.setOrderNo(i);
                     orgUser.setType(0);
                     orgUser.setState(0);
                     orgUser.setCreateId(createId);

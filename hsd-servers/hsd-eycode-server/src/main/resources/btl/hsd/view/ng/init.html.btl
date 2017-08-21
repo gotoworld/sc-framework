@@ -46,7 +46,7 @@
                                                 <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
                                                         @[ if ("1"==scfg._insert){ /]
-                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
                                                         @[ } /]
                                                         <div class="ibox-tools">
                                                             <a href="#" onclick="loadTree()">
@@ -105,7 +105,7 @@
 										</tr>
 									</table>
 									@[ if ("1"==scfg._insert){ /]
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									@[ } /]
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
@@ -126,13 +126,13 @@
                                     				@[ } /]
                                     				<td>
                                     				@[ if ("1"==scfg._detail) { /]
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:info")'  ng-click="info('i',@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:info")'  ng-click="info('i',@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                     @[ } /]
                                                     @[ if("1"==scfg._update){ /]
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:edit")'  ng-click="edit('e',@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:edit")'  ng-click="edit('e',@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                     @[ } /]
                                                     @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
-                                                      <a href="javascript:;" ng-show='user.hasPermission("${tableNameL}:del")'   ng-click="del(@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:del")'   ng-click="del(@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     @[ } /]
                                                     </td>
                                     			</tr>
@@ -198,7 +198,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
             loadPage(1);
             @[ if ("1"==scfg._tree) { /]
             loadTree();
@@ -255,20 +255,20 @@
             @[ for(t in scfg._col_show){ /]
                  trStr+=' <tr><th class="col-md-3">${t.value}:</th><th class="">'+${columnMap[t.key]=='Date'?"util.dateTimeFormat(node."+t.key+")":"node."+t.key}+'</th></tr>';
             @[ } /]
-                if(user.hasPermission("${tableNameL}:info") || user.hasPermission("${tableNameL}:edit") || user.hasPermission("${tableNameL}:del")){
+                if(staff.hasPermission("${tableNameL}:info") || staff.hasPermission("${tableNameL}:edit") || staff.hasPermission("${tableNameL}:del")){
                     trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
                     @[ if ("1"==scfg._detail) { /]
-                    if(user.hasPermission("${tableNameL}:info")){
+                    if(staff.hasPermission("${tableNameL}:info")){
                         trStr+=' <a href="javascript:;"  ng-click="info(\'i\',\''+node.id+'\')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
                     }
                     @[ } /]
                     @[ if("1"==scfg._update){ /]
-                    if(user.hasPermission("${tableNameL}:edit")){
+                    if(staff.hasPermission("${tableNameL}:edit")){
                         trStr+=' <a href="javascript:;"  ng-click="edit(\'e\',\''+node.id+'\')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
                     }
                     @[ } /]
                     @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
-                    if(user.hasPermission("${tableNameL}:del") && node.nodes==undefined && node.tags[0]==0){
+                    if(staff.hasPermission("${tableNameL}:del") && node.nodes==undefined && node.tags[0]==0){
                         trStr += ' <a href="javascript:;"  ng-click="del(\''+node.id+'\')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
                     }
                     @[ } /]

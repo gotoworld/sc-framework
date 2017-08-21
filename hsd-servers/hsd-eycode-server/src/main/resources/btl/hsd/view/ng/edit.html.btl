@@ -220,7 +220,7 @@ for(t in columns){
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
            $data.newFlag=sessionStorage.getItem(site.${tableNameL}.info);
            if($data.newFlag) $data.uuidToken=util.guid();
            if(sessionStorage.getItem(site.${tableNameL}.info) && sessionStorage.getItem(site.${tableNameL}.info)!=0){

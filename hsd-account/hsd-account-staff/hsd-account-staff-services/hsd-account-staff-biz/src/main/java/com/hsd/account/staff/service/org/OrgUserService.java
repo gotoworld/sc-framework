@@ -21,6 +21,7 @@ import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.config.AppConfig;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
@@ -65,6 +66,9 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                 // 数据存在
                 orgUserDao.update(entity);
             } else {
+                if(!JwtUtil.isPermitted("orgUser:add")){
+                    throw new RuntimeException("没用新增用户的权限!");
+                }
                 if(orgUserDao.isAccountYN(dto.getAccount())>0){
                     throw new RuntimeException("账号已存在!");
                 }
@@ -258,15 +262,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @RfAccount2Bean
+    @RequiresPermissions("orgUser:edit:org")
     public Response addOrg(@RequestBody OrgOrgVsUserDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgUser:edit:org")){
-                orgOrgVsUserDao.insert(copyTo(dto,OrgOrgVsUser.class));
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
+            orgOrgVsUserDao.insert(copyTo(dto,OrgOrgVsUser.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -274,15 +275,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 
+    @RequiresPermissions("orgUser:edit:org")
     public Response delOrg(@RequestBody OrgOrgVsUserDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgUser:edit:org")){
-                orgOrgVsUserDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsUser.class));
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
+            orgOrgVsUserDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsUser.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -290,62 +288,59 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    @RequiresPermissions("orgUser:edit:batch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (fileUrl == null) throw new RuntimeException("文件路径不存在!");
-            if(JwtUtil.isPermitted("orgUser:add:batch")){
-                Map<String,List> map= ExcelUtil.readExcelIsList(StrUtil.replaceAll(fileUrl, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload")),true);
-                if(map==null)  throw new RuntimeException("excel读取失败!");
-                List titles=map.get("titles");
-                List datas=map.get("datas");
-                log.info("excel->title->"+titles);
-                Long createId=JwtUtil.getSubject().getLong("id");
-               final StringBuffer finalMessage = new StringBuffer("");
-                if(datas!=null) {
-                    List<OrgUser> orgUsers=new ArrayList<>();
-                    for (int i = 0; i < datas.size(); i++) {
-                        List data= (List) datas.get(i);
-                        OrgUser orgUser=new OrgUser();
-                        if(ValidatorUtil.isEmpty(data.get(0))){
-                            finalMessage.append("<br/>空行:"+(i+1));
-                            continue;
+            Map<String,List> map= ExcelUtil.readExcelIsList(StrUtil.replaceAll(fileUrl, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload")),true);
+            if(map==null)  throw new RuntimeException("excel读取失败!");
+            List titles=map.get("titles");
+            List datas=map.get("datas");
+            log.info("excel->title->"+titles);
+            Long createId=JwtUtil.getSubject().getLong("id");
+           final StringBuffer finalMessage = new StringBuffer("");
+            if(datas!=null) {
+                List<OrgUser> orgUsers=new ArrayList<>();
+                for (int i = 0; i < datas.size(); i++) {
+                    List data= (List) datas.get(i);
+                    OrgUser orgUser=new OrgUser();
+                    if(ValidatorUtil.isEmpty(data.get(0))){
+                        finalMessage.append("<br/>空行:"+(i+1));
+                        continue;
+                    }
+                    orgUser.setAccount((String) data.get(0));
+                    orgUser.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(1))) );
+                    orgUser.setName((String) data.get(2));
+                    orgUser.setGender(getGender((String) data.get(3)));
+                    orgUser.setCellphone((String) data.get(4));
+                    orgUser.setEmail((String) data.get(5));
+                    orgUser.setMemo("批量导入");
+                    orgUser.setOrderNo(i);
+                    orgUser.setType(0);
+                    orgUser.setState(0);
+                    orgUser.setCreateId(createId);
+                    orgUsers.add(orgUser);
+                    if((i+1)%100==0||(i+1)==datas.size()){
+                        try {
+                            orgUserDao.insertBatch(orgUsers);
+                        } catch (Exception e) {
+                            orgUsers.forEach(ou -> {
+                                try {
+                                    orgUserDao.insert(ou);
+                                } catch (Exception e1) {
+                                    String msg=""+e1.getMessage();
+                                    int indexOf=e1.getMessage().indexOf("for key");
+                                    finalMessage.append("<br/>异常:"+(indexOf!=-1?msg.substring(0,indexOf):msg));
+                                    finalMessage.append("<br/>==>"+ou.getAccount()+","+ou.getName()+","+ou.getCellphone());
+                                }
+                            });
                         }
-                        orgUser.setAccount((String) data.get(0));
-                        orgUser.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(1))) );
-                        orgUser.setName((String) data.get(2));
-                        orgUser.setGender(getGender((String) data.get(3)));
-                        orgUser.setCellphone((String) data.get(4));
-                        orgUser.setEmail((String) data.get(5));
-                        orgUser.setMemo("批量导入");
-                        orgUser.setOrderNo(i);
-                        orgUser.setType(0);
-                        orgUser.setState(0);
-                        orgUser.setCreateId(createId);
-                        orgUsers.add(orgUser);
-                        if((i+1)%100==0||(i+1)==datas.size()){
-                            try {
-                                orgUserDao.insertBatch(orgUsers);
-                            } catch (Exception e) {
-                                orgUsers.forEach(ou -> {
-                                    try {
-                                        orgUserDao.insert(ou);
-                                    } catch (Exception e1) {
-                                        String msg=""+e1.getMessage();
-                                        int indexOf=e1.getMessage().indexOf("for key");
-                                        finalMessage.append("<br/>异常:"+(indexOf!=-1?msg.substring(0,indexOf):msg));
-                                        finalMessage.append("<br/>==>"+ou.getAccount()+","+ou.getName()+","+ou.getCellphone());
-                                    }
-                                });
-                            }
-                            orgUsers=new ArrayList<>();
-                        }
+                        orgUsers=new ArrayList<>();
                     }
                 }
-                result.message=finalMessage.toString();
-            }else{
-                throw new RuntimeException("权限不足!");
             }
+            result.message=finalMessage.toString();
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -393,30 +388,24 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
     @RfAccount2Bean
+    @RequiresPermissions("orgUser:edit:role")
     public Response addRole(@RequestBody AuthUserVsRoleDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgUser:edit:role")){
-                authUserVsRoleDao.insert(copyTo(dto,AuthUserVsRole.class));
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
+            authUserVsRoleDao.insert(copyTo(dto,AuthUserVsRole.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
+    @RequiresPermissions("orgUser:edit:role")
     public Response delRole(@RequestBody AuthUserVsRoleDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgUser:edit:role")){
-                authUserVsRoleDao.deleteByPrimaryKey(copyTo(dto,AuthUserVsRole.class));
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
+            authUserVsRoleDao.deleteByPrimaryKey(copyTo(dto,AuthUserVsRole.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

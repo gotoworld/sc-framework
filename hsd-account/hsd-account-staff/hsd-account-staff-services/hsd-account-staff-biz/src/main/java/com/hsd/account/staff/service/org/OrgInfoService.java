@@ -19,10 +19,10 @@ import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -186,15 +186,12 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return results;
     }
     @RfAccount2Bean
+    @RequiresPermissions("orgInfo:edit:user")
     public Response addUser(@RequestBody OrgOrgVsUserDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgInfo:edit:user")){
-                orgOrgVsUserDao.insert(copyTo(dto,OrgOrgVsUser.class));
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
+            orgOrgVsUserDao.insert(copyTo(dto,OrgOrgVsUser.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -202,15 +199,12 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
 
+    @RequiresPermissions("orgInfo:edit:user")
     public Response delUser(@RequestBody OrgOrgVsUserDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgInfo:edit:user")){
-                orgOrgVsUserDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsUser.class));
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
+            orgOrgVsUserDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsUser.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -232,15 +226,12 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     }
 
     @RfAccount2Bean
+    @RequiresPermissions("orgInfo:edit:role")
     public Response addRole(@RequestBody OrgOrgVsRoleDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgInfo:edit:role")){
-                orgOrgVsRoleDao.insert(copyTo(dto,OrgOrgVsRole.class));
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
+            orgOrgVsRoleDao.insert(copyTo(dto,OrgOrgVsRole.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -248,15 +239,12 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
 
+    @RequiresPermissions("orgInfo:edit:role")
     public Response delRole(@RequestBody OrgOrgVsRoleDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(JwtUtil.isPermitted("orgInfo:edit:role")){
-                orgOrgVsRoleDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsRole.class));
-            }else{
-                throw new RuntimeException("权限不足!");
-            }
+            orgOrgVsRoleDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsRole.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

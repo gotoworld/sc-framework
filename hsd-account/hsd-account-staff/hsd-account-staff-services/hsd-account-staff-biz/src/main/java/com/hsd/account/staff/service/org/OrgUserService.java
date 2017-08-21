@@ -353,6 +353,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         switch (gender){
             case "男":val=0;break;
             case "女":val=1;break;
+            case "保密":val=2;break;
         }
         return val;
     }

@@ -79,6 +79,9 @@
                             <label class="col-md-12 control-label">--请选择父级机构--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
+                                    <li>
+                                        <label style="{{item.parentId==null||item.parentId==''?'color:red':''}}"><input type="radio" name="parentId" value="" ng-checked="item.parentId==null||item.parentId==''">根节点</label>
+                                    </li>
                                     <li ng-repeat="t in nodes">
                                         <label style="{{item.parentId==t.id?'color:red':''}}"><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
                                         <ul ng-include="'../tree_radio.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id;name='parentId'"></ul>

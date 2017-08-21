@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
 <meta charset="utf-8" />
-<title>//TODO 组织架构_员工/用户 新增/编辑-组织</title>
+<title>//TODO 组织架构_员工 新增/编辑-组织</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta name="description" content="memo of your site" />
@@ -58,7 +58,7 @@
 										<td>{{item.name}}</td>
 										<td>{{typeEnum(item.type)}}</td>
 										<td>
-											<a ng-if="checkAddOrg(item)==false" href="javascript:;" ng-click="addOrg(item)" rel="nofollow" class="" ><i class="fa fa-user-md"></i> 添加</a>
+											<a ng-if="checkAddOrg(item)==false" href="javascript:;" ng-click="addOrg(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 添加</a>
 											<label ng-if="checkAddOrg(item)==true" >已存在</label>
 										</td>
 									</tr>
@@ -90,7 +90,7 @@
 									</tr>
 									</thead>
 									<tbody>
-									<tr ng-if="orgUserNodes && orgUserNodes.length>0" ng-repeat="item in orgUserNodes">
+									<tr ng-if="orgStaffNodes && orgStaffNodes.length>0" ng-repeat="item in orgStaffNodes">
 										<td>{{ $index+1}}</td>
 										<td>{{item.code}}</td>
 										<td>{{item.name}}</td>
@@ -99,9 +99,9 @@
 											<a href="javascript:;" ng-click="delOrg(item)" rel="nofollow" class="" ><i class="fa fa-close"></i> 删除</a>
 										</td>
 									</tr>
-									<tr ng-if="orgUserNodes==null || orgUserNodes==0">
+									<tr ng-if="orgStaffNodes==null || orgStaffNodes==0">
 										<td colspan="5">
-											<div class="alert"><strong>{{orgUserMessage||'暂无数据'}}</strong></div>
+											<div class="alert"><strong>{{orgStaffMessage||'暂无数据'}}</strong></div>
 										</td>
 									</tr>
 									</tbody>
@@ -143,10 +143,10 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        $data.orgUserNodes=[];
-        $data.id=sessionStorage.getItem(site.orgUser.info);
-        user.init(function(){
-            loadUserOrg();
+        $data.orgStaffNodes=[];
+        $data.id=sessionStorage.getItem(site.orgStaff.info);
+        staff.init(function(){
+            loadStaffOrg();
         });
         $scope.typeEnum=function(key){
             var val='未知';
@@ -159,9 +159,9 @@
 		}
         $scope.checkAddOrg=function (item) {
             var flag=false;
-            if($data.orgUserNodes){
-                for(var i=0;i<$data.orgUserNodes.length;i++){
-                    if($data.orgUserNodes[i].id==item.id){
+            if($data.orgStaffNodes){
+                for(var i=0;i<$data.orgStaffNodes.length;i++){
+                    if($data.orgStaffNodes[i].id==item.id){
                         //console.info("--已存在---");
                         flag= true;
                     }
@@ -171,10 +171,10 @@
         }
         $scope.addOrg = function (item) {
             if(!$data.checkAddOrg(item)){
-                $.post(site.orgUser.addOrg, {"userId":$data.id,"orgId":item.id},function (result) {
+                $.post(site.orgStaff.addOrg, {"staffId":$data.id,"orgId":item.id},function (result) {
                     //console.info("获取数据.." + JSON.stringify(result));
                     if (result.code == 0) {
-                        $data.orgUserNodes.push(item);
+                        $data.orgStaffNodes.push(item);
                         if (!$data.$$phase) $data.$apply();
                     } else {
                         alert(result.message);
@@ -183,10 +183,10 @@
             }
         }
         $scope.delOrg = function (item) {
-            $.post(site.orgUser.delOrg, {"userId":$data.id,"orgId":item.id},function (result) {
+            $.post(site.orgStaff.delOrg, {"staffId":$data.id,"orgId":item.id},function (result) {
                 //console.info("获取数据.." + JSON.stringify(result));
                 if (result.code == 0) {
-                    util.removeArrItem($data.orgUserNodes,item);
+                    util.removeArrItem($data.orgStaffNodes,item);
                     if (!$data.$$phase) $data.$apply();
                 } else {
                     alert(result.message);
@@ -208,12 +208,12 @@
             if (!$data.$$phase) $data.$apply();
         }, 'json');
     }
-    function loadUserOrg(){
-        $.post(site.orgUser.getOrg+$data.id, {},function (result) {
+    function loadStaffOrg(){
+        $.post(site.orgStaff.getOrg+$data.id, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-                $data.orgUserNodes=result.data;
-                $data.orgUserMessage=result.message;
+                $data.orgStaffNodes=result.data;
+                $data.orgStaffMessage=result.message;
             } else {
                 alert(result.message);
             }

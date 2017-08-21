@@ -12,9 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AuthUserVsRoleDto extends BaseDto {
-    /**用户id*/
-    private Long userId;
+public class AuthStaffVsRoleDto extends BaseDto {
+    /**员工id*/
+    private Long staffId;
     /**角色id*/
     private Long roleId;
     /**建立者ID*/

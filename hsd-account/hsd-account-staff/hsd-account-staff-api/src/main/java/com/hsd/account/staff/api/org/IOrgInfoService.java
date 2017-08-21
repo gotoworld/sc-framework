@@ -5,8 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsRoleDto;
-import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
-import com.hsd.account.staff.dto.org.OrgUserDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
+import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -75,20 +75,20 @@ public interface IOrgInfoService {
     public List<OrgInfoDto> findDataIsTree(OrgInfoDto dto);
 
 
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByIdIsList")
-    public List<OrgUserDto> findOrgUserIsList(OrgInfoDto dto);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffByIdIsList")
+    public List<OrgStaffDto> findOrgStaffIsList(OrgInfoDto dto);
 
     /**
      * <p>添加人员。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addUser")
-    public Response addUser(OrgOrgVsUserDto dto) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addStaff")
+    public Response addStaff(OrgOrgVsStaffDto dto) throws Exception;
 
     /**
      * <p>删除人员。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delUser")
-    public Response delUser(OrgOrgVsUserDto dto) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delStaff")
+    public Response delStaff(OrgOrgVsStaffDto dto) throws Exception;
 
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgRoleIsList")
     public List<AuthRoleDto> findOrgRoleIsList(OrgInfoDto dto);

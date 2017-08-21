@@ -3,11 +3,11 @@ package com.hsd.account.staff.service.auth;
 import com.hsd.account.staff.api.auth.IRoleSourceService;
 import com.hsd.account.staff.dao.auth.IAuthPermDao;
 import com.hsd.account.staff.dao.auth.IAuthRoleDao;
-import com.hsd.account.staff.dao.org.IOrgUserDao;
-import com.hsd.account.staff.entity.org.OrgUser;
+import com.hsd.account.staff.dao.org.IOrgStaffDao;
+import com.hsd.account.staff.entity.org.OrgStaff;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
-import com.hsd.account.staff.dto.org.OrgUserDto;
+import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,65 +28,65 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     @Autowired
     private IAuthPermDao authPermDao;
     @Autowired
-    private IOrgUserDao orgUserDao;
+    private IOrgStaffDao orgStaffDao;
 
     @Override
-    public Integer isSuperAdmin(@RequestBody OrgUserDto dto) {
+    public Integer isSuperAdmin(@RequestBody OrgStaffDto dto) {
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("userId", dto.getId());
+            map.put("staffId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
             return authRoleDao.isSuperAdmin(map);
         } catch (Exception e) {
-            log.error("根据用户id,判断用户是否为超级管理员,要特权.,数据库处理异常!", e);
+            log.error("根据员工id,判断员工是否为超级管理员,要特权.,数据库处理异常!", e);
         }
         return 0;
     }
 
     @Override
-    public List<AuthRoleDto> getRoleListByUserId(@RequestBody OrgUserDto dto) {
+    public List<AuthRoleDto> getRoleListByStaffId(@RequestBody OrgStaffDto dto) {
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("userId", dto.getId());
+            map.put("staffId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
-            return copyTo(authRoleDao.getRoleListByUserId(map),AuthRoleDto.class);
+            return copyTo(authRoleDao.getRoleListByStaffId(map),AuthRoleDto.class);
         } catch (Exception e) {
-            log.error("角色信息列表>根据用户id,数据库处理异常!", e);
+            log.error("角色信息列表>根据员工id,数据库处理异常!", e);
         }
         return null;
     }
 
     @Override
-    public List<AuthPermDto> getPermListByUserId(@RequestBody OrgUserDto dto) {
+    public List<AuthPermDto> getPermListByStaffId(@RequestBody OrgStaffDto dto) {
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("userId", dto.getId());
+            map.put("staffId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
-            return copyTo(authPermDao.getPermListByUserId(map),AuthPermDto.class);
+            return copyTo(authPermDao.getPermListByStaffId(map),AuthPermDto.class);
         } catch (Exception e) {
-            log.error("角色权限信息列表>根据用户id,数据库处理异常!", e);
+            log.error("角色权限信息列表>根据员工id,数据库处理异常!", e);
         }
         return null;
     }
 
     @Override
-    public OrgUserDto findUserByAccount(@RequestParam("account") String account, @RequestParam("userType")  Integer userType) {
+    public OrgStaffDto findStaffByAccount(@RequestParam("account") String account, @RequestParam("staffType")  Integer staffType) {
         try {
             Map dto = new HashMap();
             dto.put("account", account);
-            dto.put("userType", userType);
-            return copyTo(orgUserDao.findUserByAccount(dto),OrgUserDto.class);
+            dto.put("staffType", staffType);
+            return copyTo(orgStaffDao.findStaffByAccount(dto),OrgStaffDto.class);
         } catch (Exception e) {
-            log.error("用户信息>根据用户登录名,数据库处理异常!", e);
+            log.error("员工信息>根据员工登录名,数据库处理异常!", e);
         }
         return null;
     }
     @Override
-    public Integer lastLogin(@RequestBody OrgUserDto dto) {
+    public Integer lastLogin(@RequestBody OrgStaffDto dto) {
         try {
-            return orgUserDao.lastLogin(copyTo(dto, OrgUser.class));
+            return orgStaffDao.lastLogin(copyTo(dto, OrgStaff.class));
         } catch (Exception e) {
-            log.error("根据用户id,判断用户是否为超级管理员,要特权.,数据库处理异常!", e);
+            log.error("根据员工id,判断员工是否为超级管理员,要特权.,数据库处理异常!", e);
         }
         return 0;
     }

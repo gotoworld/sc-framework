@@ -15,10 +15,10 @@ import java.util.Date;
 public class OrgLogLogin extends BaseEntity {
      /**id*/
      private Long id;
-     /**用户ID*/
-     private Long userId;
+     /**员工ID*/
+     private Long staffId;
      /**员工名称*/
-     private String userName;
+     private String staffName;
      /**类型0登录1登出*/
      private Integer type;
      /**IP地址*/

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hsd.account.staff.dao.org.IOrgUserDao">
+<mapper namespace="com.hsd.account.staff.dao.org.IOrgStaffDao">
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
 		 t1.id as "id"
@@ -24,15 +24,15 @@
         ,t1.bi_update_ts as "biUpdateTs"
 	</sql>
     <!-- 根据主键获取信息详情 -->
-    <select id="selectByPrimaryKey" resultType="com.hsd.account.staff.entity.org.OrgUser" parameterType="com.hsd.account.staff.entity.org.OrgUser">
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.staff.entity.org.OrgStaff" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
         select
         <include refid="Base_Column_List"/>
-        from org_user t1
+        from org_staff t1
         where t1.id = #{id}
     </select>
     <!-- 新增 批量数据 -->
     <insert id="insertBatch"  >
-        insert into org_user (
+        insert into org_staff (
             account
             ,pwd
             ,name
@@ -82,8 +82,8 @@
         </foreach>
     </insert>
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgUser" useGeneratedKeys="true" keyProperty="id">
-		insert into org_user (
+    <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgStaff" useGeneratedKeys="true" keyProperty="id">
+		insert into org_staff (
             account
            ,pwd
            ,name
@@ -130,8 +130,8 @@
         )
 	</insert>
     <!-- 数据更新 -->
-    <update id="update" parameterType="com.hsd.account.staff.entity.org.OrgUser">
-        update org_user set version=version+1,date_updated=now()
+    <update id="update" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
+        update org_staff set version=version+1,date_updated=now()
         <if test="name!=null">,name = #{name}</if>
         <if test="gender!=null">,gender = #{gender}</if>
         <if test="cellphone!=null">,cellphone = #{cellphone}</if>
@@ -167,52 +167,52 @@
     </sql>
 
     <!--信息列表 分页 -->
-    <select id="findDataIsPage" parameterType="com.hsd.account.staff.entity.org.OrgUser" resultType="com.hsd.account.staff.entity.org.OrgUser">
+    <select id="findDataIsPage" parameterType="com.hsd.account.staff.entity.org.OrgStaff" resultType="com.hsd.account.staff.entity.org.OrgStaff">
         select
         <include refid="Base_Column_List"/>
-        from org_user t1
-        where t1.id!=1
-        <include refid="list_where_sql"/>
-        order t1.date_created desc
-    </select>
-    <!--信息列表 -->
-    <select id="findDataIsList" parameterType="com.hsd.account.staff.entity.org.OrgUser" resultType="com.hsd.account.staff.entity.org.OrgUser">
-        select
-        <include refid="Base_Column_List"/>
-        from org_user t1
-        where t1.id!=1
-        <include refid="list_where_sql"/>
-    </select>
-    <!--精简(分页) -->
-    <select id="findBriefDataIsPage" parameterType="com.hsd.account.staff.entity.org.OrgUser" resultType="com.hsd.account.staff.entity.org.OrgUser">
-        select
-         t1.id as "id"
-        ,t1.account as "account"
-        ,t1.name as "name"
-        from org_user t1
+        from org_staff t1
         where t1.id!=1
         <include refid="list_where_sql"/>
         order by t1.date_created desc
     </select>
-    <!-- 获取用户信息>根据用户登录名 -->
-    <select id="findUserByAccount" parameterType="map" resultType="com.hsd.account.staff.entity.org.OrgUser">
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.staff.entity.org.OrgStaff" resultType="com.hsd.account.staff.entity.org.OrgStaff">
+        select
+        <include refid="Base_Column_List"/>
+        from org_staff t1
+        where t1.id!=1
+        <include refid="list_where_sql"/>
+    </select>
+    <!--精简(分页) -->
+    <select id="findBriefDataIsPage" parameterType="com.hsd.account.staff.entity.org.OrgStaff" resultType="com.hsd.account.staff.entity.org.OrgStaff">
+        select
+         t1.id as "id"
+        ,t1.account as "account"
+        ,t1.name as "name"
+        from org_staff t1
+        where t1.id!=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+    <!-- 获取员工信息>根据员工登录名 -->
+    <select id="findStaffByAccount" parameterType="map" resultType="com.hsd.account.staff.entity.org.OrgStaff">
         select
         <include refid="Base_Column_List"/>
         ,t1.pwd as "pwd"
-        from org_user t1
+        from org_staff t1
         where t1.del_flag=0 and t1.state=0
         and account=#{account}
-        and type=#{userType}
+        and type=#{staffType}
     </select>
     <!--信息列表 分页 -->
-    <select id="findUserIsPage" parameterType="com.hsd.account.staff.entity.org.OrgUser" resultType="com.hsd.account.staff.entity.org.OrgUser">
+    <select id="findStaffIsPage" parameterType="com.hsd.account.staff.entity.org.OrgStaff" resultType="com.hsd.account.staff.entity.org.OrgStaff">
         select
         t1.id as "id"
         ,t1.account as "account"
         ,t1.name as "name"
         ,t1.gender as "gender"
         ,t1.avatar as "avatar"
-        from org_user t1
+        from org_staff t1
         where t1.id!=1
         <include refid="list_where_sql"/>
     </select>

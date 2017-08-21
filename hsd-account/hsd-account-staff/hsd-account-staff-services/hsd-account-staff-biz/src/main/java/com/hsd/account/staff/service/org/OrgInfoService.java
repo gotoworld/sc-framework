@@ -5,15 +5,15 @@ import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.dao.org.IOrgInfoDao;
 import com.hsd.account.staff.dao.org.IOrgOrgVsRoleDao;
-import com.hsd.account.staff.dao.org.IOrgOrgVsUserDao;
+import com.hsd.account.staff.dao.org.IOrgOrgVsStaffDao;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsRoleDto;
-import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
-import com.hsd.account.staff.dto.org.OrgUserDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
+import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.account.staff.entity.org.OrgInfo;
 import com.hsd.account.staff.entity.org.OrgOrgVsRole;
-import com.hsd.account.staff.entity.org.OrgOrgVsUser;
+import com.hsd.account.staff.entity.org.OrgOrgVsStaff;
 import com.hsd.framework.NodeTree;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -38,7 +38,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     @Autowired
     private IOrgInfoDao orgInfoDao;
     @Autowired
-    private IOrgOrgVsUserDao orgOrgVsUserDao;
+    private IOrgOrgVsStaffDao orgOrgVsStaffDao;
     @Autowired
     private IOrgOrgVsRoleDao orgOrgVsRoleDao;
 
@@ -173,12 +173,12 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
     }
-    public List<OrgUserDto> findOrgUserIsList(@RequestBody OrgInfoDto dto) {
-        List<OrgUserDto> results = null;
+    public List<OrgStaffDto> findOrgStaffIsList(@RequestBody OrgInfoDto dto) {
+        List<OrgStaffDto> results = null;
         try {
-            OrgOrgVsUser orgVsUser=new OrgOrgVsUser();
-            orgVsUser.setOrgId(dto.getId());
-            results = copyTo(orgOrgVsUserDao.findOrgUserIsList(orgVsUser),OrgUserDto.class);
+            OrgOrgVsStaff orgVsStaff=new OrgOrgVsStaff();
+            orgVsStaff.setOrgId(dto.getId());
+            results = copyTo(orgOrgVsStaffDao.findOrgStaffIsList(orgVsStaff),OrgStaffDto.class);
         } catch (Exception e) {
             log.error("获取组织->人员 异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -186,12 +186,12 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return results;
     }
     @RfAccount2Bean
-    @RequiresPermissions("orgInfo:edit:user")
-    public Response addUser(@RequestBody OrgOrgVsUserDto dto) throws Exception {
+    @RequiresPermissions("orgInfo:edit:staff")
+    public Response addStaff(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgOrgVsUserDao.insert(copyTo(dto,OrgOrgVsUser.class));
+            orgOrgVsStaffDao.insert(copyTo(dto,OrgOrgVsStaff.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -199,12 +199,12 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
 
-    @RequiresPermissions("orgInfo:edit:user")
-    public Response delUser(@RequestBody OrgOrgVsUserDto dto) throws Exception {
+    @RequiresPermissions("orgInfo:edit:staff")
+    public Response delStaff(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgOrgVsUserDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsUser.class));
+            orgOrgVsStaffDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsStaff.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -215,9 +215,9 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     public List<AuthRoleDto> findOrgRoleIsList(@RequestBody OrgInfoDto dto) {
         List<AuthRoleDto> results = null;
         try {
-            OrgOrgVsRole orgVsUser=new OrgOrgVsRole();
-            orgVsUser.setOrgId(dto.getId());
-            results = copyTo(orgOrgVsRoleDao.findOrgRoleIsList(orgVsUser),AuthRoleDto.class);
+            OrgOrgVsRole orgVsStaff=new OrgOrgVsRole();
+            orgVsStaff.setOrgId(dto.getId());
+            results = copyTo(orgOrgVsRoleDao.findOrgRoleIsList(orgVsStaff),AuthRoleDto.class);
         } catch (Exception e) {
             log.error("获取组织->角色 异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

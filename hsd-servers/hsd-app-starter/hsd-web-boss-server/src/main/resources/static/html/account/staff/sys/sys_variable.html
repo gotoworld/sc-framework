@@ -40,7 +40,7 @@
                                             <div class="col-md-4">
                                                 <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
-                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("sysVariable:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("sysVariable:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
                                                         <div class="ibox-tools">
                                                             <a href="#" onclick="loadTree()">
                                                                 <i class="glyphicon glyphicon-refresh"></i>
@@ -98,7 +98,7 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("sysVariable:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("sysVariable:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -119,9 +119,9 @@
                                     				<td>{{item.name}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("sysVariable:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("sysVariable:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("sysVariable:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("sysVariable:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("sysVariable:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("sysVariable:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -182,7 +182,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
             loadPage(1);
             loadTree();
         });
@@ -238,15 +238,15 @@
                  trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
                  trStr+=' <tr><th class="col-md-3">名称:</th><th class="">'+node.name+'</th></tr>';
                  trStr+=' <tr><th class="col-md-3">备注:</th><th class="">'+node.memo+'</th></tr>';
-                if(user.hasPermission("sysVariable:info") || user.hasPermission("sysVariable:edit") || user.hasPermission("sysVariable:del")){
+                if(staff.hasPermission("sysVariable:info") || staff.hasPermission("sysVariable:edit") || staff.hasPermission("sysVariable:del")){
                     trStr+=' <tr><th class="col-md-3">操作:</th><th> ';
-                    if(user.hasPermission("sysVariable:info")){
+                    if(staff.hasPermission("sysVariable:info")){
                         trStr+=' <a href="javascript:;"  ng-click="info(\'i\','+node.id+')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
                     }
-                    if(user.hasPermission("sysVariable:edit")){
+                    if(staff.hasPermission("sysVariable:edit")){
                         trStr+=' <a href="javascript:;"  ng-click="edit(\'e\','+node.id+')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
                     }
-                    if(user.hasPermission("sysVariable:del") && node.nodes==undefined && node.tags[0]==0){
+                    if(staff.hasPermission("sysVariable:del") && node.nodes==undefined && node.tags[0]==0){
                         trStr += ' <a href="javascript:;"  ng-click="del('+ node.id + ')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
                     }
                     trStr+=' </th></tr>';

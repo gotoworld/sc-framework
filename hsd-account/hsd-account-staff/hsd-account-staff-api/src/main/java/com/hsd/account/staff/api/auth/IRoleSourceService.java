@@ -13,7 +13,7 @@ package com.hsd.account.staff.api.auth;
 
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
-import com.hsd.account.staff.dto.org.OrgUserDto;
+import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,31 +29,31 @@ import java.util.List;
 public interface IRoleSourceService {
     String acPrefix = "/feign/account/staff/IRoleSourceService";
     /**
-     * 根据用户id,判断用户是否为超级管理员,要的就是特权.
+     * 根据员工id,判断员工是否为超级管理员,要的就是特权.
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isSuperAdmin")
-    public Integer isSuperAdmin(OrgUserDto orgUser);
+    public Integer isSuperAdmin(OrgStaffDto orgStaff);
     /**
-     * <p>角色信息列表>根据用户id。
+     * <p>角色信息列表>根据员工id。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getRoleListByUserId")
-    public List<AuthRoleDto> getRoleListByUserId(OrgUserDto orgUser);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getRoleListByStaffId")
+    public List<AuthRoleDto> getRoleListByStaffId(OrgStaffDto orgStaff);
 
     /**
-     * <p>角色权限信息列表>根据用户id。
+     * <p>角色权限信息列表>根据员工id。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getPermListByUserId")
-    public List<AuthPermDto> getPermListByUserId(OrgUserDto orgUser);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getPermListByStaffId")
+    public List<AuthPermDto> getPermListByStaffId(OrgStaffDto orgStaff);
 
     /**
-     * <p>用户信息。
+     * <p>员工信息。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByAccount")
-    public OrgUserDto findUserByAccount(@RequestParam("account") String account, @RequestParam("userType")  Integer userType);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffByAccount")
+    public OrgStaffDto findStaffByAccount(@RequestParam("account") String account, @RequestParam("staffType")  Integer staffType);
 
     /**
-     * 更新用户登陆信息
+     * 更新员工登陆信息
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/lastLogin")
-    public Integer lastLogin(OrgUserDto orgUser);
+    public Integer lastLogin(OrgStaffDto orgStaff);
 }

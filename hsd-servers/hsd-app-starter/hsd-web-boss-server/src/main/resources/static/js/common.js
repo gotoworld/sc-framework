@@ -1,7 +1,7 @@
 var basePath = "http://localhost/";
 var apiPath = {
     account: {
-        staff: "http://192.168.103.236:6061",
+        staff: "http://192.168.101.153:6061",
         channel: "http://localhost:6061"
     }
 }
@@ -111,6 +111,7 @@ var site = {
         , del: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/del/"
         , recovery: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/recovery/"
         , resetPwd: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/resetPwd/"
+        , addBatch: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/add/batch"
 
     }
     , channelType: {//渠道商类型

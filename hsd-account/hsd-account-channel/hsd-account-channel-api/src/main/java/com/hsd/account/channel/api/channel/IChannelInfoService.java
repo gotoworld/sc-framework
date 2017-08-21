@@ -6,6 +6,8 @@ import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.github.pagehelper.PageInfo;
 import java.util.List;
 import java.util.Map;
@@ -66,4 +68,24 @@ public interface IChannelInfoService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/resetPwd")
 	public String resetPwd(ChannelInfoDto dto) throws Exception;
+
+	/**
+     * <p>渠道商信息。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByAccount")
+    public ChannelInfoDto findUserByAccount(@RequestParam("account") String account);
+
+    /**
+     * @param 
+     * 修改密码
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updataChannel")
+	public Response updataChannel(ChannelInfoDto dto) throws Exception;
+
+    /**
+     * <p>批量新增。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addBatch")
+    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception;
+
 }

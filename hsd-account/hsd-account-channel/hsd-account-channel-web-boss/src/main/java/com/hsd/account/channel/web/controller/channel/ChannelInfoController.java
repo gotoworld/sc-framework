@@ -178,4 +178,20 @@ public class ChannelInfoController extends BaseController {
          }
          return result;
     }
+    /**
+	 * <p> 批量新增。
+	 */
+	@RequiresPermissions("channelInfo:add:batch")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"add/batch")
+	@ApiOperation(value = "批量上传")
+	public Response addBatch(@RequestParam("fileUrl") String fileUrl) {
+		log.info("ChannelInfoController addBatch.........");
+		Response result = new Response();
+		try {
+			result=channelInfoService.addBatch(fileUrl);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
 }

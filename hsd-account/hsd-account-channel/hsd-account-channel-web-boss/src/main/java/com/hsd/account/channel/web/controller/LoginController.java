@@ -10,11 +10,23 @@
  */
 package com.hsd.account.channel.web.controller;
 
-import com.hsd.framework.annotation.NoAuthorize;
-import com.hsd.framework.web.controller.BaseController;
-import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hsd.account.channel.api.channel.IChannelInfoService;
+import com.hsd.account.channel.dto.channel.ChannelInfoDto;
+import com.hsd.framework.Response;
+import com.hsd.framework.annotation.NoAuthorize;
+import com.hsd.framework.security.MD5;
+import com.hsd.framework.util.ValidatorUtil;
+import com.hsd.framework.web.controller.BaseController;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>登录登出action
@@ -25,104 +37,53 @@ import org.springframework.web.bind.annotation.RestController;
 @NoAuthorize
 public class LoginController extends BaseController {
     private static final String acPrefix = "/boss/account/channel/sign/";
-//    @Autowired
-//    private IRoleSourceService roleSourceService;
-//    /**
-//     * <p>用户登录
-//     */
-//    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix+"/login")
-//    @ApiOperation(value = "登录")
-//    public Response login(@RequestParam("account") String account , @RequestParam("password")String password ) throws Exception {
-//        log.info("LoginController login");
-//        Response result = new Response();
-//            try {
-//                if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
-//                    return Response.error("用户名或密码不能为空!");
-//                }
-//                OrgUserDto orgUser = (OrgUserDto) getAuth().getSession().getAttribute(CommonConstant.SESSION_KEY_USER);
-//                if(orgUser!=null && !account.equals(orgUser.getAccount())){
-//                    try {getAuth().logout();} catch (Exception e1) {}//注销之前的用户
-//                }
-//                MyShiroUserToken token = new MyShiroUserToken(account, password, MyShiroUserToken.UserType.admin);
-//                getAuth().login(token);
-//                getAuth().hasRole("say me");
-//
-//                if(orgUser==null||!account.equals(orgUser.getAccount())) {
-//                    orgUser = roleSourceService.findUserByLoginName(account,token.getUserType().getId());
-//                    SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USER, orgUser);
-//                    SecurityUtils.getSubject().getSession().setAttribute(CommonConstant.SESSION_KEY_USERNAME, orgUser.getAccount()+":"+orgUser.getName());
-//                    SecurityUtils.getSubject().getSession().setAttribute(token.getUserType().getCacheKey(), orgUser);
-//                    roleSourceService.lastLogin(orgUser);
-//                }
-//                orgUser.setSid((String) getAuth().getSession().getId());
-//                String subject = JwtUtil.generalSubject(orgUser);
-//                String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL,(String) getAuth().getSession().getId());
-//
-//                SimpleAuthorizationInfo authorizationInfo= (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("SimpleAuthorizationInfo");
-//                if(authorizationInfo==null){
-//                    authorizationInfo=new SimpleAuthorizationInfo();
-//                    if (0==(orgUser.getType()) && roleSourceService.isSuperAdmin(orgUser) > 0) {
-//                        //超级管理员标记
-//                        orgUser.setIissuperman(1);
-//                        SecurityUtils.getSubject().getSession().setAttribute("isSuper", "1");
-//                    }
-//                    //2.获取角色集合
-//                    List<AuthRoleDto> roleList = roleSourceService.getRoleListByUId(orgUser);
-//                    if (roleList != null) {
-//                        for (AuthRoleDto role : roleList) {
-//                            authorizationInfo.addRole(role.getName());
-//                        }
-//                    }
-//                    //3.获取功能集合
-//                    List<AuthPermDto> permList = roleSourceService.getPermListByUId(orgUser);
-//                    if (permList != null) {
-//                        for (AuthPermDto perm : permList) {
-//                            if (perm.getMatchStr() != null && !"".equals(perm.getMatchStr())) {
-//                                authorizationInfo.addStringPermission(perm.getMatchStr());
-//                            }
-//                        }
-//                    }
-//                    SecurityUtils.getSubject().getSession().setAttribute("SimpleAuthorizationInfo", authorizationInfo);
-//                }
-//
-//                Map<String,Object> data = new HashMap<>();
-//                data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
-//                data.put("authorizationToken", authorizationToken);
-//                data.put("user", JSONObject.parseObject(subject, OrgUserDto.class));
-//
-//                data.put("authorizationInfoPerms", authorizationInfo.getStringPermissions());
-//                data.put("authorizationInfoRoles",authorizationInfo.getRoles());
-//                data.put("sid",getAuth().getSession().getId());
-//                result.data = data;
-//                return result;
-//            } catch (UnknownAccountException | IncorrectCredentialsException ex) {
-//                try {getAuth().logout();} catch (Exception e1) {}
-//                result = Response.error("登录失败,用户名或密码错误1!");
-//            }catch (Exception ex) {
-//                try {getAuth().logout();} catch (Exception e1) {}
-//                log.error("登录失败,原因未知", ex);
-//                result = Response.error("登录失败,服务器异常3!");
-//            }
-//        return result;
-//    }
-//    /**
-//     * <p>用户登出
-//     */
-//    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "logout")
-//    @ApiOperation(value = "登出")
-//    public Response logout() {
-//        log.info("UserController logout.........");
-//        Response result = new Response();
-//        try {
-//            log.debug(getAuth().getPrincipal() + "准备退出!");
-//            getAuth().logout();
-//            request.getSession().invalidate();
-//        } catch (Exception e) {
-//            result = Response.error(e.getMessage());
-//        }
-//        return result;
-//    }
-//
+    @Autowired
+    private IChannelInfoService channelInfoService;
+    /**
+     * <p>用户登录
+     */
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix+"/login")
+    @ApiOperation(value = "登录")
+    public Response login(@RequestParam("account") String account , @RequestParam("pwd")String pwd ) throws Exception {
+        log.info("LoginController login");
+        Response result = new Response();
+            try {
+                if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(pwd)) {
+                    return Response.error("用户名或密码不能为空!");
+                }
+                ChannelInfoDto channelInfoUser = channelInfoService.findUserByAccount(account);
+                String pwdhex = MD5.pwdMd5Hex(pwd);
+                if (channelInfoUser==null || !(account.equals(channelInfoUser.getAccount()) && pwdhex.equals(channelInfoUser.getPwd()))) {
+                    return Response.error("登录失败,用户名或密码错误!");
+                }
+                
+            
+            }catch (Exception ex) {
+                log.error("登录失败,原因未知", ex);
+                result = Response.error("登录失败,服务器异常3!");
+            }
+        return result;
+    }
+    /**
+     * <p>渠道商登出
+     */
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "logout")
+    @ApiOperation(value = "登出")
+    public Response logout() {
+        log.info("channelController logout.........");
+        Response result = new Response();
+        try {
+            log.debug("准备退出!");
+            try {
+                request.getSession().invalidate();
+            } catch (Exception e) {
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
 //    /**
 //     * <p> 刷新token。
 //     */
@@ -149,4 +110,28 @@ public class LoginController extends BaseController {
 //        }
 //        return result;
 //    }
+    /**
+     * @param id
+     * @param pwd
+     * 修改密码
+     */
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix+"/modifyPwd")
+    @ApiOperation(value = "修改密码")
+    public Response modifyPwd(@RequestParam("id") Long id,@RequestParam("pwd") String pwd , @RequestParam("newpwd")String newpwd) throws Exception{
+    	log.info("channelController modifyPwd ........");
+    	Response result = new Response();
+    	ChannelInfoDto dto = new ChannelInfoDto();
+		dto.setId(id);
+    	try {
+			if (ValidatorUtil.isNullEmpty(newpwd)) {return Response.error("密码不能为空！");}
+			ChannelInfoDto channelInfo = channelInfoService.findDataById(dto);
+			if (MD5.pwdMd5Hex(pwd).equals(channelInfo.getPwd())) {return Response.error("旧密码错误！");}
+			dto.setPwd(newpwd);
+			channelInfoService.updataChannel(dto);
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
+    	
+    }
 }

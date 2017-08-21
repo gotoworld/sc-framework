@@ -24,9 +24,9 @@ public class ChannelInfo extends BaseEntity {
      /**渠道商名称*/
      private String channelName;
      /**渠道商类型*/
-     private Long channeltype;
+     private int channeltype;
      /**性别(0:男，1：女，2：保密）*/
-     private String gender;
+     private int gender;
      /**电话1*/
      private String phone1;
      /**电话2*/

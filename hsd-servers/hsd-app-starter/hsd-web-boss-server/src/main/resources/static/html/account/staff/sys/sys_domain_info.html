@@ -137,7 +137,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
            loadInfo(sessionStorage.getItem(site.sysDomain.info));
         });
     });

@@ -38,9 +38,9 @@ public interface IAuthPermDao extends IBaseDao {
     @Update("update auth_perm set version=version+1, date_updated=now() ,del_flag=0 where  id = #{id} ")
     int recoveryDataById(IEntity dto) throws Exception;
     /**
-     * 角色权限信息列表>根据用户id。
+     * 角色权限信息列表>根据员工id。
      */
-    List getPermListByUserId(Map dto) throws Exception;
+    List getPermListByStaffId(Map dto) throws Exception;
 
     /**
      * <p>根据角色id获取对应的权限信息列表。

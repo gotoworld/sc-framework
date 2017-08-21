@@ -25,7 +25,7 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-sm-12">
 				<form id="form1" method="post" class="form m-t" accept-charset="UTF-8" ng-submit="save()">
-					<input type="hidden" name="id" ng-value="userInfo.id" />
+					<input type="hidden" name="id" ng-value="staffInfo.id" />
 					<input type="hidden" name="token" ng-value="uuidToken" />
 					<div class="col-sm-8">
 						<div class="form-group clearfix">
@@ -83,10 +83,10 @@
 	angular.module("app", []).controller("app-ctrl", function ($scope) {
 		$data = $scope;
         $data.uuidToken=util.guid();
-		user.init(function () {});
+		staff.init(function () {});
         $scope.save = function () {
             if($("#form1").valid()){
-                $.post(site.user.updatePwd, $('#form1').serialize(),function (result) {
+                $.post(site.staff.updatePwd, $('#form1').serialize(),function (result) {
                     //console.info("获取数据.." + JSON.stringify(result));
                     if (result.code == 0) {
                         alert('密码更新成功,请重新登录!');

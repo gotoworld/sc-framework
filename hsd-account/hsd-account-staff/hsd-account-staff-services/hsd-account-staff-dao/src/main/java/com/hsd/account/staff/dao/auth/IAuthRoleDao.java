@@ -34,12 +34,12 @@ public interface IAuthRoleDao extends IBaseDao {
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
     /**
-     * 角色信息列表>根据用户id。
+     * 角色信息列表>根据员工id。
      */
-    List<?> getRoleListByUserId(Map dto) throws Exception;
+    List<?> getRoleListByStaffId(Map dto) throws Exception;
 
     /**
-     * 根据用户id,判断用户是否为超级管理员,要的就是特权.
+     * 根据员工id,判断员工是否为超级管理员,要的就是特权.
      */
     int isSuperAdmin(Map dto) throws Exception;
 }

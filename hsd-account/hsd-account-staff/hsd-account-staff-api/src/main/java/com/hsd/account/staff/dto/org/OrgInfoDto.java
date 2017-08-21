@@ -62,5 +62,5 @@ public class OrgInfoDto extends BaseDto {
     }
 
     private List<Long> roleIds;
-    private List<Long> userIds;
+    private List<Long> staffIds;
 }

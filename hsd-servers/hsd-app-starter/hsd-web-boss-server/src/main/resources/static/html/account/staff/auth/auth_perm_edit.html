@@ -122,7 +122,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
            $data.newFlag=sessionStorage.getItem(site.authPerm.info);
            if($data.newFlag) $data.uuidToken=util.guid();
             loadTree();

@@ -12,9 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrgOrgVsUserDto extends BaseDto {
-    /**用户id*/
-    private Long userId;
+public class OrgOrgVsStaffDto extends BaseDto {
+    /**员工id*/
+    private Long staffId;
     /**组织id*/
     private Long orgId;
     /**建立者ID*/

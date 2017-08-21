@@ -3,7 +3,7 @@ package com.hsd.account.staff.web.controller.org;
 import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsRoleDto;
-import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
+import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
@@ -210,45 +210,45 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/user/{orgId}")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/staff/{orgId}")
     @ApiOperation(value = "获取组织已设置人员")
-    public Response getUser(@PathVariable("orgId") Long orgId) {
-        log.info("OrgInfoController getUser.........");
+    public Response getStaff(@PathVariable("orgId") Long orgId) {
+        log.info("OrgInfoController getStaff.........");
         Response result=new Response();
         try {
             OrgInfoDto orgInfoDto=new OrgInfoDto();
             orgInfoDto.setId(orgId);
-            result.data=orgInfoService.findOrgUserIsList(orgInfoDto);
+            result.data=orgInfoService.findOrgStaffIsList(orgInfoDto);
         } catch (Exception e) {
             result=Response.error(e.getMessage());
         }
         return result;
     }
-    @RequiresPermissions("orgInfo:edit:user")
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "add/user")
+    @RequiresPermissions("orgInfo:edit:staff")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "add/staff")
     @ALogOperation(type = "添加人员", desc = "组织机构")
     @ApiOperation(value = "添加人员")
-    public Response setUser(@ModelAttribute OrgOrgVsUserDto dto) {
-        log.info("OrgInfoController addUser.........");
+    public Response setStaff(@ModelAttribute OrgOrgVsStaffDto dto) {
+        log.info("OrgInfoController addStaff.........");
         Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
-            result = orgInfoService.addUser(dto);
+            result = orgInfoService.addStaff(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
-    @RequiresPermissions("orgInfo:edit:user")
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/user")
+    @RequiresPermissions("orgInfo:edit:staff")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/staff")
     @ALogOperation(type = "删除人员", desc = "组织机构")
     @ApiOperation(value = "删除人员")
-    public Response delUser(@ModelAttribute OrgOrgVsUserDto dto) {
-        log.info("OrgInfoController delUser.........");
+    public Response delStaff(@ModelAttribute OrgOrgVsStaffDto dto) {
+        log.info("OrgInfoController delStaff.........");
         Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
-            result = orgInfoService.delUser(dto);
+            result = orgInfoService.delStaff(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

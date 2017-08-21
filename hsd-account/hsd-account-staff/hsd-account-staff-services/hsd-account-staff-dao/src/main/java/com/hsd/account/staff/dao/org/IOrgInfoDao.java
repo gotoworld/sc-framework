@@ -40,9 +40,9 @@ public interface IOrgInfoDao extends IBaseDao {
     int recoveryDataById(IEntity dto) throws Exception;
 
     /**
-     * 获取用户所在组织集合>根据用户id
+     * 获取员工所在组织集合>根据员工id
      */
-    List<?> getOrgListByUserId(Map dto) throws Exception;
+    List<?> getOrgListByStaffId(Map dto) throws Exception;
 
     List<?> findBriefDataIsPage(IEntity dto) throws Exception;
 }

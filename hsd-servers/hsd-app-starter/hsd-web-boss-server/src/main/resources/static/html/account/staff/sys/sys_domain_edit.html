@@ -116,7 +116,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
            $data.newFlag=sessionStorage.getItem(site.sysDomain.info);
            if($data.newFlag) $data.uuidToken=util.guid();
            loadInfo(sessionStorage.getItem(site.sysDomain.info));

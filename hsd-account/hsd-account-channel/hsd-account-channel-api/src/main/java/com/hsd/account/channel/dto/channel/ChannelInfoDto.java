@@ -31,10 +31,10 @@ public class ChannelInfoDto extends BaseDto {
      private String channelName;
      /**渠道商类型*/
 	 @NotNull(message="channeltype不能为空")
-     private Long channeltype;
+     private int channeltype;
      /**性别(0:男，1：女，2：保密）*/
 	 @NotNull(message="gender不能为空")@Size(max=1,message="gender最大1字符")
-     private String gender;
+     private int gender;
      /**电话1*/
 	 @NotNull(message="phone1不能为空")@Size(max=50,message="phone1最大50字符")
      private String phone1;

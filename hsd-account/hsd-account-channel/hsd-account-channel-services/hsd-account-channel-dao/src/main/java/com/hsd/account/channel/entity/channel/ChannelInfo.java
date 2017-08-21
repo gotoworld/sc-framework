@@ -1,14 +1,13 @@
 package com.hsd.account.channel.entity.channel;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hsd.framework.entity.BaseEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor

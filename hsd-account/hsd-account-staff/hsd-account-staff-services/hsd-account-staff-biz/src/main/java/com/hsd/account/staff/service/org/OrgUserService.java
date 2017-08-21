@@ -331,7 +331,9 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                                     try {
                                         orgUserDao.insert(ou);
                                     } catch (Exception e1) {
-                                        finalMessage.append("<br/>异常:"+e1.getMessage());
+                                        String msg=""+e1.getMessage();
+                                        int indexOf=e1.getMessage().indexOf("for key");
+                                        finalMessage.append("<br/>异常:"+(indexOf!=-1?msg.substring(0,indexOf):msg));
                                         finalMessage.append("<br/>==>"+ou.getAccount()+","+ou.getName()+","+ou.getCellphone());
                                     }
                                 });
@@ -422,10 +424,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
     public static void main(String[] args) {
-        for(int i=0;i<20;i++){
-            String x=IdUtil.createUUID(8);
-            System.out.println(x+":"+MD5.pwdMd5Hex(MD5.md5Hex(x)));
-        }
-
+//        for(int i=0;i<20;i++){
+//            String x=IdUtil.createUUID(8);
+//            System.out.println(x+":"+MD5.pwdMd5Hex(MD5.md5Hex(x)));
+//        }
+        String msg=" ###  ### Error updating database. Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_user_account' ### The error may involve com.hsd.account.staff.dao.org.IOrgUserDao.insert-Inline ### The error occurred while setting parameters ### SQL: insert into org_user ( account ,pwd ,name ,gender ,cellphone ,avatar ,email ,type ,last_login ,count ,state ,eff_date ,exp_date ,memo ,version ,order_no ,del_flag ,create_id ,date_created ,date_updated ,bi_update_ts ) values ( ? ,? ,? ,? ,? ,? ,? ,? ,null ,0 ,? ,? ,? ,? ,0 ,? ,0 ,? ,now() ,now() ,now() ) ### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_user_account' ; SQL []; Duplicate entry 'a001' for key 'index_org_user_account'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_user_account'";
+        int indexOf=msg.indexOf("for key");
+        System.out.println(indexOf!=-1?msg.substring(0,indexOf):msg);
     }
 }

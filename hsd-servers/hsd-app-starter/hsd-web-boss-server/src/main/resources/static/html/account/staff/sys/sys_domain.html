@@ -59,7 +59,7 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("sysDomain:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("sysDomain:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -82,9 +82,9 @@
 													<td>{{item.isShow==1?'是':'否'}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("sysDomain:info")'  ng-click="info('i',item.code)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("sysDomain:edit")'  ng-click="edit('e',item.code)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("sysDomain:del")'   ng-click="del(item.code)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("sysDomain:info")'  ng-click="info('i',item.code)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("sysDomain:edit")'  ng-click="edit('e',item.code)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("sysDomain:del")'   ng-click="del(item.code)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -143,7 +143,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
             loadPage(1);
         });
         $scope.edit = function (title,id) {

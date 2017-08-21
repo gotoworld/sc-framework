@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient(name = "${feign.name.account.staff}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IOrgLogOperationService {
-    String acPrefix = "/feign/account/staff/ISysUserLogService";
+    String acPrefix = "/feign/account/staff/ISysStaffLogService";
 
     /**
      * 管理员操作日志记录。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/info")
-    public void info(@RequestParam("type") String type,@RequestParam("memo")  String memo,@RequestParam("domainCode")String domainCode,@RequestParam("detailInfo")  String detailInfo,@RequestParam("userId")  Long userId,@RequestParam("userName")  String userName,@RequestParam("ip")  String ip);
+    public void info(@RequestParam("type") String type,@RequestParam("memo")  String memo,@RequestParam("domainCode")String domainCode,@RequestParam("detailInfo")  String detailInfo,@RequestParam("staffId")  Long staffId,@RequestParam("staffName")  String staffName,@RequestParam("ip")  String ip);
     /**
      * <p>信息列表 分页。
      */

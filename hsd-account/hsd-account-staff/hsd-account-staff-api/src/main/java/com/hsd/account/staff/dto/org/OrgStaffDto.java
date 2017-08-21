@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrgUserDto extends BaseDto {
+public class OrgStaffDto extends BaseDto {
      /**ID*/
      private Long id;
      /**员工账号*/
@@ -39,7 +39,7 @@ public class OrgUserDto extends BaseDto {
      /**邮箱*/
 	 @Size(max=64,message="email最大64字符")
      private String email;
-     /**用户类型0管理员1普通用户*/
+     /**员工类型0管理员1普通员工*/
      private Integer type;
      /**最后登录日期*/
      private Date lastLogin;
@@ -71,7 +71,7 @@ public class OrgUserDto extends BaseDto {
 
 
 
-     /**用户角色名称集合*/
+     /**员工角色名称集合*/
      private String roleNames;
      private String oldpwd;
      private String newpwd;
@@ -80,9 +80,9 @@ public class OrgUserDto extends BaseDto {
      private String orgId;
      /**超级管理员标记*/
      private Integer iissuperman;
-     /**用户权限,匹配字符集合*/
+     /**员工权限,匹配字符集合*/
      private Set<String> authorizationInfoPerms;
-     /**用户角色,匹配字符集合*/
+     /**员工角色,匹配字符集合*/
      private Set<String> authorizationInfoRoles;
 
      private List<Long> roleIds;

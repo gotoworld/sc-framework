@@ -29,6 +29,6 @@ public interface IOrgLogOperationDao extends IBaseDao {
     /**
      * 根据过期天数 物理删除
      */
-    @Delete("delete from sys_user_log where  IFNULL(datediff(DATE_FORMAT(now(),'%Y%m%d'),DATE_FORMAT(date_created,'%Y%m%d')),999)>#{expireDay} ")
+    @Delete("delete from sys_staff_log where  IFNULL(datediff(DATE_FORMAT(now(),'%Y%m%d'),DATE_FORMAT(date_created,'%Y%m%d')),999)>#{expireDay} ")
     int deleteByExpireDay(Integer expireDay) throws Exception;
 }

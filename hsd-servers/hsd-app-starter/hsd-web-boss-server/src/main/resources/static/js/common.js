@@ -6,11 +6,11 @@ var apiPath = {
     }
 }
 var site = {
-    user: {
+    staff: {
         login: apiPath.account.staff + "/boss/account/staff/sign/login" //登录
         , logout: apiPath.account.staff + "/boss/account/staff/sign/logout" //登出
         , refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
-        , updatePwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/update/pwd" //密码更新
+        , updatePwd: apiPath.account.staff + "/boss/account/staff/org/orgStaff/update/pwd" //密码更新
     }
     , sysDomain: {
         view: basePath + "/html/account/staff/sys/sys_domain"
@@ -28,32 +28,32 @@ var site = {
         , save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
         , info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
         , del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
-        , getUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/user/"
-        , addUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/user"
-        , delUser: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/user"
+        , getStaff: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/staff/"
+        , addStaff: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/staff"
+        , delStaff: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/staff"
         , getRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/role/"
         , addRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/role"
         , delRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/role"
     }
-    , orgUser: {
-        view: basePath + "/html/account/staff/org/org_user"
-        , page: apiPath.account.staff + "/boss/account/staff/org/orgUser/page/"
-        , recyclePage: apiPath.account.staff + "/boss/account/staff/org/orgUser/recyclePage/"
-        , briefPage: apiPath.account.staff + "/boss/account/staff/org/orgUser/briefPage/"
-        , recovery: apiPath.account.staff + "/boss/account/staff/org/orgUser/recovery/"
-        , info: apiPath.account.staff + "/boss/account/staff/org/orgUser/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/"
-        , save: apiPath.account.staff + "/boss/account/staff/org/orgUser/save"
-        , isAccountYN: apiPath.account.staff + "/boss/account/staff/org/orgUser/isAccountYN/"
-        , resetpwd: apiPath.account.staff + "/boss/account/staff/org/orgUser/reset/pwd/"
-        , addBatch: apiPath.account.staff + "/boss/account/staff/org/orgUser/add/batch"
-        , getOrg: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/org/"
-        , addOrg: apiPath.account.staff + "/boss/account/staff/org/orgUser/add/org"
-        , delOrg: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/org"
-        , getUserRole: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/role/user/"
-        , getOrgRole: apiPath.account.staff + "/boss/account/staff/org/orgUser/get/role/org/"
-        , addRole: apiPath.account.staff + "/boss/account/staff/org/orgUser/add/role"
-        , delRole: apiPath.account.staff + "/boss/account/staff/org/orgUser/del/role"
+    , orgStaff: {
+        view: basePath + "/html/account/staff/org/org_staff"
+        , page: apiPath.account.staff + "/boss/account/staff/org/orgStaff/page/"
+        , recyclePage: apiPath.account.staff + "/boss/account/staff/org/orgStaff/recyclePage/"
+        , briefPage: apiPath.account.staff + "/boss/account/staff/org/orgStaff/briefPage/"
+        , recovery: apiPath.account.staff + "/boss/account/staff/org/orgStaff/recovery/"
+        , info: apiPath.account.staff + "/boss/account/staff/org/orgStaff/info/"
+        , del: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/"
+        , save: apiPath.account.staff + "/boss/account/staff/org/orgStaff/save"
+        , isAccountYN: apiPath.account.staff + "/boss/account/staff/org/orgStaff/isAccountYN/"
+        , resetpwd: apiPath.account.staff + "/boss/account/staff/org/orgStaff/reset/pwd/"
+        , addBatch: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/batch"
+        , getOrg: apiPath.account.staff + "/boss/account/staff/org/orgStaff/get/org/"
+        , addOrg: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/org"
+        , delOrg: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/org"
+        , getStaffRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/get/role/staff/"
+        , getOrgRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/get/role/org/"
+        , addRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/role"
+        , delRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/role"
     }
     , authPerm: {
         view: basePath + "/html/account/staff/auth/auth_perm"
@@ -132,7 +132,7 @@ function getQueryString(name) {
     return null;
 }
 
-/**用户登录信息验证头*/
+/**员工登录信息验证头*/
 $.ajaxSetup({
     headers: {
         "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken")
@@ -150,14 +150,14 @@ $(document).ajaxComplete(function (event, xhr, settings) {
     }
 });
 
-/**用户信息*/
-var user = {
-    login: function (userJson, callback) {
-        $.post(site.user.login, userJson,
+/**员工信息*/
+var staff = {
+    login: function (staffJson, callback) {
+        $.post(site.staff.login, staffJson,
             function (result) {
                 if (result.code == 0) {
                     if (result.data) {
-                        sessionStorage.setItem('hsd_staff_user', JSON.stringify(result.data.user));
+                        sessionStorage.setItem('hsd_staff_staff', JSON.stringify(result.data.staff));
                         if (result.data.authorizationToken) {
                             sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
                             sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
@@ -174,7 +174,7 @@ var user = {
             }, 'json');
     },
     refreshToken: function (callback) {
-        $.get(site.user.refreshToken, {}, function (result) {
+        $.get(site.staff.refreshToken, {}, function (result) {
             if (result.code == 0) {
                 if (result.data) {
                     if (result.data.authorizationToken) {
@@ -189,9 +189,9 @@ var user = {
         }, 'json');
     },
     logout: function (callback) {
-        $.get(site.user.logout, {}, function (result) {
+        $.get(site.staff.logout, {}, function (result) {
             sessionStorage.removeItem('hsd_staff_tokenExpMillis');
-            sessionStorage.removeItem('hsd_staff_user');
+            sessionStorage.removeItem('hsd_staff_staff');
             sessionStorage.removeItem("hsd_staff_authorizationToken");
             sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
             sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
@@ -200,10 +200,10 @@ var user = {
         }, 'json');
     },
     info: function (callback) {
-        var userJson = sessionStorage.getItem('hsd_staff_user');
-        if (userJson) {
-            var userInfo = JSON.parse(userJson);
-            $data.userInfo = userInfo;
+        var staffJson = sessionStorage.getItem('hsd_staff_staff');
+        if (staffJson) {
+            var staffInfo = JSON.parse(staffJson);
+            $data.staffInfo = staffInfo;
         }
         callback && callback();
         try {
@@ -222,11 +222,11 @@ var user = {
             if (expMillis > 0 && expMillis < (10 * 60 * 1000)) {//还有10分钟过期
                 this.refreshToken(callback);
             } else {
-                if (sessionStorage.getItem('hsd_staff_user') && expMillis > 0) {
-                    user.info(callback);
+                if (sessionStorage.getItem('hsd_staff_staff') && expMillis > 0) {
+                    staff.info(callback);
                 } else {
                     // this.login(function () {
-                    //     user.info(callback);
+                    //     staff.info(callback);
                     // })
                     alert('登陆过期,请重新登陆!');
                     location.href = '/login.html';
@@ -250,7 +250,7 @@ var user = {
                     if(val1==val2) return true
                     return false;
                 }
-                $data.user = user;
+                $data.staff = staff;
             }
         }
     }

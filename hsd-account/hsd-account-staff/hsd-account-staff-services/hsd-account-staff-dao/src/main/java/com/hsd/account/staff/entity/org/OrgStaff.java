@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrgUser extends BaseEntity {
+public class OrgStaff extends BaseEntity {
      /**ID*/
      private Long id;
      /**员工账号*/
@@ -27,7 +27,7 @@ public class OrgUser extends BaseEntity {
      private String avatar;
      /**邮箱*/
      private String email;
-     /**用户类型0管理员*/
+     /**员工类型0管理员*/
      private Integer type;
      /**最后登录日期*/
      private Date lastLogin;

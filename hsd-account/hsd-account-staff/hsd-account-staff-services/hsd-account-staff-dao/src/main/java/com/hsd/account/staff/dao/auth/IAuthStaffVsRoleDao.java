@@ -9,15 +9,15 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 /**
- * <p>权限_用户vs角色 数据库处理接口类。
+ * <p>权限_员工vs角色 数据库处理接口类。
  */
 @Mapper
-public interface IAuthUserVsRoleDao extends IBaseDao {
+public interface IAuthStaffVsRoleDao extends IBaseDao {
 
     /**
      * 判断是否存在
      */
-    @Select("select IFNULL(count(0),0) as count from auth_user_vs_role where  user_id = #{userId} and  role_id = #{roleId} ")
+    @Select("select IFNULL(count(0),0) as count from auth_staff_vs_role where  staff_id = #{staffId} and  role_id = #{roleId} ")
     int isDataYN(IEntity entity) throws Exception;
 
 
@@ -25,20 +25,20 @@ public interface IAuthUserVsRoleDao extends IBaseDao {
     /**
      * 根据主键 物理删除
      */
-    @Delete("delete from auth_user_vs_role where  user_id = #{userId} and  role_id = #{roleId} ")
+    @Delete("delete from auth_staff_vs_role where  staff_id = #{staffId} and  role_id = #{roleId} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
      /**
-      * 根据主键user_id 物理删除
+      * 根据主键staff_id 物理删除
       */
-     @Delete("delete from auth_user_vs_role where  user_id = #{userId}")
-     int deleteBulkDataByUserId(IEntity entity) throws Exception;
+     @Delete("delete from auth_staff_vs_role where  staff_id = #{staffId}")
+     int deleteBulkDataByStaffId(IEntity entity) throws Exception;
      /**
       * 根据主键role_id 物理删除
       */
-     @Delete("delete from auth_user_vs_role where  role_id = #{roleId}")
+     @Delete("delete from auth_staff_vs_role where  role_id = #{roleId}")
      int deleteBulkDataByRoleId(IEntity entity) throws Exception;
 
-     List<?> findUserRoleIsList(IEntity entity) throws Exception;
+     List<?> findStaffRoleIsList(IEntity entity) throws Exception;
      List<?> findOrgRoleIsList(IEntity entity) throws Exception;
 }

@@ -2,20 +2,20 @@ package com.hsd.account.staff.service.org;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.hsd.account.staff.api.org.IOrgUserService;
+import com.hsd.account.staff.api.org.IOrgStaffService;
 import com.hsd.account.staff.dao.auth.IAuthRoleDao;
-import com.hsd.account.staff.dao.auth.IAuthUserVsRoleDao;
+import com.hsd.account.staff.dao.auth.IAuthStaffVsRoleDao;
 import com.hsd.account.staff.dao.org.IOrgInfoDao;
-import com.hsd.account.staff.dao.org.IOrgOrgVsUserDao;
-import com.hsd.account.staff.dao.org.IOrgUserDao;
+import com.hsd.account.staff.dao.org.IOrgOrgVsStaffDao;
+import com.hsd.account.staff.dao.org.IOrgStaffDao;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
-import com.hsd.account.staff.dto.org.AuthUserVsRoleDto;
+import com.hsd.account.staff.dto.org.AuthStaffVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
-import com.hsd.account.staff.dto.org.OrgOrgVsUserDto;
-import com.hsd.account.staff.dto.org.OrgUserDto;
-import com.hsd.account.staff.entity.auth.AuthUserVsRole;
-import com.hsd.account.staff.entity.org.OrgOrgVsUser;
-import com.hsd.account.staff.entity.org.OrgUser;
+import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
+import com.hsd.account.staff.dto.org.OrgStaffDto;
+import com.hsd.account.staff.entity.auth.AuthStaffVsRole;
+import com.hsd.account.staff.entity.org.OrgOrgVsStaff;
+import com.hsd.account.staff.entity.org.OrgStaff;
 import com.hsd.common.util.excel.ExcelUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -42,39 +42,39 @@ import java.util.Map;
 
 @FeignService
 @Slf4j
-public class OrgUserService extends BaseService implements IOrgUserService {
+public class OrgStaffService extends BaseService implements IOrgStaffService {
     @Autowired
-    private IOrgUserDao orgUserDao;
+    private IOrgStaffDao orgStaffDao;
     @Autowired
     private IAuthRoleDao authRoleDao;
     @Autowired
-    private IAuthUserVsRoleDao authUserVsRoleDao;
+    private IAuthStaffVsRoleDao authStaffVsRoleDao;
     @Autowired
     private IOrgInfoDao orgInfoDao;
     @Autowired
-    private IOrgOrgVsUserDao orgOrgVsUserDao;
+    private IOrgOrgVsStaffDao orgOrgVsStaffDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public Response saveOrUpdateData(@RequestBody OrgUserDto dto) throws Exception {
+    public Response saveOrUpdateData(@RequestBody OrgStaffDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            OrgUser entity=copyTo(dto,OrgUser.class);
+            OrgStaff entity=copyTo(dto,OrgStaff.class);
             // 判断数据是否存在
-            if (orgUserDao.isDataYN(entity) != 0) {
+            if (orgStaffDao.isDataYN(entity) != 0) {
                 // 数据存在
-                orgUserDao.update(entity);
+                orgStaffDao.update(entity);
             } else {
-                if(!JwtUtil.isPermitted("orgUser:add")){
-                    throw new RuntimeException("没用新增用户的权限!");
+                if(!JwtUtil.isPermitted("orgStaff:add")){
+                    throw new RuntimeException("没用新增员工的权限!");
                 }
-                if(orgUserDao.isAccountYN(dto.getAccount())>0){
+                if(orgStaffDao.isAccountYN(dto.getAccount())>0){
                     throw new RuntimeException("账号已存在!");
                 }
                 entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
                 // 新增
-                orgUserDao.insert(entity);
+                orgStaffDao.insert(entity);
                 result.data=entity.getId();
             }
         } catch (Exception e) {
@@ -86,15 +86,15 @@ public class OrgUserService extends BaseService implements IOrgUserService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String updateData(@RequestBody OrgUserDto dto) throws Exception {
+    public String updateData(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            OrgUser entity=copyTo(dto,OrgUser.class);
+            OrgStaff entity=copyTo(dto,OrgStaff.class);
             // 判断数据是否存在
-            if (orgUserDao.isDataYN(entity) != 0) {
+            if (orgStaffDao.isDataYN(entity) != 0) {
                 // 数据存在
-                orgUserDao.update(entity);
+                orgStaffDao.update(entity);
             }
         } catch (Exception e) {
             log.error("信息更新失败!", e);
@@ -102,11 +102,11 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         }
         return result;
     }
-    public String deleteData(@RequestBody OrgUserDto dto) throws Exception {
+    public String deleteData(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgUserDao.deleteByPrimaryKey(copyTo(dto,OrgUser.class));
+            orgStaffDao.deleteByPrimaryKey(copyTo(dto,OrgStaff.class));
         } catch (Exception e) {
             log.error("信息删除失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -116,11 +116,11 @@ public class OrgUserService extends BaseService implements IOrgUserService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String deleteDataById(@RequestBody OrgUserDto dto) throws Exception {
+    public String deleteDataById(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgUserDao.deleteById(copyTo(dto,OrgUser.class));
+            orgStaffDao.deleteById(copyTo(dto,OrgStaff.class));
         } catch (Exception e) {
             log.error("信息删除失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -129,25 +129,25 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @Override
-    public PageInfo findDataIsPage(@RequestBody OrgUserDto dto) throws Exception {
+    public PageInfo findDataIsPage(@RequestBody OrgStaffDto dto) throws Exception {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
-            OrgUser entity = copyTo(dto, OrgUser.class);
+            OrgStaff entity = copyTo(dto, OrgStaff.class);
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            List list = orgUserDao.findDataIsPage(entity);
+            List list = orgStaffDao.findDataIsPage(entity);
             pageInfo=new PageInfo(list);
-            pageInfo.setList(copyTo(pageInfo.getList(), OrgUserDto.class));
+            pageInfo.setList(copyTo(pageInfo.getList(), OrgStaffDto.class));
         } catch (Exception e) {
             log.error("信息[分页]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return pageInfo;
     }
-    public List<OrgUserDto> findDataIsList(@RequestBody OrgUserDto dto) {
-        List<OrgUserDto> results = null;
+    public List<OrgStaffDto> findDataIsList(@RequestBody OrgStaffDto dto) {
+        List<OrgStaffDto> results = null;
         try {
-            results = copyTo(orgUserDao.findDataIsList(copyTo(dto,OrgUser.class)),OrgUserDto.class);
+            results = copyTo(orgStaffDao.findDataIsList(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -155,10 +155,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return results;
     }
 
-    public OrgUserDto findDataById(@RequestBody OrgUserDto dto) {
-        OrgUserDto result = null;
+    public OrgStaffDto findDataById(@RequestBody OrgStaffDto dto) {
+        OrgStaffDto result = null;
         try {
-            result = copyTo(orgUserDao.selectByPrimaryKey(copyTo(dto,OrgUser.class)),OrgUserDto.class);
+            result = copyTo(orgStaffDao.selectByPrimaryKey(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
         } catch (Exception e) {
             log.error("信息详情查询失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -166,11 +166,11 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 
-    public String recoveryDataById(@RequestBody OrgUserDto dto) throws Exception {
+    public String recoveryDataById(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgUserDao.recoveryDataById(copyTo(dto,OrgUser.class));
+            orgStaffDao.recoveryDataById(copyTo(dto,OrgStaff.class));
         } catch (Exception e) {
             result = "信息恢复失败!";
             log.error(result, e);
@@ -179,16 +179,16 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 
-    public List<OrgInfoDto> findOrgIsList(@RequestBody OrgUserDto dto) {
+    public List<OrgInfoDto> findOrgIsList(@RequestBody OrgStaffDto dto) {
         List<OrgInfoDto> results = null;
         try {
             if (dto != null) {
                 Map entity = new HashMap();
-                entity.put("userId", dto.getId());
-                results = copyTo(orgInfoDao.getOrgListByUserId(entity),OrgInfoDto.class);
+                entity.put("staffId", dto.getId());
+                results = copyTo(orgInfoDao.getOrgListByStaffId(entity),OrgInfoDto.class);
             }
         } catch (Exception e) {
-            log.error("获取用户组织集合,数据库处理异常!", e);
+            log.error("获取员工组织集合,数据库处理异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
@@ -198,43 +198,43 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         String result = "seccuss";
         try {
             if (ValidatorUtil.notEmpty(account)) {
-                if (orgUserDao.isAccountYN(account) > 0) {
+                if (orgStaffDao.isAccountYN(account) > 0) {
                     throw new RuntimeException("账号["+account+"]已存在!");
                 }
             }
         } catch (Exception e) {
-            log.error("判断用户id是否存在,数据库处理异常!", e);
+            log.error("判断员工id是否存在,数据库处理异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String updatePwd(@RequestBody OrgUserDto dto) throws Exception {
+    public String updatePwd(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            OrgUserDto orgUserDto=findDataById(dto);
-            if (orgUserDto==null) throw new RuntimeException("用户不存在!");
+            OrgStaffDto orgStaffDto=findDataById(dto);
+            if (orgStaffDto==null) throw new RuntimeException("员工不存在!");
 
-            orgUserDto.setOldpwd(MD5.pwdMd5Hex(dto.getOldpwd()));
-//            orgUserDto.setNewpwd(MD5.pwdMd5Hex(dto.getNewpwd()));
-            orgUserDto.setConfirmpwd(MD5.pwdMd5Hex(dto.getConfirmpwd()));
+            orgStaffDto.setOldpwd(MD5.pwdMd5Hex(dto.getOldpwd()));
+//            orgStaffDto.setNewpwd(MD5.pwdMd5Hex(dto.getNewpwd()));
+            orgStaffDto.setConfirmpwd(MD5.pwdMd5Hex(dto.getConfirmpwd()));
 
-            if(!orgUserDto.getPwd().equals(orgUserDto.getOldpwd())) throw new RuntimeException("原密码错误!");
-            if(orgUserDao.updatePwd(copyTo(orgUserDto,OrgUser.class))==0) throw new RuntimeException("密码修改失败,请重试!");
+            if(!orgStaffDto.getPwd().equals(orgStaffDto.getOldpwd())) throw new RuntimeException("原密码错误!");
+            if(orgStaffDao.updatePwd(copyTo(orgStaffDto,OrgStaff.class))==0) throw new RuntimeException("密码修改失败,请重试!");
         } catch (Exception e) {
-            log.error("用户修改密码异常!",e);
+            log.error("员工修改密码异常!",e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
-    public String resetPwd(@RequestBody OrgUserDto dto) throws Exception {
+    public String resetPwd(@RequestBody OrgStaffDto dto) throws Exception {
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             String newPwd=IdUtil.createUUID(8);
             dto.setPwd(MD5.pwdMd5Hex(MD5.md5Hex(newPwd)));
-            if(orgUserDao.resetPwd(copyTo(dto,OrgUser.class))==0) throw new RuntimeException("密码重置失败,请重试!");
+            if(orgStaffDao.resetPwd(copyTo(dto,OrgStaff.class))==0) throw new RuntimeException("密码重置失败,请重试!");
             //TODO 给账号发送新密码短信
 
             return newPwd;
@@ -245,15 +245,15 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @Override
-    public PageInfo findBriefDataIsPage(@RequestBody OrgUserDto dto) throws Exception {
+    public PageInfo findBriefDataIsPage(@RequestBody OrgStaffDto dto) throws Exception {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
-            OrgUser entity = copyTo(dto, OrgUser.class);
+            OrgStaff entity = copyTo(dto, OrgStaff.class);
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            List list = orgUserDao.findBriefDataIsPage(entity);
+            List list = orgStaffDao.findBriefDataIsPage(entity);
             pageInfo=new PageInfo(list);
-            pageInfo.setList(copyTo(pageInfo.getList(), OrgUserDto.class));
+            pageInfo.setList(copyTo(pageInfo.getList(), OrgStaffDto.class));
         } catch (Exception e) {
             log.error("信息[分页]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -262,12 +262,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @RfAccount2Bean
-    @RequiresPermissions("orgUser:edit:org")
-    public Response addOrg(@RequestBody OrgOrgVsUserDto dto) throws Exception {
+    @RequiresPermissions("orgStaff:edit:org")
+    public Response addOrg(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgOrgVsUserDao.insert(copyTo(dto,OrgOrgVsUser.class));
+            orgOrgVsStaffDao.insert(copyTo(dto,OrgOrgVsStaff.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -275,12 +275,12 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 
-    @RequiresPermissions("orgUser:edit:org")
-    public Response delOrg(@RequestBody OrgOrgVsUserDto dto) throws Exception {
+    @RequiresPermissions("orgStaff:edit:org")
+    public Response delOrg(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgOrgVsUserDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsUser.class));
+            orgOrgVsStaffDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsStaff.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -288,7 +288,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
         return result;
     }
 //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    @RequiresPermissions("orgUser:edit:batch")
+    @RequiresPermissions("orgStaff:edit:batch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
@@ -301,33 +301,33 @@ public class OrgUserService extends BaseService implements IOrgUserService {
             Long createId=JwtUtil.getSubject().getLong("id");
            final StringBuffer finalMessage = new StringBuffer("");
             if(datas!=null) {
-                List<OrgUser> orgUsers=new ArrayList<>();
+                List<OrgStaff> orgStaffs=new ArrayList<>();
                 for (int i = 0; i < datas.size(); i++) {
                     List data= (List) datas.get(i);
-                    OrgUser orgUser=new OrgUser();
+                    OrgStaff orgStaff=new OrgStaff();
                     if(ValidatorUtil.isEmpty(data.get(0))){
                         finalMessage.append("<br/>空行:"+(i+1));
                         continue;
                     }
-                    orgUser.setAccount((String) data.get(0));
-                    orgUser.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(1))) );
-                    orgUser.setName((String) data.get(2));
-                    orgUser.setGender(getGender((String) data.get(3)));
-                    orgUser.setCellphone((String) data.get(4));
-                    orgUser.setEmail((String) data.get(5));
-                    orgUser.setMemo("批量导入");
-//                    orgUser.setOrderNo(i);
-                    orgUser.setType(0);
-                    orgUser.setState(0);
-                    orgUser.setCreateId(createId);
-                    orgUsers.add(orgUser);
+                    orgStaff.setAccount((String) data.get(0));
+                    orgStaff.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(1))) );
+                    orgStaff.setName((String) data.get(2));
+                    orgStaff.setGender(getGender((String) data.get(3)));
+                    orgStaff.setCellphone((String) data.get(4));
+                    orgStaff.setEmail((String) data.get(5));
+                    orgStaff.setMemo("批量导入");
+//                    orgStaff.setOrderNo(i);
+                    orgStaff.setType(0);
+                    orgStaff.setState(0);
+                    orgStaff.setCreateId(createId);
+                    orgStaffs.add(orgStaff);
                     if((i+1)%100==0||(i+1)==datas.size()){
                         try {
-                            orgUserDao.insertBatch(orgUsers);
+                            orgStaffDao.insertBatch(orgStaffs);
                         } catch (Exception e) {
-                            orgUsers.forEach(ou -> {
+                            orgStaffs.forEach(ou -> {
                                 try {
-                                    orgUserDao.insert(ou);
+                                    orgStaffDao.insert(ou);
                                 } catch (Exception e1) {
                                     String msg=""+e1.getMessage();
                                     int indexOf=e1.getMessage().indexOf("for key");
@@ -336,7 +336,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                                 }
                             });
                         }
-                        orgUsers=new ArrayList<>();
+                        orgStaffs=new ArrayList<>();
                     }
                 }
             }
@@ -359,54 +359,54 @@ public class OrgUserService extends BaseService implements IOrgUserService {
     }
 
     @Override
-    public List<AuthRoleDto> findUserRoleIsList(@RequestBody OrgUserDto dto) {
+    public List<AuthRoleDto> findStaffRoleIsList(@RequestBody OrgStaffDto dto) {
         List<AuthRoleDto> results = null;
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            AuthUserVsRole userVsRole=new AuthUserVsRole();
-            userVsRole.setUserId(dto.getId());
-            results = copyTo(authUserVsRoleDao.findUserRoleIsList(userVsRole),AuthRoleDto.class);
+            AuthStaffVsRole staffVsRole=new AuthStaffVsRole();
+            staffVsRole.setStaffId(dto.getId());
+            results = copyTo(authStaffVsRoleDao.findStaffRoleIsList(staffVsRole),AuthRoleDto.class);
 
         } catch (Exception e) {
-            log.error("获取用户->个人角色。异常!", e);
+            log.error("获取员工->个人角色。异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
     }
     @Override
-    public List<AuthRoleDto> findOrgRoleIsList(@RequestBody OrgUserDto dto) {
+    public List<AuthRoleDto> findOrgRoleIsList(@RequestBody OrgStaffDto dto) {
         List<AuthRoleDto> results = null;
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            AuthUserVsRole userVsRole=new AuthUserVsRole();
-            userVsRole.setUserId(dto.getId());
-            results = copyTo(authUserVsRoleDao.findOrgRoleIsList(userVsRole),AuthRoleDto.class);
+            AuthStaffVsRole staffVsRole=new AuthStaffVsRole();
+            staffVsRole.setStaffId(dto.getId());
+            results = copyTo(authStaffVsRoleDao.findOrgRoleIsList(staffVsRole),AuthRoleDto.class);
 
         } catch (Exception e) {
-            log.error("获取用户->组织角色。异常!", e);
+            log.error("获取员工->组织角色。异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
     }
     @RfAccount2Bean
-    @RequiresPermissions("orgUser:edit:role")
-    public Response addRole(@RequestBody AuthUserVsRoleDto dto) throws Exception {
+    @RequiresPermissions("orgStaff:edit:role")
+    public Response addRole(@RequestBody AuthStaffVsRoleDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            authUserVsRoleDao.insert(copyTo(dto,AuthUserVsRole.class));
+            authStaffVsRoleDao.insert(copyTo(dto,AuthStaffVsRole.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
-    @RequiresPermissions("orgUser:edit:role")
-    public Response delRole(@RequestBody AuthUserVsRoleDto dto) throws Exception {
+    @RequiresPermissions("orgStaff:edit:role")
+    public Response delRole(@RequestBody AuthStaffVsRoleDto dto) throws Exception {
         Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            authUserVsRoleDao.deleteByPrimaryKey(copyTo(dto,AuthUserVsRole.class));
+            authStaffVsRoleDao.deleteByPrimaryKey(copyTo(dto,AuthStaffVsRole.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -418,7 +418,7 @@ public class OrgUserService extends BaseService implements IOrgUserService {
 //            String x=IdUtil.createUUID(8);
 //            System.out.println(x+":"+MD5.pwdMd5Hex(MD5.md5Hex(x)));
 //        }
-        String msg=" ###  ### Error updating database. Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_user_account' ### The error may involve com.hsd.account.staff.dao.org.IOrgUserDao.insert-Inline ### The error occurred while setting parameters ### SQL: insert into org_user ( account ,pwd ,name ,gender ,cellphone ,avatar ,email ,type ,last_login ,count ,state ,eff_date ,exp_date ,memo ,version ,order_no ,del_flag ,create_id ,date_created ,date_updated ,bi_update_ts ) values ( ? ,? ,? ,? ,? ,? ,? ,? ,null ,0 ,? ,? ,? ,? ,0 ,? ,0 ,? ,now() ,now() ,now() ) ### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_user_account' ; SQL []; Duplicate entry 'a001' for key 'index_org_user_account'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_user_account'";
+        String msg=" ###  ### Error updating database. Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_staff_account' ### The error may involve com.hsd.account.staff.dao.org.IOrgStaffDao.insert-Inline ### The error occurred while setting parameters ### SQL: insert into org_staff ( account ,pwd ,name ,gender ,cellphone ,avatar ,email ,type ,last_login ,count ,state ,eff_date ,exp_date ,memo ,version ,order_no ,del_flag ,create_id ,date_created ,date_updated ,bi_update_ts ) values ( ? ,? ,? ,? ,? ,? ,? ,? ,null ,0 ,? ,? ,? ,? ,0 ,? ,0 ,? ,now() ,now() ,now() ) ### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_staff_account' ; SQL []; Duplicate entry 'a001' for key 'index_org_staff_account'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_staff_account'";
         int indexOf=msg.indexOf("for key");
         System.out.println(indexOf!=-1?msg.substring(0,indexOf):msg);
     }

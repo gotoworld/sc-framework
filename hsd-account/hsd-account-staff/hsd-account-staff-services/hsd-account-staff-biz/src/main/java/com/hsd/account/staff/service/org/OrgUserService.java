@@ -307,6 +307,10 @@ public class OrgUserService extends BaseService implements IOrgUserService {
                     for (int i = 0; i < datas.size(); i++) {
                         List data= (List) datas.get(i);
                         OrgUser orgUser=new OrgUser();
+                        if(ValidatorUtil.isEmpty(data.get(0))){
+                            finalMessage.append("<br/>空行:"+(i+1));
+                            continue;
+                        }
                         orgUser.setAccount((String) data.get(0));
                         orgUser.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(1))) );
                         orgUser.setName((String) data.get(2));

@@ -68,10 +68,12 @@ public class ExcelUtil {
                                 result.get("titles").add(cell.toString());
                             }
                         } else {//其他行是数据行
-                            sheetList.add(readSheet(returnType, row));
+                            Object rows = readSheet(returnType, row);
+                            if (rows != null) sheetList.add(rows);
                         }
                     } else {
-                        sheetList.add(readSheet(returnType, row));
+                        Object rows = readSheet(returnType, row);
+                        if (rows != null) sheetList.add(rows);
                     }
                 }
                 result.get("datas").addAll(sheetList);
@@ -91,6 +93,7 @@ public class ExcelUtil {
 
     private static Object readSheet(ReturnTypeEnum returnType, Row row) {
         int cellSize = row.getLastCellNum();
+        int count = 0;
         switch (returnType) {
             case MAP: {//map
                 Map rowMap = new HashMap();//对应一个数据行
@@ -98,8 +101,10 @@ public class ExcelUtil {
                     Cell cell = row.getCell(k);
                     Object value = null;
                     if (cell != null) value = getCell(cell);
+                    if (value != null) count++;
                     rowMap.put(k, value);
                 }
+                if (count == 0) return null;
                 return rowMap;
             }
             case LIST: {//list
@@ -108,8 +113,10 @@ public class ExcelUtil {
                     Cell cell = row.getCell(k);
                     Object value = null;
                     if (cell != null) value = getCell(cell);
+                    if (value != null) count++;
                     rowList.add(value);
                 }
+                if (count == 0) return null;
                 return rowList;
             }
         }
@@ -133,10 +140,10 @@ public class ExcelUtil {
                     obj = cell.getCellFormula();
                     break;
                 case HSSFCell.CELL_TYPE_BLANK: // 空值
-                    obj = "";
+                    obj = null;
                     break;
                 case HSSFCell.CELL_TYPE_ERROR: // 故障
-                    obj = "#Error#";
+                    obj = null;
                     break;
                 default:
                     obj = cell.toString();
@@ -149,7 +156,7 @@ public class ExcelUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        Map<String, List> result = readExcelIsList("d:/org_user.xlsx", true);
+        Map<String, List> result = readExcelIsList("d:/staff1.xlsx", true);
         result.get("datas").forEach(map -> {
             System.out.println(map);
         });

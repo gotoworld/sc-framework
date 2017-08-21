@@ -51,6 +51,39 @@
         where
         t1.id = #{id}
     </select>
+     <!-- 新增 批量数据 -->
+    <insert id="insertBatch"  >
+        insert into channel_info (
+            account
+            ,pwd
+            ,channel_name
+            ,gender
+            ,phone1
+            ,idNo
+            ,relation
+            ,staus
+            ,remark
+            ,date_created
+            ,bi_update_ts
+            ,del_flag
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+             #{t.account}
+            ,#{t.pwd}
+            ,#{t.channel_name}
+            ,#{t.gender}
+            ,#{t.phone1}
+            ,#{t.idNo}
+            ,#{t.relation}
+            ,#{t.staus}
+            ,#{t.remark}
+            ,now()
+            ,now()
+            ,0
+            )
+        </foreach>
+    </insert>
 
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.hsd.account.channel.entity.channel.ChannelInfo"  useGeneratedKeys="true" keyProperty="id"  >
@@ -213,5 +246,15 @@
         where 1=1
         <include refid="list_where_sql"/>
         order by t1.date_created desc
+    </select>
+    <!-- 获取用户信息>根据登录名 -->
+    <select id="findUserByAccount" parameterType="map" resultType="com.hsd.account.channel.entity.channel.ChannelInfo">
+        select
+        <include refid="Base_Column_List"/>
+        ,t1.pwd as "pwd"
+        from channel_info t1
+        where t1.del_flag=0 
+        and account=#{account}
+        and staus=1
     </select>
 </mapper>

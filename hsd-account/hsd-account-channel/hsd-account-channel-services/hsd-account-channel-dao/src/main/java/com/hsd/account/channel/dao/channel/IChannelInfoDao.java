@@ -3,6 +3,9 @@ package com.hsd.account.channel.dao.channel;
 import com.hsd.account.channel.entity.channel.ChannelInfo;
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
+
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -44,4 +47,10 @@ public interface IChannelInfoDao extends IBaseDao {
      */
     @Update("update channel_info set  pwd=#{pwd}, bi_update_ts=now() where  id = #{id} ")
 	int resetPwd(IEntity entity) throws Exception;
+
+	/**
+	 * @param dto
+	 * 根据账号获取渠道商信息
+	 */
+	Object findUserByAccount(Map dto) throws Exception;
 }

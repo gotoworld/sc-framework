@@ -2,7 +2,7 @@
 for(t in tcfgs){
 if(!strUtil.containsStr(t.tableName,'_vs_')){
  /]
-        <li ng-show='user.hasPermission("${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:menu")' ><a class="J_menuItem" href="/html/${strUtil.getDir(t.schemaConf._view_pkg)}/${t.tableName}.html">${t.tableComment}</a></li>
+        <li ng-show='staff.hasPermission("${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:menu")' ><a class="J_menuItem" href="/html/${strUtil.getDir(t.schemaConf._view_pkg)}/${t.tableName}.html">${t.tableComment}</a></li>
 @[
 }}
  /]

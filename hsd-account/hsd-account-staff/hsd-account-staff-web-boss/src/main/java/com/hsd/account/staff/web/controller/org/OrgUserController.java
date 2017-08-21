@@ -186,7 +186,7 @@ public class OrgUserController extends BaseController {
 						dto.setAccount(orgUser.getAccount());
 					}
 				}
-				if(null==dto.getState()) dto.setState(1);//禁用
+				if(null==dto.getState()) dto.setState(0);//启用
 				result=orgUserService.saveOrUpdateData(dto);
 				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}

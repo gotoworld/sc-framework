@@ -1,6 +1,6 @@
 package com.hsd.account.staff.aspect;
 
-import com.hsd.account.staff.dto.org.OrgUserDto;
+import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.IDto;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.JwtUtil;
@@ -34,15 +34,15 @@ public class RfAccount2BeanAspect {
     @Before("account2BeanAspect()")
     public void doBefore(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        //读取session中的用户
-        OrgUserDto user = JwtUtil.getSubject(OrgUserDto.class);
+        //读取session中的员工
+        OrgStaffDto staff = JwtUtil.getSubject(OrgStaffDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         try {
             if(log.isDebugEnabled()) {
                 log.debug("=====前置通知开始=====");
                 log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-                log.debug("请求人:" + user.getName());
+                log.debug("请求人:" + staff.getName());
                 log.debug("请求IP:" + ip);
             }
             Object[] objArr=joinPoint.getArgs();
@@ -50,10 +50,10 @@ public class RfAccount2BeanAspect {
                 for(Object obj:objArr){
                     if(obj instanceof IDto){
 //                      System.out.printf(JSON.toJSONString(obj));
-                        ReflectUtil.setValueByFieldName2(obj,"createId", user.getId());//创建者id
-//                        ReflectUtil.setValueByFieldName2(obj,"account", orgUser.getAccount());//用户id
+                        ReflectUtil.setValueByFieldName2(obj,"createId", staff.getId());//创建者id
+//                        ReflectUtil.setValueByFieldName2(obj,"account", orgStaff.getAccount());//id
 //                        ReflectUtil.setValueByFieldName2(obj,"createIp",ip);//创建者ip
-//                        ReflectUtil.setValueByFieldName2(obj,"updateId",orgUser.getId());//修改者id
+//                        ReflectUtil.setValueByFieldName2(obj,"updateId",orgStaff.getId());//修改者id
 //                        ReflectUtil.setValueByFieldName2(obj,"updateIp",ip);//修改者ip
                         break;
                     }

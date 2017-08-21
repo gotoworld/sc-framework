@@ -130,15 +130,15 @@
         where 1=1
         <include refid="list_where_sql"/>
     </select>
-    <!-- 获取用户所在组织集合>根据用户id -->
-    <select id="getOrgListByUserId" parameterType="map" resultType="com.hsd.account.staff.entity.org.OrgInfo">
+    <!-- 获取员工所在组织集合>根据员工id -->
+    <select id="getOrgListByStaffId" parameterType="map" resultType="com.hsd.account.staff.entity.org.OrgInfo">
         select
          t1.id as  "id"
         ,t1.code as  "code"
         ,t1.type as  "type"
         ,t1.name as  "name"
         from org_info t1
-        left join org_org_vs_user t2 on (t1.id=t2.org_id)
-        where t1.del_flag=0 and t2.user_id=#{userId}
+        left join org_org_vs_staff t2 on (t1.id=t2.org_id)
+        where t1.del_flag=0 and t2.staff_id=#{staffId}
     </select>
 </mapper>

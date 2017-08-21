@@ -40,7 +40,7 @@
                                             <div class="col-md-4">
                                                 <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
-                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("authPerm:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("authPerm:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
                                                         <div class="ibox-tools">
                                                             <a href="#" onclick="loadTree()">
                                                                 <i class="glyphicon glyphicon-refresh"></i>
@@ -97,7 +97,7 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("authPerm:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("authPerm:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -116,9 +116,9 @@
 													<td>{{item.matchStr}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("authPerm:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("authPerm:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("authPerm:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("authPerm:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("authPerm:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("authPerm:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -167,7 +167,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
             loadPage(1);
             loadTree();
         });
@@ -218,15 +218,15 @@
                  trStr+=' <tr><th class="col-md-3">权限名称:</th><th class="">'+node.name+'</th></tr>';
 				trStr+=' <tr><th class="col-md-3">权限匹配符:</th><th class="">'+node.matchStr+'</th></tr>';
 				trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
-            if(user.hasPermission("authPerm:info") || user.hasPermission("authPerm:edit") || user.hasPermission("authPerm:del")){
+            if(staff.hasPermission("authPerm:info") || staff.hasPermission("authPerm:edit") || staff.hasPermission("authPerm:del")){
                     trStr+=' <tr><th class="col-md-3">操作:</th><th> ';
-                    if(user.hasPermission("authPerm:info")){
+                    if(staff.hasPermission("authPerm:info")){
                         trStr+=' <a href="javascript:;"  ng-click="info(\'i\',\''+node.id+'\')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
                     }
-                    if(user.hasPermission("authPerm:edit")){
+                    if(staff.hasPermission("authPerm:edit")){
                         trStr+=' <a href="javascript:;"  ng-click="edit(\'e\',\''+node.id+'\')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
                     }
-                    if(user.hasPermission("authPerm:del") && node.nodes==undefined && node.tags[0]==0){
+                    if(staff.hasPermission("authPerm:del") && node.nodes==undefined && node.tags[0]==0){
                         trStr += ' <a href="javascript:;"  ng-click="del(\''+ node.id + '\')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
                     }
                     trStr+=' </th></tr>';

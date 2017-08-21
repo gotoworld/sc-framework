@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
     <meta charset="UTF-8">
-    <title>//TODO 组织架构_员工/用户</title>
+    <title>//TODO 组织架构_员工</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta name="description" content="memo of your site" />
@@ -28,7 +28,7 @@
 				<div class="clients-list">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
-						<li class="" ng-if='user.hasPermission("orgUser:recycle")'><a data-toggle="tab" href="#tab-2" aria-expanded="true">回收站</a></li>
+						<li class="" ng-if='staff.hasPermission("orgStaff:recycle")'><a data-toggle="tab" href="#tab-2" aria-expanded="true">回收站</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
@@ -60,8 +60,8 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("orgUser:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
-									<a href="javascript:;" ng-click="addBatch();"  ng-show='user.hasPermission("orgUser:add:batch")' class="btn btn-xs btn-info"><i class="fa fa-edit"></i> EXCEL导入</a>
+									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("orgStaff:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:;" ng-click="addBatch();"  ng-show='staff.hasPermission("orgStaff:add:batch")' class="btn btn-xs btn-info"><i class="fa fa-edit"></i> EXCEL导入</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -88,12 +88,12 @@
 													<td>{{item.lastLogin | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("orgUser:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("orgUser:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("orgUser:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("orgUser:edit:resetpwd")'   ng-click="resetpwd(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-expeditedssl"></i> 密码重置</a>
-                                                        <a href="javascript:;"   ng-click="getOrg(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-user"></i> 组织查看</a>
-                                                        <a href="javascript:;" ng-show='user.hasPermission("orgUser:edit:role")' ng-click="setRole(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 角色设置</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:resetpwd")'   ng-click="resetpwd(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-expeditedssl"></i> 密码重置</a>
+                                                        <a href="javascript:;"   ng-click="getOrg(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-staff"></i> 组织查看</a>
+                                                        <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:role")' ng-click="setRole(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 角色设置</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -159,8 +159,8 @@
 													<td>{{item.lastLogin | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-													  <a href="javascript:;" ng-show='user.hasPermission("orgUser:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='user.hasPermission("orgUser:recovery")'  ng-click="recovery(item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 恢复</a>
+													  <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:recovery")'  ng-click="recovery(item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 恢复</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="recycle.data.data==null || recycle.data.data.length==0">
@@ -213,32 +213,32 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope, $compile) {
         $data = $scope;
         $ngCompile = $compile;
-        user.init(function () {
+        staff.init(function () {
             loadPage(1);
             loadRecyclePage(1);
         });
         $scope.edit = function (title, id) {
-            sessionStorage.setItem(site.orgUser.info, id);
-            openMyBoxLayer(title, site.orgUser.view + '_edit.html');
+            sessionStorage.setItem(site.orgStaff.info, id);
+            openMyBoxLayer(title, site.orgStaff.view + '_edit.html');
         }
         $scope.info = function (title, id) {
-            sessionStorage.setItem(site.orgUser.info, id);
-            openMyBoxLayer(title, site.orgUser.view + '_info.html');
+            sessionStorage.setItem(site.orgStaff.info, id);
+            openMyBoxLayer(title, site.orgStaff.view + '_info.html');
         }
         $scope.getOrg = function (item) {
-            sessionStorage.setItem(site.orgUser.info,item.id);
-            openMyBoxLayer('组织查看-'+item.name,site.orgUser.view+'_edit_org.html');
+            sessionStorage.setItem(site.orgStaff.info,item.id);
+            openMyBoxLayer('组织查看-'+item.name,site.orgStaff.view+'_edit_org.html');
         }
         $scope.setRole = function (item) {
-            sessionStorage.setItem(site.orgUser.info,item.id);
-            openMyBoxLayer('设置角色-'+item.name,site.orgUser.view+'_edit_role.html');
+            sessionStorage.setItem(site.orgStaff.info,item.id);
+            openMyBoxLayer('设置角色-'+item.name,site.orgStaff.view+'_edit_role.html');
         }
         $scope.addBatch = function () {
-            openMyBoxLayer('用户批量上传',site.orgUser.view+'_edit_batch.html');
+            openMyBoxLayer('员工批量上传',site.orgStaff.view+'_edit_batch.html');
         }
         $scope.del = function (id) {
             if (confirm('确认删除吗?')) {
-                $.post(site.orgUser.del + id, {}, function (result) {
+                $.post(site.orgStaff.del + id, {}, function (result) {
                     if (result.code == 0) {
                         loadPage($('#pageNumA').val());
                         alert('删除成功');
@@ -251,7 +251,7 @@
         }
         $scope.resetpwd = function (item) {
             if (confirm('确认要重置[' + item.account + ']的密码吗?')) {
-                $.post(site.orgUser.resetpwd + item.id, {}, function (result) {
+                $.post(site.orgStaff.resetpwd + item.id, {}, function (result) {
                     if (result.code == 0) {
                         alert("重置成功,新密码:" + result.data);
                     } else {
@@ -262,7 +262,7 @@
         }
         $scope.recovery = function (item) {
             if (confirm('确认要恢复[' + item.account + ']吗?')) {
-                $.post(site.orgUser.recovery + item.id, {}, function (result) {
+                $.post(site.orgStaff.recovery + item.id, {}, function (result) {
                     if (result.code == 0) {
                         alert("恢复成功!");
                         loadRecyclePage();
@@ -297,7 +297,7 @@
             pageIndex = $('#pageNumA').val();
         }
         //console.info("加载页码"+pageIndex)
-        $.post(site.orgUser.page + pageIndex, $('#info_search_form').serialize(), function (result) {
+        $.post(site.orgStaff.page + pageIndex, $('#info_search_form').serialize(), function (result) {
 
             $data.result = result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
@@ -311,7 +311,7 @@
             pageIndex = $('#recycle_pageNumA').val();
         }
         //console.info("加载页码"+pageIndex)
-        $.post(site.orgUser.recyclePage + pageIndex, $('#recycle_info_search_form').serialize(), function (result) {
+        $.post(site.orgStaff.recyclePage + pageIndex, $('#recycle_info_search_form').serialize(), function (result) {
             $data.recycle = result;
             $('#recycleTagPages').html($ngCompile(tag.page(result.data, 'recyclePage'))($data));
             if (!$data.$$phase) $data.$apply();

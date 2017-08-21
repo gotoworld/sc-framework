@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
 <meta charset="utf-8" />
-<title>//TODO 组织架构_员工/用户 详情</title>
+<title>//TODO 组织架构_员工 详情</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta name="description" content="memo of your site" />
@@ -189,12 +189,12 @@
 <script type="text/javascript">
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
-        user.init(function(){
-            loadInfo(sessionStorage.getItem(site.orgUser.info));
+        staff.init(function(){
+            loadInfo(sessionStorage.getItem(site.orgStaff.info));
         });
     });
     var loadInfo=function(id){
-        $.get(site.orgUser.info + id, {},function (result) {
+        $.get(site.orgStaff.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
              if (result.code == 0) {
                  $data.item = result.data;

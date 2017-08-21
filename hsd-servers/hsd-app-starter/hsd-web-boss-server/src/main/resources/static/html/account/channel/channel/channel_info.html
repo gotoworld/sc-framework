@@ -59,7 +59,7 @@
 										</td>
 									</tr>
 								</table>
-								<a href="javascript:;" ng-click="edit('a',0);" ng-show='user.hasPermission("channelInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+								<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("channelInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 								<div class="table-responsive table-scrollable">
 									<table class="table table-bordered table-striped  table-hover">
 										<thead>
@@ -80,11 +80,11 @@
 											<td>{{item.account}}</td>
 											<td>{{item.phone1}}</td>
 											<td>
-												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:menu")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:menu")'  ng-click="recovery(item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i>恢复</a>
-												<a href="javascript:;" ng-show='user.hasPermission("channelInfo:menu")'  ng-click="resetPwd(item.id)" class="label label-success" ><i class="fa fa-edit"></i> 重置密码</a>
+												<a href="javascript:;" ng-show='staff.hasPermission("channelInfo:menu")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+												<a href="javascript:;" ng-show='staff.hasPermission("channelInfo:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+												<a href="javascript:;" ng-show='staff.hasPermission("channelInfo:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+												<a href="javascript:;" ng-show='staff.hasPermission("channelInfo:menu")'  ng-click="recovery(item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i>恢复</a>
+												<a href="javascript:;" ng-show='staff.hasPermission("channelInfo:menu")'  ng-click="resetPwd(item.id)" class="label label-success" ><i class="fa fa-edit"></i> 重置密码</a>
 											</td>
 										</tr>
 										<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -143,7 +143,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
             loadPage(1);
         });
         $scope.edit = function (title,id) {

@@ -44,8 +44,8 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
                      @RequestParam("memo")String memo,
                      @RequestParam("domainCode")String domainCode,
                      @RequestParam("detailInfo")String detailInfo,
-                     @RequestParam("userId")Long userId,
-                     @RequestParam("userName")String userName,
+                     @RequestParam("staffId")Long staffId,
+                     @RequestParam("staffName")String staffName,
                      @RequestParam("ip")String ip) {
         try {
             OrgLogOperation entity = new OrgLogOperation();
@@ -53,8 +53,8 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
             entity.setMemo(memo);// 描述
             entity.setDomainCode(domainCode);// 所属系统域
             entity.setDetailInfo(detailInfo);// 具体
-            entity.setCreateId(userId);// 操作人id
-            entity.setCreateName(userName);// 操作人姓名
+            entity.setCreateId(staffId);// 操作人id
+            entity.setCreateName(staffName);// 操作人姓名
             entity.setCreateIp(ip);// 建立者IP
             // 新增
             logOperationDao.insert(entity);

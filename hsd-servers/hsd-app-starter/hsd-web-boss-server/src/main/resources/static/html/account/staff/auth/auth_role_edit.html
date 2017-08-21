@@ -58,7 +58,7 @@
                             </div>
                         </div>
 					</div>
-					<div class="col-sm-4 b-r" ng-if="user.hasPermission('authRole:edit:perm')">
+					<div class="col-sm-4 b-r" ng-if="staff.hasPermission('authRole:edit:perm')">
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择角色功能--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
@@ -72,7 +72,7 @@
                         </div>
 
 					</div>
-                    <div class="col-sm-4" ng-if="user.hasPermission('authRole:edit:menu')">
+                    <div class="col-sm-4" ng-if="staff.hasPermission('authRole:edit:menu')">
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择角色菜单--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
@@ -125,15 +125,15 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        user.init(function(){
+        staff.init(function(){
            $data.newFlag=sessionStorage.getItem(site.authRole.info);
            var flag=sessionStorage.getItem(site.authRole.info) && sessionStorage.getItem(site.authRole.info)!=0;
            if($data.newFlag) $data.uuidToken=util.guid();
-                if(user.hasPermission('authRole:edit:perm')){
+                if(staff.hasPermission('authRole:edit:perm')){
                     loadPermTree();
                     if(flag) loadRolePermList(sessionStorage.getItem(site.authRole.info));
                 }
-                if(user.hasPermission('authRole:edit:menu')){
+                if(staff.hasPermission('authRole:edit:menu')){
                     loadMenuTree();
                     if(flag) loadRoleMenuList(sessionStorage.getItem(site.authRole.info));
                 }

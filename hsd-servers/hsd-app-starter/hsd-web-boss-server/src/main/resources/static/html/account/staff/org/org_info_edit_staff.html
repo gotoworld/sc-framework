@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
 <meta charset="utf-8" />
-<title>//TODO 组织架构_员工/用户 新增/编辑-角色</title>
+<title>//TODO 组织架构 新增/编辑-员工</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta name="description" content="memo of your site" />
@@ -26,91 +26,79 @@
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="ibox float-e-margins">
-			<div class="ibox-content col-md-12">
-					<div class="clearfix "></div>
-                    <div class="col-sm-4 b-r">
+            <div class="ibox-content col-md-12">
+                    <div class="clearfix "></div>
+                    <div class="col-sm-6 b-r">
                         <div class="form-group clearfix" >
-                            <label class="col-md-12 control-label">--请选择个人角色--</label>
-                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
-                                <table class="table table-bordered table-striped  table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th style="width:20px;">#</th>
-                                        <th>角色</th>
-                                        <th style="width: 60px;"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-if="roleNodes && roleNodes.length>0" ng-repeat="item in roleNodes">
-                                        <td>{{ $index+1}}</td>
-                                        <td>{{item.name}}</td>
-                                        <td>
-                                            <a ng-if="checkRole(item)==false" href="javascript:;" ng-click="addRole(item)" rel="nofollow" class="" ><i class="fa fa-check"></i> 添加</a>
-                                            <label ng-if="checkRole(item)==true" >已存在</label>
-                                        </td>
-                                    </tr>
-                                    <tr ng-if="roleNodes==null || roleNodes==0">
-                                        <td colspan="3">
-                                            <div class="alert"><strong>{{roleMessage||'暂无数据'}}</strong></div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <label class="col-md-12 control-label">--请选择组织人员--</label>
+                            <div class="col-md-12">
+                                    <input type="hidden" name="pageNum" id="pageNumA"  value="1">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" id="bean_name" placeholder="请输入关键词" class="input-sm form-control">
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="page();" class="btn btn-sm btn-primary">搜索</button>
+                                        </span>
+                                    </div>
                             </div>
-                        </div>
-					</div>
-                    <div class="col-sm-4 b-r">
-                        <div class="form-group clearfix" >
-                            <label class="col-md-12 control-label">--已有角色[个人]--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <div class="table-responsive table-scrollable">
                                     <table class="table table-bordered table-striped  table-hover">
                                         <thead>
                                         <tr>
                                             <th style="width:20px;">#</th>
-                                            <th>角色</th>
+                                            <th>账号</th>
+                                            <th>人员</th>
                                             <th style="width: 60px;"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-if="userRoleNodes && userRoleNodes.length>0" ng-repeat="item in userRoleNodes">
-                                            <td>{{ $index+1}}</td>
+                                        <tr ng-if="staffResult.data.data && staffResult.data.data.length>0" ng-repeat="item in staffResult.data.data">
+                                            <td>{{(staffResult.data.pageIndex-1)*staffResult.data.pageSize + $index+1}}</td>
+                                            <td>{{item.account}}</td>
                                             <td>{{item.name}}</td>
                                             <td>
-                                                <a href="javascript:;" ng-click="delRole(item)" rel="nofollow" class="" ><i class="fa fa-close"></i> 删除</a>
+                                                <a ng-if="checkAddStaff(item)==false" href="javascript:;" ng-click="addStaff(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 添加</a>
+                                                <label ng-if="checkAddStaff(item)==true" >已存在</label>
                                             </td>
                                         </tr>
-                                        <tr ng-if="userRoleNodes==null || userRoleNodes==0">
-                                            <td colspan="3">
-                                                <div class="alert"><strong>{{userRoleMessage||'暂无数据'}}</strong></div>
+                                        <tr ng-if="staffResult.data.data==null || staffResult.data.data==0">
+                                            <td colspan="4">
+                                                <div class="alert"><strong>{{staffResult.message||'暂无数据'}}</strong></div>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <div class="b_page" id="tagPages"></div>
                                 </div>
                             </div>
                         </div>
-					</div>
-                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group clearfix" >
-                            <label class="col-md-12 control-label">--已有角色[组织]--</label>
+                            <label class="col-md-12 control-label">--已选组织人员--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <div class="table-responsive table-scrollable">
                                     <table class="table table-bordered table-striped  table-hover">
                                         <thead>
                                         <tr>
                                             <th style="width:20px;">#</th>
-                                            <th>角色</th>
+                                            <th>账号</th>
+                                            <th>人员</th>
+                                            <th style="width: 60px;"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-if="orgRoleNodes && orgRoleNodes.length>0" ng-repeat="item in orgRoleNodes">
+                                        <tr ng-if="orgStaffNodes && orgStaffNodes.length>0" ng-repeat="item in orgStaffNodes">
                                             <td>{{ $index+1}}</td>
+                                            <td>{{item.account}}</td>
                                             <td>{{item.name}}</td>
+                                            <td>
+                                                <a href="javascript:;" ng-click="delStaff(item)" rel="nofollow" class="" ><i class="fa fa-close"></i> 删除</a>
+                                            </td>
                                         </tr>
-                                        <tr ng-if="orgRoleNodes==null || orgRoleNodes==0">
-                                            <td colspan="2">
-                                                <div class="alert"><strong>{{orgRoleMessage||'暂无数据'}}</strong></div>
+                                        <tr ng-if="orgStaffNodes==null || orgStaffNodes==0">
+                                            <td colspan="4">
+                                                <div class="alert"><strong>{{orgStaffMessage||'暂无数据'}}</strong></div>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -118,13 +106,13 @@
                                 </div>
                             </div>
                         </div>
-					</div>
-					<div class="clearfix "></div>
-					<div class="col-md-12" style="height: 50px;">
-						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
+                    </div>
+                <div class="clearfix "></div>
+                <div class="col-md-12" style="height: 50px;">
+                    <div style="width: 200px; margin: 0 auto;">
+                        <a href="javascript:;" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -146,22 +134,28 @@
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
+    function formValidate(){
+        setTimeout(function(){
+            $("#orgInfo_01").validate();
+        },1000);
+    }
+
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
-        $data.userRoleNodes=[];
-        $data.id=sessionStorage.getItem(site.orgUser.info);
-        user.init(function(){
-            loadAllRole();
-            loadUserRole();
-            loadOrgRole();
+        $ngCompile=$compile;
+        $data.orgStaffNodes=[];
+        $data.id=sessionStorage.getItem(site.orgInfo.info);
+        staff.init(function(){
+            loadOrgStaff();
         });
-        $scope.checkRole=function(item){
+        $scope.checkAddStaff=function (item) {
             var flag=false;
-            if($data.userRoleNodes){
-                for(var i=0;i<$data.userRoleNodes.length;i++){
-                    if($data.userRoleNodes[i].id==item.id){
+            if($data.orgStaffNodes){
+                for(var i=0;i<$data.orgStaffNodes.length;i++){
+                    if($data.orgStaffNodes[i].id==item.id){
                         //console.info("--已存在---");
                         flag= true;
                     }
@@ -169,12 +163,12 @@
             }
             return flag;
         }
-        $scope.addRole = function (item) {
-            if(!$data.checkRole(item)){
-                $.post(site.orgUser.addRole, {"userId":$data.id,"roleId":item.id},function (result) {
+        $scope.addStaff = function (item) {
+            if(!$data.checkAddStaff(item)){
+                $.post(site.orgInfo.addStaff, {"orgId":$data.id,"staffId":item.id},function (result) {
                     //console.info("获取数据.." + JSON.stringify(result));
                     if (result.code == 0) {
-                        $data.userRoleNodes.push(item);
+                        $data.orgStaffNodes.push(item);
                         if (!$data.$$phase) $data.$apply();
                     } else {
                         alert(result.message);
@@ -182,55 +176,52 @@
                 }, 'json');
             }
         }
-        $scope.delRole = function (item) {
-            $.post(site.orgUser.delRole, {"userId":$data.id,"roleId":item.id},function (result) {
+        $scope.delStaff = function (item) {
+            $.post(site.orgInfo.delStaff, {"orgId":$data.id,"staffId":item.id},function (result) {
                 //console.info("获取数据.." + JSON.stringify(result));
                 if (result.code == 0) {
-                    util.removeArrItem($data.userRoleNodes,item);
+                    util.removeArrItem($data.orgStaffNodes,item);
                     if (!$data.$$phase) $data.$apply();
                 } else {
                     alert(result.message);
                 }
             }, 'json');
         }
+        $scope.page = function (pageIndex) {
+            loadStaffPage(pageIndex);
+        }
     });
 
-    function loadAllRole() {
-        $.post(site.authRole.list, {}, function (result) {
-            //console.info("获取数据.." + JSON.stringify(result));
+    function loadStaffPage(pageIndex) {
+        if(!(pageIndex)){
+            pageIndex=$('#pageNumA').val();
+        }
+        $.post( site.orgStaff.briefPage+pageIndex,{"name":$('#bean_name').val()}, function (result) {
             if (result.code == 0) {
-                $data.roleNodes = result.data;
+                $data.staffResult = result;
+                $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             } else {
-                $data.roleMessage=result.message;
                 alert(result.message);
             }
             if (!$data.$$phase) $data.$apply();
         }, 'json');
     }
-    function loadUserRole(){
-        $.post(site.orgUser.getUserRole+$data.id, {}, function (result) {
+    function loadOrgStaff(){
+        $.get(site.orgInfo.getStaff+sessionStorage.getItem(site.orgInfo.info), {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-                $data.userRoleNodes = result.data;
+//                    $data.orgStaffNodes.push.apply($data.orgStaffNodes,result.data);
+                    $data.orgStaffNodes=result.data;
+                    $data.orgStaffMessage=result.message;
             } else {
-                $data.userRoleMessage=result.message;
                 alert(result.message);
             }
-            if (!$data.$$phase) $data.$apply();
+            if(!$data.$$phase) $data.$apply();
         }, 'json');
-	}
-    function loadOrgRole(){
-        $.post(site.orgUser.getOrgRole+$data.id, {}, function (result) {
-            //console.info("获取数据.." + JSON.stringify(result));
-            if (result.code == 0) {
-                $data.orgRoleNodes = result.data;
-            } else {
-                $data.orgRoleMessage=result.message;
-                alert(result.message);
-            }
-            if (!$data.$$phase) $data.$apply();
-        }, 'json');
-	}
+    }
+    $(document).ready(function(){
+        formValidate();
+    });
 </script>
 </body>
 </html>

@@ -82,7 +82,7 @@
 										</tr>
 										<tr ng-if="orgRoleNodes==null || orgRoleNodes==0">
 											<td colspan="3">
-												<div class="alert"><strong>{{userRoleMessage||'暂无数据'}}</strong></div>
+												<div class="alert"><strong>{{staffRoleMessage||'暂无数据'}}</strong></div>
 											</td>
 										</tr>
 										</tbody>
@@ -125,7 +125,7 @@
         $data = $scope;
         $data.orgRoleNodes=[];
         $data.id=sessionStorage.getItem(site.orgInfo.info);
-        user.init(function(){
+        staff.init(function(){
             loadAllRole();
             loadOrgRole();
         });

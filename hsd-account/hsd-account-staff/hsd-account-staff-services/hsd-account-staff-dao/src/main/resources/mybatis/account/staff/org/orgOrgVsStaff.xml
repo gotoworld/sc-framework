@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hsd.account.staff.dao.org.IOrgOrgVsUserDao">
+<mapper namespace="com.hsd.account.staff.dao.org.IOrgOrgVsStaffDao">
     <!-- 新增 批量数据 -->
     <insert id="insertBatch"  >
-        insert into org_org_vs_user (
-         user_id
+        insert into org_org_vs_staff (
+         staff_id
         ,org_id
         ,create_id
         ,date_created
         ) values
         <foreach collection="list" item="t" separator=",">
             (
-             #{t.userId}
+             #{t.staffId}
             ,#{t.orgId}
             ,#{t.createId}
             ,now()
@@ -19,25 +19,25 @@
         </foreach>
     </insert>
     <insert id="insert"  >
-        insert into org_org_vs_user (
-         user_id
+        insert into org_org_vs_staff (
+         staff_id
         ,org_id
         ,create_id
         ,date_created
         ) values (
-         #{userId}
+         #{staffId}
         ,#{orgId}
         ,#{createId}
         ,now()
         )
     </insert>
-    <select id="findOrgUserIsList" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsUser" resultType="com.hsd.account.staff.entity.org.OrgUser">
+    <select id="findOrgStaffIsList" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsStaff" resultType="com.hsd.account.staff.entity.org.OrgStaff">
         SELECT
          t2.id as "id"
         ,t2.account as "account"
         ,t2.name as "name"
-        from org_org_vs_user t1
-        inner join org_user t2 on (t1.user_id=t2.id and t2.del_flag=0)
+        from org_org_vs_staff t1
+        inner join org_staff t2 on (t1.staff_id=t2.id and t2.del_flag=0)
         where t1.org_id=#{orgId}
     </select>
 </mapper>

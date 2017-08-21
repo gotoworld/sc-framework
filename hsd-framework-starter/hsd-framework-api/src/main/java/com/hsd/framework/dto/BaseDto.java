@@ -7,7 +7,7 @@ import lombok.Data;
 public class BaseDto implements IDto {
     String token;
     /**新增标记0否1是*/
-    Integer newFlag=0;
+    Integer newFlag;
     /** 开始时间 */
     String dateBegin;
     /** 结束时间 */

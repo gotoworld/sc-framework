@@ -95,7 +95,7 @@
     angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
         $data = $scope;
         $scope.uLogin = function () {
-            user.login($('#_login_form').serialize(), function () {
+            staff.login($('#_login_form').serialize(), function () {
                 location.href = '/index.html';
             });
         }

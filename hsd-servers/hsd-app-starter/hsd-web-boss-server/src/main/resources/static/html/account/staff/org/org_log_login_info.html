@@ -34,15 +34,15 @@
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">用户ID：</label>
+                    <label class="col-md-3 control-label">员工ID：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.userId}}
+                    {{item.staffId}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">员工名称：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.userName}}
+                    {{item.staffName}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
@@ -99,7 +99,7 @@
 <script type="text/javascript">
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
-        user.init(function(){
+        staff.init(function(){
             loadInfo(sessionStorage.getItem(site.orgLogLogin.info));
         });
     });

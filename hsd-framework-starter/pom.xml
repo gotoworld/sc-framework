@@ -32,6 +32,7 @@
         <module>hsd-framework-amqp</module>
         <module>hsd-framework-core</module>
         <module>hsd-framework-api</module>
+        <module>hsd-framework-rule</module>
         <module>hsd-framework-service</module>
         <module>hsd-framework-server</module>
         <module>hsd-framework-web</module>

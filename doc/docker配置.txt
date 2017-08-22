@@ -4,6 +4,11 @@ DOCKER_HOST=tcp://192.168.101.150:2375
 #远程启动某台机器上的镜像
 docker -H 192.168.101.150:2375 run -dit --net="host" -p 6060:6060 hsd/hsd-account-server:1.0
 
+docker run -dit --net="host" -p 6060:6060 192.168.101.150/hsd/hsd-account-staff-server:1.0
+docker run -dit --net="host" -p 6061:6061 192.168.101.150/hsd/hsd-account-staff-web-boss:1.0
+
+
+
 docker run ：创建一个新的容器并运行一个命令
 语法
 docker run [OPTIONS] IMAGE [COMMAND] [ARG...]

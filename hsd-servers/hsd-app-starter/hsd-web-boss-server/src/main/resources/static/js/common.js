@@ -197,7 +197,7 @@ var staff = {
             sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
             sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
             callback && callback();
-            location.href = '/login.html';
+            top.location.href = '/login.html';
         }, 'json');
     },
     info: function (callback) {
@@ -229,8 +229,8 @@ var staff = {
                     // this.login(function () {
                     //     staff.info(callback);
                     // })
-                    alert('登陆过期,请重新登陆!');
-                    location.href = '/login.html';
+                    alert('未登录或登陆过期,请重新登陆!');
+                    top.location.href = '/login.html';
                 }
             }
         } catch (e) {

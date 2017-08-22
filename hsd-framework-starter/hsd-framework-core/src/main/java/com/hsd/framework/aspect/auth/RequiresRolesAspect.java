@@ -36,7 +36,7 @@ public class RequiresRolesAspect {
     /**
      * 角色权限 判断
      */
-    @Around("requiresPermissionsAcpect() && target(requiresRoles)")
+    @Around("requiresPermissionsAcpect() && @annotation(requiresRoles)")
     public void doAround(ProceedingJoinPoint pjp, RequiresRoles requiresRoles) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();

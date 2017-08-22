@@ -43,14 +43,15 @@ public class RequiresPermissionsAspect {
      * 功能权限 判断
      */
     @Around("requiresPermissionsAcpect() && @annotation(requiresPermissions)")
-    public void doAround(ProceedingJoinPoint pjp, RequiresPermissions requiresPermissions) throws Throwable {
+    public Object doAround(ProceedingJoinPoint pjp, RequiresPermissions requiresPermissions) throws Throwable {
+        Object result = null;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
         if (ValidatorUtil.isEmpty(authorizationToken)) {
             //经过JwtInterceptor过滤 理论情况不会进入这里
             WebUtil.sendJson(response, Response.error(403, "签名验证失败!" + "token头缺失"));
-            return;
+            return null;
         }
         final Claims claims = JwtUtil.parseJWT(authorizationToken);
         JSONObject jobj = JSON.parseObject(claims.getSubject());
@@ -77,10 +78,10 @@ public class RequiresPermissionsAspect {
             }
         }
         if (flag) {
-            pjp.proceed();
+            result=pjp.proceed();
         } else {
             WebUtil.sendJson(response, Response.error(503, "权限不足!"));
-            return;
         }
+        return result;
     }
 }

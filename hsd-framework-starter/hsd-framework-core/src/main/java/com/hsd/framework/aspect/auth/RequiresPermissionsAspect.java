@@ -13,10 +13,9 @@ import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.util.WebUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -32,11 +31,18 @@ public class RequiresPermissionsAspect {
     @Pointcut("@annotation(com.hsd.framework.annotation.auth.RequiresPermissions)")
     public void requiresPermissionsAcpect() {
     }
-
+    @Before("requiresPermissionsAcpect()")
+    public void doBefore(JoinPoint joinPoint) throws Exception {
+        log.debug("===========Before===========");
+    }
+    @After("requiresPermissionsAcpect()")
+    public void doAfter(JoinPoint joinPoint) throws Exception {
+        log.debug("===========After===========");
+    }
     /**
      * 功能权限 判断
      */
-    @Around("requiresPermissionsAcpect() && target(requiresPermissions)")
+    @Around("requiresPermissionsAcpect() && @annotation(requiresPermissions)")
     public void doAround(ProceedingJoinPoint pjp, RequiresPermissions requiresPermissions) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();

@@ -1,6 +1,6 @@
 package com.hsd.account.actor.aspect;
 
-import com.hsd.account.actor.dto.org.OrgActorDto;
+import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.IDto;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.JwtUtil;
@@ -35,7 +35,7 @@ public class RfAccount2BeanAspect {
     public void doBefore(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //读取session中的员工
-        OrgActorDto actor = JwtUtil.getSubject(OrgActorDto.class);
+        UserDto actor = JwtUtil.getSubject(UserDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         try {

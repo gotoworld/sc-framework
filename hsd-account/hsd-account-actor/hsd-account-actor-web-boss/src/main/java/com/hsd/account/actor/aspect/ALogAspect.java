@@ -1,11 +1,9 @@
 package com.hsd.account.actor.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.hsd.account.actor.api.org.IOrgLogOperationService;
-import com.hsd.account.actor.dto.org.OrgActorDto;
+import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.IDto;
 import com.hsd.framework.annotation.ALogOperation;
-import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ReflectUtil;
@@ -15,7 +13,6 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -31,10 +28,6 @@ import java.lang.reflect.Method;
 @Slf4j
 public class ALogAspect {
 
-    //注入Service用于把日志保存数据库
-    @Autowired
-    private IOrgLogOperationService sysActorLogService;
-
     //操作日志切点
     @Pointcut("@annotation(com.hsd.framework.annotation.ALogOperation)")
     public void alogOperationAspect() {
@@ -47,7 +40,7 @@ public class ALogAspect {
     public void doAfter(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //读取session中的员工
-        OrgActorDto actor = JwtUtil.getSubject(OrgActorDto.class);
+        UserDto actor = JwtUtil.getSubject(UserDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         String[] logArr = getMethodDesc(joinPoint);
@@ -79,7 +72,7 @@ public class ALogAspect {
                 }
             } catch (Exception e) {
             }
-            sysActorLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), JSON.toJSONString(object), actor.getId(), actor.getName(), ip);
+//            sysActorLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), JSON.toJSONString(object), actor.getId(), actor.getName(), ip);
             log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -105,7 +98,7 @@ public class ALogAspect {
         }
         try {
             //读取session中的员工
-            OrgActorDto actor = JwtUtil.getSubject(OrgActorDto.class);
+            UserDto actor = JwtUtil.getSubject(UserDto.class);
             //获取请求ip
             String ip = IpUtil.getIpAddr(request);
             String[] logArr = getMethodDesc(joinPoint);
@@ -120,7 +113,7 @@ public class ALogAspect {
                 log.debug("请求参数:" + params);
                 log.debug("=====异常通知结束=====");
             }
-            sysActorLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), actor.getId(), actor.getName(), ip);
+//            sysActorLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), actor.getId(), actor.getName(), ip);
         } catch (Exception ex) {
             log.error("异常信息:{}", ex.getMessage());
         }

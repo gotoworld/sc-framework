@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.actor.dao.user.IUserSnapshotDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.user_id as "userId"
+        ,t1.balance as "balance"
+        ,t1.credit as "credit"
+        ,t1.coin as "coin"
+        ,t1.vip_level as "vipLevel"
+        ,t1.vip_score as "vipScore"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.actor.entity.user.UserSnapshot" parameterType="com.hsd.account.actor.entity.user.UserSnapshot">
+        select
+        <include refid="Base_Column_List"/>
+        from user_snapshot t1
+        where
+        t1.user_id = #{userId}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.user.UserSnapshot"  >
+        insert into user_snapshot (
+            user_id 
+           ,balance 
+           ,credit 
+           ,coin 
+           ,vip_level 
+           ,vip_score 
+           ,bi_update_ts 
+        ) values (
+            #{userId} 
+           ,#{balance} 
+           ,#{credit} 
+           ,#{coin} 
+           ,#{vipLevel} 
+           ,#{vipScore} 
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.actor.entity.user.UserSnapshot">
+        update user_snapshot set bi_update_ts=now() 
+             <if test="balance!=null">,balance = #{balance}</if>
+             <if test="credit!=null">,credit = #{credit}</if>
+             <if test="coin!=null">,coin = #{coin}</if>
+             <if test="vipLevel!=null">,vip_level = #{vipLevel}</if>
+             <if test="vipScore!=null">,vip_score = #{vipScore}</if>
+        where
+        user_id = #{userId}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.actor.entity.user.UserSnapshot" resultType="com.hsd.account.actor.entity.user.UserSnapshot">
+        select
+        <include refid="Base_Column_List"/>
+        from user_snapshot t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+
+</mapper>

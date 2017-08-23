@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.actor.dao.identity.IIdentityLogDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.user_id as "userId"
+        ,t1.credential_type as "credentialType"
+        ,t1.credential_number as "credentialNumber"
+        ,t1.credential_photo_a as "credentialPhotoA"
+        ,t1.credential_photo_b as "credentialPhotoB"
+        ,t1.real_name as "realName"
+        ,t1.state as "state"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.actor.entity.identity.IdentityLog" parameterType="com.hsd.account.actor.entity.identity.IdentityLog">
+        select
+        <include refid="Base_Column_List"/>
+        from identity_log t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.identity.IdentityLog"  useGeneratedKeys="true" keyProperty="id"  >
+        insert into identity_log (
+         
+            user_id 
+           ,credential_type 
+           ,credential_number 
+           ,credential_photo_a 
+           ,credential_photo_b 
+           ,real_name 
+           ,state 
+           ,bi_update_ts 
+        ) values (
+         
+            #{userId} 
+           ,#{credentialType} 
+           ,#{credentialNumber} 
+           ,#{credentialPhotoA} 
+           ,#{credentialPhotoB} 
+           ,#{realName} 
+           ,#{state} 
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.actor.entity.identity.IdentityLog">
+        update identity_log set bi_update_ts=now() 
+             <if test="userId!=null">,user_id = #{userId}</if>
+             <if test="credentialType!=null">,credential_type = #{credentialType}</if>
+             <if test="credentialNumber!=null">,credential_number = #{credentialNumber}</if>
+             <if test="credentialPhotoA!=null">,credential_photo_a = #{credentialPhotoA}</if>
+             <if test="credentialPhotoB!=null">,credential_photo_b = #{credentialPhotoB}</if>
+             <if test="realName!=null">,real_name = #{realName}</if>
+             <if test="state!=null">,state = #{state}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.actor.entity.identity.IdentityLog" resultType="com.hsd.account.actor.entity.identity.IdentityLog">
+        select
+        <include refid="Base_Column_List"/>
+        from identity_log t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.actor.entity.identity.IdentityLog" resultType="com.hsd.account.actor.entity.identity.IdentityLog">
+        select
+        <include refid="Base_Column_List"/>
+        from identity_log t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+</mapper>

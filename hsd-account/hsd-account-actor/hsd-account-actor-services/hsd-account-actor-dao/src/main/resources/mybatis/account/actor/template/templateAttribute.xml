@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.actor.dao.template.ITemplateAttributeDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.template_id as "templateId"
+        ,t1.attribute_code as "attributeCode"
+        ,t1.attribute_name as "attributeName"
+        ,t1.input_type as "inputType"
+        ,t1.required as "required"
+        ,t1.option_values as "optionValues"
+        ,t1.create_id as "createId"
+        ,t1.date_created as "dateCreated"
+        ,t1.date_updated as "dateUpdated"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.actor.entity.template.TemplateAttribute" parameterType="com.hsd.account.actor.entity.template.TemplateAttribute">
+        select
+        <include refid="Base_Column_List"/>
+        from template_attribute t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.template.TemplateAttribute"  useGeneratedKeys="true" keyProperty="id"  >
+        insert into template_attribute (
+         
+            template_id 
+           ,attribute_code 
+           ,attribute_name 
+           ,input_type 
+           ,required 
+           ,option_values 
+           ,create_id 
+           ,date_created 
+           ,date_updated 
+           ,bi_update_ts 
+        ) values (
+         
+            #{templateId} 
+           ,#{attributeCode} 
+           ,#{attributeName} 
+           ,#{inputType} 
+           ,#{required} 
+           ,#{optionValues} 
+           ,#{createId} 
+           ,now()
+           ,now()
+           ,#{biUpdateTs} 
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.actor.entity.template.TemplateAttribute">
+        update template_attribute set date_updated=now() 
+             <if test="templateId!=null">,template_id = #{templateId}</if>
+             <if test="attributeCode!=null">,attribute_code = #{attributeCode}</if>
+             <if test="attributeName!=null">,attribute_name = #{attributeName}</if>
+             <if test="inputType!=null">,input_type = #{inputType}</if>
+             <if test="required!=null">,required = #{required}</if>
+             <if test="optionValues!=null">,option_values = #{optionValues}</if>
+             <if test="createId!=null">,create_id = #{createId}</if>
+             <if test="biUpdateTs!=null">,bi_update_ts = #{biUpdateTs}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.actor.entity.template.TemplateAttribute" resultType="com.hsd.account.actor.entity.template.TemplateAttribute">
+        select
+        <include refid="Base_Column_List"/>
+        from template_attribute t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.actor.entity.template.TemplateAttribute" resultType="com.hsd.account.actor.entity.template.TemplateAttribute">
+        select
+        <include refid="Base_Column_List"/>
+        from template_attribute t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+</mapper>

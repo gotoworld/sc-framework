@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.actor.dao.actor.IMemberDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.user_id as "userId"
+        ,t1.fax as "fax"
+        ,t1.birthday as "birthday"
+        ,t1.marital_status as "maritalStatus"
+        ,t1.credential_number as "credentialNumber"
+        ,t1.income as "income"
+        ,t1.inc_verifiable as "incVerifiable"
+        ,t1.other_income as "otherIncome"
+        ,t1.other_income_src as "otherIncomeSrc"
+        ,t1.self_fico as "selfFico"
+        ,t1.cumulative_job_tenure as "cumulativeJobTenure"
+        ,t1.education_level as "educationLevel"
+        ,t1.tax as "tax"
+        ,t1.own_car_num as "ownCarNum"
+        ,t1.own_house_num as "ownHouseNum"
+        ,t1.children_status as "childrenStatus"
+        ,t1.children_num as "childrenNum"
+        ,t1.asset_other as "assetOther"
+        ,t1.debt_status as "debtStatus"
+        ,t1.wechat as "wechat"
+        ,t1.qq as "qq"
+        ,t1.work_start_date as "workStartDate"
+        ,t1.domicile_live_diff as "domicileLiveDiff"
+        ,t1.relation as "relation"
+        ,t1.staff_no as "staffNo"
+        ,t1.address as "address"
+        ,t1.mantance_staff_no as "mantanceStaffNo"
+        ,t1.user_sub_type as "userSubType"
+        ,t1.proxy_level as "proxyLevel"
+        ,t1.proxy_user_id as "proxyUserId"
+        ,t1.proxy_chain as "proxyChain"
+        ,t1.lender_state as "lenderState"
+        ,t1.borrower_state as "borrowerState"
+        ,t1.date_lender_state as "dateLenderState"
+        ,t1.date_borrower_state as "dateBorrowerState"
+        ,t1.memo as "memo"
+        ,t1.del_flag as "delFlag"
+        ,t1.date_created as "dateCreated"
+        ,t1.date_updated as "dateUpdated"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.actor.entity.actor.Member" parameterType="com.hsd.account.actor.entity.actor.Member">
+        select
+        <include refid="Base_Column_List"/>
+        from member t1
+        where
+        t1.user_id = #{userId}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.actor.Member"  >
+        insert into member (
+            user_id 
+           ,fax 
+           ,birthday 
+           ,marital_status 
+           ,credential_number 
+           ,income 
+           ,inc_verifiable 
+           ,other_income 
+           ,other_income_src 
+           ,self_fico 
+           ,cumulative_job_tenure 
+           ,education_level 
+           ,tax 
+           ,own_car_num 
+           ,own_house_num 
+           ,children_status 
+           ,children_num 
+           ,asset_other 
+           ,debt_status 
+           ,wechat 
+           ,qq 
+           ,work_start_date 
+           ,domicile_live_diff 
+           ,relation 
+           ,staff_no 
+           ,address 
+           ,mantance_staff_no 
+           ,user_sub_type 
+           ,proxy_level 
+           ,proxy_user_id 
+           ,proxy_chain 
+           ,lender_state 
+           ,borrower_state 
+           ,date_lender_state 
+           ,date_borrower_state 
+           ,memo 
+           ,del_flag 
+           ,date_created 
+           ,date_updated 
+           ,bi_update_ts 
+        ) values (
+            #{userId} 
+           ,#{fax} 
+           ,#{birthday} 
+           ,#{maritalStatus} 
+           ,#{credentialNumber} 
+           ,#{income} 
+           ,#{incVerifiable} 
+           ,#{otherIncome} 
+           ,#{otherIncomeSrc} 
+           ,#{selfFico} 
+           ,#{cumulativeJobTenure} 
+           ,#{educationLevel} 
+           ,#{tax} 
+           ,#{ownCarNum} 
+           ,#{ownHouseNum} 
+           ,#{childrenStatus} 
+           ,#{childrenNum} 
+           ,#{assetOther} 
+           ,#{debtStatus} 
+           ,#{wechat} 
+           ,#{qq} 
+           ,#{workStartDate} 
+           ,#{domicileLiveDiff} 
+           ,#{relation} 
+           ,#{staffNo} 
+           ,#{address} 
+           ,#{mantanceStaffNo} 
+           ,#{userSubType} 
+           ,#{proxyLevel} 
+           ,#{proxyUserId} 
+           ,#{proxyChain} 
+           ,#{lenderState} 
+           ,#{borrowerState} 
+           ,#{dateLenderState} 
+           ,#{dateBorrowerState} 
+           ,#{memo} 
+           ,0
+           ,now()
+           ,now()
+           ,#{biUpdateTs} 
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.actor.entity.actor.Member">
+        update member set date_updated=now() 
+             <if test="fax!=null">,fax = #{fax}</if>
+             <if test="birthday!=null">,birthday = #{birthday}</if>
+             <if test="maritalStatus!=null">,marital_status = #{maritalStatus}</if>
+             <if test="credentialNumber!=null">,credential_number = #{credentialNumber}</if>
+             <if test="income!=null">,income = #{income}</if>
+             <if test="incVerifiable!=null">,inc_verifiable = #{incVerifiable}</if>
+             <if test="otherIncome!=null">,other_income = #{otherIncome}</if>
+             <if test="otherIncomeSrc!=null">,other_income_src = #{otherIncomeSrc}</if>
+             <if test="selfFico!=null">,self_fico = #{selfFico}</if>
+             <if test="cumulativeJobTenure!=null">,cumulative_job_tenure = #{cumulativeJobTenure}</if>
+             <if test="educationLevel!=null">,education_level = #{educationLevel}</if>
+             <if test="tax!=null">,tax = #{tax}</if>
+             <if test="ownCarNum!=null">,own_car_num = #{ownCarNum}</if>
+             <if test="ownHouseNum!=null">,own_house_num = #{ownHouseNum}</if>
+             <if test="childrenStatus!=null">,children_status = #{childrenStatus}</if>
+             <if test="childrenNum!=null">,children_num = #{childrenNum}</if>
+             <if test="assetOther!=null">,asset_other = #{assetOther}</if>
+             <if test="debtStatus!=null">,debt_status = #{debtStatus}</if>
+             <if test="wechat!=null">,wechat = #{wechat}</if>
+             <if test="qq!=null">,qq = #{qq}</if>
+             <if test="workStartDate!=null">,work_start_date = #{workStartDate}</if>
+             <if test="domicileLiveDiff!=null">,domicile_live_diff = #{domicileLiveDiff}</if>
+             <if test="relation!=null">,relation = #{relation}</if>
+             <if test="staffNo!=null">,staff_no = #{staffNo}</if>
+             <if test="address!=null">,address = #{address}</if>
+             <if test="mantanceStaffNo!=null">,mantance_staff_no = #{mantanceStaffNo}</if>
+             <if test="userSubType!=null">,user_sub_type = #{userSubType}</if>
+             <if test="proxyLevel!=null">,proxy_level = #{proxyLevel}</if>
+             <if test="proxyUserId!=null">,proxy_user_id = #{proxyUserId}</if>
+             <if test="proxyChain!=null">,proxy_chain = #{proxyChain}</if>
+             <if test="lenderState!=null">,lender_state = #{lenderState}</if>
+             <if test="borrowerState!=null">,borrower_state = #{borrowerState}</if>
+             <if test="dateLenderState!=null">,date_lender_state = #{dateLenderState}</if>
+             <if test="dateBorrowerState!=null">,date_borrower_state = #{dateBorrowerState}</if>
+             <if test="memo!=null">,memo = #{memo}</if>
+             <if test="biUpdateTs!=null">,bi_update_ts = #{biUpdateTs}</if>
+        where
+        user_id = #{userId}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.actor.entity.actor.Member" resultType="com.hsd.account.actor.entity.actor.Member">
+        select
+        <include refid="Base_Column_List"/>
+        from member t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.actor.entity.actor.Member" resultType="com.hsd.account.actor.entity.actor.Member">
+        select
+        <include refid="Base_Column_List"/>
+        from member t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+</mapper>

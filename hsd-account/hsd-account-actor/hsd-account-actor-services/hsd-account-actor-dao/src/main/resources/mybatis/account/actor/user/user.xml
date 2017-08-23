@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.actor.dao.user.IUserDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.account as "account"
+        ,t1.name as "name"
+        ,t1.pwd as "pwd"
+        ,t1.trade_pwd as "tradePwd"
+        ,t1.email as "email"
+        ,t1.gender as "gender"
+        ,t1.cellphone as "cellphone"
+        ,t1.type as "type"
+        ,t1.state as "state"
+        ,t1.register_channel as "registerChannel"
+        ,t1.tags as "tags"
+        ,t1.date_created as "dateCreated"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.actor.entity.user.User" parameterType="com.hsd.account.actor.entity.user.User">
+        select
+        <include refid="Base_Column_List"/>
+        from user t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.user.User"  useGeneratedKeys="true" keyProperty="id"  >
+        insert into user (
+         
+            account 
+           ,name
+           ,pwd
+           ,trade_pwd
+           ,email 
+           ,gender 
+           ,cellphone 
+           ,type 
+           ,state 
+           ,register_channel 
+           ,tags 
+           ,date_created 
+        ) values (
+         
+            #{account} 
+           ,#{name}
+           ,#{pwd}
+           ,#{tradePwd} 
+           ,#{email} 
+           ,#{gender} 
+           ,#{cellphone} 
+           ,#{type} 
+           ,#{state} 
+           ,#{registerChannel} 
+           ,#{tags} 
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.actor.entity.user.User">
+        update user set  
+             <if test="account!=null">,account = #{account}</if>
+             <if test="name!=null">,name = #{name}</if>
+             <if test="pwd!=null">,pwd = #{pwd}</if>
+             <if test="tradePwd!=null">,trade_pwd = #{tradePwd}</if>
+             <if test="email!=null">,email = #{email}</if>
+             <if test="gender!=null">,gender = #{gender}</if>
+             <if test="cellphone!=null">,cellphone = #{cellphone}</if>
+             <if test="type!=null">,type = #{type}</if>
+             <if test="state!=null">,state = #{state}</if>
+             <if test="registerChannel!=null">,register_channel = #{registerChannel}</if>
+             <if test="tags!=null">,tags = #{tags}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.actor.entity.user.User" resultType="com.hsd.account.actor.entity.user.User">
+        select
+        <include refid="Base_Column_List"/>
+        from user t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.actor.entity.user.User" resultType="com.hsd.account.actor.entity.user.User">
+        select
+        <include refid="Base_Column_List"/>
+        from user t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+</mapper>

@@ -1,0 +1,68 @@
+#定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
+info:
+  description: ${pom.description}
+  version : v${pom.version}
+# HTTP Server
+server:
+  port: 6062
+  context-path: /
+spring:
+  application:
+    name: hsd-account-actor-web-portal
+  profiles:
+    active: dev
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+#    password:
+    timeout: 1800000
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 1800000
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
+
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
+logging:
+  file: "/logs/${spring.application.name}.log"
+
+#服务名
+feign:
+  name:
+    account.actor: hsd-account-actor-server
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
+    fileServer:
+      rootFolder: /home/hsd/file/
+      upload: ${hsd.common.fileServer.rootFolder}upload/
+      download: /upload/

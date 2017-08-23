@@ -8,7 +8,7 @@ server:
   context-path: /
 spring:
   application:
-    name: hsd-account-staff-web-boss
+    name: hsd-account-staff-web-boss-wxg
   profiles:
     active: dev
   boot:
@@ -56,7 +56,7 @@ logging:
 #服务名
 feign:
   name:
-    account.staff: hsd-account-staff-server
+    account.staff: hsd-account-staff-server-wxg
 
 # 自定义配置
 hsd:

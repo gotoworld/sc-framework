@@ -65,27 +65,27 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>注册时间</th>
-                                    				<th>性别[0男1女2保密]</th>
-                                    				<th>注册渠道 默认为other</th>
-                                    				<th>是否禁用 1、启用 2、禁用 3.黑名单 默认1</th>
-                                    				<th>用户类型 1会员2渠道商</th>
-                                    				<th>登录名</th>
-                                    				<th>用户email</th>
-                                    				<th>操作</th>
+													<th>登录名</th>
+													<th>性别</th>
+													<th>注册渠道</th>
+													<th>是否禁用</th>
+													<th>用户类型</th>
+													<th>email</th>
+													<th>注册时间</th>
+													<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                    				<td>{{item.gender}}</td>
-                                    				<td>{{item.registerChannel}}</td>
-                                    				<td>{{item.state}}</td>
-                                    				<td>{{item.type}}</td>
-                                    				<td>{{item.account}}</td>
-                                    				<td>{{item.email}}</td>
-                                    				<td>
+													<td>{{item.account}}</td>
+													<td>{{item.gender}}</td>
+													<td>{{item.registerChannel}}</td>
+													<td>{{stateEnum(item.state)}}</td>
+													<td>{{item.type==1?'会员':'渠道商'}}</td>
+													<td>{{item.email}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td>
                                                       <a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='staff.hasPermission("user:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                     </td>
@@ -163,6 +163,16 @@
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }
+		$scope.stateEnum=function(key){
+            var val="其它";
+			switch (key){
+				case 1:val="启用";break;
+				case 2:val="禁用";break;
+				case 3:val="黑名单";break;
+			}
+			return val;
+		}
+
     });
 
     var loadPage = function (pageIndex) {

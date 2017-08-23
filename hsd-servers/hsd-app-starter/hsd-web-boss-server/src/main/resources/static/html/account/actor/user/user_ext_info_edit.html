@@ -20,8 +20,6 @@
 
 <link href="/css/common.css" rel="stylesheet">
 
-<link rel="stylesheet" href="/plugins/editor/themes/default/default.css" />
-<link rel="stylesheet" href="/plugins/editor/plugins/code/prettify.css" />
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
@@ -41,46 +39,36 @@
 					<div class="clearfix "></div>
 					<div class="col-sm-6 b-r">
 
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">用户ID：</label>
-                            <div class="col-md-12">
-                                <input id="bean-userId" name="userId" value="{{item.userId}}" class="form-control" type="text"  placeholder="请输入用户ID"  required="" aria-required="true"  aria-describedby="bean-userId-error"   aria-invalid="true">
-                                <span id="bean-userId-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
+					<input type="hidden" name="userId" value="{{item.userId}}">
 
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">所属模板id：</label>
+                            <label class="col-md-5 control-label">所属模板id：</label>
                             <div class="col-md-12">
-                                <input id="bean-templateId" name="templateId" value="{{item.templateId}}" class="form-control" type="text"  placeholder="请输入所属模板id"  required="" aria-required="true"  aria-describedby="bean-templateId-error"   aria-invalid="true">
+                                <select data-placeholder="选择所属模板id" id="bean-templateId" name="templateId" class="form-control"   required="" aria-required="true"  aria-describedby="bean-templateId-error"   aria-invalid="true">
+                                    <option value="">--请选择所属模板id--</option>
+                                </select>
                                 <span id="bean-templateId-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
 
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">模板值（json形式保存）：</label>
+                            <div class="col-md-12">
+                                <textarea id="bean-attributeJson" name="attributeJson" class="form-control"  placeholder="请输入模板值（json形式保存）"  required="" aria-required="true"  aria-describedby="bean-attributeJson-error"  maxlength="4000"   aria-invalid="true">{{item.attributeJson}}</textarea>
+                                <span id="bean-attributeJson-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
 					</div>
 					<div class="col-sm-6">
 
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">备注：</label>
+                            <label class="col-md-5 control-label">备注：</label>
                             <div class="col-md-12">
                                 <input id="bean-memo" name="memo" value="{{item.memo}}" class="form-control" type="text"  placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
                                 <span id="bean-memo-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
 
-					</div>
-
-					<div class="clearfix "></div>
-					<div class="col-md-12">
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">模板值（json形式保存）：</label>
-                            <div class="col-md-12">
-                                <textarea ng-bind-html="kfReady('bean-attributeJson',item.attributeJson)" id="bean-attributeJson" name="attributeJson" style="height: 300px;width: 100%;" class="form-control"  placeholder="请输入模板值（json形式保存）"  required="" aria-required="true"  aria-describedby="bean-attributeJson-error"  maxlength="4000"   aria-invalid="true">
-                                </textarea>
-                                <span id="bean-attributeJson-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
 					</div>
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
@@ -111,22 +99,7 @@
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 
-<script charset="utf-8" src="/plugins/editor/kindeditor-all-min.js"></script>
 <script type="text/javascript">
-    KindEditor.ready(function(K) {
-
-            //--编辑框(简化)[attributeJson]
-            K.create('#bean-attributeJson', {
-                resizeType : 1,
-                allowPreviewEmoticons : false,
-                allowImageUpload : false,
-                items : [
-                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                'insertunorderedlist', '|', 'emoticons', 'image', 'link'],
-                afterBlur: function () { this.sync();}
-            });
-    });
     function formValidate(){
         setTimeout(function(){
             $("#userExtInfo_01").validate();

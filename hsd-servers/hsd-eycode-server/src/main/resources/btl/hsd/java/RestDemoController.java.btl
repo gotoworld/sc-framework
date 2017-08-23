@@ -45,7 +45,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
             }
             dto.setPageNum(pageNum);
-            dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);
+            @[ if (validator.notEmpty(scfg._col_del)) { /]dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);@[ } /]
             // 信息列表
             result.data = PageUtil.copy(${tableNameL}Service.findDataIsPage(dto));
         } catch (Exception e) {

@@ -1,8 +1,9 @@
 var basePath = "http://localhost/";
 var apiPath = {
     account: {
-        staff: "http://192.168.101.153:6061",
-        channel: "http://localhost:6061"
+        staff: "http://192.168.103.236:6061",
+        channel: "http://localhost:6061",
+        actor: "http://192.168.103.236:6065"
     }
 }
 var site = {
@@ -122,6 +123,91 @@ var site = {
         , info: apiPath.account.channel + "/boss/account/channel/channel/channelType/info/"
         , del: apiPath.account.channel + "/boss/account/channel/channel/channelType/del/"
     }
+    ,user: {//用户表
+        view: basePath + "/html/account/actor/user/user"
+        ,page: apiPath.account.actor + "/boss/account/actor/user/user/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/user/user/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/user/user/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/user/user/del/"
+    }
+    , businessType: {//业务类型
+        view: basePath + "/html/account/actor/actor/business_type"
+        ,page: apiPath.account.actor + "/boss/account/actor/actor/businessType/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/actor/businessType/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/actor/businessType/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/actor/businessType/del/"
+    }
+    ,member: {//会员信息表
+        view: basePath + "/html/account/actor/actor/member"
+        ,page: apiPath.account.actor + "/boss/account/actor/actor/member/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/actor/member/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/actor/member/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/actor/member/del/"
+    }
+    ,tag: {//标签
+        view: basePath + "/html/account/actor/actor/tag"
+        ,page: apiPath.account.actor + "/boss/account/actor/actor/tag/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/actor/tag/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/actor/tag/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/actor/tag/del/"
+    }
+    ,identity: {//实名认证表
+        view: basePath + "/html/account/actor/identity/identity"
+        ,page: apiPath.account.actor + "/boss/account/actor/identity/identity/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/identity/identity/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/identity/identity/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/identity/identity/del/"
+    }
+    ,identityLog: {//用户实名认证日志
+        view: basePath + "/html/account/actor/identity/identity_log"
+        ,page: apiPath.account.actor + "/boss/account/actor/identity/identityLog/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/identity/identityLog/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/identity/identityLog/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/identity/identityLog/del/"
+    }
+    ,template: {//档案模板
+        view: basePath + "/html/account/actor/template/template"
+        ,page: apiPath.account.actor + "/boss/account/actor/template/template/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/template/template/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/template/template/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/template/template/del/"
+    }
+    ,templateAttribute: {//模板属性
+        view: basePath + "/html/account/actor/template/template_attribute"
+        ,page: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/del/"
+    }
+    ,userExtInfo: {//用户扩展数据
+        view: basePath + "/html/account/actor/user/user_ext_info"
+        ,page: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/del/"
+    }
+    ,userSignContract: {//用户网签协议记录
+        view: basePath + "/html/account/actor/user/user_sign_contract"
+        ,page: apiPath.account.actor + "/boss/account/actor/user/userSignContract/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/user/userSignContract/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/user/userSignContract/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/user/userSignContract/del/"
+    }
+    ,userSnapshot: {//用户照表
+        view: basePath + "/html/account/actor/user/user_snapshot"
+        ,page: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/del/"
+    }
+    ,userrLoginLog: {//用户登录日志
+        view: basePath + "/html/account/actor/user/userr_login_log"
+        ,page: apiPath.account.actor + "/boss/account/actor/user/userrLoginLog/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/user/userrLoginLog/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/user/userrLoginLog/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/user/userrLoginLog/del/"
+    }
+
 }
 var $data, $ngHttp, $ngCompile, $ngSce;
 var page;

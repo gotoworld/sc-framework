@@ -8,7 +8,7 @@ server:
   context-path: /
 spring:
   application:
-    name: hsd-account-staff-server
+    name: hsd-account-staff-server-wxg
   profiles:
     active: dev
   boot:

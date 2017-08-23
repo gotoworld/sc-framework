@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.actor.dao.actor.IBusinessTypeDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.name as "name"
+        ,t1.memo as "memo"
+        ,t1.version as "version"
+        ,t1.del_flag as "delFlag"
+        ,t1.create_id as "createId"
+        ,t1.date_created as "dateCreated"
+        ,t1.date_updated as "dateUpdated"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.actor.entity.actor.BusinessType" parameterType="com.hsd.account.actor.entity.actor.BusinessType">
+        select
+        <include refid="Base_Column_List"/>
+        from business_type t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.actor.BusinessType"  >
+        insert into business_type (
+            id 
+           ,name 
+           ,memo 
+           ,version 
+           ,del_flag 
+           ,create_id 
+           ,date_created 
+           ,date_updated 
+        ) values (
+            #{id} 
+           ,#{name} 
+           ,#{memo} 
+           ,0
+           ,0
+           ,#{createId} 
+           ,now()
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.actor.entity.actor.BusinessType">
+        update business_type set date_updated=now() ,version=version+1
+             <if test="name!=null">,name = #{name}</if>
+             <if test="memo!=null">,memo = #{memo}</if>
+             <if test="createId!=null">,create_id = #{createId}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.actor.entity.actor.BusinessType" resultType="com.hsd.account.actor.entity.actor.BusinessType">
+        select
+        <include refid="Base_Column_List"/>
+        from business_type t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.actor.entity.actor.BusinessType" resultType="com.hsd.account.actor.entity.actor.BusinessType">
+        select
+        <include refid="Base_Column_List"/>
+        from business_type t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+</mapper>

@@ -46,7 +46,7 @@
                                                 <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
                                                         @[ if ("1"==scfg._insert){ /]
-                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+                                                        <a href="javascript:;" ng-click="edit('a',{@[ for(t in pks){ /]${tLP.index==1?'':','}${t.columnNameFormat}:0@[ } /]});" ng-show='staff.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
                                                         @[ } /]
                                                         <div class="ibox-tools">
                                                             <a href="#" onclick="loadTree()">
@@ -105,7 +105,7 @@
 										</tr>
 									</table>
 									@[ if ("1"==scfg._insert){ /]
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:;" ng-click="edit('a',{@[ for(t in pks){ /]${tLP.index==1?'':','}${t.columnNameFormat}:0@[ } /]});" ng-show='staff.hasPermission("${tableNameL}:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									@[ } /]
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
@@ -126,15 +126,15 @@
                                     				@[ } /]
                                     				<td>
                                     				@[ if ("1"==scfg._detail) { /]
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:info")'  ng-click="info('i',@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                     @[ } /]
                                                     @[ if("1"==scfg._update){ /]
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:edit")'  ng-click="edit('e',@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                     @[ } /]
                                                     @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:del")'   ng-click="del(@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:del")'   ng-click="del(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     @[ }else if ("1"==scfg._del){ /]
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:phydel")'   ng-click="phydel(@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:phydel")'   ng-click="phydel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
                                                     @[ } /]
                                                     </td>
                                     			</tr>
@@ -210,18 +210,18 @@
             loadTree();
             @[ } /]
         });
-        $scope.edit = function (title,id) {
-            sessionStorage.setItem(site.${tableNameL}.info,id);
+        $scope.edit = function (title,item) {
+            sessionStorage.setItem(site.${tableNameL}.info,@[ for(t in pks){ /]${tLP.index==1?'':'+\'/\'+'}item.${t.columnNameFormat}@[ } /]);
             openMyBoxLayer(title,site.${tableNameL}.view+'_edit.html');
         }
-        $scope.info = function (title,id) {
-            sessionStorage.setItem(site.${tableNameL}.info,id);
+        $scope.info = function (title,item) {
+            sessionStorage.setItem(site.${tableNameL}.info,@[ for(t in pks){ /]${tLP.index==1?'':'+\'/\'+'}item.${t.columnNameFormat}@[ } /]);
             openMyBoxLayer(title,site.${tableNameL}.view+'_info.html');
         }
         @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
-        $scope.del = function (id) {
+        $scope.del = function (item) {
             if(confirm('确认删除吗?')) {
-                $.post( site.${tableNameL}.del + id,{}, function (result) {
+                $.post( site.${tableNameL}.del + @[ for(t in pks){ /]${tLP.index==1?'':'+\'/\'+'}item.${t.columnNameFormat}@[ } /],{}, function (result) {
                     if(result.code==0){
                         loadPage($('#pageNumA').val());
                         alert('删除成功');
@@ -232,9 +232,9 @@
             }
         }
         @[ }else if ("1"==scfg._del){ /]
-        $scope.phydel = function (id) {
+        $scope.phydel = function (item) {
             if(confirm('确认删除吗?此操作无法恢复!')) {
-                $.post( site.${tableNameL}.phydel + id,{}, function (result) {
+                $.post( site.${tableNameL}.phydel + @[ for(t in pks){ /]${tLP.index==1?'':'+\'/\'+'}item.${t.columnNameFormat}@[ } /],{}, function (result) {
                     if(result.code==0){
                         loadPage($('#pageNumA').val());
                         alert('删除成功');
@@ -278,17 +278,21 @@
                     trStr+=' <tr><th class="col-md-2">操作:</th><th> ';
                     @[ if ("1"==scfg._detail) { /]
                     if(staff.hasPermission("${tableNameL}:info")){
-                        trStr+=' <a href="javascript:;"  ng-click="info(\'i\',\''+node.id+'\')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
+                        trStr+=' <a href="javascript:;"  ng-click="info(\'i\',\''+node+'\')" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>';
                     }
                     @[ } /]
                     @[ if("1"==scfg._update){ /]
                     if(staff.hasPermission("${tableNameL}:edit")){
-                        trStr+=' <a href="javascript:;"  ng-click="edit(\'e\',\''+node.id+'\')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
+                        trStr+=' <a href="javascript:;"  ng-click="edit(\'e\',\''+node+'\')" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>';
                     }
                     @[ } /]
                     @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
                     if(staff.hasPermission("${tableNameL}:del") && node.nodes==undefined && node.tags[0]==0){
-                        trStr += ' <a href="javascript:;"  ng-click="del(\''+node.id+'\')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
+                        trStr += ' <a href="javascript:;"  ng-click="del(\''+node+'\')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
+                    }
+                    @[ } else if ("1"==scfg._del){ /]
+                    if(staff.hasPermission("${tableNameL}:phydel") && node.nodes==undefined && node.tags[0]==0){
+                        trStr += ' <a href="javascript:;"  ng-click="phydel(\''+node+'\')" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>';
                     }
                     @[ } /]
                     trStr+=' </th></tr>';

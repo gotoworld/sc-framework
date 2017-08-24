@@ -40,13 +40,9 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller page.........");
         Response result = new Response();
         try {
-            if (dto == null) {
-               dto = new ${tcfg.tableNameFormat!}Dto();
-               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-            }
+            if (dto == null) dto = new ${tcfg.tableNameFormat!}Dto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
             @[ if (validator.notEmpty(scfg._col_del)) { /]dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);@[ } /]
-            // 信息列表
             result.data = PageUtil.copy(${tableNameL}Service.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -87,14 +83,14 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
-            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
-            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {
-                @[ for(t in pks){ /]
-                dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
-                @[ } /]
-                @[ if (validator.notEmpty(scfg._col_del)) { /]dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);@[ } /]
-                result.data = ${tableNameL}Service.findDataById(dto);
-            }
+            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {throw new RuntimeException("参数异常!");};
+            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
+            @[ for(t in pks){ /]
+            set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            @[ } /]
+            @[ if (validator.notEmpty(scfg._col_del)) { /]set${strUtil.toUpperCase(scfg._col_del,'_')}(0);@[ } /]
+            }};
+            result.data = ${tableNameL}Service.findDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -114,15 +110,13 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
+            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {throw new RuntimeException("参数异常!");};
+            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
             @[ for(t in pks){ /]
-            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             @[ } /]
-            @[ if ("1"==scfg._delLogic) { /]
+            }};
             result.message = ${tableNameL}Service.deleteDataById(dto);
-            @[ }else{ /]
-            result.message = ${tableNameL}Service.deleteData(dto);
-            @[ } /]
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -141,10 +135,12 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
-            @[ for(t in pks){ /]
-            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
-            @[ } /]
+           if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {throw new RuntimeException("参数异常!");};
+           ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
+           @[ for(t in pks){ /]
+           set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+           @[ } /]
+           }};
             result.message = ${tableNameL}Service.deleteData(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());

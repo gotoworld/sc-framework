@@ -40,12 +40,9 @@ public class IdentityController extends BaseController {
         log.info("IdentityController page.........");
         Response result = new Response();
         try {
-            if (dto == null) {
-               dto = new IdentityDto();
-               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-            }
+            if (dto == null) dto = new IdentityDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            // 信息列表
+
             result.data = PageUtil.copy(identityService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -58,24 +55,24 @@ public class IdentityController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("identity:edit")
+    @RequiresPermissions("identity:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{userId}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("IdentityController info.........");
         Response result = new Response();
         try {
-            IdentityDto dto = new IdentityDto();
-            if (userId!=null) {
-                dto.setUserId(userId);
-                result.data = identityService.findDataById(dto);
-            }
+            if (userId!=null) {throw new RuntimeException("参数异常!");};
+            IdentityDto dto = new IdentityDto(){{
+                setUserId(userId);
+
+            }};
+            result.data = identityService.findDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
-
 
     /**
      * <p> 信息保存

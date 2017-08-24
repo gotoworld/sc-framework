@@ -40,12 +40,9 @@ public class TemplateAttributeController extends BaseController {
         log.info("TemplateAttributeController page.........");
         Response result = new Response();
         try {
-            if (dto == null) {
-               dto = new TemplateAttributeDto();
-               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-            }
+            if (dto == null) dto = new TemplateAttributeDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            // 信息列表
+
             result.data = PageUtil.copy(templateAttributeService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -65,17 +62,39 @@ public class TemplateAttributeController extends BaseController {
         log.info("TemplateAttributeController info.........");
         Response result = new Response();
         try {
-            TemplateAttributeDto dto = new TemplateAttributeDto();
-            if (id!=null) {
-                dto.setId(id);
-                result.data = templateAttributeService.findDataById(dto);
-            }
+            if (id!=null) {throw new RuntimeException("参数异常!");};
+            TemplateAttributeDto dto = new TemplateAttributeDto(){{
+                setId(id);
+
+            }};
+            result.data = templateAttributeService.findDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
 
+    /**
+     * <p>物理删除。
+     */
+    @RequiresPermissions("templateAttribute:phydel")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "phydel/{id}")
+    @ALogOperation(type = "删除", desc = "模板属性-物理删除")
+    @ApiOperation(value = "物理删除")
+    public Response phydel(@PathVariable("id") Long id) {
+        log.info("TemplateAttributeController phydel.........");
+        Response result = new Response();
+        try {
+            if (id==null) {throw new RuntimeException("参数异常!");};
+            TemplateAttributeDto dto = new TemplateAttributeDto(){{
+                setId(id);
+            }};
+            result.message = templateAttributeService.deleteData(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
     /**
      * <p> 信息保存

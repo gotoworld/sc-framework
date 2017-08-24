@@ -40,12 +40,9 @@ public class IdentityLogController extends BaseController {
         log.info("IdentityLogController page.........");
         Response result = new Response();
         try {
-            if (dto == null) {
-               dto = new IdentityLogDto();
-               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-            }
+            if (dto == null) dto = new IdentityLogDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            // 信息列表
+
             result.data = PageUtil.copy(identityLogService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -65,17 +62,17 @@ public class IdentityLogController extends BaseController {
         log.info("IdentityLogController info.........");
         Response result = new Response();
         try {
-            IdentityLogDto dto = new IdentityLogDto();
-            if (id!=null) {
-                dto.setId(id);
-                result.data = identityLogService.findDataById(dto);
-            }
+            if (id!=null) {throw new RuntimeException("参数异常!");};
+            IdentityLogDto dto = new IdentityLogDto(){{
+                setId(id);
+
+            }};
+            result.data = identityLogService.findDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
-
 
     /**
      * <p> 信息保存

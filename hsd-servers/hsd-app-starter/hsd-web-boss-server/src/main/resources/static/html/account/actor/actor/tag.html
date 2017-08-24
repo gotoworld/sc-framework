@@ -69,7 +69,7 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("tag:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:;" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("tag:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -88,9 +88,10 @@
 													<td>{{item.type==1?'会员':'供应商'}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("tag:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("tag:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                    </td>
+														<a href="javascript:;" ng-show='staff.hasPermission("tag:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("tag:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("tag:phydel")'   ng-click="phydel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
+													</td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
                                     				<td colspan="5">
@@ -140,19 +141,17 @@
         staff.init(function(){
             loadPage(1);
         });
-        $scope.edit = function (title,id) {
-            
-            sessionStorage.setItem(site.tag.info,id);
+        $scope.edit = function (title,item) {
+            sessionStorage.setItem(site.tag.info,item.id);
             openMyBoxLayer(title,site.tag.view+'_edit.html');
         }
-        $scope.info = function (title,id) {
-            sessionStorage.setItem(site.tag.info,id);
+        $scope.info = function (title,item) {
+            sessionStorage.setItem(site.tag.info,item.id);
             openMyBoxLayer(title,site.tag.view+'_info.html');
         }
-        $scope.del = function (id) {
-            if(confirm('确认删除吗?')) {
-                $.post( site.tag.del + id,{}, function (result) {
-                    
+        $scope.phydel = function (item) {
+            if(confirm('确认删除吗?此操作无法恢复!')) {
+                $.post( site.tag.phydel + item.id,{}, function (result) {
                     if(result.code==0){
                         loadPage($('#pageNumA').val());
                         alert('删除成功');
@@ -175,7 +174,7 @@
         }
         console.info("加载页码"+pageIndex)
         $.post( site.tag.page+pageIndex,$('#info_search_form').serialize(), function (result) {
-            
+
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();

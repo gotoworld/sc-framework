@@ -5,11 +5,15 @@ for(t in tcfgs){
     ${strUtil.containsStr(t.tableName,'_vs_')?' ':''}INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}', '${t.tableComment}', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:menu', 'id_${t.schemaConf._my_pkg}', '系统生成', '0', '0');
     ${strUtil.containsStr(t.tableName,'_vs_')?'-- ':''}INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_add', '${t.tableComment}_新增', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:add', 'id_${t.tableName}', '系统生成', '0', '0');
     ${strUtil.containsStr(t.tableName,'_vs_')?'-- ':''}INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_edit', '${t.tableComment}_编辑', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:edit', 'id_${t.tableName}', '系统生成', '0', '0');
-    ${strUtil.containsStr(t.tableName,'_vs_')?'-- ':''}INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_del', '${t.tableComment}_删除', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:del', 'id_${t.tableName}', '系统生成', '0', '0');
     ${strUtil.containsStr(t.tableName,'_vs_')?'-- ':''}INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_info', '${t.tableComment}_详情', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:info', 'id_${t.tableName}', '系统生成', '0', '0');
+    @[ if ("1"==t._delLogic && null!=t._col_del) { /]
+    ${strUtil.containsStr(t.tableName,'_vs_')?'-- ':''}INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_del', '${t.tableComment}_逻辑删除', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:del', 'id_${t.tableName}', '系统生成', '0', '0');
+    @[ }
+     if ("1"==scfg._del) { /]
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_phydel', '${t.tableComment}_物理删除', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:phydel', 'id_${t.tableName}', '系统生成', '0', '0');
+    @[ } /]
     --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_recycle', '${t.tableComment}_回收站', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:recycle', 'id_${t.tableName}', '系统生成', '0', '0');
     --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_recovery', '${t.tableComment}_回收站_恢复', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:recovery', 'id_${t.tableName}', '系统生成', '0', '0');
-    --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_${t.tableName}_phydel', '${t.tableComment}_回收站_物理删除', '${strUtil.toLowerCaseFirstOne(t.tableNameFormat)}:phydel', 'id_${t.tableName}', '系统生成', '0', '0');
 @[
 }
  /]

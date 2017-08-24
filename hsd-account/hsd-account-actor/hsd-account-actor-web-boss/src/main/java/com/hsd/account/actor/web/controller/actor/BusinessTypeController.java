@@ -59,7 +59,7 @@ public class BusinessTypeController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("businessType:edit")
+    @RequiresPermissions("businessType:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") String id) {

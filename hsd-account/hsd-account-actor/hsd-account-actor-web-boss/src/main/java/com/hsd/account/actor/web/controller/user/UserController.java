@@ -59,7 +59,7 @@ public class UserController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("user:edit")
+    @RequiresPermissions("user:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {

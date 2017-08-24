@@ -92,7 +92,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
                 @[ for(t in pks){ /]
                 dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
                 @[ } /]
-                dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);
+                @[ if (validator.notEmpty(scfg._col_del)) { /]dto.set${strUtil.toUpperCase(scfg._col_del,'_')}(0);@[ } /]
                 result.data = ${tableNameL}Service.findDataById(dto);
             }
         } catch (Exception e) {

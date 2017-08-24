@@ -307,12 +307,12 @@ var staff = {
                 expMillis = sessionStorage.getItem('hsd_staff_tokenExpMillis') - (new Date().getTime());
             }
             if (expMillis > 0 && expMillis < (10 * 60 * 1000)) {//还有10分钟过期
-                this.refreshToken(callback);
+                staff.refreshToken(callback);
             } else {
                 if (sessionStorage.getItem('hsd_staff_staff') && expMillis > 0) {
                     staff.info(callback);
                 } else {
-                    // this.login(function () {
+                    // staff.login(function () {
                     //     staff.info(callback);
                     // })
                     alert('未登录或登陆过期,请重新登陆!');

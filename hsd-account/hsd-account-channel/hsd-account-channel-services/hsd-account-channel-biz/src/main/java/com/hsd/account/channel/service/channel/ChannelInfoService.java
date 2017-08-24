@@ -177,7 +177,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 		}
 
 		@Override
-		public Response updataChannel(@RequestBody ChannelInfoDto dto) throws Exception {
+		public Response modifyPwd(@RequestBody ChannelInfoDto dto) throws Exception {
 			Response result = new Response(0,"seccuss");
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
@@ -270,5 +270,19 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 	        }
 	        return val;
 	    }
+
+	    @Override
+		public Response updataChannel(@RequestBody ChannelInfoDto dto) throws Exception {
+			Response result = new Response(0,"seccuss");
+			try {
+				if (dto == null)throw new RuntimeException("参数异常!");
+				ChannelInfo entity = copyTo(dto, ChannelInfo.class);
+				channelInfoDao.update(entity);
+			} catch (Exception e) {
+				 log.error("信息修改异常!", e);
+	             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+			}
+			return result;
+		}
 
 }

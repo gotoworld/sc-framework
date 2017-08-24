@@ -4,6 +4,7 @@ import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
@@ -18,7 +19,11 @@ public interface IUserDao extends IBaseDao {
     @Select("select IFNULL(count(0),0) as count from user where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
 
-
+    /**
+     * <p>判断账号是否存在
+     */
+    @Select(" select count(0) from user where  account=#{account} ")
+    int isAccountYN(@Param("account") String account) throws Exception;
 
     /**
      * 根据主键 物理删除

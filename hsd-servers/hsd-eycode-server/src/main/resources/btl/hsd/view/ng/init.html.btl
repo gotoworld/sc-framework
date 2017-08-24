@@ -133,6 +133,8 @@
                                                     @[ } /]
                                                     @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
                                                       <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:del")'   ng-click="del(@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                    @[ }else if ("1"==scfg._del){ /]
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("${tableNameL}:phydel")'   ng-click="phydel(@[ for(t in pks){ /]${tLP.index==1?'':'/'}item.${t.columnNameFormat}@[ } /])" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
                                                     @[ } /]
                                                     </td>
                                     			</tr>
@@ -178,15 +180,19 @@
 <script type="text/javascript">
     /* copy to common.js
     var site={
-        ${tableNameL}: {//${tcfg.tableComment}
+        , ${tableNameL}: {//${tcfg.tableComment}
              view: basePath + "/html/${strUtil.getDir(tcfg.schemaConf._view_pkg)}/${tcfg.tableName}"
-            ,page: apiPath.${scfg._my_project} + "${scfg._web_http}/page/"
+            ,page: apiPath.${scfg._my_project} + "${scfg._web_http}/page/"       //分页
             @[ if ("1"==scfg._tree) { /]
-            ,tree: apiPath.${scfg._my_project} + "${scfg._web_http}/tree"
+            ,tree: apiPath.${scfg._my_project} + "${scfg._web_http}/tree"        //树
             @[ } /]
-            ,save: apiPath.${scfg._my_project} + "${scfg._web_http}/save"
-            ,info: apiPath.${scfg._my_project} + "${scfg._web_http}/info/"
-            ,del: apiPath.${scfg._my_project} + "${scfg._web_http}/del/"
+            ,save: apiPath.${scfg._my_project} + "${scfg._web_http}/save"        //新增or保存
+            ,info: apiPath.${scfg._my_project} + "${scfg._web_http}/info/"       //详情
+            @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
+            ,del: apiPath.${scfg._my_project} + "${scfg._web_http}/del/"         //逻辑删除
+            @[ }else if ("1"==scfg._del){ /]
+            ,phydel: apiPath.${scfg._my_project} + "${scfg._web_http}/phydel/"   //物理删除
+            @[ } /]
         }
     }
     */
@@ -205,7 +211,6 @@
             @[ } /]
         });
         $scope.edit = function (title,id) {
-            
             sessionStorage.setItem(site.${tableNameL}.info,id);
             openMyBoxLayer(title,site.${tableNameL}.view+'_edit.html');
         }
@@ -213,10 +218,10 @@
             sessionStorage.setItem(site.${tableNameL}.info,id);
             openMyBoxLayer(title,site.${tableNameL}.view+'_info.html');
         }
+        @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
         $scope.del = function (id) {
             if(confirm('确认删除吗?')) {
                 $.post( site.${tableNameL}.del + id,{}, function (result) {
-                    
                     if(result.code==0){
                         loadPage($('#pageNumA').val());
                         alert('删除成功');
@@ -226,6 +231,20 @@
                 });
             }
         }
+        @[ }else if ("1"==scfg._del){ /]
+        $scope.phydel = function (id) {
+            if(confirm('确认删除吗?此操作无法恢复!')) {
+                $.post( site.${tableNameL}.phydel + id,{}, function (result) {
+                    if(result.code==0){
+                        loadPage($('#pageNumA').val());
+                        alert('删除成功');
+                    }else{
+                        alert(result.message);
+                    }
+                });
+            }
+        }
+        @[ } /]
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }

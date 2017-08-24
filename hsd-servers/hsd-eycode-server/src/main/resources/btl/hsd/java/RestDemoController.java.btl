@@ -104,11 +104,11 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 
     @[ if ("1"==scfg._delLogic && null!=scfg._col_del) { /]
     /**
-     * <p>删除。
+     * <p>逻辑删除。
      */
-   @RequiresPermissions("${tableNameL}:del")
+    @RequiresPermissions("${tableNameL}:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
-    @ALogOperation(type = "删除", desc = "${tcfg.tableComment}")
+    @ALogOperation(type = "删除", desc = "${tcfg.tableComment}-逻辑删除")
     @ApiOperation(value = "信息删除")
     public Response del(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
         log.info("${tcfg.tableNameFormat!}Controller del.........");
@@ -123,6 +123,29 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
             @[ }else{ /]
             result.message = ${tableNameL}Service.deleteData(dto);
             @[ } /]
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @[ } /]
+    @[ if ("1"==scfg._del) { /]
+    /**
+     * <p>物理删除。
+     */
+   @RequiresPermissions("${tableNameL}:del")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
+    @ALogOperation(type = "删除", desc = "${tcfg.tableComment}-物理删除")
+    @ApiOperation(value = "物理删除")
+    public Response phydel(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
+        log.info("${tcfg.tableNameFormat!}Controller del.........");
+        Response result = new Response();
+        try {
+            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto();
+            @[ for(t in pks){ /]
+            dto.set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            @[ } /]
+            result.message = ${tableNameL}Service.deleteData(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

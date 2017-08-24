@@ -49,6 +49,17 @@
 															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
 														</div>
 													</div>
+													<div class="form-group">
+														<label class="font-noraml">状态</label>
+														<div class=" input-group">
+															<select data-placeholder="选择状态" id="bean-type" name="state" class="form-control">
+																<option value="">--全部--</option>
+																<option value="1">启用</option>
+																<option value="2">禁用</option>
+																<option value="3">黑名单</option>
+															</select>
+														</div>
+													</div>
 													<div class="input-group">
 														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
@@ -59,7 +70,7 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("user:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:;" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("user:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -86,9 +97,14 @@
 													<td>{{item.email}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("user:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                    </td>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-info" ><i class="fa fa-edit"></i> 标签设置</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-success" ><i class="fa fa-edit"></i> 黑名单设置</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-info" ><i class="fa fa-edit"></i> 登录记录</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-success" ><i class="fa fa-edit"></i> 网签记录</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-info" ><i class="fa fa-edit"></i> 实名认证记录</a>
+													</td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
                                     				<td colspan="9">
@@ -138,27 +154,13 @@
         staff.init(function(){
             loadPage(1);
         });
-        $scope.edit = function (title,id) {
-            
-            sessionStorage.setItem(site.user.info,id);
+        $scope.edit = function (title,item) {
+            sessionStorage.setItem(site.user.info,item.id);
             openMyBoxLayer(title,site.user.view+'_edit.html');
         }
-        $scope.info = function (title,id) {
-            sessionStorage.setItem(site.user.info,id);
+        $scope.info = function (title,item) {
+            sessionStorage.setItem(site.user.info,item.id);
             openMyBoxLayer(title,site.user.view+'_info.html');
-        }
-        $scope.del = function (id) {
-            if(confirm('确认删除吗?')) {
-                $.post( site.user.del + id,{}, function (result) {
-                    
-                    if(result.code==0){
-                        loadPage($('#pageNumA').val());
-                        alert('删除成功');
-                    }else{
-                        alert(result.message);
-                    }
-                });
-            }
         }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
@@ -191,7 +193,6 @@
         }
         console.info("加载页码"+pageIndex)
         $.post( site.user.page+pageIndex,$('#info_search_form').serialize(), function (result) {
-            
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();

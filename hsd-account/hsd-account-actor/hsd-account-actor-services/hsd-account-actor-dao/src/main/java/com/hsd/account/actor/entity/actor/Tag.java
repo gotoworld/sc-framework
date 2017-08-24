@@ -17,7 +17,7 @@ public class Tag extends BaseEntity {
      private Long id;
      /**名称*/
      private String name;
-     /**类型0会员1供应商*/
+     /**类型1会员2供应商*/
      private Integer type;
      /**备注*/
      private String memo;

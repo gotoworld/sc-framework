@@ -10,8 +10,10 @@ import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;
+import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -39,6 +41,14 @@ public class UserService extends BaseService implements IUserService {
                     //数据存在
                     userDao.update(entity);
                 } else {
+                    if(ValidatorUtil.isEmpty(dto.getAccount())){
+                        throw new RuntimeException("账号不能为空!");
+                    }
+                    if(userDao.isAccountYN(dto.getAccount())>0){
+                        throw new RuntimeException("账号已存在!");
+                    }
+                    entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
+                    entity.setTradePwd(MD5.pwdMd5Hex(entity.getTradePwd()));
                     //新增
                      userDao.insert(entity);
                      result.data=entity.getId();

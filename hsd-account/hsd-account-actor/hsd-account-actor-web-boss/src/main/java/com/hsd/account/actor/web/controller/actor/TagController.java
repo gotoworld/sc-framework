@@ -58,7 +58,7 @@ public class TagController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("tag:edit")
+    @RequiresPermissions("tag:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {

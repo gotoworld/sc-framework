@@ -79,16 +79,16 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @RequiresPermissions("${tableNameL}:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
     @ApiOperation(value = "信息详情")
-    public Response info(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
+    public Response info(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") ${t.javaType} ${t.columnNameFormat}@[ } /]) {
         log.info("${tcfg.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
             if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {throw new RuntimeException("参数异常!");};
             ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
             @[ for(t in pks){ /]
-            set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+                set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             @[ } /]
-            @[ if (validator.notEmpty(scfg._col_del)) { /]set${strUtil.toUpperCase(scfg._col_del,'_')}(0);@[ } /]
+            @[ if (validator.notEmpty(scfg._col_del)) { /]  set${strUtil.toUpperCase(scfg._col_del,'_')}(0);@[ } /]
             }};
             result.data = ${tableNameL}Service.findDataById(dto);
         } catch (Exception e) {
@@ -106,14 +106,14 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
     @ALogOperation(type = "删除", desc = "${tcfg.tableComment}-逻辑删除")
     @ApiOperation(value = "信息删除")
-    public Response del(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
+    public Response del(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") ${t.javaType} ${t.columnNameFormat}@[ } /]) {
         log.info("${tcfg.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {throw new RuntimeException("参数异常!");};
+            if (@[ for(t in pks){ /]${tLP.index==1?'':' || '}${t.columnNameFormat}==null@[ } /]) {throw new RuntimeException("参数异常!");};
             ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
             @[ for(t in pks){ /]
-            set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+                set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
             @[ } /]
             }};
             result.message = ${tableNameL}Service.deleteDataById(dto);
@@ -122,23 +122,22 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         }
         return result;
     }
-    @[ } /]
-    @[ if ("1"==scfg._del) { /]
+    @[ }else if ("1"==scfg._del) { /]
     /**
      * <p>物理删除。
      */
-   @RequiresPermissions("${tableNameL}:del")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
+    @RequiresPermissions("${tableNameL}:phydel")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "phydel/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
     @ALogOperation(type = "删除", desc = "${tcfg.tableComment}-物理删除")
     @ApiOperation(value = "物理删除")
-    public Response phydel(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
-        log.info("${tcfg.tableNameFormat!}Controller del.........");
+    public Response phydel(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") ${t.javaType} ${t.columnNameFormat}@[ } /]) {
+        log.info("${tcfg.tableNameFormat!}Controller phydel.........");
         Response result = new Response();
         try {
-           if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {throw new RuntimeException("参数异常!");};
+           if (@[ for(t in pks){ /]${tLP.index==1?'':' || '}${t.columnNameFormat}==null@[ } /]) {throw new RuntimeException("参数异常!");};
            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
            @[ for(t in pks){ /]
-           set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
+            set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
            @[ } /]
            }};
             result.message = ${tableNameL}Service.deleteData(dto);

@@ -59,7 +59,6 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("identity:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -82,9 +81,9 @@
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.state}}</td>
                                     				<td>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("identity:info")'  ng-click="info('i',item.userId)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("identity:edit")'  ng-click="edit('e',item.userId)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                    </td>
+														<a href="javascript:;" ng-show='staff.hasPermission("identity:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("identity:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+													</td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
                                     				<td colspan="7">
@@ -134,27 +133,13 @@
         staff.init(function(){
             loadPage(1);
         });
-        $scope.edit = function (title,id) {
-            
-            sessionStorage.setItem(site.identity.info,id);
+        $scope.edit = function (title,item) {
+            sessionStorage.setItem(site.identity.info,item.userId);
             openMyBoxLayer(title,site.identity.view+'_edit.html');
         }
-        $scope.info = function (title,id) {
-            sessionStorage.setItem(site.identity.info,id);
+        $scope.info = function (title,item) {
+            sessionStorage.setItem(site.identity.info,item.userId);
             openMyBoxLayer(title,site.identity.view+'_info.html');
-        }
-        $scope.del = function (id) {
-            if(confirm('确认删除吗?')) {
-                $.post( site.identity.del + id,{}, function (result) {
-                    
-                    if(result.code==0){
-                        loadPage($('#pageNumA').val());
-                        alert('删除成功');
-                    }else{
-                        alert(result.message);
-                    }
-                });
-            }
         }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
@@ -169,7 +154,7 @@
         }
         console.info("加载页码"+pageIndex)
         $.post( site.identity.page+pageIndex,$('#info_search_form').serialize(), function (result) {
-            
+
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();

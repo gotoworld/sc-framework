@@ -40,13 +40,9 @@ public class TemplateController extends BaseController {
         log.info("TemplateController page.........");
         Response result = new Response();
         try {
-            if (dto == null) {
-               dto = new TemplateDto();
-               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-            }
+            if (dto == null) dto = new TemplateDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
             dto.setDelFlag(0);
-            // 信息列表
             result.data = PageUtil.copy(templateService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -66,12 +62,12 @@ public class TemplateController extends BaseController {
         log.info("TemplateController info.........");
         Response result = new Response();
         try {
-            TemplateDto dto = new TemplateDto();
-            if (id!=null) {
-                dto.setId(id);
-                dto.setDelFlag(0);
-                result.data = templateService.findDataById(dto);
-            }
+            if (id!=null) {throw new RuntimeException("参数异常!");};
+            TemplateDto dto = new TemplateDto(){{
+                setId(id);
+                setDelFlag(0);
+            }};
+            result.data = templateService.findDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -79,18 +75,20 @@ public class TemplateController extends BaseController {
     }
 
     /**
-     * <p>删除。
+     * <p>逻辑删除。
      */
-   @RequiresPermissions("template:del")
+    @RequiresPermissions("template:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
-    @ALogOperation(type = "删除", desc = "档案模板")
+    @ALogOperation(type = "删除", desc = "档案模板-逻辑删除")
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("TemplateController del.........");
         Response result = new Response();
         try {
-            TemplateDto dto = new TemplateDto();
-            dto.setId(id);
+            if (id==null) {throw new RuntimeException("参数异常!");};
+            TemplateDto dto = new TemplateDto(){{
+                setId(id);
+            }};
             result.message = templateService.deleteDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());

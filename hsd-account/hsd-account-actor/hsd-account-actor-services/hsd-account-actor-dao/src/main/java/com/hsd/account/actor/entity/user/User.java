@@ -31,7 +31,7 @@ public class User extends BaseEntity {
      private String cellphone;
      /**用户类型 1会员2渠道商*/
      private Integer type;
-     /**是否禁用 1、启用 2、禁用 3.黑名单 默认1*/
+     /**状态 1、启用 2、禁用 3.黑名单 默认1*/
      private Integer state;
      /**注册渠道 默认为other*/
      private String registerChannel;

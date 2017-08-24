@@ -42,7 +42,8 @@
            ,state 
            ,register_channel 
            ,tags 
-           ,date_created 
+           ,date_created
+           ,version
         ) values (
          
             #{account} 
@@ -57,17 +58,15 @@
            ,#{registerChannel} 
            ,#{tags} 
            ,now()
+           ,0
         )
     </insert>
 
 
     <!-- 数据更新 -->
     <update id="update" parameterType="com.hsd.account.actor.entity.user.User">
-        update user set  
-             <if test="account!=null">,account = #{account}</if>
+        update user set  version=version+1
              <if test="name!=null">,name = #{name}</if>
-             <if test="pwd!=null">,pwd = #{pwd}</if>
-             <if test="tradePwd!=null">,trade_pwd = #{tradePwd}</if>
              <if test="email!=null">,email = #{email}</if>
              <if test="gender!=null">,gender = #{gender}</if>
              <if test="cellphone!=null">,cellphone = #{cellphone}</if>

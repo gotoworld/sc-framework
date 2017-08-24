@@ -144,26 +144,23 @@ var site = {
         ,info: apiPath.account.actor + "/boss/account/actor/actor/member/info/"
         ,del: apiPath.account.actor + "/boss/account/actor/actor/member/del/"
     }
-    ,tag: {//标签
+    , tag: {//标签
         view: basePath + "/html/account/actor/actor/tag"
-        ,page: apiPath.account.actor + "/boss/account/actor/actor/tag/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/actor/tag/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/actor/tag/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/actor/tag/del/"
+        ,page: apiPath.account.actor + "/boss/account/actor/actor/tag/page/"       //分页
+        ,save: apiPath.account.actor + "/boss/account/actor/actor/tag/save"        //新增or保存
+        ,info: apiPath.account.actor + "/boss/account/actor/actor/tag/info/"       //详情
+        ,phydel: apiPath.account.actor + "/boss/account/actor/actor/tag/phydel/"   //物理删除
     }
     ,identity: {//实名认证表
         view: basePath + "/html/account/actor/identity/identity"
         ,page: apiPath.account.actor + "/boss/account/actor/identity/identity/page/"
         ,save: apiPath.account.actor + "/boss/account/actor/identity/identity/save"
         ,info: apiPath.account.actor + "/boss/account/actor/identity/identity/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/identity/identity/del/"
     }
-    ,identityLog: {//用户实名认证日志
+    , identityLog: {//用户实名认证日志
         view: basePath + "/html/account/actor/identity/identity_log"
-        ,page: apiPath.account.actor + "/boss/account/actor/identity/identityLog/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/identity/identityLog/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/identity/identityLog/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/identity/identityLog/del/"
+        ,page: apiPath.account.actor + "/boss/account/actor/identity/identityLog/page/"       //分页
+        ,info: apiPath.account.actor + "/boss/account/actor/identity/identityLog/info/"       //详情
     }
     ,template: {//档案模板
         view: basePath + "/html/account/actor/template/template"
@@ -172,12 +169,12 @@ var site = {
         ,info: apiPath.account.actor + "/boss/account/actor/template/template/info/"
         ,del: apiPath.account.actor + "/boss/account/actor/template/template/del/"
     }
-    ,templateAttribute: {//模板属性
+    , templateAttribute: {//模板属性
         view: basePath + "/html/account/actor/template/template_attribute"
-        ,page: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/del/"
+        ,page: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/page/"       //分页
+        ,save: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/save"        //新增or保存
+        ,info: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/info/"       //详情
+        ,phydel: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/phydel/"   //物理删除
     }
     ,userExtInfo: {//用户扩展数据
         view: basePath + "/html/account/actor/user/user_ext_info"
@@ -338,6 +335,7 @@ var staff = {
                     return false;
                 }
                 $data.staff = staff;
+                $data.util = util;
             }
         }
     }

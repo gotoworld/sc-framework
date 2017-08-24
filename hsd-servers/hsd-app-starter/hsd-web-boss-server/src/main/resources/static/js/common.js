@@ -128,7 +128,6 @@ var site = {
         ,page: apiPath.account.actor + "/boss/account/actor/user/user/page/"
         ,save: apiPath.account.actor + "/boss/account/actor/user/user/save"
         ,info: apiPath.account.actor + "/boss/account/actor/user/user/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/user/user/del/"
     }
     , businessType: {//业务类型
         view: basePath + "/html/account/actor/actor/business_type"

@@ -379,10 +379,10 @@ var staff = {
 //工具类
 var util = {
     notEmpty: function (p) {
-        if (p == null || p == '' || p == 'null' || p == undefined || p == 'undefined') {
-            return true;
-        } else {
+        if (p == undefined || p == null ||  p == '' || p == 'null'  || p == 'undefined') {
             return false;
+        } else {
+            return true;
         }
     },
     dateTimeFormat: function (value) {

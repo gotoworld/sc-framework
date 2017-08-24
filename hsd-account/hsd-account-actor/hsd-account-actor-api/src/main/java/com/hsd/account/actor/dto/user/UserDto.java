@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -18,13 +17,13 @@ public class UserDto extends BaseDto {
      /**用户id*/
      private Long id;
      /**登录名*/
-	 @NotNull(message="account不能为空")@Size(max=64,message="account最大64字符")
+	 @Size(max=64,message="account最大64字符")
      private String account;
      /**用户名*/
-	 @NotNull(message="name不能为空")@Size(max=64,message="name最大64字符")
+	 @Size(max=64,message="name最大64字符")
      private String name;
      /**登录密码*/
-	 @NotNull(message="pwd不能为空")@Size(max=64,message="pwd最大64字符")
+	@Size(max=64,message="pwd最大64字符")
      private String pwd;
      /**交易密码*/
 	 @Size(max=64,message="trade_pwd最大64字符")

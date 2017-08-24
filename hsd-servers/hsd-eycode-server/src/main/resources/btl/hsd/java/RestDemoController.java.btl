@@ -80,7 +80,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("${tableNameL}:edit")
+    @RequiresPermissions("${tableNameL}:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
     @ApiOperation(value = "信息详情")
     public Response info(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {

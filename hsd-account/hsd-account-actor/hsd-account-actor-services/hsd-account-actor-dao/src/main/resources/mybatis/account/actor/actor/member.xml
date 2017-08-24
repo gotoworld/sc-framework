@@ -187,6 +187,7 @@
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
+        and t1.user_id = #{userId}
         <choose>
             <when test="delFlag!=null">
                 and t1.del_flag=#{delFlag}

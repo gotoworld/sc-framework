@@ -79,13 +79,20 @@ public interface IChannelInfoService {
      * @param 
      * 修改密码
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updataChannel")
-	public Response updataChannel(ChannelInfoDto dto) throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/modifyPwd")
+	public Response modifyPwd(ChannelInfoDto dto) throws Exception;
 
     /**
      * <p>批量新增。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addBatch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception;
+    
+    /**
+     * @param 
+     * 信息完善
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updataChannel")
+	public Response updataChannel(ChannelInfoDto dto) throws Exception;
 
 }

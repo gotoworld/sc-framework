@@ -20,7 +20,7 @@ public class TagDto extends BaseDto {
      /**名称*/
 	 @NotNull(message="name不能为空")@Size(max=50,message="name最大50字符")
      private String name;
-     /**类型0会员1供应商*/
+     /**类型1会员2供应商*/
 	 @NotNull(message="type不能为空")
      private Integer type;
      /**备注*/

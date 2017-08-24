@@ -49,6 +49,16 @@
 															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
 														</div>
 													</div>
+													<div class="form-group">
+														<label class="font-noraml">用户</label>
+														<div class=" input-group">
+															<select data-placeholder="选择类型" id="bean-type" name="type" class="form-control">
+																<option value="">--全部--</option>
+																<option value="1">会员</option>
+																<option value="2">渠道商</option>
+															</select>
+														</div>
+													</div>
 													<div class="input-group">
 														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
@@ -65,19 +75,19 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>创建时间</th>
                                     				<th>名称</th>
-                                    				<th>类型0会员1供应商</th>
-                                    				<th>操作</th>
+													<th>用户</th>
+													<th>创建时间</th>
+													<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.name}}</td>
-                                    				<td>{{item.type}}</td>
-                                    				<td>
+													<td>{{item.type==1?'会员':'供应商'}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td>
                                                       <a href="javascript:;" ng-show='staff.hasPermission("tag:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:;" ng-show='staff.hasPermission("tag:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                     </td>

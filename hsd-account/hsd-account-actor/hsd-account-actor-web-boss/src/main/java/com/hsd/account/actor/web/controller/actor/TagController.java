@@ -40,12 +40,9 @@ public class TagController extends BaseController {
         log.info("TagController page.........");
         Response result = new Response();
         try {
-            if (dto == null) {
-               dto = new TagDto();
-               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
-            }
+            if (dto == null) dto = new TagDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            // 信息列表
+
             result.data = PageUtil.copy(tagService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -65,17 +62,39 @@ public class TagController extends BaseController {
         log.info("TagController info.........");
         Response result = new Response();
         try {
-            TagDto dto = new TagDto();
-            if (id!=null) {
-                dto.setId(id);
-                result.data = tagService.findDataById(dto);
-            }
+            if (id==null) {throw new RuntimeException("参数异常!");};
+            TagDto dto = new TagDto(){{
+                setId(id);
+
+            }};
+            result.data = tagService.findDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
 
+    /**
+     * <p>物理删除。
+     */
+    @RequiresPermissions("tag:phydel")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "phydel/{id}")
+    @ALogOperation(type = "删除", desc = "标签-物理删除")
+    @ApiOperation(value = "物理删除")
+    public Response phydel(@PathVariable("id") Long id) {
+        log.info("TagController phydel.........");
+        Response result = new Response();
+        try {
+            if (id==null) {throw new RuntimeException("参数异常!");};
+            TagDto dto = new TagDto(){{
+                setId(id);
+            }};
+            result.message = tagService.deleteData(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
     /**
      * <p> 信息保存

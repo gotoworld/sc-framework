@@ -180,7 +180,7 @@
              <if test="dateLenderState!=null">,date_lender_state = #{dateLenderState}</if>
              <if test="dateBorrowerState!=null">,date_borrower_state = #{dateBorrowerState}</if>
              <if test="memo!=null">,memo = #{memo}</if>
-             <if test="biUpdateTs!=null">,bi_update_ts = #{biUpdateTs}</if>
+
         where
         user_id = #{userId}
     </update>

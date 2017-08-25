@@ -51,7 +51,7 @@
         update business_type set date_updated=now() ,version=version+1
              <if test="name!=null">,name = #{name}</if>
              <if test="memo!=null">,memo = #{memo}</if>
-             <if test="createId!=null">,create_id = #{createId}</if>
+
         where
         id = #{id}
     </update>

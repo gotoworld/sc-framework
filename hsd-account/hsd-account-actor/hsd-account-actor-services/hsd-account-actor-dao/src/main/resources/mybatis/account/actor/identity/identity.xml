@@ -72,7 +72,7 @@
              <if test="state!=null">,state = #{state}</if>
              <if test="memo!=null">,memo = #{memo}</if>
              <if test="keyword!=null">,keyword = #{keyword}</if>
-             <if test="createId!=null">,create_id = #{createId}</if>
+
         where
         user_id = #{userId}
     </update>

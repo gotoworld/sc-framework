@@ -65,31 +65,9 @@ public class UserController extends BaseController {
         log.info("UserController info.........");
         Response result = new Response();
         try {
-            UserDto dto = new UserDto();
-            if (id != null) {
-                dto.setId(id);
-
-                result.data = userService.findDataById(dto);
-            }
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
-
-    /**
-     * <p> 设置标签。
-     */
-    @RequiresPermissions("user:edit:tag")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "setTags")
-    @ALogOperation(type = "修改", desc = "客户表-设置标签")
-    @ApiOperation(value = "设置标签")
-    public Response setTags(@ModelAttribute UserDto dto) {
-        log.info("TagController setTags.........");
-        Response result = new Response();
-        try {
-            if(dto==null) throw new RuntimeException("参数异常");
-            result.data = userService.setTags(dto);
+            if(id==null) throw new RuntimeException("参数异常!");
+            UserDto dto = new UserDto(){{setId(id);}};
+            result.data = userService.findDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -124,6 +102,58 @@ public class UserController extends BaseController {
                 result = userService.saveOrUpdateData(dto);
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * <p> 设置标签。
+     */
+    @RequiresPermissions("user:edit:tag")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "setTags")
+    @ALogOperation(type = "修改", desc = "客户表-设置标签")
+    @ApiOperation(value = "设置标签")
+    public Response setTags(@ModelAttribute UserDto dto) {
+        log.info("TagController setTags.........");
+        Response result = new Response();
+        try {
+            if(dto==null) throw new RuntimeException("参数异常");
+            result.data = userService.setTags(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequiresPermissions("user:edit:blacklist")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "set/blacklist/{id}")
+    @ALogOperation(type = "修改", desc = "客户表-设置黑名单")
+    @ApiOperation(value = "设置黑名单")
+    public Response setBlacklist(@PathVariable("id") Long id) {
+        log.info("TagController setBlacklist.........");
+        Response result = new Response();
+        try {
+            if(id==null) throw new RuntimeException("参数异常!");
+            UserDto dto = new UserDto(){{setId(id);}};
+            result.data = userService.setBlacklist(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequiresPermissions("user:edit:blacklist")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/blacklist/{id}")
+    @ALogOperation(type = "修改", desc = "客户表-设置黑名单")
+    @ApiOperation(value = "设置黑名单")
+    public Response delBlacklist(@PathVariable("id") Long id) {
+        log.info("TagController delBlacklist.........");
+        Response result = new Response();
+        try {
+            if(id==null) throw new RuntimeException("参数异常!");
+            UserDto dto = new UserDto(){{setId(id);}};
+            result.data = userService.delBlacklist(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

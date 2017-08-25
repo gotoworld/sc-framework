@@ -62,7 +62,7 @@ public class IdentityLogController extends BaseController {
         log.info("IdentityLogController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");};
+            if (id==null) {throw new RuntimeException("参数异常!");};
             IdentityLogDto dto = new IdentityLogDto(){{
                 setId(id);
 

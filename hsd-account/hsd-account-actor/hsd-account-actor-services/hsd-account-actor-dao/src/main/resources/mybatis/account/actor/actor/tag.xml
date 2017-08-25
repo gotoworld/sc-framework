@@ -53,7 +53,7 @@
              <if test="type!=null">,type = #{type}</if>
              <if test="memo!=null">,memo = #{memo}</if>
              <if test="orderNo!=null">,order_no = #{orderNo}</if>
-             <if test="createId!=null">,create_id = #{createId}</if>
+
         where
         id = #{id}
     </update>

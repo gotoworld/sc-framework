@@ -335,8 +335,8 @@
                             <div class="col-md-12">
                                 <select data-placeholder="选择渠道商状态" id="bean-staus" name="staus" class="form-control"   aria-describedby="bean-staus-error"   aria-invalid="true">
                                     <option value="">--请选择渠道商状态--</option>
-                                    <option value="0">停用</option>
-                                    <option value="1">启用</option>
+                                    <option value="0" ng-selected="item.staus==0">停用</option>
+                                    <option value="1" ng-selected="item.staus==1">启用</option>
                                 </select>
                                 <span id="bean-staus-error" class="help-block m-b-none"></span>
                             </div>

@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Member extends BaseEntity {
-     /**用户ID*/
+     /**客户ID*/
      private Long userId;
      /**传真*/
      private String fax;
@@ -68,7 +68,7 @@ public class Member extends BaseEntity {
      private String address;
      /**发展员工*/
      private String mantanceStaffNo;
-     /**用户子类型*/
+     /**客户子类型*/
      private String userSubType;
      /**代理人等级*/
      private Integer proxyLevel;

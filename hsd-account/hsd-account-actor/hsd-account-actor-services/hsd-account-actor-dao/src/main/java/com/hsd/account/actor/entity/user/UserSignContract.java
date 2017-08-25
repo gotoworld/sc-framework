@@ -17,7 +17,7 @@ import java.util.Date;
 public class UserSignContract extends BaseEntity {
      /**id*/
      private Long id;
-     /**用户id*/
+     /**客户id*/
      private Long userId;
      /**协议编码*/
      private String contractId;

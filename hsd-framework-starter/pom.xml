@@ -166,7 +166,7 @@
                 <configuration>
                     <serverId>docker-hub</serverId>
                     <registryUrl>http://192.168.101.150</registryUrl>
-                    <!--<dockerHost>tcp://192.168.101.150:2375</dockerHost>-->
+                    <dockerHost>http://192.168.101.150:2375</dockerHost>
                     <exposes>80</exposes>
                     <pushImage>true</pushImage>
                     <imageName>192.168.101.150/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>

@@ -15,7 +15,7 @@ import java.util.Date;
 public class UserrLoginLog extends BaseEntity {
      /**id*/
      private Long id;
-     /**用户ID*/
+     /**客户ID*/
      private Long userId;
      /**员工名称*/
      private String userName;

@@ -59,7 +59,6 @@ public class UserService extends BaseService implements IUserService {
             }
             return result;
         }
-
         @Override
         public String deleteData(@RequestBody UserDto dto) throws Exception {
             String result = "seccuss";
@@ -120,5 +119,17 @@ public class UserService extends BaseService implements IUserService {
             return result;
         }
 
-
+        @Override
+        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+        public Response setTags(@RequestBody UserDto dto) throws Exception {
+            Response result = new Response(0,"seccuss");
+            try {
+                if (dto == null)throw new RuntimeException("参数异常!");
+                userDao.setTags(copyTo(dto, User.class));
+            } catch (Exception e) {
+                log.error("标签设置异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            return result;
+        }
 }

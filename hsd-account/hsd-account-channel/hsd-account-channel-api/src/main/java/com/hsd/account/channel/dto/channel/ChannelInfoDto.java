@@ -22,7 +22,6 @@ public class ChannelInfoDto extends BaseDto {
 	 @NotNull(message="account不能为空")@Size(max=255,message="account最大255字符")
      private String account;
      /**渠道商登录密码*/
-	 @NotNull(message="pwd不能为空")@Size(max=255,message="pwd最大255字符")
      private String pwd;
      /**渠道商名称*/
 	 @NotNull(message="channel_name不能为空")@Size(max=50,message="channel_name最大50字符")
@@ -31,7 +30,7 @@ public class ChannelInfoDto extends BaseDto {
 	 @NotNull(message="channeltype不能为空")
      private int channeltype;
      /**性别(0:男，1：女，2：保密）*/
-	 @NotNull(message="gender不能为空")@Size(max=1,message="gender最大1字符")
+	 @NotNull(message="gender不能为空")
      private int gender;
      /**电话1*/
 	 @NotNull(message="phone1不能为空")@Size(max=50,message="phone1最大50字符")
@@ -68,10 +67,8 @@ public class ChannelInfoDto extends BaseDto {
      /**税收*/
      private BigDecimal tax;
      /**车辆数*/
-	 @NotNull(message="own_car_num不能为空")
      private Integer ownCarNum;
      /**房产数*/
-	 @NotNull(message="own_house_num不能为空")
      private Integer ownHouseNum;
      /**是否有小孩（0：是，1：否）*/
      private Integer childrenStatus;
@@ -104,7 +101,6 @@ public class ChannelInfoDto extends BaseDto {
 	 @Size(max=50,message="staff_no最大50字符")
      private String staffNo;
      /**地址*/
-	 @NotNull(message="address不能为空")@Size(max=200,message="address最大200字符")
      private String address;
      /**BI时间戳*/
      private Date biUpdateTs;

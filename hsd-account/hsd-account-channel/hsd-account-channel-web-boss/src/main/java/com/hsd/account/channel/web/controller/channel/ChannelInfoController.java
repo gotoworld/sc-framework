@@ -162,7 +162,7 @@ public class ChannelInfoController extends BaseController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
     
-    @RequiresPermissions("channelInfo:menu")
+    @RequiresPermissions("channelInfo:reset")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "resetPwd/{id}")
     @ALogOperation(type = "重置", desc = "渠道商信息")
     @ApiOperation(value = "重置密码")

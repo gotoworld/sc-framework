@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+<meta charset="utf-8" />
+<title>//TODO 客户表 新增/编辑</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description" content="memo of your site" />
+<meta name="author" content="author of the site" />
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+<link href="/css/common.css" rel="stylesheet">
+    <script src="/js/jQuery.md5.js" type="text/javascript"></script>
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-md-12">
+				<form id="user_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+					<input type="hidden" name="id" value="{{item.id}}" />
+					<div class="clearfix "></div>
+                    <div class="col-sm-6 b-r">
+                        <div class="form-group clearfix" >
+                            <label class="col-md-12 control-label">--请选择标签--</label>
+                            <div class="col-md-12">
+                                <input type="hidden" name="pageNum" id="pageNumA"  value="1">
+                                <div class="input-group">
+                                    <input type="text" name="keyword" id="keyword" placeholder="请输入关键词" class="input-sm form-control">
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="page();" class="btn btn-sm btn-primary">搜索</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
+                                <div class="table-responsive table-scrollable">
+                                    <table class="table table-bordered table-striped  table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:20px;">#</th>
+                                            <th>标签</th>
+                                            <th style="width: 60px;"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-if="tagsResult.data.data && tagsResult.data.data.length>0" ng-repeat="item in tagsResult.data.data">
+                                            <td>{{(tagsResult.data.pageIndex-1)*tagsResult.data.pageSize + $index+1}}</td>
+                                            <td>{{item.name}}</td>
+                                            <td>
+                                                <a ng-if="checkAddTag(item)==false" href="javascript:;" ng-click="addTag(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 添加</a>
+                                                <label ng-if="checkAddTag(item)==true" >已存在</label>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="tagsResult.data.data==null || tagsResult.data.data==0">
+                                            <td colspan="3">
+                                                <div class="alert"><strong>{{tagsResult.message||'暂无数据'}}</strong></div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="b_page" id="tagPages"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group clearfix" >
+                            <label class="col-md-12 control-label">--已设标签--</label>
+                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
+                                <div class="table-responsive table-scrollable">
+                                    <table class="table table-bordered table-striped  table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:20px;">#</th>
+                                            <th>标签</th>
+                                            <th style="width: 60px;"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-if="tagsNodes && tagsNodes.length>0" ng-repeat="item in tagsNodes">
+                                            <td>{{ $index+1}}</td>
+                                            <td>
+                                                <input type="hidden" name="tags" ng-value="item">
+                                                {{item}}</td>
+                                            <td>
+                                                <a href="javascript:;" ng-click="delTag(item)" rel="nofollow" class="" ><i class="fa fa-close"></i> 删除</a>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="tagsNodes==null || tagsNodes==0">
+                                            <td colspan="3">
+                                                <div class="alert"><strong>{{'未设置标签'}}</strong></div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
+						<div style="width: 200px; margin: 0 auto;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/pageTag.js"></script>
+
+<script type="text/javascript">
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
+        $data = $scope;
+        $ngCompile=$compile;
+        staff.init(function(){
+           if(sessionStorage.getItem(site.user.info) && sessionStorage.getItem(site.user.info)!=0){
+               loadInfo(sessionStorage.getItem(site.user.info));
+           }
+        });
+        $scope.save = function () {
+            $.post(site.user.setTags, $('#user_01').serialize(),function (result) {
+                    //console.info("获取数据.." + JSON.stringify(result));
+                    if (result.code == 0) {
+                        alert('保存成功!');
+                        parent.location.href = site.user.view+'.html';
+                    } else {
+                        alert(result.message);
+                    }
+            }, 'json');
+        }
+        $scope.page = function (pageIndex) {
+            loadTagPage(pageIndex);
+        }
+        $scope.checkAddTag=function (item) {
+            var flag=false;
+            if($data.tagsNodes){
+                for(var i=0;i<$data.tagsNodes.length;i++){
+                    if($data.tagsNodes[i]==item.name){
+                        flag= true;
+                    }
+                }
+            }
+            return flag;
+        }
+        $scope.addTag = function (item) {
+            if(!$data.checkAddTag(item)){
+                $data.tagsNodes.push(item.name);
+                if (!$data.$$phase) $data.$apply();
+            }
+        }
+        $scope.delTag = function (item) {
+            util.removeArrItem($data.tagsNodes,item);
+            if (!$data.$$phase) $data.$apply();
+        }
+    });
+    var loadInfo=function(id){
+        $.get(site.user.info + id, {},function (result) {
+             //console.info("获取数据.." + JSON.stringify(result));
+             if (result.code == 0) {
+                 $data.item=result.data;
+                 $data.tagsNodes=[];
+                 if($data.item.tags) $data.tagsNodes = $data.item.tags.split(",");
+             } else {
+                 $data.message = result.message;
+                 alert( result.message);
+             }
+             if(!$data.$$phase) $data.$apply();
+         }, 'json');
+    }
+    var loadTagPage = function (pageIndex) {
+        if(pageIndex){
+            $('#pageNumA').val(pageIndex);
+        }else{
+            pageIndex=$('#pageNumA').val();
+        }
+        $.post( site.tag.page+pageIndex,{"type":$data.item.type,'keyword':$('#keyword').val()}, function (result) {
+            if (result.code == 0) {
+                $data.tagsResult=result;
+                $('#tagPages').html($ngCompile(tag.page(result.data))($data));
+            } else {
+                $data.tagsMessage = result.message;
+                alert( result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+</script>
+</body>
+</html>
+

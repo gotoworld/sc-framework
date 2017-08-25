@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "用户扩展数据")
+@Api(description = "客户扩展数据")
 @RestController
 @Slf4j
 public class UserExtInfoController extends BaseController {
@@ -85,7 +85,7 @@ public class UserExtInfoController extends BaseController {
     @RequiresPermissions(value = {"userExtInfo:add", "userExtInfo:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "用户扩展数据")
+    @ALogOperation(type = "修改", desc = "客户扩展数据")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute UserExtInfoDto dto, BindingResult bindingResult) {
         log.info("UserExtInfoController save.........");

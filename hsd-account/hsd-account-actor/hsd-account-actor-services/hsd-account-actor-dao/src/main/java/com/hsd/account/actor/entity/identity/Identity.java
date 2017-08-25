@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Identity extends BaseEntity {
-     /**用户ID*/
+     /**客户ID*/
      private Long userId;
      /**真实姓名*/
      private String realName;

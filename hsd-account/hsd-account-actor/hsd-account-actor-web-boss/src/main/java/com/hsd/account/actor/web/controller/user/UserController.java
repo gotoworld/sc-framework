@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "用户表")
+@Api(description = "客户表")
 @RestController
 @Slf4j
 public class UserController extends BaseController {
@@ -36,13 +36,13 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
-    public Response page(@ModelAttribute  UserDto dto, @PathVariable("pageNum") Integer pageNum) {
+    public Response page(@ModelAttribute UserDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("UserController page.........");
         Response result = new Response();
         try {
             if (dto == null) {
-               dto = new UserDto();
-               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+                dto = new UserDto();
+                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
             }
             dto.setPageNum(pageNum);
 
@@ -53,7 +53,6 @@ public class UserController extends BaseController {
         }
         return result;
     }
-
 
 
     /**
@@ -67,11 +66,30 @@ public class UserController extends BaseController {
         Response result = new Response();
         try {
             UserDto dto = new UserDto();
-            if (id!=null) {
+            if (id != null) {
                 dto.setId(id);
 
                 result.data = userService.findDataById(dto);
             }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * <p> 设置标签。
+     */
+    @RequiresPermissions("user:edit:tag")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "setTags")
+    @ALogOperation(type = "修改", desc = "客户表-设置标签")
+    @ApiOperation(value = "设置标签")
+    public Response setTags(@ModelAttribute UserDto dto) {
+        log.info("TagController setTags.........");
+        Response result = new Response();
+        try {
+            if(dto==null) throw new RuntimeException("参数异常");
+            result.data = userService.setTags(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -83,9 +101,9 @@ public class UserController extends BaseController {
      * <p> 信息保存
      */
     @RequiresPermissions(value = {"user:add", "user:edit"}, logical = Logical.OR)
-    @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "用户表")
+    @ALogOperation(type = "修改", desc = "客户表")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute UserDto dto, BindingResult bindingResult) {
         log.info("UserController save.........");

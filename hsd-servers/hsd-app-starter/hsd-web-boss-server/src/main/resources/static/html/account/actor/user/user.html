@@ -77,19 +77,21 @@
                                     			<tr>
                                     				<th style="width:20px;">#</th>
 													<th>登录名</th>
+													<th>昵称</th>
 													<th>性别</th>
 													<th>注册渠道</th>
 													<th>状态</th>
 													<th>客户类型</th>
 													<th>email</th>
 													<th>注册时间</th>
-													<th>操作</th>
+													<th style="width:320px;">操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
 													<td>{{item.account}}</td>
+													<td>{{item.name}}</td>
 													<td>{{genderEnum(item.gender)}}</td>
 													<td>{{item.registerChannel}}</td>
 													<td>{{stateEnum(item.state)}}</td>
@@ -99,15 +101,17 @@
 													<td>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-														<a href="javascript:;" ng-show='staff.hasPermission("user:edit:tag")'  ng-click="tag(item)" class="label label-info" ><i class="fa fa-edit"></i> 标签设置</a>
-														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-success" ><i class="fa fa-edit"></i> 黑名单设置</a>
-														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-info" ><i class="fa fa-edit"></i> 登录记录</a>
-														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-success" ><i class="fa fa-edit"></i> 网签记录</a>
-														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-info" ><i class="fa fa-edit"></i> 实名认证记录</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:edit")'  ng-click="member(item)" class="label label-warning" ><i class="fa "></i> 会员信息</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:edit:tag")'  ng-click="tag(item)" class="label label-info" ><i class="fa "></i> 标签</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:edit:blacklist")' ng-if="item.state==1"  ng-click="setBlacklist(item)" class="label label-danger" ><i class="fa "></i> 设置黑名单</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:edit:blacklist")' ng-if="item.state==3"  ng-click="delBlacklist(item)" class="label label-danger" ><i class="fa "></i> 移除黑名单</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="showLog('login',item)" class="label label-info" ><i class="fa "></i> 登录记录</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="showLog('sign',item)" class="label label-success" ><i class="fa "></i> 网签记录</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="showLog('identity',item)" class="label label-info" ><i class="fa "></i> 实名认证记录</a>
 													</td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="9">
+                                    				<td colspan="10">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -162,9 +166,47 @@
             sessionStorage.setItem(site.user.info,item.id);
             openMyBoxLayer(title,site.user.view+'_info.html');
         }
+        $scope.setBlacklist = function (item) {
+            $.post( site.user.setBlacklist+item.id,{}, function (result) {
+                if (result.code == 0) {
+                    loadPage();
+                    alert('设置成功!');
+                } else {
+                    alert( result.message);
+                }
+            }, 'json');
+        }
+        $scope.delBlacklist = function (item) {
+            $.post( site.user.delBlacklist+item.id,{}, function (result) {
+                if (result.code == 0) {
+                    loadPage();
+                    alert('设置成功!');
+                } else {
+                    alert( result.message);
+                }
+            }, 'json');
+        }
+        $scope.showLog = function (type,item) {
+            sessionStorage.setItem(site.user.info,item.id);
+            switch (type){
+				case 'login':
+                    openMyBoxLayer('用户登录日志',site.userLoginLog.view+'.html');
+				    break;
+				case 'sign':
+                    openMyBoxLayer('用户网签协议记录',site.userSignContract.view+'.html');
+				    break;
+				case 'identity':
+                    openMyBoxLayer('用户实名认证日志',site.identityLog.view+'.html');
+				    break;
+			}
+        }
         $scope.tag = function (item) {
             sessionStorage.setItem(site.user.info,item.id);
             openMyBoxLayer('客户标签设置--'+item.name,site.user.view+'_edit_tag.html');
+        }
+        $scope.member = function (item) {
+            sessionStorage.setItem(site.member.info,item.id);
+            openMyBoxLayer('会员信息--'+item.name,site.member.view+'_edit.html');
         }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);

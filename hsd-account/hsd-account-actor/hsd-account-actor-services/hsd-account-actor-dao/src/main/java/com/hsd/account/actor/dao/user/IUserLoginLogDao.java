@@ -11,12 +11,12 @@ import org.apache.ibatis.annotations.Update;
  * <p>客户登录日志 数据库处理接口类。
  */
 @Mapper
-public interface IUserrLoginLogDao extends IBaseDao {
+public interface IUserLoginLogDao extends IBaseDao {
 
     /**
      * 判断是否存在
      */
-    @Select("select IFNULL(count(0),0) as count from userr_login_log where  id = #{id} ")
+    @Select("select IFNULL(count(0),0) as count from user_login_log where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
 
 
@@ -24,7 +24,7 @@ public interface IUserrLoginLogDao extends IBaseDao {
     /**
      * 根据主键 物理删除
      */
-    @Delete("delete from userr_login_log where  id = #{id} ")
+    @Delete("delete from user_login_log where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
 }

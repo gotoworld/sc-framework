@@ -2,10 +2,10 @@ package com.hsd.account.actor.service.user;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.hsd.account.actor.api.user.IUserrLoginLogService;
-import com.hsd.account.actor.dao.user.IUserrLoginLogDao;
-import com.hsd.account.actor.dto.user.UserrLoginLogDto;
-import com.hsd.account.actor.entity.user.UserrLoginLog;
+import com.hsd.account.actor.api.user.IUserLoginLogService;
+import com.hsd.account.actor.dao.user.IUserLoginLogDao;
+import com.hsd.account.actor.dto.user.UserLoginLogDto;
+import com.hsd.account.actor.entity.user.UserLoginLog;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
@@ -23,24 +23,24 @@ import java.util.List;
 
 @FeignService
 @Slf4j
-public class UserrLoginLogService extends BaseService implements IUserrLoginLogService {
+public class UserLoginLogService extends BaseService implements IUserLoginLogService {
     @Autowired
-    private IUserrLoginLogDao userrLoginLogDao;
+    private IUserLoginLogDao userLoginLogDao;
 
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-        public Response saveOrUpdateData(@RequestBody UserrLoginLogDto dto) throws Exception {
+        public Response saveOrUpdateData(@RequestBody UserLoginLogDto dto) throws Exception {
             Response result = new Response(0,"seccuss");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
-                UserrLoginLog entity = copyTo(dto, UserrLoginLog.class);
+                UserLoginLog entity = copyTo(dto, UserLoginLog.class);
                 //判断数据是否存在
-                if (userrLoginLogDao.isDataYN(entity) != 0) {
+                if (userLoginLogDao.isDataYN(entity) != 0) {
                     //数据存在
                     
                 } else {
                     //新增
-                     userrLoginLogDao.insert(entity);
+                     userLoginLogDao.insert(entity);
                      result.data=entity.getId();
                 }
             } catch (Exception e) {
@@ -51,12 +51,12 @@ public class UserrLoginLogService extends BaseService implements IUserrLoginLogS
         }
 
         @Override
-        public String deleteData(@RequestBody UserrLoginLogDto dto) throws Exception {
+        public String deleteData(@RequestBody UserLoginLogDto dto) throws Exception {
             String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
-                UserrLoginLog entity = copyTo(dto, UserrLoginLog.class);
-                if(userrLoginLogDao.deleteByPrimaryKey(entity)==0){
+                UserLoginLog entity = copyTo(dto, UserLoginLog.class);
+                if(userLoginLogDao.deleteByPrimaryKey(entity)==0){
                     throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -68,15 +68,15 @@ public class UserrLoginLogService extends BaseService implements IUserrLoginLogS
 
 
         @Override
-        public PageInfo findDataIsPage(@RequestBody UserrLoginLogDto dto) throws Exception {
+        public PageInfo findDataIsPage(@RequestBody UserLoginLogDto dto) throws Exception {
            PageInfo pageInfo=null;
            try {
                if (dto == null)throw new RuntimeException("参数异常!");
-               UserrLoginLog entity = copyTo(dto, UserrLoginLog.class);
+               UserLoginLog entity = copyTo(dto, UserLoginLog.class);
                PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-               List list = userrLoginLogDao.findDataIsPage(entity);
+               List list = userLoginLogDao.findDataIsPage(entity);
                pageInfo=new PageInfo(list);
-               pageInfo.setList(copyTo(pageInfo.getList(), UserrLoginLogDto.class));
+               pageInfo.setList(copyTo(pageInfo.getList(), UserLoginLogDto.class));
            } catch (Exception e) {
                log.error("信息[分页]查询异常!", e);
                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -86,11 +86,11 @@ public class UserrLoginLogService extends BaseService implements IUserrLoginLogS
 
 
         @Override
-        public UserrLoginLogDto findDataById(@RequestBody UserrLoginLogDto dto) throws Exception {
-            UserrLoginLogDto result = null;
+        public UserLoginLogDto findDataById(@RequestBody UserLoginLogDto dto) throws Exception {
+            UserLoginLogDto result = null;
             try {
-                UserrLoginLog entity = copyTo(dto, UserrLoginLog.class);
-                result = copyTo(userrLoginLogDao.selectByPrimaryKey(entity),UserrLoginLogDto.class);
+                UserLoginLog entity = copyTo(dto, UserLoginLog.class);
+                result = copyTo(userLoginLogDao.selectByPrimaryKey(entity),UserLoginLogDto.class);
             } catch (Exception e) {
                 log.error("信息[详情]查询异常!", e);
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

@@ -132,4 +132,34 @@ public class UserService extends BaseService implements IUserService {
             }
             return result;
         }
+        @Override
+//        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+        public Response setBlacklist(@RequestBody UserDto dto) throws Exception {
+            Response result = new Response(0,"seccuss");
+            try {
+                if (dto == null)throw new RuntimeException("参数异常!");
+                if(userDao.setBlacklist(copyTo(dto, User.class))==0){
+                    throw new RuntimeException("设置失败,请检查当前状态!");
+                }
+            } catch (Exception e) {
+                log.error("黑名单设置异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            return result;
+        }
+        @Override
+//        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+        public Response delBlacklist(@RequestBody UserDto dto) throws Exception {
+            Response result = new Response(0,"seccuss");
+            try {
+                if (dto == null)throw new RuntimeException("参数异常!");
+                if(userDao.delBlacklist(copyTo(dto, User.class))==0){
+                    throw new RuntimeException("设置失败,请检查当前状态!");
+                }
+            } catch (Exception e) {
+                log.error("黑名单移除异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            return result;
+        }
 }

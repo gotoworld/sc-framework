@@ -52,4 +52,14 @@ public interface IUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setTags")
     public Response setTags(UserDto dto) throws Exception;
+    /**
+     * <p>设置黑名单。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setBlacklist")
+    public Response setBlacklist(UserDto dto) throws Exception;
+    /**
+     * <p>移除黑名单。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delBlacklist")
+    public Response delBlacklist(UserDto dto) throws Exception;
 }

@@ -62,7 +62,7 @@ public class IdentityController extends BaseController {
         log.info("IdentityController info.........");
         Response result = new Response();
         try {
-            if (userId!=null) {throw new RuntimeException("参数异常!");};
+            if (userId==null) {throw new RuntimeException("参数异常!");};
             IdentityDto dto = new IdentityDto(){{
                 setUserId(userId);
 

@@ -17,7 +17,7 @@ import java.util.Date;
 public class IdentityLog extends BaseEntity {
      /**id*/
      private Long id;
-     /**用户ID*/
+     /**客户ID*/
      private Long userId;
      /**证件类型:0身份证*/
      private Integer credentialType;

@@ -18,7 +18,7 @@ import java.util.List;
 public class UserrLoginLogDto extends BaseDto {
      /**id*/
      private Long id;
-     /**用户ID*/
+     /**客户ID*/
      private Long userId;
      /**员工名称*/
 	 @NotNull(message="user_name不能为空")@Size(max=32,message="user_name最大32字符")

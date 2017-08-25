@@ -49,6 +49,23 @@ public class TagController extends BaseController {
         }
         return result;
     }
+    /**
+     * <p>信息列表 (未删除)。
+     */
+    @RequiresPermissions("tag:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
+    @ApiOperation(value = "信息列表")
+    public Response list(@ModelAttribute  TagDto dto) {
+        log.info("TagController userId.........");
+        Response result = new Response();
+        try {
+            if (dto == null||dto.getType()==null) {throw new RuntimeException("参数异常!");}
+            result.data = tagService.findDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
 
 
@@ -62,7 +79,7 @@ public class TagController extends BaseController {
         log.info("TagController info.........");
         Response result = new Response();
         try {
-            if (id==null) {throw new RuntimeException("参数异常!");};
+            if (id==null) {throw new RuntimeException("参数异常!");}
             TagDto dto = new TagDto(){{
                 setId(id);
 
@@ -73,7 +90,6 @@ public class TagController extends BaseController {
         }
         return result;
     }
-
     /**
      * <p>物理删除。
      */

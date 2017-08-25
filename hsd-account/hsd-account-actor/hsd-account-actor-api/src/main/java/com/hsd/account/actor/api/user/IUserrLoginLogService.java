@@ -10,7 +10,7 @@ import com.github.pagehelper.PageInfo;
 import java.util.List;
 import java.util.Map;
 /**
- * <p>用户登录日志 业务处理接口类。
+ * <p>客户登录日志 业务处理接口类。
  */
 @FeignClient(value = "${feign.name.account.actor}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IUserrLoginLogService {

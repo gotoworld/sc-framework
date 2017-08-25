@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 /**
- * <p>用户表 业务处理接口类。
+ * <p>客户表 业务处理接口类。
  */
 @FeignClient(value = "${feign.name.account.actor}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IUserService {
@@ -20,7 +20,6 @@ public interface IUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     public Response saveOrUpdateData(UserDto dto) throws Exception;
-
     /**
      * <p>物理删除。
      */
@@ -47,4 +46,10 @@ public interface IUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public UserDto findDataById(UserDto dto) throws Exception;
+
+    /**
+     * <p>设置标签。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setTags")
+    public Response setTags(UserDto dto) throws Exception;
 }

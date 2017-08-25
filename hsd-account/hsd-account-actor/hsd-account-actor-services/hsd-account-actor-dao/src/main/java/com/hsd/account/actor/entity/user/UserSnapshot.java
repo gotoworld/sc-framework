@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserSnapshot extends BaseEntity {
-     /**用户id*/
+     /**客户id*/
      private Long userId;
      /**可用余额*/
      private BigDecimal balance;
@@ -22,7 +22,7 @@ public class UserSnapshot extends BaseEntity {
      private Integer credit;
      /**可用合时币*/
      private Integer coin;
-     /**用户等级*/
+     /**客户等级*/
      private Integer vipLevel;
      /**VIP分数*/
      private Integer vipScore;

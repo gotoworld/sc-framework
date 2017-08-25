@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 /**
- * <p>用户登录日志 数据库处理接口类。
+ * <p>客户登录日志 数据库处理接口类。
  */
 @Mapper
 public interface IUserrLoginLogDao extends IBaseDao {

@@ -18,7 +18,7 @@ import java.util.List;
 public class UserSignContractDto extends BaseDto {
      /**id*/
      private Long id;
-     /**用户id*/
+     /**客户id*/
 	 @NotNull(message="user_id不能为空")
      private Long userId;
      /**协议编码*/

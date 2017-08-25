@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 /**
- * <p>用户照表 业务处理接口类。
+ * <p>客户照表 业务处理接口类。
  */
 @FeignClient(value = "${feign.name.account.actor}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IUserSnapshotService {

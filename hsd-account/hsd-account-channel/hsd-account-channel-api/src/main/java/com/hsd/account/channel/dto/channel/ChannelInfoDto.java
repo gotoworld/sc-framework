@@ -22,7 +22,6 @@ public class ChannelInfoDto extends BaseDto {
 	 @NotNull(message="account不能为空")@Size(max=255,message="account最大255字符")
      private String account;
      /**渠道商登录密码*/
-	 @NotNull(message="pwd不能为空")@Size(max=255,message="pwd最大255字符")
      private String pwd;
      /**渠道商名称*/
 	 @NotNull(message="channel_name不能为空")@Size(max=50,message="channel_name最大50字符")

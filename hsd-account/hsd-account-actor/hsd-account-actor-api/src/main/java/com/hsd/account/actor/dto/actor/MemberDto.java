@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberDto extends BaseDto {
-     /**用户ID*/
+     /**客户ID*/
 	 @NotNull(message="user_id不能为空")
      private Long userId;
      /**传真*/
@@ -81,7 +81,7 @@ public class MemberDto extends BaseDto {
      /**发展员工*/
 	 @Size(max=50,message="mantance_staff_no最大50字符")
      private String mantanceStaffNo;
-     /**用户子类型*/
+     /**客户子类型*/
 	 @Size(max=50,message="user_sub_type最大50字符")
      private String userSubType;
      /**代理人等级*/

@@ -17,7 +17,7 @@ import java.util.Date;
 public class TemplateDto extends BaseDto {
      /**ID*/
      private Long id;
-     /**用户类型*/
+     /**客户类型*/
 	 @NotNull(message="user_type不能为空")
      private Integer userType;
      /**模板名称*/

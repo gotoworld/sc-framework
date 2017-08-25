@@ -17,7 +17,7 @@ import java.util.Date;
 public class IdentityLogDto extends BaseDto {
      /**id*/
      private Long id;
-     /**用户ID*/
+     /**客户ID*/
 	 @NotNull(message="user_id不能为空")
      private Long userId;
      /**证件类型:0身份证*/

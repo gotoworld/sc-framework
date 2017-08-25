@@ -2,13 +2,10 @@ package com.hsd.account.actor.dao.user;
 
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 /**
- * <p>用户表 数据库处理接口类。
+ * <p>客户表 数据库处理接口类。
  */
 @Mapper
 public interface IUserDao extends IBaseDao {
@@ -30,5 +27,11 @@ public interface IUserDao extends IBaseDao {
      */
     @Delete("delete from user where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
+
+    /**
+     * 设置标签
+     */
+    @Update("update user set tags=#{tags} where id = #{id} ")
+    int setTags(IEntity entity) throws Exception;
 
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "用户实名认证日志")
+@Api(description = "客户实名认证日志")
 @RestController
 @Slf4j
 public class IdentityLogController extends BaseController {
@@ -80,7 +80,7 @@ public class IdentityLogController extends BaseController {
     @RequiresPermissions(value = {"identityLog:add", "identityLog:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "用户实名认证日志")
+    @ALogOperation(type = "修改", desc = "客户实名认证日志")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute IdentityLogDto dto, BindingResult bindingResult) {
         log.info("IdentityLogController save.........");

@@ -14,12 +14,12 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto extends BaseDto {
-     /**用户id*/
+     /**客户id*/
      private Long id;
      /**登录名*/
 	 @Size(max=64,message="account最大64字符")
      private String account;
-     /**用户名*/
+     /**客户名*/
 	 @Size(max=64,message="name最大64字符")
      private String name;
      /**登录密码*/
@@ -28,7 +28,7 @@ public class UserDto extends BaseDto {
      /**交易密码*/
 	 @Size(max=64,message="trade_pwd最大64字符")
      private String tradePwd;
-     /**用户email*/
+     /**客户email*/
 	 @Size(max=100,message="email最大100字符")
      private String email;
      /**性别[0男1女2保密]*/
@@ -36,7 +36,7 @@ public class UserDto extends BaseDto {
      /**手机号码*/
 	 @Size(max=18,message="cellphone最大18字符")
      private String cellphone;
-     /**用户类型 1会员2渠道商*/
+     /**客户类型 1会员2渠道商*/
      private Integer type;
      /**状态 1、启用 2、禁用 3.黑名单 默认1*/
      private Integer state;

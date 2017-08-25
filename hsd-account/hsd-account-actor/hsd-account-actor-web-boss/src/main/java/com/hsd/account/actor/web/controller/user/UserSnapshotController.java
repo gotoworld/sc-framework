@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "用户照表")
+@Api(description = "客户照表")
 @RestController
 @Slf4j
 public class UserSnapshotController extends BaseController {
@@ -85,7 +85,7 @@ public class UserSnapshotController extends BaseController {
     @RequiresPermissions(value = {"userSnapshot:add", "userSnapshot:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "用户照表")
+    @ALogOperation(type = "修改", desc = "客户照表")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute UserSnapshotDto dto, BindingResult bindingResult) {
         log.info("UserSnapshotController save.........");

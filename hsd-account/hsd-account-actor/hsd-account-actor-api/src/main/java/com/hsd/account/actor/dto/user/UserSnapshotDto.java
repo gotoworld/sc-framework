@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserSnapshotDto extends BaseDto {
-     /**用户id*/
+     /**客户id*/
 	 @NotNull(message="user_id不能为空")
      private Long userId;
      /**可用余额*/
@@ -24,7 +24,7 @@ public class UserSnapshotDto extends BaseDto {
      private Integer credit;
      /**可用合时币*/
      private Integer coin;
-     /**用户等级*/
+     /**客户等级*/
      private Integer vipLevel;
      /**VIP分数*/
      private Integer vipScore;

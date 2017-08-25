@@ -40,6 +40,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="page()">
+													<input type="hidden" name="userId" id="userIdA" ng-value="userId">
 													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
@@ -79,7 +80,7 @@
 													<td>{{item.ipAddr}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("userrLoginLog:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("userLoginLog:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -127,12 +128,13 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
+        $data.userId=sessionStorage.getItem(site.user.info);
         staff.init(function(){
             loadPage(1);
         });
         $scope.info = function (title,id) {
-            sessionStorage.setItem(site.userrLoginLog.info,id);
-            openMyBoxLayer(title,site.userrLoginLog.view+'_info.html');
+            sessionStorage.setItem(site.userLoginLog.info,id);
+            openMyBoxLayer(title,site.userLoginLog.view+'_info.html');
         }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
@@ -145,8 +147,9 @@
         }else{
             pageIndex=$('#pageNumA').val();
         }
-        console.info("加载页码"+pageIndex)
-        $.post( site.userrLoginLog.page+pageIndex,$('#info_search_form').serialize(), function (result) {
+        $('#userIdA').val($data.userId);
+//        console.info("加载页码"+pageIndex)
+        $.post( site.userLoginLog.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));

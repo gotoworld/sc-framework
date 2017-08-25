@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserrLoginLog extends BaseEntity {
+public class UserLoginLog extends BaseEntity {
      /**id*/
      private Long id;
      /**客户ID*/

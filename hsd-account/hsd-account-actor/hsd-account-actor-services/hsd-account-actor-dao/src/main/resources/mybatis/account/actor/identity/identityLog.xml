@@ -66,6 +66,12 @@
     <!--列表通用条件-->
     <sql id="list_where_sql">
         and t1.user_id = #{userId}
+        <if test="state!=null">
+            and t1.state = #{state}
+        </if>
+        <if test="keyword!=null and keyword!=''">
+            and t1.real_name like concat('%',#{keyword},'%')
+        </if>
     </sql>
 
     <!--信息分页 -->

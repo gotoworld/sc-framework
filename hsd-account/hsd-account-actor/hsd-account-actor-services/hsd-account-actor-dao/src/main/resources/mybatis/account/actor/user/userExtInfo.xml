@@ -60,7 +60,7 @@
              <if test="attributeJson!=null">,attribute_json = #{attributeJson}</if>
              <if test="memo!=null">,memo = #{memo}</if>
              <if test="orderNo!=null">,order_no = #{orderNo}</if>
-             <if test="createId!=null">,create_id = #{createId}</if>
+
         where
         id = #{id}
     </update>
@@ -68,6 +68,7 @@
     <!--列表通用条件-->
     <sql id="list_where_sql">
         and t1.user_id = #{userId}
+        <if test="templateId!=null"> and template_id = #{templateId}</if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
         </if>

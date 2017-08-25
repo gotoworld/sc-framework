@@ -129,6 +129,8 @@ var site = {
         ,save: apiPath.account.actor + "/boss/account/actor/user/user/save"
         ,setTags: apiPath.account.actor + "/boss/account/actor/user/user/setTags"
         ,info: apiPath.account.actor + "/boss/account/actor/user/user/info/"
+        ,setBlacklist: apiPath.account.actor + "/boss/account/actor/user/user/set/blacklist/"
+        ,delBlacklist: apiPath.account.actor + "/boss/account/actor/user/user/del/blacklist/"
     }
     , businessType: {//业务类型
         view: basePath + "/html/account/actor/actor/business_type"
@@ -198,12 +200,12 @@ var site = {
         ,info: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/info/"
         ,del: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/del/"
     }
-    ,userrLoginLog: {//用户登录日志
-        view: basePath + "/html/account/actor/user/userr_login_log"
-        ,page: apiPath.account.actor + "/boss/account/actor/user/userrLoginLog/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/user/userrLoginLog/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/user/userrLoginLog/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/user/userrLoginLog/del/"
+    ,userLoginLog: {//用户登录日志
+        view: basePath + "/html/account/actor/user/user_login_log"
+        ,page: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/page/"
+        ,save: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/save"
+        ,info: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/info/"
+        ,del: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/del/"
     }
 
 }

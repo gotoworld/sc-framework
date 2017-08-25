@@ -1,7 +1,7 @@
 var basePath = "http://localhost/";
 var apiPath = {
     account: {
-        staff: "http://192.168.101.150:6061",
+        staff: "http://192.168.101.153:6061",
         channel: "http://localhost:6061",
         actor: "http://192.168.103.236:6065"
     }

@@ -54,7 +54,7 @@
              <if test="contractName!=null">,contract_name = #{contractName}</if>
              <if test="signDate!=null">,sign_date = #{signDate}</if>
              <if test="memo!=null">,memo = #{memo}</if>
-             <if test="createId!=null">,create_id = #{createId}</if>
+
         where
         id = #{id}
     </update>
@@ -62,6 +62,9 @@
     <!--列表通用条件-->
     <sql id="list_where_sql">
         and t1.user_id = #{userId}
+        <if test="keyword!=null and keyword!=''">
+            and t1.contract_name like concat('%',#{keyword},'%')
+        </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
         </if>

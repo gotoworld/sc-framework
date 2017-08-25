@@ -33,5 +33,15 @@ public interface IUserDao extends IBaseDao {
      */
     @Update("update user set tags=#{tags} where id = #{id} ")
     int setTags(IEntity entity) throws Exception;
+    /**
+     * 设置黑名单
+     */
+    @Update("update user set state=3 where id = #{id} and state=1 ")
+    int setBlacklist(IEntity entity) throws Exception;
+    /**
+     * 移除黑名单
+     */
+    @Update("update user set state=1 where id = #{id} and state=3 ")
+    int delBlacklist(IEntity entity) throws Exception;
 
 }

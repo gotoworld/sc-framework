@@ -101,11 +101,11 @@
         $data = $scope;
         $ngCompile=$compile;
         staff.init(function(){
-           loadInfo(sessionStorage.getItem(site.userrLoginLog.info));
+           loadInfo(sessionStorage.getItem(site.userLoginLog.info));
         });
     });
     var loadInfo=function(id){
-        $.get(site.userrLoginLog.info + id, {},function (result) {
+        $.get(site.userLoginLog.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
              if (result.code == 0) {
                  $data.item = result.data;

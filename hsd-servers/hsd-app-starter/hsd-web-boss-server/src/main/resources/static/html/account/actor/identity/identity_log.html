@@ -40,6 +40,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="page()">
+													<input type="hidden" name="userId" id="userIdA" ng-value="userId">
 													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
 													<div class="form-group" id="data_5">
 														<label class="font-noraml">创建时间</label>
@@ -129,6 +130,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
+        $data.userId=sessionStorage.getItem(site.user.info);
         staff.init(function(){
             loadPage(1);
         });
@@ -147,7 +149,8 @@
         }else{
             pageIndex=$('#pageNumA').val();
         }
-        console.info("加载页码"+pageIndex)
+        $('#userIdA').val($data.userId);
+        //console.info("加载页码"+pageIndex)
         $.post( site.identityLog.page+pageIndex,$('#info_search_form').serialize(), function (result) {
 
             $data.result=result;

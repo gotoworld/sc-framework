@@ -42,6 +42,7 @@
 													ng-submit="page()">
 													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
 													<div class="form-group" id="data_5">
+														<input type="hidden" name="userId" id="userIdA" ng-value="userId">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="datepicker">
 															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
@@ -167,7 +168,7 @@
         }else{
             pageIndex=$('#pageNumA').val();
         }
-        console.info("加载页码"+pageIndex)
+        //console.info("加载页码"+pageIndex)
         $.post( site.userSnapshot.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             
             $data.result=result;

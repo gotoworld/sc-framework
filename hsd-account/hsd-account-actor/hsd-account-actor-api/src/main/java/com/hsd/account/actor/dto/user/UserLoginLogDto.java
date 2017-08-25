@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserrLoginLogDto extends BaseDto {
+public class UserLoginLogDto extends BaseDto {
      /**id*/
      private Long id;
      /**客户ID*/

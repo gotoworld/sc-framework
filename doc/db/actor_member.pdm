@@ -7074,7 +7074,7 @@ Table.Comment 0</a:SymbolContent>
 <o:Table Id="o47">
 <a:ObjectID>B90AD899-A055-4C03-BBFD-AC9F99767A99</a:ObjectID>
 <a:Name>用户登录日志</a:Name>
-<a:Code>userr_login_log</a:Code>
+<a:Code>user_login_log</a:Code>
 <a:CreationDate>1501207915</a:CreationDate>
 <a:Creator>Administrator</a:Creator>
 <a:ModificationDate>1503471711</a:ModificationDate>

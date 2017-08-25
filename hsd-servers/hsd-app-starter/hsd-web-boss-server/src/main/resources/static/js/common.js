@@ -127,6 +127,7 @@ var site = {
         view: basePath + "/html/account/actor/user/user"
         ,page: apiPath.account.actor + "/boss/account/actor/user/user/page/"
         ,save: apiPath.account.actor + "/boss/account/actor/user/user/save"
+        ,setTags: apiPath.account.actor + "/boss/account/actor/user/user/setTags"
         ,info: apiPath.account.actor + "/boss/account/actor/user/user/info/"
     }
     , businessType: {//业务类型
@@ -147,6 +148,7 @@ var site = {
         view: basePath + "/html/account/actor/actor/tag"
         ,page: apiPath.account.actor + "/boss/account/actor/actor/tag/page/"       //分页
         ,save: apiPath.account.actor + "/boss/account/actor/actor/tag/save"        //新增or保存
+        ,list: apiPath.account.actor + "/boss/account/actor/actor/tag/list"        //列表
         ,info: apiPath.account.actor + "/boss/account/actor/actor/tag/info/"       //详情
         ,phydel: apiPath.account.actor + "/boss/account/actor/actor/tag/phydel/"   //物理删除
     }

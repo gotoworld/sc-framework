@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
     <meta charset="UTF-8">
-    <title>//TODO 用户表</title>
+    <title>//TODO 客户表</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta name="description" content="memo of your site" />
@@ -80,7 +80,7 @@
 													<th>性别</th>
 													<th>注册渠道</th>
 													<th>状态</th>
-													<th>用户类型</th>
+													<th>客户类型</th>
 													<th>email</th>
 													<th>注册时间</th>
 													<th>操作</th>
@@ -99,7 +99,7 @@
 													<td>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-info" ><i class="fa fa-edit"></i> 标签设置</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:edit:tag")'  ng-click="tag(item)" class="label label-info" ><i class="fa fa-edit"></i> 标签设置</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-success" ><i class="fa fa-edit"></i> 黑名单设置</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-info" ><i class="fa fa-edit"></i> 登录记录</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="edit('i',item)" class="label label-success" ><i class="fa fa-edit"></i> 网签记录</a>
@@ -162,6 +162,10 @@
             sessionStorage.setItem(site.user.info,item.id);
             openMyBoxLayer(title,site.user.view+'_info.html');
         }
+        $scope.tag = function (item) {
+            sessionStorage.setItem(site.user.info,item.id);
+            openMyBoxLayer('客户标签设置--'+item.name,site.user.view+'_edit_tag.html');
+        }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }
@@ -191,13 +195,14 @@
         }else{
             pageIndex=$('#pageNumA').val();
         }
-        console.info("加载页码"+pageIndex)
+        //console.info("加载页码"+pageIndex)
         $.post( site.user.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
+
 </script>
 </body>
 </html>

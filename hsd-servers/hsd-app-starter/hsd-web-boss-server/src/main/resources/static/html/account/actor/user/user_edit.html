@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
 <meta charset="utf-8" />
-<title>//TODO 用户表 新增/编辑</title>
+<title>//TODO 客户表 新增/编辑</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta name="description" content="memo of your site" />
@@ -78,7 +78,7 @@
                         <div class="form-group clearfix">
                             <label class="col-md-5 control-label">邮箱：</label>
                             <div class="col-md-12">
-                                <input id="bean-email" name="email" value="{{item.email}}" class="form-control" type="email"  placeholder="请输入用户email"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
+                                <input id="bean-email" name="email" value="{{item.email}}" class="form-control" type="email"  placeholder="请输入客户email"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
                                 <span id="bean-email-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -104,9 +104,9 @@
                             </div>
                         </div>
                         <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">用户类型：</label>
+                            <label class="col-md-5 control-label">客户类型：</label>
                             <div class="col-md-12">
-                                <select data-placeholder="选择用户类型" id="bean-type" name="type" class="form-control"   aria-describedby="bean-type-error"   aria-invalid="true">
+                                <select data-placeholder="选择客户类型" id="bean-type" name="type" class="form-control"   aria-describedby="bean-type-error"   aria-invalid="true">
                                     <option value="1" ng-selected="item.type==1">会员</option>
                                     <option value="2" ng-selected="item.type==2">渠道商</option>
                                 </select>

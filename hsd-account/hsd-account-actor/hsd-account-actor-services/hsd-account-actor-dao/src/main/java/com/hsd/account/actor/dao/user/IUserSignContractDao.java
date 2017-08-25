@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * <p>用户网签协议记录 数据库处理接口类。
+ * <p>客户网签协议记录 数据库处理接口类。
  */
 @Mapper
 public interface IUserSignContractDao extends IBaseDao {

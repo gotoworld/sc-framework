@@ -15,7 +15,7 @@ import java.util.Date;
 public class Template extends BaseEntity {
      /**ID*/
      private Long id;
-     /**用户类型*/
+     /**客户类型*/
      private Integer userType;
      /**模板名称*/
      private String templateName;

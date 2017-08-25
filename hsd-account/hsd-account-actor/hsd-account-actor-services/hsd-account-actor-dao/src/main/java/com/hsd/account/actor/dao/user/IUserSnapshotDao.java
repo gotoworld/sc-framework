@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * <p>用户照表 数据库处理接口类。
+ * <p>客户照表 数据库处理接口类。
  */
 @Mapper
 public interface IUserSnapshotDao extends IBaseDao {

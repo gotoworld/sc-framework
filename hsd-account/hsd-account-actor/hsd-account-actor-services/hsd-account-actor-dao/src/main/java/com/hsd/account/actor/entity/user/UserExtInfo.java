@@ -15,7 +15,7 @@ import java.util.Date;
 public class UserExtInfo extends BaseEntity {
      /**id*/
      private Long id;
-     /**用户ID*/
+     /**客户ID*/
      private Long userId;
      /**所属模板id*/
      private Long templateId;

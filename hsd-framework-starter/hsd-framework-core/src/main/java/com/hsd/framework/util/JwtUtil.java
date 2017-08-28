@@ -3,6 +3,7 @@ package com.hsd.framework.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.hsd.framework.config.AppConfig;
 import io.jsonwebtoken.*;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -17,14 +18,18 @@ import java.util.Date;
  * Created by wu1g119 on 2017/2/8.
  */
 public class JwtUtil {
-    //    @Value("${spring.profiles.active}")
     private static String profiles = "";
+
+    public static String getProfiles() {
+        if (profiles == null) profiles = AppConfig.getProperty("common.appPrefix");
+        return profiles;
+    }
 
     /**
      * 由字符串生成加密key
      */
     private static SecretKey generalKey() {
-        String stringKey = profiles + CommonConstant.JWT_SECRET_KEY;
+        String stringKey = getProfiles() + CommonConstant.JWT_SECRET_KEY;
         byte[] encodedKey = Base64.decodeBase64(stringKey);
         SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
         return key;
@@ -64,15 +69,16 @@ public class JwtUtil {
     /**
      * 生成subject信息
      */
-    public static String generalSubject(Object user) {
+    public static String generalSubject(Object obj) {
         JSONObject jo = new JSONObject();
-        jo.put("id", ReflectUtil.getValueByFieldName(user, "id"));
-        jo.put("account", ReflectUtil.getValueByFieldName(user, "account"));
-        jo.put("name", ReflectUtil.getValueByFieldName(user, "name"));
-        jo.put("authorizationInfoPerms", ReflectUtil.getValueByFieldName(user, "authorizationInfoPerms"));
-        jo.put("authorizationInfoRoles", ReflectUtil.getValueByFieldName(user, "authorizationInfoRoles"));
+        jo.put("id", ReflectUtil.getValueByFieldName(obj, "id"));
+        jo.put("account", ReflectUtil.getValueByFieldName(obj, "account"));
+        jo.put("name", ReflectUtil.getValueByFieldName(obj, "name"));
+        jo.put("authorizationInfoPerms", ReflectUtil.getValueByFieldName(obj, "authorizationInfoPerms"));
+        jo.put("authorizationInfoRoles", ReflectUtil.getValueByFieldName(obj, "authorizationInfoRoles"));
         return jo.toJSONString();
     }
+
     public static JSONObject getSubject() throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);

@@ -46,7 +46,7 @@ public class JwtInterceptor implements HandlerInterceptor {
                 log.debug("Expiration: " + claims.getExpiration());
                 JwtUtil.UserType userType =null;
                 if(claims.get("userType")!=null) userType = Enum.valueOf(JwtUtil.UserType.class, ""+claims.get("userType"));
-                log.debug("----当前用户类型----"+userType!=null?userType.getVal():"未知");
+                log.debug("UserType: "+userType!=null?userType.getVal():"未知");
             }
             return true;
         } catch (final SignatureException e) {

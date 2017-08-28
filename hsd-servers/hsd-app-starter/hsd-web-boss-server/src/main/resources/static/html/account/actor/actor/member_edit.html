@@ -19,7 +19,9 @@
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
 <link href="/css/common.css" rel="stylesheet">
-
+<style>
+    .pl0{padding-left:0px;}
+</style>
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
@@ -38,19 +40,33 @@
                     <input type="hidden" name="userId" ng-value="item.userId" >
                     <div class="col-sm-6 b-r">
                         <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">省份证号：</label>
+                            <label class="col-md-5 control-label">省份证号：
+                                <input id="bean-credentialNumber" name="credentialNumber" value="{{item.credentialNumber}}" class="form-control layer-date" type="text"  placeholder="请输入省份证号"    required="" aria-required="true" aria-describedby="bean-credentialNumber-error"  maxlength="50"   aria-invalid="true">
+                            </label>
                             <div class="col-md-12">
-                                <input id="bean-credentialNumber" name="credentialNumber" value="{{item.credentialNumber}}" class="form-control" type="text"  placeholder="请输入省份证号"    required="" aria-required="true" aria-describedby="bean-credentialNumber-error"  maxlength="50"   aria-invalid="true">
                                 <span id="bean-credentialNumber-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">生日：
+                                <input id="bean-birthday" name="birthday" value="{{item.birthday | date:'yyyy-MM-dd'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入生日"    required="" aria-required="true" aria-describedby="bean-birthday-error"   aria-invalid="true">
+                            </label>
+                            <div class="col-md-12">
+                                <span id="bean-birthday-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">生日：</label>
+                            <label class="col-md-5 control-label">投资状态变更时间：<label class="label label-warning control-label"><input type="checkbox" name="lenderState"  ng-checked="item.lenderState==1" value="1">投资人</label></label>
                             <div class="col-md-12">
-                                <input id="bean-birthday" name="birthday" value="{{item.birthday | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入生日"    required="" aria-required="true" aria-describedby="bean-birthday-error"   aria-invalid="true">
-                                <span id="bean-birthday-error" class="help-block m-b-none"></span>
+                                {{item.dateLender | date:'yyyy-MM-dd HH:mm:ss'}}
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">欠债状态变更时间：<label class="label label-warning control-label"><input type="checkbox" name="debtState"  ng-checked="item.debtState==1" value="1">欠债人</label></label>
+                            <div class="col-md-12">
+                                {{item.dateDebt | date:'yyyy-MM-dd HH:mm:ss'}}
                             </div>
                         </div>
                     </div>
@@ -64,17 +80,6 @@
                             <div id="tab-1" class="tab-pane active" style="padding-top: 20px;">
                                 <div class="col-sm-6 b-r">
 
-                                    <div class="form-group clearfix col-md-12">
-                                        <label class="label label-info control-label"><input type="checkbox" name="maritalStatus" ng-checked="item.maritalStatus==1" value="1">已结婚</label>
-                                        <label class="label label-warning control-label"><input type="checkbox" name="domicileLiveDiff"  ng-checked="item.domicileLiveDiff==1" value="1">户籍与居住地一致</label>
-                                    </div>
-                                    <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">员工工号：<label class="label label-info control-label"><input type="checkbox" name="relation"  ng-checked="item.relation==1" value="1">公司员工</label></label>
-                                        <div class="col-md-12">
-                                            <input id="bean-staffNo" name="staffNo" value="{{item.staffNo}}" class="form-control" type="text"  placeholder="请输入员工工号"    required="" aria-required="true" aria-describedby="bean-staffNo-error"  maxlength="50"   aria-invalid="true">
-                                            <span id="bean-staffNo-error" class="help-block m-b-none"></span>
-                                        </div>
-                                    </div>
                                     <div class="form-group clearfix">
                                         <label class="col-md-5 control-label">传真：</label>
                                         <div class="col-md-12">
@@ -84,58 +89,77 @@
                                     </div>
 
                                     <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">孩子数量：<label class="label label-warning control-label"><input type="checkbox" name="childrenStatus" ng-checked="item.childrenStatus==1" value="1">已有小孩</label></label>
+                                        <label class="col-md-5 control-label">孩子数量：<label class="label label-info control-label"><input type="checkbox" name="maritalState" ng-checked="item.maritalState==1" value="1">已结婚</label> <label class="label label-warning control-label"><input type="checkbox" name="childrenState" ng-checked="item.childrenState==1" value="1">已有小孩</label></label>
                                         <div class="col-md-12">
                                             <input id="bean-childrenNum" name="childrenNum" value="{{item.childrenNum}}" class="form-control" type="text"  placeholder="请输入孩子数量"    required="" aria-required="true" aria-describedby="bean-childrenNum-error"   aria-invalid="true">
                                             <span id="bean-childrenNum-error" class="help-block m-b-none"></span>
                                         </div>
                                     </div>
-                                    <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">开始工作时间：</label>
-                                        <div class="col-md-12">
-                                            <input id="bean-workStartDate" name="workStartDate" value="{{item.workStartDate | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入开始工作时间"    required="" aria-required="true" aria-describedby="bean-workStartDate-error"   aria-invalid="true">
-                                            <span id="bean-workStartDate-error" class="help-block m-b-none"></span>
+
+
+                                    <div class="col-sm-12 pl0">
+                                        <div class="col-sm-6 b-r  pl0">
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-5 control-label">教育程度：</label>
+                                                <div class="col-md-12">
+                                                    <select data-placeholder="选择教育程度" id="bean-educationLevel" name="educationLevel" class="form-control"     required="" aria-required="true" aria-describedby="bean-educationLevel-error"  maxlength="50"   aria-invalid="true">
+                                                        <option value=""  >--请选择教育程度--</option>
+                                                        <option value="小学" ng-selected="item.educationLevel=='小学'">小学</option>
+                                                        <option value="初中" ng-selected="item.educationLevel=='初中'">初中</option>
+                                                        <option value="高中" ng-selected="item.educationLevel=='高中'">高中</option>
+                                                        <option value="专科" ng-selected="item.educationLevel=='专科'">专科</option>
+                                                        <option value="本科" ng-selected="item.educationLevel=='本科'">本科</option>
+                                                        <option value="硕士" ng-selected="item.educationLevel=='硕士'">硕士</option>
+                                                        <option value="博士" ng-selected="item.educationLevel=='博士'">博士</option>
+                                                    </select>
+                                                    <span id="bean-educationLevel-error" class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-5 control-label">开始工作时间：</label>
+                                                <div class="col-md-12">
+                                                    <input id="bean-workStartDate" name="workStartDate" value="{{item.workStartDate | date:'yyyy-MM-dd'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入开始工作时间"    required="" aria-required="true" aria-describedby="bean-workStartDate-error"   aria-invalid="true">
+                                                    <span id="bean-workStartDate-error" class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-5 control-label">微信：</label>
+                                                <div class="col-md-12">
+                                                    <input id="bean-wechat" name="wechat" value="{{item.wechat}}" class="form-control" type="text"  placeholder="请输入微信"    required="" aria-required="true" aria-describedby="bean-wechat-error"  maxlength="50"   aria-invalid="true">
+                                                    <span id="bean-wechat-error" class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">教育程度：</label>
-                                        <div class="col-md-12">
-                                            <select data-placeholder="选择教育程度" id="bean-educationLevel" name="educationLevel" class="form-control"     required="" aria-required="true" aria-describedby="bean-educationLevel-error"  maxlength="50"   aria-invalid="true">
-                                                <option value=""  >--请选择教育程度--</option>
-                                                <option value="小学" ng-selected="item.educationLevel==小学">小学</option>
-                                                <option value="初中" ng-selected="item.educationLevel==初中">初中</option>
-                                                <option value="高中" ng-selected="item.educationLevel==高中">高中</option>
-                                                <option value="专科" ng-selected="item.educationLevel==专科">专科</option>
-                                                <option value="本科" ng-selected="item.educationLevel==本科">本科</option>
-                                                <option value="硕士" ng-selected="item.educationLevel==硕士">硕士</option>
-                                                <option value="博士" ng-selected="item.educationLevel==博士">博士</option>
-                                            </select>
-                                            <span id="bean-educationLevel-error" class="help-block m-b-none"></span>
+                                        <div class="col-sm-6" >
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-12 control-label">员工工号：<label class="label label-info control-label"><input type="checkbox" name="relation"  ng-checked="item.relation==1" value="1">公司员工</label></label>
+                                                <div class="col-md-12">
+                                                    <input id="bean-staffNo" name="staffNo" value="{{item.staffNo}}" class="form-control" type="text"  placeholder="请输入员工工号"    required="" aria-required="true" aria-describedby="bean-staffNo-error"  maxlength="50"   aria-invalid="true">
+                                                    <span id="bean-staffNo-error" class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-5 control-label">累计工作年限：</label>
+                                                <div class="col-md-12">
+                                                    <input id="bean-cumulativeJobTenure" name="cumulativeJobTenure" value="{{item.cumulativeJobTenure}}" class="form-control" type="text"  placeholder="请输入累计工作年限"    required="" aria-required="true" aria-describedby="bean-cumulativeJobTenure-error"   aria-invalid="true">
+                                                    <span id="bean-cumulativeJobTenure-error" class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-5 control-label">QQ：</label>
+                                                <div class="col-md-12">
+                                                    <input id="bean-qq" name="qq" value="{{item.qq}}" class="form-control" type="text"  placeholder="请输入QQ"    required="" aria-required="true" aria-describedby="bean-qq-error"  maxlength="50"   aria-invalid="true">
+                                                    <span id="bean-qq-error" class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">累计工作年限：</label>
+                                        <label class="col-md-5 control-label">地址：<label class="label label-warning control-label"><input type="checkbox" name="domicileLiveDiff"  ng-checked="item.domicileLiveDiff==1" value="1">户籍与居住地一致</label></label>
                                         <div class="col-md-12">
-                                            <input id="bean-cumulativeJobTenure" name="cumulativeJobTenure" value="{{item.cumulativeJobTenure}}" class="form-control" type="text"  placeholder="请输入累计工作年限"    required="" aria-required="true" aria-describedby="bean-cumulativeJobTenure-error"   aria-invalid="true">
-                                            <span id="bean-cumulativeJobTenure-error" class="help-block m-b-none"></span>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">微信：</label>
-                                        <div class="col-md-12">
-                                            <input id="bean-wechat" name="wechat" value="{{item.wechat}}" class="form-control" type="text"  placeholder="请输入微信"    required="" aria-required="true" aria-describedby="bean-wechat-error"  maxlength="50"   aria-invalid="true">
-                                            <span id="bean-wechat-error" class="help-block m-b-none"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">QQ：</label>
-                                        <div class="col-md-12">
-                                            <input id="bean-qq" name="qq" value="{{item.qq}}" class="form-control" type="text"  placeholder="请输入QQ"    required="" aria-required="true" aria-describedby="bean-qq-error"  maxlength="50"   aria-invalid="true">
-                                            <span id="bean-qq-error" class="help-block m-b-none"></span>
+                                            <textarea id="bean-address" name="address" class="form-control"  placeholder="请输入地址"    required="" aria-required="true" aria-describedby="bean-address-error"  maxlength="200"   aria-invalid="true">{{item.address}}</textarea>
+                                            <span id="bean-address-error" class="help-block m-b-none"></span>
                                         </div>
                                     </div>
 
@@ -180,17 +204,11 @@
                                             <span id="bean-proxyChain-error" class="help-block m-b-none"></span>
                                         </div>
                                     </div>
-                                    <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">地址：</label>
-                                        <div class="col-md-12">
-                                            <textarea id="bean-address" name="address" class="form-control"  placeholder="请输入地址"    required="" aria-required="true" aria-describedby="bean-address-error"  maxlength="200"   aria-invalid="true">{{item.address}}</textarea>
-                                            <span id="bean-address-error" class="help-block m-b-none"></span>
-                                        </div>
-                                    </div>
+
                                     <div class="form-group clearfix">
                                         <label class="col-md-5 control-label">备注：</label>
                                         <div class="col-md-12">
-                                            <input id="bean-memo" name="memo" value="{{item.memo}}" class="form-control" type="text"  placeholder="请输入备注"    required="" aria-required="true" aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
+                                            <textarea id="bean-memo" name="memo"  class="form-control"  placeholder="请输入备注"  style="height: 100px;"   required="" aria-required="true" aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">{{item.memo}}</textarea>
                                             <span id="bean-memo-error" class="help-block m-b-none"></span>
                                         </div>
                                     </div>
@@ -199,6 +217,9 @@
                             <div id="tab-2" class="tab-pane " style="padding-top: 20px;">
                                 <div class="col-sm-6 b-r">
                                     <div class="form-group clearfix">
+                                        <label class="col-md-5 control-label"><label class="label label-info control-label"><input type="checkbox" name="incVerifiable"  ng-checked="item.incVerifiable==1" value="1">收入已验证</label></label>
+                                    </div>
+                                    <div class="form-group clearfix">
                                         <label class="col-md-5 control-label">收入：</label>
                                         <div class="col-md-12">
                                             <input id="bean-income" name="income" value="{{item.income}}" class="form-control" type="text"  placeholder="请输入收入"    required="" aria-required="true" aria-describedby="bean-income-error"   aria-invalid="true">
@@ -206,7 +227,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">其他收入：<label class="label label-info control-label"><input type="checkbox" name="incVerifiable"  ng-checked="item.incVerifiable==1" value="1">收入已验证</label></label>
+                                        <label class="col-md-5 control-label">其他收入：</label>
                                         <div class="col-md-12">
                                             <input id="bean-otherIncome" name="otherIncome" value="{{item.otherIncome}}" class="form-control" type="text"  placeholder="请输入其他收入"    required="" aria-required="true" aria-describedby="bean-otherIncome-error"   aria-invalid="true">
                                             <span id="bean-otherIncome-error" class="help-block m-b-none"></span>
@@ -236,11 +257,10 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!--1-->
+
                                 <div class="col-sm-6">
-                                    <div class="form-group clearfix col-md-12">
-                                        <label class="label label-info control-label"><input type="checkbox" name="borrowerState"  ng-checked="item.borrowerState==1" value="1">是借款人</label>
-                                        <label class="label label-warning control-label"><input type="checkbox" name="debtStatus"  ng-checked="item.debtStatus==1" value="1">是贷款人</label>
-                                    </div>
                                     <div class="form-group clearfix">
                                         <label class="col-md-5 control-label">车辆数：</label>
                                         <div class="col-md-12">
@@ -263,20 +283,10 @@
                                             <span id="bean-assetOther-error" class="help-block m-b-none"></span>
                                         </div>
                                     </div>
-                                    <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">投资状态变更时间：<label class="label label-warning control-label"><input type="checkbox" name="lenderState"  ng-checked="item.lenderState==1" value="1">是投资人</label></label>
-                                        <div class="col-md-12">
-                                            {{item.dateLenderState | date:'yyyy-MM-dd HH:mm:ss'}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group clearfix">
-                                        <label class="col-md-5 control-label">借款状态变更时间：</label>
-                                        <div class="col-md-12">
-                                            {{item.dateBorrowerState | date:'yyyy-MM-dd HH:mm:ss'}}
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
+                                 </div>
+                              </div>
+                         </div>
+                    </div>
 
 
 					<div class="clearfix "></div>
@@ -332,7 +342,7 @@
                         //console.info("获取数据.." + JSON.stringify(result));
                         if (result.code == 0) {
                             alert('保存成功!');
-                            parent.location.href = site.member.view+'.html';
+                            parent.location.href = site.user.view+'.html';
                         } else {
                             alert(result.message);
                         }

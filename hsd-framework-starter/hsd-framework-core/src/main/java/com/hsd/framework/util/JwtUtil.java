@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hsd.framework.config.AppConfig;
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -17,7 +18,19 @@ import java.util.Date;
 /**
  * Created by wu1g119 on 2017/2/8.
  */
+@Slf4j
 public class JwtUtil {
+    public enum UserType{
+        STAFF("员工"), USER("客户");
+        UserType(String val){
+            this.val=val;
+        }
+        private String val;
+        public String getVal(){
+            return val;
+        }
+    }
+
     private static String profiles = "";
 
     public static String getProfiles() {
@@ -38,7 +51,7 @@ public class JwtUtil {
     /**
      * 创建jwt
      */
-    public static String createJWT(String id, String subject, long ttlMillis) throws Exception {
+    public static String createJWT(UserType userType,String id, String subject, long ttlMillis) throws Exception {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         SecretKey key = generalKey();
@@ -46,6 +59,7 @@ public class JwtUtil {
                 .setId(id)
                 .setIssuedAt(now)
                 .setSubject(subject)
+                .claim("userType",userType)
                 .signWith(SignatureAlgorithm.HS256, key);
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;

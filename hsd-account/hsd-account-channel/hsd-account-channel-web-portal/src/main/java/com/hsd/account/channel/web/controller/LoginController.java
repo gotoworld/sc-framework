@@ -10,15 +10,6 @@
  */
 package com.hsd.account.channel.web.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSONObject;
 import com.hsd.account.channel.api.channel.IChannelInfoService;
 import com.hsd.account.channel.dto.channel.ChannelInfoDto;
@@ -29,11 +20,18 @@ import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
-
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>登录登出action
@@ -66,7 +64,7 @@ public class LoginController extends BaseController {
                 String subject = JwtUtil.generalSubject(channelInfoUser);
                 Map<String, Object> data = new HashMap<>();
                 data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
-                data.put("authorizationToken", JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL));
+                data.put("authorizationToken", JwtUtil.createJWT(JwtUtil.UserType.USER,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL));
                 data.put("staff", JSONObject.parseObject(subject, ChannelInfoDto.class));
                 
                 result.data = data;
@@ -112,7 +110,7 @@ public class LoginController extends BaseController {
             String json = claims.getSubject();
             ChannelInfoDto staff = JSONObject.parseObject(json, ChannelInfoDto.class);
             String subject = JwtUtil.generalSubject(staff);
-            String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+            String refreshToken = JwtUtil.createJWT(JwtUtil.UserType.USER,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);

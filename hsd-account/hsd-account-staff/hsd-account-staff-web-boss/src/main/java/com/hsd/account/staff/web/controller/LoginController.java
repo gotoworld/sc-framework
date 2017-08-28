@@ -87,7 +87,7 @@ public class LoginController extends BaseController {
             orgStaff.setAuthorizationInfoPerms(authorizationInfo.get("permissions"));
             orgStaff.setAuthorizationInfoRoles(authorizationInfo.get("roles"));
             String subject = JwtUtil.generalSubject(orgStaff);
-            String authorizationToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+            String authorizationToken = JwtUtil.createJWT(JwtUtil.UserType.STAFF,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
             Map<String, Object> data = new HashMap<>();
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
@@ -170,7 +170,7 @@ public class LoginController extends BaseController {
             String json = claims.getSubject();
             OrgStaffDto staff = JSONObject.parseObject(json, OrgStaffDto.class);
             String subject = JwtUtil.generalSubject(staff);
-            String refreshToken = JwtUtil.createJWT(CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+            String refreshToken = JwtUtil.createJWT(JwtUtil.UserType.STAFF,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);

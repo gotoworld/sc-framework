@@ -5,6 +5,7 @@ import com.hsd.framework.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,9 +24,10 @@ public class MemberDto extends BaseDto {
 	 @Size(max=50,message="fax最大50字符")
      private String fax;
      /**生日*/
+     @DateTimeFormat(pattern="yyyy-MM-dd")
      private Date birthday;
      /**婚姻状态0否1是*/
-     private Integer maritalStatus;
+     private Integer maritalState;
      /**省份证号*/
 	 @Size(max=50,message="credential_number最大50字符")
      private String credentialNumber;
@@ -52,14 +54,14 @@ public class MemberDto extends BaseDto {
      /**房产数*/
      private Integer ownHouseNum;
      /**是否有小孩0否1是*/
-     private Integer childrenStatus;
+     private Integer childrenState;
      /**孩子数量*/
      private Integer childrenNum;
      /**其他财产备注*/
 	 @Size(max=100,message="asset_other最大100字符")
      private String assetOther;
-     /**贷款状态0否1是*/
-     private Integer debtStatus;
+     /**欠债状态0否1是*/
+     private Integer debtState;
      /**微信*/
 	 @Size(max=50,message="wechat最大50字符")
      private String wechat;
@@ -67,6 +69,7 @@ public class MemberDto extends BaseDto {
 	 @Size(max=50,message="qq最大50字符")
      private String qq;
      /**开始工作时间*/
+     @DateTimeFormat(pattern="yyyy-MM-dd")
      private Date workStartDate;
      /**户籍与居住地是否一致0否1是*/
      private Integer domicileLiveDiff;
@@ -93,12 +96,12 @@ public class MemberDto extends BaseDto {
      private String proxyChain;
      /**投资状态0否1是*/
      private Integer lenderState;
-     /**借款状态0否1是*/
-     private Integer borrowerState;
      /**投资状态变更时间*/
-     private Date dateLenderState;
-     /**借款状态变更时间*/
-     private Date dateBorrowerState;
+     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+     private Date dateLender;
+     /**欠债状态变更时间*/
+     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+     private Date dateDebt;
      /**备注*/
 	 @Size(max=255,message="memo最大255字符")
      private String memo;

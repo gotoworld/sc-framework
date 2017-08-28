@@ -1,9 +1,9 @@
 package com.hsd.framework.service;
 
+import com.hsd.framework.IdGenerator;
 import com.hsd.framework.ObjectCopy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.util.IdGenerator;
 
 import java.util.List;
 import java.util.Observable;
@@ -15,6 +15,7 @@ public abstract class BaseService extends Observable {
 	/** 线程池 */
 	@Autowired
 	protected ThreadPoolTaskExecutor taskExecutor;
+	/** 分布式id生成器*/
     @Autowired
     protected IdGenerator idGenerator;
 

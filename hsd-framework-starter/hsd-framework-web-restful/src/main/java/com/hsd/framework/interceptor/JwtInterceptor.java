@@ -14,7 +14,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -45,19 +44,10 @@ public class JwtInterceptor implements HandlerInterceptor {
                 log.debug("Subject: " + claims.getSubject());
                 log.debug("Issuer: " + claims.getIssuer());
                 log.debug("Expiration: " + claims.getExpiration());
-//                log.debug("roles: " + claims.get("roles") != null ? JSON.toJSONString(claims.get("roles")) : null);
+                JwtUtil.UserType userType =null;
+                if(claims.get("userType")!=null) userType = Enum.valueOf(JwtUtil.UserType.class, ""+claims.get("userType"));
+                log.debug("----当前用户类型----"+userType!=null?userType.getVal():"未知");
             }
-//            if (claims.get("roles") != null && ((List) claims.get("roles")).contains("默认权限")) {
-//                log.info("权限验证通过!");
-//                return true;
-//            } else {
-//                log.error("jwt访问授权验证失败! ");
-//                response.getWriter().print(JSON.toJSONString(Response.error(403, "访问授权验证失败!")));
-//            }
-            response.setHeader("sid",""+claims.get("sid"));
-            Cookie cookie = new Cookie("sid",""+claims.get("sid"));
-            response.addCookie(cookie);
-
             return true;
         } catch (final SignatureException e) {
             responseOutWithJson(response,Response.error(403, "签名验证失败!" + e.getMessage()));

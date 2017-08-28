@@ -48,7 +48,7 @@
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">婚姻状态0否1是：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.maritalStatus}}
+                    {{item.maritalState}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
@@ -120,7 +120,7 @@
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">是否有小孩0否1是：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.childrenStatus}}
+                    {{item.childrenState}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
@@ -138,7 +138,7 @@
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">贷款状态0否1是：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.debtStatus}}
+                    {{item.debtState}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
@@ -220,21 +220,15 @@
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">借款状态0否1是：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.borrowerState}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
                     <label class="col-md-3 control-label">投资状态变更时间：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.dateLenderState | date:'yyyy-MM-dd HH:mm:ss'}}
+                    {{item.dateLender | date:'yyyy-MM-dd HH:mm:ss'}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">借款状态变更时间：</label>
+                    <label class="col-md-3 control-label">欠债状态变更时间：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.dateBorrowerState | date:'yyyy-MM-dd HH:mm:ss'}}
+                    {{item.dateDebt | date:'yyyy-MM-dd HH:mm:ss'}}
                     </div>
                 </div>
                 <div class="form-group clearfix">

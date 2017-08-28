@@ -36,6 +36,12 @@ public class MemberService extends BaseService implements IMemberService {
                 Member entity = copyTo(dto, Member.class);
                 //判断数据是否存在
                 if (memberDao.isDataYN(entity) != 0) {
+                    if(entity.getChildrenState()==null) entity.setChildrenState(0);
+                    if(entity.getMaritalState()==null) entity.setMaritalState(0);
+                    if(entity.getDebtState()==null) entity.setDebtState(0);
+                    if(entity.getLenderState()==null) entity.setLenderState(0);
+                    if(entity.getRelation()==null) entity.setRelation(0);
+                    if(entity.getDomicileLiveDiff()==null) entity.setDomicileLiveDiff(0);
                     //数据存在
                     memberDao.update(entity);
                 } else {

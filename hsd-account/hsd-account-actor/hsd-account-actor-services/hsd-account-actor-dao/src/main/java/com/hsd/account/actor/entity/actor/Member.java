@@ -21,7 +21,7 @@ public class Member extends BaseEntity {
      /**生日*/
      private Date birthday;
      /**婚姻状态0否1是*/
-     private Integer maritalStatus;
+     private Integer maritalState;
      /**省份证号*/
      private String credentialNumber;
      /**收入*/
@@ -45,13 +45,13 @@ public class Member extends BaseEntity {
      /**房产数*/
      private Integer ownHouseNum;
      /**是否有小孩0否1是*/
-     private Integer childrenStatus;
+     private Integer childrenState;
      /**孩子数量*/
      private Integer childrenNum;
      /**其他财产备注*/
      private String assetOther;
      /**贷款状态0否1是*/
-     private Integer debtStatus;
+     private Integer debtState;
      /**微信*/
      private String wechat;
      /**QQ*/
@@ -78,12 +78,10 @@ public class Member extends BaseEntity {
      private String proxyChain;
      /**投资状态0否1是*/
      private Integer lenderState;
-     /**借款状态0否1是*/
-     private Integer borrowerState;
      /**投资状态变更时间*/
-     private Date dateLenderState;
-     /**借款状态变更时间*/
-     private Date dateBorrowerState;
+     private Date dateLender;
+     /**欠债状态变更时间*/
+     private Date dateDebt;
      /**备注*/
      private String memo;
      /**是否删除0否1是*/

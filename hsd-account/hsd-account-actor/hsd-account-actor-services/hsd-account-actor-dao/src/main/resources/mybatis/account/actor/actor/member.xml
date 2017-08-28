@@ -6,7 +6,7 @@
          t1.user_id as "userId"
         ,t1.fax as "fax"
         ,t1.birthday as "birthday"
-        ,t1.marital_status as "maritalStatus"
+        ,t1.marital_state as "maritalState"
         ,t1.credential_number as "credentialNumber"
         ,t1.income as "income"
         ,t1.inc_verifiable as "incVerifiable"
@@ -18,10 +18,10 @@
         ,t1.tax as "tax"
         ,t1.own_car_num as "ownCarNum"
         ,t1.own_house_num as "ownHouseNum"
-        ,t1.children_status as "childrenStatus"
+        ,t1.children_state as "childrenState"
         ,t1.children_num as "childrenNum"
         ,t1.asset_other as "assetOther"
-        ,t1.debt_status as "debtStatus"
+        ,t1.debt_state as "debtState"
         ,t1.wechat as "wechat"
         ,t1.qq as "qq"
         ,t1.work_start_date as "workStartDate"
@@ -35,9 +35,8 @@
         ,t1.proxy_user_id as "proxyUserId"
         ,t1.proxy_chain as "proxyChain"
         ,t1.lender_state as "lenderState"
-        ,t1.borrower_state as "borrowerState"
-        ,t1.date_lender_state as "dateLenderState"
-        ,t1.date_borrower_state as "dateBorrowerState"
+        ,t1.date_lender as "dateLender"
+        ,t1.date_debt as "dateDebt"
         ,t1.memo as "memo"
         ,t1.del_flag as "delFlag"
         ,t1.date_created as "dateCreated"
@@ -60,7 +59,7 @@
             user_id 
            ,fax 
            ,birthday 
-           ,marital_status 
+           ,marital_state
            ,credential_number 
            ,income 
            ,inc_verifiable 
@@ -72,10 +71,10 @@
            ,tax 
            ,own_car_num 
            ,own_house_num 
-           ,children_status 
+           ,children_state
            ,children_num 
            ,asset_other 
-           ,debt_status 
+           ,debt_state
            ,wechat 
            ,qq 
            ,work_start_date 
@@ -89,9 +88,9 @@
            ,proxy_user_id 
            ,proxy_chain 
            ,lender_state 
-           ,borrower_state 
-           ,date_lender_state 
-           ,date_borrower_state 
+           ,debt_state
+           ,date_lender
+           ,date_debt
            ,memo 
            ,del_flag 
            ,date_created 
@@ -101,7 +100,7 @@
             #{userId} 
            ,#{fax} 
            ,#{birthday} 
-           ,#{maritalStatus} 
+           ,#{maritalState}
            ,#{credentialNumber} 
            ,#{income} 
            ,#{incVerifiable} 
@@ -113,10 +112,10 @@
            ,#{tax} 
            ,#{ownCarNum} 
            ,#{ownHouseNum} 
-           ,#{childrenStatus} 
+           ,#{childrenState}
            ,#{childrenNum} 
            ,#{assetOther} 
-           ,#{debtStatus} 
+           ,#{debtState}
            ,#{wechat} 
            ,#{qq} 
            ,#{workStartDate} 
@@ -130,9 +129,8 @@
            ,#{proxyUserId} 
            ,#{proxyChain} 
            ,#{lenderState} 
-           ,#{borrowerState} 
-           ,#{dateLenderState} 
-           ,#{dateBorrowerState} 
+           ,#{dateLender}
+           ,#{dateDebt}
            ,#{memo} 
            ,0
            ,now()
@@ -147,7 +145,7 @@
         update member set date_updated=now() 
              <if test="fax!=null">,fax = #{fax}</if>
              <if test="birthday!=null">,birthday = #{birthday}</if>
-             <if test="maritalStatus!=null">,marital_status = #{maritalStatus}</if>
+             <if test="maritalState!=null">,marital_state = #{maritalState}</if>
              <if test="credentialNumber!=null">,credential_number = #{credentialNumber}</if>
              <if test="income!=null">,income = #{income}</if>
              <if test="incVerifiable!=null">,inc_verifiable = #{incVerifiable}</if>
@@ -159,10 +157,10 @@
              <if test="tax!=null">,tax = #{tax}</if>
              <if test="ownCarNum!=null">,own_car_num = #{ownCarNum}</if>
              <if test="ownHouseNum!=null">,own_house_num = #{ownHouseNum}</if>
-             <if test="childrenStatus!=null">,children_status = #{childrenStatus}</if>
+             <if test="childrenState!=null">,children_state = #{childrenState}</if>
              <if test="childrenNum!=null">,children_num = #{childrenNum}</if>
              <if test="assetOther!=null">,asset_other = #{assetOther}</if>
-             <if test="debtStatus!=null">,debt_status = #{debtStatus}</if>
+             <if test="debtState!=null">,debt_state = #{debtState}</if>
              <if test="wechat!=null">,wechat = #{wechat}</if>
              <if test="qq!=null">,qq = #{qq}</if>
              <if test="workStartDate!=null">,work_start_date = #{workStartDate}</if>
@@ -176,9 +174,8 @@
              <if test="proxyUserId!=null">,proxy_user_id = #{proxyUserId}</if>
              <if test="proxyChain!=null">,proxy_chain = #{proxyChain}</if>
              <if test="lenderState!=null">,lender_state = #{lenderState}</if>
-             <if test="borrowerState!=null">,borrower_state = #{borrowerState}</if>
-             <if test="dateLenderState!=null">,date_lender_state = #{dateLenderState}</if>
-             <if test="dateBorrowerState!=null">,date_borrower_state = #{dateBorrowerState}</if>
+             <if test="dateLender!=null">,date_lender = #{dateLender}</if>
+             <if test="dateDebt!=null">,date_debt = #{dateDebt}</if>
              <if test="memo!=null">,memo = #{memo}</if>
 
         where

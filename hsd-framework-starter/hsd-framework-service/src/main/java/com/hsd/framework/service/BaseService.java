@@ -3,6 +3,7 @@ package com.hsd.framework.service;
 import com.hsd.framework.ObjectCopy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.IdGenerator;
 
 import java.util.List;
 import java.util.Observable;
@@ -14,6 +15,8 @@ public abstract class BaseService extends Observable {
 	/** 线程池 */
 	@Autowired
 	protected ThreadPoolTaskExecutor taskExecutor;
+    @Autowired
+    protected IdGenerator idGenerator;
 
     protected Integer PN(Integer pageNum) {
         if (pageNum == null || pageNum == 0) {

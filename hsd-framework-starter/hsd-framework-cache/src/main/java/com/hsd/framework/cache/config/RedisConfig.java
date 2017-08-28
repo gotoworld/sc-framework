@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hsd.framework.cache.util.IdGeneratorIsRedis;
 import com.hsd.framework.config.AppConfig;
+import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
@@ -28,6 +30,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Redis服务器对象缓存配置(对象缓存和Session缓存)
@@ -47,6 +50,27 @@ public class RedisConfig extends CachingConfigurerSupport {
 	public RedisProperties redisProperties() {
 		return new RedisProperties();
 	}
+
+
+	@Bean(name = "IdGenerator")
+	public IdGeneratorIsRedis idGenerator(){
+		RedisProperties redisProperties=redisProperties();
+		IdGeneratorIsRedis.IdGeneratorBuilder idGeneratorBuilder = IdGeneratorIsRedis.builder();
+		if(redisProperties.getIdGenNodes()!=null){
+			List<RedisProperties.IdGenNode> idGenNodes=redisProperties.getIdGenNodes();
+			idGenNodes.forEach(idGenNode -> {
+				String pwd=idGenNode.getPassword();
+				if(ValidatorUtil.notEmpty(pwd)){
+					idGeneratorBuilder.addHost(idGenNode.getHost(), idGenNode.getPort(),redisProperties.getTimeout(),idGenNode.getPassword(), idGenNode.getLuaSha());
+				}else{
+					idGeneratorBuilder.addHost(idGenNode.getHost(), idGenNode.getPort(), idGenNode.getLuaSha());
+				}
+			});
+		}
+		return idGeneratorBuilder.build();
+	}
+
+
 
 	/**
 	 * 主键生成器
@@ -90,14 +114,16 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 	@Bean(name = "secondaryRedisConnectionFactory")
 	public RedisConnectionFactory secondaryRedisConnectionFactory() {
+		RedisProperties redisProperties=redisProperties();
+
 		JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig());
-		redisConnectionFactory.setDatabase(redisProperties().getSecondaryDatabase());
-		if(redisProperties().getPassword()!=null){
-			redisConnectionFactory.setPassword(AppConfig.checkPassword(redisProperties().getPassword()));
+		redisConnectionFactory.setDatabase(redisProperties.getSecondaryDatabase());
+		if(redisProperties.getPassword()!=null){
+			redisConnectionFactory.setPassword(AppConfig.checkPassword(redisProperties.getPassword()));
 		}
-		redisConnectionFactory.setHostName(redisProperties().getHost());
-		redisConnectionFactory.setTimeout(redisProperties().getTimeout());
-		redisConnectionFactory.setPort(redisProperties().getPort());
+		redisConnectionFactory.setHostName(redisProperties.getHost());
+		redisConnectionFactory.setTimeout(redisProperties.getTimeout());
+		redisConnectionFactory.setPort(redisProperties.getPort());
 		redisConnectionFactory.afterPropertiesSet();
 		log.info("2.1 初始化Redis缓存服务器(普通对象)... ...");
 		return redisConnectionFactory;

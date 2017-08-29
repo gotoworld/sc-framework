@@ -1,3 +1,7 @@
+spring:
+  application:
+    name: hsd-gateway-server
+
 server:
   port: 28890
 
@@ -14,19 +18,39 @@ endpoints:
 
 
 zuul:
-  ignored-services: "*"
-  routes:
-    product:
-      path: /product/**
-      url: http://product:9001/product
-    recommend:
-      path: /recommend/**
-      url: http://recommend:9002/recommend
-    review:
-      path: /review/**
-      url: http://review:9003/review
+#  ignored-services: "*"
+#  routes:
+#    product:
+#      path: /product/**
+#      url: http://product:9001/product
+#    recommend:
+#      path: /recommend/**
+#      url: http://recommend:9002/recommend
+#    review:
+#      path: /review/**
+#      url: http://review:9003/review
 ---
 logging:
   file: logs/hsd-gateway-server.log
   level:
     ROOT: INFO
+
+security:
+  basic:
+    enabled: false
+  user:
+    name: admin
+    password: admin
+
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

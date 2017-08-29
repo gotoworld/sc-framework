@@ -80,8 +80,6 @@ security:
 endpoints:
   health:
     sensitive: false
-  cors:
-    allowed-methods: HEAD,GET,POST
 
 management.security.enabled: false
 

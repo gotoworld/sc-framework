@@ -1,14 +1,14 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: ${pom.description}
-  version : v${pom.version}
+  description: BOSS系统->员工
+  version : 1.0
 # HTTP Server
 server:
   port: 6061
   context-path: /
 spring:
   application:
-    name: hsd-account-staff-web-boss-wxg
+    name: hsd-account-staff-web-boss
   profiles:
     active: dev
   boot:
@@ -61,7 +61,7 @@ logging:
 #服务名
 feign:
   name:
-    account.staff: hsd-account-staff-server-wxg
+    account.staff: hsd-account-staff-server
 
 # 自定义配置
 hsd:

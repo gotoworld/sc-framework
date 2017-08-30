@@ -38,13 +38,13 @@ public class ALogAspect {
      */
     @After("alogOperationAspect()")
     public void doAfter(JoinPoint joinPoint) throws Exception {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        //读取session中的员工
-        UserDto actor = JwtUtil.getSubject(UserDto.class);
-        //请求的IP
-        String ip = IpUtil.getIpAddr(request);
-        String[] logArr = getMethodDesc(joinPoint);
         try {
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            //读取session中的员工
+            UserDto actor = JwtUtil.getSubject(UserDto.class);
+            //请求的IP
+            String ip = IpUtil.getIpAddr(request);
+            String[] logArr = getMethodDesc(joinPoint);
             if (log.isDebugEnabled()) {
                 log.debug("=====前置通知开始=====");
                 log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
@@ -97,7 +97,6 @@ public class ALogAspect {
             }
         }
         try {
-            //读取session中的员工
             UserDto actor = JwtUtil.getSubject(UserDto.class);
             //获取请求ip
             String ip = IpUtil.getIpAddr(request);

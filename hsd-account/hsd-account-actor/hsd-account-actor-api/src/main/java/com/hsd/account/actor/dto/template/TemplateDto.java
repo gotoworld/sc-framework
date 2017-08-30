@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -42,4 +43,7 @@ public class TemplateDto extends BaseDto {
      /**更新时间*/
      private Date dateUpdated;
 
+     /**属性name集合*/
+     private List<String> attrName;
+     private List<TemplateAttributeDto> attributes;
 }

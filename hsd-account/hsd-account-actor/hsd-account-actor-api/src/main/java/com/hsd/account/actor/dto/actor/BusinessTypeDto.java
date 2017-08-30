@@ -1,15 +1,13 @@
 package com.hsd.account.actor.dto.actor;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.dto.BaseDto;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
+
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,8 +15,10 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BusinessTypeDto extends BaseDto {
      /**id*/
+     private Long id;
+     /**编码*/
 	 @Size(max=32,message="id最大32字符")
-     private String id;
+     private String code;
      /**名称*/
 	 @Size(max=64,message="name最大64字符")
      private String name;

@@ -1,6 +1,7 @@
 package com.hsd.account.actor.dto.actor;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.account.actor.dto.user.UserExtInfoDto;
 import com.hsd.framework.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -107,6 +109,8 @@ public class MemberDto extends BaseDto {
      private String memo;
      /**是否删除0否1是*/
      private Integer delFlag;
+     /**建立者ID*/
+     private Long createId;
      /**创建时间*/
      private Date dateCreated;
      /**更新时间*/
@@ -114,4 +118,8 @@ public class MemberDto extends BaseDto {
      /**BI时间戳*/
      private Date biUpdateTs;
 
+     /**扩展信息集合*/
+     List<UserExtInfoDto> extInfos;
+
+     List<Long> templateIds;
 }

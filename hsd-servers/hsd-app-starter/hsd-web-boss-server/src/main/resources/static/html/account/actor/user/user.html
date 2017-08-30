@@ -107,7 +107,8 @@
 														<a href="javascript:;" ng-show='staff.hasPermission("user:edit:blacklist")' ng-if="item.state==3"  ng-click="delBlacklist(item)" class="label label-danger" ><i class="fa "></i> 移除黑名单</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="showLog('login',item)" class="label label-info" ><i class="fa "></i> 登录记录</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="showLog('sign',item)" class="label label-success" ><i class="fa "></i> 网签记录</a>
-														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="showLog('identity',item)" class="label label-info" ><i class="fa "></i> 实名认证记录</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="showLog('identity',item)" class="label label-warning" ><i class="fa "></i> 实名认证记录</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("user:info")'  ng-click="userSnapshot(item)" class="label label-primary" ><i class="fa "></i> 账户快照</a>
 													</td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -228,6 +229,10 @@
                 case 2:val='保密';break;
             }
             return val;
+        }
+        $scope.userSnapshot = function (item) {
+            sessionStorage.setItem(site.userSnapshot.info,item.id);
+            openMyBoxLayer('客户账户快照-'+item.name,site.userSnapshot.view+'_info.html');
         }
     });
 

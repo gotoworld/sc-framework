@@ -28,21 +28,16 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
 				<form id="businessType_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
-					<div class="col-md-12" style="height: 50px;">
-						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
+					<input type="hidden" name="id" value="" ng-value="item.id" />
 					<div class="clearfix "></div>
 					<div class="col-sm-6 b-r">
 
                         <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">id：</label>
+                            <label class="col-md-5 control-label">编码：</label>
                             <div class="col-md-12">
-                                <input id="bean-id" name="id" value="{{item.id}}" class="form-control" type="text"  placeholder="请输入id"  required="" aria-required="true"  aria-describedby="bean-id-error"  maxlength="32"   aria-invalid="true">
-                                <span id="bean-id-error" class="help-block m-b-none"></span>
+                                <input id="bean-id" name="code" value="{{item.code}}" class="form-control" type="text"  placeholder="请输入code"  required="" aria-required="true"  aria-describedby="bean-id-error"  maxlength="32"   aria-invalid="true">
                             </div>
                         </div>
 

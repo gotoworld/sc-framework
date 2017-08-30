@@ -2,6 +2,7 @@ package com.hsd.account.actor.web.controller.actor;
 
 import com.hsd.account.actor.api.actor.IMemberService;
 import com.hsd.account.actor.dto.actor.MemberDto;
+import com.hsd.account.actor.dto.user.UserExtInfoDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
@@ -9,6 +10,8 @@ import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.StrUtil;
+import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +22,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(description = "会员信息表")
@@ -36,13 +40,13 @@ public class MemberController extends BaseController {
     @RequiresPermissions("member:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
-    public Response page(@ModelAttribute  MemberDto dto, @PathVariable("pageNum") Integer pageNum) {
+    public Response page(@ModelAttribute MemberDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("MemberController page.........");
         Response result = new Response();
         try {
             if (dto == null) {
-               dto = new MemberDto();
-               dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+                dto = new MemberDto();
+                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
             }
             dto.setPageNum(pageNum);
             dto.setDelFlag(0);
@@ -53,7 +57,6 @@ public class MemberController extends BaseController {
         }
         return result;
     }
-
 
 
     /**
@@ -67,7 +70,7 @@ public class MemberController extends BaseController {
         Response result = new Response();
         try {
             MemberDto dto = new MemberDto();
-            if (userId!=null) {
+            if (userId != null) {
                 dto.setUserId(userId);
                 dto.setDelFlag(0);
                 result.data = memberService.findDataById(dto);
@@ -81,7 +84,7 @@ public class MemberController extends BaseController {
     /**
      * <p>删除。
      */
-   @RequiresPermissions("member:del")
+    @RequiresPermissions("member:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{userId}")
     @ALogOperation(type = "删除", desc = "会员信息表")
     @ApiOperation(value = "信息删除")
@@ -102,10 +105,10 @@ public class MemberController extends BaseController {
      * <p> 信息保存
      */
     @RequiresPermissions(value = {"member:add", "member:edit"}, logical = Logical.OR)
-    @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
-    @RfAccount2Bean
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, value = acPrefix + "save")
     @ALogOperation(type = "修改", desc = "会员信息表")
     @ApiOperation(value = "信息保存")
+    @RfAccount2Bean
     public Response save(@Validated @ModelAttribute MemberDto dto, BindingResult bindingResult) {
         log.info("MemberController save.........");
         Response result = new Response();
@@ -122,6 +125,28 @@ public class MemberController extends BaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                String[] templateIds = request.getParameterValues("templateId");
+                if (templateIds != null) {
+                    if (dto.getExtInfos() == null) dto.setExtInfos(new ArrayList<>());
+                    for (String templateId : templateIds) {
+                        if (ValidatorUtil.notEmpty(templateId)) {
+                            UserExtInfoDto extInfoDto = new UserExtInfoDto();
+                            extInfoDto.setUserId(dto.getUserId());//客户ID
+                            extInfoDto.setTemplateId(Long.parseLong(templateId));//所属模板id
+                            StringBuffer attributeJson = new StringBuffer("{"); //模板值（json形式保存）
+                            String[] attrs = request.getParameterValues("attr" + templateId);
+                            if (attrs != null) {
+                                for (int i = 0; i < attrs.length; i++) {
+                                    attributeJson.append("\"" + StrUtil.replaceAll(attrs[i], "attr" + templateId, "") + "\":\"" + request.getParameter(attrs[i]) + "\"");
+                                    if (attrs.length - i > 1) attributeJson.append(",");
+                                }
+                            }
+                            attributeJson.append("}");
+                            extInfoDto.setAttributeJson(attributeJson.toString());
+                            dto.getExtInfos().add(extInfoDto);
+                        }
+                    }
+                }
                 result = memberService.saveOrUpdateData(dto);
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }

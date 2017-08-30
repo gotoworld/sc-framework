@@ -65,19 +65,19 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>创建时间</th>
                                     				<th>模板名称</th>
-                                    				<th>客户类型</th>
-                                    				<th>操作</th>
+													<th>客户类型</th>
+													<th>创建时间</th>
+													<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.templateName}}</td>
-                                    				<td>{{item.userType}}</td>
-                                    				<td>
+													<td>{{userTypeEnum(item.userType)}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td>
 														<a href="javascript:;" ng-show='staff.hasPermission("template:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("template:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
 														<a href="javascript:;" ng-show='staff.hasPermission("template:del")'   ng-click="del(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
@@ -153,6 +153,14 @@
         }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
+        }
+        $scope.userTypeEnum = function (key) {
+            var val='其它';
+            switch (key){
+				case 1:val='客户';break;
+				case 2:val='供应商';break;
+			}
+            return val;
         }
     });
 

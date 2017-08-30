@@ -65,22 +65,20 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>证件类型:0身份证</th>
+                                    				<th>证件类型</th>
                                     				<th>证件编号</th>
                                     				<th>真实姓名</th>
-                                    				<th>认证状态0待处理1成功2失败</th>
-                                    				<th>客户ID</th>
+                                    				<th>认证状态</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.credentialType}}</td>
+                                    				<td>{{item.credentialType==0?'身份证':'未知'}}</td>
                                     				<td>{{item.credentialNumber}}</td>
                                     				<td>{{item.realName}}</td>
-                                    				<td>{{item.state}}</td>
-                                    				<td>{{item.userId}}</td>
+                                    				<td>{{stateEnum(item.state)}}</td>
                                     				<td>
                                                       <a href="javascript:;" ng-show='staff.hasPermission("identityLog:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                     </td>
@@ -140,6 +138,15 @@
         }
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
+        }
+        $scope.stateEnum = function (key) {
+            var val='未知';
+            switch (key){
+				case 0:val ='待处理';break;
+				case 1:val ='成功';break;
+				case 2:val ='失败';break;
+			}
+			return val;
         }
     });
 

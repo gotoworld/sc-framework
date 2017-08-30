@@ -29,11 +29,6 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
 				<form id="identity_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
-					<div class="col-md-12" style="height: 50px;">
-						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
 					<input type="hidden" name="userId" value="{{item.userId}}" />
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />

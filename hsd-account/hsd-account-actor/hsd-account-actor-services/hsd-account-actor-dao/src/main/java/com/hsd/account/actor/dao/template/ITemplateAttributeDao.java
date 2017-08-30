@@ -17,13 +17,16 @@ public interface ITemplateAttributeDao extends IBaseDao {
      */
     @Select("select IFNULL(count(0),0) as count from template_attribute where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
-
-
-
     /**
      * 根据主键 物理删除
      */
     @Delete("delete from template_attribute where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
+
+    /**
+     * 根据模板id 物理删除
+     */
+    @Delete("delete from template_attribute where  template_id = #{templateId} ")
+    int deleteByTemplateId(IEntity entity) throws Exception;
 
 }

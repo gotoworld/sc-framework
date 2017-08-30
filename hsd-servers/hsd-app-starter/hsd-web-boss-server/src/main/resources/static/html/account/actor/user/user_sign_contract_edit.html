@@ -28,49 +28,10 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
 				<form id="userSignContract_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
-					<div class="col-md-12" style="height: 50px;">
-						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
 					<div class="clearfix "></div>
-					<div class="col-sm-6 b-r">
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">客户id：</label>
-                            <div class="col-md-12">
-                                <input id="bean-userId" name="userId" value="{{item.userId}}" class="form-control" type="text"  placeholder="请输入客户id"  required="" aria-required="true"  aria-describedby="bean-userId-error"   aria-invalid="true">
-                                <span id="bean-userId-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">协议编码：</label>
-                            <div class="col-md-12">
-                                <input id="bean-contractId" name="contractId" value="{{item.contractId}}" class="form-control" type="text"  placeholder="请输入协议编码"  required="" aria-required="true"  aria-describedby="bean-contractId-error"  maxlength="30"   aria-invalid="true">
-                                <span id="bean-contractId-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">协议版本名称：</label>
-                            <div class="col-md-12">
-                                <input id="bean-contractName" name="contractName" value="{{item.contractName}}" class="form-control" type="text"  placeholder="请输入协议版本名称"  aria-describedby="bean-contractName-error"  maxlength="30"   aria-invalid="true">
-                                <span id="bean-contractName-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
-					</div>
-					<div class="col-sm-6">
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">签约时间：</label>
-                            <div class="col-md-12" ng-bind-html="item.signDate">
-                            </div>
-                        </div>
 
                         <div class="form-group clearfix">
                             <label class="col-md-5 control-label">备注：</label>
@@ -80,7 +41,6 @@
                             </div>
                         </div>
 
-					</div>
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">

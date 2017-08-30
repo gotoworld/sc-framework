@@ -62,7 +62,7 @@ public class BusinessTypeController extends BaseController {
     @RequiresPermissions("businessType:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
-    public Response info(@PathVariable("id") String id) {
+    public Response info(@PathVariable("id") Long id) {
         log.info("BusinessTypeController info.........");
         Response result = new Response();
         try {
@@ -85,7 +85,7 @@ public class BusinessTypeController extends BaseController {
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
     @ALogOperation(type = "删除", desc = "业务类型")
     @ApiOperation(value = "信息删除")
-    public Response del(@PathVariable("id") String id) {
+    public Response del(@PathVariable("id") Long id) {
         log.info("BusinessTypeController del.........");
         Response result = new Response();
         try {

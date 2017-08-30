@@ -168,6 +168,7 @@ var site = {
     ,template: {//档案模板
         view: basePath + "/html/account/actor/template/template"
         ,page: apiPath.account.actor + "/boss/account/actor/template/template/page/"
+        ,list: apiPath.account.actor + "/boss/account/actor/template/template/list"
         ,save: apiPath.account.actor + "/boss/account/actor/template/template/save"
         ,info: apiPath.account.actor + "/boss/account/actor/template/template/info/"
         ,del: apiPath.account.actor + "/boss/account/actor/template/template/del/"
@@ -175,6 +176,7 @@ var site = {
     , templateAttribute: {//模板属性
         view: basePath + "/html/account/actor/template/template_attribute"
         ,page: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/page/"       //分页
+        ,list: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/list"        //列表
         ,save: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/save"        //新增or保存
         ,info: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/info/"       //详情
         ,phydel: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/phydel/"   //物理删除
@@ -405,6 +407,16 @@ var util = {
         }
 
         return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    }
+    , parseInt: function (num) {
+        return Math.round(num);
+    }
+    , parseJson: function (json) {
+        return JSON.parse(json);
+    }
+    , split: function (str,splitStr) {
+        if(str && splitStr) return str.split(splitStr);
+        return [];
     }
     , removeArrItem: function (_arr, _obj) {
         var length = _arr.length;

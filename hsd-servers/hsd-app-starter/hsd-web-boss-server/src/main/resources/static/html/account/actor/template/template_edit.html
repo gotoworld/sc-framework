@@ -19,7 +19,12 @@
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
 <link href="/css/common.css" rel="stylesheet">
-
+<style>
+	.form-inline .form-group{margin: 3px;}
+	.clearfix{margin: 2px;}
+	.form-group .label-danger{color: #ffffff;position: absolute;left: 40%;bottom: 50px;}
+	.btn-success,.contact-box a{color: #ffffff;}
+</style>
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
@@ -27,48 +32,141 @@
 	<div class="row">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content col-md-12">
-				<form id="template_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
-					<div class="col-md-12" style="height: 50px;">
-						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
-						</div>
-					</div>
+				<form id="template_01" method="post" class="form-horizontal m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<input type="hidden" name="id" value="{{item.id}}" />
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
 					<div class="clearfix "></div>
-					<div class="col-sm-6 b-r">
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">客户类型：</label>
-                            <div class="col-md-12">
-                                <select data-placeholder="选择客户类型" id="bean-userType" name="userType" class="form-control"   required="" aria-required="true"  aria-describedby="bean-userType-error"   aria-invalid="true">
-                                    <option value="">--请选择客户类型--</option>
-                                </select>
-                                <span id="bean-userType-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">模板名称：</label>
-                            <div class="col-md-12">
-                                <input id="bean-templateName" name="templateName" value="{{item.templateName}}" class="form-control" type="text"  placeholder="请输入模板名称"  required="" aria-required="true"  aria-describedby="bean-templateName-error"  maxlength="50"   aria-invalid="true">
-                                <span id="bean-templateName-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
+					<div class="clients-list" style="margin-top: 0px;">
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#tab-1">模板</a> </li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab-1" class="tab-pane active" style="padding-top: 20px;height:auto;">
+								<div class="col-sm-12">
+									<div class="form-inline">
+										<div class="form-group ">
+											<label class="font-noraml">客户类型：</label>
+											<div class="input-group">
+												<select data-placeholder="选择客户类型" id="bean-userType" name="userType" class="form-control"   required="" aria-required="true"  aria-describedby="bean-userType-error"   aria-invalid="true">
+													<option value="">--请选择客户类型--</option>
+													<option value="1" ng-selected="item.userType==1">客户</option>
+													<option value="2" ng-selected="item.userType==2">供应商</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="font-noraml">模板名称：</label>
+											<div class="input-group">
+												<input id="bean-templateName" name="templateName" value="{{item.templateName}}" class="form-control" type="text"  placeholder="请输入模板名称"  required="" aria-required="true"  aria-describedby="bean-templateName-error"  maxlength="50"   aria-invalid="true">
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="font-noraml" >备注：</label>
+											<div class="input-group">
+												<input id="bean-memo" name="memo" class="form-control" placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true" ng-value="item.memo">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="col-sm-6">
+					<div class="clearfix "></div>
+					<div class="clients-list">
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#tab-2"> 属性</a> </li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab-2" class="tab-pane active" style="padding-top: 20px;height:auto;">
+								<div class="col-sm-12">
 
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">备注：</label>
-                            <div class="col-md-12">
-                                <input id="bean-memo" name="memo" value="{{item.memo}}" class="form-control" type="text"  placeholder="请输入备注"  aria-describedby="bean-memo-error"  maxlength="255"   aria-invalid="true">
-                                <span id="bean-memo-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-
+									<div class="form-inline" id="form_attr">
+										<div class="col-sm-3" id="attr_box_default" ng-if="item.attributes==null || item.attributes.length==0">
+											<input type="hidden" name="attrName" value="_default">
+											<div class="contact-box">
+												<div class="form-group">
+													<label class="font-noraml">属性编码：</label>
+													<div class="input-group">
+														<input name="tributeCode_defaultat" value="" class="form-control" type="text" required="" aria-required="true" placeholder="请输入属性编码" maxlength="50" aria-invalid="true">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="font-noraml">属性名称：</label>
+													<div class="input-group">
+														<input name="attributeName_default" class="form-control" type="text" required="" aria-required="true" placeholder="请输入属性名称" maxlength="50" aria-invalid="true">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="font-noraml">输入类型：</label>
+													<div class="input-group">
+														<select data-placeholder="请选择输入类型" name="inputType_default" class="form-control" required="" aria-required="true" aria-invalid="true">
+															<option value="">--请选择输入类型--</option>
+															<option value="str">--字符--</option>
+															<option value="num">--数值--</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="font-noraml">---可选值：</label>
+													<div class="input-group"><input name="optionValues_default" class="form-control" placeholder="示例:key:val,key:val" maxlength="1000" aria-invalid="true"></div>
+												</div>
+												<div class="form-group">
+													<label class="font-noraml"><label class="font-noraml">	<span class=""><input type="checkbox" name="required_default" value="1">必填</span></label></label>
+												</div>
+												<div class="form-group" >
+													<a href="javascript:;" onclick="delAttr('attr_box_default')" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3" id="attr_box_{{$index}}" ng-if="item.attributes && item.attributes.length>0" ng-repeat="attr in item.attributes">
+											<input type="hidden" name="attrName" ng-value="$index">
+											<div class="contact-box">
+												<div class="form-group">
+													<label class="font-noraml">属性编码：</label>
+													<div class="input-group">
+														<input name="attributeCode{{$index}}" ng-value="attr.attributeCode" class="form-control" type="text" required="" aria-required="true" placeholder="请输入属性编码" maxlength="50" aria-invalid="true">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="font-noraml">属性名称：</label>
+													<div class="input-group">
+														<input name="attributeName{{$index}}" ng-value="attr.attributeName" class="form-control" type="text" required="" aria-required="true" placeholder="请输入属性名称" maxlength="50" aria-invalid="true">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="font-noraml">输入类型：</label>
+													<div class="input-group">
+														<select data-placeholder="请选择输入类型" name="inputType{{$index}}" class="form-control" required="" aria-required="true" aria-invalid="true">
+															<option value="">--请选择输入类型--</option>
+															<option value="str" ng-selected="attr.inputType=='str'">--字符--</option>
+															<option value="num" ng-selected="attr.inputType=='num'">--数值--</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="font-noraml">---可选值：</label>
+													<div class="input-group"><input name="optionValues{{$index}}" ng-value="attr.optionValues" class="form-control" placeholder="示例:key:val,key:val" maxlength="1000" aria-invalid="true"></div>
+												</div>
+												<div class="form-group">
+													<label class="font-noraml"><label class="font-noraml">	<span class=""><input type="checkbox" name="required{{$index}}" value="1" ng-checked="attr.required==1">必填</span></label></label>
+												</div>
+												<div class="form-group" >
+													<a href="javascript:;" ng-click="delAttr('attr_box_'+$index)" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="contact-box">
+											<a href="javascript:;" ng-click="addAttr();" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增属性</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
+
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
@@ -128,7 +226,55 @@
                 }, 'json');
             }
         }
+        $scope.addAttr=function(){
+            var uuid=new Date().getTime();
+            var htmlStr='';
+            htmlStr = htmlStr + '<div class="col-sm-3" id="attr_box_'+uuid+'">';
+            htmlStr = htmlStr + '	<input type="hidden" name="attrName" value="'+uuid+'">';
+            htmlStr = htmlStr + '	<div class="contact-box">';
+            htmlStr = htmlStr + '		<div class="form-group">';
+            htmlStr = htmlStr + '			<label class="font-noraml">属性编码：</label>';
+            htmlStr = htmlStr + '			<div class="input-group">';
+            htmlStr = htmlStr + '				<input name="attributeCode'+uuid+'" placeholder="请输入属性编码" value="" class="form-control" type="text" required="" aria-required="true" maxlength="50" aria-invalid="true">';
+            htmlStr = htmlStr + '			</div>';
+            htmlStr = htmlStr + '		</div>';
+            htmlStr = htmlStr + '		<div class="form-group">';
+            htmlStr = htmlStr + '			<label class="font-noraml">属性名称：</label>';
+            htmlStr = htmlStr + '			<div class="input-group">';
+            htmlStr = htmlStr + '				<input name="attributeName'+uuid+'" placeholder="请输入属性名称" class="form-control" type="text" required="" aria-required="true" maxlength="50" aria-invalid="true">';
+            htmlStr = htmlStr + '			</div>';
+            htmlStr = htmlStr + '		</div>';
+            htmlStr = htmlStr + '		<div class="form-group">';
+            htmlStr = htmlStr + '			<label class="font-noraml">输入类型：</label>';
+            htmlStr = htmlStr + '			<div class="input-group">';
+            htmlStr = htmlStr + '				<select name="inputType'+uuid+'" data-placeholder="请选择输入类型" class="form-control" required="" aria-required="true" aria-invalid="true">';
+            htmlStr = htmlStr + '					<option value="">--请选择输入类型--</option>';
+            htmlStr = htmlStr + '					<option value="str">--字符--</option>';
+            htmlStr = htmlStr + '					<option value="num">--数值--</option>';
+            htmlStr = htmlStr + '				</select>';
+            htmlStr = htmlStr + '			</div>';
+            htmlStr = htmlStr + '		</div>';
+            htmlStr = htmlStr + '		<div class="form-group">';
+            htmlStr = htmlStr + '			<label class="font-noraml">---可选值：</label>';
+            htmlStr = htmlStr + '			<div class="input-group"><input name="optionValues'+uuid+'" class="form-control" placeholder="示例:key:val,key:val" maxlength="1000" aria-invalid="true"></div>';
+            htmlStr = htmlStr + '		</div>';
+            htmlStr = htmlStr + '		<div class="form-group">';
+            htmlStr = htmlStr + '			<label class="font-noraml"><label class="font-noraml">	<span class=""><input name="required'+uuid+'" type="checkbox" value="1">必填</span></label></label>';
+            htmlStr = htmlStr + '		</div>';
+            htmlStr = htmlStr + '		<div class="form-group" >';
+            htmlStr = htmlStr + '			<a href="javascript:;" onclick="delAttr(\'attr_box_'+uuid+'\')" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>';
+            htmlStr = htmlStr + '		</div>';
+            htmlStr = htmlStr + '	</div>';
+            htmlStr = htmlStr + '</div>';
+			$('#form_attr').append(htmlStr);
+		}
+		$scope.delAttr=function(attrId){
+            $('#'+attrId).remove();
+		}
     });
+    var delAttr=function (attrId){
+        $('#'+attrId).remove();
+	}
     var loadInfo=function(id){
         $.get(site.template.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));

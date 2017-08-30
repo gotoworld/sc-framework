@@ -1,6 +1,7 @@
 package com.hsd.account.actor.web.controller.template;
 
 import com.hsd.account.actor.api.template.ITemplateService;
+import com.hsd.account.actor.dto.template.TemplateAttributeDto;
 import com.hsd.account.actor.dto.template.TemplateDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
@@ -9,6 +10,7 @@ import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +21,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(description = "档案模板")
@@ -44,6 +47,20 @@ public class TemplateController extends BaseController {
             dto.setPageNum(pageNum);
             dto.setDelFlag(0);
             result.data = PageUtil.copy(templateService.findDataIsPage(dto));
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequiresPermissions("template:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
+    @ApiOperation(value = "信息列表")
+    public Response list( @RequestParam("userType") Integer userType) {
+        log.info("TemplateController list.........");
+        Response result = new Response();
+        try {
+            TemplateDto dto = new TemplateDto(){{ setUserType(userType); }};
+            result.data = templateService.findDataIsList(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -120,6 +137,18 @@ public class TemplateController extends BaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                if(dto.getAttrName()!=null){
+                    dto.getAttrName().forEach(attrName->{
+                        TemplateAttributeDto attributeDto=new TemplateAttributeDto();
+                        attributeDto.setAttributeCode(request.getParameter("attributeCode"+attrName));
+                        attributeDto.setAttributeName(request.getParameter("attributeName"+attrName));
+                        attributeDto.setInputType(request.getParameter("inputType"+attrName));
+                        attributeDto.setOptionValues(request.getParameter("optionValues"+attrName));
+                        attributeDto.setRequired(ValidatorUtil.notEmpty(request.getParameter("required"+attrName))?1:0);
+                        if(dto.getAttributes()==null) dto.setAttributes(new ArrayList<>());
+                        dto.getAttributes().add(attributeDto);
+                    });
+                }
                 result = templateService.saveOrUpdateData(dto);
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }

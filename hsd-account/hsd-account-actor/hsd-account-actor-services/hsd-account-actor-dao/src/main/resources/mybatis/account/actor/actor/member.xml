@@ -21,7 +21,6 @@
         ,t1.children_state as "childrenState"
         ,t1.children_num as "childrenNum"
         ,t1.asset_other as "assetOther"
-        ,t1.debt_state as "debtState"
         ,t1.wechat as "wechat"
         ,t1.qq as "qq"
         ,t1.work_start_date as "workStartDate"
@@ -35,6 +34,7 @@
         ,t1.proxy_user_id as "proxyUserId"
         ,t1.proxy_chain as "proxyChain"
         ,t1.lender_state as "lenderState"
+        ,t1.debt_state as "debtState"
         ,t1.date_lender as "dateLender"
         ,t1.date_debt as "dateDebt"
         ,t1.memo as "memo"
@@ -74,8 +74,7 @@
            ,children_state
            ,children_num 
            ,asset_other 
-           ,debt_state
-           ,wechat 
+           ,wechat
            ,qq 
            ,work_start_date 
            ,domicile_live_diff 
@@ -115,8 +114,7 @@
            ,#{childrenState}
            ,#{childrenNum} 
            ,#{assetOther} 
-           ,#{debtState}
-           ,#{wechat} 
+           ,#{wechat}
            ,#{qq} 
            ,#{workStartDate} 
            ,#{domicileLiveDiff} 
@@ -128,7 +126,8 @@
            ,#{proxyLevel} 
            ,#{proxyUserId} 
            ,#{proxyChain} 
-           ,#{lenderState} 
+           ,#{lenderState}
+           ,#{debtState}
            ,#{dateLender}
            ,#{dateDebt}
            ,#{memo} 

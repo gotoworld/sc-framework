@@ -1,13 +1,11 @@
 package com.hsd.account.actor.entity.actor;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.entity.BaseEntity;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 @Data
@@ -17,6 +15,8 @@ import java.util.Date;
 public class BusinessType extends BaseEntity {
      /**id*/
      private String id;
+     /**编码*/
+     private String code;
      /**名称*/
      private String name;
      /**备注*/

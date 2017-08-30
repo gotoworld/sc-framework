@@ -21,7 +21,7 @@ import java.util.Date;
 @Slf4j
 public class JwtUtil {
     public enum UserType{
-        STAFF("员工"), USER("客户");
+        STAFF("员工"), USER("客户"),CHANNEL("渠道商");
         UserType(String val){
             this.val=val;
         }

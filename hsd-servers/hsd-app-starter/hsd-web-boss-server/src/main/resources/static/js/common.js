@@ -175,39 +175,26 @@ var site = {
     }
     , templateAttribute: {//模板属性
         view: basePath + "/html/account/actor/template/template_attribute"
-        ,page: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/page/"       //分页
         ,list: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/list"        //列表
-        ,save: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/save"        //新增or保存
-        ,info: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/info/"       //详情
-        ,phydel: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/phydel/"   //物理删除
     }
     ,userExtInfo: {//用户扩展数据
         view: basePath + "/html/account/actor/user/user_ext_info"
-        ,page: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/save"
         ,info: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/del/"
     }
     ,userSignContract: {//用户网签协议记录
         view: basePath + "/html/account/actor/user/user_sign_contract"
         ,page: apiPath.account.actor + "/boss/account/actor/user/userSignContract/page/"
         ,save: apiPath.account.actor + "/boss/account/actor/user/userSignContract/save"
         ,info: apiPath.account.actor + "/boss/account/actor/user/userSignContract/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/user/userSignContract/del/"
     }
     ,userSnapshot: {//用户照表
         view: basePath + "/html/account/actor/user/user_snapshot"
-        ,page: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/save"
         ,info: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/del/"
     }
     ,userLoginLog: {//用户登录日志
         view: basePath + "/html/account/actor/user/user_login_log"
         ,page: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/save"
         ,info: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/del/"
     }
 
 }

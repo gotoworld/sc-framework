@@ -86,7 +86,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
         try {
             return orgStaffDao.lastLogin(copyTo(dto, OrgStaff.class));
         } catch (Exception e) {
-            log.error("根据员工id,判断员工是否为超级管理员,要特权.,数据库处理异常!", e);
+            log.error("更新最后登录时间!处理异常!", e);
         }
         return 0;
     }

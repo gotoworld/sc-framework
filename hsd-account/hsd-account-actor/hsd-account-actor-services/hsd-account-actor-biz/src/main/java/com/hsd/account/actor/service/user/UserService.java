@@ -20,8 +20,11 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @FeignService
 @Slf4j
@@ -162,4 +165,26 @@ public class UserService extends BaseService implements IUserService {
             }
             return result;
         }
+
+    @Override
+    public UserDto findUserByAccount(@RequestParam("account") String account, @RequestParam("userType")  Integer userType) {
+        try {
+            Map dto = new HashMap();
+            dto.put("account", account);
+            dto.put("userType", userType);
+            return copyTo(userDao.findUserByAccount(dto),UserDto.class);
+        } catch (Exception e) {
+            log.error("用户信息>根据用户登录名,数据库处理异常!", e);
+        }
+        return null;
+    }
+    @Override
+    public Integer lastLogin(@RequestBody UserDto dto) {
+        try {
+            return userDao.lastLogin(copyTo(dto, User.class));
+        } catch (Exception e) {
+            log.error("用户信息id,判断员工是否为超级管理员,要特权.,数据库处理异常!", e);
+        }
+        return 0;
+    }
 }

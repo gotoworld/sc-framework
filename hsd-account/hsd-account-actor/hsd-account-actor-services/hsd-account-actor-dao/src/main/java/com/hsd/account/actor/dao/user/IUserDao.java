@@ -4,6 +4,8 @@ import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Map;
+
 /**
  * <p>客户表 数据库处理接口类。
  */
@@ -44,4 +46,13 @@ public interface IUserDao extends IBaseDao {
     @Update("update user set state=1 where id = #{id} and state=3 ")
     int delBlacklist(IEntity entity) throws Exception;
 
+    /**
+     * <p>获取用户信息>根据登录名。
+     */
+    Object findUserByAccount(Map dto) throws Exception;
+    /**
+     * <p>最后登陆记录
+     */
+    @Update("update user set count=count+1,last_login=now() where id = #{id}")
+    int lastLogin(IEntity entity) throws Exception;
 }

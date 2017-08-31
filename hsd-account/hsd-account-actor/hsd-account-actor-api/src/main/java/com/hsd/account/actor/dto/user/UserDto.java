@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hsd.framework.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Size;
@@ -14,6 +15,17 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto extends BaseDto {
+    public enum userType{
+        USER(1,"会员"),CHANNEL(2,"渠道商");
+        private userType(Integer _code,String _name){
+            this.code=_code;
+            this.name=_name;
+        }
+        @Getter
+        Integer code;
+        @Getter
+        String name;
+    }
      /**客户id*/
      private Long id;
      /**登录名*/

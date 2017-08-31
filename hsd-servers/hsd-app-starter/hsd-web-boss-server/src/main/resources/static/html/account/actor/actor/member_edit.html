@@ -179,7 +179,7 @@
                                         <label class="col-md-10 control-label">客户子类型：</label>
                                         <div class="col-md-12">
                                             <select name="userSubType"  placeholder="请输入客户子类型" class="form-control"  >
-                                                <option>---请选择客户子类型--</option>
+                                                <option value="">---请选择客户子类型--</option>
                                                 <option value="1" ng-selected="item.userSubType==1">测试类型1</option>
                                                 <option value="2" ng-selected="item.userSubType==2">测试类型2</option>
                                             </select>
@@ -272,26 +272,25 @@
                             <div id="tab-3" class="tab-pane " style="padding-top: 20px;">
                                 <div class="form-group clearfix">
                                     <div class="col-md-4">属性模板:
-                                        <select data-placeholder="选择模板"  ng-model="templateId" ng-change="getTemplate()"  class="form-control">
+                                        <select data-placeholder="选择模板" onchange="getTemplateA()"  class="form-control" id="templateSelect">
                                             <option value="">--选择模板--</option>
-                                            <option ng-repeat="temp in templateResult" ng-value="{{temp.id}}" ng-selected="tempSelectd(temp)">{{temp.templateName}}</option>
+                                            <option ng-repeat="temp in templateResult" value="{{temp.id}}" selected="tempSelectd(temp)">{{temp.templateName}}</option>
                                         </select>
-                                        <span id="bean-userType-error" class="help-block m-b-none"></span>
                                     </div>
                                 </div>
-                                <input type="hidden" ng-value="templateId" name="templateId">
+                                <input type="hidden" value="" name="templateId" id="templateIdA">
 
                                 <div class="col-md-3 " ng-repeat="attr in attributesResult">
-                                    <input type="hidden" name="attr{{attr.templateId}}" ng-value="'attr'+attr.templateId+attr.attributeCode">
+                                    <input type="hidden" name="attr{{attr.templateId}}" value="{{'attr'+attr.templateId+attr.attributeCode}}">
                                     <div class="form-group clearfix" >
                                         <label class="col-md-8 control-label">{{attr.attributeName}}：</label>
                                         <div class="col-md-12" ng-if="!(util.notEmpty(attr.optionValues))">
-                                            <input name="{{'attr'+attr.templateId+attr.attributeCode}}"  ng-value="getTempAttrVal(attr)" class="form-control" type="{{attr.inputType=='num'?'number':'text'}}"  placeholder="请输入{{attr.attributeName}}" aria-invalid="true" ng-required="attr.required==1">
+                                            <input name="{{'attr'+attr.templateId+attr.attributeCode}}"  value="{{getTempAttrVal(attr)}}" class="form-control" type="{{attr.inputType=='num'?'number':'text'}}"  placeholder="请输入{{attr.attributeName}}" aria-invalid="true" ng-required="attr.required==1">
                                         </div>
-                                        <div class="col-md-12" ng-if="util.notEmpty(attr.optionValues)">
-                                            <select name="{{'attr'+attr.templateId+attr.attributeCode}}" class="form-control" placeholder="请选择{{attr.attributeName}}" aria-invalid="true" ng-required="attr.required==1">
-                                                <option >--请选择{{attr.attributeName}}--</option>
-                                                <!--<option ng-repeat="m in optionValuesToObj(attr.optionValues)" ng-value="m.key">{{m.val}}</option>-->
+                                        <div class="col-md-12" ng-if="util.notEmpty(attr.optionValues)" >
+                                            <select id="{{'id_attr'+attr.templateId+attr.attributeCode}}" name="{{'attr'+attr.templateId+attr.attributeCode}}" class="form-control" placeholder="请选择{{attr.attributeName}}" aria-invalid="true" ng-required="attr.required==1">
+                                                <option value="">--请选择{{attr.attributeName}}--</option>
+                                                {{getOptionValuesHtml('id_attr'+attr.templateId+attr.attributeCode,attr)}}
                                             </select>
                                         </div>
                                     </div>
@@ -341,7 +340,9 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
+        $data.attr={};
         staff.init(function(){
+            console.info('staff.init(function(){....')
            $data.newFlag=sessionStorage.getItem(site.member.info);
            if($data.newFlag) $data.uuidToken=util.guid();
             loadInfo(sessionStorage.getItem(site.member.info));
@@ -359,7 +360,36 @@
                 }, 'json');
             }
         }
+        $scope.tempSelectd=function(temp){
+            console.info('tempSelectd{....')
+            var extInfos=$data.item.extInfos;
+            if(extInfos && temp){
+                for(var i=0;i<extInfos.length;i++){
+                    var extInfo=extInfos[i];
+                    if(temp.id==extInfo.templateId){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        $scope.getTempAttrVal=function(attr){
+            console.info('getTempAttrVal{....')
+            var extInfos=$data.item.extInfos;
+            if(extInfos && attr){
+                for(var i=0;i<extInfos.length;i++){
+                    var extInfo=extInfos[i];
+                    if(attr.templateId==extInfo.templateId){
+//                        console.info('attributeJson==')
+                        var attributeJson=JSON.parse(extInfo.attributeJson);
+                        if(attributeJson) return attributeJson[attr.attributeCode];
+                    }
+                }
+            }
+            return "";
+        }
         $scope.optionValuesToObj=function(optionValues){
+            console.info('optionValuesToObj{....')
             var optionValuesArr=[];
             if(optionValues){
                 var optionValuesTemp=util.split(optionValues,',');
@@ -372,49 +402,27 @@
             }
             return optionValuesArr;
         }
-        $scope.getTemplate=function(){
-            if($scope.templateId){
-                getTemplate($scope.templateId);
-            }
-        }
-        $scope.getTempAttrVal=function(attr){
-            var extInfos=$data.item.extInfos;
-            if(extInfos && attr){
-                for(var i=0;i<extInfos.length;i++){
-                    var extInfo=extInfos[i];
-                    if(attr.templateId==extInfo.templateId){
-                        var attributeJson=JSON.parse(extInfo.attributeJson);
-                        if(attributeJson) return attributeJson[attr.attributeCode];
-                    }
+        $scope.getOptionValuesHtml=function(id,attr){
+            if(!attr||$data.attr[attr.attributeCode]) return;
+            var html='';
+//            html = html + '<select  name="'+("attr"+attr.templateId+attr.attributeCode)+'" class="form-control" placeholder="请选择'+attr.attributeName+'" aria-invalid="true" '+(attr.required==1?'required=\"\"':'')+'>';
+//            html = html + '<option value="">--请选择'+attr.attributeName+'--</option>';
+            var attrOps=$scope.optionValuesToObj(attr.optionValues);
+            if(attrOps && attrOps.length>0){
+                for (var i=0;i<attrOps.length;i++){
+                    var selectedStr='';
+                    if(attrOps[i].key==$scope.getTempAttrVal(attr)) selectedStr='selected="selected"';
+                    html = html + '<option  value="'+attrOps[i].key+'" '+selectedStr+'>'+attrOps[i].val+'</option>';
                 }
             }
-            return "";
-        }
-        $scope.tempSelectd=function(temp){
-            var extInfos=$data.item.extInfos;
-            if(extInfos && temp){
-                for(var i=0;i<extInfos.length;i++){
-                    var extInfo=extInfos[i];
-                    if(temp.id==extInfo.templateId){
-                        return true;
-                    }
-                }
-            }
-            return false;
+//            html = html + '</select>';
+//            console.info(html)
+            $data.attr[attr.attributeCode]=1;
+            $('#'+id).append($ngCompile(html)($data));
         }
     });
-    var getTemplate=function(templateId){
-        $.post(site.templateAttribute.list , {"templateId":templateId},function (result) {
-            if (result.code == 0) {
-                $data.attributesResult = result.data;
-            } else {
-                $data.attributesMessage = result.message;
-                alert( result.message);
-            }
-            if(!$data.$$phase) $data.$apply();
-        }, 'json');
-    }
     var loadInfo=function(id){
+        console.info('loadInfo{....')
         $.get(site.member.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
              if (result.code == 0) {
@@ -433,19 +441,36 @@
          }, 'json');
     }
     var loadTemplateIsList=function(){
+        console.info('loadTemplateIsList{....')
         $.post(site.template.list , {"userType":1},function (result) {
             if (result.code == 0) {
                 $data.templateResult = result.data;
-                if(result.data && $data.templateId==null) {
+                if(result.data && !util.notEmpty($('#templateIdA').val())) {
                     for (var i = 0; i < result.data.length; i++){
                         if ($data.tempSelectd(result.data[i])) {
-                            $data.templateId=result.data[i].id;
-                            getTemplate(result.data[i].id);
+                            $('#templateIdA').val(result.data[i].id);
+                            getTemplateA(result.data[i].id);
                         }
                     }
                 }
             } else {
                 $data.templateMessage = result.message;
+                alert( result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+    var getTemplateA=function(templateId){
+        console.info('getTemplateA{....')
+        if(!util.notEmpty(templateId)){
+            templateId=$('#templateSelect').val();;
+        }
+        $('#templateIdA').val(templateId);
+        $.post(site.templateAttribute.list , {"templateId":templateId},function (result) {
+            if (result.code == 0) {
+                $data.attributesResult = result.data;
+            } else {
+                $data.attributesMessage = result.message;
                 alert( result.message);
             }
             if(!$data.$$phase) $data.$apply();

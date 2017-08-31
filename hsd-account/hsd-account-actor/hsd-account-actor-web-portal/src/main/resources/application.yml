@@ -4,11 +4,11 @@ info:
   version : v${pom.version}
 # HTTP Server
 server:
-  port: 6062
+  port: 6066
   context-path: /
 spring:
   application:
-    name: hsd-account-actor-web-portal
+    name: hsd-account-actor-web-portal-wxg
   profiles:
     active: dev
   boot:
@@ -25,6 +25,11 @@ spring:
     port: 6379
 #    password:
     timeout: 1800000
+    idGenNodes:
+      - host: 192.168.101.101
+        port: 6379
+    #    password:
+        luaSha: c5809078fa6d652e0b0232d552a9d06d37fe819c
     pool:
       max-active: 8
       max-total: 50

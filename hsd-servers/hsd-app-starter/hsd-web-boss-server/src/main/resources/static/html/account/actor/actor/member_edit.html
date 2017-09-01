@@ -274,7 +274,7 @@
                                     <div class="col-md-4">属性模板:
                                         <select data-placeholder="选择模板" onchange="getTemplateA()"  class="form-control" id="templateSelect">
                                             <option value="">--选择模板--</option>
-                                            <option ng-repeat="temp in templateResult" value="{{temp.id}}" selected="tempSelectd(temp)">{{temp.templateName}}</option>
+                                            <option ng-repeat="temp in templateResult" value="{{temp.id}}" ng-selected="tempSelectd(temp)">{{temp.templateName}}</option>
                                         </select>
                                     </div>
                                 </div>

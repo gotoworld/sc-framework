@@ -6,8 +6,6 @@
          t1.id as "id"
         ,t1.account as "account"
         ,t1.name as "name"
-        ,t1.pwd as "pwd"
-        ,t1.trade_pwd as "tradePwd"
         ,t1.email as "email"
         ,t1.gender as "gender"
         ,t1.cellphone as "cellphone"
@@ -114,4 +112,18 @@
         <include refid="list_where_sql"/>
         order by t1.date_created desc
     </select>
+
+
+    <!-- 获取客户信息>根据客户登录名 -->
+    <select id="findUserByAccount" parameterType="map" resultType="com.hsd.account.actor.entity.user.User">
+        select
+        <include refid="Base_Column_List"/>
+        ,t1.pwd as "pwd"
+        ,t1.trade_pwd as "tradePwd"
+        from user t1
+        where  t1.state=1
+        and t1.account=#{account}
+        and t1.type=#{userType}
+    </select>
+
 </mapper>

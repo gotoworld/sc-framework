@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -21,7 +20,7 @@
     </style>
 </head>
 
-<body class="gray-bg top-navigation">
+<body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
 <div class="fixed-sidebar border-bottom white-bg" >
     <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
         <div class="navbar-header">
@@ -65,7 +64,7 @@
             </ul>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <a  data-toggle="modal" href="/index.html">
+                    <a  data-toggle="modal" href="#" ng-click="user.logout()">
                         <i class="fa fa-sign-out"></i> 退出
                     </a>
                 </li>
@@ -86,8 +85,8 @@
                         <span ><img alt="image" class="img-circle" src="/img/avatar.png" /></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
-                                <span class="text-muted text-xs block">demo客户</span>
+                               <span class="block m-t-xs"><strong class="font-bold" ng-bind="userInfo.account"></strong></span>
+                                <span class="text-muted text-xs block" ><label ng-bind="userInfo.name"></label></span>
                                 </span>
                         </a>
                     </div>
@@ -231,6 +230,17 @@
     <!-- 自定义js -->
     <!--<script src="/plugins/hplus/js/hplus.js?v=4.1.0"></script>-->
     <!--<script type="text/javascript" src="/plugins/hplus/js/contabs.js"></script>-->
+
+    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript">
+        angular.module("app", []).controller("app-ctrl", function ($scope) {
+            $data = $scope;
+            user.init(function(){
+
+            });
+        });
+    </script>
 </body>
 
 </html>

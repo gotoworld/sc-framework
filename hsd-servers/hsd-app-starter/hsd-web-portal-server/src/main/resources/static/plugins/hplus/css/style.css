@@ -7838,7 +7838,7 @@ body.skin-3 {
 }
 
 .navbar-header {
-    width: 60%;
+    width: 50%;
 }
 
 .bs-glyphicons {
@@ -7890,3 +7890,16 @@ body.skin-3 {
         font-size: 12px
     }
 }
+
+.caret{margin-top: -5px;}
+
+.nav-header{ background:none;}
+#side-menu>li>a{ background: #e0e0e0;border-top:1px dashed #FFFFFF;}
+.top-navigation .nav > li > a{padding: 15px 20px;}
+.top-navigation .nav > li .J_menuItem{ border-top:1px dashed #e0e0e0;padding: 10px 20px 10px 40px;}
+.nav-second-level li:last-child { margin-bottom: 0px; }
+.top-navigation .nav > li a.active{color: #1ab394;}
+.nav-label{ color: #676a6c;}
+.dropdown-menu{min-width: 110px;}
+.dropdown-menu > li > a{padding: 0px;}
+.top-navigation .navbar-nav .open .dropdown-menu > li > a, .top-navigation .navbar-nav .open .dropdown-menu .dropdown-header{padding: 10px 0px 10px 20px;border-top:1px dashed #e0e0e0;}

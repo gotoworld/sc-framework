@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <title>hsd - 登录</title>
+    <title>demo</title>
+
     <link href="/plugins/hplus/css/bootstrap.min.css" rel="stylesheet">
     <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
     <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
@@ -25,46 +26,121 @@
     </style>
 </head>
 
-<body class="gray-bg">
-    <div class="signinpanel">
-        <div class="row">
-            <div class="col-sm-7">
-                <div class="signin-info">
-                    <div class="logopanel m-b">
-                        <h1>[ DEMO ]</h1>
-                    </div>
-                    <div class="m-b"></div>
-                    <h4>欢迎使用 <strong>DEMO</strong></h4>
-                    <ul class="m-b">
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 一</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 二</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 三</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 四</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 五</li>
-                    </ul>
-                    <strong>还没有账号？ <a href="register.html">立即注册&raquo;</a></strong>
-                </div>
-            </div>
-            <div class="col-sm-5">
-                <form method="get" action="home.html">
-                    <h4 class="no-margins">登录：</h4>
-                    <p class="m-t-md">合时代客户系统</p>
-                    <input type="text" class="form-control uname" placeholder="用户名"  required=""/>
-                    <input type="password" class="form-control pword m-b" placeholder="密码"  required=""/>
-                    <a href="">忘记密码了？</a>
-                    <button class="btn btn-success btn-block">登录</button>
-                </form>
-            </div>
+<body class="gray-bg top-navigation">
+<div class="fixed-sidebar border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
         </div>
-        <div class="signup-footer">
-            <div class="pull-left">
-                &copy; 2017 All Rights Reserved. demo
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要投资
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">芝麻开花</a></li>
+                        <li><a href="">定期项目</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要借款
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">汽车分期</a> </li>
+                        <li><a href="">净值借款</a> </li>
+                        <li><a href="">线下借款</a> </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 信息披露
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">关于我们</a> </li>
+                        <li><a href="">安全保障</a> </li>
+                        <li><a href="">平台数据</a> </li>
+                        <li><a href="">运营报告</a> </li>
+                    </ul>
+                </li>
+            </ul>
+            <!--<ul class="nav navbar-top-links navbar-right">-->
+                <!--<li>-->
+                    <!--<a  data-toggle="modal" href="/index.html#modal-form">-->
+                        <!--<i class="fa fa-sign-out"></i> 登录-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        </div>
+    </nav>
+</div>
+
+<div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
+        <div class="signinpanel" style="padding: 10% 0;margin: 0 auto;">
+            <div class="row">
+                <div class="col-sm-7">
+                    <div class="signin-info">
+                        <div class="logopanel m-b">
+                            <h1>- DEMO -</h1>
+                        </div>
+                        <div class="m-b"></div>
+                        <h4>....... <strong>.......</strong></h4>
+                        <ul class="m-b">
+                            <li> .......</li>
+                            <li> .......</li>
+                            <li> .......</li>
+                            <li> .......</li>
+                            <li> .......</li>
+                        </ul>
+                        <strong>还没有账号？ <a href="register.html">立即注册&raquo;</a></strong>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <form role="form" method="get" action="/html/account/actor/user/home.html">
+                        <h4 class="no-margins">登录</h4>
+                        <p class="m-t-md">-</p>
+                        <input type="text" class="form-control uname" placeholder="用户名"  required=""/>
+                        <input type="password" class="form-control pword m-b" placeholder="密码"  required=""/>
+                        <a href="">忘记密码了？</a>
+                        <button class="btn btn-success btn-block">登录</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+
+    <!--<div class="footer" style="clear: both;position: absolute;bottom: 0px;width: 100%;margin: 0px;">-->
+        <!--<div class="pull-right">-->
+            <!--By：demo-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<strong>Copyright</strong> demo &copy; 2017-->
+        <!--</div>-->
+    <!--</div>-->
+
+
     <!-- 全局js -->
     <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
     <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript">
+        var $data;
+        angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
+            $data = $scope;
+            $scope.uLogin = function () {
+                staff.login($('#_login_form').serialize(), function () {
+                    location.href = '/index.html';
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

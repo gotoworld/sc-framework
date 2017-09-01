@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>hsd - 注册</title>
+    <title>demo</title>
 
     <link rel="shortcut icon" href="favicon.ico"> <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -18,41 +18,101 @@
 
 </head>
 
-<body class="gray-bg">
 
-    <div class="middle-box text-center loginscreen   animated fadeInDown">
-        <div>
-            <div>
-
-                <h1 class="logo-name">HSD</h1>
-
-            </div>
-            <h3>欢迎注册 hsd</h3>
-            <p>创建一个合时代新账户</p>
-            <form class="m-t" role="form" action="login.html">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="请输入用户名" required="">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="请输入密码" required="">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="请再次输入密码" required="">
-                </div>
-                <div class="form-group text-left">
-                    <div class="checkbox i-checks">
-                        <label class="no-padding">
-                            <input type="checkbox"><i></i> 我同意注册协议</label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">注 册</button>
-
-                <p class="text-muted text-center"><small>已经有账户了？</small><a href="login.html">点此登录</a>
-                </p>
-
-            </form>
+<body class="gray-bg top-navigation">
+<div class="fixed-sidebar border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
         </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要投资
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">芝麻开花</a></li>
+                        <li><a href="">定期项目</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要借款
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">汽车分期</a> </li>
+                        <li><a href="">净值借款</a> </li>
+                        <li><a href="">线下借款</a> </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 信息披露
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">关于我们</a> </li>
+                        <li><a href="">安全保障</a> </li>
+                        <li><a href="">平台数据</a> </li>
+                        <li><a href="">运营报告</a> </li>
+                    </ul>
+                </li>
+            </ul>
+            <!--<ul class="nav navbar-top-links navbar-right">-->
+                <!--<li>-->
+                    <!--<a  data-toggle="modal" href="/index.html#modal-form">-->
+                        <!--<i class="fa fa-sign-out"></i> 登录-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        </div>
+    </nav>
+</div>
+<div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
+    <div class="middle-box text-center loginscreen   animated fadeInDown"  style="padding: 10% 0;margin: 0 auto;">
+        <div>
+
+            <h1 class="logo-name">HSD</h1>
+
+        </div>
+        <h3>欢迎注册 hsd</h3>
+        <p>创建一个合时代新账户</p>
+        <form class="m-t" role="form" method="get" action="/html/account/actor/user/home.html">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="请输入用户名" required="">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="请输入密码" required="">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="请再次输入密码" required="">
+            </div>
+            <div class="form-group text-left">
+                <div class="checkbox i-checks">
+                    <label class="no-padding">
+                        <input type="checkbox"><i></i> 我同意注册协议</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b">注 册</button>
+
+            <p class="text-muted text-center"><small>已经有账户了？</small><a href="login.html">点此登录</a>
+            </p>
+        </form>
     </div>
+</div>
+
+
+<!--<div class="footer" style="clear: both;position: absolute;bottom: 0px;width: 100%;margin: 0px;">-->
+    <!--<div class="pull-right">-->
+        <!--By：demo-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<strong>Copyright</strong> demo &copy; 2017-->
+    <!--</div>-->
+<!--</div>-->
 
     <!-- 全局js -->
     <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>

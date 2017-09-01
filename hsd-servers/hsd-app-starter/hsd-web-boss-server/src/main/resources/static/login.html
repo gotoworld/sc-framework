@@ -13,15 +13,12 @@
     <link href="/plugins/hplus/css/animate.css" rel="stylesheet"/>
     <link href="/plugins/hplus/css/style.css" rel="stylesheet"/>
     <link href="/plugins/hplus/css/login.css" rel="stylesheet"/>
-    <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html"/>
-    <![endif]-->
     <script>
         if (window.top !== window.self) {
             window.top.location = window.location
         }
     </script>
-    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
     <script src="/js/jQuery.md5.js" type="text/javascript"></script>
 
     <style>
@@ -38,7 +35,7 @@
     </style>
 </head>
 
-<body class="signin" ng-controller="app-ctrl" class="ng-cloak" ng-cloak>
+<body class="signin ng-cloak" ng-controller="app-ctrl" ng-cloak>
 <div class="signinpanel">
     <div class="row" style="background: rgba(116, 114, 114, 0.2);
                             -moz-box-shadow: 0 3px 0 rgba(12, 12, 12, 0.03);
@@ -71,7 +68,8 @@
                        name="password"/>
                 <input type="password" value="admin"
                        onkeydown="$('#passwordA').val($.md5($(this).val()));"
-                       onchange="$('#passwordA').val($.md5($(this).val()));" class="form-control pword m-b"
+                       onchange="$('#passwordA').val($.md5($(this).val()));"
+                       class="form-control pword m-b"
                        placeholder="密码"/>
                 <!--<div class="checkbox" > -->
                 <!--   <label > -->

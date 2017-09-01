@@ -2,15 +2,14 @@ var basePath = "http://localhost:8080/";
 var apiPath = {
     account: {
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-boss",
-        actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss-wxg"
+        actor: "http://192.168.101.100:28890/hsd-account-actor-web-portal-wxg"
     }
 }
 var site = {
     user: {
-        login: apiPath.account.actor + "/boss/account/user/sign/login" //登录
-        , logout: apiPath.account.actor + "/boss/account/user/sign/logout" //登出
-        , refreshToken: apiPath.account.actor + "/boss/account/user/sign/refreshToken" //刷新token
-        , updatePwd: apiPath.account.actor + "/boss/account/user/org/orguser/update/pwd" //密码更新
+        login: apiPath.account.actor + "/api/account/actor/sign/login" //登录
+        , logout: apiPath.account.actor + "/api/account/actor/sign/logout" //登出
+        , refreshToken: apiPath.account.actor + "/api/account/actor/sign/refreshToken" //刷新token
     }
 }
 var $data, $ngHttp, $ngCompile, $ngSce;
@@ -23,10 +22,10 @@ function getQueryString(name) {
     return null;
 }
 
-/**员工登录信息验证头*/
+/**客户登录信息验证头*/
 $.ajaxSetup({
     headers: {
-        "Authorization": sessionStorage.getItem("hsd_user_authorizationToken")
+        "Authorization": sessionStorage.getItem("hsd_actor_authorizationToken")
     }
 })
 $(document).ajaxComplete(function (event, xhr, settings) {
@@ -41,36 +40,33 @@ $(document).ajaxComplete(function (event, xhr, settings) {
     }
 });
 
-/**员工信息*/
+/**客户信息*/
 var user = {
     login: function (userJson, callback) {
-        $.post(site.user.login, userJson,
-            function (result) {
-                if (result.code == 0) {
-                    if (result.data) {
-                        sessionStorage.setItem('hsd_user_user', JSON.stringify(result.data.user));
-                        if (result.data.authorizationToken) {
-                            sessionStorage.setItem('hsd_user_tokenExpMillis', result.data.tokenExpMillis);
-                            sessionStorage.setItem("hsd_user_authorizationToken", result.data.authorizationToken);
-                            sessionStorage.setItem("hsd_user_authorizationInfoPerms", result.data.authorizationInfoPerms);
-                            sessionStorage.setItem("hsd_user_authorizationInfoRoles", result.data.authorizationInfoRoles);
-                        }
+        $.post(site.user.login, userJson, function (result) {
+            if (result.code == 0) {
+                if (result.data) {
+                    sessionStorage.setItem('hsd_actor_user', JSON.stringify(result.data.user));
+                    if (result.data.authorizationToken) {
+                        sessionStorage.setItem('hsd_actor_tokenExpMillis', result.data.tokenExpMillis);
+                        sessionStorage.setItem("hsd_actor_authorizationToken", result.data.authorizationToken);
                     }
-                    callback && callback();
-                } else {
-                    $data.result = result;
-                    // alert(result.message);
-                    if (!$data.$$phase) $data.$apply();
                 }
-            }, 'json');
+                callback && callback();
+            } else {
+                $data.result = result;
+                // alert(result.message);
+                if (!$data.$$phase) $data.$apply();
+            }
+        }, 'json');
     },
     refreshToken: function (callback) {
         $.get(site.user.refreshToken, {}, function (result) {
             if (result.code == 0) {
                 if (result.data) {
                     if (result.data.authorizationToken) {
-                        sessionStorage.setItem('hsd_user_tokenExpMillis', result.data.tokenExpMillis);
-                        sessionStorage.setItem("hsd_user_authorizationToken", result.data.authorizationToken)
+                        sessionStorage.setItem('hsd_actor_tokenExpMillis', result.data.tokenExpMillis);
+                        sessionStorage.setItem("hsd_actor_authorizationToken", result.data.authorizationToken)
                     }
                 }
                 callback && callback();
@@ -81,17 +77,15 @@ var user = {
     },
     logout: function (callback) {
         $.get(site.user.logout, {}, function (result) {
-            sessionStorage.removeItem('hsd_user_tokenExpMillis');
-            sessionStorage.removeItem('hsd_user_user');
-            sessionStorage.removeItem("hsd_user_authorizationToken");
-            sessionStorage.removeItem("hsd_user_authorizationInfoPerms");
-            sessionStorage.removeItem("hsd_user_authorizationInfoRoles");
+            sessionStorage.removeItem('hsd_actor_tokenExpMillis');
+            sessionStorage.removeItem('hsd_actor_user');
+            sessionStorage.removeItem("hsd_actor_authorizationToken");
             callback && callback();
             top.location.href = '/login.html';
         }, 'json');
     },
     info: function (callback) {
-        var userJson = sessionStorage.getItem('hsd_user_user');
+        var userJson = sessionStorage.getItem('hsd_actor_user');
         if (userJson) {
             var userInfo = JSON.parse(userJson);
             $data.userInfo = userInfo;
@@ -107,13 +101,13 @@ var user = {
     init: function (callback) {
         try {
             var expMillis = 0;
-            if (sessionStorage.getItem('hsd_user_tokenExpMillis')) {
-                expMillis = sessionStorage.getItem('hsd_user_tokenExpMillis') - (new Date().getTime());
+            if (sessionStorage.getItem('hsd_actor_tokenExpMillis')) {
+                expMillis = sessionStorage.getItem('hsd_actor_tokenExpMillis') - (new Date().getTime());
             }
             if (expMillis > 0 && expMillis < (10 * 60 * 1000)) {//还有10分钟过期
                 user.refreshToken(callback);
             } else {
-                if (sessionStorage.getItem('hsd_user_user') && expMillis > 0) {
+                if (sessionStorage.getItem('hsd_actor_user') && expMillis > 0) {
                     user.info(callback);
                 } else {
                     // user.login(function () {

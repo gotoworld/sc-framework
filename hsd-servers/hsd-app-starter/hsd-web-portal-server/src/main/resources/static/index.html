@@ -62,8 +62,11 @@
             </ul>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <a  data-toggle="modal" href="/index.html#modal-form">
+                    <a ng-show="!util.notEmpty(userInfo.account)" data-toggle="modal" href="/index.html#modal-form">
                         <i class="fa fa-sign-in"></i> 登录
+                    </a>
+                    <a ng-show="util.notEmpty(userInfo.account)" href="#" ng-click="user.logout()">
+                        <i class="fa fa-sign-out"></i> 退出
                     </a>
                 </li>
             </ul>
@@ -157,14 +160,16 @@
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
-    var $data;
-    angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
+    angular.module("app", []).controller("app-ctrl", function ($scope) {
         $data = $scope;
+        $data.util = util;
+        user.info(function(){});
         $scope.uLogin = function () {
             user.login($('#_login_form').serialize(), function () {
                 location.href = '/html/account/actor/user/home.html';
             });
         }
+        $data.user = user;
     });
 </script>
 </body>

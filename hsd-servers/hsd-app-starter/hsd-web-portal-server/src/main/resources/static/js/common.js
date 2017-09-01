@@ -85,17 +85,19 @@ var user = {
         }, 'json');
     },
     info: function (callback) {
-        var userJson = sessionStorage.getItem('hsd_actor_user');
-        if (userJson) {
-            var userInfo = JSON.parse(userJson);
-            $data.userInfo = userInfo;
-        }
-        callback && callback();
         try {
+            console.info("user.info.............")
+            var userJson = sessionStorage.getItem('hsd_actor_user');
+            if (userJson) {
+                var userInfo = JSON.parse(userJson);
+                $data.userInfo = userInfo;
+            }
+            callback && callback();
+        } catch (e) {
+        } finally {
             if ($data) {
                 if (!$data.$$phase) $data.$apply();
             }
-        } catch (e) {
         }
     },
     init: function (callback) {
@@ -121,20 +123,6 @@ var user = {
         } finally {
             if ($data) {
                 //定义全局函数
-                $data.openMyBoxLayer = function (mytitle, myurl) {
-                    openMyBoxLayer(mytitle, myurl);
-                }
-                $data.closeMyBoxLayer = function () {
-                    closeMyBoxLayer();
-                }
-                $data.kfReady=function(key,val){
-                    if(KindEditor) KindEditor.html('#'+key,val);
-                    return val;
-                }
-                $data.selected=function(val1,val2){
-                    if(val1==val2) return true
-                    return false;
-                }
                 $data.user = user;
                 $data.util = util;
             }
@@ -149,6 +137,7 @@ var user = {
 //工具类
 var util = {
     notEmpty: function (p) {
+        console.info('notEmpty...........')
         if (p == undefined || p == null ||  p == '' || p == 'null'  || p == 'undefined') {
             return false;
         } else {

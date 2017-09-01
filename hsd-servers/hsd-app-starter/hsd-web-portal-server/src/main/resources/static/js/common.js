@@ -1,202 +1,17 @@
-var basePath = "http://localhost/";
+var basePath = "http://localhost:8080/";
 var apiPath = {
     account: {
-        staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss",
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-boss",
         actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss-wxg"
     }
 }
 var site = {
-    staff: {
-        login: apiPath.account.staff + "/boss/account/staff/sign/login" //登录
-        , logout: apiPath.account.staff + "/boss/account/staff/sign/logout" //登出
-        , refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
-        , updatePwd: apiPath.account.staff + "/boss/account/staff/org/orgStaff/update/pwd" //密码更新
+    user: {
+        login: apiPath.account.actor + "/boss/account/user/sign/login" //登录
+        , logout: apiPath.account.actor + "/boss/account/user/sign/logout" //登出
+        , refreshToken: apiPath.account.actor + "/boss/account/user/sign/refreshToken" //刷新token
+        , updatePwd: apiPath.account.actor + "/boss/account/user/org/orguser/update/pwd" //密码更新
     }
-    , sysDomain: {
-        view: basePath + "/html/account/staff/sys/sys_domain"
-        , page: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/page/"
-        , list: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/list"
-        , save: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/save"
-        , info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"
-    }
-    , orgInfo: {
-        view: basePath + "/html/account/staff/org/org_info"
-        , page: apiPath.account.staff + "/boss/account/staff/org/orgInfo/page/"
-        , briefPage: apiPath.account.staff + "/boss/account/staff/org/orgInfo/briefPage/"
-        , tree: apiPath.account.staff + "/boss/account/staff/org/orgInfo/tree"
-        , save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
-        , info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
-        , getStaff: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/staff/"
-        , addStaff: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/staff"
-        , delStaff: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/staff"
-        , getRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/role/"
-        , addRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/role"
-        , delRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/role"
-    }
-    , orgStaff: {
-        view: basePath + "/html/account/staff/org/org_staff"
-        , page: apiPath.account.staff + "/boss/account/staff/org/orgStaff/page/"
-        , recyclePage: apiPath.account.staff + "/boss/account/staff/org/orgStaff/recyclePage/"
-        , briefPage: apiPath.account.staff + "/boss/account/staff/org/orgStaff/briefPage/"
-        , recovery: apiPath.account.staff + "/boss/account/staff/org/orgStaff/recovery/"
-        , info: apiPath.account.staff + "/boss/account/staff/org/orgStaff/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/"
-        , save: apiPath.account.staff + "/boss/account/staff/org/orgStaff/save"
-        , isAccountYN: apiPath.account.staff + "/boss/account/staff/org/orgStaff/isAccountYN/"
-        , resetpwd: apiPath.account.staff + "/boss/account/staff/org/orgStaff/reset/pwd/"
-        , addBatch: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/batch"
-        , getOrg: apiPath.account.staff + "/boss/account/staff/org/orgStaff/get/org/"
-        , addOrg: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/org"
-        , delOrg: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/org"
-        , getStaffRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/get/role/staff/"
-        , getOrgRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/get/role/org/"
-        , addRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/role"
-        , delRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/role"
-    }
-    , authPerm: {
-        view: basePath + "/html/account/staff/auth/auth_perm"
-        , page: apiPath.account.staff + "/boss/account/staff/auth/authPerm/page/"
-        , tree: apiPath.account.staff + "/boss/account/staff/auth/authPerm/tree"
-        , save: apiPath.account.staff + "/boss/account/staff/auth/authPerm/save"
-        , info: apiPath.account.staff + "/boss/account/staff/auth/authPerm/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/auth/authPerm/del/"
-    }
-    , sysMenu: {
-        view: basePath + "/html/account/staff/sys/sys_menu"
-        , page: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/page/"
-        , tree: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/tree"
-        , save: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/save"
-        , info: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/sys/sysMenu/del/"
-    }
-    , authRole: {
-        view: basePath + "/html/account/staff/auth/auth_role"
-        , page: apiPath.account.staff + "/boss/account/staff/auth/authRole/page/"
-        , list: apiPath.account.staff + "/boss/account/staff/auth/authRole/list"
-        , save: apiPath.account.staff + "/boss/account/staff/auth/authRole/save"
-        , perm: apiPath.account.staff + "/boss/account/staff/auth/authRole/perm"
-        , menu: apiPath.account.staff + "/boss/account/staff/auth/authRole/menu"
-        , info: apiPath.account.staff + "/boss/account/staff/auth/authRole/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/auth/authRole/del/"
-    }
-    , sysVariable: {
-        view: basePath + "/html/account/staff/sys/sys_variable"
-        , page: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/page/"
-        , tree: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/tree"
-        , save: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/save"
-        , info: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/del/"
-    }
-    , orgLogLogin: {
-        view: basePath + "/html/account/staff/org/org_log_login"
-        , page: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/page/"
-        , save: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/save"
-        , info: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/org/orgLogLogin/del/"
-    }
-    , orgLogOperation: {
-        view: basePath + "/html/account/staff/org/org_log_operation"
-        , page: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/page/"
-        , save: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/save"
-        , info: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/org/orgLogOperation/del/"
-    }
-    , channelInfo: {//渠道商信息
-        view: basePath + "/html/account/channel/channel/channel_info"
-        , page: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/page/"
-        , save: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/save"
-        , info: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/info/"
-        , del: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/del/"
-        , recovery: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/recovery/"
-        , resetPwd: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/resetPwd/"
-        , addBatch: apiPath.account.channel + "/boss/account/channel/channel/channelInfo/add/batch"
-
-    }
-    , channelType: {//渠道商类型
-        view: basePath + "/html/account/channel/channel/channel_type"
-        , page: apiPath.account.channel + "/boss/account/channel/channel/channelType/page/"
-        , list: apiPath.account.channel + "/boss/account/channel/channel/channelType/list"
-        , save: apiPath.account.channel + "/boss/account/channel/channel/channelType/save"
-        , info: apiPath.account.channel + "/boss/account/channel/channel/channelType/info/"
-        , del: apiPath.account.channel + "/boss/account/channel/channel/channelType/del/"
-    }
-    ,user: {//用户表
-        view: basePath + "/html/account/actor/user/user"
-        ,page: apiPath.account.actor + "/boss/account/actor/user/user/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/user/user/save"
-        ,setTags: apiPath.account.actor + "/boss/account/actor/user/user/setTags"
-        ,info: apiPath.account.actor + "/boss/account/actor/user/user/info/"
-        ,setBlacklist: apiPath.account.actor + "/boss/account/actor/user/user/set/blacklist/"
-        ,delBlacklist: apiPath.account.actor + "/boss/account/actor/user/user/del/blacklist/"
-    }
-    , businessType: {//业务类型
-        view: basePath + "/html/account/actor/actor/business_type"
-        ,page: apiPath.account.actor + "/boss/account/actor/actor/businessType/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/actor/businessType/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/actor/businessType/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/actor/businessType/del/"
-    }
-    ,member: {//会员信息表
-        view: basePath + "/html/account/actor/actor/member"
-        ,page: apiPath.account.actor + "/boss/account/actor/actor/member/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/actor/member/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/actor/member/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/actor/member/del/"
-    }
-    , tag: {//标签
-        view: basePath + "/html/account/actor/actor/tag"
-        ,page: apiPath.account.actor + "/boss/account/actor/actor/tag/page/"       //分页
-        ,save: apiPath.account.actor + "/boss/account/actor/actor/tag/save"        //新增or保存
-        ,list: apiPath.account.actor + "/boss/account/actor/actor/tag/list"        //列表
-        ,info: apiPath.account.actor + "/boss/account/actor/actor/tag/info/"       //详情
-        ,phydel: apiPath.account.actor + "/boss/account/actor/actor/tag/phydel/"   //物理删除
-    }
-    ,identity: {//实名认证表
-        view: basePath + "/html/account/actor/identity/identity"
-        ,page: apiPath.account.actor + "/boss/account/actor/identity/identity/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/identity/identity/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/identity/identity/info/"
-    }
-    , identityLog: {//用户实名认证日志
-        view: basePath + "/html/account/actor/identity/identity_log"
-        ,page: apiPath.account.actor + "/boss/account/actor/identity/identityLog/page/"       //分页
-        ,info: apiPath.account.actor + "/boss/account/actor/identity/identityLog/info/"       //详情
-    }
-    ,template: {//档案模板
-        view: basePath + "/html/account/actor/template/template"
-        ,page: apiPath.account.actor + "/boss/account/actor/template/template/page/"
-        ,list: apiPath.account.actor + "/boss/account/actor/template/template/list"
-        ,save: apiPath.account.actor + "/boss/account/actor/template/template/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/template/template/info/"
-        ,del: apiPath.account.actor + "/boss/account/actor/template/template/del/"
-    }
-    , templateAttribute: {//模板属性
-        view: basePath + "/html/account/actor/template/template_attribute"
-        ,list: apiPath.account.actor + "/boss/account/actor/template/templateAttribute/list"        //列表
-    }
-    ,userExtInfo: {//用户扩展数据
-        view: basePath + "/html/account/actor/user/user_ext_info"
-        ,info: apiPath.account.actor + "/boss/account/actor/user/userExtInfo/info/"
-    }
-    ,userSignContract: {//用户网签协议记录
-        view: basePath + "/html/account/actor/user/user_sign_contract"
-        ,page: apiPath.account.actor + "/boss/account/actor/user/userSignContract/page/"
-        ,save: apiPath.account.actor + "/boss/account/actor/user/userSignContract/save"
-        ,info: apiPath.account.actor + "/boss/account/actor/user/userSignContract/info/"
-    }
-    ,userSnapshot: {//用户照表
-        view: basePath + "/html/account/actor/user/user_snapshot"
-        ,info: apiPath.account.actor + "/boss/account/actor/user/userSnapshot/info/"
-    }
-    ,userLoginLog: {//用户登录日志
-        view: basePath + "/html/account/actor/user/user_login_log"
-        ,page: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/page/"
-        ,info: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/info/"
-    }
-
 }
 var $data, $ngHttp, $ngCompile, $ngSce;
 var page;
@@ -211,7 +26,7 @@ function getQueryString(name) {
 /**员工登录信息验证头*/
 $.ajaxSetup({
     headers: {
-        "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken")
+        "Authorization": sessionStorage.getItem("hsd_user_authorizationToken")
     }
 })
 $(document).ajaxComplete(function (event, xhr, settings) {
@@ -227,18 +42,18 @@ $(document).ajaxComplete(function (event, xhr, settings) {
 });
 
 /**员工信息*/
-var staff = {
-    login: function (staffJson, callback) {
-        $.post(site.staff.login, staffJson,
+var user = {
+    login: function (userJson, callback) {
+        $.post(site.user.login, userJson,
             function (result) {
                 if (result.code == 0) {
                     if (result.data) {
-                        sessionStorage.setItem('hsd_staff_staff', JSON.stringify(result.data.staff));
+                        sessionStorage.setItem('hsd_user_user', JSON.stringify(result.data.user));
                         if (result.data.authorizationToken) {
-                            sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
-                            sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
-                            sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.authorizationInfoPerms);
-                            sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.authorizationInfoRoles);
+                            sessionStorage.setItem('hsd_user_tokenExpMillis', result.data.tokenExpMillis);
+                            sessionStorage.setItem("hsd_user_authorizationToken", result.data.authorizationToken);
+                            sessionStorage.setItem("hsd_user_authorizationInfoPerms", result.data.authorizationInfoPerms);
+                            sessionStorage.setItem("hsd_user_authorizationInfoRoles", result.data.authorizationInfoRoles);
                         }
                     }
                     callback && callback();
@@ -250,12 +65,12 @@ var staff = {
             }, 'json');
     },
     refreshToken: function (callback) {
-        $.get(site.staff.refreshToken, {}, function (result) {
+        $.get(site.user.refreshToken, {}, function (result) {
             if (result.code == 0) {
                 if (result.data) {
                     if (result.data.authorizationToken) {
-                        sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
-                        sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken)
+                        sessionStorage.setItem('hsd_user_tokenExpMillis', result.data.tokenExpMillis);
+                        sessionStorage.setItem("hsd_user_authorizationToken", result.data.authorizationToken)
                     }
                 }
                 callback && callback();
@@ -265,21 +80,21 @@ var staff = {
         }, 'json');
     },
     logout: function (callback) {
-        $.get(site.staff.logout, {}, function (result) {
-            sessionStorage.removeItem('hsd_staff_tokenExpMillis');
-            sessionStorage.removeItem('hsd_staff_staff');
-            sessionStorage.removeItem("hsd_staff_authorizationToken");
-            sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
-            sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
+        $.get(site.user.logout, {}, function (result) {
+            sessionStorage.removeItem('hsd_user_tokenExpMillis');
+            sessionStorage.removeItem('hsd_user_user');
+            sessionStorage.removeItem("hsd_user_authorizationToken");
+            sessionStorage.removeItem("hsd_user_authorizationInfoPerms");
+            sessionStorage.removeItem("hsd_user_authorizationInfoRoles");
             callback && callback();
             top.location.href = '/login.html';
         }, 'json');
     },
     info: function (callback) {
-        var staffJson = sessionStorage.getItem('hsd_staff_staff');
-        if (staffJson) {
-            var staffInfo = JSON.parse(staffJson);
-            $data.staffInfo = staffInfo;
+        var userJson = sessionStorage.getItem('hsd_user_user');
+        if (userJson) {
+            var userInfo = JSON.parse(userJson);
+            $data.userInfo = userInfo;
         }
         callback && callback();
         try {
@@ -292,17 +107,17 @@ var staff = {
     init: function (callback) {
         try {
             var expMillis = 0;
-            if (sessionStorage.getItem('hsd_staff_tokenExpMillis')) {
-                expMillis = sessionStorage.getItem('hsd_staff_tokenExpMillis') - (new Date().getTime());
+            if (sessionStorage.getItem('hsd_user_tokenExpMillis')) {
+                expMillis = sessionStorage.getItem('hsd_user_tokenExpMillis') - (new Date().getTime());
             }
             if (expMillis > 0 && expMillis < (10 * 60 * 1000)) {//还有10分钟过期
-                staff.refreshToken(callback);
+                user.refreshToken(callback);
             } else {
-                if (sessionStorage.getItem('hsd_staff_staff') && expMillis > 0) {
-                    staff.info(callback);
+                if (sessionStorage.getItem('hsd_user_user') && expMillis > 0) {
+                    user.info(callback);
                 } else {
-                    // staff.login(function () {
-                    //     staff.info(callback);
+                    // user.login(function () {
+                    //     user.info(callback);
                     // })
                     alert('未登录或登陆过期,请重新登陆!');
                     top.location.href = '/login.html';
@@ -326,39 +141,10 @@ var staff = {
                     if(val1==val2) return true
                     return false;
                 }
-                $data.staff = staff;
+                $data.user = user;
                 $data.util = util;
             }
         }
-    }
-    //-- shiro 权限
-    , hasPermission: function (str) {
-        //console.info("permsstr="+str)
-        var hsd_staff_authorizationInfo = sessionStorage.getItem("hsd_staff_authorizationInfoPerms");
-        //console.info("hsd_staff_authorizationInfo="+hsd_staff_authorizationInfo)
-        if (hsd_staff_authorizationInfo) {
-            var permsArr = hsd_staff_authorizationInfo.split(",");
-            //console.info("permsArr="+permsArr)
-            //console.info("permsstr="+str)
-            if (permsArr && permsArr.indexOf(str) != -1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
-    , hasRole: function (str) {
-        var hsd_staff_authorizationInfo = sessionStorage.getItem("hsd_staff_authorizationInfoRoles");
-        if (hsd_staff_authorizationInfo) {
-            var permsArr = hsd_staff_authorizationInfo.split(",");
-            if (permsArr && permsArr.indexOf(str) != -1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
     }
 }
 

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -12,9 +11,6 @@
     <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
     <link href="/plugins/hplus/css/style.css" rel="stylesheet">
     <link href="/plugins/hplus/css/login.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-    <![endif]-->
     <script>
         if (window.top !== window.self) {
             window.top.location = window.location;
@@ -26,7 +22,7 @@
     </style>
 </head>
 
-<body class="gray-bg top-navigation">
+<body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
 <div class="fixed-sidebar border-bottom white-bg">
     <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
         <div class="navbar-header">
@@ -96,17 +92,21 @@
                             <li> .......</li>
                             <li> .......</li>
                         </ul>
-                        <strong>还没有账号？ <a href="register.html">立即注册&raquo;</a></strong>
+                        <strong>还没有账号？ <a href="/register.html">立即注册&raquo;</a></strong>
                     </div>
                 </div>
                 <div class="col-sm-5">
-                    <form role="form" method="get" action="/html/account/actor/user/home.html">
-                        <h4 class="no-margins">登录</h4>
-                        <p class="m-t-md">-</p>
-                        <input type="text" class="form-control uname" placeholder="用户名"  required=""/>
-                        <input type="password" class="form-control pword m-b" placeholder="密码"  required=""/>
+                    <form id="_login_form"  ng-submit="uLogin()">
+                        <h4 class="no-margins">欢迎登录本站</h4>
+                        <h4 class="text-danger" ng-show="result.code!=0" ng-bind="result.message"></h4>
+                        <input type="text" name="account" class="form-control uname" placeholder="用户名"  required=""/>
+                        <input type="hidden" name="password" id="passwordA" />
+                        <input type="password"
+                               onkeydown="$('#passwordA').val($.md5($(this).val()));"
+                               onchange="$('#passwordA').val($.md5($(this).val()));"
+                               class="form-control pword m-b" placeholder="密码"  required=""/>
                         <a href="">忘记密码了？</a>
-                        <button class="btn btn-success btn-block">登录</button>
+                        <button type="submit" class="btn btn-success btn-block">登录</button>
                     </form>
                 </div>
             </div>
@@ -128,6 +128,8 @@
     <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
     <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
 
+    <script type="text/javascript" src="/js/jQuery.md5.js"></script>
+
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript">
@@ -135,8 +137,8 @@
         angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
             $data = $scope;
             $scope.uLogin = function () {
-                staff.login($('#_login_form').serialize(), function () {
-                    location.href = '/index.html';
+                user.login($('#_login_form').serialize(), function () {
+                    location.href = '/html/account/actor/user/home.html';
                 });
             }
         });

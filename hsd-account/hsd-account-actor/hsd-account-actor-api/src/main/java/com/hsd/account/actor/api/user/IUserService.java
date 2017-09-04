@@ -57,15 +57,21 @@ public interface IUserService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delBlacklist")
     public Response delBlacklist(UserDto dto) throws Exception;
 
-
     /**
      * <p>用户信息。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findUserByAccount")
     public UserDto findUserByAccount(@RequestParam("account") String account, @RequestParam("userType")  Integer userType);
+
     /**
      * <p>更新客户登陆信息
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/lastLogin")
     public Integer lastLogin(UserDto dto);
+
+    /**
+     * <p>客户注册。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/register")
+    public Response register(UserDto dto) throws Exception;
 }

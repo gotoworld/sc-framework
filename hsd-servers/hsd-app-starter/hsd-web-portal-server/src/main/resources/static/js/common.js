@@ -6,10 +6,16 @@ var apiPath = {
     }
 }
 var site = {
-    user: {
+    portalHome:"/html/account/actor/user/home.html"
+    ,user: {
         login: apiPath.account.actor + "/api/account/actor/sign/login" //登录
         , logout: apiPath.account.actor + "/api/account/actor/sign/logout" //登出
         , refreshToken: apiPath.account.actor + "/api/account/actor/sign/refreshToken" //刷新token
+        , refreshToken: apiPath.account.actor + "/api/account/actor/sign/refreshToken" //刷新token
+    }
+    ,findpwd: {
+        view: apiPath.account.actor + "/html/account/actor/user/findpwd"
+        , verify: apiPath.account.actor + "/html/account/actor/user/findpwd_verify"
     }
 }
 var $data, $ngHttp, $ngCompile, $ngSce;

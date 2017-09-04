@@ -78,7 +78,6 @@ public class UserService extends BaseService implements IUserService {
             return result;
         }
 
-
         @Override
         public PageInfo findDataIsPage(@RequestBody UserDto dto) throws Exception {
            PageInfo pageInfo=null;
@@ -135,7 +134,8 @@ public class UserService extends BaseService implements IUserService {
             }
             return result;
         }
-        @Override
+
+    @Override
 //        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response setBlacklist(@RequestBody UserDto dto) throws Exception {
             Response result = new Response(0,"seccuss");
@@ -150,7 +150,7 @@ public class UserService extends BaseService implements IUserService {
             }
             return result;
         }
-        @Override
+    @Override
 //        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response delBlacklist(@RequestBody UserDto dto) throws Exception {
             Response result = new Response(0,"seccuss");
@@ -165,7 +165,6 @@ public class UserService extends BaseService implements IUserService {
             }
             return result;
         }
-
     @Override
     public UserDto findUserByAccount(@RequestParam("account") String account, @RequestParam("userType")  Integer userType) {
         try {
@@ -178,6 +177,7 @@ public class UserService extends BaseService implements IUserService {
         }
         return null;
     }
+
     @Override
     public Integer lastLogin(@RequestBody UserDto dto) {
         try {
@@ -186,5 +186,29 @@ public class UserService extends BaseService implements IUserService {
             log.error("用户信息id,判断员工是否为超级管理员,要特权.,数据库处理异常!", e);
         }
         return 0;
+    }
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response register(@RequestBody UserDto dto) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null)throw new RuntimeException("参数异常!");
+            User entity = copyTo(dto, User.class);
+
+            if(ValidatorUtil.isEmpty(dto.getAccount())){
+                throw new RuntimeException("账号不能为空!");
+            }
+            if(userDao.isAccountYN(dto.getAccount())>0){
+                throw new RuntimeException("账号已存在!");
+            }
+            entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
+            //新增
+            userDao.insert(entity);
+            result.data=entity.getId();
+        } catch (Exception e) {
+            log.error("信息保存异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
     }
 }

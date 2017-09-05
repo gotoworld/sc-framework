@@ -121,9 +121,19 @@
         ,t1.pwd as "pwd"
         ,t1.trade_pwd as "tradePwd"
         from user t1
-        where  t1.state=1
+        where  t1.state=1 and t1.type=#{userType}
         and t1.account=#{account}
-        and t1.type=#{userType}
+    </select>
+    <select id="getAccount" parameterType="com.hsd.account.actor.entity.user.User" resultType="com.hsd.account.actor.entity.user.User">
+        select
+         t1.id as "id"
+        ,t1.account as "account"
+        ,t1.name as "name"
+        ,t1.email as "email"
+        ,t1.cellphone as "cellphone"
+        from user t1
+        where  t1.state=1 and t1.type=#{type}
+        and (t1.account=#{account} or t1.email=#{account} or t1.cellphone=#{account})
     </select>
 
 </mapper>

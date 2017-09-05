@@ -1,7 +1,5 @@
 package com.hsd.framework.util;
 
-import com.hsd.framework.config.AppConfig;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,9 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StrUtil {
-
-    private static final String rootFolderUpload = AppConfig.getProperty("common.fileServer.upload");
-    private static final String rootFolderDownload = AppConfig.getProperty("common.fileServer.download");
 
     /**
      * @param str        原始字符串
@@ -443,43 +438,6 @@ public class StrUtil {
      */
     public static String fmtStr(String str, String regex){
         return toLowerCaseFirstOne(toUpperCase(str,regex));
-    }
-    /**
-     * 将服务器相对地址转为物理地址
-     *
-     * @param url
-     * @return
-     */
-    public static String escapeRemoteToLocal(String url) {
-        String local_url = null;
-        if (url != null) {
-            if (!ValidatorUtil.isUrl(url)) {
-                local_url = url.replaceAll(
-                        rootFolderDownload,
-                        rootFolderUpload).replaceAll(
-                        "//", "/");
-            }
-        }
-        return local_url;
-    }
-
-    /**
-     * 将物理地址转为服务器相对地址
-     *
-     * @param url
-     * @return
-     */
-    public static String escapeLocalToRemote(String url) {
-        String remote_url = null;
-        if (url != null) {
-            if (!ValidatorUtil.isUrl(url)) {
-                remote_url = url.replaceAll(
-                        rootFolderUpload,
-                        rootFolderDownload)
-                        .replaceAll("//", "/");
-            }
-        }
-        return remote_url;
     }
     public static boolean containsStr(String a,String b){
         return a.contains(b);

@@ -4,7 +4,6 @@ import com.hsd.account.actor.api.actor.IBusinessTypeService;
 import com.hsd.account.actor.dto.actor.BusinessTypeDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
@@ -83,7 +82,6 @@ public class BusinessTypeController extends BaseController {
      */
    @RequiresPermissions("businessType:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
-    @ALogOperation(type = "删除", desc = "业务类型")
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("BusinessTypeController del.........");
@@ -104,7 +102,6 @@ public class BusinessTypeController extends BaseController {
     @RequiresPermissions(value = {"businessType:add", "businessType:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "业务类型")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute BusinessTypeDto dto, BindingResult bindingResult) {
         log.info("BusinessTypeController save.........");

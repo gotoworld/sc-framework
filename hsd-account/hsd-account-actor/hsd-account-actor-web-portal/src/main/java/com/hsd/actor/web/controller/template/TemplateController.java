@@ -5,7 +5,6 @@ import com.hsd.account.actor.dto.template.TemplateAttributeDto;
 import com.hsd.account.actor.dto.template.TemplateDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
@@ -96,7 +95,6 @@ public class TemplateController extends BaseController {
      */
     @RequiresPermissions("template:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
-    @ALogOperation(type = "删除", desc = "档案模板-逻辑删除")
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("TemplateController del.........");
@@ -119,7 +117,6 @@ public class TemplateController extends BaseController {
     @RequiresPermissions(value = {"template:add", "template:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "档案模板")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute TemplateDto dto, BindingResult bindingResult) {
         log.info("TemplateController save.........");

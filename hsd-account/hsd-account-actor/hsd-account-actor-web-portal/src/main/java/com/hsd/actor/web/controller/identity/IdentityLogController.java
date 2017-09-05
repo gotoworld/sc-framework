@@ -4,7 +4,6 @@ import com.hsd.account.actor.api.identity.IIdentityLogService;
 import com.hsd.account.actor.dto.identity.IdentityLogDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
@@ -80,7 +79,6 @@ public class IdentityLogController extends BaseController {
     @RequiresPermissions(value = {"identityLog:add", "identityLog:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "客户实名认证日志")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute IdentityLogDto dto, BindingResult bindingResult) {
         log.info("IdentityLogController save.........");

@@ -74,4 +74,14 @@ public interface IUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/register")
     public Response register(UserDto dto) throws Exception;
+    /**
+     * <p>获取账号信息。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getAccount")
+    public UserDto getAccount(UserDto dto) throws Exception;
+    /**
+     * <p>客户密码修改。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updatePwd")
+    public Response updatePwd(UserDto dto) throws Exception;
 }

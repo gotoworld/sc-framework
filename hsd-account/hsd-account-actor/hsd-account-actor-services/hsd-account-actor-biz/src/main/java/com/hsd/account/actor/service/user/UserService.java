@@ -48,10 +48,16 @@ public class UserService extends BaseService implements IUserService {
                         throw new RuntimeException("账号不能为空!");
                     }
                     if(userDao.isAccountYN(dto.getAccount())>0){
-                        throw new RuntimeException("账号已存在!");
+                        throw new RuntimeException("账号["+dto.getAccount()+"]已存在!");
                     }
-                    entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
-                    entity.setTradePwd(MD5.pwdMd5Hex(entity.getTradePwd()));
+                    if(ValidatorUtil.notEmpty(dto.getCellphone()) && userDao.isCellphoneYN(dto.getCellphone())>0){
+                        throw new RuntimeException("手机号["+dto.getCellphone()+"]已注册!");
+                    }
+                    if(ValidatorUtil.notEmpty(dto.getEmail()) && userDao.isEmailYN(dto.getEmail())>0){
+                        throw new RuntimeException("邮箱["+dto.getEmail()+"]已注册!");
+                    }
+                    if(ValidatorUtil.notEmpty(dto.getPwd())) entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
+                    if(ValidatorUtil.notEmpty(dto.getTradePwd())) entity.setTradePwd(MD5.pwdMd5Hex(entity.getTradePwd()));
                     //新增
                      userDao.insert(entity);
                      result.data=entity.getId();
@@ -177,7 +183,6 @@ public class UserService extends BaseService implements IUserService {
         }
         return null;
     }
-
     @Override
     public Integer lastLogin(@RequestBody UserDto dto) {
         try {
@@ -187,6 +192,7 @@ public class UserService extends BaseService implements IUserService {
         }
         return 0;
     }
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response register(@RequestBody UserDto dto) throws Exception {
@@ -199,7 +205,13 @@ public class UserService extends BaseService implements IUserService {
                 throw new RuntimeException("账号不能为空!");
             }
             if(userDao.isAccountYN(dto.getAccount())>0){
-                throw new RuntimeException("账号已存在!");
+                throw new RuntimeException("账号["+dto.getAccount()+"]已存在!");
+            }
+            if(ValidatorUtil.notEmpty(dto.getCellphone()) && userDao.isCellphoneYN(dto.getCellphone())>0){
+                throw new RuntimeException("手机号["+dto.getCellphone()+"]已注册!");
+            }
+            if(ValidatorUtil.notEmpty(dto.getEmail()) && userDao.isEmailYN(dto.getEmail())>0){
+                throw new RuntimeException("邮箱["+dto.getEmail()+"]已注册!");
             }
             entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
             //新增
@@ -207,6 +219,33 @@ public class UserService extends BaseService implements IUserService {
             result.data=entity.getId();
         } catch (Exception e) {
             log.error("信息保存异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    @Override
+    public UserDto getAccount(@RequestBody UserDto dto) {
+        try {
+            User entity = copyTo(dto,User.class);
+            return copyTo(userDao.getAccount(entity),UserDto.class);
+        } catch (Exception e) {
+            log.error("用户信息>根据用户登录名,数据库处理异常!", e);
+        }
+        return null;
+    }
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response updatePwd(@RequestBody UserDto dto) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数异常!");
+            User entity = copyTo(dto, User.class);
+            entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
+            if(userDao.updatePwd(entity)==0){
+                throw new RuntimeException("密码修改失败!");
+            }
+        } catch (Exception e) {
+            log.error("密码修改失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;

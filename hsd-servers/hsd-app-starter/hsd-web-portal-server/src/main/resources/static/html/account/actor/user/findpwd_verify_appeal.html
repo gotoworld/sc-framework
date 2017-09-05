@@ -14,7 +14,10 @@
     <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
     <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
     <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+    <link href="/plugins/hplus/css/plugins/steps/jquery.steps.css" rel="stylesheet">
     <style>
+        .middle-box {margin-top: 0px;}
+        .steps li{border-left: 1px dotted #ffffff;border-right: 1px dotted #ffffff;}
         .glyphicon{color: #1ab394;}
     </style>
 </head>
@@ -65,7 +68,7 @@
             <ul class="nav navbar-nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a ng-show="!util.notEmpty(userInfo.account)" data-toggle="modal" href="/login.html">
-                    <i class="fa fa-sign-in"></i> 登录
+                        <i class="fa fa-sign-in"></i> 登录
                     </a>
                     <a ng-show="util.notEmpty(userInfo.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
@@ -82,6 +85,16 @@
     </nav>
 </div>
 <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
+    <div class="wizard" style="width: 1330px;background: #eeeeee;position: absolute;top:100px;margin: 0px 0px 0px -20px;padding: 0px;height: 35px;overflow: hidden">
+        <div class=" steps clearfix">
+            <ul role="tablist">
+                <li role="tab" class="first " aria-disabled="false" aria-selected="true"><a><span class="number badge badge-info">1</span> 填写帐号</a></li>
+                <li role="tab" class="disabled current" aria-disabled="true"><a><span class="number badge badge-info">2</span> 身份验证</a></li>
+                <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">3</span> 密码重置</a></li>
+                <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">√</span> 完成</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="text-center loginscreen   animated fadeInDown"  style="width: 500px;padding: 10% 0;margin: 0 auto;">
         <div class="row">
             <div class="col-lg-12">
@@ -92,29 +105,36 @@
                             <hr>
                         </div>
                         <div class="col-sm-12">
-                            <form class="m-t" role="form" method="get" action="/html/account/actor/user/findpwd_success.html">
+                            <form class="m-t" role="form" method="get" action="/html/account/actor/user/findpwd_verify.html">
                                 <p class="col-md-12 text-muted text-left">
                                     是指通过提交个人资料及帐号使用信息来证明您是帐号主人的方式。
                                 </p>
+
                                 <p class="col-md-12 text-muted text-left">
-                                    申诉成功后可修改密码或密保。申诉结果一般会在4小时内发到您的联系邮箱。
-                                    说明：
+                                    请拨打人工服务热线:（工作日 9:00 - 21:30）
                                 </p>
-                                <p class="col-md-12 text-muted text-left">
-                                    1、申诉期间帐号可正常。
+                                <p class="col-md-12 text-muted " style="font-size: 40px;color: #0d8ddb">
+                                    4008-331-333
                                 </p>
-                                <p class="col-md-12 text-muted text-left">
-                                    2、因帐号买卖、赠予、共用引起的申诉纠纷，X概不受理。
-                                </p>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control" placeholder="请输入手机/账号/邮箱" required="">
-                                </div>
-                                <div class=" col-md-12" style="margin: 50px 0 10px 0px;">
-                                    <input type="text" class="form-control" placeholder="请输入验证码" required="" style="float: left; width: 300px;">
-                                    <img src="/img/captcha.jpg" style="width: 100px;height: 35px;float: right;">
-                                </div>
+                                <!--<p class="col-md-12 text-muted text-left">-->
+                                    <!--申诉成功后可修改密码或密保。申诉结果一般会在4小时内发到您的联系邮箱。-->
+                                    <!--说明：-->
+                                <!--</p>-->
+                                <!--<p class="col-md-12 text-muted text-left">-->
+                                    <!--1、申诉期间帐号可正常。-->
+                                <!--</p>-->
+                                <!--<p class="col-md-12 text-muted text-left">-->
+                                    <!--2、因帐号买卖、赠予、共用引起的申诉纠纷，X概不受理。-->
+                                <!--</p>-->
+                                <!--<div class="col-md-12">-->
+                                    <!--<input type="text" class="form-control" placeholder="请输入手机/账号/邮箱" required="">-->
+                                <!--</div>-->
+                                <!--<div class=" col-md-12" style="margin: 50px 0 10px 0px;">-->
+                                    <!--<input type="text" class="form-control" placeholder="请输入验证码" required="" style="float: left; width: 300px;">-->
+                                    <!--<img src="/img/captcha.jpg" style="width: 100px;height: 35px;float: right;">-->
+                                <!--</div>-->
                                 <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
-                                    <button type="submit" class="btn btn-primary block full-width m-b">开始申诉</button>
+                                    <a href="/html/account/actor/user/findpwd_verify.html" style="border: 1px solid #1ab394;color: #1ab394;" class="btn  block full-width m-b">返回</a>
                                 </div>
                             </form>
                         </div>

@@ -4,7 +4,6 @@ import com.hsd.account.actor.api.actor.ITagService;
 import com.hsd.account.actor.dto.actor.TagDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
@@ -95,7 +94,6 @@ public class TagController extends BaseController {
      */
     @RequiresPermissions("tag:phydel")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "phydel/{id}")
-    @ALogOperation(type = "删除", desc = "标签-物理删除")
     @ApiOperation(value = "物理删除")
     public Response phydel(@PathVariable("id") Long id) {
         log.info("TagController phydel.........");
@@ -118,7 +116,6 @@ public class TagController extends BaseController {
     @RequiresPermissions(value = {"tag:add", "tag:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "标签")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute TagDto dto, BindingResult bindingResult) {
         log.info("TagController save.........");

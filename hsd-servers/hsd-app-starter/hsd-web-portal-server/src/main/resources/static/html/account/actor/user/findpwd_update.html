@@ -196,7 +196,7 @@
                 if ($("#form_1").valid()) {
                     $.post(site.findpwd.update, $('#form_1').serialize(), function (result) {
                         if (result.code == 0) {
-                            sessionStorage.setItem(site.findpwd.view, location.href);
+                            sessionStorage.removeItem(site.findpwd.view);
                             parent.location.href = site.findpwd.view + '_success.html';
                         } else {
                             alert(result.message);

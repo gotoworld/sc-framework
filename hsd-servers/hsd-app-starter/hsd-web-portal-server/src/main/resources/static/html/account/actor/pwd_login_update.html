@@ -16,7 +16,6 @@
         }
     </script>
     <style>
-
     </style>
 </head>
 
@@ -110,8 +109,8 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem active" href="home.html">账户总览</a>
-                            <a class="J_menuItem" href="home_setting.html">个人设置</a>
+                            <a class="J_menuItem" href="home.html">账户总览</a>
+                            <a class="J_menuItem active" href="home_setting.html">个人设置</a>
                             <a class="J_menuItem" href="#">自动投标</a>
                             <a class="J_menuItem" href="#">消息中心</a>
                         </li>
@@ -205,165 +204,49 @@
         <div class="row">
             <div class="ibox float-e-margins">
                 <div class="row   white-bg dashboard-header">
-                    <!--<div class="col-sm-12">-->
-                        <!--<blockquote class="text-warning" style="font-size:14px">-->
-                            <!--<h4 class="text-danger">那么，现在...</h4>-->
-                        <!--</blockquote>-->
-                        <!--<hr>-->
-                    <!--</div>-->
+                    <div class="col-sm-12">
+                        <blockquote class="text-warning" style="font-size:14px;background-color:#EEEEEE">
+                        <h4 class="text-warning">修改登录密码</h4>
+                        </blockquote>
+                    </div>
                     <div class="col-md-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-content" style="border:0px;">
-                                <div class="row">
-                                    <div class="col-sm-6 b-r" style="height: 150px;">
-                                        <div class="col-sm-3" style="margin-top: 0px;padding-left: 0;">
-                                            <i class="fa fa-user-secret " style="font-size: 140px;"></i>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p>150****2231</p>
-                                            <p>会员等级：<span class="label label-info">V1 普通会员</span></p>
-                                            <p>我的合积分：100分</p>
-                                            <p>您尚未完成实名认证，为保障您的资金安全，建议您立即进行实名认证。</p>
-                                            <p>
-                                                <h3 style="float: left;margin-left: 5px;color: #0d8ddb"> <i class="fa fa-money"></i> </h3>
-                                                <h3 style="float: left;margin-left: 5px;"> <i class="fa fa-cab"></i> </h3>
-                                                <h3 style="float: left;margin-left: 5px;"> <i class="fa fa-ship"></i> </h3>
-                                                <h3 style="float: left;margin-left: 5px;"> <i class="fa fa-file"></i> </h3>
-                                                <h3 style="float: left;margin-left: 5px;"> <i class="fa fa-cog"></i> </h3>
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p> 资产总额 ￥0.00 </p>
-                                        <p> 总收益 ￥0.00 </p>
-                                        <p> 可用余额 ￥0.00 </p>
-                                        <p> 待收本金总额 ￥0.00 </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tabs-container">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 我的投资</a>
-                                </li>
-                                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">我的借款</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div id="tab-1" class="tab-pane active">
-                                    <div class="panel-body">
-                                        <div class="col-sm-6 b-r" style="height: 150px;">
-                                            <p>定期理财 </p>
-                                            <p> 待收本金 ￥0.00 </p>
-                                            <p> 待收利息 ￥0.00 </p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p>芝麻开花 </p>
-                                            <p> 待收本金 ￥0.00 </p>
-                                            <p> 预期待收利息 ￥0.00 </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tab-2" class="tab-pane">
-                                    <div class="panel-body">
-                                        <p>净值借款 </p>
-                                        <div class="col-sm-3 b-r" style="height: 150px;">
-                                            待还总额
-                                            ￥0
-                                        </div>
-                                        <div class="col-sm-3 b-r">
-                                            待还本金
-                                            ￥0
-                                        </div>
-                                        <div class="col-sm-3 b-r">
-                                            待还利息
-                                            ￥0
-                                        </div>
-                                        <div class="col-sm-3">
-                                            待还罚息
-                                            ￥0
+                        <div class="ibox-content" style="border:0px;">
+                            <div class=" loginscreen   animated fadeInDown"  style="width: 500px;padding: 30px 0;margin: 0 auto;">
+                                <div class="ibox float-e-margins">
+                                    <div class="white-bg dashboard-header">
+                                        <div class="col-sm-12" style="margin-top: 0px;">
+                                            <form id="form_1" class="form m-t" role="form" ng-submit="submitForm()">
+                                                <p class="col-md-12 text-muted text-left">
+                                                    密码长度8-20位,建议字母,数字,标点的组合来提高账号安全度
+                                                    <input type="hidden" name="accid" ng-value="userInfo.id">
+                                                </p>
+                                                <div class="col-md-12">
+                                                    <input type="hidden" name="oldpwd" id="oldpwdA">
+                                                    <input type="password" id="oldpasswordA"
+                                                           onkeydown="$('#oldpwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#oldpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入原始密码" required="">
+                                                </div>
+                                                <div class="col-md-12"  style="margin-top:20px; ">
+                                                    <input type="hidden" name="newpwd" id="newpwdA">
+                                                    <input type="password" id="newpasswordA" name="newpasswordA"
+                                                           onkeydown="$('#newpwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#newpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入新密码" required="">
+                                                </div>
+                                                <div class="col-md-12" style="margin-top:20px; ">
+                                                    <input type="hidden" name="confirmpwd" id="confirmpwdA">
+                                                    <input type="password" equalTo="#newpasswordA" id="confirmpwdB" name="confirmpwdB"
+                                                           onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认新密码" required="">
+                                                </div>
+                                                <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
+                                                    <button type="submit" class="btn btn-primary block full-width m-b">保存新密码</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <img src="/img/19.jpg" style="height: 100px;width: 100%;margin-top: 15px;">
-                        <hr>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="col-md-6 b-r" style="height: 300px;">
-                            <div class="ibox ">
-                                <div class="ibox-title" style="border-top:0;">
-                                    <h5><2017</h5>
-                                </div>
-                                <div class="ibox-content">
-                                    <div class="spiner-example">
-                                        <div class="sk-spinner sk-spinner-cube-grid">
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6" >
-                            <div class="tabs-container">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tabB-1" aria-expanded="true"> 投标概况</a>
-                                    </li>
-                                    <li class=""><a data-toggle="tab" href="#tabB-2" aria-expanded="false">近期回款</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div id="tabB-1" class="tab-pane active">
-                                        <div class="panel-body">
-                                            <table class="table table-bordered table-striped">
-                                                <thead>
-                                                <tr> <th> 状态 </th> <th> 笔数 </th> <th> 金额 </th> </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr> <th> 回款中</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 投标中</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 已回款</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 总计</th> <td>0</td> <td>0.00</td> </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div id="tabB-2" class="tab-pane">
-                                        <div class="panel-body">
-                                            <table class="table table-bordered table-striped">
-                                                <thead>
-                                                <tr> <th> 时间 </th> <th> 笔数 </th> <th> 金额 </th> </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr> <th> 本周</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 本月</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 下月</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 本年</th> <td>0</td> <td>0.00</td> </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-sm-12 text-center" style="text-align: center;margin-top: 50px;">
-                        <h4>今天有新的理财产品哦，赶快来参与吧 <button class="btn btn-success">立即投资</button></h4>
                     </div>
                 </div>
             </div>
@@ -386,10 +269,15 @@
     <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
     <!--<script src="/plugins/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
     <!--<script src="/plugins/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
-    <script src="/plugins/hplus/js/plugins/layer/layer.min.js"></script>
     <!-- 自定义js -->
     <!--<script src="/plugins/hplus/js/hplus.js?v=4.1.0"></script>-->
     <!--<script type="text/javascript" src="/plugins/hplus/js/contabs.js"></script>-->
+    <script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+    <script src="/js/jQuery.md5.js" type="text/javascript"></script>
+    <script src="/plugins/layer/layer.js" type="text/javascript"></script>
+    <script src="/js/global.js" type="text/javascript"></script>
 
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
@@ -399,6 +287,20 @@
             user.init(function(){
 
             });
+            $scope.submitForm=function(){
+               if($("#form_1").valid()){
+                    $.post(site.userSetting.loginpwd.update, $('#form_1').serialize(),function (result) {
+                        if (result.code == 0) {
+                            parent.location.href = site.userSetting.loginpwd.view+'_success.html';
+                        } else {
+                            alert(result.message);
+                        }
+                    }, 'json');
+                }
+            }
+        });
+        $(document).ready(function(){
+            $("#form_1").validate();
         });
     </script>
 </body>

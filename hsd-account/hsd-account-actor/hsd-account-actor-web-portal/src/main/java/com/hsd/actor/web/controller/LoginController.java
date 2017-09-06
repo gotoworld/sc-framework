@@ -65,7 +65,15 @@ public class LoginController extends BaseController {
             Map<String, Object> data = new HashMap<>();
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", authorizationToken);
-            data.put("user", JSONObject.parseObject(subject, UserDto.class));
+
+            UserDto userJon=JSONObject.parseObject(subject, UserDto.class);
+
+            if (ValidatorUtil.notEmpty(user.getCellphone()))
+                userJon.setCellphone(user.getCellphone().replaceAll("(\\d{3})\\d{5}(\\d{3})", "$1****$2"));
+            if (ValidatorUtil.notEmpty(user.getEmail()))
+                userJon.setEmail(user.getEmail().substring(0, 1) + "****" + user.getEmail().substring(user.getEmail().indexOf("@") - 1, user.getEmail().length()));
+
+            data.put("user",userJon );
 
             try {
                 //读取session中的用户

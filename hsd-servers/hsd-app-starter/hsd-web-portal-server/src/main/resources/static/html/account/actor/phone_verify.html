@@ -16,7 +16,6 @@
         }
     </script>
     <style>
-
     </style>
 </head>
 
@@ -110,8 +109,8 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem active" href="home.html">账户总览</a>
-                            <a class="J_menuItem" href="home_setting.html">个人设置</a>
+                            <a class="J_menuItem" href="home.html">账户总览</a>
+                            <a class="J_menuItem active" href="home_setting.html">个人设置</a>
                             <a class="J_menuItem" href="#">自动投标</a>
                             <a class="J_menuItem" href="#">消息中心</a>
                         </li>
@@ -205,165 +204,44 @@
         <div class="row">
             <div class="ibox float-e-margins">
                 <div class="row   white-bg dashboard-header">
-                    <!--<div class="col-sm-12">-->
-                        <!--<blockquote class="text-warning" style="font-size:14px">-->
-                            <!--<h4 class="text-danger">那么，现在...</h4>-->
-                        <!--</blockquote>-->
-                        <!--<hr>-->
-                    <!--</div>-->
+                    <div class="col-sm-12">
+                        <blockquote class="text-warning" style="font-size:14px;background-color:#EEEEEE">
+                        <h4 class="text-warning">修改绑定手机</h4>
+                        </blockquote>
+                    </div>
                     <div class="col-md-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-content" style="border:0px;">
-                                <div class="row">
-                                    <div class="col-sm-6 b-r" style="height: 150px;">
-                                        <div class="col-sm-3" style="margin-top: 0px;padding-left: 0;">
-                                            <i class="fa fa-user-secret " style="font-size: 140px;"></i>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p>150****2231</p>
-                                            <p>会员等级：<span class="label label-info">V1 普通会员</span></p>
-                                            <p>我的合积分：100分</p>
-                                            <p>您尚未完成实名认证，为保障您的资金安全，建议您立即进行实名认证。</p>
-                                            <p>
-                                                <h3 style="float: left;margin-left: 5px;color: #0d8ddb"> <i class="fa fa-money"></i> </h3>
-                                                <h3 style="float: left;margin-left: 5px;"> <i class="fa fa-cab"></i> </h3>
-                                                <h3 style="float: left;margin-left: 5px;"> <i class="fa fa-ship"></i> </h3>
-                                                <h3 style="float: left;margin-left: 5px;"> <i class="fa fa-file"></i> </h3>
-                                                <h3 style="float: left;margin-left: 5px;"> <i class="fa fa-cog"></i> </h3>
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p> 资产总额 ￥0.00 </p>
-                                        <p> 总收益 ￥0.00 </p>
-                                        <p> 可用余额 ￥0.00 </p>
-                                        <p> 待收本金总额 ￥0.00 </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tabs-container">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 我的投资</a>
-                                </li>
-                                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">我的借款</a>
-                                </li>
+                        <div class="ibox-content" style="border:0px;">
+                            <ul class="stepsli tab_box">
+                                <li class="hover"><i>1</i><span></span><em>验证</em></li>
+                                <li><i>2</i><span></span><em>手机绑定</em></li>
+                                <li class="last"><i>√</i><span></span><em>完成</em></li>
                             </ul>
-                            <div class="tab-content">
-                                <div id="tab-1" class="tab-pane active">
-                                    <div class="panel-body">
-                                        <div class="col-sm-6 b-r" style="height: 150px;">
-                                            <p>定期理财 </p>
-                                            <p> 待收本金 ￥0.00 </p>
-                                            <p> 待收利息 ￥0.00 </p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p>芝麻开花 </p>
-                                            <p> 待收本金 ￥0.00 </p>
-                                            <p> 预期待收利息 ￥0.00 </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tab-2" class="tab-pane">
-                                    <div class="panel-body">
-                                        <p>净值借款 </p>
-                                        <div class="col-sm-3 b-r" style="height: 150px;">
-                                            待还总额
-                                            ￥0
-                                        </div>
-                                        <div class="col-sm-3 b-r">
-                                            待还本金
-                                            ￥0
-                                        </div>
-                                        <div class="col-sm-3 b-r">
-                                            待还利息
-                                            ￥0
-                                        </div>
-                                        <div class="col-sm-3">
-                                            待还罚息
-                                            ￥0
+                            <div class="text-center loginscreen   animated fadeInDown"  style="width: 500px;padding: 30px 0;margin: 0 auto;">
+                                <div class="ibox float-e-margins">
+                                    <div class="   white-bg dashboard-header">
+                                        <div class="col-sm-12" style="margin-top: 0px;">
+                                            <form id="form_1" class="" role="form" ng-submit="submitForm();">
+                                                <input type="hidden" name="accid" ng-value="userInfo.id">
+                                                <p class="text-muted text-left" style="margin-left: 10px;">
+                                                    发送短信验证码至<span ng-bind="userInfo.cellphone">***********</span>
+                                                </p>
+                                                <div class=" row" style="margin: 0 0 10px 10px;">
+                                                    <input type="text" id="smsCaptcha" name="smsCaptcha" class="form-control" placeholder="请输入短信验证码" required="" style="float: left; width: 300px;">
+                                                    <button onclick="sendSMS()" class="btn btn-primary block m-b" style="float: right;" id="sendSMSBtn">发送验证码</button>
+                                                </div>
+                                                <div class="row m-b" style="margin: 0 0 10px 10px;">
+                                                    <input type="text"id="imgCaptcha"  name="imgCaptcha" style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
+                                                    <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
+                                                </div>
+                                                <div class="col-sm-12" style="margin-top: 40px;margin-right: 10px;">
+                                                    <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <img src="/img/19.jpg" style="height: 100px;width: 100%;margin-top: 15px;">
-                        <hr>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="col-md-6 b-r" style="height: 300px;">
-                            <div class="ibox ">
-                                <div class="ibox-title" style="border-top:0;">
-                                    <h5><2017</h5>
-                                </div>
-                                <div class="ibox-content">
-                                    <div class="spiner-example">
-                                        <div class="sk-spinner sk-spinner-cube-grid">
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                            <div class="sk-cube"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6" >
-                            <div class="tabs-container">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tabB-1" aria-expanded="true"> 投标概况</a>
-                                    </li>
-                                    <li class=""><a data-toggle="tab" href="#tabB-2" aria-expanded="false">近期回款</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div id="tabB-1" class="tab-pane active">
-                                        <div class="panel-body">
-                                            <table class="table table-bordered table-striped">
-                                                <thead>
-                                                <tr> <th> 状态 </th> <th> 笔数 </th> <th> 金额 </th> </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr> <th> 回款中</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 投标中</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 已回款</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 总计</th> <td>0</td> <td>0.00</td> </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div id="tabB-2" class="tab-pane">
-                                        <div class="panel-body">
-                                            <table class="table table-bordered table-striped">
-                                                <thead>
-                                                <tr> <th> 时间 </th> <th> 笔数 </th> <th> 金额 </th> </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr> <th> 本周</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 本月</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 下月</th> <td>0</td> <td>0.00</td> </tr>
-                                                <tr> <th> 本年</th> <td>0</td> <td>0.00</td> </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-sm-12 text-center" style="text-align: center;margin-top: 50px;">
-                        <h4>今天有新的理财产品哦，赶快来参与吧 <button class="btn btn-success">立即投资</button></h4>
                     </div>
                 </div>
             </div>
@@ -399,7 +277,53 @@
             user.init(function(){
 
             });
+            $scope.submitForm=function(){
+                if(!util.notEmpty($('#smsCaptcha').val())){
+                    alert('请输入短信验证码');
+                    return;
+                }
+                //
+                $.post(site.userSetting.phone.verify,$('#form_1').serialize(),function (result) {
+                    if (result.code == 0) {
+                        parent.location.href = site.userSetting.phone.view+'_update.html';
+                    } else {
+                        alert(result.message);
+                    }
+                }, 'json');
+            }
         });
+
+        var sendSMS=function(){
+            if(!util.notEmpty($('#imgCaptcha').val())){
+                alert('请输入图片中的数字或字母');
+                return;
+            }
+//            if($('#sendSMSBtn').attr("disabled")==false) return;
+            $('#sendSMSBtn').attr("disabled",true);
+            $.post(site.userSetting.phone.verifySms, $('#form_1').serialize(),function (result) {
+                if (result.code == 0) {
+                    timeCount=60;
+                    sendSMSBtnOut();
+                } else {
+                    timeCount=0;
+                    sendSMSBtnOut();
+                    alert(result.message);
+                }
+            }, 'json');
+        }
+
+        var sendSMSBtnOut=function(){
+            if(timeCount<=0){
+                $('#sendSMSBtn').attr("disabled",false);
+                $('#sendSMSBtn').html('发送验证码');
+                return;
+            }
+            $('#sendSMSBtn').html('('+timeCount+')重新发送');
+            setTimeout(function(){
+                timeCount--;
+                sendSMSBtnOut();
+            },1000);
+        }
     </script>
 </body>
 

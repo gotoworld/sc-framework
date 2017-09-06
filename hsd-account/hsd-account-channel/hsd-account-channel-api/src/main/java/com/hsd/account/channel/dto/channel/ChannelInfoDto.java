@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -42,6 +45,7 @@ public class ChannelInfoDto extends BaseDto {
 	 @Size(max=50,message="fax最大50字符")
      private String fax;
      /**生日*/
+	 @DateTimeFormat(pattern="yyyy-MM-dd")
      private Date birthday;
      /**婚姻状态(0：已婚，1,：未婚）*/
      private Integer maritalStatus;
@@ -89,6 +93,7 @@ public class ChannelInfoDto extends BaseDto {
 	 @Size(max=500,message="remark最大500字符")
      private String remark;
      /**开始工作时间*/
+	 @DateTimeFormat(pattern="yyyy-MM-dd")
      private Date workStartDate;
      /**户籍与居住地是否一致*/
      private Integer domicileLiveDiff;

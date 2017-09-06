@@ -31,6 +31,9 @@ var site = {
         login: apiPath.account.channel + "/api/account/channel/sign/login" //登录
         , logout: apiPath.account.channel + "/api/account/channel/sign/logout" //登出
         , refreshToken: apiPath.account.channel + "/api/account/channel/sign/refreshToken" //刷新token
+        , modifyPwd: apiPath.account.channel +"/api/account/channel/sign/modifyPwd"
+        , edit: apiPath.account.channel + "/api/account/channel/channel/channelInfo/edit"
+        , info: apiPath.account.channel + "/api/account/channel/channel/channelInfo/info/"
     }
 }
 var $data, $ngHttp, $ngCompile, $ngSce;
@@ -220,6 +223,7 @@ var channel = {
                 var channelInfoUser = JSON.parse(channelJson);
                 $data.channelInfoUser = channelInfoUser;
             }
+            console.info("111111111");
             callback && callback();
         } catch (e) {
         } finally {

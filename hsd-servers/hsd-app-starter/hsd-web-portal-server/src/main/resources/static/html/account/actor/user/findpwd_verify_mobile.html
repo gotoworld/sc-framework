@@ -14,7 +14,9 @@
     <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
     <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
     <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+    <link href="/plugins/hplus/css/plugins/steps/jquery.steps.css" rel="stylesheet">
     <style>
+        .steps li{border-left: 1px dotted #ffffff;border-right: 1px dotted #ffffff;}
         .glyphicon{color: #1ab394;}
     </style>
 </head>
@@ -65,7 +67,7 @@
             <ul class="nav navbar-nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a ng-show="!util.notEmpty(userInfo.account)" data-toggle="modal" href="/login.html">
-                    <i class="fa fa-sign-in"></i> 登录
+                        <i class="fa fa-sign-in"></i> 登录
                     </a>
                     <a ng-show="util.notEmpty(userInfo.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
@@ -82,6 +84,16 @@
     </nav>
 </div>
 <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
+    <div class="wizard" style="width: 1330px;background: #eeeeee;position: absolute;top:100px;margin: 0px 0px 0px -20px;padding: 0px;height: 35px;overflow: hidden">
+        <div class=" steps clearfix">
+            <ul role="tablist">
+                <li role="tab" class="first " aria-disabled="false" aria-selected="true"><a><span class="number badge badge-info">1</span> 填写帐号</a></li>
+                <li role="tab" class="disabled current" aria-disabled="true"><a><span class="number badge badge-info">2</span> 身份验证</a></li>
+                <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">3</span> 设置新密码</a></li>
+                <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">√</span> 完成</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="text-center loginscreen   animated fadeInDown"  style="width: 500px;padding: 10% 0;margin: 0 auto;">
         <div class="row">
             <div class="col-lg-12">
@@ -92,15 +104,19 @@
                             <hr>
                         </div>
                         <div class="col-sm-12" style="margin-top: 50px;">
-                            <form class="m-t" role="form" method="get" action="/html/account/actor/user/findpwd_update.html">
+                            <form class="m-t" role="form" ng-submit="verifyCaptcha();">
                                 <p class="text-muted text-left" style="margin-left: 10px;">
-                                    短信验证码已发送至150*****231
+                                    短信验证码发送至<span ng-bind="accountInfo.cellphone">***********</span>
                                 </p>
                                 <div class=" row" style="margin: 0 0 10px 10px;">
-                                    <input type="text" class="form-control" placeholder="请输入短信验证码" required="" style="float: left; width: 300px;">
-                                    <a  class="btn btn-primary block m-b" style="float: right;">重发验证码</a>
+                                    <input type="text" id="smsCaptcha" class="form-control" placeholder="请输入短信验证码" required="" style="float: left; width: 300px;">
+                                    <button onclick="sendSMS()" class="btn btn-primary block m-b" style="float: right;" id="sendSMSBtn">发送验证码</button>
                                 </div>
-                                <div class="col-sm-12" style="margin-top: 100px;margin-right: 10px;">
+                                <div class="row m-b" style="margin: 0 0 10px 10px;">
+                                    <input type="text"id="imgCaptcha"  name="captcha" style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
+                                    <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
+                                </div>
+                                <div class="col-sm-12" style="margin-top: 70px;margin-right: 10px;">
                                     <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
                                     <p class="text-muted ">
                                         <a href="#" class="text-left" style="float: left;">短信验证码没收到</a>
@@ -133,12 +149,65 @@
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript">
+        var timeCount=60;
         angular.module("app", []).controller("app-ctrl", function ($scope) {
             $data = $scope;
             $data.util = util;
             $data.user = user;
             user.info(function(){});
+            var accountStr=sessionStorage.getItem(site.findpwd.verify);
+            if(accountStr){
+                $data.accountInfo=JSON.parse(accountStr);
+            }else{
+                alert('请选输入账号!');
+                parent.location.href = site.findpwd.view+'.html';
+            }
+            $scope.verifyCaptcha=function(){
+                if(!util.notEmpty($('#smsCaptcha').val())){
+                    alert('请输入短信验证码');
+                    return;
+                }
+                $.post(site.findpwd.verifyCaptchaSms,{id:$data.accountInfo.id,captcha:$('#smsCaptcha').val()},function (result) {
+                    if (result.code == 0) {
+                        sessionStorage.setItem(site.findpwd.view,location.href);
+                        parent.location.href = site.findpwd.view+'_update.html';
+                    } else {
+                        alert(result.message);
+                    }
+                }, 'json');
+            }
         });
+
+        var sendSMS=function(){
+            if(!util.notEmpty($('#imgCaptcha').val())){
+                alert('图片中的数字或字母');
+                return;
+            }
+//            if($('#sendSMSBtn').attr("disabled")==false) return;
+            $('#sendSMSBtn').attr("disabled",true);
+            $.post(site.findpwd.sendSms,{accid:$data.accountInfo.id,captcha:$('#imgCaptcha').val()},function (result) {
+                if (result.code == 0) {
+                    timeCount=60;
+                    sendSMSBtnOut();
+                } else {
+                    timeCount=0;
+                    alert(result.message);
+                }
+            }, 'json');
+        }
+
+        var sendSMSBtnOut=function(){
+            if(timeCount<=0){
+                $('#sendSMSBtn').attr("disabled",false);
+                $('#sendSMSBtn').html('发送验证码');
+                return;
+            }
+            $('#sendSMSBtn').html('('+timeCount+')重新发送');
+            setTimeout(function(){
+                timeCount--;
+                sendSMSBtnOut();
+            },1000);
+        }
     </script>
 </body>
 

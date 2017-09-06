@@ -3,6 +3,7 @@ package com.hsd.actor.web.controller.user;
 import com.hsd.account.actor.api.user.IUserService;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.Response;
+import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
@@ -12,13 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Api(description = "客户注册")
 @RestController
 @Slf4j
+@NoAuthorize
 public class RegisterController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
@@ -30,7 +35,7 @@ public class RegisterController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, value = acPrefix + "reg")
     @RfAccount2Bean
-    @ApiOperation(value = "信息保存")
+    @ApiOperation(value = "客户注册")
     public Response reg(@Validated @ModelAttribute UserDto dto, BindingResult bindingResult) {
         log.info("RegisterController reg.........");
         Response result = new Response();

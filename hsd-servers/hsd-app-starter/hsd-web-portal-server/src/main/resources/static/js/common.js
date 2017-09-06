@@ -13,11 +13,18 @@ var site = {
         , refreshToken: apiPath.account.actor + "/api/account/actor/sign/refreshToken" //刷新token
     }
     ,findpwd: {
-        view: apiPath.account.actor + "/html/account/actor/user/findpwd"
-        , verify: apiPath.account.actor + "/html/account/actor/user/findpwd_verify"
+        view: basePath + "/html/account/actor/user/findpwd"
+        , verify: basePath + "/html/account/actor/user/findpwd_verify"
+        , getAccount: apiPath.account.actor + "/api/account/actor/findpwd/getAccount"
+        , sendSms:apiPath.account.actor+"/api/account/actor/findpwd/send/captcha/sms"
+        , sendMmail:apiPath.account.actor+"/api/account/actor/findpwd/send/captcha/email"
+        , verifyCaptchaSms: apiPath.account.actor + "/api/account/actor/findpwd/verifyCaptchaSms" //验证码校验并设置密码重置状态
+        , verifyCaptchaEmail: apiPath.account.actor + "/api/account/actor/findpwd/verifyCaptchaEmail" //验证码校验并设置密码重置状态
+        , verifystate: apiPath.account.actor + "/api/account/actor/findpwd/verifystate" //校验密码重置状态
+        , update: apiPath.account.actor + "/api/account/actor/findpwd/update" //密码修改
     }
     ,register: {
-        view: apiPath.account.actor + "/html/account/actor/user/register"
+        view: basePath + "/html/account/actor/user/register"
         , register: apiPath.account.actor + "/api/account/actor/register/reg"
     }
     ,channel: { //渠道商

@@ -66,7 +66,7 @@ public class ChannelTypeController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
     @ApiOperation(value = "信息列表")
     public Response list(@ModelAttribute ChannelTypeDto dto) {
-        log.info("SysDomainController list.........");
+        log.info("ChannelTypeController list.........");
         Response result = new Response();
         try {
             if (dto == null) {

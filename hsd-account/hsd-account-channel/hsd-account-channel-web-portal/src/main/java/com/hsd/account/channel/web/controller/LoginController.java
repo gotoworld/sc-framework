@@ -41,15 +41,15 @@ import java.util.Map;
 @Slf4j
 @NoAuthorize
 public class LoginController extends BaseController {
-    private static final String acPrefix = "/boss/account/channel/sign/";
+    private static final String acPrefix = "/api/account/channel/sign/";
     @Autowired
     private IChannelInfoService channelInfoService;
     /**
      * <p>渠道商登录
      */
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix+"/login")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/login")
     @ApiOperation(value = "登录")
-    public Response login(@RequestParam("account") String account , @RequestParam("pwd")String pwd ) throws Exception {
+    public Response login(@RequestParam("account") String account , @RequestParam("pwd") String pwd ) throws Exception {
         log.info("ChannelLoginController login");
         Response result = new Response();
             try {

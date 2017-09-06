@@ -88,6 +88,7 @@ public class JwtUtil {
         jo.put("id", ReflectUtil.getValueByFieldName(obj, "id"));
         jo.put("account", ReflectUtil.getValueByFieldName(obj, "account"));
         jo.put("name", ReflectUtil.getValueByFieldName(obj, "name"));
+        jo.put("channelName", ReflectUtil.getValueByFieldName(obj, "channelName"));
         jo.put("authorizationInfoPerms", ReflectUtil.getValueByFieldName(obj, "authorizationInfoPerms"));
         jo.put("authorizationInfoRoles", ReflectUtil.getValueByFieldName(obj, "authorizationInfoRoles"));
         return jo.toJSONString();

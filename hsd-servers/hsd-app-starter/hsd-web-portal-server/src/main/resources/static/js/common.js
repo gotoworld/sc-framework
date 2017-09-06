@@ -32,8 +32,9 @@ var site = {
         , logout: apiPath.account.channel + "/api/account/channel/sign/logout" //登出
         , refreshToken: apiPath.account.channel + "/api/account/channel/sign/refreshToken" //刷新token
         , modifyPwd: apiPath.account.channel +"/api/account/channel/sign/modifyPwd"
-        , edit: apiPath.account.channel + "/api/account/channel/channel/channelInfo/edit"
-        , info: apiPath.account.channel + "/api/account/channel/channel/channelInfo/info/"
+        , edit: apiPath.account.channel + "/api/account/channel/channelInfo/edit"
+        , info: apiPath.account.channel + "/api/account/channel/channelInfo/info/"
+        , list: apiPath.account.channel + "/api/account/channel/channelInfo/list"
     }
 }
 var $data, $ngHttp, $ngCompile, $ngSce;

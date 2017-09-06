@@ -22,21 +22,117 @@
 
 </head>
 
-<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
-<div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="ibox float-e-margins">
-			<div class="ibox-content col-md-12">
+<body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
+    <div class="fixed-sidebar border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要投资
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">芝麻开花</a></li>
+                        <li><a href="">定期项目</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要借款
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">汽车分期</a> </li>
+                        <li><a href="">净值借款</a> </li>
+                        <li><a href="">线下借款</a> </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 信息披露
+                        <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">关于我们</a> </li>
+                        <li><a href="">安全保障</a> </li>
+                        <li><a href="">平台数据</a> </li>
+                        <li><a href="">运营报告</a> </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <!--<a ng-show="!util.notEmpty(channelInfoUser.account)" data-toggle="modal" href="/login.html">
+                    <i class="fa fa-sign-in"></i> 登录
+                    </a>-->
+                    <a ng-show="util.notEmpty(channelInfoUser.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
+                    </a>
+                    <ul ng-show="util.notEmpty(channelInfoUser.account)" role="menu" class="dropdown-menu">
+                        <li><a href="/html/account/actor/home.html">我的投资</a> </li>
+                        <li><a href="/html/account/actor/home.html">我的借款</a> </li>
+                        <li><a href="/html/account/actor/home.html">资金明细</a> </li>
+                        <li><a href="#" ng-click="user.logout()">安全退出 <i class="fa fa-sign-out"></i> </a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+	<div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
+        <nav class="navbar-default navbar-static-side" role="navigation" style="width: 200px;min-height:876px;float: left;background: #fff; margin-bottom: 10px;padding-right:10px;border-right:1px dashed #e0e0e0;">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header" style="text-align: center;">
+                        <div class="dropdown profile-element">
+                            <span ><img alt="image" class="img-circle" src="/img/avatar.png" /></span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                               <span class="block m-t-xs"><strong class="font-bold" ng-bind="channelInfoUser.account"></strong></span>
+                                <span class="text-muted text-xs block" ><label ng-bind="channelInfoUser.channelName"></label></span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">DEMO
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="title">
+                            <i class="fa fa-vimeo"></i>
+                            <span class="nav-label">我的账户</span>
+                            <!-- <span class="fa arrow"></span> -->
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem " href="#">账户总览</a>
+                                <a class="J_menuItem active" href="/html/account/channel/channel/channel_info_edit.html">信息完善</a>
+                                <a class="J_menuItem " href="/html/account/channel/channel/modifyPwd.html">修改密码</a>
+                                <a class="J_menuItem" href="#">消息中心</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+		<div class="text-center loginscreen   animated fadeInDown"  style="width: 60%;padding: 5% 0;margin: 0 auto;">
+			<div class="row">
 				<form id="channelInfo_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
-					<div class="col-md-12" style="height: 50px;">
+					<!--<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
 						</div>
-					</div>
+					</div>-->
 					<input type="hidden" name="id" value="{{item.id}}" />
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
-					<div class="clearfix "></div>
 					<div class="col-sm-6 b-r">
 
                         <div class="form-group clearfix">
@@ -114,7 +210,7 @@
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">生日：</label>
                             <div class="col-md-12">
-                                <input id="bean-birthday" name="birthday" value="{{item.birthday | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入生日"  required="" aria-required="true"  aria-describedby="bean-birthday-error"   aria-invalid="true">
+                                <input id="bean-birthday" name="birthday" value="{{item.birthday | date:'yyyy-MM-dd'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入生日"  required="" aria-required="true"  aria-describedby="bean-birthday-error"   aria-invalid="true">
                                 <span id="bean-birthday-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -291,7 +387,7 @@
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">开始工作时间：</label>
                             <div class="col-md-12">
-                                <input id="bean-workStartDate" name="workStartDate" value="{{item.workStartDate | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入开始工作时间"  required="" aria-required="true"  aria-describedby="bean-workStartDate-error"   aria-invalid="true">
+                                <input id="bean-workStartDate" name="workStartDate" value="{{item.workStartDate | date:'yyyy-MM-dd'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入开始工作时间"  required="" aria-required="true"  aria-describedby="bean-workStartDate-error"   aria-invalid="true">
                                 <span id="bean-workStartDate-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -347,7 +443,6 @@
                         </div>
 
 					</div>
-					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
 							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
@@ -357,7 +452,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+
 
 <!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
 <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
@@ -388,11 +483,10 @@
         $data = $scope;
         $ngCompile=$compile;
         channel.init(function(){
-           $data.newFlag=sessionStorage.getItem(site.channel.info);
-           if($data.newFlag) $data.uuidToken=util.guid();
+           if($data.channelInfoUser) $data.uuidToken=util.guid();
             loadTypeList();
-           if(sessionStorage.getItem(site.channel.info) && sessionStorage.getItem(site.channel.info)!=0){
-               loadInfo(sessionStorage.getItem(site.channel.info));
+           if($data.channelInfoUser!=0){
+               loadInfo($data.channelInfoUser.id);
            }
         });
         $scope.save = function () {
@@ -422,7 +516,7 @@
          }, 'json');
     }
     function loadTypeList(){
-        $.get(site.channelType.list, {},function (result) {
+        $.get(site.channel.list, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 $data.typeNodes=result.data;

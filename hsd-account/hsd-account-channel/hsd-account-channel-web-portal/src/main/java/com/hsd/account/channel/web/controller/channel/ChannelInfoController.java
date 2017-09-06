@@ -2,28 +2,19 @@ package com.hsd.account.channel.web.controller.channel;
 
 import com.hsd.account.channel.api.channel.IChannelInfoService;
 import com.hsd.account.channel.dto.channel.ChannelInfoDto;
-import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.framework.annotation.auth.Logical;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
-import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Api(description = "渠道商信息")
@@ -33,7 +24,7 @@ public class ChannelInfoController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IChannelInfoService channelInfoService;
-    private static final String acPrefix = "/boss/account/channel/channel/channelInfo/";
+    private static final String acPrefix = "/api/account/channel/channel/channelInfo/";
     /**
      * <p> 信息详情。
      */

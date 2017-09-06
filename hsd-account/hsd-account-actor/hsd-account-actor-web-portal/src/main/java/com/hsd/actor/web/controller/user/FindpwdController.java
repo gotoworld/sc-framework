@@ -114,13 +114,13 @@ public class FindpwdController extends BaseController {
             dto = userService.findDataById(dto);
             if (dto == null) return Response.error("账号不存在!");
             UserDto finalDto = dto;
-            result.data = pushService.verifyCaptchaSms(new PushDto() {{
+            pushService.verifyCaptchaSms(new PushDto() {{
                 setPrefix(captchaPreix);
                 setCellphone(finalDto.getCellphone());
                 setCaptcha(captcha);
             }});
 
-            redisTemplate.opsForValue().set(findPwdStatePreix + finalDto.getId(), "1", 5, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
+            redisTemplate.opsForValue().set(findPwdStatePreix + finalDto.getId(), "1", 30, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -140,12 +140,12 @@ public class FindpwdController extends BaseController {
             dto = userService.findDataById(dto);
             if (dto == null) return Response.error("账号不存在!");
             UserDto finalDto = dto;
-            result.data = pushService.verifyCaptchaEmail(new PushDto() {{
+            pushService.verifyCaptchaEmail(new PushDto() {{
                 setPrefix(captchaPreix);
                 setEmail(finalDto.getEmail());
                 setCaptcha(captcha);
             }});
-            redisTemplate.opsForValue().set(findPwdStatePreix + finalDto.getId(), "1", 5, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
+            redisTemplate.opsForValue().set(findPwdStatePreix + finalDto.getId(), "1", 30, TimeUnit.MINUTES);//校验成功状态 有效期30分钟
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -173,7 +173,7 @@ public class FindpwdController extends BaseController {
         try {
             if (dto == null || dto.getId()==null || ValidatorUtil.isEmpty(dto.getPwd())) return Response.error("参数获取异常!");
             if(!"1".equals(redisTemplate.opsForValue().get(findPwdStatePreix + dto.getId())))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
-            result=userService.updatePwd(dto);
+            result=userService.restPwd(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

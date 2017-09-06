@@ -7903,3 +7903,15 @@ body.skin-3 {
 .dropdown-menu{min-width: 110px;}
 .dropdown-menu > li > a{padding: 0px;}
 .top-navigation .navbar-nav .open .dropdown-menu > li > a, .top-navigation .navbar-nav .open .dropdown-menu .dropdown-header{padding: 10px 0px 10px 20px;border-top:1px dashed #e0e0e0;}
+
+
+ul.stepsli{ width:480px; margin:29px auto 30px; height:5px; background:#ccc; border-radius:3px; padding:0; overflow:visible; border:none;}
+ul.stepsli li{ width:160px; float:left; position:relative; margin:0;list-style: none}
+ul.stepsli li i{background:#b3b3b3;border-radius:30px; width:23px; height:23px; text-align:center; line-height:23px; position:absolute; top:-10px; left:50%; margin-left:-11px;background-position:-324px 0; z-index:2; color:#fff; font-size:14px;}
+ul.stepsli li span{ display:none;}
+ul.stepsli li em{ width:160px; display:inline-block; text-align:center; color:#ccc; height:24px; line-height:24px; margin-top:12px; font-size:12px;}
+ul.stepsli li.last i{ background-position:-351px 0;}
+ul.stepsli li.last.hover i{ background-position:-267px 0;}
+ul.stepsli li.hover span{ width:160px; height:5px; background:#7DD04C; display:inline-block; border-radius:3px; position:absolute; top:0;}
+ul.stepsli li.hover i{ background-position:-295px 0;background:#7DD04C;}
+ul.stepsli li.hover em{ color:#62C041;}

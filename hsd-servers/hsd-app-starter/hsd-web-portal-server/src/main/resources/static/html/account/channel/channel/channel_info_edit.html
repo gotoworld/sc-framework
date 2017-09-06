@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+<meta charset="utf-8" />
+<title>//TODO 渠道商信息 新增/编辑</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description" content="memo of your site" />
+<meta name="author" content="author of the site" />
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+<link href="/css/common.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-md-12">
+				<form id="channelInfo_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+					<div class="col-md-12" style="height: 50px;">
+						<div style="float:right;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+					<input type="hidden" name="id" value="{{item.id}}" />
+					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
+					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
+					<div class="clearfix "></div>
+					<div class="col-sm-6 b-r">
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">渠道商登录账户：</label>
+                            <div class="col-md-12">
+                                <input id="bean-account" name="account" value="{{item.account}}" class="form-control" type="text"  placeholder="请输入渠道商登录账户"  required="" aria-required="true"  aria-describedby="bean-account-error"  maxlength="255"   aria-invalid="true">
+                                <span id="bean-account-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix"  ng-if="!(util.notEmpty(item.id))" >
+                            <label class="col-md-3 control-label">渠道商登录密码：</label>
+                            <div class="col-md-12">
+                                <input id="bean-pwd" name="pwd" value="{{item.pwd}}" class="form-control" type="text"  placeholder="请输入渠道商登录密码"  required="" aria-required="true"  aria-describedby="bean-pwd-error"  maxlength="255"   aria-invalid="true">
+                                <span id="bean-pwd-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">渠道商名称：</label>
+                            <div class="col-md-12">
+                                <input id="bean-channelName" name="channelName" value="{{item.channelName}}" class="form-control" type="text"  placeholder="请输入渠道商名称"  required="" aria-required="true"  aria-describedby="bean-channelName-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-channelName-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">渠道商类型：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择渠道商类型" id="bean-channeltype" name="channeltype" class="form-control"   required="" aria-required="true"  aria-describedby="bean-channeltype-error"   aria-invalid="true">
+                                    <option value="">--请选择渠道商类型--</option>
+                                    <option ng-repeat="t in typeNodes" ng-value="t.id" ng-selected="t.id==item.channeltype" ng-bind="t.type"></option>
+                                </select>
+                                <span id="bean-channeltype-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">性别：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择性别" id="bean-gender" name="gender" class="form-control"   required="" aria-required="true"  aria-describedby="bean-gender-error"  maxlength="1"   aria-invalid="true">
+                                    <option value="">--请选择性别--</option>
+                                    <option value="0" ng-selected="item.gender==0">男</option>
+                                    <option value="1" ng-selected="item.gender==1">女</option>
+                                    <option value="2" ng-selected="item.gender==2">保密</option>
+                                </select>
+                                <span id="bean-gender-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">电话1：</label>
+                            <div class="col-md-12">
+                                <input id="bean-phone1" name="phone1" value="{{item.phone1}}" class="form-control" type="text"  placeholder="请输入电话1"  required="" aria-required="true"  aria-describedby="bean-phone1-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-phone1-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">电话2：</label>
+                            <div class="col-md-12">
+                                <input id="bean-phone2" name="phone2" value="{{item.phone2}}" class="form-control" type="text"  placeholder="请输入电话2"  aria-describedby="bean-phone2-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-phone2-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">传真：</label>
+                            <div class="col-md-12">
+                                <input id="bean-fax" name="fax" value="{{item.fax}}" class="form-control" type="text"  placeholder="请输入传真"  aria-describedby="bean-fax-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-fax-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">生日：</label>
+                            <div class="col-md-12">
+                                <input id="bean-birthday" name="birthday" value="{{item.birthday | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入生日"  required="" aria-required="true"  aria-describedby="bean-birthday-error"   aria-invalid="true">
+                                <span id="bean-birthday-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">婚姻状态：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择婚姻状态" id="bean-maritalStatus" name="maritalStatus" class="form-control"   aria-describedby="bean-maritalStatus-error"   aria-invalid="true">
+                                    <option value="">--请选择婚姻状态--</option>
+                                    <option value="0" ng-selected="item.maritalStatus==0">已婚</option>
+                                    <option value="1" ng-selected="item.maritalStatus==1">未婚</option>
+                                </select>
+                                <span id="bean-maritalStatus-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">身份证号：</label>
+                            <div class="col-md-12">
+                                <input id="bean-idNo" name="idNo" value="{{item.idNo}}" class="form-control" type="text"  placeholder="请输入身份证号"  required="" aria-required="true"  aria-describedby="bean-idNo-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-idNo-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">收入：</label>
+                            <div class="col-md-12">
+                                <input id="bean-income" name="income" value="{{item.income}}" class="form-control" type="text"  placeholder="请输入收入"  aria-describedby="bean-income-error"   aria-invalid="true">
+                                <span id="bean-income-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">收入是否验证：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择收入是否验证" id="bean-incVerifiable" name="incVerifiable" class="form-control"   aria-describedby="bean-incVerifiable-error"   aria-invalid="true">
+                                    <option value="">--请选择收入是否验证--</option>
+                                    <option value="0" ng-selected="item.incVerifiable==0">是</option>
+                                    <option value="1" ng-selected="item.incVerifiable==1">否</option>
+                                </select>
+                                <span id="bean-incVerifiable-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">其他收入：</label>
+                            <div class="col-md-12">
+                                <input id="bean-otherIncome" name="otherIncome" value="{{item.otherIncome}}" class="form-control" type="text"  placeholder="请输入其他收入"  aria-describedby="bean-otherIncome-error"   aria-invalid="true">
+                                <span id="bean-otherIncome-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">其他收入来源：</label>
+                            <div class="col-md-12">
+                                <input id="bean-otherIncomeSrc" name="otherIncomeSrc" value="{{item.otherIncomeSrc}}" class="form-control" type="text"  placeholder="请输入其他收入来源"  aria-describedby="bean-otherIncomeSrc-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-otherIncomeSrc-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">财务状况评分：</label>
+                            <div class="col-md-12">
+                                <input id="bean-selfFico" name="selfFico" value="{{item.selfFico}}" class="form-control" type="text"  placeholder="请输入财务状况评分"  aria-describedby="bean-selfFico-error"   aria-invalid="true">
+                                <span id="bean-selfFico-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">累计工作年限：</label>
+                            <div class="col-md-12">
+                                <input id="bean-cumulativeJobTenure" name="cumulativeJobTenure" value="{{item.cumulativeJobTenure}}" class="form-control" type="text"  placeholder="请输入累计工作年限"  aria-describedby="bean-cumulativeJobTenure-error"   aria-invalid="true">
+                                <span id="bean-cumulativeJobTenure-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">教育程度：</label>
+                            <div class="col-md-12">
+                                <input id="bean-educationLevel" name="educationLevel" value="{{item.educationLevel}}" class="form-control" type="text"  placeholder="请输入教育程度"  aria-describedby="bean-educationLevel-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-educationLevel-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+					</div>
+					<div class="col-sm-6">
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">税收：</label>
+                            <div class="col-md-12">
+                                <input id="bean-tax" name="tax" value="{{item.tax}}" class="form-control" type="text"  placeholder="请输入税收"  aria-describedby="bean-tax-error"   aria-invalid="true">
+                                <span id="bean-tax-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">车辆数：</label>
+                            <div class="col-md-12">
+                                <input id="bean-ownCarNum" name="ownCarNum" value="{{item.ownCarNum}}" class="form-control" type="text"  placeholder="请输入车辆数"  required="" aria-required="true"  aria-describedby="bean-ownCarNum-error"   aria-invalid="true">
+                                <span id="bean-ownCarNum-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">房产数：</label>
+                            <div class="col-md-12">
+                                <input id="bean-ownHouseNum" name="ownHouseNum" value="{{item.ownHouseNum}}" class="form-control" type="text"  placeholder="请输入房产数"  required="" aria-required="true"  aria-describedby="bean-ownHouseNum-error"   aria-invalid="true">
+                                <span id="bean-ownHouseNum-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">是否有小孩：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择是否有小孩" id="bean-childrenStatus" name="childrenStatus" class="form-control"   aria-describedby="bean-childrenStatus-error"   aria-invalid="true">
+                                    <option value="">--请选择是否有小孩--</option>
+                                    <option value="0" ng-selected="item.childrenStatus==0">是</option>
+                                    <option value="1" ng-selected="item.childrenStatus==1">否</option>
+                                </select>
+                                <span id="bean-childrenStatus-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">孩子数量：</label>
+                            <div class="col-md-12">
+                                <input id="bean-childrenNum" name="childrenNum" value="{{item.childrenNum}}" class="form-control" type="text"  placeholder="请输入孩子数量"  aria-describedby="bean-childrenNum-error"   aria-invalid="true">
+                                <span id="bean-childrenNum-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">其他财产备注：</label>
+                            <div class="col-md-12">
+                                <input id="bean-assetOther" name="assetOther" value="{{item.assetOther}}" class="form-control" type="text"  placeholder="请输入其他财产备注"  aria-describedby="bean-assetOther-error"  maxlength="100"   aria-invalid="true">
+                                <span id="bean-assetOther-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">贷款状态：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择贷款状态" id="bean-debtStatus" name="debtStatus" class="form-control"   aria-describedby="bean-debtStatus-error"   aria-invalid="true">
+                                    <option value="">--请选择贷款状态--</option>
+                                    <option value="0"  ng-selected="item.debtStatus==0">已贷</option>
+                                    <option value="1"  ng-selected="item.debtStatus==0">未贷</option>
+                                </select>
+                                <span id="bean-debtStatus-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">微信：</label>
+                            <div class="col-md-12">
+                                <input id="bean-wechat" name="wechat" value="{{item.wechat}}" class="form-control" type="text"  placeholder="请输入微信"  aria-describedby="bean-wechat-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-wechat-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">QQ：</label>
+                            <div class="col-md-12">
+                                <input id="bean-qq" name="qq" value="{{item.qq}}" class="form-control" type="text"  placeholder="请输入QQ"  aria-describedby="bean-qq-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-qq-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">备注信息：</label>
+                            <div class="col-md-12">
+                                <textarea id="bean-remark" name="remark" class="form-control"  placeholder="请输入备注信息"  aria-describedby="bean-remark-error"  maxlength="500"   aria-invalid="true">{{item.remark}}</textarea>
+                                <span id="bean-remark-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">开始工作时间：</label>
+                            <div class="col-md-12">
+                                <input id="bean-workStartDate" name="workStartDate" value="{{item.workStartDate | date:'yyyy-MM-dd HH:mm:ss'}}" class="laydate-icon form-control layer-date" type="text"  placeholder="请输入开始工作时间"  required="" aria-required="true"  aria-describedby="bean-workStartDate-error"   aria-invalid="true">
+                                <span id="bean-workStartDate-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">户籍与居住地是否一致：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择户籍与居住地是否一致" id="bean-domicileLiveDiff" name="domicileLiveDiff" class="form-control"    aria-describedby="bean-relation-error"   aria-invalid="true">
+                                    <option value="">--请选择户籍与居住地是否一致--</option>
+                                    <option value="0" ng-selected="item.domicileLiveDiff==0">是</option>
+                                    <option value="1" ng-selected="item.domicileLiveDiff==1">否</option>
+                                </select>
+                                <span id="bean-domicileLiveDiff-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">是否公司员工：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择是否公司员工" id="bean-relation" name="relation" class="form-control"   required="" aria-required="true"  aria-describedby="bean-relation-error"   aria-invalid="true">
+                                    <option value="">--请选择是否公司员工--</option>
+                                    <option value="0" ng-selected="item.relation==0">是</option>
+                                    <option value="1" ng-selected="item.relation==1">否</option>
+                                </select>
+                                <span id="bean-relation-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">员工工号：</label>
+                            <div class="col-md-12">
+                                <input id="bean-staffNo" name="staffNo" value="{{item.staffNo}}" class="form-control" type="text"  placeholder="请输入员工工号"  aria-describedby="bean-staffNo-error"  maxlength="50"   aria-invalid="true">
+                                <span id="bean-staffNo-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">地址：</label>
+                            <div class="col-md-12">
+                                <input id="bean-address" name="address" value="{{item.address}}" class="form-control" type="text"  placeholder="请输入地址"  aria-describedby="bean-address-error"  maxlength="200"   aria-invalid="true">
+                                <span id="bean-address-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">渠道商状态：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择渠道商状态" id="bean-staus" name="staus" class="form-control"   aria-describedby="bean-staus-error"   aria-invalid="true">
+                                    <option value="">--请选择渠道商状态--</option>
+                                    <option value="0" ng-selected="item.staus==0">停用</option>
+                                    <option value="1" ng-selected="item.staus==1">启用</option>
+                                </select>
+                                <span id="bean-staus-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+					</div>
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
+						<div style="width: 200px; margin: 0 auto;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+<script src="/plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
+<script type="text/javascript">
+    function formValidate(){
+        setTimeout(function(){
+            $("#channelInfo_01").validate();
+        },1000);
+    }
+
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
+        $data = $scope;
+        $ngCompile=$compile;
+        channel.init(function(){
+           $data.newFlag=sessionStorage.getItem(site.channel.info);
+           if($data.newFlag) $data.uuidToken=util.guid();
+            loadTypeList();
+           if(sessionStorage.getItem(site.channel.info) && sessionStorage.getItem(site.channel.info)!=0){
+               loadInfo(sessionStorage.getItem(site.channel.info));
+           }
+        });
+        $scope.save = function () {
+            if($("#channelInfo_01").valid()){
+                $.post(site.channel.edit, $('#channelInfo_01').serialize(),function (result) {
+                        //console.info("获取数据.." + JSON.stringify(result));
+                        if (result.code == 0) {
+                            alert('保存成功!');
+                            parent.location.href = site.channelInfo.view+'.html';
+                        } else {
+                            alert(result.message);
+                        }
+                }, 'json');
+            }
+        }
+    });
+    var loadInfo=function(id){
+        $.get(site.channel.info + id, {},function (result) {
+             console.info("获取数据.." + JSON.stringify(result));
+             if (result.code == 0) {
+                 $data.item = result.data;
+             } else {
+                 $data.message = result.message;
+                 alert( result.message);
+             }
+             if(!$data.$$phase) $data.$apply();
+         }, 'json');
+    }
+    function loadTypeList(){
+        $.get(site.channelType.list, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.typeNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+    $(document).ready(function(){
+        formValidate();
+
+    laydate({elem: '#bean-birthday',event: 'click'});
+
+    laydate({elem: '#bean-workStartDate',event: 'click'});
+    });
+</script>
+</body>
+</html>
+

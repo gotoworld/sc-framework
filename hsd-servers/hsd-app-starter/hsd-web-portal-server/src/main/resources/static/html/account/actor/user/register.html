@@ -128,7 +128,7 @@
                         <input type="text" name="name" class="form-control" placeholder="请输入昵称" required="">
                     </div>
                     <div class="form-group ">
-                        <input name="email" value="" required="required" class="form-control" type="email"  placeholder="请输入您的邮箱"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
+                        <input name="email" value="" class="form-control" type="email"  placeholder="请输入您的邮箱"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
                     </div>
                     <div class="form-group ">
                         <select data-placeholder="选择性别" id="bean-gender" name="gender" class="form-control"   aria-describedby="bean-gender-error"   aria-invalid="true">
@@ -182,11 +182,7 @@
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript">
-        function formValidate(){
-            setTimeout(function(){
-                $("#registerForm").validate();
-            },1000);
-        }
+
         angular.module("app", []).controller("app-ctrl", function ($scope) {
             $data = $scope;
             $data.util = util;
@@ -197,7 +193,7 @@
                     $.post(site.register.register, $('#registerForm').serialize(),function (result) {
                         if (result.code == 0) {
                             alert('注册成功!');
-                            parent.location.href = site.register.view+'2.html';
+                            parent.location.href = site.register.view+'_success.html';
                         } else {
                             alert(result.message);
                         }
@@ -205,6 +201,11 @@
                 }
             }
         });
+        function formValidate(){
+            setTimeout(function(){
+                $("#registerForm").validate();
+            },1000);
+        }
         $(document).ready(function(){
             formValidate();
         });

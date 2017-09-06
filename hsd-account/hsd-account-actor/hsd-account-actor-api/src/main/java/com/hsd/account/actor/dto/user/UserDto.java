@@ -63,6 +63,8 @@ public class UserDto extends BaseDto {
 
     /**验证码*/
     private String captcha;
+    /**新密码*/
+    private String newpwd;
     /**密码确认*/
     private String confirmpwd;
     /**协议确认0否1是*/

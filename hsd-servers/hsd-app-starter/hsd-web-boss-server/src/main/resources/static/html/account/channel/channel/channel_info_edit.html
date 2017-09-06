@@ -298,7 +298,11 @@
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">户籍与居住地是否一致：</label>
                             <div class="col-md-12">
-                                <input id="bean-domicileLiveDiff" name="domicileLiveDiff" value="{{item.domicileLiveDiff}}" class="form-control" type="text"  placeholder="请输入户籍与居住地是否一致"  aria-describedby="bean-domicileLiveDiff-error"   aria-invalid="true">
+                                <select data-placeholder="选择户籍与居住地是否一致" id="bean-domicileLiveDiff" name="domicileLiveDiff" class="form-control"    aria-describedby="bean-relation-error"   aria-invalid="true">
+                                    <option value="">--请选择户籍与居住地是否一致--</option>
+                                    <option value="0" ng-selected="item.domicileLiveDiff==0">是</option>
+                                    <option value="1" ng-selected="item.domicileLiveDiff==1">否</option>
+                                </select>
                                 <span id="bean-domicileLiveDiff-error" class="help-block m-b-none"></span>
                             </div>
                         </div>

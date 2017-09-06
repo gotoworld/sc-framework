@@ -4,7 +4,6 @@ import com.hsd.account.actor.api.identity.IIdentityService;
 import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
@@ -80,7 +79,6 @@ public class IdentityController extends BaseController {
     @RequiresPermissions(value = {"identity:add", "identity:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "实名认证表")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute IdentityDto dto, BindingResult bindingResult) {
         log.info("IdentityController save.........");

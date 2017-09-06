@@ -116,18 +116,19 @@
                                onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
                                onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次输入密码" required="">
                     </div>
-                    <div class="form-group m-b">
+                    <div class="form-group ">
                         <input name="cellphone" type="text" class="form-control" placeholder="请输入手机号" required="">
                     </div>
-                    <div class="form-group m-b" style="width: 100%;margin-bottom: 70px;">
-                        <input name="captcha" type="text"  style="width: 190px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图形验证码" required="">
-                        <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
+                    <div class="form-group " >
+                        <input name="captcha" type="text"  style="width: 190px;height: 40px;" class="form-control col-md-4 " placeholder="请输入图形验证码" required="">
+                        <img src="/img/captcha.jpg" style="width: 100px;height: 40px;margin-left: 10px;">
+                        <label id="captcha-error" class="error" for="captcha"></label>
                     </div>
                     <div class="form-group">
                         <input type="text" name="name" class="form-control" placeholder="请输入昵称" required="">
                     </div>
                     <div class="form-group ">
-                        <input id="bean-email" name="email" value="" required="required" class="form-control" type="email"  placeholder="请输入您的邮箱"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
+                        <input name="email" value="" required="required" class="form-control" type="email"  placeholder="请输入您的邮箱"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
                     </div>
                     <div class="form-group ">
                         <select data-placeholder="选择性别" id="bean-gender" name="gender" class="form-control"   aria-describedby="bean-gender-error"   aria-invalid="true">
@@ -145,6 +146,7 @@
                                     <a href="javascript:void(0);" onclick="openMyBoxLayer('服务协议','register_article.html')">《服务协议》</a>
                                     <a href="javascript:void(0);" onclick="openMyBoxLayer('风险提示书','register_article.html')">和 《风险提示书》</a>
                             </label>
+                            <label id="agreement-error" class="error" for="agreement"></label>
                             <!--<p class="pacttip hide" style="display: block;"><span class="error">需同意协议方可完成注册</span></p>-->
                         </div>
                     </div>
@@ -194,7 +196,7 @@
                 if($("#registerForm").valid()){
                     $.post(site.register.register, $('#registerForm').serialize(),function (result) {
                         if (result.code == 0) {
-                            alert('保存成功!');
+                            alert('注册成功!');
                             parent.location.href = site.register.view+'2.html';
                         } else {
                             alert(result.message);

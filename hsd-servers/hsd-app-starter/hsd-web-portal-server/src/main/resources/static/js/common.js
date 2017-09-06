@@ -213,7 +213,7 @@ var channel = {
             sessionStorage.removeItem('hsd_channel_channel');
             sessionStorage.removeItem("hsd_channel_authorizationToken");
             callback && callback();
-            top.location.href = '/login.html';
+            top.location.href = '/';
         }, 'json');
     },
     info: function (callback) {

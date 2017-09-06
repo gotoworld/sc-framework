@@ -23,6 +23,16 @@ public interface IUserDao extends IBaseDao {
      */
     @Select(" select count(0) from user where  account=#{account} ")
     int isAccountYN(@Param("account") String account) throws Exception;
+    /**
+     * <p>判断手机号是否存在
+     */
+    @Select(" select count(0) from user where  cellphone=#{cellphone} ")
+    int isCellphoneYN(@Param("cellphone") String cellphone) throws Exception;
+    /**
+     * <p>判断邮箱是否存在
+     */
+    @Select(" select count(0) from user where  email=#{email} ")
+    int isEmailYN(@Param("email") String email) throws Exception;
 
     /**
      * 根据主键 物理删除
@@ -55,4 +65,13 @@ public interface IUserDao extends IBaseDao {
      */
     @Update("update user set count=count+1,last_login=now() where id = #{id}")
     int lastLogin(IEntity entity) throws Exception;
+    /**
+     * <p>获取用户[id,手机号,邮箱]>根据登录名。找回密码
+     */
+    Object getAccount(IEntity dto) throws Exception;
+    /**
+     * <p>密码修改
+     */
+    @Update("update user set count=count+1,pwd=#{pwd} where id = #{id}")
+    int updatePwd(IEntity entity) throws Exception;
 }

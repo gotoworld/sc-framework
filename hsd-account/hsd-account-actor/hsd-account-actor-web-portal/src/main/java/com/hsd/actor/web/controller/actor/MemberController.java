@@ -86,7 +86,6 @@ public class MemberController extends BaseController {
      */
     @RequiresPermissions("member:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{userId}")
-    @ALogOperation(type = "删除", desc = "会员信息表")
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("userId") Long userId) {
         log.info("MemberController del.........");
@@ -106,7 +105,6 @@ public class MemberController extends BaseController {
      */
     @RequiresPermissions(value = {"member:add", "member:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, value = acPrefix + "save")
-    @ALogOperation(type = "修改", desc = "会员信息表")
     @ApiOperation(value = "信息保存")
     @RfAccount2Bean
     public Response save(@Validated @ModelAttribute MemberDto dto, BindingResult bindingResult) {

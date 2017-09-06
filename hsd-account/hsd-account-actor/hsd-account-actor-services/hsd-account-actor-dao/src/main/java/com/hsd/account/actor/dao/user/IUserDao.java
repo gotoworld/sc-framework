@@ -1,5 +1,6 @@
 package com.hsd.account.actor.dao.user;
 
+import com.hsd.account.actor.entity.user.User;
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
 import org.apache.ibatis.annotations.*;
@@ -33,7 +34,6 @@ public interface IUserDao extends IBaseDao {
      */
     @Select(" select count(0) from user where  email=#{email} ")
     int isEmailYN(@Param("email") String email) throws Exception;
-
     /**
      * 根据主键 物理删除
      */
@@ -45,6 +45,7 @@ public interface IUserDao extends IBaseDao {
      */
     @Update("update user set tags=#{tags} where id = #{id} ")
     int setTags(IEntity entity) throws Exception;
+
     /**
      * 设置黑名单
      */
@@ -55,11 +56,11 @@ public interface IUserDao extends IBaseDao {
      */
     @Update("update user set state=1 where id = #{id} and state=3 ")
     int delBlacklist(IEntity entity) throws Exception;
-
     /**
      * <p>获取用户信息>根据登录名。
      */
     Object findUserByAccount(Map dto) throws Exception;
+
     /**
      * <p>最后登陆记录
      */
@@ -74,4 +75,24 @@ public interface IUserDao extends IBaseDao {
      */
     @Update("update user set count=count+1,pwd=#{pwd} where id = #{id}")
     int updatePwd(IEntity entity) throws Exception;
+    /**
+     * <p>交易密码修改
+     */
+    @Update("update user set count=count+1,trade_pwd=#{tradePwd} where id = #{id}")
+    int updateTradePwd(IEntity entity) throws Exception;
+    /**
+     * <p>绑定手机修改
+     */
+    @Update("update user set count=count+1,cellphone=#{cellphone} where id = #{id}")
+    int phoneBind(IEntity entity) throws Exception;
+    /**
+     * <p>绑定邮箱修改
+     */
+    @Update("update user set count=count+1,email=#{email} where id = #{id}")
+    int emailBind(IEntity entity) throws Exception;
+    /**
+     * <p>获取账号密码
+     */
+    @Select("select pwd as 'pwd',trade_pwd as 'tradePwd'  from user where id = #{id} ")
+    User getAccountPwd(IEntity entity) throws Exception;
 }

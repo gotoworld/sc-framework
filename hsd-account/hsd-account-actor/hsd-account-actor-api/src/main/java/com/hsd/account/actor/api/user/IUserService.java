@@ -80,6 +80,21 @@ public interface IUserService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getAccount")
     public UserDto getAccount(UserDto dto) throws Exception;
     /**
+     * <p>客户密码找回。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/restPwd")
+    public Response restPwd(UserDto dto) throws Exception;
+    /**
+     * <p>绑定手机修改。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/phoneBind")
+    public Response phoneBind(UserDto dto) throws Exception;
+    /**
+     * <p>绑定邮箱修改。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/emailBind")
+    public Response emailBind(UserDto dto) throws Exception;
+    /**
      * <p>客户密码修改。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updatePwd")

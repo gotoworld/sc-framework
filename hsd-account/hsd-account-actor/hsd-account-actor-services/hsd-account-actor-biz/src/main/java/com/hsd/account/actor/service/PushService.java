@@ -27,7 +27,7 @@ public class PushService extends BaseService implements IPushService {
         Response result = new Response(0, "seccuss");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getCellphone())) throw new RuntimeException("参数异常!");
-            redisTemplate.opsForValue().set(prefix + dto.getPrefix() + dto.getCellphone(), "1234", 5, TimeUnit.MINUTES);//验证码有效期5分钟
+            redisTemplate.opsForValue().set(prefix + dto.getPrefix() + dto.getCellphone(), "1234", 30, TimeUnit.MINUTES);//验证码有效期30分钟
         } catch (Exception e) {
             log.error("信息保存异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
@@ -39,7 +39,7 @@ public class PushService extends BaseService implements IPushService {
         Response result = new Response(0, "seccuss");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getEmail())) throw new RuntimeException("参数异常!");
-            redisTemplate.opsForValue().set(prefix + dto.getPrefix() + dto.getEmail(), "1234", 5, TimeUnit.MINUTES);//验证码有效期5分钟
+            redisTemplate.opsForValue().set(prefix + dto.getPrefix() + dto.getEmail(), "1234", 30, TimeUnit.MINUTES);//验证码有效期30分钟
         } catch (Exception e) {
             log.error("信息保存异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());

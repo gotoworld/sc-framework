@@ -65,7 +65,7 @@ public class LoginController extends BaseController {
                 Map<String, Object> data = new HashMap<>();
                 data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
                 data.put("authorizationToken", JwtUtil.createJWT(JwtUtil.UserType.USER,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL));
-                data.put("staff", JSONObject.parseObject(subject, ChannelInfoDto.class));
+                data.put("channel", JSONObject.parseObject(subject, ChannelInfoDto.class));
                 
                 result.data = data;
             }catch (Exception ex) {
@@ -127,7 +127,7 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix+"/modifyPwd")
     @ApiOperation(value = "修改密码")
-    public Response modifyPwd(@RequestParam("id") Long id,@RequestParam("pwd") String pwd , @RequestParam("newpwd")String newpwd) throws Exception{
+    public Response modifyPwd(@RequestParam("id") Long id, @RequestParam("pwd") String pwd , @RequestParam("newpwd") String newpwd) throws Exception{
     	log.info("channelController modifyPwd ........");
     	Response result = new Response();
     	ChannelInfoDto dto = new ChannelInfoDto();
@@ -135,8 +135,8 @@ public class LoginController extends BaseController {
     	try {
 			if (ValidatorUtil.isNullEmpty(newpwd)) {return Response.error("密码不能为空！");}
 			ChannelInfoDto channelInfo = channelInfoService.findDataById(dto);
-			if (MD5.pwdMd5Hex(pwd).equals(channelInfo.getPwd())) {return Response.error("旧密码错误！");}
-			dto.setPwd(newpwd);
+			if (!MD5.pwdMd5Hex(pwd).equals(channelInfo.getPwd())) {return Response.error("旧密码错误！");}
+			dto.setPwd(MD5.pwdMd5Hex(newpwd));
 			channelInfoService.modifyPwd(dto);
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());

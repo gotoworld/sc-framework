@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>修改密码</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <style>
+        .glyphicon{color: #1ab394;}
+        .middle-box {margin-top: 0px;}
+        .steps li{border-left: 1px dotted #ffffff;border-right: 1px dotted #ffffff;}
+    </style>
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
+    <div class="fixed-sidebar border-bottom white-bg">
+        <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
+            <div class="navbar-header">
+                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <i class="fa fa-reorder"></i>
+                </button>
+                <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要投资
+                            <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="">芝麻开花</a></li>
+                            <li><a href="">定期项目</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要借款
+                            <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="">汽车分期</a> </li>
+                            <li><a href="">净值借款</a> </li>
+                            <li><a href="">线下借款</a> </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 信息披露
+                            <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="">关于我们</a> </li>
+                            <li><a href="">安全保障</a> </li>
+                            <li><a href="">平台数据</a> </li>
+                            <li><a href="">运营报告</a> </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <!--<a ng-show="!util.notEmpty(channelInfoUser.account)" data-toggle="modal" href="/login.html">
+                        <i class="fa fa-sign-in"></i> 登录
+                        </a>-->
+                        <a ng-show="util.notEmpty(channelInfoUser.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
+                        </a>
+                        <ul ng-show="util.notEmpty(channelInfoUser.account)" role="menu" class="dropdown-menu">
+                            <li><a href="/html/account/actor/home.html">我的投资</a> </li>
+                            <li><a href="/html/account/actor/home.html">我的借款</a> </li>
+                            <li><a href="/html/account/actor/home.html">资金明细</a> </li>
+                            <li><a href="#" ng-click="user.logout()">安全退出 <i class="fa fa-sign-out"></i> </a> </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation" style="width: 200px;min-height:876px;float: left;background: #fff; margin-bottom: 10px;padding-right:10px;border-right:1px dashed #e0e0e0;">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header" style="text-align: center;">
+                        <div class="dropdown profile-element">
+                            <span ><img alt="image" class="img-circle" src="/img/avatar.png" /></span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                               <span class="block m-t-xs"><strong class="font-bold" ng-bind="channelInfoUser.account"></strong></span>
+                                <span class="text-muted text-xs block" ><label ng-bind="channelInfoUser.channelName"></label></span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">DEMO
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="title">
+                            <i class="fa fa-vimeo"></i>
+                            <span class="nav-label">我的账户</span>
+                            <!-- <span class="fa arrow"></span> -->
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem " href="#">账户总览</a>
+                                <a class="J_menuItem" href="/html/account/channel/channel/channel_info_edit.html">个人设置</a>
+                                <a class="J_menuItem active" href="/html/account/channel/channel/modifyPwd.html">修改密码</a>
+                                <a class="J_menuItem" href="#">消息中心</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+        <div class="text-center loginscreen   animated fadeInDown"  style="width: 600px;padding: 10% 0;margin: 0 auto;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="row   white-bg dashboard-header">
+                            <div class="col-sm-12">
+                                <form id="form_1" class="m-t" role="form" ng-submit="modifyPwd()">
+                                    <input type="hidden" name="id" ng-value="channelInfoUser.id"/>
+                                    <div class="form-group">
+                                        <input type="hidden" name="pwd" id="pwdA" />
+                                        <input type="password"
+                                               onkeydown="$('#pwdA').val($.md5($(this).val()));"
+                                               onchange="$('#pwdA').val($.md5($(this).val()));"
+                                               placeholder="请输入旧密码" class="form-control" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="newpwd" id="newpwdA" />
+                                        <input type="password"
+                                               onkeydown="$('#newpwdA').val($.md5($(this).val()));"
+                                               onchange="$('#newpwdA').val($.md5($(this).val()));"
+                                               placeholder="请输入新密码" class="form-control" required="">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary block full-width m-b">确认修改</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer" style="background: transparent;border:0;width: 1330px;margin: 0px auto;bottom: 0px;">
+        <div class="pull-right">
+            By：demo
+        </div>
+        <div>
+            <strong>Copyright</strong> demo &copy; 2017
+        </div>
+    </div>
+
+
+    <!-- 全局js -->
+    <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <script type="text/javascript" src="/js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript">
+        angular.module("app", []).controller("app-ctrl", function ($scope) {
+            $data = $scope;
+            $data.util = util;
+            $data.channel = channel;
+            channel.info(function(){});
+            $scope.modifyPwd=function(){
+                $.post(site.channel.modifyPwd, $('#form_1').serialize(),function (result) {
+                    if(result.code ==0){
+                            alert("修改成功");
+                    }else {
+                        alert(result.message);
+                    }
+                }, 'json');
+            }
+        });
+    </script>
+</body>
+
+</html>

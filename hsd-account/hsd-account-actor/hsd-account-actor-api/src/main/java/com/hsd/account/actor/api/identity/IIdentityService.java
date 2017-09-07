@@ -47,4 +47,9 @@ public interface IIdentityService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public IdentityDto findDataById(IdentityDto dto) throws Exception;
+    /**
+     * <p>判断用户是否已实名认证。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isUserInentityYN")
+    public Integer isUserInentityYN(IdentityDto dto) throws Exception;
 }

@@ -1,6 +1,7 @@
 package com.hsd.account.actor.api.user;
 
 import com.github.pagehelper.PageInfo;
+import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
@@ -99,4 +100,20 @@ public interface IUserService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updatePwd")
     public Response updatePwd(UserDto dto) throws Exception;
+    /**
+     * <p>实名认证。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/identity")
+    public Response identity(IdentityDto dto) throws Exception;
+
+    /** <p>交易密码-设置 or 密码重置。 */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/pwd/trade/setting")
+    public Response pwdTradeSetting(UserDto dto) throws Exception;
+    /** <p>交易密码-修改。 */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/pwd/trade/update")
+    public Response pwdTradeUpdate(UserDto dto) throws Exception;
+    /** <p>找回交易密码-密码重置。 */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/pwd/trade/reset/setting")
+    public Response pwdTradeResetSetting(UserDto dto) throws Exception;
+
 }

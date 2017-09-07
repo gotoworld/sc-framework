@@ -206,47 +206,41 @@
                 <div class="row   white-bg dashboard-header">
                     <div class="col-sm-12">
                         <blockquote class="text-warning" style="font-size:14px;background-color:#EEEEEE">
-                        <h4 class="text-warning">修改登录密码</h4>
+                        <h4 class="text-warning">风险测评</h4>
                         </blockquote>
                     </div>
                     <div class="col-md-12">
                         <div class="ibox-content" style="border:0px;">
+                            <p class="col-md-12 text-muted text-left">
+                                <label>1、您的年龄介于</label>
+                            </p>
+                            <div class="col-md-12">
+                                <ul>
+                                    <li><label><input value="1" type="radio" name="x">51岁以上</label></li>
+                                    <li><label><input value="2" type="radio" name="x">18-30岁</label></li>
+                                    <li><label><input value="3" type="radio" name="x">31-50岁</label></li>
+                                </ul>
+                            </div>
                             <div class=" loginscreen   animated fadeInDown"  style="width: 500px;padding: 30px 0;margin: 0 auto;">
                                 <div class="ibox float-e-margins">
                                     <div class="white-bg dashboard-header">
                                         <div class="col-sm-12" style="margin-top: 0px;">
                                             <form id="form_1" class="form m-t" role="form" ng-submit="submitForm()">
-                                                <p class="col-md-12 text-muted text-left">
-                                                    密码长度8-20位,建议字母,数字,标点的组合来提高账号安全度
-
-                                                </p>
-                                                <div class="col-md-12">
-                                                    <input type="hidden" name="oldpwd" id="oldpwdA">
-                                                    <input type="password" id="oldpasswordA"
-                                                           onkeydown="$('#oldpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#oldpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入原始密码" required="">
-                                                </div>
-                                                <div class="col-md-12"  style="margin-top:20px; ">
-                                                    <input type="hidden" name="newpwd" id="newpwdA">
-                                                    <input type="password" id="newpasswordA" name="newpasswordA"
-                                                           onkeydown="$('#newpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#newpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入新密码" required="">
-                                                </div>
-                                                <div class="col-md-12" style="margin-top:20px; ">
-                                                    <input type="hidden" name="confirmpwd" id="confirmpwdA">
-                                                    <input type="password" equalTo="#newpasswordA" id="confirmpwdB" name="confirmpwdB"
-                                                           onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认新密码" required="">
-                                                </div>
                                                 <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
-                                                    <button type="submit" class="btn btn-primary block full-width m-b">保存新密码</button>
+                                                    <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" >上一题</button>
+                                                    1/12
+                                                    <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="left" >下一题</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
+                        <p class="col-md-12 text-muted text-left">
+                            本问卷根据国家相关法规要求，旨在了解您对风险的承受意愿及能力，以帮助您控制投资风险
+                        </p>
                     </div>
                 </div>
             </div>

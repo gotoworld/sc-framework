@@ -7890,10 +7890,11 @@ body.skin-3 {
         font-size: 12px
     }
 }
-
+ul li{list-style: none}
 .caret{margin-top: -5px;}
 
-.nav-header{ background:none;}
+.nav>li.nav-header{ background:none;display: none;}
+#side-menu{margin-top: 30px;}
 #side-menu>li>a{ background: #e0e0e0;border-top:1px dashed #FFFFFF;}
 .top-navigation .nav > li > a{padding: 15px 20px;}
 .top-navigation .nav > li .J_menuItem{ border-top:1px dashed #e0e0e0;padding: 10px 20px 10px 40px;}

@@ -109,6 +109,18 @@ public class IdentityService extends BaseService implements IIdentityService {
             }
             return result;
         }
+        @Override
+        public Integer isUserInentityYN(@RequestBody IdentityDto dto) throws Exception {
+            Integer result = 0;
+            try {
+                Identity entity = copyTo(dto, Identity.class);
+                result = identityDao.isDataYN(entity);
+            } catch (Exception e) {
+                log.error("实名认证检查异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            return result;
+        }
 
 
 }

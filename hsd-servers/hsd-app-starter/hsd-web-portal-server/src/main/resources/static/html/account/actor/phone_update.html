@@ -221,7 +221,7 @@
                                     <div class="   white-bg dashboard-header">
                                         <div class="col-sm-12" style="margin-top: 0px;">
                                             <form id="form_1" class="" role="form" ng-submit="submitForm();">
-                                                <input type="hidden" name="accid" ng-value="userInfo.id">
+
                                                 <div class=" row" style="margin: 0 0 10px 10px;">
                                                     <input type="text" id="cellphone" name="cellphone" class="form-control" placeholder="请输入新手机号码" required="">
                                                 </div>
@@ -285,6 +285,7 @@
                 //
                 $.post(site.userSetting.phone.update,$('#form_1').serialize(),function (result) {
                     if (result.code == 0) {
+
                         parent.location.href = site.userSetting.phone.view+'_success.html';
                     } else {
                         alert(result.message);

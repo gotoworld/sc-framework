@@ -27,17 +27,9 @@ var site = {
         view: basePath + "/html/account/actor/user/register"
         , register: apiPath.account.actor + "/api/account/actor/register/reg"
     }
-    // ,channel: { //渠道商
-    //     login: apiPath.account.channel + "/api/account/channel/sign/login" //登录
-    //     , logout: apiPath.account.channel + "/api/account/channel/sign/logout" //登出
-    //     , refreshToken: apiPath.account.channel + "/api/account/channel/sign/refreshToken" //刷新token
-    //     , modifyPwd: apiPath.account.channel + "/api/account/channel/sign/modifyPwd"
-    //     , edit: apiPath.account.channel + "/api/account/channel/channelInfo/edit"
-    //     , info: apiPath.account.channel + "/api/account/channel/channelInfo/info/"
-    //     , list: apiPath.account.channel + "/api/account/channel/channelInfo/list"
-    // }
     ,userSetting: {
-        phone:{
+         info: apiPath.account.actor + "/api/account/actor/user/setting/info"
+        ,phone:{
             view: basePath + "/html/account/actor/phone"
             ,  bindSms: apiPath.account.actor + "/api/account/actor/user/setting/phone/bind/sms" //手机号绑定-短信验证码
             , updateSms: apiPath.account.actor + "/api/account/actor/user/setting/phone/update/sms" //手机号修改-短信验证码
@@ -50,6 +42,25 @@ var site = {
             view: basePath + "/html/account/actor/pwd_login"
             ,update: apiPath.account.actor + "/api/account/actor/user/setting/pwd/login/update"
         }
+        ,tradepwd:{
+            view: basePath + "/html/account/actor/pwd_trade"
+            ,setting: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/setting"  //设置交易密码
+            ,update: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/update"    //修改交易密码
+            ,resetVerifySms: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/reset/verify/sms"  //找回交易密码-验证短信验证码-推送
+            ,resetVerify: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/reset/verify"  //找回交易密码-验证短信验证码-验证
+            ,resetSetting: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/reset/setting"  //找回交易密码-密码重置
+        }
+        ,email:{
+            view: basePath + "/html/account/actor/email"
+            , bind: apiPath.account.actor + "/api/account/actor/user/setting/email/bind" //邮箱绑定
+            , verify: apiPath.account.actor + "/api/account/actor/user/setting/email/verify" //邮箱验证
+            , update: apiPath.account.actor + "/api/account/actor/user/setting/email/update" //邮箱修改
+        }
+        ,identity:{
+            view: basePath + "/html/account/actor/identity"
+            , setting: apiPath.account.actor + "/api/account/actor/user/setting/identity" //实名认证
+        }
+
     }
 }
 var $data, $ngHttp, $ngCompile, $ngSce;
@@ -170,110 +181,6 @@ var user = {
     }
 }
 
-// /**渠道商登录信息验证头*/
-// $.ajaxSetup({
-//     headers: {
-//         "Authorization": sessionStorage.getItem("hsd_channel_authorizationToken")
-//     }
-// })
-// $(document).ajaxComplete(function (event, xhr, settings) {
-//     if (xhr && xhr.responseText) {
-//         var result = JSON.parse(xhr.responseText);
-//         //console.info("result=="+JSON.stringify(result))
-//         if (result.code == 403) {//授权验证失败!
-//             // console.info('授权验证失败!需跳转到登陆界面');
-//             alert('授权验证失败,请重新登陆!');
-//             location.href = '/login.html';
-//         }
-//     }
-// });
-// /**渠道商信息*/
-// var channel = {
-//     login: function (channelJson, callback) {
-//         $.post(site.channel.login, channelJson, function (result) {
-//             if (result.code == 0) {
-//                 if (result.data) {
-//                     sessionStorage.setItem('hsd_channel_channel', JSON.stringify(result.data.channel));
-//                     if (result.data.authorizationToken) {
-//                         sessionStorage.setItem('hsd_channel_tokenExpMillis', result.data.tokenExpMillis);
-//                         sessionStorage.setItem("hsd_channel_authorizationToken", result.data.authorizationToken);
-//                     }
-//                 }
-//                 callback && callback();
-//             } else {
-//                 $data.result = result;
-//                 // alert(result.message);
-//                 if (!$data.$$phase) $data.$apply();
-//             }
-//         }, 'json');
-//     },
-//     refreshToken: function (callback) {
-//         $.get(site.channel.refreshToken, {}, function (result) {
-//             if (result.code == 0) {
-//                 if (result.data) {
-//                     if (result.data.authorizationToken) {
-//                         sessionStorage.setItem('hsd_channel_tokenExpMillis', result.data.tokenExpMillis);
-//                         sessionStorage.setItem("hsd_channel_authorizationToken", result.data.authorizationToken)
-//                     }
-//                 }
-//                 callback && callback();
-//             } else {
-//                 alert(result.message);
-//             }
-//         }, 'json');
-//     },
-//     logout: function (callback) {
-//         $.get(site.channel.logout, {}, function (result) {
-//             sessionStorage.removeItem('hsd_channel_tokenExpMillis');
-//             sessionStorage.removeItem('hsd_channel_channel');
-//             sessionStorage.removeItem("hsd_channel_authorizationToken");
-//             callback && callback();
-//             top.location.href = '/';
-//         }, 'json');
-//     },
-//     info: function (callback) {
-//         try {
-//             console.info("channel.info.............")
-//             var channelJson = sessionStorage.getItem('hsd_channel_channel');
-//             if (channelJson) {
-//                 var channelInfoUser = JSON.parse(channelJson);
-//                 $data.channelInfoUser = channelInfoUser;
-//             }
-//             console.info("111111111");
-//             callback && callback();
-//         } catch (e) {
-//         } finally {
-//             if ($data) {
-//                 if (!$data.$$phase) $data.$apply();
-//             }
-//         }
-//     },
-//     init: function (callback) {
-//         try {
-//             var expMillis = 0;
-//             if (sessionStorage.getItem('hsd_channel_tokenExpMillis')) {
-//                 expMillis = sessionStorage.getItem('hsd_channel_tokenExpMillis') - (new Date().getTime());
-//             }
-//             if (expMillis > 0 && expMillis < (10 * 60 * 1000)) {//还有10分钟过期
-//                 channel.refreshToken(callback);
-//             } else {
-//                 if (sessionStorage.getItem('hsd_channel_channel') && expMillis > 0) {
-//                     channel.info(callback);
-//                 } else {
-//                     alert('未登录或登陆过期,请重新登陆!');
-//                     top.location.href = '/login.html';
-//                 }
-//             }
-//         } catch (e) {
-//         } finally {
-//             if ($data) {
-//                 //定义全局函数
-//                 $data.channel = channel;
-//                 $data.util = util;
-//             }
-//         }
-//     }
-// }
 /**
  * 判断是否为空
  */

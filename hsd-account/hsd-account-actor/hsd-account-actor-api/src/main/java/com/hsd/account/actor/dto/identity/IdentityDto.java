@@ -25,7 +25,7 @@ public class IdentityDto extends BaseDto {
 	 @NotNull(message="credential_type不能为空")
      private Integer credentialType;
      /**证件编号*/
-	 @Size(max=50,message="credential_number最大50字符")
+	 @Size(min = 7,max=50,message="证件编号[7-50]个字符")
      private String credentialNumber;
      /**证件A面*/
 	 @Size(max=255,message="credential_photo_a最大255字符")
@@ -50,4 +50,6 @@ public class IdentityDto extends BaseDto {
      /**更新时间*/
      private Date dateUpdated;
 
+    /** 图片验证码 */
+    private String imgCaptcha;
 }

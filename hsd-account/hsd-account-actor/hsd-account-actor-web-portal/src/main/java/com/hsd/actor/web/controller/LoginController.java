@@ -1,8 +1,10 @@
 package com.hsd.actor.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hsd.account.actor.api.identity.IIdentityService;
 import com.hsd.account.actor.api.user.IUserLoginLogService;
 import com.hsd.account.actor.api.user.IUserService;
+import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.account.actor.dto.user.UserLoginLogDto;
 import com.hsd.framework.Response;
@@ -39,6 +41,8 @@ public class LoginController extends BaseController {
     private IUserService userService;
     @Autowired
     private IUserLoginLogService loginLogService;
+    @Autowired
+    private IIdentityService identityService;
 
     /**
      * <p>用户登录
@@ -68,13 +72,33 @@ public class LoginController extends BaseController {
 
             UserDto userJon=JSONObject.parseObject(subject, UserDto.class);
 
-            if (ValidatorUtil.notEmpty(user.getCellphone()))
+            if (ValidatorUtil.notEmpty(user.getCellphone())){
                 userJon.setCellphone(user.getCellphone().replaceAll("(\\d{3})\\d{5}(\\d{3})", "$1****$2"));
-            if (ValidatorUtil.notEmpty(user.getEmail()))
+                userJon.setIsCellphoneYN(1);
+            }else{
+                userJon.setIsCellphoneYN(0);
+            }
+            if (ValidatorUtil.notEmpty(user.getEmail())){
                 userJon.setEmail(user.getEmail().substring(0, 1) + "****" + user.getEmail().substring(user.getEmail().indexOf("@") - 1, user.getEmail().length()));
+                userJon.setIsEmailYN(1);
+            }else{
+                userJon.setIsEmailYN(0);
+            }
+            if(ValidatorUtil.notEmpty(user.getTradePwd())){
+                userJon.setIsTradePwdYN(1);
+            } else{
+                userJon.setIsTradePwdYN(0);
+            }
+            IdentityDto identityDto=identityService.findDataById(new IdentityDto(){{setUserId(user.getId());}});
+            if(identityDto!=null){
+                userJon.setRealName(identityDto.getRealName());
+                userJon.setCredentialNumber(identityDto.getCredentialNumber().substring(0, 3) + "***********" + identityDto.getCredentialNumber().substring(identityDto.getCredentialNumber().length()- 4, identityDto.getCredentialNumber().length()));
+                userJon.setIsIdentityYN(1);
+            }else{
+                userJon.setIsIdentityYN(0);
+            }
 
             data.put("user",userJon );
-
             try {
                 //读取session中的用户
                 UserDto actor = user;

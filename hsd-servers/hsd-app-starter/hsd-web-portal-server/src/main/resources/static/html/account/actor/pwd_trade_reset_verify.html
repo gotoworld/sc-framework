@@ -206,40 +206,40 @@
                 <div class="row   white-bg dashboard-header">
                     <div class="col-sm-12">
                         <blockquote class="text-warning" style="font-size:14px;background-color:#EEEEEE">
-                        <h4 class="text-warning">修改登录密码</h4>
+                        <h4 class="text-warning">交易密码找回</h4>
                         </blockquote>
                     </div>
                     <div class="col-md-12">
                         <div class="ibox-content" style="border:0px;">
+                            <ul class="stepsli tab_box">
+                                <li class="hover"><i>1</i><span></span><em>验证</em></li>
+                                <li class=""><i>2</i><span></span><em>设置</em></li>
+                                <li class="last"><i>√</i><span></span><em>完成</em></li>
+                            </ul>
                             <div class=" loginscreen   animated fadeInDown"  style="width: 500px;padding: 30px 0;margin: 0 auto;">
                                 <div class="ibox float-e-margins">
                                     <div class="white-bg dashboard-header">
                                         <div class="col-sm-12" style="margin-top: 0px;">
                                             <form id="form_1" class="form m-t" role="form" ng-submit="submitForm()">
                                                 <p class="col-md-12 text-muted text-left">
-                                                    密码长度8-20位,建议字母,数字,标点的组合来提高账号安全度
-
+                                                    真实姓名：<span ng-bind="settingInfo.realName"></span>
                                                 </p>
                                                 <div class="col-md-12">
-                                                    <input type="hidden" name="oldpwd" id="oldpwdA">
-                                                    <input type="password" id="oldpasswordA"
-                                                           onkeydown="$('#oldpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#oldpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入原始密码" required="">
+                                                    <input type="text" id="credentialNumber" name="credentialNumber" class="form-control" placeholder="请输入身份证号码" required="">
                                                 </div>
-                                                <div class="col-md-12"  style="margin-top:20px; ">
-                                                    <input type="hidden" name="newpwd" id="newpwdA">
-                                                    <input type="password" id="newpasswordA" name="newpasswordA"
-                                                           onkeydown="$('#newpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#newpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入新密码" required="">
+                                                <p class="col-md-12 text-muted text-left" style="margin-top: 10px">
+                                                    绑定手机：<span ng-bind="settingInfo.cellphone"></span>
+                                                </p>
+                                                <div class=" row" style="margin: 0 0 10px 10px;">
+                                                    <input type="text" id="smsCaptcha" name="smsCaptcha" class="form-control" placeholder="请输入短信验证码" required="" style="float: left; width: 300px;">
+                                                    <button onclick="sendSMS()" class="btn btn-primary block m-b" style="float: right;" id="sendSMSBtn">发送验证码</button>
                                                 </div>
-                                                <div class="col-md-12" style="margin-top:20px; ">
-                                                    <input type="hidden" name="confirmpwd" id="confirmpwdA">
-                                                    <input type="password" equalTo="#newpasswordA" id="confirmpwdB" name="confirmpwdB"
-                                                           onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认新密码" required="">
+                                                <div class="row m-b" style="margin: 0 0 10px 10px;">
+                                                    <input type="text"id="imgCaptcha"  name="imgCaptcha" style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
+                                                    <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
                                                 </div>
                                                 <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
-                                                    <button type="submit" class="btn btn-primary block full-width m-b">保存新密码</button>
+                                                    <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -272,8 +272,6 @@
     <!-- 自定义js -->
     <!--<script src="/plugins/hplus/js/hplus.js?v=4.1.0"></script>-->
     <!--<script type="text/javascript" src="/plugins/hplus/js/contabs.js"></script>-->
-    <script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
-    <script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
 
     <script src="/js/jQuery.md5.js" type="text/javascript"></script>
     <script src="/plugins/layer/layer.js" type="text/javascript"></script>
@@ -287,21 +285,56 @@
             user.init(function(){
 
             });
-            $scope.submitForm=function(){
-               if($("#form_1").valid()){
-                    $.post(site.userSetting.loginpwd.update, $('#form_1').serialize(),function (result) {
-                        if (result.code == 0) {
-                            parent.location.href = site.userSetting.loginpwd.view+'_success.html';
-                        } else {
-                            alert(result.message);
-                        }
-                    }, 'json');
+            $.get(site.userSetting.info, {}, function (result) {
+                if (result.code == 0) {
+                    $data.settingInfo=result.data;
+                    if (!$data.$$phase) $data.$apply();
+                } else {
+                    alert(result.message);
                 }
+            }, 'json');
+            $scope.submitForm=function(){
+                $.post(site.userSetting.tradepwd.resetVerify, $('#form_1').serialize(),function (result) {
+                    if (result.code == 0) {
+                        parent.location.href = site.userSetting.tradepwd.view+'_reset_setting.html';
+                    } else {
+                        alert(result.message);
+                    }
+                }, 'json');
             }
         });
-        $(document).ready(function(){
-            $("#form_1").validate();
-        });
+
+        var sendSMS=function(){
+            if(!util.notEmpty($('#imgCaptcha').val())){
+                alert('请输入图片中的数字或字母');
+                return;
+            }
+//            if($('#sendSMSBtn').attr("disabled")==false) return;
+            $('#sendSMSBtn').attr("disabled",true);
+            $.post(site.userSetting.tradepwd.resetVerifySms, $('#form_1').serialize(),function (result) {
+                if (result.code == 0) {
+                    timeCount=60;
+                    sendSMSBtnOut();
+                } else {
+                    timeCount=0;
+                    sendSMSBtnOut();
+                    alert(result.message);
+                }
+            }, 'json');
+        }
+
+        var sendSMSBtnOut=function(){
+            if(timeCount<=0){
+                $('#sendSMSBtn').attr("disabled",false);
+                $('#sendSMSBtn').html('发送验证码');
+                return;
+            }
+            $('#sendSMSBtn').html('('+timeCount+')重新发送');
+            setTimeout(function(){
+                timeCount--;
+                sendSMSBtnOut();
+            },1000);
+        }
     </script>
 </body>
 

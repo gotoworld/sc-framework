@@ -28,11 +28,11 @@
     </select>
 
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="com.hsd.account.actor.entity.identity.Identity"  useGeneratedKeys="true" keyProperty="userId"  >
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.identity.Identity">
         insert into identity (
-         
-            real_name 
-           ,credential_type 
+            user_id
+           ,real_name
+           ,credential_type
            ,credential_number 
            ,credential_photo_a 
            ,credential_photo_b 
@@ -44,13 +44,13 @@
            ,date_created 
            ,date_updated 
         ) values (
-         
-            #{realName} 
+            #{userId}
+           ,#{realName}
            ,#{credentialType} 
            ,#{credentialNumber} 
            ,#{credentialPhotoA} 
            ,#{credentialPhotoB} 
-           ,#{state} 
+           ,0
            ,#{memo} 
            ,0
            ,#{keyword} 

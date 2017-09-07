@@ -61,6 +61,12 @@ public class UserDto extends BaseDto {
     /**注册时间*/
      private Date dateCreated;
 
+    /**风险评估*/
+    private String riskAssess;
+    /**真实姓名*/
+    private String realName;
+    /**证件编号*/
+    private String credentialNumber;
     /**验证码*/
     private String captcha;
     /**新密码*/
@@ -69,4 +75,14 @@ public class UserDto extends BaseDto {
     private String confirmpwd;
     /**协议确认0否1是*/
     private Integer agreement;
+    /**手机号0否1是*/
+    private Integer isCellphoneYN;
+    /**邮箱0否1是*/
+    private Integer isEmailYN;
+    /**交易密码0否1是*/
+    private Integer isTradePwdYN;
+    /**实名认证0否1是*/
+    private Integer isIdentityYN;
+    /**风险评测0否1是*/
+    private Integer isRiskAssessYN;
 }

@@ -3,8 +3,13 @@ package com.hsd.account.actor.service.user;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.actor.api.user.IUserService;
+import com.hsd.account.actor.dao.identity.IIdentityDao;
+import com.hsd.account.actor.dao.identity.IIdentityLogDao;
 import com.hsd.account.actor.dao.user.IUserDao;
+import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.actor.dto.user.UserDto;
+import com.hsd.account.actor.entity.identity.Identity;
+import com.hsd.account.actor.entity.identity.IdentityLog;
 import com.hsd.account.actor.entity.user.User;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -33,6 +38,10 @@ import java.util.concurrent.TimeUnit;
 public class UserService extends BaseService implements IUserService {
     @Autowired
     private IUserDao userDao;
+    @Autowired
+    private IIdentityDao identityDao;
+    @Autowired
+    private IIdentityLogDao identityLogDao;
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
     @Override
@@ -244,7 +253,7 @@ public class UserService extends BaseService implements IUserService {
             if (dto == null) throw new RuntimeException("参数异常!");
             User entity = copyTo(dto, User.class);
             entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
-            if(userDao.updatePwd(entity)==0){
+            if(userDao.updateLoginPwd(entity)==0){
                 throw new RuntimeException("密码修改失败!");
             }
         } catch (Exception e) {
@@ -260,6 +269,9 @@ public class UserService extends BaseService implements IUserService {
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             User entity = copyTo(dto, User.class);
+
+            if(userDao.isCellphoneYN(entity.getCellphone())>0) throw new RuntimeException("绑定失败!手机号["+entity.getCellphone()+"]已被其它账号绑定!");
+
             if(userDao.phoneBind(entity)==0){
                 throw new RuntimeException("手机绑定失败!");
             }
@@ -276,6 +288,9 @@ public class UserService extends BaseService implements IUserService {
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             User entity = copyTo(dto, User.class);
+
+            if(userDao.isEmailYN(entity.getEmail())>0) throw new RuntimeException("绑定失败!邮箱["+entity.getEmail()+"]已被其它账号绑定!");
+
             if(userDao.emailBind(entity)==0){
                 throw new RuntimeException("邮箱绑定失败!");
             }
@@ -293,24 +308,118 @@ public class UserService extends BaseService implements IUserService {
             if (dto == null) throw new RuntimeException("参数异常!");
             Integer count= (Integer) redisTemplate.opsForValue().get("user:setting:loginpwd:"+dto.getId());
             if(count==null) count=0;
-            if(count>=3)  throw new RuntimeException("已超过24小时内最大重试次数!");
+            if(count>=5)  throw new RuntimeException("已超过24小时内最大重试次数!");
             User entity = copyTo(dto, User.class);
-            //获取账号登录信息
+            //获取账号密码
             User user= userDao.getAccountPwd(entity);
             if(user==null) throw new RuntimeException("账号不存在!");
             //验证原密码
             String hashOldPwd=MD5.pwdMd5Hex(dto.getPwd());
             if(!(""+hashOldPwd).equals(user.getPwd())){
                 redisTemplate.opsForValue().set("user:setting:loginpwd:"+dto.getId(),++count,24, TimeUnit.HOURS);
-                throw new RuntimeException("原始密码错误!剩余重试次数,"+(3-count));
+                throw new RuntimeException("原始密码错误!剩余重试次数,"+(5-count));
             }
             //修改新密码
             entity.setPwd(MD5.pwdMd5Hex(dto.getNewpwd()));
-            if(userDao.updatePwd(entity)==0){
+            if(userDao.updateLoginPwd(entity)==0){
                 throw new RuntimeException("密码修改失败!");
             }
+            redisTemplate.opsForValue().set("user:setting:loginpwd:"+dto.getId(),++count,0, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             log.error("密码修改失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response identity(@RequestBody IdentityDto dto) throws Exception {
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数异常!");
+            dto.setState(0);
+            dto.setCredentialType(0);
+            Identity entity=copyTo(dto,Identity.class);
+            if(identityDao.isDataYN(entity)>0) throw new RuntimeException("已实名认证,不能重复操作!");
+            identityDao.insert(entity);
+            identityLogDao.insert(copyTo(dto,IdentityLog.class));
+        } catch (Exception e) {
+            log.error("实名认证异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response pwdTradeSetting(@RequestBody UserDto dto) throws Exception{
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数异常!");
+            User entity = copyTo(dto, User.class);
+            //获取账号密码
+            User user= userDao.getAccountPwd(entity);
+            if(user==null) throw new RuntimeException("账号不存在!");
+            if(ValidatorUtil.notEmpty(user.getTradePwd())) throw new RuntimeException("登录密码已存在,不能重复操作!");
+
+            entity.setTradePwd(MD5.pwdMd5Hex(dto.getTradePwd()));
+            if(userDao.updateTradePwd(entity)==0){
+                throw new RuntimeException("交易密码修改失败!");
+            }
+            redisTemplate.opsForValue().getOperations().delete("user:setting:tradepwd:"+dto.getId());
+        } catch (Exception e) {
+            log.error("交易密码修改失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response pwdTradeUpdate(@RequestBody UserDto dto) throws Exception{
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数异常!");
+            Integer count= (Integer) redisTemplate.opsForValue().get("user:setting:tradepwd:"+dto.getId());
+            if(count==null) count=0;
+            if(count>=5)  throw new RuntimeException("已超过24小时内最大重试次数!");
+
+            User entity = copyTo(dto, User.class);
+
+            //获取账号密码
+            User user= userDao.getAccountPwd(entity);
+            if(user==null) throw new RuntimeException("账号不存在!");
+
+            //验证原交易密码
+            String hashOldTradePwd=MD5.pwdMd5Hex(dto.getTradePwd());
+            if(!(""+hashOldTradePwd).equals(user.getTradePwd())){
+                redisTemplate.opsForValue().set("user:setting:tradepwd:"+dto.getId(),++count,24, TimeUnit.HOURS);
+                throw new RuntimeException("原始交易密码错误!剩余重试次数,"+(5-count));
+            }
+
+            entity.setTradePwd(MD5.pwdMd5Hex(dto.getNewpwd()));
+            if(userDao.updateTradePwd(entity)==0){
+                throw new RuntimeException("交易密码修改失败!");
+            }
+            redisTemplate.opsForValue().getOperations().delete("user:setting:tradepwd:"+dto.getId());
+        } catch (Exception e) {
+            log.error("交易密码修改失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response pwdTradeResetSetting(@RequestBody UserDto dto) throws Exception{
+        Response result = new Response(0,"seccuss");
+        try {
+            if (dto == null) throw new RuntimeException("参数异常!");
+            User entity = copyTo(dto, User.class);
+            entity.setTradePwd(MD5.pwdMd5Hex(dto.getTradePwd()));
+            if(userDao.updateTradePwd(entity)==0){
+                throw new RuntimeException("交易密码重置失败!");
+            }
+            redisTemplate.opsForValue().getOperations().delete("user:setting:tradepwd:"+dto.getId());
+        } catch (Exception e) {
+            log.error("交易密码重置失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;

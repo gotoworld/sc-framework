@@ -218,28 +218,21 @@
                                             <form id="form_1" class="form m-t" role="form" ng-submit="submitForm()">
                                                 <p class="col-md-12 text-muted text-left">
                                                     密码长度8-20位,建议字母,数字,标点的组合来提高账号安全度
-                                                    <input type="hidden" name="accid" ng-value="userInfo.id">
                                                 </p>
-                                                <div class="col-md-12">
-                                                    <input type="hidden" name="oldpwd" id="oldpwdA">
-                                                    <input type="password" id="oldpasswordA"
-                                                           onkeydown="$('#oldpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#oldpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入原始交易密码" required="">
-                                                </div>
                                                 <div class="col-md-12"  style="margin-top:20px; ">
-                                                    <input type="hidden" name="newpwd" id="newpwdA">
-                                                    <input type="password" id="newpasswordA" name="newpasswordA"
-                                                           onkeydown="$('#newpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#newpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入新交易密码" required="">
+                                                    <input type="hidden" name="tradePwd" id="tradePwdA">
+                                                    <input type="password" id="tradePwdB" name="tradePwdB"
+                                                           onkeydown="$('#tradePwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#tradePwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入交易密码" required="">
                                                 </div>
                                                 <div class="col-md-12" style="margin-top:20px; ">
                                                     <input type="hidden" name="confirmpwd" id="confirmpwdA">
-                                                    <input type="password" equalTo="#newpasswordA" id="confirmpwdB" name="confirmpwdB"
+                                                    <input type="password" equalTo="#tradePwdB" id="confirmpwdB" name="confirmpwdB"
                                                            onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认新交易密码" required="">
+                                                           onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认交易密码" required="">
                                                 </div>
                                                 <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
-                                                    <button type="submit" class="btn btn-primary block full-width m-b">保存新密码</button>
+                                                    <button type="submit" class="btn btn-primary block full-width m-b">保存交易密码</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -289,9 +282,9 @@
             });
             $scope.submitForm=function(){
                if($("#form_1").valid()){
-                    $.post(site.userSetting.loginpwd.update, $('#form_1').serialize(),function (result) {
+                    $.post(site.userSetting.tradepwd.setting, $('#form_1').serialize(),function (result) {
                         if (result.code == 0) {
-                            parent.location.href = site.userSetting.loginpwd.view+'_success.html';
+                            parent.location.href = site.userSetting.tradepwd.view+'_success.html';
                         } else {
                             alert(result.message);
                         }

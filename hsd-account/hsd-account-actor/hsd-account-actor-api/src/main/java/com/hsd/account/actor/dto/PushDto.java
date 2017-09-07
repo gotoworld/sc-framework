@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 public class PushDto extends BaseDto {
     /**前缀*/
      private String prefix;
+    /**用户id*/
+     private String userid;
     /**用户账号*/
      private String account;
     /**手机号码*/

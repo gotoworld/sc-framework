@@ -18,12 +18,12 @@ public interface IUserDao extends IBaseDao {
      */
     @Select("select IFNULL(count(0),0) as count from user where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
-
     /**
      * <p>判断账号是否存在
      */
     @Select(" select count(0) from user where  account=#{account} ")
     int isAccountYN(@Param("account") String account) throws Exception;
+
     /**
      * <p>判断手机号是否存在
      */
@@ -39,7 +39,6 @@ public interface IUserDao extends IBaseDao {
      */
     @Delete("delete from user where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
-
     /**
      * 设置标签
      */
@@ -51,6 +50,7 @@ public interface IUserDao extends IBaseDao {
      */
     @Update("update user set state=3 where id = #{id} and state=1 ")
     int setBlacklist(IEntity entity) throws Exception;
+
     /**
      * 移除黑名单
      */
@@ -60,21 +60,21 @@ public interface IUserDao extends IBaseDao {
      * <p>获取用户信息>根据登录名。
      */
     Object findUserByAccount(Map dto) throws Exception;
-
     /**
      * <p>最后登陆记录
      */
     @Update("update user set count=count+1,last_login=now() where id = #{id}")
     int lastLogin(IEntity entity) throws Exception;
+
     /**
      * <p>获取用户[id,手机号,邮箱]>根据登录名。找回密码
      */
     Object getAccount(IEntity dto) throws Exception;
     /**
-     * <p>密码修改
+     * <p>登录密码修改
      */
     @Update("update user set count=count+1,pwd=#{pwd} where id = #{id}")
-    int updatePwd(IEntity entity) throws Exception;
+    int updateLoginPwd(IEntity entity) throws Exception;
     /**
      * <p>交易密码修改
      */
@@ -93,6 +93,6 @@ public interface IUserDao extends IBaseDao {
     /**
      * <p>获取账号密码
      */
-    @Select("select pwd as 'pwd',trade_pwd as 'tradePwd'  from user where id = #{id} ")
+    @Select("select id as 'id',pwd as 'pwd',trade_pwd as 'tradePwd'  from user where id = #{id} ")
     User getAccountPwd(IEntity entity) throws Exception;
 }

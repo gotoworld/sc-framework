@@ -54,6 +54,7 @@ public class PushService extends BaseService implements IPushService {
             if (!(""+dto.getCaptcha()).equals(redisTemplate.opsForValue().get(prefix + dto.getPrefix() + dto.getCellphone()))) {
                 throw new RuntimeException("校验失败,验证码错误!");
             }
+            redisTemplate.opsForValue().getOperations().delete(prefix + dto.getPrefix() + dto.getCellphone());
         } catch (Exception e) {
             log.error("信息保存异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
@@ -68,6 +69,7 @@ public class PushService extends BaseService implements IPushService {
             if (!(""+dto.getCaptcha()).equals(redisTemplate.opsForValue().get(prefix + dto.getPrefix() + dto.getEmail()))) {
                 throw new RuntimeException("校验失败,验证码错误!");
             }
+            redisTemplate.opsForValue().getOperations().delete(prefix + dto.getPrefix() + dto.getEmail());
         } catch (Exception e) {
             log.error("信息保存异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());

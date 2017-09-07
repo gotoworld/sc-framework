@@ -61,7 +61,7 @@ logging:
 #服务名
 feign:
   name:
-    account.actor: hsd-account-actor-server
+    account.actor: hsd-account-actor-server-wxg
 
 # 自定义配置
 hsd:

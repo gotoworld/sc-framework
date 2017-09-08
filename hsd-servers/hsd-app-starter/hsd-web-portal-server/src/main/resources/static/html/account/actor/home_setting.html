@@ -306,7 +306,7 @@
                                                             风险测评</div>
                                                         <div class="col-md-4">
                                                             <span ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0">未测评</span>
-                                                            <span ng-if="settingInfo.isRiskAssessYN==1" ng-bind="settingInfo.email">riskAssess</span>
+                                                            <span ng-if="settingInfo.isRiskAssessYN==1" ng-bind="settingInfo.riskAssess">***</span>
                                                             </div>
                                                         <div class="col-md-4">
                                                             <a ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0" href="risk_assess_setting.html"  style="color: #f8ac59;">开始测评</a>

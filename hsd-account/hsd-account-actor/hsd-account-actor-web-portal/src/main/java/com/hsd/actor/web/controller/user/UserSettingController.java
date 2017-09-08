@@ -39,7 +39,7 @@ public class UserSettingController extends BaseController {
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info")
     @ApiOperation(value = "获取信息")
    public Response info() {
-        log.info("UserController info.........");
+        log.info("UserSettingController info.........");
         Response result = new Response();
         try {
            UserDto user=userService.findUserByAccount(JwtUtil.getSubject(UserDto.class).getAccount(), UserDto.userType.USER.getCode());

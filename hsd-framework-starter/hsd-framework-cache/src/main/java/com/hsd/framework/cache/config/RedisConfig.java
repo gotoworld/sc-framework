@@ -51,7 +51,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 		return new RedisProperties();
 	}
 
-
+	/** 分布式有序id生成器*/
 	@Bean(name = "IdGenerator")
 	public IdGeneratorIsRedis idGenerator(){
 		RedisProperties redisProperties=redisProperties();
@@ -69,8 +69,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 		}
 		return idGeneratorBuilder.build();
 	}
-
-
 
 	/**
 	 * 主键生成器
@@ -176,7 +174,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 	/**
 	 * 设置redisTemplate的存储格式（在此与Session没有什么关系）
-	 *
 	 * @return
 	 */
 	@Bean

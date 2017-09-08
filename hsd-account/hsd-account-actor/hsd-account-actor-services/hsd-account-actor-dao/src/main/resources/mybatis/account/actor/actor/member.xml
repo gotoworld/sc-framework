@@ -134,7 +134,7 @@
            ,0
            ,now()
            ,now()
-           ,#{biUpdateTs} 
+           ,now()
         )
     </insert>
 

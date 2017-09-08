@@ -1,6 +1,7 @@
 #servers
-代码地址 http://192.168.101.16/wuxiaogang/hsd-servers
-注册中心 http://192.168.101.100:8761/   admin/admin
+| 名称 | 地址 | 账号 |
+| 代码地址 | http://192.168.101.16/wuxiaogang/hsd-servers |  |
+| 注册中心 | http://192.168.101.100:8761/   admin/admin
          http://192.168.101.101:8761/   admin/admin
          http://192.168.101.102:8761/   admin/admin
 crapAPI http://192.168.101.100:10086/api    姓名pinyin/123456

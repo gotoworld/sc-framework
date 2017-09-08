@@ -56,10 +56,11 @@ public class LoginController extends BaseController {
                 if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(pwd)) {
                     return Response.error("用户名或密码不能为空!");
                 }
-                ChannelInfoDto channelInfoUser = channelInfoService.findUserByAccount(account);
+                ChannelInfoDto channelInfoUser = channelInfoService.findUserByAccount(account); 
+                if(channelInfoUser==null ){return Response.error("登录失败,登录名错误或渠道商未启用!");}
                 String pwdhex = MD5.pwdMd5Hex(pwd);
-                if (channelInfoUser==null || !(account.equals(channelInfoUser.getAccount()) && pwdhex.equals(channelInfoUser.getPwd()))) {
-                    return Response.error("登录失败,用户名或密码错误!");
+                if (!pwdhex.equals(channelInfoUser.getPwd())) {
+                    return Response.error("登录失败,密码错误!");
                 }
                 String subject = JwtUtil.generalSubject(channelInfoUser);
                 Map<String, Object> data = new HashMap<>();

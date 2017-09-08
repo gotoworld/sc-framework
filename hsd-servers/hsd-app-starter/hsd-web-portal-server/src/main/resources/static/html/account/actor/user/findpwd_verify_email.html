@@ -16,141 +16,69 @@
     <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
     <link href="/plugins/hplus/css/plugins/steps/jquery.steps.css" rel="stylesheet">
     <style>
-        .middle-box {margin-top: 0px;}
         .steps li{border-left: 1px dotted #ffffff;border-right: 1px dotted #ffffff;}
-        .show-gridA{    padding-top: 10px;
-            padding-bottom: 10px;
-            border: 1px solid #ddd;
-            background-color: #eee !important;
-            height: 50px;
-            text-align: left;
-        }
         .show-gridA .tit{padding-top: 6px; color: #a9a9a9}
-        .glyphicon{color: #1ab394;}
     </style>
 </head>
 
 
 <body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
-<div class="fixed-sidebar border-bottom white-bg">
-    <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
-        <div class="navbar-header">
-            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-                <i class="fa fa-reorder"></i>
-            </button>
-            <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
+    <!--头部菜单开始-->
+    <div class="fixed-sidebar border-bottom white-bg"  ng-include="'/html/account/actor/include/navigation.html'" ng-init="current=''"></div>
+    <!--头部菜单结束-->
+    <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
+        <div class="wizard" style="width: 1330px;background: #eeeeee;position: absolute;top:100px;margin: 0px 0px 0px -20px;padding: 0px;height: 35px;overflow: hidden">
+            <div class=" steps clearfix">
+                <ul role="tablist">
+                    <li role="tab" class="first " aria-disabled="false" aria-selected="true"><a><span class="number badge badge-info">1</span> 填写帐号</a></li>
+                    <li role="tab" class="disabled current" aria-disabled="true"><a><span class="number badge badge-info">2</span> 身份验证</a></li>
+                    <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">3</span> 设置新密码</a></li>
+                    <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">√</span> 完成</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="navbar-collapse collapse" id="navbar">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要投资
-                        <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="">芝麻开花</a></li>
-                        <li><a href="">定期项目</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要借款
-                        <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="">汽车分期</a> </li>
-                        <li><a href="">净值借款</a> </li>
-                        <li><a href="">线下借款</a> </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 信息披露
-                        <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="">关于我们</a> </li>
-                        <li><a href="">安全保障</a> </li>
-                        <li><a href="">平台数据</a> </li>
-                        <li><a href="">运营报告</a> </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a ng-show="!util.notEmpty(userInfo.account)" data-toggle="modal" href="/login.html">
-                        <i class="fa fa-sign-in"></i> 登录
-                    </a>
-                    <a ng-show="util.notEmpty(userInfo.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
-                    </a>
-                    <ul ng-show="util.notEmpty(userInfo.account)" role="menu" class="dropdown-menu">
-                        <li><a href="/html/account/actor/home.html">我的投资</a> </li>
-                        <li><a href="/html/account/actor/home.html">我的借款</a> </li>
-                        <li><a href="/html/account/actor/home.html">资金明细</a> </li>
-                        <li><a href="#" ng-click="user.logout()">安全退出 <i class="fa fa-sign-out"></i> </a> </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
-<div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
-    <div class="wizard" style="width: 1330px;background: #eeeeee;position: absolute;top:100px;margin: 0px 0px 0px -20px;padding: 0px;height: 35px;overflow: hidden">
-        <div class=" steps clearfix">
-            <ul role="tablist">
-                <li role="tab" class="first " aria-disabled="false" aria-selected="true"><a><span class="number badge badge-info">1</span> 填写帐号</a></li>
-                <li role="tab" class="disabled current" aria-disabled="true"><a><span class="number badge badge-info">2</span> 身份验证</a></li>
-                <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">3</span> 设置新密码</a></li>
-                <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">√</span> 完成</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="text-center loginscreen   animated fadeInDown"  style="width: 600px;padding: 10% 0;margin: 0 auto;">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="white-bg dashboard-header">
-                        <div class="col-sm-12">
-                            <h2>邮箱验证</h2>
-                            <hr>
-                        </div>
-                        <div class="col-sm-12" style="">
-                            <form class="m-t" role="form" method="get" action="/html/account/actor/user/findpwd_success.html">
-                                <p class="col-md-12">
-                                    <img src="/img/uc_send_email.png">
-                                </p>
-                                <div class="col-md-12">
-                                    设置新密码的链接已经发送至<label style="color: #1ab394;"  ng-bind="accountInfo.email">***@***</label>
-                                </div>
-                                <div class="col-md-12" style="">
-                                    请您在48小时之内登录邮箱,点击邮箱内的链接设置新密码
-                                </div>
-                                <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
-                                    <a href="http://mail.163.com/" target="_blank" class="btn btn-primary block full-width m-b">去邮箱验证</a>
-                                </div>
-                                <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
-                                    <a href="/html/account/actor/user/findpwd_verify.html" style="border: 1px solid #1ab394;color: #1ab394;" class="btn  block full-width m-b">返回</a>
-                                </div>
-                            </form>
+        <div class="text-center loginscreen   animated fadeInDown"  style="width: 600px;padding: 10% 0;margin: 0 auto;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="white-bg dashboard-header">
+                            <div class="col-sm-12">
+                                <h2>邮箱验证</h2>
+                                <hr>
+                            </div>
+                            <div class="col-sm-12" style="">
+                                <form class="m-t" role="form" method="get" action="/html/account/actor/user/findpwd_success.html">
+                                    <p class="col-md-12">
+                                        <img src="/img/uc_send_email.png">
+                                    </p>
+                                    <div class="col-md-12">
+                                        设置新密码的链接已经发送至<label style="color: #1ab394;"  ng-bind="accountInfo.email">***@***</label>
+                                    </div>
+                                    <div class="col-md-12" style="">
+                                        请您在48小时之内登录邮箱,点击邮箱内的链接设置新密码
+                                    </div>
+                                    <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
+                                        <a href="http://mail.163.com/" target="_blank" class="btn btn-primary block full-width m-b">去邮箱验证</a>
+                                    </div>
+                                    <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
+                                        <a href="/html/account/actor/user/findpwd_verify.html" style="border: 1px solid #1ab394;color: #1ab394;" class="btn  block full-width m-b">返回</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!--右侧部分结束-->
     </div>
-</div>
-
-
-    <div class="footer" style="background: transparent;border:0;width: 1330px;margin: 0px auto;bottom: 0px;">
-        <div class="pull-right">
-            By：demo
-        </div>
-        <div>
-            <strong>Copyright</strong> demo &copy; 2017
-        </div>
-    </div>
+    <!--顶部footer开始-->
+    <div ng-include="'/html/account/actor/include/footer.html'"></div>
+    <!--顶部footer结束-->
 
     <!-- 全局js -->
     <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script><script type="text/javascript" src="/plugins/layer/layer.js"></script>
 
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>

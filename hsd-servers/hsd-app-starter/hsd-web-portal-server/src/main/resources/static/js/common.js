@@ -154,6 +154,11 @@ var user = {
             callback && callback();
         } catch (e) {
         } finally {
+            $data.uLogin = function () {
+                user.login($('#_login_form_modal').serialize(), function () {
+                    location.href = '/html/account/actor/home.html';
+                });
+            }
             if ($data) {
                 if (!$data.$$phase) $data.$apply();
             }
@@ -184,6 +189,11 @@ var user = {
                 //定义全局函数
                 $data.user = user;
                 $data.util = util;
+                $data.uLogin = function () {
+                    user.login($('#_login_form').serialize(), function () {
+                        location.href = '/html/account/actor/home.html';
+                    });
+                }
             }
         }
     }

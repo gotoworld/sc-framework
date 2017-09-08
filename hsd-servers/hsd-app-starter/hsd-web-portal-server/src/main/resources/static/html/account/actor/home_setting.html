@@ -25,365 +25,194 @@
 </head>
 
 <body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
-<div class="fixed-sidebar border-bottom white-bg" >
-    <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
-        <div class="navbar-header">
-            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-                <i class="fa fa-reorder"></i>
-            </button>
-            <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-left">
-                <li class="active">
-                    <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要投资
-                        <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="#">芝麻开花</a></li>
-                        <li><a href="#">定期项目</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要借款
-                        <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="#">汽车分期</a> </li>
-                        <li><a href="#">净值借款</a> </li>
-                        <li><a href="#">线下借款</a> </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 信息披露
-                        <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="#">关于我们</a> </li>
-                        <li><a href="#">安全保障</a> </li>
-                        <li><a href="#">平台数据</a> </li>
-                        <li><a href="#">运营报告</a> </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <!--<a ng-show="!util.notEmpty(settingInfo.account)" data-toggle="modal" href="/index.html#modal-form">-->
-                        <!--<i class="fa fa-sign-in"></i> 登录-->
-                    <!--</a>-->
-                    <a ng-show="util.notEmpty(settingInfo.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
-                    </a>
-                    <ul ng-show="util.notEmpty(settingInfo.account)" role="menu" class="dropdown-menu">
-                        <li><a href="/html/account/actor/home.html">我的投资</a> </li>
-                        <li><a href="/html/account/actor/home.html">我的借款</a> </li>
-                        <li><a href="/html/account/actor/home.html">资金明细</a> </li>
-                        <li><a href="#" ng-click="user.logout()">安全退出 <i class="fa fa-sign-out"></i> </a> </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
+    <!--头部菜单开始-->
+    <div class="fixed-sidebar border-bottom white-bg"  ng-include="'/html/account/actor/include/navigation.html'" ng-init="current=''"></div>
+    <!--头部菜单结束-->
+    <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;height: 1200px;">
+        <!--左侧导航开始-->
+        <div ng-include="'/html/account/actor/include/sidemenu.html'" ng-init="current='setting'"></div>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div class="page-wrapper" class="gray-bg" style="width: 1085px;min-height:876px;float: right;background: #fff;padding: 10px;">
+            <div class="row">
+                <div class="ibox float-e-margins">
+                    <div class="row   white-bg dashboard-header">
+                        <div class="col-md-12">
+                            <div class="ibox float-e-margins">
+                                <div class="tabs-container">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 安全设置</a>
+                                        </li>
+                                        <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">通知设置</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="tab-1" class="tab-pane active">
+                                            <div class="panel-body">
+                                                <p> <label style="float: left;">账户安全等级：<span style="color:#f8ac59;">中</span></label>
+                                                    <div class="progress progress-striped" style="float: left;width: 100px;margin-top: -8px;margin-left: 5px;margin-right:5px;height: 15px;">
+                                                        <div style="width: 50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="43" role="progressbar" class="progress-bar progress-bar-warning">
+                                                            <span class="sr-only">43% Complete (success)</span>
+                                                        </div>
+                                                    </div>
+                                                    <label  style="float: left;margin-top: -10px;">您的账户安全等级已达到最高啦，请继续保持哦~</label>
+                                                </p>
 
-<div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;height: 1200px;">
-    <!--左侧导航开始-->
-    <nav class="navbar-default navbar-static-side" role="navigation" style="width: 200px;min-height:876px;float: left;background: #fff; margin-bottom: 10px;padding-right:10px;border-right:1px dashed #e0e0e0;">
-        <div class="nav-close"><i class="fa fa-times-circle"></i>
-        </div>
-        <div class="sidebar-collapse">
-            <ul class="nav" id="side-menu">
-                <li class="nav-header" style="text-align: center;">
-                    <div class="dropdown profile-element">
-                        <span ><img alt="image" class="img-circle" src="/img/avatar.png" /></span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold" ng-bind="settingInfo.account"></strong></span>
-                                <span class="text-muted text-xs block" ><label ng-bind="settingInfo.name"></label></span>
-                                </span>
-                        </a>
-                    </div>
-                    <div class="logo-element">DEMO
-                    </div>
-                </li>
-                <li>
-                    <a href="#" class="title">
-                        <i class="fa fa-vimeo"></i>
-                        <span class="nav-label">我的账户</span>
-                        <!-- <span class="fa arrow"></span> -->
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="home.html">账户总览</a>
-                            <a class="J_menuItem active" href="home_setting.html">个人设置</a>
-                            <a class="J_menuItem" href="#">自动投标</a>
-                            <a class="J_menuItem" href="#">消息中心</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-vimeo"></i>
-                        <span class="nav-label">我的投资</span>
-                        <!-- <span class="fa arrow"></span> -->
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="#">投资统计</a>
-                            <a class="J_menuItem" href="#">天天盈</a>
-                            <a class="J_menuItem" href="#">芝麻开花</a>
-                            <a class="J_menuItem" href="#">定期投资</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-vimeo"></i>
-                        <span class="nav-label">我的借款</span>
-                        <!-- <span class="fa arrow"></span> -->
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="#">净值借款</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-vimeo"></i>
-                        <span class="nav-label">资金管理</span>
-                        <!-- <span class="fa arrow"></span> -->
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="#">银行卡管理</a>
-                            <a class="J_menuItem" href="#">我要充值</a>
-                            <a class="J_menuItem" href="#">我要提现</a>
-                            <a class="J_menuItem" href="#">资金明细</a>
-                            <a class="J_menuItem" href="#">我的优惠券</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-vimeo"></i>
-                        <span class="nav-label">合知道</span>
-                        <!-- <span class="fa arrow"></span> -->
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="#">我的合知道</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-vimeo"></i>
-                        <span class="nav-label">推广有奖</span>
-                        <!-- <span class="fa arrow"></span> -->
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="#">推广管理</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-vimeo"></i>
-                        <span class="nav-label">我的积分</span>
-                        <!-- <span class="fa arrow"></span> -->
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="#">积分明细</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!--左侧导航结束-->
-    <!--右侧部分开始-->
-    <div class="page-wrapper" class="gray-bg" style="width: 1085px;min-height:876px;float: right;background: #fff;padding: 10px;">
-        <div class="row">
-            <div class="ibox float-e-margins">
-                <div class="row   white-bg dashboard-header">
-                    <div class="col-md-12">
-                        <div class="ibox float-e-margins">
-                            <div class="tabs-container">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 安全设置</a>
-                                    </li>
-                                    <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">通知设置</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div id="tab-1" class="tab-pane active">
-                                        <div class="panel-body">
-                                            <p> <label style="float: left;">账户安全等级：<span style="color:#f8ac59;">中</span></label>
-                                                <div class="progress progress-striped" style="float: left;width: 100px;margin-top: -8px;margin-left: 5px;margin-right:5px;height: 15px;">
-                                                    <div style="width: 50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="43" role="progressbar" class="progress-bar progress-bar-warning">
-                                                        <span class="sr-only">43% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                                <label  style="float: left;margin-top: -10px;">您的账户安全等级已达到最高啦，请继续保持哦~</label>
-                                            </p>
-
-                                            <div class="col-md-12">
-                                                <div class="feed-activity-list">
-                                                    <div class="feed-element">
-                                                    </div>
-                                                    <div class="feed-element">
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isMemberPerfectYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
-                                                            <span ng-if="settingInfo.isMemberPerfectYN>0" class="badge badge-info" style="margin-top: -2px;">√</span>
-                                                            信息完善</div>
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isMemberPerfectYN==0">待补充</span>
-                                                            <span ng-if="settingInfo.isMemberPerfectYN>0">已完善</span>
+                                                <div class="col-md-12">
+                                                    <div class="feed-activity-list">
+                                                        <div class="feed-element">
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isMemberPerfectYN==0" href="setting/member_setting.html" style="color: #f8ac59">完善</a>
-                                                            <a ng-if="settingInfo.isMemberPerfectYN>0" href="setting/member_setting.html" style="color: #0099E5">修改</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="feed-element">
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isIdentityYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
-                                                            <span ng-if="settingInfo.isIdentityYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
-                                                            实名认证</div>
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isIdentityYN==0">未认证</span>
-                                                            <span ng-if="settingInfo.isIdentityYN==1">
-                                                                {{settingInfo.realName}}
-                                                                {{settingInfo.credentialNumber}}
-                                                            </span>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isIdentityYN==0" href="setting/identity_setting.html" style="color: #f8ac59">认证</a>
-                                                            <span ng-if="settingInfo.isIdentityYN==1">已认证</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="feed-element">
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isCellphoneYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
-                                                            <span ng-if="settingInfo.isCellphoneYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
-                                                            手机号码</div>
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isCellphoneYN==0">未绑定</span>
-                                                            <span ng-if="settingInfo.isCellphoneYN==1" ng-bind="settingInfo.cellphone">********</span>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isCellphoneYN==0" href="setting/phone_setting.html" style="color:#f8ac59">绑定</a>
-                                                            <a ng-if="settingInfo.isCellphoneYN==1" href="setting/phone_verify.html" style="color:#0099E5">修改</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="feed-element">
-                                                        <div class="col-md-4"><span class="badge badge-info" style="margin-top: -2px;">√</span> 登录密码</div>
-                                                        <div class="col-md-4">已设置</div>
-                                                        <div class="col-md-4"><a href="setting/pwd_login_update.html" style="color: #0099E5">修改</a></div>
-                                                    </div>
-                                                    <div class="feed-element">
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isTradePwdYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
-                                                            <span ng-if="settingInfo.isTradePwdYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
-                                                            交易密码</div>
-                                                        <div class="col-md-4">{{settingInfo.isTradePwdYN==1?'已设置':'未设置'}}</div>
-                                                        <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isTradePwdYN==0" href="setting/pwd_trade_setting.html" style="color:#f8ac59">设置</a>
-                                                            <div ng-if="settingInfo.isTradePwdYN==1">
-                                                                <a href="setting/pwd_trade_update.html" style="color:#0099E5;float: left">修改</a>
-                                                                <span style="float: left">|</span>
-                                                                <a href="setting/pwd_trade_reset_verify.html" style="color:#0099E5;float: left">找回</a>
+                                                        <div class="feed-element">
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isMemberPerfectYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
+                                                                <span ng-if="settingInfo.isMemberPerfectYN>0" class="badge badge-info" style="margin-top: -2px;">√</span>
+                                                                信息完善</div>
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isMemberPerfectYN==0">待补充</span>
+                                                                <span ng-if="settingInfo.isMemberPerfectYN>0">已完善</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <a ng-if="settingInfo.isMemberPerfectYN==0" href="setting/member_setting.html" style="color: #f8ac59">完善</a>
+                                                                <a ng-if="settingInfo.isMemberPerfectYN>0" href="setting/member_setting.html" style="color: #0099E5">修改</a>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="feed-element">
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isEmailYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
-                                                            <span ng-if="settingInfo.isEmailYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
-                                                            电子邮箱</div>
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isEmailYN==0">未绑定</span>
-                                                            <span ng-if="settingInfo.isEmailYN==1" ng-bind="settingInfo.email">********</span>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isEmailYN==0" href="setting/email_setting.html" style="color: #f8ac59">绑定</a>
-                                                            <a ng-if="settingInfo.isEmailYN==1" href="setting/email_verify.html" style="color:#0099E5">修改</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="feed-element">
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
-                                                            <span ng-if="settingInfo.isRiskAssessYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
-                                                            风险测评</div>
-                                                        <div class="col-md-4">
-                                                            <span ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0">未测评</span>
-                                                            <span ng-if="settingInfo.isRiskAssessYN==1" ng-bind="settingInfo.riskAssess">***</span>
+                                                        <div class="feed-element">
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isIdentityYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
+                                                                <span ng-if="settingInfo.isIdentityYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
+                                                                实名认证</div>
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isIdentityYN==0">未认证</span>
+                                                                <span ng-if="settingInfo.isIdentityYN==1">
+                                                                    {{settingInfo.realName}}
+                                                                    {{settingInfo.credentialNumber}}
+                                                                </span>
                                                             </div>
-                                                        <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0" href="setting/risk_assess_setting.html" style="color: #f8ac59;">开始测评</a>
-                                                            <a ng-if="settingInfo.isRiskAssessYN==1" href="setting/risk_assess_setting.html" style="color:#0099E5">重新测评</a>
+                                                            <div class="col-md-4">
+                                                                <a ng-if="settingInfo.isIdentityYN==0" href="setting/identity_setting.html" style="color: #f8ac59">认证</a>
+                                                                <span ng-if="settingInfo.isIdentityYN==1">已认证</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="feed-element">
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isCellphoneYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
+                                                                <span ng-if="settingInfo.isCellphoneYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
+                                                                手机号码</div>
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isCellphoneYN==0">未绑定</span>
+                                                                <span ng-if="settingInfo.isCellphoneYN==1" ng-bind="settingInfo.cellphone">********</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <a ng-if="settingInfo.isCellphoneYN==0" href="setting/phone_setting.html" style="color:#f8ac59">绑定</a>
+                                                                <a ng-if="settingInfo.isCellphoneYN==1" href="setting/phone_verify.html" style="color:#0099E5">修改</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="feed-element">
+                                                            <div class="col-md-4"><span class="badge badge-info" style="margin-top: -2px;">√</span> 登录密码</div>
+                                                            <div class="col-md-4">已设置</div>
+                                                            <div class="col-md-4"><a href="setting/pwd_login_update.html" style="color: #0099E5">修改</a></div>
+                                                        </div>
+                                                        <div class="feed-element">
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isTradePwdYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
+                                                                <span ng-if="settingInfo.isTradePwdYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
+                                                                交易密码</div>
+                                                            <div class="col-md-4">{{settingInfo.isTradePwdYN==1?'已设置':'未设置'}}</div>
+                                                            <div class="col-md-4">
+                                                                <a ng-if="settingInfo.isTradePwdYN==0" href="setting/pwd_trade_setting.html" style="color:#f8ac59">设置</a>
+                                                                <div ng-if="settingInfo.isTradePwdYN==1">
+                                                                    <a href="setting/pwd_trade_update.html" style="color:#0099E5;float: left">修改</a>
+                                                                    <span style="float: left">|</span>
+                                                                    <a href="setting/pwd_trade_reset_verify.html" style="color:#0099E5;float: left">找回</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="feed-element">
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isEmailYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
+                                                                <span ng-if="settingInfo.isEmailYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
+                                                                电子邮箱</div>
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isEmailYN==0">未绑定</span>
+                                                                <span ng-if="settingInfo.isEmailYN==1" ng-bind="settingInfo.email">********</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <a ng-if="settingInfo.isEmailYN==0" href="setting/email_setting.html" style="color: #f8ac59">绑定</a>
+                                                                <a ng-if="settingInfo.isEmailYN==1" href="setting/email_verify.html" style="color:#0099E5">修改</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="feed-element">
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
+                                                                <span ng-if="settingInfo.isRiskAssessYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
+                                                                风险测评</div>
+                                                            <div class="col-md-4">
+                                                                <span ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0">未测评</span>
+                                                                <span ng-if="settingInfo.isRiskAssessYN==1" ng-bind="settingInfo.riskAssess">***</span>
+                                                                </div>
+                                                            <div class="col-md-4">
+                                                                <a ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0" href="setting/risk_assess_setting.html" style="color: #f8ac59;">开始测评</a>
+                                                                <a ng-if="settingInfo.isRiskAssessYN==1" href="setting/risk_assess_setting.html" style="color:#0099E5">重新测评</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div id="tab-2" class="tab-pane">
-                                        <div class="panel-body">
-                                            <div class="col-md-12">
-                                                <div class="inform_txt">
-                                                    <input type="checkbox" id="message" onclick="checkAll_MG(this);">&nbsp;<label for="message">站内信通知</label>
-                                                    <ul>
-                                                        <li><input type="checkbox" id="messageReceive" onclick="mgcheck1(this);" class="mg">&nbsp;收到还款</li>
-                                                        <li><input type="checkbox" id="messageDeposit" onclick="mgcheck1(this);" class="mg">&nbsp;提现成功</li>
-                                                        <li><input type="checkbox" id="messageRecharge" onclick="mgcheck1(this);" class="mg">&nbsp;充值成功</li>
-                                                        <li><input type="checkbox" id="messageChange" onclick="mgcheck1(this);" class="mg">&nbsp;投资成功</li>
-                                                        <li><input type="checkbox" id="messageTransfer" onclick="mgcheck1(this);" class="mg">&nbsp;转让申请成功</li>
+                                        <div id="tab-2" class="tab-pane">
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <div class="inform_txt">
+                                                        <input type="checkbox" id="message" onclick="checkAll_MG(this);">&nbsp;<label for="message">站内信通知</label>
+                                                        <ul>
+                                                            <li><input type="checkbox" id="messageReceive" onclick="mgcheck1(this);" class="mg">&nbsp;收到还款</li>
+                                                            <li><input type="checkbox" id="messageDeposit" onclick="mgcheck1(this);" class="mg">&nbsp;提现成功</li>
+                                                            <li><input type="checkbox" id="messageRecharge" onclick="mgcheck1(this);" class="mg">&nbsp;充值成功</li>
+                                                            <li><input type="checkbox" id="messageChange" onclick="mgcheck1(this);" class="mg">&nbsp;投资成功</li>
+                                                            <li><input type="checkbox" id="messageTransfer" onclick="mgcheck1(this);" class="mg">&nbsp;转让申请成功</li>
 
-                                                        <li><input type="checkbox" id="messageborrowingEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;借款成功</li>
-                                                        <li><input type="checkbox" id="messagerepaymentRemindEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款提醒</li>
-                                                        <li><input type="checkbox" id="messageoverdueEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;逾期提醒</li>
-                                                        <li><input type="checkbox" id="messagerepaymentSuccessEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款成功</li>
-                                                        <li><input type="checkbox" id="messagerepaymentFailEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款失败</li>
-                                                        <li><input type="checkbox" id="messageborrowingFailEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;借款流标</li>
-                                                        <li><input type="checkbox" id="messagewithdrawalEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;投资流标/被撤标</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="inform_txt">
-                                                    <input type="checkbox" id="mail" onclick="checkAll_ML(this);" checked="checked">&nbsp;<label for="mail">邮件通知</label>
-                                                    <ul>
-                                                        <li><input type="checkbox" id="mailReceive" onclick="mlcheck1(this);" class="ml" checked="checked">&nbsp;收到还款</li>
-                                                        <li><input type="checkbox" id="mailDeposit" onclick="mlcheck1(this);" class="ml" checked="checked">&nbsp;提现成功</li>
-                                                        <li><input type="checkbox" id="mailRecharge" onclick="mlcheck1(this);" class="ml" checked="checked">&nbsp;充值成功</li>
-                                                        <li><input type="checkbox" id="mailChange" onclick="mlcheck1(this);" class="ml" checked="checked">&nbsp;投资成功</li>
-                                                        <li><input type="checkbox" id="mailTransfer" onclick="mgcheck1(this);" class="ml">&nbsp;转让申请成功</li>
+                                                            <li><input type="checkbox" id="messageborrowingEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;借款成功</li>
+                                                            <li><input type="checkbox" id="messagerepaymentRemindEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款提醒</li>
+                                                            <li><input type="checkbox" id="messageoverdueEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;逾期提醒</li>
+                                                            <li><input type="checkbox" id="messagerepaymentSuccessEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款成功</li>
+                                                            <li><input type="checkbox" id="messagerepaymentFailEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款失败</li>
+                                                            <li><input type="checkbox" id="messageborrowingFailEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;借款流标</li>
+                                                            <li><input type="checkbox" id="messagewithdrawalEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;投资流标/被撤标</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="inform_txt">
+                                                        <input type="checkbox" id="mail" onclick="checkAll_ML(this);" checked="checked">&nbsp;<label for="mail">邮件通知</label>
+                                                        <ul>
+                                                            <li><input type="checkbox" id="mailReceive" onclick="mlcheck1(this);" class="ml" checked="checked">&nbsp;收到还款</li>
+                                                            <li><input type="checkbox" id="mailDeposit" onclick="mlcheck1(this);" class="ml" checked="checked">&nbsp;提现成功</li>
+                                                            <li><input type="checkbox" id="mailRecharge" onclick="mlcheck1(this);" class="ml" checked="checked">&nbsp;充值成功</li>
+                                                            <li><input type="checkbox" id="mailChange" onclick="mlcheck1(this);" class="ml" checked="checked">&nbsp;投资成功</li>
+                                                            <li><input type="checkbox" id="mailTransfer" onclick="mgcheck1(this);" class="ml">&nbsp;转让申请成功</li>
 
-                                                        <li><input type="checkbox" id="mailborrowingEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;借款成功</li>
-                                                        <li><input type="checkbox" id="mailrepaymentRemindEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款提醒</li>
-                                                        <li><input type="checkbox" id="mailoverdueEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;逾期提醒</li>
-                                                        <li><input type="checkbox" id="mailrepaymentSuccessEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款成功</li>
-                                                        <li><input type="checkbox" id="mailrepaymentFailEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款失败</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="inform_txt">
-                                                    <input type="checkbox" id="note" onclick="checkAll_NT(this);" checked="checked">&nbsp;<label for="note">短信通知</label>
-                                                    <ul>
-                                                        <li><input type="checkbox" id="noteReceive" onclick="ntcheck1(this);" class="nt" checked="checked">&nbsp;收到还款</li>
-                                                        <li><input type="checkbox" id="noteDeposit" onclick="ntcheck1(this);" class="nt" checked="checked">&nbsp;提现成功</li>
-                                                        <li><input type="checkbox" id="noteRecharge" onclick="ntcheck1(this);" class="nt" checked="checked">&nbsp;充值成功</li>
-                                                        <li><input type="checkbox" id="noteChange" onclick="ntcheck1(this);" class="nt" checked="checked">&nbsp;投资成功</li>
-                                                        <li><input type="checkbox" id="noteTransfer" onclick="mgcheck1(this);" class="nt">&nbsp;转让申请成功</li>
+                                                            <li><input type="checkbox" id="mailborrowingEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;借款成功</li>
+                                                            <li><input type="checkbox" id="mailrepaymentRemindEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款提醒</li>
+                                                            <li><input type="checkbox" id="mailoverdueEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;逾期提醒</li>
+                                                            <li><input type="checkbox" id="mailrepaymentSuccessEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款成功</li>
+                                                            <li><input type="checkbox" id="mailrepaymentFailEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款失败</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="inform_txt">
+                                                        <input type="checkbox" id="note" onclick="checkAll_NT(this);" checked="checked">&nbsp;<label for="note">短信通知</label>
+                                                        <ul>
+                                                            <li><input type="checkbox" id="noteReceive" onclick="ntcheck1(this);" class="nt" checked="checked">&nbsp;收到还款</li>
+                                                            <li><input type="checkbox" id="noteDeposit" onclick="ntcheck1(this);" class="nt" checked="checked">&nbsp;提现成功</li>
+                                                            <li><input type="checkbox" id="noteRecharge" onclick="ntcheck1(this);" class="nt" checked="checked">&nbsp;充值成功</li>
+                                                            <li><input type="checkbox" id="noteChange" onclick="ntcheck1(this);" class="nt" checked="checked">&nbsp;投资成功</li>
+                                                            <li><input type="checkbox" id="noteTransfer" onclick="mgcheck1(this);" class="nt">&nbsp;转让申请成功</li>
 
-                                                        <li><input type="checkbox" id="noteborrowingEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;借款成功</li>
-                                                        <li><input type="checkbox" id="noterepaymentRemindEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款提醒</li>
-                                                        <li><input type="checkbox" id="noteoverdueEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;逾期提醒</li>
-                                                        <li><input type="checkbox" id="noterepaymentSuccessEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款成功</li>
-                                                        <li><input type="checkbox" id="noterepaymentFailEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款失败</li>
-                                                        <li><input type="checkbox" id="notewithdrawalEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;投资流标/被撤标</li>
-                                                    </ul>
+                                                            <li><input type="checkbox" id="noteborrowingEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;借款成功</li>
+                                                            <li><input type="checkbox" id="noterepaymentRemindEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款提醒</li>
+                                                            <li><input type="checkbox" id="noteoverdueEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;逾期提醒</li>
+                                                            <li><input type="checkbox" id="noterepaymentSuccessEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款成功</li>
+                                                            <li><input type="checkbox" id="noterepaymentFailEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;还款失败</li>
+                                                            <li><input type="checkbox" id="notewithdrawalEnable" onclick="mgcheck1(this);" class="ml" checked="checked">&nbsp;投资流标/被撤标</li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -394,29 +223,18 @@
                     </div>
                 </div>
             </div>
+            <!--右侧部分结束-->
         </div>
         <!--右侧部分结束-->
     </div>
-</div>
-<div class="footer" style="clear: both;">
-    <div class="pull-right">
-        By：demo
-    </div>
-    <div>
-        <strong>Copyright</strong> demo &copy; 2017
-    </div>
-</div>
-
-<!-- 全局js -->
+    <!--顶部footer开始-->
+    <div ng-include="'/html/account/actor/include/footer.html'"></div>
+    <!--顶部footer结束-->
+    <!-- 全局js -->
     <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
-    <!--<script src="/plugins/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
-    <!--<script src="/plugins/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
+    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script><script type="text/javascript" src="/plugins/layer/layer.js"></script>
     <script src="/plugins/hplus/js/plugins/layer/layer.min.js"></script>
     <!-- 自定义js -->
-    <!--<script src="/plugins/hplus/js/hplus.js?v=4.1.0"></script>-->
-    <!--<script type="text/javascript" src="/plugins/hplus/js/contabs.js"></script>-->
-
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript">
@@ -436,5 +254,4 @@
         });
     </script>
 </body>
-
 </html>

@@ -238,6 +238,20 @@
                                                         <div class="col-md-4">
                                                             <span ng-if="settingInfo.isIdentityYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
                                                             <span ng-if="settingInfo.isIdentityYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
+                                                            信息完善</div>
+                                                        <div class="col-md-4">
+                                                            <span ng-if="settingInfo.isIdentityYN==0">待补充</span>
+                                                            <span ng-if="settingInfo.isIdentityYN==1">已完善</span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <a ng-if="settingInfo.isIdentityYN==0" href="setting/identity_setting.html" style="color: #f8ac59">完善</a>
+                                                            <span ng-if="settingInfo.isIdentityYN==1">已认证</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="feed-element">
+                                                        <div class="col-md-4">
+                                                            <span ng-if="settingInfo.isIdentityYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
+                                                            <span ng-if="settingInfo.isIdentityYN==1" class="badge badge-info" style="margin-top: -2px;">√</span>
                                                             实名认证</div>
                                                         <div class="col-md-4">
                                                             <span ng-if="settingInfo.isIdentityYN==0">未认证</span>
@@ -247,7 +261,7 @@
                                                             </span>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isIdentityYN==0" href="identity_setting.html" style="color: #f8ac59">认证</a>
+                                                            <a ng-if="settingInfo.isIdentityYN==0" href="setting/identity_setting.html" style="color: #f8ac59">认证</a>
                                                             <span ng-if="settingInfo.isIdentityYN==1">已认证</span>
                                                         </div>
                                                     </div>
@@ -261,14 +275,14 @@
                                                             <span ng-if="settingInfo.isCellphoneYN==1" ng-bind="settingInfo.cellphone">********</span>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isCellphoneYN==0" href="phone_setting.html" style="color:#f8ac59">绑定</a>
-                                                            <a ng-if="settingInfo.isCellphoneYN==1" href="phone_verify.html" style="color:#0099E5">修改</a>
+                                                            <a ng-if="settingInfo.isCellphoneYN==0" href="setting/phone_setting.html" style="color:#f8ac59">绑定</a>
+                                                            <a ng-if="settingInfo.isCellphoneYN==1" href="setting/phone_verify.html" style="color:#0099E5">修改</a>
                                                         </div>
                                                     </div>
                                                     <div class="feed-element">
                                                         <div class="col-md-4"><span class="badge badge-info" style="margin-top: -2px;">√</span> 登录密码</div>
                                                         <div class="col-md-4">已设置</div>
-                                                        <div class="col-md-4"><a href="pwd_login_update.html" style="color: #0099E5">修改</a></div>
+                                                        <div class="col-md-4"><a href="setting/pwd_login_update.html" style="color: #0099E5">修改</a></div>
                                                     </div>
                                                     <div class="feed-element">
                                                         <div class="col-md-4">
@@ -277,11 +291,11 @@
                                                             交易密码</div>
                                                         <div class="col-md-4">{{settingInfo.isTradePwdYN==1?'已设置':'未设置'}}</div>
                                                         <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isTradePwdYN==0" href="pwd_trade_setting.html" style="color:#f8ac59">设置</a>
+                                                            <a ng-if="settingInfo.isTradePwdYN==0" href="setting/pwd_trade_setting.html" style="color:#f8ac59">设置</a>
                                                             <div ng-if="settingInfo.isTradePwdYN==1">
-                                                                <a href="pwd_trade_update.html" style="color:#0099E5;float: left">修改</a>
+                                                                <a href="setting/pwd_trade_update.html" style="color:#0099E5;float: left">修改</a>
                                                                 <span style="float: left">|</span>
-                                                                <a href="pwd_trade_reset_verify.html" style="color:#0099E5;float: left">找回</a>
+                                                                <a href="setting/pwd_trade_reset_verify.html" style="color:#0099E5;float: left">找回</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -295,8 +309,8 @@
                                                             <span ng-if="settingInfo.isEmailYN==1" ng-bind="settingInfo.email">********</span>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isEmailYN==0" href="email_setting.html"  style="color: #f8ac59">绑定</a>
-                                                            <a ng-if="settingInfo.isEmailYN==1" href="email_verify.html" style="color:#0099E5">修改</a>
+                                                            <a ng-if="settingInfo.isEmailYN==0" href="setting/email_setting.html" style="color: #f8ac59">绑定</a>
+                                                            <a ng-if="settingInfo.isEmailYN==1" href="setting/email_verify.html" style="color:#0099E5">修改</a>
                                                         </div>
                                                     </div>
                                                     <div class="feed-element">
@@ -309,8 +323,8 @@
                                                             <span ng-if="settingInfo.isRiskAssessYN==1" ng-bind="settingInfo.riskAssess">***</span>
                                                             </div>
                                                         <div class="col-md-4">
-                                                            <a ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0" href="risk_assess_setting.html"  style="color: #f8ac59;">开始测评</a>
-                                                            <a ng-if="settingInfo.isRiskAssessYN==1" href="risk_assess_setting.html" style="color:#0099E5">重新测评</a>
+                                                            <a ng-if="settingInfo.isRiskAssessYN==null || settingInfo.isRiskAssessYN==0" href="setting/risk_assess_setting.html" style="color: #f8ac59;">开始测评</a>
+                                                            <a ng-if="settingInfo.isRiskAssessYN==1" href="setting/risk_assess_setting.html" style="color:#0099E5">重新测评</a>
                                                         </div>
                                                     </div>
                                                 </div>

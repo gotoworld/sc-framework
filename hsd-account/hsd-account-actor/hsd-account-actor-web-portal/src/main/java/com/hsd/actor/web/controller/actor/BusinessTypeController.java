@@ -5,8 +5,6 @@ import com.hsd.account.actor.dto.actor.BusinessTypeDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.framework.annotation.auth.Logical;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
@@ -32,7 +30,6 @@ public class BusinessTypeController extends BaseController {
     /**
      * <p>信息分页 (未删除)。
      */
-    @RequiresPermissions("businessType:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  BusinessTypeDto dto, @PathVariable("pageNum") Integer pageNum) {
@@ -53,12 +50,9 @@ public class BusinessTypeController extends BaseController {
         return result;
     }
 
-
-
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("businessType:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
@@ -78,28 +72,8 @@ public class BusinessTypeController extends BaseController {
     }
 
     /**
-     * <p>删除。
-     */
-   @RequiresPermissions("businessType:del")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
-    @ApiOperation(value = "信息删除")
-    public Response del(@PathVariable("id") Long id) {
-        log.info("BusinessTypeController del.........");
-        Response result = new Response();
-        try {
-            BusinessTypeDto dto = new BusinessTypeDto();
-            dto.setId(id);
-            result.message = businessTypeService.deleteDataById(dto);
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
-
-    /**
      * <p> 信息保存
      */
-    @RequiresPermissions(value = {"businessType:add", "businessType:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
     @ApiOperation(value = "信息保存")

@@ -109,8 +109,8 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="home.html">账户总览</a>
-                            <a class="J_menuItem active" href="home_setting.html">个人设置</a>
+                            <a class="J_menuItem" href="../home.html">账户总览</a>
+                            <a class="J_menuItem active" href="../home_setting.html">个人设置</a>
                             <a class="J_menuItem" href="#">自动投标</a>
                             <a class="J_menuItem" href="#">消息中心</a>
                         </li>
@@ -206,19 +206,45 @@
                 <div class="row   white-bg dashboard-header">
                     <div class="col-sm-12">
                         <blockquote class="text-warning" style="font-size:14px;background-color:#EEEEEE">
-                        <h4 class="text-warning">绑定邮箱</h4>
+                        <h4 class="text-warning">交易密码修改</h4>
                         </blockquote>
                     </div>
                     <div class="col-md-12">
                         <div class="ibox-content" style="border:0px;">
-                            <ul class="stepsli tab_box">
-                                <li class="hover"><i>1</i><span></span><em>验证</em></li>
-                                <li class="hover"><i>2</i><span></span><em>绑定</em></li>
-                                <li class="hover"><i>√</i><span></span><em>完成</em></li>
-                            </ul>
-                            <div class="col-sm-12 text-center" style="">
-                                <hr>
-                                <h2>邮箱设置成功</h2>
+                            <div class=" loginscreen   animated fadeInDown"  style="width: 500px;padding: 30px 0;margin: 0 auto;">
+                                <div class="ibox float-e-margins">
+                                    <div class="white-bg dashboard-header">
+                                        <div class="col-sm-12" style="margin-top: 0px;">
+                                            <form id="form_1" class="form m-t" role="form" ng-submit="submitForm()">
+                                                <p class="col-md-12 text-muted text-left">
+                                                    密码长度8-20位,建议字母,数字,标点的组合来提高账号安全度
+
+                                                </p>
+                                                <div class="col-md-12">
+                                                    <input type="hidden" name="oldTradePwd" id="oldpwdA">
+                                                    <input type="password" id="oldpasswordA"
+                                                           onkeydown="$('#oldpwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#oldpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入原始交易密码" required="">
+                                                </div>
+                                                <div class="col-md-12"  style="margin-top:20px; ">
+                                                    <input type="hidden" name="newTradePwd" id="newTradePwdA">
+                                                    <input type="password" id="newpasswordA" name="newpasswordA"
+                                                           onkeydown="$('#newTradePwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#newTradePwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入新交易密码" required="">
+                                                </div>
+                                                <div class="col-md-12" style="margin-top:20px; ">
+                                                    <input type="hidden" name="confirmpwd" id="confirmpwdA">
+                                                    <input type="password" equalTo="#newpasswordA" id="confirmpwdB" name="confirmpwdB"
+                                                           onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认新交易密码" required="">
+                                                </div>
+                                                <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
+                                                    <button type="submit" class="btn btn-primary block full-width m-b">保存新密码</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -243,10 +269,15 @@
     <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
     <!--<script src="/plugins/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
     <!--<script src="/plugins/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
-    <!--<script src="/plugins/hplus/js/plugins/layer/layer.min.js"></script>-->
     <!-- 自定义js -->
     <!--<script src="/plugins/hplus/js/hplus.js?v=4.1.0"></script>-->
     <!--<script type="text/javascript" src="/plugins/hplus/js/contabs.js"></script>-->
+    <script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+    <script src="/js/jQuery.md5.js" type="text/javascript"></script>
+    <script src="/plugins/layer/layer.js" type="text/javascript"></script>
+    <script src="/js/global.js" type="text/javascript"></script>
 
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
@@ -256,6 +287,20 @@
             user.init(function(){
 
             });
+            $scope.submitForm=function(){
+               if($("#form_1").valid()){
+                    $.post(site.userSetting.tradepwd.update, $('#form_1').serialize(),function (result) {
+                        if (result.code == 0) {
+                            parent.location.href = site.userSetting.tradepwd.view+'_success.html';
+                        } else {
+                            alert(result.message);
+                        }
+                    }, 'json');
+                }
+            }
+        });
+        $(document).ready(function(){
+            $("#form_1").validate();
         });
     </script>
 </body>

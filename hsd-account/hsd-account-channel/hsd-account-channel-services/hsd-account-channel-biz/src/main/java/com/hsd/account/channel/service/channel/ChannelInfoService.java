@@ -155,7 +155,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 			String result = "seccuss";
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
-				dto.setPwd( MD5.pwdMd5Hex("123456"));
+				dto.setPwd("7fb4771b47dda67c83e499cc42d01707");
 				channelInfoDao.resetPwd(copyTo(dto,ChannelInfo.class));
 			} catch (Exception e) {
 				 log.error("重置密码异常!", e);

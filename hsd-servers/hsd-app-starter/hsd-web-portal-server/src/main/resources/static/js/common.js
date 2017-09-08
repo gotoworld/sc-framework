@@ -30,7 +30,7 @@ var site = {
     ,userSetting: {
          info: apiPath.account.actor + "/api/account/actor/user/setting/info"
         ,phone:{
-            view: basePath + "/html/account/actor/phone"
+            view: basePath + "/html/account/actor/setting/phone"
             ,  bindSms: apiPath.account.actor + "/api/account/actor/user/setting/phone/bind/sms" //手机号绑定-短信验证码
             , updateSms: apiPath.account.actor + "/api/account/actor/user/setting/phone/update/sms" //手机号修改-短信验证码
             , verifySms: apiPath.account.actor + "/api/account/actor/user/setting/phone/verify/sms" //手机号验证-短信验证码
@@ -39,11 +39,11 @@ var site = {
             , update: apiPath.account.actor + "/api/account/actor/user/setting/phone/update" //手机号修改
         }
         ,loginpwd:{
-            view: basePath + "/html/account/actor/pwd_login"
+            view: basePath + "/html/account/actor/setting/pwd_login"
             ,update: apiPath.account.actor + "/api/account/actor/user/setting/pwd/login/update"
         }
         ,tradepwd:{
-            view: basePath + "/html/account/actor/pwd_trade"
+            view: basePath + "/html/account/actor/setting/pwd_trade"
             ,setting: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/setting"  //设置交易密码
             ,update: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/update"    //修改交易密码
             ,resetVerifySms: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/reset/verify/sms"  //找回交易密码-验证短信验证码-推送
@@ -51,13 +51,13 @@ var site = {
             ,resetSetting: apiPath.account.actor + "/api/account/actor/user/setting/pwd/trade/reset/setting"  //找回交易密码-密码重置
         }
         ,email:{
-            view: basePath + "/html/account/actor/email"
+            view: basePath + "/html/account/actor/setting/email"
             , bind: apiPath.account.actor + "/api/account/actor/user/setting/email/bind" //邮箱绑定
             , verify: apiPath.account.actor + "/api/account/actor/user/setting/email/verify" //邮箱验证
             , update: apiPath.account.actor + "/api/account/actor/user/setting/email/update" //邮箱修改
         }
         ,identity:{
-            view: basePath + "/html/account/actor/identity"
+            view: basePath + "/html/account/actor/setting/identity"
             , setting: apiPath.account.actor + "/api/account/actor/user/setting/identity" //实名认证
         }
 

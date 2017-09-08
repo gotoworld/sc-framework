@@ -109,8 +109,8 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="home.html">账户总览</a>
-                            <a class="J_menuItem active" href="home_setting.html">个人设置</a>
+                            <a class="J_menuItem" href="../home.html">账户总览</a>
+                            <a class="J_menuItem active" href="../home_setting.html">个人设置</a>
                             <a class="J_menuItem" href="#">自动投标</a>
                             <a class="J_menuItem" href="#">消息中心</a>
                         </li>
@@ -206,32 +206,22 @@
                 <div class="row   white-bg dashboard-header">
                     <div class="col-sm-12">
                         <blockquote class="text-warning" style="font-size:14px;background-color:#EEEEEE">
-                        <h4 class="text-warning">修改绑定邮箱</h4>
+                        <h4 class="text-warning">交易密码设置</h4>
                         </blockquote>
                     </div>
                     <div class="col-md-12">
                         <div class="ibox-content" style="border:0px;">
-                            <ul class="stepsli tab_box">
-                                <li class="hover"><i>1</i><span></span><em>验证</em></li>
-                                <li><i>2</i><span></span><em>绑定</em></li>
-                                <li class="last"><i>√</i><span></span><em>完成</em></li>
-                            </ul>
                             <div class="text-center loginscreen   animated fadeInDown"  style="width: 500px;padding: 30px 0;margin: 0 auto;">
                                 <div class="ibox float-e-margins">
-                                    <div class="   white-bg dashboard-header">
-                                        <div class="col-sm-12" style="margin-top: 0px;">
-                                            <form id="form_1" class="" role="form" ng-submit="submitForm();">
-                                                <p class="text-muted text-left" style="margin-left: 10px;">
-                                                    邮件验证码将发送至<span ng-bind="userInfo.email">***********</span>
-                                                </p>
-                                                <div class="row m-b" style="margin: 0 0 10px 10px;">
-                                                    <input type="text"id="imgCaptcha"  name="imgCaptcha" style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
-                                                    <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
-                                                </div>
-                                                <div class="col-sm-12" style="margin-top: 40px;margin-right: 10px;">
-                                                    <button type="submit" class="btn btn-primary block full-width m-b">发送验证</button>
-                                                </div>
-                                            </form>
+                                    <div class="white-bg dashboard-header">
+                                        <div class="col-sm-12">
+                                            <h2>密码修改成功</h2>
+                                            <hr>
+                                        </div>
+                                        <div class="col-sm-12" style="">
+                                            <p class="text-muted text-center"><small>你的交易密码已修改,</small></p>
+                                            <h1 class="logo-name">
+                                                <i class="fa fa-hand-pointer-o"></i></h1>
                                         </div>
                                     </div>
                                 </div>
@@ -259,7 +249,6 @@
     <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
     <!--<script src="/plugins/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
     <!--<script src="/plugins/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
-    <script src="/plugins/hplus/js/plugins/layer/layer.min.js"></script>
     <!-- 自定义js -->
     <!--<script src="/plugins/hplus/js/hplus.js?v=4.1.0"></script>-->
     <!--<script type="text/javascript" src="/plugins/hplus/js/contabs.js"></script>-->
@@ -272,20 +261,6 @@
             user.init(function(){
 
             });
-            $scope.submitForm=function(){
-                if(!util.notEmpty($('#imgCaptcha').val())){
-                    alert('请输入图片中的验证码');
-                    return;
-                }
-                //
-                $.post(site.userSetting.email.verify,$('#form_1').serialize(),function (result) {
-                    if (result.code == 0) {
-                        parent.location.href = site.userSetting.email.view+'_update.html';
-                    } else {
-                        alert(result.message);
-                    }
-                }, 'json');
-            }
         });
     </script>
 </body>

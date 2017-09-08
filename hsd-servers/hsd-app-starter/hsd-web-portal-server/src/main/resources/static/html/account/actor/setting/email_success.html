@@ -109,8 +109,8 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="home.html">账户总览</a>
-                            <a class="J_menuItem active" href="home_setting.html">个人设置</a>
+                            <a class="J_menuItem" href="../home.html">账户总览</a>
+                            <a class="J_menuItem active" href="../home_setting.html">个人设置</a>
                             <a class="J_menuItem" href="#">自动投标</a>
                             <a class="J_menuItem" href="#">消息中心</a>
                         </li>
@@ -206,39 +206,19 @@
                 <div class="row   white-bg dashboard-header">
                     <div class="col-sm-12">
                         <blockquote class="text-warning" style="font-size:14px;background-color:#EEEEEE">
-                        <h4 class="text-warning">绑定手机</h4>
+                        <h4 class="text-warning">绑定邮箱</h4>
                         </blockquote>
                     </div>
                     <div class="col-md-12">
                         <div class="ibox-content" style="border:0px;">
                             <ul class="stepsli tab_box">
-                                <li class="hover"><i>1</i><span></span><em>手机绑定</em></li>
-                                <li class="last"><i>√</i><span></span><em>完成</em></li>
+                                <li class="hover"><i>1</i><span></span><em>验证</em></li>
+                                <li class="hover"><i>2</i><span></span><em>绑定</em></li>
+                                <li class="hover"><i>√</i><span></span><em>完成</em></li>
                             </ul>
-                            <div class="text-center loginscreen   animated fadeInDown"  style="width: 500px;padding: 30px 0;margin: 0 auto;">
-                                <div class="ibox float-e-margins">
-                                    <div class="   white-bg dashboard-header">
-                                        <div class="col-sm-12" style="margin-top: 0px;">
-                                            <form class="" id="form_1" role="form" ng-submit="submitForm();">
-
-                                                <div class=" row" style="margin: 0 0 10px 10px;">
-                                                    <input type="text" id="cellphoneA" name="cellphone" class="form-control" placeholder="请输入新手机号码" required="">
-                                                </div>
-                                                <div class=" row" style="margin: 0 0 10px 10px;">
-                                                    <input type="text" id="smsCaptcha" name="smsCaptcha" class="form-control" placeholder="请输入短信验证码" required="" style="float: left; width: 300px;">
-                                                    <button onclick="sendSMS()" class="btn btn-primary block m-b" style="float: right;" id="sendSMSBtn">发送验证码</button>
-                                                </div>
-                                                <div class="row m-b" style="margin: 0 0 10px 10px;">
-                                                    <input type="text"id="imgCaptcha"  name="imgCaptcha" style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
-                                                    <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
-                                                </div>
-                                                <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
-                                                    <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-sm-12 text-center" style="">
+                                <hr>
+                                <h2>邮箱设置成功</h2>
                             </div>
                         </div>
                     </div>
@@ -276,59 +256,7 @@
             user.init(function(){
 
             });
-            $scope.submitForm=function(){
-                if(!util.notEmpty($('#cellphoneA').val())){
-                    alert('请输入绑定手机号');
-                    return;
-                }
-                if(!util.notEmpty($('#smsCaptcha').val())){
-                    alert('请输入短信验证码');
-                    return;
-                }
-                $.post(site.userSetting.phone.bind, $('#form_1').serialize(),function (result) {
-                    if (result.code == 0) {
-                        parent.location.href = site.userSetting.phone.view+'_success.html';
-                    } else {
-                        alert(result.message);
-                    }
-                }, 'json');
-            }
         });
-
-        var sendSMS=function(){
-            if(!util.notEmpty($('#cellphoneA').val())){
-                alert('请输入绑定手机号');
-                return;
-            }
-            if(!util.notEmpty($('#imgCaptcha').val())){
-                alert('请输入图片中的数字或字母');
-                return;
-            }
-//            if($('#sendSMSBtn').attr("disabled")==false) return;
-            $('#sendSMSBtn').attr("disabled",true);
-            $.post(site.userSetting.phone.bindSms, $('#form_1').serialize(),function (result) {
-                if (result.code == 0) {
-                    timeCount=60;
-                    sendSMSBtnOut();
-                } else {
-                    timeCount=0;
-                    alert(result.message);
-                }
-            }, 'json');
-        }
-
-        var sendSMSBtnOut=function(){
-            if(timeCount<=0){
-                $('#sendSMSBtn').attr("disabled",false);
-                $('#sendSMSBtn').html('发送验证码');
-                return;
-            }
-            $('#sendSMSBtn').html('('+timeCount+')重新发送');
-            setTimeout(function(){
-                timeCount--;
-                sendSMSBtnOut();
-            },1000);
-        }
     </script>
 </body>
 

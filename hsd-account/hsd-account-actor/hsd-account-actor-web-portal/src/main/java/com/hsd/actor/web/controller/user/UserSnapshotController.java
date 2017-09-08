@@ -5,8 +5,6 @@ import com.hsd.account.actor.dto.user.UserSnapshotDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.framework.annotation.auth.Logical;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
@@ -32,7 +30,6 @@ public class UserSnapshotController extends BaseController {
     /**
      * <p>信息分页 (未删除)。
      */
-    @RequiresPermissions("userSnapshot:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  UserSnapshotDto dto, @PathVariable("pageNum") Integer pageNum) {
@@ -58,7 +55,6 @@ public class UserSnapshotController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("userSnapshot:edit")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{userId}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
@@ -81,7 +77,6 @@ public class UserSnapshotController extends BaseController {
     /**
      * <p> 信息保存
      */
-    @RequiresPermissions(value = {"userSnapshot:add", "userSnapshot:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
     @ApiOperation(value = "信息保存")

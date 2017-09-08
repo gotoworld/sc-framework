@@ -3,7 +3,6 @@ package com.hsd.actor.web.controller.template;
 import com.hsd.account.actor.api.template.ITemplateAttributeService;
 import com.hsd.account.actor.dto.template.TemplateAttributeDto;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +22,6 @@ public class TemplateAttributeController extends BaseController {
     private ITemplateAttributeService templateAttributeService;
     private static final String acPrefix = "/api/account/actor/template/templateAttribute/";
 
-    @RequiresPermissions("templateAttribute:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
     @ApiOperation(value = "信息列表")
     public Response list(@RequestParam("templateId") Long templateId) {

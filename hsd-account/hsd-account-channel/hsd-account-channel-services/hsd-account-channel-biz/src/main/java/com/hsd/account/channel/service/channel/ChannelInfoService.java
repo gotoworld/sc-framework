@@ -155,7 +155,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 			String result = "seccuss";
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
-				dto.setPwd( MD5.pwdMd5Hex("123456"));
+				dto.setPwd("7fb4771b47dda67c83e499cc42d01707");
 				channelInfoDao.resetPwd(copyTo(dto,ChannelInfo.class));
 			} catch (Exception e) {
 				 log.error("重置密码异常!", e);
@@ -216,9 +216,8 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 	                    channel.setChannelName((String) data.get(2));
 	                    channel.setGender(getGender((String) data.get(3)));
 	                    channel.setPhone1((String) data.get(4));
-	                    channel.setIdNo((String) data.get(5));
-	                    channel.setRelation(getRelation((String) data.get(6)));
-	                    channel.setStaus(getstatus((String) data.get(7)));
+	                    channel.setRelation(getRelation((String) data.get(5)));
+	                    channel.setStaus(getstatus((String) data.get(6)));
 	                    channel.setRemark("批量导入");
 	                    channelList.add(channel);
 	                    if((i+1)%100==0||(i+1)==datas.size()){

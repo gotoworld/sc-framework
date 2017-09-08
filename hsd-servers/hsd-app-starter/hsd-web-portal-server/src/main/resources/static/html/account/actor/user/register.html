@@ -24,66 +24,9 @@
 
 
 <body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
-    <div class="fixed-sidebar border-bottom white-bg">
-        <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
-            <div class="navbar-header">
-                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-                    <i class="fa fa-reorder"></i>
-                </button>
-                <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
-            </div>
-            <div class="navbar-collapse collapse" id="navbar">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
-                    </li>
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要投资
-                            <span class="caret"></span></a>
-                        <ul role="menu" class="dropdown-menu">
-                            <li><a href="">芝麻开花</a></li>
-                            <li><a href="">定期项目</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要借款
-                            <span class="caret"></span></a>
-                        <ul role="menu" class="dropdown-menu">
-                            <li><a href="">汽车分期</a> </li>
-                            <li><a href="">净值借款</a> </li>
-                            <li><a href="">线下借款</a> </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 信息披露
-                            <span class="caret"></span></a>
-                        <ul role="menu" class="dropdown-menu">
-                            <li><a href="">关于我们</a> </li>
-                            <li><a href="">安全保障</a> </li>
-                            <li><a href="">平台数据</a> </li>
-                            <li><a href="">运营报告</a> </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-top-links navbar-right">
-                    <li class="dropdown">
-                        <a ng-show="!util.notEmpty(userInfo.account)" data-toggle="modal" href="/login.html">
-                            <i class="fa fa-sign-in"></i> 登录
-                        </a>
-                        <a ng-show="util.notEmpty(userInfo.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
-                        </a>
-                        <ul ng-show="util.notEmpty(userInfo.account)" role="menu" class="dropdown-menu">
-                            <li><a href="/html/account/actor/home.html">我的投资</a> </li>
-                            <li><a href="/html/account/actor/home.html">我的借款</a> </li>
-                            <li><a href="/html/account/actor/home.html">资金明细</a> </li>
-                            <li><a href="#" ng-click="user.logout()">安全退出 <i class="fa fa-sign-out"></i> </a> </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+    <!--头部菜单开始-->
+    <div class="fixed-sidebar border-bottom white-bg"  ng-include="'/html/account/actor/include/navigation.html'" ng-init="current=''"></div>
+    <!--头部菜单结束-->
     <div class="wrapper " style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
         <div class="wizard" style="width: 1330px;background: #eeeeee;position: absolute;top:100px;margin: 0px 0px 0px -20px;padding: 0px;height: 35px;overflow: hidden">
             <div class=" steps clearfix">
@@ -96,82 +39,76 @@
         </div>
         <div class="middle-box"  style="padding: 10% 0;margin: 0 auto;">
 
-            <div class="middle-box loginscreen animated fadeInDown " style="margin-top: 0px;">
-                <div class="text-center">
-                    <h3>欢迎注册 hsd</h3>
-                    <p>创建一个合时代新账户</p>
-                </div>
-                <form id="registerForm" class="form m-t" role="form" ng-submit="register();">
-                    <div class="form-group">
-                        <input type="text" name="account" class="form-control" placeholder="请输入登录名" required="">
+                <div class="middle-box loginscreen animated fadeInDown " style="margin-top: 0px;">
+                    <div class="text-center">
+                        <h3>欢迎注册 hsd</h3>
+                        <p>创建一个合时代新账户</p>
                     </div>
-                    <div class="form-group">
-                        <input type="hidden" name="pwd" id="pwdA">
-                        <input type="password" id="passwordA"
-                               onkeydown="$('#pwdA').val($.md5($(this).val()));"
-                               onchange="$('#pwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入密码" required="">
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" name="confirmpwd" id="confirmpwdA">
-                        <input type="password" equalTo="#passwordA"
-                               onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
-                               onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次输入密码" required="">
-                    </div>
-                    <div class="form-group ">
-                        <input name="cellphone" type="text" class="form-control" placeholder="请输入手机号" required="">
-                    </div>
-                    <div class="form-group " >
-                        <input name="captcha" type="text"  style="width: 190px;height: 40px;" class="form-control col-md-4 " placeholder="请输入图形验证码" required="">
-                        <img src="/img/captcha.jpg" style="width: 100px;height: 40px;margin-left: 10px;">
-                        <label id="captcha-error" class="error" for="captcha"></label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="请输入昵称" required="">
-                    </div>
-                    <div class="form-group ">
-                        <input name="email" value="" class="form-control" type="email"  placeholder="请输入您的邮箱"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
-                    </div>
-                    <div class="form-group ">
-                        <select data-placeholder="选择性别" id="bean-gender" name="gender" class="form-control"   aria-describedby="bean-gender-error"   aria-invalid="true">
-                            <option value="">--请选择性别--</option>
-                            <option value="2" ng-selected="item.gender==2">保密</option>
-                            <option value="0" ng-selected="item.gender==0">男</option>
-                            <option value="1" ng-selected="item.gender==1">女</option>
-                        </select>
-                    </div>
-                    <div class="form-group text-left">
-                        <div class="checkbox i-checks" style="margin-left: 20px;">
-                            <label class="no-padding">
-                                <input name="agreement" type="checkbox" style="margin-top: 3px;" required="" value="1">
-                                    已阅读并同意
-                                    <a href="javascript:void(0);" onclick="openMyBoxLayer('服务协议','register_article.html')">《服务协议》</a>
-                                    <a href="javascript:void(0);" onclick="openMyBoxLayer('风险提示书','register_article.html')">和 《风险提示书》</a>
-                            </label>
-                            <label id="agreement-error" class="error" for="agreement"></label>
-                            <!--<p class="pacttip hide" style="display: block;"><span class="error">需同意协议方可完成注册</span></p>-->
+                    <form id="registerForm" class="form m-t" role="form" ng-submit="register();">
+                        <div class="form-group">
+                            <input type="text" name="account" class="form-control" placeholder="请输入登录名" required="">
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
+                        <div class="form-group">
+                            <input type="hidden" name="pwd" id="pwdA">
+                            <input type="password" id="passwordA"
+                                   onkeydown="$('#pwdA').val($.md5($(this).val()));"
+                                   onchange="$('#pwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入密码" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="confirmpwd" id="confirmpwdA">
+                            <input type="password" name="confirmpwdB" equalTo="#passwordA"
+                                   onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
+                                   onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请确认密码" required="">
+                        </div>
+                        <div class="form-group ">
+                            <input name="cellphone" type="text" class="form-control" placeholder="请输入手机号" required="">
+                        </div>
+                        <div class="form-group " >
+                            <input name="captcha" type="text"  style="width: 190px;height: 40px;" class="form-control col-md-4 " placeholder="请输入图形验证码" required="">
+                            <img src="/img/captcha.jpg" style="width: 100px;height: 40px;margin-left: 10px;">
+                            <label id="captcha-error" class="error" for="captcha"></label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="请输入昵称" >
+                        </div>
+                        <div class="form-group ">
+                            <input name="email" value="" class="form-control" type="email"  placeholder="请输入您的邮箱"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
+                        </div>
+                        <div class="form-group ">
+                            <select data-placeholder="选择性别" id="bean-gender" name="gender" class="form-control"   aria-describedby="bean-gender-error"   aria-invalid="true">
+                                <option value="">--请选择性别--</option>
+                                <option value="2">保密</option>
+                                <option value="0" selected>男</option>
+                                <option value="1">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group text-left">
+                            <div class="checkbox i-checks" style="margin-left: 20px;">
+                                <label class="no-padding">
+                                    <input name="agreement" type="checkbox" style="margin-top: 3px;" required="" value="1">
+                                        已阅读并同意
+                                        <a href="javascript:void(0);" onclick="openMyBoxLayer('服务协议','register_article.html')">《服务协议》</a>
+                                        <a href="javascript:void(0);" onclick="openMyBoxLayer('风险提示书','register_article.html')">和 《风险提示书》</a>
+                                </label>
+                                <!--<p class="pacttip hide" style="display: block;"><span class="error">需同意协议方可完成注册</span></p>-->
+                            </div>
+                            <label id="agreement-error" class="error" for="agreement"></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
 
-                    <p class="text-muted text-center"><small>已经有账户了？</small><a href="/login.html">点此登录</a></p>
-                </form>
+                        <p class="text-muted text-center"><small>已经有账户了？</small><a href="/login.html">点此登录</a></p>
+                    </form>
+                </div>
             </div>
-        </div>
+        <!--右侧部分结束-->
     </div>
-
-
-    <div class="footer" style="background: transparent;border:0;width: 1330px;margin: 0px auto;bottom: 0px;">
-        <div class="pull-right">
-            By：demo
-        </div>
-        <div>
-            <strong>Copyright</strong> demo &copy; 2017
-        </div>
-    </div>
+    <!--顶部footer开始-->
+    <div ng-include="'/html/account/actor/include/footer.html'"></div>
+    <!--顶部footer结束-->
 
     <!-- 全局js -->
     <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script><script type="text/javascript" src="/plugins/layer/layer.js"></script>
 
     <script src="/js/jQuery.md5.js" type="text/javascript"></script>
     <script src="/plugins/layer/layer.js" type="text/javascript"></script>

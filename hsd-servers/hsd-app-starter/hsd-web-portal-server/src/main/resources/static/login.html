@@ -24,58 +24,9 @@
 </head>
 
 <body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
-    <div class="fixed-sidebar border-bottom white-bg">
-        <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
-            <div class="navbar-header">
-                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-                    <i class="fa fa-reorder"></i>
-                </button>
-                <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
-            </div>
-            <div class="navbar-collapse collapse" id="navbar">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
-                    </li>
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要投资
-                            <span class="caret"></span></a>
-                        <ul role="menu" class="dropdown-menu">
-                            <li><a href="">芝麻开花</a></li>
-                            <li><a href="">定期项目</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我要借款
-                            <span class="caret"></span></a>
-                        <ul role="menu" class="dropdown-menu">
-                            <li><a href="">汽车分期</a> </li>
-                            <li><a href="">净值借款</a> </li>
-                            <li><a href="">线下借款</a> </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 信息披露
-                            <span class="caret"></span></a>
-                        <ul role="menu" class="dropdown-menu">
-                            <li><a href="">关于我们</a> </li>
-                            <li><a href="">安全保障</a> </li>
-                            <li><a href="">平台数据</a> </li>
-                            <li><a href="">运营报告</a> </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!--<ul class="nav navbar-top-links navbar-right">-->
-                    <!--<li>-->
-                        <!--<a  data-toggle="modal" href="/index.html#modal-form">-->
-                            <!--<i class="fa fa-sign-out"></i> 登录-->
-                        <!--</a>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            </div>
-        </nav>
-    </div>
-
+    <!--头部菜单开始-->
+    <div class="fixed-sidebar border-bottom white-bg"  ng-include="'/html/account/actor/include/navigation.html'" ng-init="current='index'"></div>
+    <!--头部菜单结束-->
     <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
         <div class="signinpanel" style="padding: 10% 0;margin: 0 auto;">
             <div class="row">
@@ -97,14 +48,14 @@
                     </div>
                 </div>
                 <div class="col-sm-5">
-                    <form id="_login_form"  ng-submit="uLogin()">
+                    <form id="_login_form"  ng-submit="Login()">
                         <h4 class="no-margins">欢迎登录本站</h4>
                         <h4 class="text-danger" ng-show="result.code!=0" ng-bind="result.message"></h4>
                         <input type="text" name="account" class="form-control uname" placeholder="用户名"  required=""/>
-                        <input type="hidden" name="password" id="passwordA" />
+                        <input type="hidden" name="password" id="passwordXX" />
                         <input type="password"
-                               onkeydown="$('#passwordA').val($.md5($(this).val()));"
-                               onchange="$('#passwordA').val($.md5($(this).val()));"
+                               onkeydown="$('#passwordXX').val($.md5($(this).val()));"
+                               onchange="$('#passwordXX').val($.md5($(this).val()));"
                                class="form-control pword m-b" placeholder="密码"  required=""/>
                         <a href="/html/account/actor/user/findpwd.html">忘记密码了？</a>
                         <button type="submit" class="btn btn-success btn-block">登录</button>
@@ -113,7 +64,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="footer" style="background: transparent;border:0;width: 1330px;margin: 0px auto;bottom: 0px;">
         <div class="pull-right">
@@ -125,11 +75,9 @@
     </div>
 
 
-    &lt;!&ndash; 全局js &ndash;&gt;
+    <!-- 全局js -->
     <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
-
-    <script type="text/javascript" src="/js/jQuery.md5.js"></script>
+    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script><script type="text/javascript" src="/plugins/layer/layer.js"></script>
 
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
@@ -137,7 +85,7 @@
         var $data;
         angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
             $data = $scope;
-            $scope.uLogin = function () {
+            $scope.Login = function () {
                 user.login($('#_login_form').serialize(), function () {
                     location.href = '/html/account/actor/home.html';
                 });

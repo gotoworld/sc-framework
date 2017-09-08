@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
 <meta charset="utf-8" />
-<title>//TODO 会员信息表 新增/编辑</title>
+<title>demo</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta name="description" content="memo of your site" />
@@ -209,7 +209,7 @@
     </nav>
     <!--左侧导航结束-->
     <!--右侧部分开始-->
-    <div class="page-wrapper" class="gray-bg" style="width: 1085px;min-height:876px;float: right;background: #fff;padding: 10px;">
+    <div class="page-wrapper" class="gray-bg" style="width: 1085px;min-height:876px;float: right;padding: 10px;">
         <div class="row">
             <div class="ibox float-e-margins" style="margin-top: 20px;">
                 <div class="col-sm-12">
@@ -365,26 +365,25 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div id="tab-3" class="tab-pane active" style="padding-top: 20px;">
-                                        <div class="form-group clearfix">
-                                            <div class="col-md-4">
-                                                <label style="padding-top: 5px;">属性模板:</label>
-                                                <select data-placeholder="选择模板" onchange="getTemplateA()"  class="form-control  layer-date" id="templateSelect">
-                                                    <option value="">--选择模板--</option>
-                                                    <option ng-repeat="temp in templateResult" ng-value="temp.id}}" ng-selected="tempSelectd(temp)">{{temp.templateName}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <!--<div class="form-group clearfix">-->
+                                            <!--<div class="col-md-4">-->
+                                                <!--<label style="padding-top: 5px;">属性模板:</label>-->
+                                                <!--<select data-placeholder="选择模板" onchange="getTemplateA()"  class="form-control  layer-date" id="templateSelect">-->
+                                                    <!--<option value="">&#45;&#45;选择模板&#45;&#45;</option>-->
+                                                    <!--<option ng-repeat="temp in templateResult" ng-value="temp.id" ng-selected="tempSelectd(temp)">{{temp.templateName}}</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
                                         <input type="hidden" value="" name="templateId" id="templateIdA">
-
-                                        <div class="col-md-3 " ng-repeat="attr in attributesResult">
-                                            <input type="hidden" name="attr{{attr.templateId}}" ng-value="'attr'+attr.templateId+attr.attributeCode}}">
+                                        <div class="col-md-4 " ng-repeat="attr in attributesResult">
+                                            <input type="hidden" name="attr{{attr.templateId}}" ng-value="'attr'+attr.templateId+attr.attributeCode">
                                             <div class="form-group clearfix" >
                                                 <label class="col-md-8 control-label">{{attr.attributeName}}：</label>
                                                 <div class="col-md-12" ng-if="!(util.notEmpty(attr.optionValues))">
-                                                    <input name="{{'attr'+attr.templateId+attr.attributeCode}}"  ng-value="getTempAttrVal(attr)" class="form-control" type="{{attr.inputType=='num'?'number':'text'}}"  placeholder="请输入{{attr.attributeName}}" ng-required="attr.required==1">
+                                                    <input name="{{'attr'+attr.templateId+attr.attributeCode}}"  ng-value="getTempAttrVal(attr)" class="form-control layer-date" type="{{attr.inputType=='num'?'number':'text'}}"  placeholder="请输入{{attr.attributeName}}" ng-required="attr.required==1">
                                                 </div>
                                                 <div class="col-md-12" ng-if="util.notEmpty(attr.optionValues)" >
-                                                    <select id="{{'id_attr'+attr.templateId+attr.attributeCode}}" name="{{'attr'+attr.templateId+attr.attributeCode}}" class="form-control" placeholder="请选择{{attr.attributeName}}" ng-required="attr.required==1">
+                                                    <select id="{{'id_attr'+attr.templateId+attr.attributeCode}}" name="{{'attr'+attr.templateId+attr.attributeCode}}" class="form-control layer-date" placeholder="请选择{{attr.attributeName}}" ng-required="attr.required==1">
                                                         <option value="">--请选择{{attr.attributeName}}--</option>
                                                         {{getOptionValuesHtml('id_attr'+attr.templateId+attr.attributeCode,attr)}}
                                                     </select>
@@ -396,8 +395,8 @@
                             </div>
                             <div class="clearfix "></div>
                             <div class="col-md-12" style="height: 50px;">
-                                <div style="width: 200px; margin: 0 auto;">
-                                    <input class="btn btn-primary" type="submit" value="保存" />
+                                <div style="width: 100px; margin: 20px auto 0 auto;">
+                                    <input class="btn btn-primary block  m-b" type="submit" value="保存" />
                                 </div>
                             </div>
                         </form>
@@ -433,6 +432,7 @@
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
+    <script src="/plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
 
 <script type="text/javascript">
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
@@ -441,9 +441,8 @@
         $data.attr={};
         user.init(function(){
             console.info('user.init(function(){....')
-           $data.newFlag=sessionStorage.getItem(site.member.info);
            if($data.newFlag) $data.uuidToken=util.guid();
-            loadInfo(sessionStorage.getItem(site.member.info));
+            loadInfo();
         });
         $scope.submitForm = function () {
             if($("#form_1").valid()){
@@ -520,14 +519,13 @@
     });
     var loadInfo=function(id){
         console.info('loadInfo{....')
-        $.get(site.member.info + id, {},function (result) {
+        $.get(site.userSetting.member.info, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
              if (result.code == 0) {
                  if(result.data){
                      $data.item = result.data;
                  }else{
                      $data.item={};
-                     $data.item.userId=sessionStorage.getItem(site.member.info);
                  }
                  loadTemplateIsList();
              } else {
@@ -539,17 +537,20 @@
     }
     var loadTemplateIsList=function(){
         console.info('loadTemplateIsList{....')
-        $.post(site.template.list , {"userType":1},function (result) {
+        $.post(site.userSetting.member.templateList , {"userType":1},function (result) {
             if (result.code == 0) {
                 $data.templateResult = result.data;
                 if(result.data && !util.notEmpty($('#templateIdA').val())) {
                     for (var i = 0; i < result.data.length; i++){
                         if ($data.tempSelectd(result.data[i])) {
                             $('#templateIdA').val(result.data[i].id);
+                            isTemplateAFlag=true;
                             getTemplateA(result.data[i].id);
                         }
                     }
                 }
+                if(result.data[0])
+                if(!isTemplateAFlag) getTemplateA(result.data[0].id);
             } else {
                 $data.templateMessage = result.message;
                 alert( result.message);
@@ -557,13 +558,14 @@
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
+    var isTemplateAFlag=false;
     var getTemplateA=function(templateId){
         console.info('getTemplateA{....')
         if(!util.notEmpty(templateId)){
             templateId=$('#templateSelect').val();;
         }
         $('#templateIdA').val(templateId);
-        $.post(site.templateAttribute.list , {"templateId":templateId},function (result) {
+        $.post(site.userSetting.member.templateAttributeList , {"templateId":templateId},function (result) {
             if (result.code == 0) {
                 $data.attributesResult = result.data;
             } else {

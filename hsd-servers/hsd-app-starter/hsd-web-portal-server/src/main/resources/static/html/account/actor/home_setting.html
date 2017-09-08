@@ -236,16 +236,16 @@
                                                     </div>
                                                     <div class="feed-element">
                                                         <div class="col-md-4">
-                                                            <span ng-if="0==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
-                                                            <span ng-if="0==1" class="badge badge-info" style="margin-top: -2px;">√</span>
+                                                            <span ng-if="settingInfo.isMemberPerfectYN==0" class="badge badge-warning" style="margin-top: -2px;">!</span>
+                                                            <span ng-if="settingInfo.isMemberPerfectYN>0" class="badge badge-info" style="margin-top: -2px;">√</span>
                                                             信息完善</div>
                                                         <div class="col-md-4">
-                                                            <span ng-if="0==0">待补充</span>
-                                                            <span ng-if="0==1">已完善</span>
+                                                            <span ng-if="settingInfo.isMemberPerfectYN==0">待补充</span>
+                                                            <span ng-if="settingInfo.isMemberPerfectYN>0">已完善</span>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <a ng-if="0==0" href="setting/member_setting.html" style="color: #f8ac59">完善</a>
-                                                            <span ng-if="0==1">已认证</span>
+                                                            <a ng-if="settingInfo.isMemberPerfectYN==0" href="setting/member_setting.html" style="color: #f8ac59">完善</a>
+                                                            <a ng-if="settingInfo.isMemberPerfectYN>0" href="setting/member_setting.html" style="color: #0099E5">修改</a>
                                                         </div>
                                                     </div>
                                                     <div class="feed-element">
@@ -427,6 +427,7 @@
             $.get(site.userSetting.info, {}, function (result) {
                 if (result.code == 0) {
                     $data.settingInfo=result.data;
+                    sessionStorage.setItem(site.userSetting.info,JSON.stringify(result.data));
                     if (!$data.$$phase) $data.$apply();
                 } else {
                     alert(result.message);

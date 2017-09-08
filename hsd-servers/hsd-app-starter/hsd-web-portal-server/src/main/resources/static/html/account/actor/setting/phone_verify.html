@@ -223,7 +223,7 @@
                                             <form id="form_1" class="" role="form" ng-submit="submitForm();">
 
                                                 <p class="text-muted text-left" style="margin-left: 10px;">
-                                                    发送短信验证码至<span ng-bind="userInfo.cellphone">***********</span>
+                                                    发送短信验证码至<span ng-bind="settingInfo.cellphone">***********</span>
                                                 </p>
                                                 <div class=" row" style="margin: 0 0 10px 10px;">
                                                     <input type="text" id="smsCaptcha" name="smsCaptcha" class="form-control" placeholder="请输入短信验证码" required="" style="float: left; width: 300px;">
@@ -277,6 +277,7 @@
             user.init(function(){
 
             });
+            $data.settingInfo=JSON.parse(sessionStorage.getItem(site.userSetting.info));
             $scope.submitForm=function(){
                 if(!util.notEmpty($('#smsCaptcha').val())){
                     alert('请输入短信验证码');

@@ -216,9 +216,8 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 	                    channel.setChannelName((String) data.get(2));
 	                    channel.setGender(getGender((String) data.get(3)));
 	                    channel.setPhone1((String) data.get(4));
-	                    channel.setIdNo((String) data.get(5));
-	                    channel.setRelation(getRelation((String) data.get(6)));
-	                    channel.setStaus(getstatus((String) data.get(7)));
+	                    channel.setRelation(getRelation((String) data.get(5)));
+	                    channel.setStaus(getstatus((String) data.get(6)));
 	                    channel.setRemark("批量导入");
 	                    channelList.add(channel);
 	                    if((i+1)%100==0||(i+1)==datas.size()){

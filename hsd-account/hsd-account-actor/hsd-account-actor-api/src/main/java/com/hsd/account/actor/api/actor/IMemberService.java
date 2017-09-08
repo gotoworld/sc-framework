@@ -1,14 +1,14 @@
 package com.hsd.account.actor.api.actor;
 
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.actor.dto.actor.MemberDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.github.pagehelper.PageInfo;
+
 import java.util.List;
-import java.util.Map;
 /**
  * <p>会员信息表 业务处理接口类。
  */
@@ -57,4 +57,9 @@ public interface IMemberService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public MemberDto findDataById(MemberDto dto) throws Exception;
+    /**
+     * <p>信息是否存在。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isDataYN")
+    public Integer isDataYN(MemberDto dto) throws Exception;
 }

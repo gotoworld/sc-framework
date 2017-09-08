@@ -63,7 +63,10 @@ var site = {
         }
         ,member:{
             view: basePath + "/html/account/actor/setting/member"
-            , setting: apiPath.account.actor + "/api/account/actor/user/setting/member" //个人信息完善
+            , templateList: apiPath.account.actor + "/api/account/actor/template/template/list" //模板列表
+            , templateAttributeList: apiPath.account.actor + "/api/account/actor/template/templateAttribute/list" //模板属性列表
+            , info: apiPath.account.actor + "/api/account/actor/actor/member/info" //个人信息
+            , setting: apiPath.account.actor + "/api/account/actor/actor/member/save" //个人信息保存
         }
 
     }

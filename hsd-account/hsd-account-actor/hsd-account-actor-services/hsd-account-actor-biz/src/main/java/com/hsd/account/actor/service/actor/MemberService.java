@@ -153,7 +153,6 @@ public class MemberService extends BaseService implements IMemberService {
         }
         return result;
     }
-
     @Override
     public String recoveryDataById(@RequestBody MemberDto dto) throws Exception {
         String result = "seccuss";
@@ -170,4 +169,16 @@ public class MemberService extends BaseService implements IMemberService {
         return result;
     }
 
+    @Override
+    public Integer isDataYN(@RequestBody MemberDto dto) throws Exception {
+        Integer result = 0;
+        try {
+            Member entity = copyTo(dto, Member.class);
+            result=memberDao.isDataYN(entity);
+        } catch (Exception e) {
+            log.error("信息[详情]查询异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }
+        return result;
+    }
 }

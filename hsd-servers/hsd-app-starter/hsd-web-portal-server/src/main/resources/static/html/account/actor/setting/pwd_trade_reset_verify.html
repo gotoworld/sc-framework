@@ -285,14 +285,7 @@
             user.init(function(){
 
             });
-            $.get(site.userSetting.info, {}, function (result) {
-                if (result.code == 0) {
-                    $data.settingInfo=result.data;
-                    if (!$data.$$phase) $data.$apply();
-                } else {
-                    alert(result.message);
-                }
-            }, 'json');
+            $data.settingInfo=JSON.parse(sessionStorage.getItem(site.userSetting.info));
             $scope.submitForm=function(){
                 $.post(site.userSetting.tradepwd.resetVerify, $('#form_1').serialize(),function (result) {
                     if (result.code == 0) {

@@ -28,7 +28,8 @@ var site = {
         , register: apiPath.account.actor + "/api/account/actor/register/reg"
     }
     ,userSetting: {
-         info: apiPath.account.actor + "/api/account/actor/user/setting/info"
+         view:"/html/account/actor/home_setting"
+        ,info: apiPath.account.actor + "/api/account/actor/user/setting/info"
         ,phone:{
             view: basePath + "/html/account/actor/setting/phone"
             ,  bindSms: apiPath.account.actor + "/api/account/actor/user/setting/phone/bind/sms" //手机号绑定-短信验证码
@@ -59,6 +60,10 @@ var site = {
         ,identity:{
             view: basePath + "/html/account/actor/setting/identity"
             , setting: apiPath.account.actor + "/api/account/actor/user/setting/identity" //实名认证
+        }
+        ,member:{
+            view: basePath + "/html/account/actor/setting/member"
+            , setting: apiPath.account.actor + "/api/account/actor/user/setting/member" //个人信息完善
         }
 
     }

@@ -30,11 +30,15 @@ public interface IMemberDao extends IBaseDao {
      */
     @Update("update member set   date_updated=now(), del_flag=0 where  user_id = #{userId} ")
     int recoveryDataById(IEntity entity) throws Exception;
-
     /**
      * 根据主键 物理删除
      */
     @Delete("delete from member where  user_id = #{userId} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
+    /**
+     * 更新客户身份证号
+     */
+    @Update("update member set date_updated=now(),credential_number = #{credentialNumber} where user_id = #{userId} ")
+    int updateCredentialNumber(IEntity entity) throws Exception;
 }

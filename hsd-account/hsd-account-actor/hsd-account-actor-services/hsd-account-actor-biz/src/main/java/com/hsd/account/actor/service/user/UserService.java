@@ -3,11 +3,13 @@ package com.hsd.account.actor.service.user;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.actor.api.user.IUserService;
+import com.hsd.account.actor.dao.actor.IMemberDao;
 import com.hsd.account.actor.dao.identity.IIdentityDao;
 import com.hsd.account.actor.dao.identity.IIdentityLogDao;
 import com.hsd.account.actor.dao.user.IUserDao;
 import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.actor.dto.user.UserDto;
+import com.hsd.account.actor.entity.actor.Member;
 import com.hsd.account.actor.entity.identity.Identity;
 import com.hsd.account.actor.entity.identity.IdentityLog;
 import com.hsd.account.actor.entity.user.User;
@@ -42,6 +44,8 @@ public class UserService extends BaseService implements IUserService {
     private IIdentityDao identityDao;
     @Autowired
     private IIdentityLogDao identityLogDao;
+    @Autowired
+    private IMemberDao memberDao;
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
     @Override
@@ -343,6 +347,13 @@ public class UserService extends BaseService implements IUserService {
             if(identityDao.isDataYN(entity)>0) throw new RuntimeException("已实名认证,不能重复操作!");
             identityDao.insert(entity);
             identityLogDao.insert(copyTo(dto,IdentityLog.class));
+
+            Member member=new Member(){{setUserId(dto.getUserId());setCredentialNumber(dto.getCredentialNumber());}};
+           if(memberDao.isDataYN(member) != 0) {
+               memberDao.updateCredentialNumber(member);
+           }else{
+               memberDao.insert(member);
+           }
         } catch (Exception e) {
             log.error("实名认证异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

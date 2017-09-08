@@ -5,12 +5,10 @@ import com.hsd.framework.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -50,7 +48,6 @@ public class ChannelInfoDto extends BaseDto {
      /**婚姻状态(0：已婚，1,：未婚）*/
      private Integer maritalStatus;
      /**身份证号*/
-	 @NotNull(message="id_no不能为空")@Size(max=50,message="id_no最大50字符")
      private String idNo;
      /**收入*/
      private BigDecimal income;

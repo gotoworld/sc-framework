@@ -226,6 +226,9 @@
         <if test="dateEnd!=null and dateEnd!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
         </if>
+        <if test="keyword!=null and keyword!=''">
+            and t1.channel_name like concat('%',#{keyword},'%')
+        </if>
     </sql>
 
     <!--信息分页 -->

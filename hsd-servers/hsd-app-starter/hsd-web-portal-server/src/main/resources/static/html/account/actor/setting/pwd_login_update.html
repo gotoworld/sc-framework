@@ -109,8 +109,8 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="home.html">账户总览</a>
-                            <a class="J_menuItem active" href="home_setting.html">个人设置</a>
+                            <a class="J_menuItem" href="../home.html">账户总览</a>
+                            <a class="J_menuItem active" href="../home_setting.html">个人设置</a>
                             <a class="J_menuItem" href="#">自动投标</a>
                             <a class="J_menuItem" href="#">消息中心</a>
                         </li>
@@ -206,16 +206,11 @@
                 <div class="row   white-bg dashboard-header">
                     <div class="col-sm-12">
                         <blockquote class="text-warning" style="font-size:14px;background-color:#EEEEEE">
-                        <h4 class="text-warning">交易密码找回</h4>
+                        <h4 class="text-warning">修改登录密码</h4>
                         </blockquote>
                     </div>
                     <div class="col-md-12">
                         <div class="ibox-content" style="border:0px;">
-                            <ul class="stepsli tab_box">
-                                <li class="hover"><i>1</i><span></span><em>验证</em></li>
-                                <li class="hover"><i>2</i><span></span><em>设置</em></li>
-                                <li class="last"><i>√</i><span></span><em>完成</em></li>
-                            </ul>
                             <div class=" loginscreen   animated fadeInDown"  style="width: 500px;padding: 30px 0;margin: 0 auto;">
                                 <div class="ibox float-e-margins">
                                     <div class="white-bg dashboard-header">
@@ -223,18 +218,25 @@
                                             <form id="form_1" class="form m-t" role="form" ng-submit="submitForm()">
                                                 <p class="col-md-12 text-muted text-left">
                                                     密码长度8-20位,建议字母,数字,标点的组合来提高账号安全度
+
                                                 </p>
+                                                <div class="col-md-12">
+                                                    <input type="hidden" name="oldpwd" id="oldpwdA">
+                                                    <input type="password" id="oldpasswordA"
+                                                           onkeydown="$('#oldpwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#oldpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入原始密码" required="">
+                                                </div>
                                                 <div class="col-md-12"  style="margin-top:20px; ">
-                                                    <input type="hidden" name="tradePwd" id="tradePwdA">
+                                                    <input type="hidden" name="newpwd" id="newpwdA">
                                                     <input type="password" id="newpasswordA" name="newpasswordA"
-                                                           onkeydown="$('#tradePwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#tradePwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入新交易密码" required="">
+                                                           onkeydown="$('#newpwdA').val($.md5($(this).val()));"
+                                                           onchange="$('#newpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入新密码" required="">
                                                 </div>
                                                 <div class="col-md-12" style="margin-top:20px; ">
                                                     <input type="hidden" name="confirmpwd" id="confirmpwdA">
                                                     <input type="password" equalTo="#newpasswordA" id="confirmpwdB" name="confirmpwdB"
                                                            onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
-                                                           onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认新交易密码" required="">
+                                                           onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认新密码" required="">
                                                 </div>
                                                 <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
                                                     <button type="submit" class="btn btn-primary block full-width m-b">保存新密码</button>
@@ -287,9 +289,9 @@
             });
             $scope.submitForm=function(){
                if($("#form_1").valid()){
-                    $.post(site.userSetting.tradepwd.resetSetting, $('#form_1').serialize(),function (result) {
+                    $.post(site.userSetting.loginpwd.update, $('#form_1').serialize(),function (result) {
                         if (result.code == 0) {
-                            parent.location.href = site.userSetting.tradepwd.view+'_reset_success.html';
+                            parent.location.href = site.userSetting.loginpwd.view+'_success.html';
                         } else {
                             alert(result.message);
                         }

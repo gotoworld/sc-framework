@@ -280,15 +280,15 @@
                                 </div>
                                 <input type="hidden" value="" name="templateId" id="templateIdA">
 
-                                <div class="col-md-3 " ng-repeat="attr in attributesResult">
+                                <div class="col-md-4 " ng-repeat="attr in attributesResult">
                                     <input type="hidden" name="attr{{attr.templateId}}" value="{{'attr'+attr.templateId+attr.attributeCode}}">
                                     <div class="form-group clearfix" >
                                         <label class="col-md-8 control-label">{{attr.attributeName}}：</label>
                                         <div class="col-md-12" ng-if="!(util.notEmpty(attr.optionValues))">
-                                            <input name="{{'attr'+attr.templateId+attr.attributeCode}}"  value="{{getTempAttrVal(attr)}}" class="form-control" type="{{attr.inputType=='num'?'number':'text'}}"  placeholder="请输入{{attr.attributeName}}" aria-invalid="true" ng-required="attr.required==1">
+                                            <input name="{{'attr'+attr.templateId+attr.attributeCode}}"  value="{{getTempAttrVal(attr)}}" class="form-control layer-date" type="{{attr.inputType=='num'?'number':'text'}}"  placeholder="请输入{{attr.attributeName}}" aria-invalid="true" ng-required="attr.required==1">
                                         </div>
                                         <div class="col-md-12" ng-if="util.notEmpty(attr.optionValues)" >
-                                            <select id="{{'id_attr'+attr.templateId+attr.attributeCode}}" name="{{'attr'+attr.templateId+attr.attributeCode}}" class="form-control" placeholder="请选择{{attr.attributeName}}" aria-invalid="true" ng-required="attr.required==1">
+                                            <select id="{{'id_attr'+attr.templateId+attr.attributeCode}}" name="{{'attr'+attr.templateId+attr.attributeCode}}" class="form-control layer-date" placeholder="请选择{{attr.attributeName}}" aria-invalid="true" ng-required="attr.required==1">
                                                 <option value="">--请选择{{attr.attributeName}}--</option>
                                                 {{getOptionValuesHtml('id_attr'+attr.templateId+attr.attributeCode,attr)}}
                                             </select>

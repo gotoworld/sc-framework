@@ -1,9 +1,11 @@
 package com.hsd.actor.web.controller.user;
 
 import com.hsd.account.actor.api.IPushService;
+import com.hsd.account.actor.api.actor.IMemberService;
 import com.hsd.account.actor.api.identity.IIdentityService;
 import com.hsd.account.actor.api.user.IUserService;
 import com.hsd.account.actor.dto.PushDto;
+import com.hsd.account.actor.dto.actor.MemberDto;
 import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.Response;
@@ -30,6 +32,8 @@ public class UserSettingController extends BaseController {
     private IPushService pushService;
     @Autowired
     private IIdentityService identityService;
+    @Autowired
+    private IMemberService memberService;
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
     /**获取当前登录客户的id*/
@@ -71,6 +75,8 @@ public class UserSettingController extends BaseController {
             }else{
                 userJon.setIsIdentityYN(0);
             }
+            userJon.setIsMemberPerfectYN(memberService.isDataYN(new MemberDto(){{setUserId(user.getId());}}));
+
             result.data = userJon;
         } catch (Exception e) {
             result = Response.error(e.getMessage());

@@ -276,7 +276,7 @@
                             </div>
                         </div>
 
-                       <!-- <div class="form-group clearfix">
+                        <div class="form-group clearfix">
                             <label class="col-md-3 control-label">累计工作年限：</label>
                             <div class="col-md-12">
                                 <input id="bean-cumulativeJobTenure" name="cumulativeJobTenure" value="{{item.cumulativeJobTenure}}" class="form-control" type="text"  placeholder="请输入累计工作年限"  aria-describedby="bean-cumulativeJobTenure-error"   aria-invalid="true">
@@ -290,7 +290,7 @@
                                 <input id="bean-educationLevel" name="educationLevel" value="{{item.educationLevel}}" class="form-control" type="text"  placeholder="请输入教育程度"  aria-describedby="bean-educationLevel-error"  maxlength="50"   aria-invalid="true">
                                 <span id="bean-educationLevel-error" class="help-block m-b-none"></span>
                             </div>
-                        </div>-->
+                        </div>
 
 					</div>
 					<div class="col-sm-6">
@@ -443,7 +443,7 @@
 					</div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="/html/account/channel/home.html">返回</a>
 						</div>
 					</div>
 				</form>
@@ -493,6 +493,7 @@
                         //console.info("获取数据.." + JSON.stringify(result));
                         if (result.code == 0) {
                             alert('保存成功!');
+                            parent.location.href = '/html/account/channel/home.html';
                         } else {
                             alert(result.message);
                         }

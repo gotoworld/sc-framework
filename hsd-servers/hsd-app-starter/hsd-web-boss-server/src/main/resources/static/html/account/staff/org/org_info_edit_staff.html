@@ -196,7 +196,7 @@
         if(!(pageIndex)){
             pageIndex=$('#pageNumA').val();
         }
-        $.post( site.orgStaff.briefPage+pageIndex,{"name":$('#bean_name').val()}, function (result) {
+        $.post( site.orgStaff.briefPage+pageIndex,{"keyword":$('#bean_name').val()}, function (result) {
             if (result.code == 0) {
                 $data.staffResult = result;
                 $('#tagPages').html($ngCompile(tag.page(result.data))($data));

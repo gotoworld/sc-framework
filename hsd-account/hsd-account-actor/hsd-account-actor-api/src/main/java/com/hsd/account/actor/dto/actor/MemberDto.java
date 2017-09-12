@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,7 +19,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberDto extends BaseDto {
      /**客户ID*/
-	 @NotNull(message="user_id不能为空")
      private Long userId;
      /**传真*/
 	 @Size(max=50,message="fax最大50字符")

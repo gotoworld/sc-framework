@@ -340,6 +340,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
                     }
                 }
             }
+            result.code=500;
             result.message=finalMessage.toString();
         } catch (Exception e) {
             log.error("信息保存失败!", e);

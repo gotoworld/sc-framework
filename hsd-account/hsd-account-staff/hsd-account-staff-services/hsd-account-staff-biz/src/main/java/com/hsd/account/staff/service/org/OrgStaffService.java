@@ -288,7 +288,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
 //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    @RequiresPermissions("orgStaff:edit:batch")
+    @RequiresPermissions("orgStaff:add:batch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
         Response result = new Response(0,"seccuss");
         try {

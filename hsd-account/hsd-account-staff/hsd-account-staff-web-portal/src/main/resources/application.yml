@@ -1,7 +1,7 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: ${pom.description}
-  version : v${pom.version}
+  description: PORTAL系统->员工
+  version : v1.0
 # HTTP Server
 server:
   port: 6062

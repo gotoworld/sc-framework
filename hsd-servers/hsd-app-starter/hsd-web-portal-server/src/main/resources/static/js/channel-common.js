@@ -2,7 +2,7 @@ var basePath = "http://localhost:8080/";
 var apiPath = {
     account: {
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-portal",
-        actor: "http://192.168.101.100:28890/hsd-account-actor-web-portal-wxg"
+        actor: "http://192.168.101.100:28890/hsd-account-actor-web-portal"
     }
 }
 var site = {

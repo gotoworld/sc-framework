@@ -3,7 +3,7 @@ var apiPath = {
     account: {
         staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss",
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-boss",
-        actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss-wxg"
+        actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss"
     }
 }
 var site = {

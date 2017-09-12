@@ -67,6 +67,7 @@ public class MemberController extends BaseController {
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
+            dto.setUserId(JwtUtil.getSubject(UserDto.class).getId());
             if (bindingResult.hasErrors()) {
                 String errorMsg = "";
                 List<ObjectError> errorList = bindingResult.getAllErrors();

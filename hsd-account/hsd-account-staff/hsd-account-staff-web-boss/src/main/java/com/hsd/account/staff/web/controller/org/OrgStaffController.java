@@ -214,6 +214,7 @@ public class OrgStaffController extends BaseController {
 			if ("1".equals(request.getSession().getAttribute(acPrefix + "updatePwd." + dto.getToken()))) {
 				throw new RuntimeException("请不要重复提交!");
 			}
+			dto.setId(JwtUtil.getSubject(OrgStaffDto.class).getId());
 			result.message=orgStaffService.updatePwd(dto);
 			request.getSession().setAttribute(acPrefix + "updatePwd." + dto.getToken(), "1");
 		} catch (Exception e) {

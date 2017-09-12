@@ -1,14 +1,14 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: ${pom.description}
-  version : v${pom.version}
+  description: PORTAL系统->客户
+  version : v1.0
 # HTTP Server
 server:
   port: 6066
   context-path: /
 spring:
   application:
-    name: hsd-account-actor-web-portal-wxg
+    name: hsd-account-actor-web-portal
   profiles:
     active: dev
   boot:
@@ -61,7 +61,7 @@ logging:
 #服务名
 feign:
   name:
-    account.actor: hsd-account-actor-server-wxg
+    account.actor: hsd-account-actor-server
 
 # 自定义配置
 hsd:

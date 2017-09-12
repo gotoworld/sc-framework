@@ -65,7 +65,7 @@ public class LoginController extends BaseController {
                 String subject = JwtUtil.generalSubject(channelInfoUser);
                 Map<String, Object> data = new HashMap<>();
                 data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
-                data.put("authorizationToken", JwtUtil.createJWT(JwtUtil.UserType.USER,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL));
+                data.put("authorizationToken", JwtUtil.createJWT(JwtUtil.UserType.CHANNEL,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL));
                 data.put("channel", JSONObject.parseObject(subject, ChannelInfoDto.class));
                 
                 result.data = data;
@@ -111,7 +111,7 @@ public class LoginController extends BaseController {
             String json = claims.getSubject();
             ChannelInfoDto staff = JSONObject.parseObject(json, ChannelInfoDto.class);
             String subject = JwtUtil.generalSubject(staff);
-            String refreshToken = JwtUtil.createJWT(JwtUtil.UserType.USER,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
+            String refreshToken = JwtUtil.createJWT(JwtUtil.UserType.CHANNEL,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);

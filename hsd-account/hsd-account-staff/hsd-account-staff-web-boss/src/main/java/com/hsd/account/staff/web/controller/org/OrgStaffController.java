@@ -313,7 +313,7 @@ public class OrgStaffController extends BaseController {
 	 */
 	@RequiresPermissions("orgStaff:add:batch")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"add/batch")
-	@ApiOperation(value = "详情")
+	@ApiOperation(value = "批量新增")
 	public Response addBatch(@RequestParam("fileUrl") String fileUrl) {
 		log.info("OrgStaffController addBatch.........");
 		Response result = new Response();

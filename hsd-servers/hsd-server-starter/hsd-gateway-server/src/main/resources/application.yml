@@ -1,13 +1,8 @@
 spring:
   application:
     name: hsd-gateway-server
-
 server:
   port: 28890
-
-#sidecar:
-  #port: 8000
-
 endpoints:
   restart:
     enabled: true
@@ -16,25 +11,41 @@ endpoints:
   health:
     sensitive: false
 
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: false
 
 zuul:
   sensitiveHeaders: Access-Control-Allow-Origin,Access-Control-Allow-Methods
+  max:
+    host:
+      connections: 500
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
 #  ignored-services: "*"
 #  routes:
 #    product:
 #      path: /product/**
 #      url: http://product:9001/product
-#    recommend:
-#      path: /recommend/**
-#      url: http://recommend:9002/recommend
-#    review:
-#      path: /review/**
-#      url: http://review:9003/review
 ---
-logging:
-  file: logs/hsd-gateway-server.log
-  level:
-    ROOT: INFO
+#logging:
+#  file: logs/hsd-gateway-server.log
+#  level:
+#    ROOT: INFO
 
 security:
   basic:

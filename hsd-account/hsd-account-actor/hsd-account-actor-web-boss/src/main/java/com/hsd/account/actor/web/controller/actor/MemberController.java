@@ -81,25 +81,25 @@ public class MemberController extends BaseController {
         return result;
     }
 
-    /**
-     * <p>删除。
-     */
-    @RequiresPermissions("member:del")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{userId}")
-    @ALogOperation(type = "删除", desc = "会员信息表")
-    @ApiOperation(value = "信息删除")
-    public Response del(@PathVariable("userId") Long userId) {
-        log.info("MemberController del.........");
-        Response result = new Response();
-        try {
-            MemberDto dto = new MemberDto();
-            dto.setUserId(userId);
-            result.message = memberService.deleteDataById(dto);
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
+//    /**
+//     * <p>删除。
+//     */
+//    @RequiresPermissions("member:del")
+//    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{userId}")
+//    @ALogOperation(type = "删除", desc = "会员信息表")
+//    @ApiOperation(value = "信息删除")
+//    public Response del(@PathVariable("userId") Long userId) {
+//        log.info("MemberController del.........");
+//        Response result = new Response();
+//        try {
+//            MemberDto dto = new MemberDto();
+//            dto.setUserId(userId);
+//            result.message = memberService.deleteDataById(dto);
+//        } catch (Exception e) {
+//            result = Response.error(e.getMessage());
+//        }
+//        return result;
+//    }
 
     /**
      * <p> 信息保存

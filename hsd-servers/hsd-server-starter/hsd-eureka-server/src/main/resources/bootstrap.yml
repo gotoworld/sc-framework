@@ -3,7 +3,7 @@ eureka:
     enableSelfPreservation: false
 #   waitTimeInMsWhenSyncEmpty: 0
   instance:
-    hostname: discovery-2
+    #hostname: discovery
     perferIpAddress: true
   client:
     registerWithEureka: false

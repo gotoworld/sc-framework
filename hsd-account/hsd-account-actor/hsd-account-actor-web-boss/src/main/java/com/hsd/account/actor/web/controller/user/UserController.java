@@ -145,8 +145,8 @@ public class UserController extends BaseController {
     }
     @RequiresPermissions("user:edit:blacklist")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/blacklist/{id}")
-    @ALogOperation(type = "修改", desc = "客户表-设置黑名单")
-    @ApiOperation(value = "设置黑名单")
+    @ALogOperation(type = "修改", desc = "客户表-取消黑名单")
+    @ApiOperation(value = "取消黑名单")
     public Response delBlacklist(@PathVariable("id") Long id) {
         log.info("TagController delBlacklist.........");
         Response result = new Response();

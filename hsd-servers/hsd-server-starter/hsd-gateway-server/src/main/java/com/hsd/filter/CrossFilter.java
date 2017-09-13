@@ -2,9 +2,11 @@ package com.hsd.filter;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,6 +28,7 @@ public class CrossFilter implements Filter {
             HttpServletRequest alteredRequest = ((HttpServletRequest) request);
             HttpServletResponse alteredResponse = ((HttpServletResponse) response);
             addHeadersFor200Response(alteredRequest,alteredResponse);
+            addHeadersCookieForAuthorization(alteredRequest,alteredResponse);
             chain.doFilter(request, response);
         }
     }
@@ -35,5 +38,8 @@ public class CrossFilter implements Filter {
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
         response.setHeader("Access-Control-Allow-Headers", "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma");
     }
-
+    private void addHeadersCookieForAuthorization(HttpServletRequest request,HttpServletResponse response) {
+        String authorization=request.getHeader("Authorization");
+        response.addCookie(new Cookie("JSESSIONID", DigestUtils.md5Hex(authorization )));
+    }
 }

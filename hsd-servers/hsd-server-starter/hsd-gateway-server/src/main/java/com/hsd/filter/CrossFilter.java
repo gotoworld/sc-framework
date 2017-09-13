@@ -40,6 +40,27 @@ public class CrossFilter implements Filter {
     }
     private void addHeadersCookieForAuthorization(HttpServletRequest request,HttpServletResponse response) {
         String authorization=request.getHeader("Authorization");
-        response.addCookie(new Cookie("JSESSIONID", DigestUtils.md5Hex(authorization )));
+        if(authorization!=null && !"".equals(authorization)){
+            String md5=DigestUtils.md5Hex(authorization );
+            boolean flag=false;
+            Cookie[] cks= request.getCookies();
+            if(cks!=null){
+                for(Cookie ck:cks){
+                    if("SESSION".equalsIgnoreCase(ck.getName())){
+                        ck.setValue(md5);
+                        flag=true;
+                    }
+                    if("JSESSIONID".equalsIgnoreCase(ck.getName())){
+                        ck.setValue(md5);
+                        flag=true;
+                    }
+                }
+            }
+            if(flag){
+                Cookie ck=new Cookie("JSESSIONID",md5);
+                ck.setPath("/");ck.setHttpOnly(true);
+                response.addCookie(ck);
+            }
+        }
     }
 }

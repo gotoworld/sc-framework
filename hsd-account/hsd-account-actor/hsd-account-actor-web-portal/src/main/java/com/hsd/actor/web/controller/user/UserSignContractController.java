@@ -53,7 +53,7 @@ public class UserSignContractController extends BaseController {
             UserSignContractDto dto = new UserSignContractDto();
             if (id!=null) {
                 dto.setId(id);
-
+                dto.setUserId(JwtUtil.getSubject(UserDto.class).getId());
                 result.data = userSignContractService.findDataById(dto);
             }
         } catch (Exception e) {

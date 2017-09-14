@@ -2,9 +2,11 @@ package com.hsd.actor.web.controller.identity;
 
 import com.hsd.account.actor.api.identity.IIdentityLogService;
 import com.hsd.account.actor.dto.identity.IdentityLogDto;
+import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +34,7 @@ public class IdentityLogController extends BaseController {
         try {
             if (dto == null) dto = new IdentityLogDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-
+            dto.setUserId(JwtUtil.getSubject(UserDto.class).getId());
             result.data = PageUtil.copy(identityLogService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -52,7 +54,7 @@ public class IdentityLogController extends BaseController {
             if (id==null) {throw new RuntimeException("参数异常!");};
             IdentityLogDto dto = new IdentityLogDto(){{
                 setId(id);
-
+                setUserId(JwtUtil.getSubject(UserDto.class).getId());
             }};
             result.data = identityLogService.findDataById(dto);
         } catch (Exception e) {

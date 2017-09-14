@@ -1,10 +1,12 @@
 package com.hsd.actor.web.controller.user;
 
 import com.hsd.account.actor.api.user.IUserLoginLogService;
+import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.account.actor.dto.user.UserLoginLogDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,7 +37,7 @@ public class UserLoginLogController extends BaseController {
                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
             }
             dto.setPageNum(pageNum);
-
+            dto.setUserId(JwtUtil.getSubject(UserDto.class).getId());
             // 信息列表
             result.data = PageUtil.copy(userLoginLogService.findDataIsPage(dto));
         } catch (Exception e) {

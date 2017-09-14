@@ -6,7 +6,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -42,25 +41,33 @@ public class CrossFilter implements Filter {
         String authorization=request.getHeader("Authorization");
         if(authorization!=null && !"".equals(authorization)){
             String md5=DigestUtils.md5Hex(authorization );
-            boolean flag=false;
-            Cookie[] cks= request.getCookies();
-            if(cks!=null){
-                for(Cookie ck:cks){
-                    if("SESSION".equalsIgnoreCase(ck.getName())){
-                        ck.setValue(md5);
-                        flag=true;
-                    }
-                    if("JSESSIONID".equalsIgnoreCase(ck.getName())){
-                        ck.setValue(md5);
-                        flag=true;
-                    }
-                }
-            }
-            if(flag){
-                Cookie ck=new Cookie("JSESSIONID",md5);
-                ck.setPath("/");ck.setHttpOnly(true);
-                response.addCookie(ck);
-            }
+//            boolean flag=false;
+//           String cookieHeader=request.getHeader("Cookie");
+//            String setCookie=request.getHeader("set-cookie");
+//           if(cookieHeader==null || "".equals(cookieHeader) || setCookie==null || "".equals(setCookie)){
+////               cookieHeader
+//               response.setHeader("Cookie","JSESSIONID="+md5+";");
+               response.getHeaderNames().remove("set-cookie");
+               response.setHeader("set-cookie","JSESSIONID="+md5+"; path=/; HttpOnly");
+//           }
+//            Cookie[] cks= request.getCookies();
+//            if(cks!=null){
+//                for(Cookie ck:cks){
+//                    if("SESSION".equalsIgnoreCase(ck.getName())){
+//                        ck.setValue(md5);
+//                        flag=true;
+//                    }
+//                    if("JSESSIONID".equalsIgnoreCase(ck.getName())){
+//                        ck.setValue(md5);
+//                        flag=true;
+//                    }
+//                }
+//            }
+//            if(flag){
+//                Cookie ck=new Cookie("JSESSIONID",md5);
+//                ck.setPath("/");ck.setHttpOnly(true);
+//                response.addCookie(ck);
+//            }
         }
     }
 }

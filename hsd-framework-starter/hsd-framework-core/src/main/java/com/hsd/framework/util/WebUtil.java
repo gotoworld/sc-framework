@@ -416,10 +416,8 @@ public class WebUtil {
 
     /**
      * <p>
-     * 评论者/咨询者用户名前台显示(显示前3位)共通方法
+     *  (显示前3位)共通方法
      * </p>
-     *
-     * @return 按照规则转换以后的评论/咨询用户名
      */
     public static String formatViewConsultAuthor(String viewConsultAuthor) {
 

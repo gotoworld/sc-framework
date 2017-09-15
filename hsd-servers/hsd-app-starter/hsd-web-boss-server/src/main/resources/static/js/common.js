@@ -231,7 +231,7 @@ $(document).ajaxComplete(function (event, xhr, settings) {
 var staff = {
     login: function (staffJson, callback) {
         $.post(site.staff.login, staffJson,
-            function (result,textStatus, request) {
+            function (result) {
                 if (result.code == 0) {
                     if (result.data) {
                         sessionStorage.setItem('hsd_staff_staff', JSON.stringify(result.data.staff));
@@ -240,7 +240,7 @@ var staff = {
                             sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
                             sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.authorizationInfoPerms);
                             sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.authorizationInfoRoles);
-                            sessionStorage.setItem('XAuthToken',result.data.staff.id+':'+result.data.staff.account);
+                            sessionStorage.setItem('XAuthToken',util.guid());
                         }
                     }
                     callback && callback();
@@ -330,6 +330,7 @@ var staff = {
                 }
                 $data.staff = staff;
                 $data.util = util;
+                if(!util.notEmpty(sessionStorage.getItem('XAuthToken'))) sessionStorage.setItem('XAuthToken',util.guid());
             }
         }
     }

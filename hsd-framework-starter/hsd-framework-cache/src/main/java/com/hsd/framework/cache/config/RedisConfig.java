@@ -174,7 +174,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	@Bean
 	public HttpSessionStrategy httpSessionStrategy() {
 		HeaderHttpSessionStrategy headerHttpSessionStrategy = new HeaderHttpSessionStrategy();
-		headerHttpSessionStrategy.setHeaderName("X-Auth-Token");
+		headerHttpSessionStrategy.setHeaderName("x-auth-token");
 		return headerHttpSessionStrategy;
 	}
 }

@@ -27,6 +27,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.session.web.http.HeaderHttpSessionStrategy;
+import org.springframework.session.web.http.HttpSessionStrategy;
+import org.springframework.session.web.http.SessionRepositoryFilter;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.lang.reflect.Method;
@@ -41,11 +44,7 @@ import java.util.List;
 @Slf4j
 public class RedisConfig extends CachingConfigurerSupport {
 
-	/**
-	 * 加载属性文件数据
-	 *
-	 * @return
-	 */
+	/** 加载属性文件数据 */
 	@Bean
 	public RedisProperties redisProperties() {
 		return new RedisProperties();
@@ -70,11 +69,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 		return idGeneratorBuilder.build();
 	}
 
-	/**
-	 * 主键生成器
-	 *
-	 * @return
-	 */
+	/** 主键生成器 */
 	@Bean
 	public KeyGenerator commonKeyGenerator() {
 		return new KeyGenerator() {
@@ -94,12 +89,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 	}
 
-	@Bean
-	public CacheManager cacheManager(@Qualifier("secondaryStringRedisTemplate") RedisTemplate redisTemplate) {
-		CacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
-		return redisCacheManager;
-	}
-
 	private JedisPoolConfig jedisPoolConfig() {
 		JedisPoolConfig config = new JedisPoolConfig();
 		RedisProperties.Pool props = redisProperties().getPool();
@@ -112,8 +101,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 	@Bean(name = "secondaryRedisConnectionFactory")
 	public RedisConnectionFactory secondaryRedisConnectionFactory() {
+		log.info("2.1 初始化Redis缓存服务器(普通对象)... ...");
 		RedisProperties redisProperties=redisProperties();
-
 		JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig());
 		redisConnectionFactory.setDatabase(redisProperties.getSecondaryDatabase());
 		if(redisProperties.getPassword()!=null){
@@ -123,7 +112,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 		redisConnectionFactory.setTimeout(redisProperties.getTimeout());
 		redisConnectionFactory.setPort(redisProperties.getPort());
 		redisConnectionFactory.afterPropertiesSet();
-		log.info("2.1 初始化Redis缓存服务器(普通对象)... ...");
 		return redisConnectionFactory;
 	}
 
@@ -138,27 +126,23 @@ public class RedisConfig extends CachingConfigurerSupport {
 		om.setSerializationInclusion(Include.NON_EMPTY);// 创建只输出非Null且非Empty(如List.isEmpty)的属性到Json字符串的Mapper
 		GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(om);
 		template.setValueSerializer(jackson2JsonRedisSerializer);
-		// template.afterPropertiesSet();
+		template.afterPropertiesSet();
 		return template;
 	}
 
-	/**
-	 * 与Session有关设置链接
-	 *
-	 * @return
-	 */
 	@Bean
-	public RedisOperationsSessionRepository sessionRepository() {
-		RedisOperationsSessionRepository sessionRepository = new RedisOperationsSessionRepository(secondaryRedisConnectionFactory());
-		sessionRepository.setDefaultMaxInactiveInterval(redisProperties().getSessionExpire());// 设置session的有效时长
-		return sessionRepository;
+	public CacheManager cacheManager(@Qualifier("secondaryStringRedisTemplate") RedisTemplate redisTemplate) {
+		CacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
+		return redisCacheManager;
 	}
 
-	/**
-	 * RedisTemplate
-	 *
-	 * @return
-	 */
+	/** 设置redisTemplate的存储格式 */
+	@Bean
+	public RedisSerializer sessionRedisSerializer() {
+		return new Jackson2JsonRedisSerializer<Object>(Object.class);
+	}
+	
+	/** RedisTemplate */
 	@Bean(name = "redisTemplate")
 	public RedisTemplate<String, Object> sessionRedisTemplate() {
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
@@ -172,13 +156,25 @@ public class RedisConfig extends CachingConfigurerSupport {
 		return template;
 	}
 
-	/**
-	 * 设置redisTemplate的存储格式（在此与Session没有什么关系）
-	 * @return
-	 */
+	/** Session设置 */
 	@Bean
-	@SuppressWarnings("rawtypes")
-	public RedisSerializer sessionRedisSerializer() {
-		return new Jackson2JsonRedisSerializer<Object>(Object.class);
+	public RedisOperationsSessionRepository sessionRepository() {
+		RedisOperationsSessionRepository sessionRepository = new RedisOperationsSessionRepository(secondaryRedisConnectionFactory());
+		sessionRepository.setDefaultMaxInactiveInterval(redisProperties().getSessionExpire());// 设置session的有效时长
+		return sessionRepository;
+	}
+
+	@Bean
+	public SessionRepositoryFilter sessionRepositoryFilter(){
+		SessionRepositoryFilter sessionRepositoryFilter=new SessionRepositoryFilter(sessionRepository());
+		sessionRepositoryFilter.setHttpSessionStrategy(httpSessionStrategy());
+		return sessionRepositoryFilter;
+	}
+
+	@Bean
+	public HttpSessionStrategy httpSessionStrategy() {
+		HeaderHttpSessionStrategy headerHttpSessionStrategy = new HeaderHttpSessionStrategy();
+		headerHttpSessionStrategy.setHeaderName("X-Auth-Token");
+		return headerHttpSessionStrategy;
 	}
 }

@@ -2,7 +2,6 @@ package com.hsd.filter;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -40,7 +39,7 @@ public class CrossFilter implements Filter {
     private void addHeadersCookieForAuthorization(HttpServletRequest request,HttpServletResponse response) {
         String authorization=request.getHeader("Authorization");
         if(authorization!=null && !"".equals(authorization)){
-            response.setHeader("x-auth-token",DigestUtils.md5Hex(authorization ));
+//            response.setHeader("x-auth-token",DigestUtils.md5Hex(authorization ));
         }
     }
 }

@@ -22,7 +22,7 @@ public class FeignConfiguration {
                 if (headerNames != null) {
                     while (headerNames.hasMoreElements()) {
                         String name = headerNames.nextElement();
-                        if(!"#X-Real-IP#Proxy-Client-IP#WL-Proxy-Client-IP#X-Forwarded-For#Authorization#".toLowerCase().contains("#"+(""+name).toLowerCase()+"#")) continue;
+                        if(!"#X-Real-IP#Proxy-Client-IP#WL-Proxy-Client-IP#X-Forwarded-For#Authorization#X-Auth-Token#".toLowerCase().contains("#"+(""+name).toLowerCase()+"#")) continue;
                         Enumeration<String> values = request.getHeaders(name);
                         while (values.hasMoreElements()) {
                             String value = values.nextElement();

@@ -211,7 +211,8 @@ function getQueryString(name) {
 /**员工登录信息验证头*/
 $.ajaxSetup({
     headers: {
-        "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken")
+        "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken"),
+        "X-Auth-Token": sessionStorage.getItem("XAuthToken")
     }
 })
 $(document).ajaxComplete(function (event, xhr, settings) {
@@ -220,7 +221,7 @@ $(document).ajaxComplete(function (event, xhr, settings) {
         //console.info("result=="+JSON.stringify(result))
         if (result.code == 403) {//授权验证失败!
             // console.info('授权验证失败!需跳转到登陆界面');
-            alert('授权验证失败,请重新登陆!');
+            //alert('授权验证失败,请重新登陆!');
             location.href = '/login.html';
         }
     }
@@ -230,7 +231,7 @@ $(document).ajaxComplete(function (event, xhr, settings) {
 var staff = {
     login: function (staffJson, callback) {
         $.post(site.staff.login, staffJson,
-            function (result) {
+            function (result,textStatus, request) {
                 if (result.code == 0) {
                     if (result.data) {
                         sessionStorage.setItem('hsd_staff_staff', JSON.stringify(result.data.staff));
@@ -239,6 +240,7 @@ var staff = {
                             sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
                             sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.authorizationInfoPerms);
                             sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.authorizationInfoRoles);
+                            sessionStorage.setItem('XAuthToken',result.data.staff.id+':'+result.data.staff.account);
                         }
                     }
                     callback && callback();
@@ -304,7 +306,7 @@ var staff = {
                     // staff.login(function () {
                     //     staff.info(callback);
                     // })
-                    alert('未登录或登陆过期,请重新登陆!');
+                    //alert('未登录或登陆过期,请重新登陆!');
                     top.location.href = '/login.html';
                 }
             }

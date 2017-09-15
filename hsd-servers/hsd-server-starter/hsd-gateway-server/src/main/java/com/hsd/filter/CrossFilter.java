@@ -35,39 +35,12 @@ public class CrossFilter implements Filter {
     private void addHeadersFor200Response(HttpServletRequest request,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin","*");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-        response.setHeader("Access-Control-Allow-Headers", "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma");
+        response.setHeader("Access-Control-Allow-Headers", "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,X-Auth-Token");
     }
     private void addHeadersCookieForAuthorization(HttpServletRequest request,HttpServletResponse response) {
         String authorization=request.getHeader("Authorization");
         if(authorization!=null && !"".equals(authorization)){
-            String md5=DigestUtils.md5Hex(authorization );
-//            boolean flag=false;
-//           String cookieHeader=request.getHeader("Cookie");
-//            String setCookie=request.getHeader("set-cookie");
-//           if(cookieHeader==null || "".equals(cookieHeader) || setCookie==null || "".equals(setCookie)){
-////               cookieHeader
-//               response.setHeader("Cookie","JSESSIONID="+md5+";");
-               response.getHeaderNames().remove("set-cookie");
-               response.setHeader("set-cookie","JSESSIONID="+md5+"; path=/; HttpOnly");
-//           }
-//            Cookie[] cks= request.getCookies();
-//            if(cks!=null){
-//                for(Cookie ck:cks){
-//                    if("SESSION".equalsIgnoreCase(ck.getName())){
-//                        ck.setValue(md5);
-//                        flag=true;
-//                    }
-//                    if("JSESSIONID".equalsIgnoreCase(ck.getName())){
-//                        ck.setValue(md5);
-//                        flag=true;
-//                    }
-//                }
-//            }
-//            if(flag){
-//                Cookie ck=new Cookie("JSESSIONID",md5);
-//                ck.setPath("/");ck.setHttpOnly(true);
-//                response.addCookie(ck);
-//            }
+            response.setHeader("x-auth-token",DigestUtils.md5Hex(authorization ));
         }
     }
 }

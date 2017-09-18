@@ -1,10 +1,8 @@
 package com.hsd.actor.web.controller.user;
 
-import com.hsd.account.actor.api.IPushService;
 import com.hsd.account.actor.api.actor.IMemberService;
 import com.hsd.account.actor.api.identity.IIdentityService;
 import com.hsd.account.actor.api.user.IUserService;
-import com.hsd.account.actor.dto.PushDto;
 import com.hsd.account.actor.dto.actor.MemberDto;
 import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.actor.dto.user.UserDto;
@@ -12,6 +10,8 @@ import com.hsd.framework.Response;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
+import com.hsd.util.api.msg.IPushService;
+import com.hsd.util.dto.msg.PushDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

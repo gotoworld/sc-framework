@@ -1,8 +1,8 @@
-package com.hsd.account.actor.api;
+package com.hsd.util.api.msg;
 
-import com.hsd.account.actor.dto.PushDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
+import com.hsd.util.dto.msg.PushDto;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * <p>消息推送 业务处理接口类。
  */
-@FeignClient(value = "${feign.name.account.actor}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
+@FeignClient(value = "${feign.name.util.sms}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IPushService {
-    String acPrefix = "/feign/account/actor/IPushService";
+    String acPrefix = "/feign/util/IPushService";
     /**
      * <p>验证码-短信推送。
      */

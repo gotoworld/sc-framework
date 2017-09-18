@@ -11,5 +11,10 @@
     </parent>
     <artifactId>hsd-common-util-sms</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>com.hsd.framework</groupId>
+            <artifactId>hsd-framework-api</artifactId>
+            <version>${hsd.framework.version}</version>
+        </dependency>
     </dependencies>
 </project>

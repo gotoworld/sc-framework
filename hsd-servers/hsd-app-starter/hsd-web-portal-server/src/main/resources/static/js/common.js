@@ -84,7 +84,8 @@ function getQueryString(name) {
 /**客户登录信息验证头*/
 $.ajaxSetup({
     headers: {
-        "Authorization": sessionStorage.getItem("hsd_actor_authorizationToken")
+        "Authorization": sessionStorage.getItem("hsd_actor_authorizationToken"),
+        "Cache-X": sessionStorage.getItem("cacheX")
     }
 })
 $(document).ajaxComplete(function (event, xhr, settings) {
@@ -109,6 +110,7 @@ var user = {
                     if (result.data.authorizationToken) {
                         sessionStorage.setItem('hsd_actor_tokenExpMillis', result.data.tokenExpMillis);
                         sessionStorage.setItem("hsd_actor_authorizationToken", result.data.authorizationToken);
+                        sessionStorage.setItem('cacheX', result.data.cacheX);
                     }
                 }
                 callback && callback();
@@ -125,7 +127,8 @@ var user = {
                 if (result.data) {
                     if (result.data.authorizationToken) {
                         sessionStorage.setItem('hsd_actor_tokenExpMillis', result.data.tokenExpMillis);
-                        sessionStorage.setItem("hsd_actor_authorizationToken", result.data.authorizationToken)
+                        sessionStorage.setItem("hsd_actor_authorizationToken", result.data.authorizationToken);
+                        sessionStorage.setItem('cacheX', result.data.cacheX);
                     }
                 }
                 callback && callback();
@@ -179,7 +182,7 @@ var user = {
                     // user.login(function () {
                     //     user.info(callback);
                     // })
-                    alert('未登录或登陆过期,请重新登陆!');
+                    //alert('未登录或登陆过期,请重新登陆!');
                     top.location.href = '/login.html';
                 }
             }

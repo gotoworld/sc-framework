@@ -1,13 +1,13 @@
-package com.hsd.account.actor.service;
+package com.hsd.util.service.msg;
 
-import com.hsd.account.actor.api.IPushService;
-import com.hsd.account.actor.dto.PushDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.ValidatorUtil;
+import com.hsd.util.api.msg.IPushService;
+import com.hsd.util.dto.msg.PushDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

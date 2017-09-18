@@ -3,7 +3,6 @@ package com.hsd.service.impl;
 import com.hsd.dao.ISchemaInfoDao;
 import com.hsd.domain.SchemaConf;
 import com.hsd.domain.SchemaInfo;
-import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.BeetlUtils;
 import com.hsd.framework.util.DateUtil;
 import com.hsd.framework.util.StrUtil;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class SchemaInfoService extends BaseService implements ISchemaInfoService {
+public class SchemaInfoService implements ISchemaInfoService {
     @Autowired
     private ISchemaInfoDao schemaInfoDao;
 

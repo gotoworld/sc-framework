@@ -161,7 +161,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 				 log.error("重置密码异常!", e);
 	             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
 			}
-			return null;
+			return result;
 		}
 
 		@Override

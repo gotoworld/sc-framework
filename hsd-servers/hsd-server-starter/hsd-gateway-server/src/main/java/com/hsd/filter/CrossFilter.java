@@ -34,12 +34,12 @@ public class CrossFilter implements Filter {
     private void addHeadersFor200Response(HttpServletRequest request,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin","*");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-        response.setHeader("Access-Control-Allow-Headers", "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,x-auth-token");
+        response.setHeader("Access-Control-Allow-Headers", "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,Cache-X");
     }
     private void addHeadersCookieForAuthorization(HttpServletRequest request,HttpServletResponse response) {
         String authorization=request.getHeader("Authorization");
         if(authorization!=null && !"".equals(authorization)){
-//            response.setHeader("x-auth-token",DigestUtils.md5Hex(authorization ));
+//            response.setHeader("Cache-X",DigestUtils.md5Hex(authorization ));
         }
     }
 }

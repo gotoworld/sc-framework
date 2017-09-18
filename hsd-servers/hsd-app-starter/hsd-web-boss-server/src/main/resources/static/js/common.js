@@ -212,7 +212,7 @@ function getQueryString(name) {
 $.ajaxSetup({
     headers: {
         "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken"),
-        "x-auth-token": sessionStorage.getItem("XAuthToken")
+        "Cache-X": sessionStorage.getItem("cacheX")
     }
 })
 $(document).ajaxComplete(function (event, xhr, settings) {
@@ -240,7 +240,7 @@ var staff = {
                             sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
                             sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.authorizationInfoPerms);
                             sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.authorizationInfoRoles);
-                            sessionStorage.setItem('XAuthToken',util.guid());
+                            sessionStorage.setItem('cacheX', result.data.cacheX);
                         }
                     }
                     callback && callback();
@@ -257,7 +257,8 @@ var staff = {
                 if (result.data) {
                     if (result.data.authorizationToken) {
                         sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
-                        sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken)
+                        sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
+                        sessionStorage.setItem('cacheX', result.data.cacheX);
                     }
                 }
                 callback && callback();
@@ -330,7 +331,6 @@ var staff = {
                 }
                 $data.staff = staff;
                 $data.util = util;
-                if(!util.notEmpty(sessionStorage.getItem('XAuthToken'))) sessionStorage.setItem('XAuthToken',util.guid());
             }
         }
     }

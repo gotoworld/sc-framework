@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>//TODO 邮件推送</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="memo of your site" />
+    <meta name="author" content="author of the site" />
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+    <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+    <link href="/css/common.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="clients-list">
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="tab-1" class="tab-pane active">
+							<div class="ibox float-e-margins">
+								<div class="ibox-content">
+									<table class="table">
+										<tr>
+											<td>
+												<form id="info_search_form"
+													role="form" class="form-inline"
+													method="post"  accept-charset="UTF-8"
+													ng-submit="page()">
+													<input type="hidden" name="pageNum" id="pageNumA" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
+													<div class="form-group" id="data_5">
+														<label class="font-noraml">创建时间</label>
+														<div class="input-daterange input-group" id="datepicker">
+															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+															<span class="input-group-addon">到</span>
+															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+														</div>
+													</div>
+													<div class="input-group">
+														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+														</span>
+													</div>
+												</form>
+											</td>
+										</tr>
+									</table>
+									<a href="javascript:;" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("msgEmail:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<div class="table-responsive table-scrollable">
+                                    	<table class="table table-bordered table-striped  table-hover">
+                                    		<thead>
+                                    			<tr>
+                                    				<th style="width:20px;">#</th>
+                                    				<th>发送人</th>
+                                    				<th>主题</th>
+                                    				<th>收件人</th>
+                                    				<th>发送状态0：未发送 1：发送中 2：已发送</th>
+                                    				<th>预定发送时间</th>
+                                    				<th>实际发送时间</th>
+                                    				<th>实际发送次数</th>
+                                    				<th>操作</th>
+                                    			</tr>
+                                    		</thead>
+                                    		<tbody>
+                                    			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
+                                    				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
+                                    				<td>{{item.sender}}</td>
+                                    				<td>{{item.subject}}</td>
+                                    				<td>{{item.recipient}}</td>
+                                    				<td>{{item.state}}</td>
+                                    				<td>{{item.dateSend | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.dateActual | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.sendCount}}</td>
+                                    				<td>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("msgEmail:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("msgEmail:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:;" ng-show='staff.hasPermission("msgEmail:phydel")'   ng-click="phydel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
+                                                    </td>
+                                    			</tr>
+                                    			<tr ng-if="result.data.data==null || result.data.data.length==0">
+                                    				<td colspan="9">
+                                    				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
+                                    				</td>
+                                    			</tr>
+                                    		</tbody>
+                                    	</table>
+										<div class="b_page" id="tagPages"></div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/pageTag.js"></script>
+
+<script type="text/javascript">
+    /* copy to common.js
+    var site={
+        , msgEmail: {//邮件推送
+             view: basePath + "/html/util/msg/msg_email"
+            ,page: apiPath.util + "/boss/util/msg/msgEmail/page/"       //分页
+            ,save: apiPath.util + "/boss/util/msg/msgEmail/save"        //新增or保存
+            ,info: apiPath.util + "/boss/util/msg/msgEmail/info/"       //详情
+            ,phydel: apiPath.util + "/boss/util/msg/msgEmail/phydel/"   //物理删除
+        }
+    }
+    */
+    $("#data_5 .input-daterange").datepicker({
+        keyboardNavigation : !1,
+        forceParse : !1,
+        autoclose : !0
+    });
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
+        $data = $scope;
+        $ngCompile=$compile;
+        staff.init(function(){
+            loadPage(1);
+        });
+        $scope.edit = function (title,item) {
+            sessionStorage.setItem(site.msgEmail.info,item.id);
+            openMyBoxLayer(title,site.msgEmail.view+'_edit.html');
+        }
+        $scope.info = function (title,item) {
+            sessionStorage.setItem(site.msgEmail.info,item.id);
+            openMyBoxLayer(title,site.msgEmail.view+'_info.html');
+        }
+        $scope.phydel = function (item) {
+            if(confirm('确认删除吗?此操作无法恢复!')) {
+                $.post( site.msgEmail.phydel + item.id,{}, function (result) {
+                    if(result.code==0){
+                        loadPage($('#pageNumA').val());
+                        alert('删除成功');
+                    }else{
+                        alert(result.message);
+                    }
+                });
+            }
+        }
+        $scope.page = function (pageIndex) {
+            loadPage(pageIndex);
+        }
+    });
+
+    var loadPage = function (pageIndex) {
+        if(pageIndex){
+            $('#pageNumA').val(pageIndex);
+        }else{
+            pageIndex=$('#pageNumA').val();
+        }
+        console.info("加载页码"+pageIndex)
+        $.post( site.msgEmail.page+pageIndex,$('#info_search_form').serialize(), function (result) {
+            
+            $data.result=result;
+            $('#tagPages').html($ngCompile(tag.page(result.data))($data));
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+</script>
+</body>
+</html>

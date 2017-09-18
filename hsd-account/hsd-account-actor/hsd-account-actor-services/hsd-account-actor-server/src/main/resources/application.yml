@@ -73,7 +73,7 @@ spring:
       max-idle: 10
       max-wait: -1
       min-idle: 0
-    session-expire: 1800000
+    session-expire: 7200000
 
 security:
   basic:

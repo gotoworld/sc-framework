@@ -1,4 +1,4 @@
-package com.hsd.account.actor.dto;
+package com.hsd.util.dto.msg;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hsd.framework.dto.BaseDto;

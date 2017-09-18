@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+<meta charset="utf-8" />
+<title>//TODO 邮件推送 新增/编辑</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description" content="memo of your site" />
+<meta name="author" content="author of the site" />
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+<link href="/css/common.css" rel="stylesheet">
+
+<link href="/css/upload.css" rel="stylesheet">
+<link rel="stylesheet" href="/plugins/editor/themes/default/default.css" />
+<link rel="stylesheet" href="/plugins/editor/plugins/code/prettify.css" />
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-md-12">
+				<form id="msgEmail_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+					<div class="col-md-12" style="height: 50px;">
+						<div style="float:right;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+					<input type="hidden" name="id" value="{{item.id}}" />
+					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
+					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
+					<div class="clearfix "></div>
+					<div class="col-sm-6 b-r">
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">发送人：</label>
+                            <div class="col-md-12">
+                                <input id="bean-sender" name="sender" value="{{item.sender}}" class="form-control" type="text"  placeholder="请输入发送人"  required="" aria-required="true"  aria-describedby="bean-sender-error"  maxlength="55"   aria-invalid="true">
+                                <span id="bean-sender-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">

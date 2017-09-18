@@ -1,0 +1,22 @@
+--
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_email', '邮件推送', 'msgEmail:menu', 'id_msg', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_email_add', '邮件推送_新增', 'msgEmail:add', 'id_msg_email', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_email_edit', '邮件推送_编辑', 'msgEmail:edit', 'id_msg_email', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_email_info', '邮件推送_详情', 'msgEmail:info', 'id_msg_email', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_email_phydel', '邮件推送_物理删除', 'msgEmail:phydel', 'id_msg_email', '系统生成', '0', '0');
+    --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_email_recycle', '邮件推送_回收站', 'msgEmail:recycle', 'id_msg_email', '系统生成', '0', '0');
+    --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_email_recovery', '邮件推送_回收站_恢复', 'msgEmail:recovery', 'id_msg_email', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_sms', '短信推送', 'msgSms:menu', 'id_msg', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_sms_add', '短信推送_新增', 'msgSms:add', 'id_msg_sms', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_sms_edit', '短信推送_编辑', 'msgSms:edit', 'id_msg_sms', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_sms_info', '短信推送_详情', 'msgSms:info', 'id_msg_sms', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_sms_phydel', '短信推送_物理删除', 'msgSms:phydel', 'id_msg_sms', '系统生成', '0', '0');
+    --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_sms_recycle', '短信推送_回收站', 'msgSms:recycle', 'id_msg_sms', '系统生成', '0', '0');
+    --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_sms_recovery', '短信推送_回收站_恢复', 'msgSms:recovery', 'id_msg_sms', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_verify', '信息验证', 'msgVerify:menu', 'id_msg', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_verify_add', '信息验证_新增', 'msgVerify:add', 'id_msg_verify', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_verify_edit', '信息验证_编辑', 'msgVerify:edit', 'id_msg_verify', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_verify_info', '信息验证_详情', 'msgVerify:info', 'id_msg_verify', '系统生成', '0', '0');
+    INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_verify_phydel', '信息验证_物理删除', 'msgVerify:phydel', 'id_msg_verify', '系统生成', '0', '0');
+    --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_verify_recycle', '信息验证_回收站', 'msgVerify:recycle', 'id_msg_verify', '系统生成', '0', '0');
+    --  INSERT INTO `auth_perm` (id,name,match_str,parent_id,memo,order_no,del_flag) VALUES ('id_msg_verify_recovery', '信息验证_回收站_恢复', 'msgVerify:recovery', 'id_msg_verify', '系统生成', '0', '0');

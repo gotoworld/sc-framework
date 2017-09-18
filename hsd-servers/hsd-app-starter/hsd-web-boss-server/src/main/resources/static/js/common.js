@@ -212,7 +212,7 @@ function getQueryString(name) {
 $.ajaxSetup({
     headers: {
         "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken"),
-        "X-Auth-Token": sessionStorage.getItem("XAuthToken")
+        "x-auth-token": sessionStorage.getItem("XAuthToken")
     }
 })
 $(document).ajaxComplete(function (event, xhr, settings) {

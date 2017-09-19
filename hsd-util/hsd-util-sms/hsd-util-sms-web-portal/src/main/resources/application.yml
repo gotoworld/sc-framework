@@ -1,6 +1,6 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: BOSS系统->客户
+  description: PORTAL系统->图形认证码
   version : 1.0
 # HTTP Server
 server:
@@ -8,7 +8,7 @@ server:
   context-path: /
 spring:
   application:
-    name: hsd-util-sms-web-boss
+    name: hsd-util-sms-web-portal
   profiles:
     active: dev
   boot:

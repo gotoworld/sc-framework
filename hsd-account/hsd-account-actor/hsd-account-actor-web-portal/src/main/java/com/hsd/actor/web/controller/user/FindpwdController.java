@@ -1,13 +1,13 @@
 package com.hsd.actor.web.controller.user;
 
-import com.hsd.account.actor.api.IPushService;
 import com.hsd.account.actor.api.user.IUserService;
-import com.hsd.account.actor.dto.PushDto;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
+import com.hsd.util.api.msg.IMsgVerifyService;
+import com.hsd.util.dto.msg.MsgVerifyDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +26,12 @@ public class FindpwdController extends BaseController {
     @Autowired
     private IUserService userService;
     @Autowired
-    private IPushService pushService;
+    private IMsgVerifyService msgVerifyService;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     private static final String acPrefix = "/api/account/actor/findpwd/";
 
     private static final String findPwdStatePreix = "captcha:find:pwd:success:";
-    private static final String captchaPreix = "captcha:find:pwd:";
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, value = acPrefix + "getAccount")
     @ApiOperation(value = "获取账户")
@@ -40,10 +39,15 @@ public class FindpwdController extends BaseController {
         log.info("FindpwdController getAccount.........");
         Response result = new Response("success");
         try {
-            if (dto == null || ValidatorUtil.isEmpty(dto.getAccount()) || ValidatorUtil.isEmpty(dto.getCaptcha()))
-                return Response.error("参数获取异常!");
-            //验证码确认
-            if (!"ufgb".equals(dto.getCaptcha())) return Response.error("验证码不正确!");
+            if (dto == null || ValidatorUtil.isEmpty(dto.getAccount()) || ValidatorUtil.isEmpty(dto.getCaptcha())) return Response.error("参数有误!");
+
+            UserDto finalDto = dto;
+            MsgVerifyDto verifyDto = new MsgVerifyDto() {{
+                setImgCaptchaId(finalDto.getImgCaptchaId());
+                setImgCaptchaCode(finalDto.getImgCaptchaCode());
+            }};
+            msgVerifyService.verifyImgCode(verifyDto);
+
             dto.setType(UserDto.userType.USER.getCode());
             dto = userService.getAccount(dto);
             if (dto == null) return Response.error("账号不存在!");
@@ -62,18 +66,26 @@ public class FindpwdController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/send/captcha/sms")
     @ApiOperation(value = "验证码-短信推送")
-    public Response captchaSms(@RequestParam("accid") Long accid, @RequestParam("captcha") String captcha) throws Exception {
+    public Response captchaSms(@RequestParam("accid") Long accid, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) throws Exception {
         log.info("LoginController captchaSms");
         Response result = new Response();
         try {
-            if (accid==null || ValidatorUtil.isNullEmpty(captcha)) {
-                return Response.error("参数异常!");
+            if (accid==null || ValidatorUtil.isNullEmpty(imgCaptchaId) || ValidatorUtil.isNullEmpty(imgCaptchaCode)) {
+                return Response.error("参数有误!");
             }
-            //验证码确认
-            if (!"ufgb".equals(captcha)) return Response.error("验证码不正确!");
+            MsgVerifyDto verifyDto = new MsgVerifyDto() {{
+                setImgCaptchaId(imgCaptchaId);
+                setImgCaptchaCode(imgCaptchaCode);
+            }};
+            msgVerifyService.verifyImgCode(verifyDto);
+
             UserDto userDto = userService.findDataById(new UserDto(){{setId(accid);}});
             if(userDto==null) return Response.error("账号不存在!");
-            result = pushService.captchaSms(new PushDto(){{setPrefix(captchaPreix);setCellphone(userDto.getCellphone());}});
+
+            verifyDto.setSmsType(0);
+            verifyDto.setIpAddress(getIpAddr());
+            verifyDto.setSmsAddress(userDto.getCellphone());
+            result = msgVerifyService.pushVerifyCode(verifyDto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -84,18 +96,26 @@ public class FindpwdController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/send/captcha/email")
     @ApiOperation(value = "验证码-邮件推送")
-    public Response captchaEmail(@RequestParam("accid") Long accid, @RequestParam("captcha") String captcha) throws Exception {
+    public Response captchaEmail(@RequestParam("accid") Long accid, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) throws Exception {
         log.info("LoginController captchaEmail");
         Response result = new Response();
         try {
-            if (accid==null || ValidatorUtil.isNullEmpty(captcha)) {
-                return Response.error("参数异常!");
+            if (accid==null || ValidatorUtil.isNullEmpty(imgCaptchaId) || ValidatorUtil.isNullEmpty(imgCaptchaCode)) {
+                return Response.error("参数有误!");
             }
-            //验证码确认
-            if (!"ufgb".equals(captcha)) return Response.error("验证码不正确!");
+            MsgVerifyDto verifyDto = new MsgVerifyDto() {{
+                setImgCaptchaId(imgCaptchaId);
+                setImgCaptchaCode(imgCaptchaCode);
+            }};
+            msgVerifyService.verifyImgCode(verifyDto);
+
             UserDto userDto = userService.findDataById(new UserDto(){{setId(accid);}});
             if(userDto==null) return Response.error("账号不存在!");
-            result = pushService.captchaEmail(new PushDto(){{setPrefix(captchaPreix);setEmail(userDto.getEmail());}});
+
+            verifyDto.setSmsType(1);
+            verifyDto.setIpAddress(getIpAddr());
+            verifyDto.setSmsAddress(userDto.getEmail());
+            result = msgVerifyService.pushVerifyCode(verifyDto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -114,11 +134,12 @@ public class FindpwdController extends BaseController {
             dto = userService.findDataById(dto);
             if (dto == null) return Response.error("账号不存在!");
             UserDto finalDto = dto;
-            result.data = pushService.verifyCaptchaSms(new PushDto() {{
-                setPrefix(captchaPreix);
-                setCellphone(finalDto.getCellphone());
-                setCaptcha(captcha);
-            }});
+
+            MsgVerifyDto verifyDto = new MsgVerifyDto();
+            verifyDto.setSmsType(0);
+            verifyDto.setSmsAddress(finalDto.getCellphone());
+            verifyDto.setVerifyCode(captcha);
+            result.data = msgVerifyService.checkVerifyCode(verifyDto);
 
             redisTemplate.opsForValue().set(findPwdStatePreix + finalDto.getId(), "1", 5, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
         } catch (Exception e) {
@@ -134,17 +155,19 @@ public class FindpwdController extends BaseController {
         Response result = new Response("success");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getAccount()) || ValidatorUtil.isEmpty(dto.getCaptcha()))
-                return Response.error("参数获取异常!");
+                return Response.error("参数有误!");
             String captcha=dto.getCaptcha();
             dto.setType(UserDto.userType.USER.getCode());
             dto = userService.findDataById(dto);
             if (dto == null) return Response.error("账号不存在!");
             UserDto finalDto = dto;
-            result.data = pushService.verifyCaptchaEmail(new PushDto() {{
-                setPrefix(captchaPreix);
-                setEmail(finalDto.getEmail());
-                setCaptcha(captcha);
-            }});
+
+            MsgVerifyDto verifyDto = new MsgVerifyDto();
+            verifyDto.setSmsType(1);
+            verifyDto.setSmsAddress(finalDto.getEmail());
+            verifyDto.setVerifyCode(captcha);
+            result.data = msgVerifyService.checkVerifyCode(verifyDto);
+
             redisTemplate.opsForValue().set(findPwdStatePreix + finalDto.getId(), "1", 5, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -158,7 +181,7 @@ public class FindpwdController extends BaseController {
         log.info("FindpwdController verifystate.........");
         Response result = new Response("success");
         try {
-            if (accid == null ) return Response.error("参数获取异常!");
+            if (accid == null ) return Response.error("参数有误!");
             if(!"1".equals(redisTemplate.opsForValue().get(findPwdStatePreix + accid)))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -171,7 +194,7 @@ public class FindpwdController extends BaseController {
         log.info("FindpwdController update.........");
         Response result = new Response("success");
         try {
-            if (dto == null || dto.getId()==null || ValidatorUtil.isEmpty(dto.getPwd())) return Response.error("参数获取异常!");
+            if (dto == null || dto.getId()==null || ValidatorUtil.isEmpty(dto.getPwd())) return Response.error("参数有误!");
             if(!"1".equals(redisTemplate.opsForValue().get(findPwdStatePreix + dto.getId())))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
             result=userService.updatePwd(dto);
         } catch (Exception e) {

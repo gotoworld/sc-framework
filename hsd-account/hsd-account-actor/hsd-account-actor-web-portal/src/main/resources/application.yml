@@ -62,6 +62,7 @@ logging:
 feign:
   name:
     account.actor: hsd-account-actor-server
+    util.sms: hsd-util-sms-server
 
 # 自定义配置
 hsd:

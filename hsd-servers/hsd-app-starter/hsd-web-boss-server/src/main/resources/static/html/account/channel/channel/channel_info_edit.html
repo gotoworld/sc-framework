@@ -50,7 +50,11 @@
                         <div class="form-group clearfix"  ng-if="!(util.notEmpty(item.id))" >
                             <label class="col-md-3 control-label">渠道商登录密码：</label>
                             <div class="col-md-12">
-                                <input id="bean-pwd" name="pwd" value="{{item.pwd}}" class="form-control" type="text"  placeholder="请输入渠道商登录密码"  required="" aria-required="true"  aria-describedby="bean-pwd-error"  maxlength="255"   aria-invalid="true">
+                                <input type="hidden" name="pwd" id="pwdA" />
+                                <input type="password"
+                                       onkeydown="$('#pwdA').val($.md5($(this).val()));"
+                                       onchange="$('#pwdA').val($.md5($(this).val()));"
+                                       placeholder="请输入渠道商登录密码"  required="" aria-required="true"   class="form-control" aria-describedby="bean-pwd-error"  maxlength="255"   aria-invalid="true">
                                 <span id="bean-pwd-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -375,6 +379,7 @@
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/jQuery.md5.js"></script>
 
 <script src="/plugins/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript">

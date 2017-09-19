@@ -19,5 +19,6 @@
         <module>../../hsd-common/hsd-common-util-sms</module>
         <module>hsd-util-sms-services</module>
         <module>hsd-util-sms-web-boss</module>
+        <module>hsd-util-sms-web-portal</module>
     </modules>
 </project>

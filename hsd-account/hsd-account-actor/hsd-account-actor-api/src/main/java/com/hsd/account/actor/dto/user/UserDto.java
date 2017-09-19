@@ -87,4 +87,9 @@ public class UserDto extends BaseDto {
     private Integer isRiskAssessYN;
     /**客户信息完善0否1是*/
     private Integer isMemberPerfectYN;
+
+    /**图片验证码Id*/
+    private String imgCaptchaId;
+    /**图片验证码code*/
+    private String imgCaptchaCode;
 }

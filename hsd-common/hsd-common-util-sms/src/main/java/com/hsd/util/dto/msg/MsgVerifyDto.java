@@ -40,4 +40,10 @@ public class MsgVerifyDto extends BaseDto {
 	 @NotNull(message="state不能为空")
      private Integer state;
 
+    /**图片验证码Id*/
+    private String imgCaptchaId;
+    /**图片验证码code*/
+    private String imgCaptchaCode;
+    /**图片验证码 验证成功删除*/
+    private Boolean imgCaptchaDel;
 }

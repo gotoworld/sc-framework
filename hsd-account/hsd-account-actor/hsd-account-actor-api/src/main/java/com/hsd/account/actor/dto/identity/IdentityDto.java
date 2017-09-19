@@ -50,6 +50,10 @@ public class IdentityDto extends BaseDto {
      /**更新时间*/
      private Date dateUpdated;
 
-    /** 图片验证码 */
-    private String imgCaptcha;
+    /**图片验证码Id*/
+    private String imgCaptchaId;
+    /**图片验证码code*/
+    private String imgCaptchaCode;
+    /**图片验证码 验证成功删除*/
+    private Boolean imgCaptchaDel;
 }

@@ -7,16 +7,14 @@ import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
-import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.util.api.msg.IMsgVerifyService;
 import com.hsd.util.dao.msg.IMsgVerifyDao;
 import com.hsd.util.dto.msg.MsgVerifyDto;
 import com.hsd.util.entity.msg.MsgVerify;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -26,89 +24,95 @@ import java.util.List;
 public class MsgVerifyService extends BaseService implements IMsgVerifyService {
     @Autowired
     private IMsgVerifyDao msgVerifyDao;
+    public static final String prefix = "verify:msg:";
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
-        @Override
-        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-        public Response saveOrUpdateData(@RequestBody MsgVerifyDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
-            try {
-                if (dto == null)throw new RuntimeException("参数异常!");
-                MsgVerify entity = copyTo(dto, MsgVerify.class);
-                //判断数据是否存在
-                if (msgVerifyDao.isDataYN(entity) != 0) {
-                    //数据存在
-                    msgVerifyDao.update(entity);
-                } else {
-                    //新增
-                     msgVerifyDao.insert(entity);
-                     result.data=entity.getId();
+    @Override
+    public PageInfo findDataIsPage(@RequestBody MsgVerifyDto dto) throws Exception {
+        PageInfo pageInfo = null;
+        try {
+            if (dto == null) throw new RuntimeException("参数异常!");
+            MsgVerify entity = copyTo(dto, MsgVerify.class);
+            PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
+            List list = msgVerifyDao.findDataIsPage(entity);
+            pageInfo = new PageInfo(list);
+            pageInfo.setList(copyTo(pageInfo.getList(), MsgVerifyDto.class));
+        } catch (Exception e) {
+            log.error("信息[分页]查询异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }
+        return pageInfo;
+    }
+
+    @Override
+    public MsgVerifyDto findDataById(@RequestBody MsgVerifyDto dto) throws Exception {
+        MsgVerifyDto result = null;
+        try {
+            MsgVerify entity = copyTo(dto, MsgVerify.class);
+            result = copyTo(msgVerifyDao.selectByPrimaryKey(entity), MsgVerifyDto.class);
+        } catch (Exception e) {
+            log.error("信息[详情]查询异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public boolean verifyImgCode(@RequestBody MsgVerifyDto dto) throws Exception {
+        try {
+            if (dto == null || ValidatorUtil.isEmpty(dto.getImgCaptchaId()) || ValidatorUtil.isEmpty(dto.getImgCaptchaCode()))
+                throw new RuntimeException("认证码不能为空!");
+            if (dto.getImgCaptchaCode().equalsIgnoreCase("" + redisTemplate.opsForValue().get("verify:img:"+dto.getImgCaptchaId()))){
+                if(dto.getImgCaptchaDel()){
+                    redisTemplate.opsForValue().getOperations().delete("verify:img:"+dto.getImgCaptchaId());
                 }
-            } catch (Exception e) {
-                log.error("信息保存异常!", e);
-                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+                return true;
+            }else{
+                throw new RuntimeException("认证码输入错误!");
             }
-            return result;
+        } catch (Exception e) {
+            log.error("图片认证码校验-异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
         }
+    }
 
-        @Override
-        public String deleteData(@RequestBody MsgVerifyDto dto) throws Exception {
-            String result = "seccuss";
-            try {
-                if (dto == null)throw new RuntimeException("参数异常!");
-                MsgVerify entity = copyTo(dto, MsgVerify.class);
-                if(msgVerifyDao.deleteByPrimaryKey(entity)==0){
-                    throw new RuntimeException("数据不存在!");
-                }
-            } catch (Exception e) {
-                log.error("物理删除异常!", e);
-                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-            }
-            return result;
+    @Override
+    public Response pushVerifyCode(@RequestBody MsgVerifyDto dto) throws Exception {
+        Response result = new Response(0, "seccuss");
+        try {
+            //检查图片验证码是否正确//限制恶意刷短信
+            dto.setImgCaptchaDel(true);
+            verifyImgCode(dto);
+            //跨域请求限制: 进一步限制恶意刷短信
+            //手机号限制: 防止短信轰炸
+            //IP次数限制: 防止恶意刷手机验证码短信
+
+            MsgVerify msgVerify = copyTo(dto, MsgVerify.class);
+            msgVerify.setDataExpire(60*30);//有效时长(秒)
+            msgVerify.setVerifyCode("" + ((int) (Math.random() * 9000) + 1000));//验证码
+            msgVerify.setState(0);//是否使用0否1是
+            msgVerifyDao.insert(msgVerify);
+        } catch (Exception e) {
+            log.error("短讯验证码推送信息入库,异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
         }
+        return result;
+    }
+
+    public Response checkVerifyCode(@RequestBody MsgVerifyDto dto) throws Exception {
+        Response result = new Response(0, "seccuss");
+        try {
+            if (dto == null || ValidatorUtil.isEmpty(dto.getSmsAddress())) throw new RuntimeException("参数异常!");
 
 
-        @Override
-        public PageInfo findDataIsPage(@RequestBody MsgVerifyDto dto) throws Exception {
-           PageInfo pageInfo=null;
-           try {
-               if (dto == null)throw new RuntimeException("参数异常!");
-               MsgVerify entity = copyTo(dto, MsgVerify.class);
-               PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-               List list = msgVerifyDao.findDataIsPage(entity);
-               pageInfo=new PageInfo(list);
-               pageInfo.setList(copyTo(pageInfo.getList(), MsgVerifyDto.class));
-           } catch (Exception e) {
-               log.error("信息[分页]查询异常!", e);
-               throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-           }
-           return pageInfo;
+            //     throw new RuntimeException("校验失败,验证码错误!");
+//            时效限制: [5-10min]
+//            使用次数限制: 1次
+        } catch (Exception e) {
+            log.error("验证码校验异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
         }
-
-        @Override
-        public List<MsgVerifyDto> findDataIsList(@RequestBody MsgVerifyDto dto) throws Exception {
-            List<MsgVerifyDto>  results = null;
-            try {
-                MsgVerify entity = copyTo(dto, MsgVerify.class);
-                 results = copyTo(msgVerifyDao.findDataIsList(entity), MsgVerifyDto.class);
-            } catch (Exception e) {
-                log.error("信息[列表]查询异常!", e);
-                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-            }
-            return  results;
-        }
-
-        @Override
-        public MsgVerifyDto findDataById(@RequestBody MsgVerifyDto dto) throws Exception {
-            MsgVerifyDto result = null;
-            try {
-                MsgVerify entity = copyTo(dto, MsgVerify.class);
-                result = copyTo(msgVerifyDao.selectByPrimaryKey(entity),MsgVerifyDto.class);
-            } catch (Exception e) {
-                log.error("信息[详情]查询异常!", e);
-                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
-            }
-            return result;
-        }
-
-
+        return result;
+    }
 }

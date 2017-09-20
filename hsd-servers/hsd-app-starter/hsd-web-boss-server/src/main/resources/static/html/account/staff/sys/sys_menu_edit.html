@@ -48,10 +48,10 @@
                         </div>
 
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">所属系统域：</label>
+                            <label class="col-md-3 control-label">所属应用：</label>
                             <div class="col-md-12">
-                                <select data-placeholder="选择所属系统域" id="bean-domainCode" name="domainCode" class="form-control"   required="" aria-required="true"  aria-describedby="bean-domainCode-error"  maxlength="50"   aria-invalid="true">
-                                    <option value="">--请选择所属系统域--</option>
+                                <select data-placeholder="选择所属应用" id="bean-domainCode" name="domainCode" class="form-control"   required="" aria-required="true"  aria-describedby="bean-domainCode-error"  maxlength="50"   aria-invalid="true">
+                                    <option value="">--请选择所属应用--</option>
                                     <option ng-repeat="d in domainNodes" ng-value="d.code" ng-selected="d.code==item.domainCode" ng-bind="d.name"></option>
                                 </select>
                                 <span id="bean-domainCode-error" class="help-block m-b-none"></span>

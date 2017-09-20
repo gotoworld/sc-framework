@@ -84,14 +84,17 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
             //检查图片验证码是否正确//限制恶意刷短信
             dto.setImgCaptchaDel(true);
             verifyImgCode(dto);
-            //跨域请求限制: 进一步限制恶意刷短信
-            //手机号限制: 防止短信轰炸
-            //IP次数限制: 防止恶意刷手机验证码短信
-
             MsgVerify msgVerify = copyTo(dto, MsgVerify.class);
-            msgVerify.setDataExpire(60*30);//有效时长(秒)
-            msgVerify.setVerifyCode("" + ((int) (Math.random() * 9000) + 1000));//验证码
+            msgVerify.setDataExpire(60*10);//有效时长(秒)
             msgVerify.setState(0);//是否使用0否1是
+
+            //跨域请求限制: 进一步限制恶意刷短信
+            //检查1分钟内 是否有未使用的短讯 //防止短信轰炸
+            if(msgVerifyDao.isNotUsedYN(msgVerify)>0) throw new RuntimeException("请休息一会吧!");
+            //IP次数限制: 防止恶意刷手机验证码短信
+            if(msgVerifyDao.isNotUsedYN(msgVerify)>0) throw new RuntimeException("请休息一会吧!");
+
+            msgVerify.setVerifyCode("" + ((int) (Math.random() * 9000) + 1000));//验证码
             msgVerifyDao.insert(msgVerify);
         } catch (Exception e) {
             log.error("短讯验证码推送信息入库,异常!", e);

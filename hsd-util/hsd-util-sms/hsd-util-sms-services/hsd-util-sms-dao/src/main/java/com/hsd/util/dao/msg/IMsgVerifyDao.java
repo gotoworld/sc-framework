@@ -17,13 +17,15 @@ public interface IMsgVerifyDao extends IBaseDao {
      */
     @Select("select IFNULL(count(0),0) as count from msg_verify where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
-
-
-
     /**
      * 根据主键 物理删除
      */
     @Delete("delete from msg_verify where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
+    /**
+     * 判断是否存在未使用的短讯
+     */
+    @Select("select IFNULL(count(0),0) as count from msg_verify where  state=0 and date_created<=date_add(date_created, interval 1 minute) ")
+    int isNotUsedYN(IEntity entity) throws Exception;
 }

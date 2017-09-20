@@ -1,13 +1,5 @@
 package com.hsd.account.channel.service.channel;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.channel.api.channel.IChannelTypeService;
@@ -20,8 +12,14 @@ import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @FeignService
 @Slf4j
@@ -32,7 +30,7 @@ public class ChannelTypeService extends BaseService implements IChannelTypeServi
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody ChannelTypeDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
+            Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ChannelType entity = copyTo(dto, ChannelType.class);
@@ -54,7 +52,7 @@ public class ChannelTypeService extends BaseService implements IChannelTypeServi
 
         @Override
         public String deleteData(@RequestBody ChannelTypeDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ChannelType entity = copyTo(dto, ChannelType.class);
@@ -71,7 +69,7 @@ public class ChannelTypeService extends BaseService implements IChannelTypeServi
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public String deleteDataById(@RequestBody ChannelTypeDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ChannelType entity = copyTo(dto, ChannelType.class);

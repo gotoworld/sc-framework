@@ -41,7 +41,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody ChannelInfoDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
+            Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ChannelInfo entity = copyTo(dto, ChannelInfo.class);
@@ -63,7 +63,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
         @Override
         public String deleteData(@RequestBody ChannelInfoDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ChannelInfo entity = copyTo(dto, ChannelInfo.class);
@@ -80,7 +80,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public String deleteDataById(@RequestBody ChannelInfoDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ChannelInfo entity = copyTo(dto, ChannelInfo.class);
@@ -139,7 +139,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
 		@Override
 		public String recoveryData(@RequestBody ChannelInfoDto dto) throws Exception{
-			  String result = "seccuss";
+			  String result = "success";
 	            try {
 	                if (dto == null)throw new RuntimeException("参数异常!");
 	               channelInfoDao.recoveryData(copyTo(dto, ChannelInfo.class));
@@ -152,7 +152,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
 		@Override
 		public String resetPwd(@RequestBody ChannelInfoDto dto) throws Exception {
-			String result = "seccuss";
+			String result = "success";
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
 				dto.setPwd("7fb4771b47dda67c83e499cc42d01707");
@@ -178,7 +178,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
 		@Override
 		public Response modifyPwd(@RequestBody ChannelInfoDto dto) throws Exception {
-			Response result = new Response(0,"seccuss");
+			Response result = new Response(0,"success");
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
 				ChannelInfo entity = copyTo(dto, ChannelInfo.class);
@@ -192,7 +192,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
 		@RequiresPermissions("channelInfo:edit:batch")
 	    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
-	        Response result = new Response(0,"seccuss");
+	        Response result = new Response(0,"success");
 	        try {
 	            if (fileUrl == null) throw new RuntimeException("文件路径不存在!");
 	            Map<String,List> map= ExcelUtil.readExcelIsList(StrUtil.replaceAll(fileUrl, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload")),true);
@@ -272,7 +272,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
 	    @Override
 		public Response updataChannel(@RequestBody ChannelInfoDto dto) throws Exception {
-			Response result = new Response(0,"seccuss");
+			Response result = new Response(0,"success");
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
 				ChannelInfo entity = copyTo(dto, ChannelInfo.class);

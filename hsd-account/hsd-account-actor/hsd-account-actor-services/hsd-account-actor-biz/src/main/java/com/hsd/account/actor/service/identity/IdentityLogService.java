@@ -30,7 +30,7 @@ public class IdentityLogService extends BaseService implements IIdentityLogServi
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody IdentityLogDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
+            Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 IdentityLog entity = copyTo(dto, IdentityLog.class);
@@ -52,7 +52,7 @@ public class IdentityLogService extends BaseService implements IIdentityLogServi
 
         @Override
         public String deleteData(@RequestBody IdentityLogDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 IdentityLog entity = copyTo(dto, IdentityLog.class);

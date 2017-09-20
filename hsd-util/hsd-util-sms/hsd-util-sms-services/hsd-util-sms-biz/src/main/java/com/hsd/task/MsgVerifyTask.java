@@ -26,7 +26,7 @@ public class MsgVerifyTask {
     public void clearVerifyExpire() {
         log.info("===============清理已过期验证码未使用信息====================");
         Lock lock = new RedisLock(redisTemplate,"lock:clear-verify-expire", 5 * 60 * 1000);
-        if (lock.tryLock(5 * 60 * 1000)) {
+        if (lock.tryLock(3 * 60 * 1000)) {
             try {
                 MsgVerify msgVerify=new MsgVerify();
 

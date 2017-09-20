@@ -2,6 +2,7 @@ package com.hsd.framework.cache.redis;
 
 import com.hsd.framework.lock.AbstractLock;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
@@ -14,8 +15,7 @@ public class RedisLock extends AbstractLock {
     protected String lockKey;
     // 锁的有效时长(毫秒)
     protected long lockExpires = 2000;
-
-    RedisSerializer<String> serializer;
+    private RedisSerializer<String> serializer;
 
     public RedisLock(RedisTemplate redisTemplate, String lockKey) {
         this(redisTemplate, lockKey, 2000);
@@ -54,7 +54,6 @@ public class RedisLock extends AbstractLock {
         if (interrupt) {
             checkInterruption();
         }
-
         long start = System.currentTimeMillis();
         //当不指定timeout时，按最长等待时间
         timeout = timeout > 0 ? timeout : this.lockExpires + 1;
@@ -63,42 +62,38 @@ public class RedisLock extends AbstractLock {
                 if (interrupt) {
                     checkInterruption();
                 }
-
                 long lockExpireTime = System.currentTimeMillis() + lockExpires + 1;//锁超时时间
-                String stringOfLockExpireTime = String.valueOf(lockExpireTime);
 
-                if (redisTemplate.getConnectionFactory().getConnection().setNX(getByte(lockKey), getByte(stringOfLockExpireTime))) { // 获取到锁
-                    redisTemplate.expire(lockKey, lockExpires, TimeUnit.MILLISECONDS);//设置过期，防止异常中断锁未释放
+                if (redisTemplate.execute((RedisCallback<Boolean>) connection -> connection.setNX(getByte(lockKey), getByte(""+lockExpireTime)))) { // 获取到锁
                     // 成功获取到锁, 设置相关标识
-                    if (log.isDebugEnabled()) {
-                        log.debug("add RedisLock[" + lockKey + "].");
-                    }
                     locked = true;
+                    redisTemplate.expire(lockKey, lockExpires, TimeUnit.MILLISECONDS);//设置过期，防止异常中断锁未释放
                     setExclusiveOwnerThread(Thread.currentThread());
                     return true;
-                }
-
-                Object value = redisTemplate.opsForValue().get(lockKey);
-                if (value != null && isTimeExpired(value)) { // lock is expired
-                    // 假设多个线程(非单jvm)同时走到这里
-                    Object oldValue = redisTemplate.opsForValue().getAndSet(lockKey, stringOfLockExpireTime); // getset is atomic
-                    // 但是走到这里时每个线程拿到的oldValue肯定不可能一样(因为getset是原子性的)
-                    // 加入拿到的oldValue依然是expired的，那么就说明拿到锁了
-                    if (oldValue != null && isTimeExpired(oldValue)) {
-                        // 成功获取到锁, 设置相关标识
-                        locked = true;
-                        setExclusiveOwnerThread(Thread.currentThread());
-                        return true;
+                }else{
+                    Long redisTimeExpired = (Long) redisTemplate.opsForValue().get(lockKey);
+                    if (redisTimeExpired != null && isTimeExpired(redisTimeExpired)) { // lock is expired
+                        // 假设多个线程(非单jvm)同时走到这里
+                        Long oldValue = (Long) redisTemplate.opsForValue().getAndSet(lockKey, lockExpireTime); // getset is atomic
+                        // 但是走到这里时每个线程拿到的oldValue肯定不可能一样(因为getset是原子性的)
+                        // 加入拿到的oldValue依然是expired的，那么就说明拿到锁了
+                        if (oldValue != null && isTimeExpired(oldValue)) {
+                            // 成功获取到锁, 设置相关标识
+                            locked = true;
+                            redisTemplate.expire(lockKey, lockExpires, TimeUnit.MILLISECONDS);//设置过期，防止异常中断锁未释放
+                            setExclusiveOwnerThread(Thread.currentThread());
+                            return true;
+                        }
+                    } else {
+                        // lock is not expired, enter next loop retrying
                     }
-                } else {
-                    // TODO lock is not expired, enter next loop retrying
                 }
-                TimeUnit.MICROSECONDS.sleep(60);
+                TimeUnit.MICROSECONDS.sleep(100);//睡眠100毫秒
             } while (isTimeout(start, timeout));
-
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error(e.getMessage(), e);
         } finally {
+
         }
         return false;
     }
@@ -107,7 +102,7 @@ public class RedisLock extends AbstractLock {
         if (locked) {
             return true;
         } else {
-            Object value = redisTemplate.opsForValue().get(lockKey);
+            Long value = (Long) redisTemplate.opsForValue().get(lockKey);
             // TODO 这里其实是有问题的, 想:当get方法返回value后, 假设这个value已经是过期的了,
             // 而就在这瞬间, 另一个节点set了value, 这时锁是被别的线程(节点持有), 而接下来的判断
             // 是检测不出这种情况的.不过这个问题应该不会导致其它的问题出现, 因为这个方法的目的本来就
@@ -122,8 +117,8 @@ public class RedisLock extends AbstractLock {
         }
     }
 
-    private boolean isTimeExpired(Object value) {
-        return Long.parseLong("" + value) < System.currentTimeMillis();
+    private boolean isTimeExpired(Long value) {
+        return value < System.currentTimeMillis();
     }
 
     private boolean isTimeout(long start, long timeout) {

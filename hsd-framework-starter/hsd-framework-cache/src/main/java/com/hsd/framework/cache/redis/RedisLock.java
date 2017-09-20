@@ -68,7 +68,7 @@ public class RedisLock extends AbstractLock {
                 String stringOfLockExpireTime = String.valueOf(lockExpireTime);
 
                 if (redisTemplate.getConnectionFactory().getConnection().setNX(getByte(lockKey), getByte(stringOfLockExpireTime))) { // 获取到锁
-                    redisTemplate.expire(lockKey, lockExpires, TimeUnit.SECONDS);//设置过期，防止异常中断锁未释放
+                    redisTemplate.expire(lockKey, lockExpires, TimeUnit.MILLISECONDS);//设置过期，防止异常中断锁未释放
                     // 成功获取到锁, 设置相关标识
                     if (log.isDebugEnabled()) {
                         log.debug("add RedisLock[" + lockKey + "].");

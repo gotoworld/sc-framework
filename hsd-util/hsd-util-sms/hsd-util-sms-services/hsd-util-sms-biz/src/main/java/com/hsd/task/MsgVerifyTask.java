@@ -19,23 +19,28 @@ public class MsgVerifyTask {
     private IMsgVerifyDao msgVerifyDao;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
     /**
      * <p>清理已过期验证码未使用信息
      */
     @Scheduled(cron = "0/5 * * * * * ")
     public void clearVerifyExpire() {
-        log.info("===============清理已过期验证码未使用信息====================");
-        Lock lock = new RedisLock(redisTemplate,"lock:clear-verify-expire", 5 * 60 * 1000);
-        if (lock.tryLock(3 * 60 * 1000)) {
-            try {
-                MsgVerify msgVerify=new MsgVerify();
+        try {
+            log.info("===============清理已过期验证码未使用信息====================");
+            Lock lock = new RedisLock(redisTemplate, "lock:clear-verify-expire", 5 * 60 * 1000);
+            if (lock.tryLock(3 * 60 * 1000)) {
+                try {
+                    MsgVerify msgVerify = new MsgVerify();
 
-                msgVerifyDao.clearVerifyExpire(msgVerify);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            } finally {
-                //lock.unlock();
+                    msgVerifyDao.clearVerifyExpire(msgVerify);
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                } finally {
+                    //lock.unlock();
+                }
             }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
     }
 }

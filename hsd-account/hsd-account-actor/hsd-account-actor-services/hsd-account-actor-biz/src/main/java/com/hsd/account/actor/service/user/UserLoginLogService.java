@@ -30,7 +30,7 @@ public class UserLoginLogService extends BaseService implements IUserLoginLogSer
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody UserLoginLogDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
+            Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 UserLoginLog entity = copyTo(dto, UserLoginLog.class);
@@ -52,7 +52,7 @@ public class UserLoginLogService extends BaseService implements IUserLoginLogSer
 
         @Override
         public String deleteData(@RequestBody UserLoginLogDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 UserLoginLog entity = copyTo(dto, UserLoginLog.class);

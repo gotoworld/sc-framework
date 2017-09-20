@@ -37,8 +37,17 @@ public class MsgVerifyDto extends BaseDto {
 	 @NotNull(message="ip_address不能为空")@Size(max=25,message="ip_address最大25字符")
      private String ipAddress;
      /**是否使用0否1是*/
-	 @NotNull(message="state不能为空")
-     private Integer state;
+	 @NotNull(message="isUsed不能为空")
+     private Integer isUsed;
+
+    /**预定发送时间*/
+    private Date dateSend;
+    /**实际发送时间*/
+    private Date dateActual;
+    /**实际发送次数*/
+    private Integer sendCount;
+    /**发送状态0：未发送 1：发送中 2：已发送*/
+    private Integer state;
 
     /**图片验证码Id*/
     private String imgCaptchaId;

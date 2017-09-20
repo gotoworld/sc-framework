@@ -41,7 +41,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response saveOrUpdateData(@RequestBody AuthRoleDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             AuthRole entity=copyTo(dto,AuthRole.class);
@@ -107,7 +107,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     }
 
     public String deleteData(@RequestBody AuthRoleDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             authRoleDao.deleteByPrimaryKey(copyTo(dto,AuthRole.class));
@@ -119,7 +119,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     }
 
     public String deleteDataById(@RequestBody AuthRoleDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             authRoleDao.deleteById(copyTo(dto,AuthRole.class));

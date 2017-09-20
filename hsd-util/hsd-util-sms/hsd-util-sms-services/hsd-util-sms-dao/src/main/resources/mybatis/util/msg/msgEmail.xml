@@ -38,7 +38,7 @@
            ,date_send 
            ,date_actual 
            ,send_count 
-           ,state 
+           ,state
         ) values (
          
             #{sender} 
@@ -47,10 +47,10 @@
            ,#{scontent} 
            ,#{lcontent} 
            ,#{files} 
-           ,#{dateSend} 
-           ,#{dateActual} 
-           ,#{sendCount} 
-           ,#{state} 
+           ,now()
+           ,null
+           ,0
+           ,0
         )
     </insert>
 

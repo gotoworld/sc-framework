@@ -23,12 +23,12 @@ public class MsgVerifyTask {
     /**
      * <p>清理已过期验证码未使用信息
      */
-    @Scheduled(cron = "0/5 * * * * * ")
+    @Scheduled(cron = "0 0/30 * * * * ")
     public void clearVerifyExpire() {
         try {
-            log.info("===============清理已过期验证码未使用信息====================");
             Lock lock = new RedisLock(redisTemplate, "lock:clear-verify-expire", 5 * 60 * 1000);
             if (lock.tryLock(3 * 60 * 1000)) {
+                log.debug("===============清理已过期验证码未使用信息====================");
                 try {
                     MsgVerify msgVerify = new MsgVerify();
 
@@ -36,10 +36,11 @@ public class MsgVerifyTask {
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                 } finally {
-                    //lock.unlock();
+//                    lock.unlock();
+//                    log.debug("释放锁");
                 }
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error(e.getMessage(), e);
         }
     }

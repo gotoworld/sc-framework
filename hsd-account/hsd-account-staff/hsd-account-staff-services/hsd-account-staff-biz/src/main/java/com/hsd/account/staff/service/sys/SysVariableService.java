@@ -31,7 +31,7 @@ public class SysVariableService extends BaseService implements ISysVariableServi
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody SysVariableDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
+            Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysVariable entity = copyTo(dto, SysVariable.class);
@@ -53,7 +53,7 @@ public class SysVariableService extends BaseService implements ISysVariableServi
 
         @Override
         public String deleteData(@RequestBody SysVariableDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysVariable entity = copyTo(dto, SysVariable.class);
@@ -70,7 +70,7 @@ public class SysVariableService extends BaseService implements ISysVariableServi
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public String deleteDataById(@RequestBody SysVariableDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysVariable entity = copyTo(dto, SysVariable.class);

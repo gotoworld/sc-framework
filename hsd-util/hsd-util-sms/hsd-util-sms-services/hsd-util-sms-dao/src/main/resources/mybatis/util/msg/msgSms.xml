@@ -30,15 +30,15 @@
            ,date_send 
            ,date_actual 
            ,send_count 
-           ,state 
+           ,state
         ) values (
          
             #{cellphone} 
            ,#{content} 
-           ,#{dateSend} 
-           ,#{dateActual} 
-           ,#{sendCount} 
-           ,#{state} 
+           ,now()
+           ,null
+           ,0
+           ,0
         )
     </insert>
 

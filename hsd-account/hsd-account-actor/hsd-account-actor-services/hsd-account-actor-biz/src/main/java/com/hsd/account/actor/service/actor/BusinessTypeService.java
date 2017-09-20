@@ -30,7 +30,7 @@ public class BusinessTypeService extends BaseService implements IBusinessTypeSer
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody BusinessTypeDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
+            Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 BusinessType entity = copyTo(dto, BusinessType.class);
@@ -52,7 +52,7 @@ public class BusinessTypeService extends BaseService implements IBusinessTypeSer
 
         @Override
         public String deleteData(@RequestBody BusinessTypeDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 BusinessType entity = copyTo(dto, BusinessType.class);
@@ -69,7 +69,7 @@ public class BusinessTypeService extends BaseService implements IBusinessTypeSer
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public String deleteDataById(@RequestBody BusinessTypeDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 BusinessType entity = copyTo(dto, BusinessType.class);

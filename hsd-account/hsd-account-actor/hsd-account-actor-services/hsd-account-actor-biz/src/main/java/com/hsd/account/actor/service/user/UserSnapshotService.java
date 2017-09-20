@@ -30,7 +30,7 @@ public class UserSnapshotService extends BaseService implements IUserSnapshotSer
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody UserSnapshotDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
+            Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 UserSnapshot entity = copyTo(dto, UserSnapshot.class);
@@ -52,7 +52,7 @@ public class UserSnapshotService extends BaseService implements IUserSnapshotSer
 
         @Override
         public String deleteData(@RequestBody UserSnapshotDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 UserSnapshot entity = copyTo(dto, UserSnapshot.class);

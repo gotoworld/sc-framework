@@ -30,7 +30,7 @@ public class TemplateAttributeService extends BaseService implements ITemplateAt
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody TemplateAttributeDto dto) throws Exception {
-            Response result = new Response(0,"seccuss");
+            Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 TemplateAttribute entity = copyTo(dto, TemplateAttribute.class);
@@ -52,7 +52,7 @@ public class TemplateAttributeService extends BaseService implements ITemplateAt
 
         @Override
         public String deleteData(@RequestBody TemplateAttributeDto dto) throws Exception {
-            String result = "seccuss";
+            String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 TemplateAttribute entity = copyTo(dto, TemplateAttribute.class);

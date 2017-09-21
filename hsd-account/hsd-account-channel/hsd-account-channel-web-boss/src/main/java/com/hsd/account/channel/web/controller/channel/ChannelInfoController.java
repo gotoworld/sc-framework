@@ -1,5 +1,25 @@
 package com.hsd.account.channel.web.controller.channel;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.hsd.account.channel.api.channel.IChannelInfoService;
 import com.hsd.account.channel.dto.channel.ChannelInfoDto;
 import com.hsd.framework.PageUtil;
@@ -10,21 +30,10 @@ import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 @Api(description = "渠道商信息")
 @RestController
@@ -172,7 +181,7 @@ public class ChannelInfoController extends BaseController {
          try {
              ChannelInfoDto dto = new ChannelInfoDto();
              dto.setId(id);
-             result.message = channelInfoService.resetPwd(dto);
+             result.data = channelInfoService.resetPwd(dto);
          } catch (Exception e) {
              result = Response.error(e.getMessage());
          }

@@ -176,7 +176,7 @@ public class ChannelInfoController extends BaseController {
     @ALogOperation(type = "重置", desc = "渠道商信息")
     @ApiOperation(value = "重置密码")
     public Response resetPwd(@PathVariable("id") Long id){
-    	log.info("ChannelInfoController resetPwd.........");
+    	log.info("ChannelInfoController resetPwd........."); 
     	 Response result = new Response();
          try {
              ChannelInfoDto dto = new ChannelInfoDto();

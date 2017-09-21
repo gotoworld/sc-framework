@@ -16,6 +16,7 @@ import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.IdUtil;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.StrUtil;
 import com.hsd.framework.util.ValidatorUtil;
@@ -152,16 +153,16 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
 		@Override
 		public String resetPwd(@RequestBody ChannelInfoDto dto) throws Exception {
-			String result = "seccuss";
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
-				dto.setPwd("7fb4771b47dda67c83e499cc42d01707");
+				String newPwd=IdUtil.createUUID(6);
+				dto.setPwd(MD5.pwdMd5Hex(MD5.md5Hex(newPwd)));
 				channelInfoDao.resetPwd(copyTo(dto,ChannelInfo.class));
+				return newPwd;
 			} catch (Exception e) {
 				 log.error("重置密码异常!", e);
 	             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
 			}
-			return result;
 		}
 
 		@Override

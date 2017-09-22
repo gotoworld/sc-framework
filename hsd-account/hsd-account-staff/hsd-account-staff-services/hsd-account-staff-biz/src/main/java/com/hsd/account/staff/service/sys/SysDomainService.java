@@ -30,7 +30,7 @@ public class SysDomainService extends BaseService implements ISysDomainService {
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody SysDomainDto dto) throws Exception {
-            Response result = new Response(0,"success");
+            Response result = new Response(0,"seccuss");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysDomain entity = copyTo(dto, SysDomain.class);
@@ -52,7 +52,7 @@ public class SysDomainService extends BaseService implements ISysDomainService {
 
         @Override
         public String deleteData(@RequestBody SysDomainDto dto) throws Exception {
-            String result = "success";
+            String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysDomain entity = copyTo(dto, SysDomain.class);
@@ -69,7 +69,7 @@ public class SysDomainService extends BaseService implements ISysDomainService {
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public String deleteDataById(@RequestBody SysDomainDto dto) throws Exception {
-            String result = "success";
+            String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysDomain entity = copyTo(dto, SysDomain.class);

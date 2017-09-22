@@ -35,7 +35,7 @@ public class TemplateService extends BaseService implements ITemplateService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response saveOrUpdateData(@RequestBody TemplateDto dto) throws Exception {
-        Response result = new Response(0, "success");
+        Response result = new Response(0, "seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             Template entity = copyTo(dto, Template.class);
@@ -69,7 +69,7 @@ public class TemplateService extends BaseService implements ITemplateService {
 
     @Override
     public String deleteData(@RequestBody TemplateDto dto) throws Exception {
-        String result = "success";
+        String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             Template entity = copyTo(dto, Template.class);
@@ -86,7 +86,7 @@ public class TemplateService extends BaseService implements ITemplateService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String deleteDataById(@RequestBody TemplateDto dto) throws Exception {
-        String result = "success";
+        String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             Template entity = copyTo(dto, Template.class);

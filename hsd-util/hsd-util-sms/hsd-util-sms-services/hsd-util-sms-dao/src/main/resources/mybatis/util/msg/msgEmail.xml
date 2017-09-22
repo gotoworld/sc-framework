@@ -38,36 +38,36 @@
            ,date_send 
            ,date_actual 
            ,send_count 
-           ,state 
+           ,state
         ) values (
-         
-            #{sender} 
-           ,#{recipient} 
-           ,#{subject} 
-           ,#{scontent} 
-           ,#{lcontent} 
-           ,#{files} 
-           ,#{dateSend} 
-           ,#{dateActual} 
-           ,#{sendCount} 
-           ,#{state} 
+
+            #{sender}
+           ,#{recipient}
+           ,#{subject}
+           ,#{scontent}
+           ,#{lcontent}
+           ,#{files}
+           ,now()
+           ,null
+           ,0
+           ,0
         )
     </insert>
 
 
     <!-- 数据更新 -->
     <update id="update" parameterType="com.hsd.util.entity.msg.MsgEmail">
-        update msg_email set  
-             <if test="sender!=null">,sender = #{sender}</if>
-             <if test="recipient!=null">,recipient = #{recipient}</if>
-             <if test="subject!=null">,subject = #{subject}</if>
-             <if test="scontent!=null">,scontent = #{scontent}</if>
-             <if test="lcontent!=null">,lcontent = #{lcontent}</if>
-             <if test="files!=null">,files = #{files}</if>
-             <if test="dateSend!=null">,date_send = #{dateSend}</if>
-             <if test="dateActual!=null">,date_actual = #{dateActual}</if>
-             <if test="sendCount!=null">,send_count = #{sendCount}</if>
-             <if test="state!=null">,state = #{state}</if>
+        update msg_email set
+        <if test="sender!=null">,sender = #{sender}</if>
+        <if test="recipient!=null">,recipient = #{recipient}</if>
+        <if test="subject!=null">,subject = #{subject}</if>
+        <if test="scontent!=null">,scontent = #{scontent}</if>
+        <if test="lcontent!=null">,lcontent = #{lcontent}</if>
+        <if test="files!=null">,files = #{files}</if>
+        <if test="dateSend!=null">,date_send = #{dateSend}</if>
+        <if test="dateActual!=null">,date_actual = #{dateActual}</if>
+        <if test="sendCount!=null">,send_count = #{sendCount}</if>
+        <if test="state!=null">,state = #{state}</if>
         where
         id = #{id}
     </update>
@@ -83,7 +83,7 @@
         from msg_email t1
         where 1=1
         <include refid="list_where_sql"/>
-        
+
     </select>
 
     <!--信息列表 -->
@@ -93,6 +93,6 @@
         from msg_email t1
         where 1=1
         <include refid="list_where_sql"/>
-        
+
     </select>
 </mapper>

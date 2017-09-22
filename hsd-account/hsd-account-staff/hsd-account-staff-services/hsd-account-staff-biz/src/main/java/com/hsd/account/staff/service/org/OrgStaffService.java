@@ -57,7 +57,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public Response saveOrUpdateData(@RequestBody OrgStaffDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             OrgStaff entity=copyTo(dto,OrgStaff.class);
@@ -87,7 +87,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String updateData(@RequestBody OrgStaffDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             OrgStaff entity=copyTo(dto,OrgStaff.class);
@@ -103,7 +103,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
     public String deleteData(@RequestBody OrgStaffDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgStaffDao.deleteByPrimaryKey(copyTo(dto,OrgStaff.class));
@@ -117,7 +117,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String deleteDataById(@RequestBody OrgStaffDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgStaffDao.deleteById(copyTo(dto,OrgStaff.class));
@@ -167,7 +167,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
 
     public String recoveryDataById(@RequestBody OrgStaffDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgStaffDao.recoveryDataById(copyTo(dto,OrgStaff.class));
@@ -195,7 +195,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
 
     public String isAccountYN(@RequestParam(name ="account") String account) {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (ValidatorUtil.notEmpty(account)) {
                 if (orgStaffDao.isAccountYN(account) > 0) {
@@ -211,7 +211,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String updatePwd(@RequestBody OrgStaffDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             OrgStaffDto orgStaffDto=findDataById(dto);
@@ -264,7 +264,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     @RfAccount2Bean
     @RequiresPermissions("orgStaff:edit:org")
     public Response addOrg(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgOrgVsStaffDao.insert(copyTo(dto,OrgOrgVsStaff.class));
@@ -277,7 +277,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
 
     @RequiresPermissions("orgStaff:edit:org")
     public Response delOrg(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgOrgVsStaffDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsStaff.class));
@@ -287,10 +287,10 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
-//    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RequiresPermissions("orgStaff:add:batch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (fileUrl == null) throw new RuntimeException("文件路径不存在!");
             Map<String,List> map= ExcelUtil.readExcelIsList(StrUtil.replaceAll(fileUrl, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload")),true);
@@ -299,7 +299,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
             List datas=map.get("datas");
             log.info("excel->title->"+titles);
             Long createId=JwtUtil.getSubject().getLong("id");
-           final StringBuffer finalMessage = new StringBuffer("");
+            final StringBuffer finalMessage = new StringBuffer("");
             if(datas!=null) {
                 List<OrgStaff> orgStaffs=new ArrayList<>();
                 for (int i = 0; i < datas.size(); i++) {
@@ -392,7 +392,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     @RfAccount2Bean
     @RequiresPermissions("orgStaff:edit:role")
     public Response addRole(@RequestBody AuthStaffVsRoleDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             authStaffVsRoleDao.insert(copyTo(dto,AuthStaffVsRole.class));
@@ -404,7 +404,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
     @RequiresPermissions("orgStaff:edit:role")
     public Response delRole(@RequestBody AuthStaffVsRoleDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             authStaffVsRoleDao.deleteByPrimaryKey(copyTo(dto,AuthStaffVsRole.class));

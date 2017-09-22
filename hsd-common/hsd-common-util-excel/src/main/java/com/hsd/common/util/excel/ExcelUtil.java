@@ -11,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,11 @@ public class ExcelUtil {
         InputStream is = null;
         Workbook wb = null;
         try {
-            is = new FileInputStream(filePath);
+            if(filePath.startsWith("http://")){
+                is=new URL(filePath).openConnection().getInputStream();
+            }else{
+                is = new FileInputStream(filePath);
+            }
 
             if (fileType.equals("xls")) {
                 wb = new HSSFWorkbook(is);
@@ -156,7 +161,8 @@ public class ExcelUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        Map<String, List> result = readExcelIsList("d:/staff1.xlsx", true);
+        Map<String, List> result = readExcelIsList("http://192.168.101.100:8080/11.xlsx", true);
+//        Map<String, List> result = readExcelIsList("d:/staff1.xlsx", true);
         result.get("datas").forEach(map -> {
             System.out.println(map);
         });

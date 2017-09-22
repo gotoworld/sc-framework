@@ -90,7 +90,7 @@ management.security.enabled: false
 
 feign:
   name:
-    util.sms: ${spring.application.name}
+    util.staff: ${spring.application.name}
 
 #
 logging:

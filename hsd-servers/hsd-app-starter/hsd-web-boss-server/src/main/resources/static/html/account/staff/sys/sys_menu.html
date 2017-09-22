@@ -106,7 +106,7 @@
                                     				<th style="width:20px;">#</th>
                                     				<th>名称</th>
 													<th>页面链接</th>
-													<th>所属应用</th>
+													<th>所属系统域</th>
 													<th>创建时间</th>
 													<th>操作</th>
                                     			</tr>
@@ -235,7 +235,7 @@
             var trStr ='';
             trStr+=' <tr><th class="col-md-3">名称:</th><th class="">'+node.name+'</th></tr>';
             trStr+=' <tr><th class="col-md-3">页面链接:</th><th class="">'+node.url+'</th></tr>';
-            trStr+=' <tr><th class="col-md-3">所属应用:</th><th class="">'+node.domainCode+'</th></tr>';
+            trStr+=' <tr><th class="col-md-3">所属系统域:</th><th class="">'+node.domainCode+'</th></tr>';
             trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
             if(staff.hasPermission("sysMenu:info") || staff.hasPermission("sysMenu:edit") || staff.hasPermission("sysMenu:del")){
                     trStr+=' <tr><th class="col-md-3">操作:</th><th> ';

@@ -30,14 +30,5 @@ public class MsgVerify extends BaseEntity {
      /**IP地址*/
      private String ipAddress;
      /**是否使用0否1是*/
-     private Integer isUsed;
-
-     /**预定发送时间*/
-     private Date dateSend;
-     /**实际发送时间*/
-     private Date dateActual;
-     /**实际发送次数*/
-     private Integer sendCount;
-     /**发送状态0：未发送 1：发送中 2：已发送*/
      private Integer state;
 }

@@ -108,12 +108,12 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgRoleIsList")
     public List<AuthRoleDto> findOrgRoleIsList(OrgStaffDto dto);
-
     /**
      * <p>添加组织。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addOrg")
     public Response addOrg(OrgOrgVsStaffDto dto) throws Exception;
+
     /**
      * <p>删除组织。
      */
@@ -124,15 +124,20 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addBatch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception;
-
     /**
      * <p>添加角色。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addRole")
     public Response addRole(AuthStaffVsRoleDto dto) throws Exception;
+
     /**
      * <p>添加角色。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delRole")
     public Response delRole(AuthStaffVsRoleDto dto) throws Exception;
+    /**
+     * <p>根据角色-获取员工列表。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffByRoleIsList")
+    public List<OrgStaffDto> findStaffByRoleIsList(AuthStaffVsRoleDto dto);
 }

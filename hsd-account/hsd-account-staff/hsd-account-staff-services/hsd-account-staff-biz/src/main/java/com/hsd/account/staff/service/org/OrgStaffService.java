@@ -414,13 +414,19 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
-    public static void main(String[] args) {
-//        for(int i=0;i<20;i++){
-//            String x=IdUtil.createUUID(8);
-//            System.out.println(x+":"+MD5.pwdMd5Hex(MD5.md5Hex(x)));
-//        }
-        String msg=" ###  ### Error updating database. Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_staff_account' ### The error may involve com.hsd.account.staff.dao.org.IOrgStaffDao.insert-Inline ### The error occurred while setting parameters ### SQL: insert into org_staff ( account ,pwd ,name ,gender ,cellphone ,avatar ,email ,type ,last_login ,count ,state ,eff_date ,exp_date ,memo ,version ,order_no ,del_flag ,create_id ,date_created ,date_updated ,bi_update_ts ) values ( ? ,? ,? ,? ,? ,? ,? ,? ,null ,0 ,? ,? ,? ,? ,0 ,? ,0 ,? ,now() ,now() ,now() ) ### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_staff_account' ; SQL []; Duplicate entry 'a001' for key 'index_org_staff_account'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'a001' for key 'index_org_staff_account'";
-        int indexOf=msg.indexOf("for key");
-        System.out.println(indexOf!=-1?msg.substring(0,indexOf):msg);
+    @Override
+    public List<OrgStaffDto> findStaffByRoleIsList(@RequestBody AuthStaffVsRoleDto dto) {
+        List<OrgStaffDto> results = null;
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            AuthStaffVsRole staffVsRole=new AuthStaffVsRole();
+            staffVsRole.setRoleId(dto.getRoleId());
+            results = copyTo(authStaffVsRoleDao.findStaffByRoleIsList(staffVsRole),OrgStaffDto.class);
+
+        } catch (Exception e) {
+            log.error("根据角色id->获取用户列表。异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
     }
 }

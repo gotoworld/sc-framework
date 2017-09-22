@@ -14,6 +14,7 @@
         <module>hsd-eureka-server</module>
         <module>hsd-gateway-server</module>
         <module>hsd-health-server</module>
+        <module>hsd-file-server</module>
     </modules>
 
 </project>

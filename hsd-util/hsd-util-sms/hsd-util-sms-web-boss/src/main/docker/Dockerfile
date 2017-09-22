@@ -6,6 +6,6 @@ VOLUME /tmp
 ADD hsd-util-sms-web-boss-1.0.jar /app.jar
 RUN bash -c 'touch /app.jar'
 # 开放端口
-EXPOSE 6061
+EXPOSE 6081
 # 配置容器启动后执行的命令
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

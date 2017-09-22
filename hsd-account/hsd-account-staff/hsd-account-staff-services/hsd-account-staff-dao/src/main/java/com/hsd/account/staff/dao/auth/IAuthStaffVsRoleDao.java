@@ -41,4 +41,6 @@ public interface IAuthStaffVsRoleDao extends IBaseDao {
 
      List<?> findStaffRoleIsList(IEntity entity) throws Exception;
      List<?> findOrgRoleIsList(IEntity entity) throws Exception;
+    /** 根据角色id获取用户列表 */
+    List<?> findStaffByRoleIsList(IEntity entity) throws Exception;
 }

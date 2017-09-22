@@ -33,7 +33,7 @@
         )
     </insert>
 
-    <select id="findStaffRoleIsList" parameterType="com.hsd.account.staff.entity.auth.AuthStaffVsRole" resultType="com.hsd.account.staff.dto.auth.AuthRoleDto">
+    <select id="findStaffRoleIsList" parameterType="com.hsd.account.staff.entity.auth.AuthStaffVsRole" resultType="com.hsd.account.staff.entity.auth.AuthRole">
       select
          t2.id as "id"
         ,t2.name as "name"
@@ -43,14 +43,24 @@
       where t1.staff_id=#{staffId}
     </select>
 
-    <select id="findOrgRoleIsList" parameterType="com.hsd.account.staff.entity.auth.AuthStaffVsRole" resultType="com.hsd.account.staff.dto.auth.AuthRoleDto">
-      select
-         DISTINCT(t3.id) as "id"
+    <select id="findOrgRoleIsList" parameterType="com.hsd.account.staff.entity.auth.AuthStaffVsRole" resultType="com.hsd.account.staff.entity.auth.AuthRole">
+        select
+        DISTINCT(t3.id) as "id"
         ,t3.name as "name"
         ,t3.is_super as "isSuper"
-      from org_org_vs_staff t1
-      inner join org_org_vs_role t2 on (t1.org_id=t2.org_id)
-      inner join auth_role t3 on (t2.role_id=t3.id and t3.del_flag=0)
-      where t1.staff_id=#{staffId}
+        from org_org_vs_staff t1
+        inner join org_org_vs_role t2 on (t1.org_id=t2.org_id)
+        inner join auth_role t3 on (t2.role_id=t3.id and t3.del_flag=0)
+        where t1.staff_id=#{staffId}
+    </select>
+
+    <select id="findStaffByRoleIsList" parameterType="com.hsd.account.staff.entity.auth.AuthStaffVsRole" resultType="com.hsd.account.staff.entity.org.OrgStaff">
+       select
+         t2.id as "id"
+        ,t2.account as "account"
+        ,t2.name as "name"
+      from auth_staff_vs_role t1
+      inner join org_staff t2 on (t2.id!=1 and t1.staff_id=t2.id)
+      where t1.role_id=#{roleId}
     </select>
 </mapper>

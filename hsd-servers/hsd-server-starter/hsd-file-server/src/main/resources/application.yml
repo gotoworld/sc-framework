@@ -18,35 +18,3 @@ spring:
 #          metadata:
 #            user.name: ${security.user.name}
 #            user.password: ${security.user.password}
-
-spring:
-  cloud:
-    config:
-      enabled: false
-##      uri: http://192.168.101.100:8888
-#      profile: dev
-#      label: trunk
-#      discovery:
-#        enabled: true             # 默认false，设为true表示使用注册中心中的configserver配置而不自己配置configserver的uri
-#        serviceId: config-server  # 指定config server在服务发现中的serviceId，默认为：configserver
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
-
-# 自定义配置
-hsd:
-  common:
-    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
-    fileServer:
-      rootFolder: d:/home/hsd/file/
-      upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: /upload/
-      image:
-        executorServiceSize: 5
-        n1:
-          width: 200
-          height: 200

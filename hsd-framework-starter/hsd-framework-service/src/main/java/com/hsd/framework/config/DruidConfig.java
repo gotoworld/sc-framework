@@ -27,7 +27,6 @@ package com.hsd.framework.config;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
-import com.hsd.framework.util.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -46,26 +45,10 @@ import org.springframework.core.env.Environment;
 @Order(-1000)
 public class DruidConfig implements EnvironmentAware {
     private RelaxedPropertyResolver myResolver;
+
     @Override
     public void setEnvironment(Environment env) {
         this.myResolver = new RelaxedPropertyResolver(env, "hsd.");
-    }
-
-    /**
-     * Druid Filter配置
-     * @return
-     */
-    @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter( new WebStatFilter() );
-        filterRegistrationBean.addUrlPatterns( "/*" );
-        filterRegistrationBean.addInitParameter( "exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" );
-        filterRegistrationBean.addInitParameter( "sessionStatMaxCount", "2000" );
-        filterRegistrationBean.addInitParameter( "sessionStatEnable", "true" );
-        filterRegistrationBean.addInitParameter( "principalSessionName", CommonConstant.SESSION_KEY_USERNAME);
-        filterRegistrationBean.addInitParameter( "profileEnable", "true" );
-        return filterRegistrationBean;
     }
 
     /**
@@ -73,31 +56,48 @@ public class DruidConfig implements EnvironmentAware {
      */
     @Bean
     public ServletRegistrationBean dispatcherRegistration() {
-        ServletRegistrationBean registration = new ServletRegistrationBean();
-        // 添加druidServlet
-        registration.setServlet( new StatViewServlet() );
-        registration.addInitParameter( "resetEnable", "true" );
-        registration.addInitParameter( "loginUsername", "druidAdmin" );
-        registration.addInitParameter( "loginPassword", "druidAdmin-123" );
-        registration.addUrlMappings( "/druid/*" );
+        ServletRegistrationBean registration = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+        registration.addInitParameter("loginUsername", "druidAdmin");
+        registration.addInitParameter("loginPassword", "druidAdmin-123");
+        registration.addInitParameter("resetEnable", "false");// 禁用HTML页面上的“Reset All”功能
+        registration.addInitParameter("logSlowSql", "true");
+        //白名单：
+        registration.addInitParameter("allow","127.0.0.1");
+        //IP黑名单 (存在共同时，deny优先于allow) : 如果满足deny的话提示:Sorry, you are not permitted to view this page.
+        //registration.addInitParameter("deny","192.168.101.100");
         return registration;
     }
+
+    /**
+     * Druid Filter配置
+     */
     @Bean
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
+        //添加过滤规则.
+        filterRegistrationBean.addUrlPatterns("/*");
+        //添加不需要忽略的格式信息.
+        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        return filterRegistrationBean;
+    }
+
+    /**
+     * 按照BeanId来拦截配置 用来bean的监控
+     */
+    @Bean(value = "druid-stat-interceptor")
     public DruidStatInterceptor druidStatInterceptor() {
         return new DruidStatInterceptor();
     }
 
     /**
      * 添加Spring监控 监控所有包含Dao和Service的Bean
-     * @return
      */
     @Bean
     public BeanNameAutoProxyCreator beanNameAutoProxyCreator() {
         BeanNameAutoProxyCreator creator = new BeanNameAutoProxyCreator();
-        creator.setProxyTargetClass( true );
-        creator.setBeanNames( new String[] { "*Dao*", "*Service*" } );
-        creator.setInterceptorNames( "druidStatInterceptor" );
-
+        creator.setProxyTargetClass(true);
+        creator.setBeanNames(new String[]{"*Dao*", "*Service*"});
+        creator.setInterceptorNames("druid-stat-interceptor");
         return creator;
     }
 }

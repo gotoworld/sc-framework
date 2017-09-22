@@ -1,8 +1,5 @@
 package com.hsd.framework.lock;
 
-/**
- * Created by Administrator on 16-10-9.
- */
 public interface Lock {
 
     /**

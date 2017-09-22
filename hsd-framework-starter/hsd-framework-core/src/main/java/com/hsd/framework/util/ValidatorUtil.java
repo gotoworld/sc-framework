@@ -29,7 +29,7 @@ public final class ValidatorUtil {
     /**
      * 电子邮件
      */
-    public static final String EMAIL = "^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+    public static final String EMAIL = "\\w+(\\.\\w)*@\\w+(\\.\\w{2,3}){1,3}";
     /**
      * 网址
      */
@@ -254,21 +254,14 @@ public final class ValidatorUtil {
         return obj == null;
     }
 
-//	/**
-//	 * 验证邮箱
-//	 * 
-//	 * @param str 待验证的字符串
-//	 * @return 如果是符合的字符串,返回 <b>true </b>,否则为 <b>false </b>
-//	 */
-//	public static boolean isEmail(String str) {
-//
-//		// 长度验证
-//		if (getWordCount(str) > MailConstant.MAIL_TO_LENGTH) {
-//			return false;
-//		}
-//
-//		return match(EMAIL, str);
-//	}
+	/**
+	 * 验证邮箱
+	 * @param str 待验证的字符串
+	 * @return 如果是符合的字符串,返回 <b>true </b>,否则为 <b>false </b>
+	 */
+	public static boolean isEmail(String str) {
+		return match(EMAIL, str);
+	}
 
     /**
      * 验证IP地址
@@ -457,6 +450,7 @@ public final class ValidatorUtil {
      * @return 如果str 符合 regex的正则表达式格式,返回true, 否则返回 false;
      */
     private static boolean match(String regex, String str) {
+        if(ValidatorUtil.isEmpty(str)) return false;
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();

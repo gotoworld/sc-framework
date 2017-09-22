@@ -1,102 +1,102 @@
 <!DOCTYPE html>
 <html lang="zh" ng-app="app">
 <head>
-<meta charset="utf-8" />
-<title>//TODO 系统_数据字典表 详情</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<meta name="description" content="memo of your site" />
-<meta name="author" content="author of the site" />
-<link rel="shortcut icon" href="/favicon.ico">
+    <meta charset="utf-8" />
+    <title>//TODO 系统_数据字典表 详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="memo of your site" />
+    <meta name="author" content="author of the site" />
+    <link rel="shortcut icon" href="/favicon.ico">
 
-<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
-<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
 
-<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
-<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+    <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
-<link href="/css/common.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
 <div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="ibox float-e-margins">
-			<div class="form-horizontal ibox-content col-md-12">
+    <div class="row">
+        <div class="ibox float-e-margins">
+            <div class="form-horizontal ibox-content col-md-12">
 
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">ID：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.id}}
+                        {{item.id}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">编码：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.code}}
+                        {{item.code}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">名称：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.name}}
+                        {{item.name}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">父级ID：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.parentId}}
+                        {{item.parentId}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">所属系统域：</label>
+                    <label class="col-md-3 control-label">所属应用：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.domainCode}}
+                        {{item.domainCode}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">备注：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.memo}}
+                        {{item.memo}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">版本号：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.version}}
+                        {{item.version}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">排序：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.orderNo}}
+                        {{item.orderNo}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">删除标记(0正常1删除)：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.delFlag}}
+                        {{item.delFlag}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">建立者ID：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.createId}}
+                        {{item.createId}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">创建时间：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}
+                        {{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">更新时间：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}
+                        {{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}
                     </div>
                 </div>
 
@@ -132,20 +132,20 @@
         $data = $scope;
         $ngCompile=$compile;
         staff.init(function(){
-           loadInfo(sessionStorage.getItem(site.sysVariable.info));
+            loadInfo(sessionStorage.getItem(site.sysVariable.info));
         });
     });
     var loadInfo=function(id){
         $.get(site.sysVariable.info + id, {},function (result) {
-             //console.info("获取数据.." + JSON.stringify(result));
-             if (result.code == 0) {
-                 $data.item = result.data;
-             } else {
-                 $data.message = result.message;
-                 alert( result.message);
-             }
-             if(!$data.$$phase) $data.$apply();
-         }, 'json');
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.item = result.data;
+            } else {
+                $data.message = result.message;
+                alert( result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
     }
 </script>
 </body>

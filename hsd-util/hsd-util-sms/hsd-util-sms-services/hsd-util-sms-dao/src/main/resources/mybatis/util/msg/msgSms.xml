@@ -30,28 +30,28 @@
            ,date_send 
            ,date_actual 
            ,send_count 
-           ,state 
+           ,state
         ) values (
-         
-            #{cellphone} 
-           ,#{content} 
-           ,#{dateSend} 
-           ,#{dateActual} 
-           ,#{sendCount} 
-           ,#{state} 
+
+            #{cellphone}
+           ,#{content}
+           ,now()
+           ,null
+           ,0
+           ,0
         )
     </insert>
 
 
     <!-- 数据更新 -->
     <update id="update" parameterType="com.hsd.util.entity.msg.MsgSms">
-        update msg_sms set  
-             <if test="cellphone!=null">,cellphone = #{cellphone}</if>
-             <if test="content!=null">,content = #{content}</if>
-             <if test="dateSend!=null">,date_send = #{dateSend}</if>
-             <if test="dateActual!=null">,date_actual = #{dateActual}</if>
-             <if test="sendCount!=null">,send_count = #{sendCount}</if>
-             <if test="state!=null">,state = #{state}</if>
+        update msg_sms set
+        <if test="cellphone!=null">,cellphone = #{cellphone}</if>
+        <if test="content!=null">,content = #{content}</if>
+        <if test="dateSend!=null">,date_send = #{dateSend}</if>
+        <if test="dateActual!=null">,date_actual = #{dateActual}</if>
+        <if test="sendCount!=null">,send_count = #{sendCount}</if>
+        <if test="state!=null">,state = #{state}</if>
         where
         id = #{id}
     </update>
@@ -67,7 +67,7 @@
         from msg_sms t1
         where 1=1
         <include refid="list_where_sql"/>
-        
+
     </select>
 
     <!--信息列表 -->
@@ -77,6 +77,6 @@
         from msg_sms t1
         where 1=1
         <include refid="list_where_sql"/>
-        
+
     </select>
 </mapper>

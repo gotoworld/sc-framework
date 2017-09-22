@@ -196,7 +196,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 	        Response result = new Response(0,"seccuss");
 	        try {
 	            if (fileUrl == null) throw new RuntimeException("文件路径不存在!");
-	            Map<String,List> map= ExcelUtil.readExcelIsList(StrUtil.replaceAll(fileUrl, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload")),true);
+				Map<String,List> map= ExcelUtil.readExcelIsList(fileUrl.startsWith("http")?fileUrl:StrUtil.replaceAll(fileUrl, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload")),true);
 	            if(map==null)  throw new RuntimeException("excel读取失败!");
 	            List titles=map.get("titles");
 	            List datas=map.get("datas");

@@ -1,3 +1,4 @@
+var uploadPath = "http://192.168.101.100:28888/";
 var basePath = "http://localhost:8080/";
 var apiPath = {
     account: {

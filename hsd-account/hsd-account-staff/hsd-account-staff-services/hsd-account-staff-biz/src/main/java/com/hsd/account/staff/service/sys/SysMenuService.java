@@ -31,7 +31,7 @@ public class SysMenuService extends BaseService implements ISysMenuService {
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody SysMenuDto dto) throws Exception {
-            Response result = new Response(0,"success");
+            Response result = new Response(0,"seccuss");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysMenu entity = copyTo(dto, SysMenu.class);
@@ -53,7 +53,7 @@ public class SysMenuService extends BaseService implements ISysMenuService {
 
         @Override
         public String deleteData(@RequestBody SysMenuDto dto) throws Exception {
-            String result = "success";
+            String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysMenu entity = copyTo(dto, SysMenu.class);
@@ -70,7 +70,7 @@ public class SysMenuService extends BaseService implements ISysMenuService {
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public String deleteDataById(@RequestBody SysMenuDto dto) throws Exception {
-            String result = "success";
+            String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 SysMenu entity = copyTo(dto, SysMenu.class);

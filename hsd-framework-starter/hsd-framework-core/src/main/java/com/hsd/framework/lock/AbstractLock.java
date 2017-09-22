@@ -1,8 +1,8 @@
 package com.hsd.framework.lock;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
+/**
+ * Created by Administrator on 16-10-9.
+ */
 public abstract class AbstractLock implements Lock {
     /**
      * <pre>
@@ -22,8 +22,8 @@ public abstract class AbstractLock implements Lock {
     public void lock() {
         try {
             lock(0, false);
-        } catch (Throwable e) {
-            log.error("lock",e);
+        } catch (InterruptedException e) {
+            // TODO ignore
         }
     }
 
@@ -41,8 +41,8 @@ public abstract class AbstractLock implements Lock {
     public boolean tryLock(long time) {
         try {
             return lock(time, false);
-        } catch (Throwable e) {
-            log.error("tryLock",e);
+        } catch (InterruptedException e) {
+            // TODO ignore
         }
         return false;
     }

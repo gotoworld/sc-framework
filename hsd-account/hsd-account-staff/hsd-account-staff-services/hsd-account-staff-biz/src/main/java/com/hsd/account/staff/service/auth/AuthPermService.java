@@ -33,7 +33,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response saveOrUpdateData(@RequestBody AuthPermDto dto) throws Exception {
-        Response result = new Response(0,"success");
+        Response result = new Response(0,"seccuss");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             AuthPerm entity=copyTo(dto,AuthPerm.class);
@@ -56,7 +56,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     }
 
     public String deleteData(@RequestBody AuthPermDto dto) throws Exception {
-        String result = "success";
+        String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             authPermDao.deleteByPrimaryKey(copyTo(dto,AuthPerm.class));
@@ -70,7 +70,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
     public String deleteDataById(@RequestBody AuthPermDto dto) throws Exception {
-        String result = "success";
+        String result = "seccuss";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             authPermDao.deleteById(copyTo(dto,AuthPerm.class));
@@ -120,7 +120,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     }
 
     public String recoveryDataById(@RequestBody AuthPermDto dto) throws Exception {
-        String result = "success";
+        String result = "seccuss";
             try {
                 if (dto == null) throw new RuntimeException("参数对象不能为null");
                 authPermDao.recoveryDataById(copyTo(dto,AuthPerm.class));

@@ -3,9 +3,6 @@ package com.hsd.framework;
 import com.hsd.framework.exception.ErrorCode;
 import lombok.Data;
 
-/**
- * Created by leo on 16/6/6.
- */
 @Data
 public class Response<T> {
 

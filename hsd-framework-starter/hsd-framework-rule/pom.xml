@@ -18,11 +18,11 @@
             <artifactId>hsd-framework-core</artifactId>
             <version>${hsd.framework.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-spring</artifactId>
-            <version>7.2.0.Final</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.kie</groupId>-->
+            <!--<artifactId>kie-spring</artifactId>-->
+            <!--<version>7.2.0.Final</version>-->
+        <!--</dependency>-->
         <!--<dependency>-->
             <!--<groupId>org.drools</groupId>-->
             <!--<artifactId>drools-core</artifactId>-->

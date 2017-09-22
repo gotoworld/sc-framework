@@ -32,7 +32,7 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
     public PageInfo findDataIsPage(@RequestBody MsgVerifyDto dto) throws Exception {
         PageInfo pageInfo = null;
         try {
-            if (dto == null) throw new RuntimeException("参数异常!");
+            if (dto == null) throw new RuntimeException("参数有误!");
             MsgVerify entity = copyTo(dto, MsgVerify.class);
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
             List list = msgVerifyDao.findDataIsPage(entity);
@@ -79,20 +79,20 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
 
     @Override
     public Response pushVerifyCode(@RequestBody MsgVerifyDto dto) throws Exception {
-        Response result = new Response(0, "seccuss");
+        Response result = new Response(0, "success");
         try {
             //检查图片验证码是否正确//限制恶意刷短信
             dto.setImgCaptchaDel(true);
             verifyImgCode(dto);
             MsgVerify msgVerify = copyTo(dto, MsgVerify.class);
             msgVerify.setDataExpire(60*10);//有效时长(秒)
-            msgVerify.setState(0);//是否使用0否1是
+            //msgVerify.setIsUsed(0);//是否使用0否1是
 
             //跨域请求限制: 进一步限制恶意刷短信
             //检查1分钟内 是否有未使用的短讯 //防止短信轰炸
-            if(msgVerifyDao.isNotUsedYN(msgVerify)>0) throw new RuntimeException("请休息一会吧!");
+            if(msgVerifyDao.isNotUsedYN(msgVerify)>0) throw new RuntimeException("请一分钟后重试!");
             //IP次数限制: 防止恶意刷手机验证码短信
-            if(msgVerifyDao.isNotUsedYN(msgVerify)>0) throw new RuntimeException("请休息一会吧!");
+            if(msgVerifyDao.isIpExceedYN(msgVerify)>100) throw new RuntimeException("已超过当日最大信息数!");
 
             msgVerify.setVerifyCode("" + ((int) (Math.random() * 9000) + 1000));//验证码
             msgVerifyDao.insert(msgVerify);
@@ -104,14 +104,14 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
     }
 
     public Response checkVerifyCode(@RequestBody MsgVerifyDto dto) throws Exception {
-        Response result = new Response(0, "seccuss");
+        Response result = new Response(0, "success");
         try {
-            if (dto == null || ValidatorUtil.isEmpty(dto.getSmsAddress())) throw new RuntimeException("参数异常!");
-
-
-            //     throw new RuntimeException("校验失败,验证码错误!");
-//            时效限制: [5-10min]
-//            使用次数限制: 1次
+            if (dto == null || ValidatorUtil.isEmpty(dto.getSmsAddress())) throw new RuntimeException("参数有误!");
+            MsgVerify msgVerify = copyTo(dto, MsgVerify.class);
+//            使用次数限制: 1次 || 时效限制: [5-10min]
+            if(msgVerifyDao.useVerifyCode(msgVerify)==0){
+                throw new RuntimeException("校验失败,验证码错误或已过期!");
+            }
         } catch (Exception e) {
             log.error("验证码校验异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());

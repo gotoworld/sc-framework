@@ -1,10 +1,10 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: 基础服务->员工
+  description: 基础服务->短信/邮件
   version: 1.0
 # HTTP Server
 server:
-  port: 6060
+  port: 6080
   context-path: /
 spring:
   application:
@@ -100,7 +100,3 @@ logging:
 hsd:
   common:
     appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
-    fileServer:
-      rootFolder: d:/home/hsd/file/
-      upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: /upload/

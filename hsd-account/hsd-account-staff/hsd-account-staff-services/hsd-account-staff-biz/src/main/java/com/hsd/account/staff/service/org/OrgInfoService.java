@@ -45,7 +45,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public Response saveOrUpdateData(@RequestBody OrgInfoDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             dto.setState(dto.getState()==null?0:dto.getState());
@@ -67,7 +67,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     }
     @RfAccount2Bean
     public String deleteData(@RequestBody OrgInfoDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgInfoDao.deleteByPrimaryKey(copyTo(dto,OrgInfo.class));
@@ -81,7 +81,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
     public String deleteDataById(@RequestBody OrgInfoDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgInfoDao.deleteById(copyTo(dto,OrgInfo.class));
@@ -148,7 +148,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     }
 
     public String recoveryDataById(@RequestBody OrgInfoDto dto) throws Exception {
-        String result = "seccuss";
+        String result = "success";
         if (dto != null) {
             try {
                 orgInfoDao.recoveryDataById(copyTo(dto,OrgInfo.class));
@@ -188,7 +188,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     @RfAccount2Bean
     @RequiresPermissions("orgInfo:edit:staff")
     public Response addStaff(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgOrgVsStaffDao.insert(copyTo(dto,OrgOrgVsStaff.class));
@@ -201,7 +201,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
 
     @RequiresPermissions("orgInfo:edit:staff")
     public Response delStaff(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgOrgVsStaffDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsStaff.class));
@@ -228,7 +228,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     @RfAccount2Bean
     @RequiresPermissions("orgInfo:edit:role")
     public Response addRole(@RequestBody OrgOrgVsRoleDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgOrgVsRoleDao.insert(copyTo(dto,OrgOrgVsRole.class));
@@ -241,7 +241,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
 
     @RequiresPermissions("orgInfo:edit:role")
     public Response delRole(@RequestBody OrgOrgVsRoleDto dto) throws Exception {
-        Response result = new Response(0,"seccuss");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgOrgVsRoleDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsRole.class));

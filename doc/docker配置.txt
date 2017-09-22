@@ -11,6 +11,9 @@ docker run -dit -v /logs:/logs --net="host" --name="hsd-account-actor-server" -p
 docker run -dit -v /logs:/logs --net="host" --name="hsd-account-actor-web-boss" -p 6065:6065 192.168.101.150/hsd/hsd-account-actor-web-boss:1.0
 docker run -dit -v /logs:/logs --net="host" --name="hsd-account-actor-web-portal" -p 6066:6066 192.168.101.150/hsd/hsd-account-actor-web-portal:1.0
 
+docker run -dit -v /logs:/logs --net="host" --name="hsd-util-sms-server" -p 6080:6080 192.168.101.150/hsd/hsd-util-sms-server:1.0
+docker run -dit -v /logs:/logs --net="host" --name="hsd-util-sms-web-boss" -p 6081:6081 192.168.101.150/hsd/hsd-util-sms-web-boss:1.0
+docker run -dit -v /logs:/logs --net="host" --name="hsd-util-sms-web-portal" -p 6082:6082 192.168.101.150/hsd/hsd-util-sms-web-portal:1.0
 
 docker run ：创建一个新的容器并运行一个命令
 语法

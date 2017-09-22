@@ -36,7 +36,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public Response saveOrUpdateData(@RequestBody ${tcfg.tableNameFormat!}Dto dto) throws Exception {
-            Response result = new Response(0,"success");
+            Response result = new Response(0,"seccuss");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
@@ -60,7 +60,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         @[ if ("1"==scfg._del) { /]
         @Override
         public String deleteData(@RequestBody ${tcfg.tableNameFormat!}Dto dto) throws Exception {
-            String result = "success";
+            String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
@@ -79,7 +79,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
         public String deleteDataById(@RequestBody ${tcfg.tableNameFormat!}Dto dto) throws Exception {
-            String result = "success";
+            String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);
@@ -146,7 +146,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
          @[ if ("1"==scfg._recovery && null!=scfg._col_del) { /]
         @Override
         public String recoveryDataById(@RequestBody ${tcfg.tableNameFormat!}Dto dto) throws Exception {
-            String result = "success";
+            String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
                 ${tcfg.tableNameFormat!} entity = copyTo(dto, ${tcfg.tableNameFormat!}.class);

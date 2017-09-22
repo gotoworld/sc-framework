@@ -1,5 +1,6 @@
 package com.hsd.account.channel.api.channel;
 
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.channel.dto.channel.ChannelInfoDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
@@ -8,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.pagehelper.PageInfo;
 import java.util.List;
-import java.util.Map;
 /**
  * <p>渠道商信息 业务处理接口类。
  */
@@ -76,8 +75,7 @@ public interface IChannelInfoService {
     public ChannelInfoDto findUserByAccount(@RequestParam("account") String account);
 
     /**
-     * @param 
-     * 修改密码
+     * <p>修改密码
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/modifyPwd")
 	public Response modifyPwd(ChannelInfoDto dto) throws Exception;
@@ -89,8 +87,7 @@ public interface IChannelInfoService {
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception;
     
     /**
-     * @param 
-     * 信息完善
+     * <p>信息完善
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updataChannel")
 	public Response updataChannel(ChannelInfoDto dto) throws Exception;

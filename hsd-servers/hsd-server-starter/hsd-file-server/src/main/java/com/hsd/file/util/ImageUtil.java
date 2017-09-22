@@ -1,6 +1,9 @@
-package com.hsd.framework.util;
+package com.hsd.file.util;
 
 import com.hsd.framework.config.AppConfig;
+import com.hsd.framework.util.Base64Util;
+import com.hsd.framework.util.PathCommonConstant;
+import com.hsd.framework.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang.StringUtils;

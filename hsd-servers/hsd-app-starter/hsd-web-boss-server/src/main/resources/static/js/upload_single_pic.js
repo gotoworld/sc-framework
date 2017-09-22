@@ -8,7 +8,7 @@ function upload_single_pic(btn, divId,_fileExt,name) {
         container: document.getElementById('' + divId),
         flash_swf_url: basePath + 'plugins/plupload/js/Moxie.swf',
         silverlight_xap_url: basePath + 'plugins/plupload/js/Moxie.xap',
-        url: basePath + '/file/fileUpload?dir=image',
+        url: uploadPath + '/file/fileUpload?dir=image',
 
         filters: {
             mime_types: [ //只允许上传图片

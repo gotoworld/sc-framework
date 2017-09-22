@@ -1,13 +1,9 @@
-package com.hsd.framework.thread;
-
+package com.hsd.file.thread;
 
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Positions;
-import net.coobird.thumbnailator.name.Rename;
 
 import javax.imageio.ImageIO;
-
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;

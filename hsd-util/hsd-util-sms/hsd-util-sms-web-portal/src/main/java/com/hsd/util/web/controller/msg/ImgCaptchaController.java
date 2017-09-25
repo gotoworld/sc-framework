@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @NoAuthorize
-public class VerificationCodeController {
+public class ImgCaptchaController {
     private static final String acPrefix = "/api/util/sms/imgCaptcha/";
     public static final String prefix = "verify:img:";
     @Autowired

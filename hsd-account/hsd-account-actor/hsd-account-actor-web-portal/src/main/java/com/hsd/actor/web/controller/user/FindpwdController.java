@@ -39,7 +39,7 @@ public class FindpwdController extends BaseController {
         log.info("FindpwdController getAccount.........");
         Response result = new Response("success");
         try {
-            if (dto == null || ValidatorUtil.isEmpty(dto.getAccount()) || ValidatorUtil.isEmpty(dto.getCaptcha())) return Response.error("参数有误!");
+            if (dto == null || ValidatorUtil.isEmpty(dto.getAccount()) || ValidatorUtil.isEmpty(dto.getImgCaptchaCode())) return Response.error("参数有误!");
 
             UserDto finalDto = dto;
             MsgVerifyDto verifyDto = new MsgVerifyDto() {{

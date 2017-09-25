@@ -64,7 +64,7 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
             if (dto == null || ValidatorUtil.isEmpty(dto.getImgCaptchaId()) || ValidatorUtil.isEmpty(dto.getImgCaptchaCode()))
                 throw new RuntimeException("认证码不能为空!");
             if (dto.getImgCaptchaCode().equalsIgnoreCase("" + redisTemplate.opsForValue().get("verify:img:"+dto.getImgCaptchaId()))){
-                if(dto.getImgCaptchaDel()){
+                if(dto.isImgCaptchaDel()){
                     redisTemplate.opsForValue().getOperations().delete("verify:img:"+dto.getImgCaptchaId());
                 }
                 return true;

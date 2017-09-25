@@ -42,7 +42,7 @@
         ,date_send
         ,date_actual
         ,send_count
-        ,isUsed
+        ,is_used
         ) values (
 
         #{verifyCode}

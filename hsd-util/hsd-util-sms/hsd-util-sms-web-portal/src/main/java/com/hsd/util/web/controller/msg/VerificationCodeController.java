@@ -1,5 +1,6 @@
 package com.hsd.util.web.controller.msg;
 
+import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.security.MD5;
 import org.apache.commons.codec.binary.Base64;
@@ -34,6 +35,32 @@ public class VerificationCodeController {
     public static final String prefix = "verify:img:";
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+    /** 校验码json */
+    @RequestMapping(value = acPrefix+"/json", method = {RequestMethod.POST, RequestMethod.GET})
+    public Response json(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Response result=new Response("success");
+        try {
+            // 设置页面不缓存
+            response.setHeader("Pragma", "No-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expires", 0);
+            result.data=encodeBase64ImgCode();
+        } catch (Throwable e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /** 校验码html */
+    @RequestMapping(value = acPrefix+"/html")
+    public void html(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=utf-8");
+        Map captcha=encodeBase64ImgCode();
+        out.println("<input id=\"imgCaptchaId\" name=\"imgCaptchaId\" type=\"hidden\" value=\"" + captcha.get("id") + "\">");
+        out.println("<img class=\"imgCaptchaImage\" src=\"" + captcha.get("img") + "\">");
+        out.close();
+    }
+
     // 渲染随机背景颜色
     private Color getRandColor(int fc, int bc) {
         Random random = new Random();
@@ -125,24 +152,5 @@ public class VerificationCodeController {
         //将认证码存入redis
         redisTemplate.opsForValue().set(prefix+uuid,captcha,30, TimeUnit.MINUTES);//N分钟
         return  captchaMap;
-    }
-    /** 校验码json */
-    @RequestMapping(value = acPrefix+"/json", method = {RequestMethod.POST, RequestMethod.GET})
-    public Map generateCode(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 设置页面不缓存
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-        return encodeBase64ImgCode();
-    }
-    /** 校验码html */
-    @RequestMapping(value = acPrefix+"/html")
-    public void getOutImgCode(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html;charset=utf-8");
-        Map captcha=encodeBase64ImgCode();
-        out.println("<input id=\"imgCaptchaId\" name=\"imgCaptchaId\" type=\"hidden\" value=\"" + captcha.get("id") + "\">");
-        out.println("<img class=\"imgCaptchaImage\" src=\"" + captcha.get("img") + "\">");
-        out.close();
     }
 }

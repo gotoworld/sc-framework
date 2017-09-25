@@ -54,5 +54,5 @@ public class MsgVerifyDto extends BaseDto {
     /**图片验证码code*/
     private String imgCaptchaCode;
     /**图片验证码 验证成功删除*/
-    private Boolean imgCaptchaDel;
+    private boolean imgCaptchaDel;
 }

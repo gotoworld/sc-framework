@@ -56,8 +56,10 @@
                                         <input type="text" name="account" class="form-control" placeholder="手机号/邮箱/用户名" required="">
                                     </div>
                                     <div class="form-group m-b" style="width: 100%;margin-bottom: 100px;">
-                                        <input type="text"  name="captcha" style="width: 400px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
-                                        <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
+                                        <input id="imgCaptchaId" name="imgCaptchaId" type="hidden" ng-value="imgCaptcha.id">
+                                        <input name="imgCaptchaCode" id="imgCaptchaCode"  style="width: 400px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
+                                        <img ng-src="{{imgCaptcha.img}}" ng-click="loadImgCaptcha()" style="cursor: pointer;width: 100px;height: 40px;float: right;">
+                                        <label id="captcha-error" class="error" for="imgCaptchaCode"></label>
                                     </div>
                                     <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
                                 </form>
@@ -96,6 +98,17 @@
                     }
                 }, 'json');
             }
+            $scope.loadImgCaptcha=function(){
+                $.post(site.util.sms.imgCaptcha.json, {},function (result) {
+                    if (result.code == 0) {
+                        $data.imgCaptcha=result.data;
+                    } else {
+                        alert(result.message);
+                    }
+                    if (!$data.$$phase) $data.$apply();
+                }, 'json');
+            }
+            $scope.loadImgCaptcha();
         });
     </script>
 </body>

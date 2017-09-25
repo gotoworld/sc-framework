@@ -56,8 +56,10 @@
                                         <button onclick="sendSMS()" class="btn btn-primary block m-b" style="float: right;" id="sendSMSBtn">发送验证码</button>
                                     </div>
                                     <div class="row m-b" style="margin: 0 0 10px 10px;">
-                                        <input type="text"id="imgCaptcha"  name="captcha" style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
-                                        <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
+                                        <input id="imgCaptchaId" name="imgCaptchaId" type="hidden" ng-value="imgCaptcha.id">
+                                        <input name="imgCaptchaCode" id="imgCaptchaCode"  style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
+                                        <img ng-src="{{imgCaptcha.img}}" ng-click="loadImgCaptcha()" style="cursor: pointer;width: 100px;height: 40px;float: right;">
+                                        <label id="captcha-error" class="error" for="imgCaptchaCode"></label>
                                     </div>
                                     <div class="col-sm-12" style="margin-top: 70px;margin-right: 10px;">
                                         <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
@@ -104,7 +106,7 @@
                     alert('请输入短信验证码');
                     return;
                 }
-                $.post(site.findpwd.verifyCaptchaSms,{id:$data.accountInfo.id,captcha:$('#smsCaptcha').val()},function (result) {
+                $.post(site.findpwd.verifyCaptchaSms,{id:$data.accountInfo.id,imgCaptchaId:$('#imgCaptchaId').val(),imgCaptchaCode:$('#imgCaptchaCode').val()},function (result) {
                     if (result.code == 0) {
                         sessionStorage.setItem(site.findpwd.view,location.href);
                         parent.location.href = site.findpwd.view+'_update.html';
@@ -113,25 +115,44 @@
                     }
                 }, 'json');
             }
+
+            $scope.loadImgCaptcha=function(){
+                $.post(site.util.sms.imgCaptcha.json, {},function (result) {
+                    if (result.code == 0) {
+                        $data.imgCaptcha=result.data;
+                    } else {
+                        alert(result.message);
+                    }
+                    if (!$data.$$phase) $data.$apply();
+                }, 'json');
+            }
+            $scope.loadImgCaptcha();
         });
 
         var sendSMS=function(){
-            if(!util.notEmpty($('#imgCaptcha').val())){
+            if(!util.notEmpty($('#imgCaptchaCode').val())){
                 alert('图片中的数字或字母');
                 return;
             }
 //            if($('#sendSMSBtn').attr("disabled")==false) return;
             $('#sendSMSBtn').attr("disabled",true);
-            $.post(site.findpwd.sendSms,{accid:$data.accountInfo.id,captcha:$('#imgCaptcha').val()},function (result) {
-                if (result.code == 0) {
-                    timeCount=60;
-                    sendSMSBtnOut();
-                } else {
-                    timeCount=0;
-                    sendSMSBtnOut();
-                    alert(result.message);
-                }
-            }, 'json');
+            try {
+                $.post(site.findpwd.sendSms, {
+                    accid: $data.accountInfo.id,
+                    imgCaptchaId:$('#imgCaptchaId').val(),imgCaptchaCode:$('#imgCaptchaCode').val()
+                }, function (result) {
+                    if (result.code == 0) {
+                        timeCount = 60;
+                        sendSMSBtnOut();
+                    } else {
+                        timeCount = 0;
+                        sendSMSBtnOut();
+                        alert(result.message);
+                    }
+                }, 'json');
+            } catch (e){
+                $('#sendSMSBtn').attr("disabled",false);
+            }
         }
 
         var sendSMSBtnOut=function(){

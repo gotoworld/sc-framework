@@ -5,9 +5,13 @@ var apiPath = {
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-portal",
         actor: "http://192.168.101.100:28890/hsd-account-actor-web-portal"
     }
+    ,util:{
+        sms: "http://192.168.101.100:28890/hsd-util-sms-web-portal"
+    }
 }
 var site = {
     portalHome:"/html/account/actor/user/home.html"
+    ,uploadFile:uploadPath+"/file/fileUpload"
     ,user: {
         login: apiPath.account.actor + "/api/account/actor/sign/login" //登录
         , logout: apiPath.account.actor + "/api/account/actor/sign/logout" //登出
@@ -69,7 +73,14 @@ var site = {
             , info: apiPath.account.actor + "/api/account/actor/actor/member/info" //个人信息
             , setting: apiPath.account.actor + "/api/account/actor/actor/member/save" //个人信息保存
         }
-
+    }
+    ,util:{
+        sms:{
+            imgCaptcha:{
+                 json: apiPath.util.sms+"/api/util/sms/imgCaptcha/json"
+                ,html: apiPath.util.sms+"/api/util/sms/imgCaptcha/html"
+            }
+        }
     }
 }
 var $data, $ngHttp, $ngCompile, $ngSce;

@@ -4,8 +4,10 @@ import com.hsd.account.actor.api.user.IUserService;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
-import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
+import com.hsd.util.api.msg.IMsgVerifyService;
+import com.hsd.util.dto.msg.MsgVerifyDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,13 +30,14 @@ public class RegisterController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IMsgVerifyService msgVerifyService;
     private static final String acPrefix = "/api/account/actor/register/";
 
     /**
      * <p> 注册
      */
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, value = acPrefix + "reg")
-    @RfAccount2Bean
     @ApiOperation(value = "客户注册")
     public Response reg(@Validated @ModelAttribute UserDto dto, BindingResult bindingResult) {
         log.info("RegisterController reg.........");
@@ -52,8 +55,14 @@ public class RegisterController extends BaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                if(ValidatorUtil.isEmpty(dto.getImgCaptchaId()) || ValidatorUtil.isEmpty(dto.getImgCaptchaCode()) ) throw new RuntimeException("图片验证码不能为空!");
                 //验证码确认
-                if(!"ufgb".equals(dto.getCaptcha())) return Response.error("验证码不正确!");
+                MsgVerifyDto verifyDto = new MsgVerifyDto() {{
+                    setImgCaptchaId(dto.getImgCaptchaId());
+                    setImgCaptchaCode(dto.getImgCaptchaCode());
+                }};
+                msgVerifyService.verifyImgCode(verifyDto);
+
                 if(dto.getPwd()==null || !dto.getPwd().equals(dto.getConfirmpwd()) ) return Response.error("两次密码不一致!");
                 dto.setType(UserDto.userType.USER.getCode());
                 dto.setState(1);

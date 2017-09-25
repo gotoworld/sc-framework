@@ -32,7 +32,7 @@ ribbon:
     enabled: true
 
 zuul:
-  sensitiveHeaders: Access-Control-Allow-Origin,Access-Control-Allow-Headers,Access-Control-Allow-Methods
+  sensitiveHeaders: Access-Control-Allow-Origin,Access-Control-Allow-Headers
   max:
     host:
       connections: 500

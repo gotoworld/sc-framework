@@ -50,13 +50,13 @@
                         </div>
                         <div class="form-group">
                             <input type="hidden" name="pwd" id="pwdA">
-                            <input type="password" id="passwordA"
+                            <input type="text" id="password"
                                    onkeydown="$('#pwdA').val($.md5($(this).val()));"
                                    onchange="$('#pwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入密码" required="">
                         </div>
                         <div class="form-group">
                             <input type="hidden" name="confirmpwd" id="confirmpwdA">
-                            <input type="password" name="confirmpwdB" equalTo="#passwordA"
+                            <input type="text" equalTo="#password"
                                    onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
                                    onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请确认密码" required="">
                         </div>
@@ -64,9 +64,10 @@
                             <input name="cellphone" type="text" class="form-control" placeholder="请输入手机号" required="">
                         </div>
                         <div class="form-group " >
-                            <input name="captcha" type="text"  style="width: 190px;height: 40px;" class="form-control col-md-4 " placeholder="请输入图形验证码" required="">
-                            <img src="/img/captcha.jpg" style="width: 100px;height: 40px;margin-left: 10px;">
-                            <label id="captcha-error" class="error" for="captcha"></label>
+                            <input id="imgCaptchaId" name="imgCaptchaId" type="hidden" ng-value="imgCaptcha.id">
+                            <input name="imgCaptchaCode" id="imgCaptchaCode" type="text"  style="width: 190px;height: 40px;" class="form-control col-md-4 " placeholder="请输入图形验证码" required="">
+                            <img ng-src="{{imgCaptcha.img}}" ng-click="loadImgCaptcha()" id="imgCaptchaImage" style="cursor: pointer;width: 100px;height: 40px;margin-left: 10px;">
+                            <label id="captcha-error" class="error" for="imgCaptchaCode"></label>
                         </div>
                         <div class="form-group">
                             <input type="text" name="name" class="form-control" placeholder="请输入昵称" >
@@ -138,6 +139,17 @@
                     }, 'json');
                 }
             }
+            $scope.loadImgCaptcha=function(){
+                $.post(site.util.sms.imgCaptcha.json, {},function (result) {
+                    if (result.code == 0) {
+                        $data.imgCaptcha=result.data;
+                    } else {
+                        alert(result.message);
+                    }
+                    if (!$data.$$phase) $data.$apply();
+                }, 'json');
+            }
+            $scope.loadImgCaptcha();
         });
         $(document).ready(function(){
             setTimeout(function(){

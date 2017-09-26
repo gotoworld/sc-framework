@@ -22,11 +22,13 @@ import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
-import com.hsd.framework.config.AppConfig;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
-import com.hsd.framework.util.*;
+import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.IdUtil;
+import com.hsd.framework.util.JwtUtil;
+import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -293,7 +295,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         Response result = new Response(0,"success");
         try {
             if (fileUrl == null) throw new RuntimeException("文件路径不存在!");
-            Map<String,List> map= ExcelUtil.readExcelIsList(fileUrl.startsWith("http")?fileUrl:StrUtil.replaceAll(fileUrl, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload")),true);
+            Map<String,List> map= ExcelUtil.readExcelIsList(fileUrl,true);
             if(map==null)  throw new RuntimeException("excel读取失败!");
             List titles=map.get("titles");
             List datas=map.get("datas");

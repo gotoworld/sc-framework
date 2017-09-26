@@ -128,7 +128,7 @@ public class FindpwdController extends BaseController {
         Response result = new Response("success");
         try {
             if (dto == null || (dto.getId()==null) || ValidatorUtil.isEmpty(dto.getCaptcha()))
-                return Response.error("获取异常!");
+                return Response.error("参数有误!");
             String captcha=dto.getCaptcha();
             dto.setType(UserDto.userType.USER.getCode());
             dto = userService.findDataById(dto);

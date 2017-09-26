@@ -106,12 +106,13 @@
                     alert('请输入短信验证码');
                     return;
                 }
-                $.post(site.findpwd.verifyCaptchaSms,{id:$data.accountInfo.id,imgCaptchaId:$('#imgCaptchaId').val(),imgCaptchaCode:$('#imgCaptchaCode').val()},function (result) {
+                $.post(site.findpwd.verifyCaptchaSms,{id:$data.accountInfo.id,captcha:$('#smsCaptcha').val()},function (result) {
                     if (result.code == 0) {
                         sessionStorage.setItem(site.findpwd.view,location.href);
                         parent.location.href = site.findpwd.view+'_update.html';
                     } else {
                         alert(result.message);
+                        $scope.loadImgCaptcha();
                     }
                 }, 'json');
             }

@@ -45,7 +45,7 @@ public interface IMsgVerifyDao extends IBaseDao {
     /**
      * 使用短信验证码
      */
-    @Update("update msg_verify set is_used=1,date_using=now() where sms_type=#{smsType} and is_used=0 and now()>=DATE_ADD(date_created,INTERVAL data_expire second) and sms_address=#{smsAddress} ")
+    @Update("update msg_verify set is_used=1,date_using=now() where sms_type=#{smsType} and is_used=0 and now()<=DATE_ADD(date_created,INTERVAL data_expire second) and sms_address=#{smsAddress} ")
     int useVerifyCode(IEntity entity) throws Exception;
 
 }

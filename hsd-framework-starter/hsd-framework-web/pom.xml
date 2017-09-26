@@ -33,6 +33,11 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl</artifactId>
+            <version>2.7.22</version>
+        </dependency>
         <!-- 图片 -->
         <dependency>
             <groupId>net.coobird</groupId>

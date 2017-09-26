@@ -96,18 +96,18 @@ public class FindpwdController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/send/captcha/email")
     @ApiOperation(value = "验证码-邮件推送")
-    public Response captchaEmail(@RequestParam("accid") Long accid, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) throws Exception {
+    public Response captchaEmail(@RequestParam("accid") Long accid) throws Exception {
         log.info("LoginController captchaEmail");
         Response result = new Response();
         try {
-            if (accid==null || ValidatorUtil.isNullEmpty(imgCaptchaId) || ValidatorUtil.isNullEmpty(imgCaptchaCode)) {
+            if (accid==null) {
                 return Response.error("参数有误!");
             }
-            MsgVerifyDto verifyDto = new MsgVerifyDto() {{
-                setImgCaptchaId(imgCaptchaId);
-                setImgCaptchaCode(imgCaptchaCode);
-            }};
-            msgVerifyService.verifyImgCode(verifyDto);
+            MsgVerifyDto verifyDto = new MsgVerifyDto();// {{
+//                setImgCaptchaId(imgCaptchaId);
+//                setImgCaptchaCode(imgCaptchaCode);
+//            }};
+//            msgVerifyService.verifyImgCode(verifyDto);
 
             UserDto userDto = userService.findDataById(new UserDto(){{setId(accid);}});
             if(userDto==null) return Response.error("账号不存在!");
@@ -188,15 +188,15 @@ public class FindpwdController extends BaseController {
         }
         return result;
     }
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, value = acPrefix + "update")
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, value = acPrefix + "restPwd")
     @ApiOperation(value = "密码修改")
-    public Response update(@ModelAttribute UserDto dto) {
-        log.info("FindpwdController update.........");
+    public Response restPwd(@ModelAttribute UserDto dto) {
+        log.info("FindpwdController restPwd.........");
         Response result = new Response("success");
         try {
             if (dto == null || dto.getId()==null || ValidatorUtil.isEmpty(dto.getPwd())) return Response.error("参数有误!");
             if(!"1".equals(redisTemplate.opsForValue().get(findPwdStatePreix + dto.getId())))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
-            result=userService.updatePwd(dto);
+            result=userService.restPwd(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

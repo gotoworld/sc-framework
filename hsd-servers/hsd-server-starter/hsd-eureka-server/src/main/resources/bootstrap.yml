@@ -1,13 +1,13 @@
 eureka:
   server:
-    enableSelfPreservation: false
-#   waitTimeInMsWhenSyncEmpty: 0
+    enableSelfPreservation: true
+   waitTimeInMsWhenSyncEmpty: 0.1
   instance:
-    #hostname: discovery
+    hostname: discovery1
     perferIpAddress: true
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
       defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.100:${server.port}/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.101:${server.port}/eureka/
 

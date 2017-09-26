@@ -78,7 +78,7 @@
                                         <label class="tit">通过 密保邮箱 <span ng-bind="accountInfo.email">***********</span> 验证 </label>
                                     </div>
                                     <div class="col-md-3 f-r">
-                                        <a href="findpwd_verify_email.html" class="btn btn-primary block m-b">立刻验证</a>
+                                        <a href="javascript:;" class="btn btn-primary block m-b" ng-click="sendEmail();">立刻验证</a>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +124,18 @@
             }else{
                 alert('请选输入账号!');
                 parent.location.href = site.findpwd.view+'.html';
+            }
+            $scope.sendEmail=function(){
+                $.post(site.findpwd.sendMmail, {
+                    accid: $data.accountInfo.id,
+                    imgCaptchaId:$('#imgCaptchaId').val(),imgCaptchaCode:$('#imgCaptchaCode').val()
+                }, function (result) {
+                    if (result.code == 0) {
+                        parent.location.href = site.findpwd.view+'_verify_email.html';
+                    } else {
+                        alert(result.message);
+                    }
+                }, 'json');
             }
         });
     </script>

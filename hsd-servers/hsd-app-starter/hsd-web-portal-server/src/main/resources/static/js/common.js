@@ -26,7 +26,7 @@ var site = {
         , verifyCaptchaSms: apiPath.account.actor + "/api/account/actor/findpwd/verifyCaptchaSms" //验证码校验并设置密码重置状态
         , verifyCaptchaEmail: apiPath.account.actor + "/api/account/actor/findpwd/verifyCaptchaEmail" //验证码校验并设置密码重置状态
         , verifystate: apiPath.account.actor + "/api/account/actor/findpwd/verifystate" //校验密码重置状态
-        , update: apiPath.account.actor + "/api/account/actor/findpwd/update" //密码修改
+        , update: apiPath.account.actor + "/api/account/actor/findpwd/restPwd" //密码修改
     }
     ,register: {
         view: basePath + "/html/account/actor/user/register"

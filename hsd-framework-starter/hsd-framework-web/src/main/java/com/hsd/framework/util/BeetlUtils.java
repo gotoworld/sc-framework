@@ -1,16 +1,15 @@
 package com.hsd.framework.util;
 
-import java.io.FileOutputStream;
-import java.io.StringWriter;
-import java.util.*;
-
-import java.io.*;
-
 import org.apache.commons.lang.StringEscapeUtils;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 import org.beetl.core.resource.ClasspathResourceLoader;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.StringWriter;
+import java.util.Map;
 
 public class BeetlUtils {
 

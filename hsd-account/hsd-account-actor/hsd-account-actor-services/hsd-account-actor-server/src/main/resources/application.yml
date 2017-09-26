@@ -95,14 +95,10 @@ feign:
     account.actor: ${spring.application.name}
 
 #
-logging:
-  file: "d:/logs/${spring.application.name}.log"
+#logging:
+#  file: "d:/logs/${spring.application.name}.log"
 
 # 自定义配置
 hsd:
   common:
     appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
-    fileServer:
-      rootFolder: d:/home/hsd/file/
-      upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: /upload/

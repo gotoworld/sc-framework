@@ -12,7 +12,7 @@ spring:
   profiles:
     active: dev
   resources:
-      static-locations: classpath:/META-INF/resources/,classpath:/static/,file:${hsd.common.fileServer.rootFolder}
+      static-locations: classpath:/META-INF/resources/,classpath:/static/
   boot:
     admin:
       url: http://192.168.101.100:8889
@@ -57,28 +57,15 @@ endpoints:
 
 management.security.enabled: false
 
-logging:
-  file: "/logs/${spring.application.name}.log"
+#logging:
+#  file: "/logs/${spring.application.name}.log"
 
 #服务名
 feign:
   name:
     account: hsd-account-server
 
-#shiro
-shiro:
-  login-url: /error/403
-  success-url: /info
-  unauthorized-url: /error/noauth
-  filterChainDefinitionMap:
-    /boss/account/sign/**: anon
-    /boss/**: authc
-
 # 自定义配置
 hsd:
   common:
     appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
-    fileServer:
-      rootFolder: /home/hsd/file/
-      upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: /upload/

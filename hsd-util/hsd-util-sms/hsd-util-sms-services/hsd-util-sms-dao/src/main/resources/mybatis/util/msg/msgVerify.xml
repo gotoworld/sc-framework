@@ -15,7 +15,7 @@
         ,t1.date_send as "dateSend"
         ,t1.date_actual as "dateActual"
         ,t1.send_count as "sendCount"
-        ,t1.isUsed as "isUsed"
+        ,t1.state as "state"
     </sql>
 
     <!-- 根据主键获取信息详情 -->
@@ -42,7 +42,7 @@
         ,date_send
         ,date_actual
         ,send_count
-        ,is_used
+        ,state
         ) values (
 
         #{verifyCode}

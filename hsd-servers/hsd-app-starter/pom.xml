@@ -10,7 +10,7 @@
     <version>1.0</version>
 
     <modules>
-        <module>hsd-service-provide-server</module>
+        <module>hsd-service-server</module>
         <module>hsd-web-portal-server</module>
         <module>hsd-web-boss-server</module>
     </modules>

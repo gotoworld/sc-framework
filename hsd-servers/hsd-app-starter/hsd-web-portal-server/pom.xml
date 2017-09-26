@@ -20,6 +20,11 @@
             <!--<optional>true</optional>-->
         <!--</dependency>-->
         <dependency>
+            <groupId>com.hsd.framework</groupId>
+            <artifactId>hsd-framework-web-restful</artifactId>
+            <version>${hsd.framework.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.hsd.account</groupId>
             <artifactId>hsd-account-staff-web-portal</artifactId>
             <version>1.0</version>

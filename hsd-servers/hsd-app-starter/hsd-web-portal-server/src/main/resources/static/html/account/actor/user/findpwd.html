@@ -94,6 +94,7 @@
 //                        alert('选择验证方式!');
                         parent.location.href = site.findpwd.verify+'.html';
                     } else {
+                        $scope.loadImgCaptcha();
                         alert(result.message);
                     }
                 }, 'json');

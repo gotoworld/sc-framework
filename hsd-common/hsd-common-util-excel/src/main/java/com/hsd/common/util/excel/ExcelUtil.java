@@ -42,6 +42,7 @@ public class ExcelUtil {
             if(filePath.startsWith("http://")){
                 is=new URL(filePath).openConnection().getInputStream();
             }else{
+                //filePath=StrUtil.replaceAll(filePath, AppConfig.getProperty("common.fileServer.download"),AppConfig.getProperty("common.fileServer.upload"));
                 is = new FileInputStream(filePath);
             }
 

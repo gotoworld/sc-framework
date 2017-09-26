@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>demo</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <style>
+        .modal-dialog{top:20%;}
+    </style>
+</head>
+
+<body class="gray-bg top-navigation v-cloak"  v-cloak >
+<div id="app">
+    <h2 v-html="$data.code !" @click="$options.methods.a(1)"></h2>
+    <h2 v-html="$data.data.message1!" @click="$options.methods.a(1)"></h2>
+    <h2 v-html="$data.data1.message2!" @click="$options.methods.a(2)"></h2>
+</div>
+<!--头部菜单开始-->
+<div class="fixed-sidebar border-bottom white-bg"  ng-include="'/html/account/actor/include/navigation.html'" ng-init="current='index'"></div>
+<!--头部菜单结束-->
+<div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;height: 1200px;">
+    <div class="" style="margin: 10px 30px 0px 30px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="row   white-bg dashboard-header">
+                        <div class="col-sm-12">
+                            <blockquote class="text-warning" style="font-size:14px">
+                                <h4 class="text-danger">那么，现在...</h4>
+                            </blockquote>
+                            <hr>
+                        </div>
+                        <div class="col-sm-12">
+                            <h2>..</h2>
+                            <div style="min-height:600px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="pull-right">
+        By：demo
+    </div>
+    <div>
+        <strong>Copyright</strong> demo &copy; 2017
+    </div>
+</div>
+
+
+<!-- 全局js -->
+<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script><script type="text/javascript" src="/plugins/layer/layer.js"></script>
+<!-- 自定义js -->
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vuex"></script>
+<script type="text/javascript">
+    var $data,$fun;
+    var $app = new Vue({
+        el: '#app',
+        data:{
+            code:0
+            ,ss:{}
+        },
+        methods:{}
+    });
+    $data=$app.$data;
+    $data.data={ message1: 1};
+    $data.data1={ message2: 2};
+    $fun=$app.$options.methods;
+    $fun.a=function(x){
+        $data.data.message1='=='+x;
+    }
+</script>
+</body>
+</html>

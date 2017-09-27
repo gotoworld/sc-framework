@@ -197,6 +197,8 @@ public class UserSettingController extends BaseController {
             verifyDto.setSmsType(0);
             verifyDto.setVerifyCode(smsCaptcha);
             msgVerifyService.checkVerifyCode(verifyDto);
+
+            redisTemplate.opsForValue().set("user:setting:phone:captcha:update:verify:" + userId,"1",30,TimeUnit.MINUTES);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

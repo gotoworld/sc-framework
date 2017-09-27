@@ -360,7 +360,6 @@ public class UserSettingController extends BaseController {
             MsgVerifyDto verifyDto = new MsgVerifyDto() {{
                 setImgCaptchaId(imgCaptchaId);
                 setImgCaptchaCode(imgCaptchaCode);
-                setImgCaptchaDel(true);
             }};
             msgVerifyService.verifyImgCode(verifyDto);
 

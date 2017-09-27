@@ -37,8 +37,8 @@ public class ChannelInfoDto extends BaseDto {
 	 @NotNull(message="phone1不能为空")@Size(max=50,message="phone1最大50字符")
      private String phone1;
      /**电话2*/
-	 @Size(max=50,message="phone2最大50字符")
-     private String phone2;
+	 @Size(max=50,message="email最大50字符")
+     private String email;
      /**传真*/
 	 @Size(max=50,message="fax最大50字符")
      private String fax;

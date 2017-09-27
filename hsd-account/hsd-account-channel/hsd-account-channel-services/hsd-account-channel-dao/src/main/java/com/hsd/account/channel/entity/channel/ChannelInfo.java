@@ -29,7 +29,7 @@ public class ChannelInfo extends BaseEntity {
      /**电话1*/
      private String phone1;
      /**电话2*/
-     private String phone2;
+     private String email;
      /**传真*/
      private String fax;
      /**生日*/

@@ -110,5 +110,11 @@ public class ChannelInfoDto extends BaseDto {
      private Integer staus;
      /**是否删除*/
      private Integer delFlag;
-
+     
+     /**验证码*/
+     private String captcha;
+     /**图片验证码Id*/
+     private String imgCaptchaId;
+     /**图片验证码code*/
+     private String imgCaptchaCode;
 }

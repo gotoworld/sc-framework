@@ -51,9 +51,10 @@
                                                         <input type="text" name="credentialNumber"  class="form-control" placeholder="请输入身份证号" required="">
                                                     </div>
                                                     <div class="col-md-12 m-b">
-                                                        <input type="text"id="imgCaptcha"  name="imgCaptcha" style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
-                                                        <img src="/img/captcha.jpg" style="width: 100px;height: 40px;float: right;">
-                                                        <label id="imgCaptcha-error" class="error" for="imgCaptcha"></label>
+                                                        <input id="imgCaptchaId" name="imgCaptchaId" type="hidden" ng-value="imgCaptcha.id">
+                                                        <input name="imgCaptchaCode" id="imgCaptchaCode"  style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
+                                                        <img ng-src="{{imgCaptcha.img}}" ng-click="loadImgCaptcha()" style="cursor: pointer;width: 100px;height: 40px;float: right;">
+                                                        <label id="captcha-error" class="error" for="imgCaptchaCode"></label>
                                                     </div>
                                                     <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
                                                         <button type="submit" class="btn btn-primary block full-width m-b">提交</button>
@@ -110,6 +111,17 @@
                     }, 'json');
                 }
             }
+            $scope.loadImgCaptcha=function(){
+                $.post(site.util.sms.imgCaptcha.json, {},function (result) {
+                    if (result.code == 0) {
+                        $data.imgCaptcha=result.data;
+                    } else {
+                        alert(result.message);
+                    }
+                    if (!$data.$$phase) $data.$apply();
+                }, 'json');
+            }
+            $scope.loadImgCaptcha();
         });
         $(document).ready(function(){
             $("#form_1").validate();

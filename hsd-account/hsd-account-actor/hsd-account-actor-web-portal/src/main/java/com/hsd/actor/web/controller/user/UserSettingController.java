@@ -457,6 +457,9 @@ public class UserSettingController extends BaseController {
             UserDto userDto = userService.findDataById(new UserDto() {{
                 setId(userId);
             }});
+            if(ValidatorUtil.notEmpty(userDto.getEmail())){
+                return Response.error("已绑定邮箱,请先解绑原邮箱!");
+            }
             userDto.setEmail(email);
             userService.emailBind(userDto);
         } catch (Exception e) {

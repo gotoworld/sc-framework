@@ -283,4 +283,21 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 			return result;
 		}
 
+		@Override
+		public Response restPwd(@RequestBody ChannelInfoDto dto) throws Exception {
+			 Response result = new Response(0,"success");
+		        try {
+		            if (dto == null) throw new RuntimeException("参数异常!");
+		            ChannelInfo entity = copyTo(dto, ChannelInfo.class);
+		            entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
+		            if(channelInfoDao.updateLoginPwd(entity)==0){
+		                throw new RuntimeException("密码修改失败!");
+		            }
+		        } catch (Exception e) {
+		            log.error("密码修改失败!", e);
+		            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+		        }
+		        return result;
+		}
+
 }

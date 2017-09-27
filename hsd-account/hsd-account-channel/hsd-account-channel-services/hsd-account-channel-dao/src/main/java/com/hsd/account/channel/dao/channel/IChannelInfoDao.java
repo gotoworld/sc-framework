@@ -53,4 +53,10 @@ public interface IChannelInfoDao extends IBaseDao {
 	 * 根据账号获取渠道商信息
 	 */
 	Object findUserByAccount(Map dto) throws Exception;
+
+	/**
+     * <p>密码修改
+     */
+    @Update("update channel_info set pwd=#{pwd} where id = #{id}")
+	int updateLoginPwd(ChannelInfo entity);
 }

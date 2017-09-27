@@ -13,14 +13,14 @@
     <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
     <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
     <link href="/plugins/hplus/css/plugins/steps/jquery.steps.css" rel="stylesheet">
     <style>
-        .glyphicon{color: #1ab394;}
-        .middle-box {margin-top: 0px;}
         .steps li{border-left: 1px dotted #ffffff;border-right: 1px dotted #ffffff;}
+        .glyphicon{color: #1ab394;}
     </style>
-    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
 </head>
+
 
 <body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
     <div class="fixed-sidebar border-bottom white-bg">
@@ -54,6 +54,7 @@
             </div>
         </nav>
     </div>
+    <!--头部菜单结束-->
     <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
         <nav class="navbar-default navbar-static-side" role="navigation" style="width: 200px;min-height:876px;float: left;background: #fff; margin-bottom: 10px;padding-right:10px;border-right:1px dashed #e0e0e0;">
             <div class="nav-close"><i class="fa fa-times-circle"></i>
@@ -96,38 +97,44 @@
         <div class="wizard" style="width: 1090px;background: #eeeeee;position: absolute;top:100px;margin: 0px 0px 0px 205px;padding: 0px;height: 35px;overflow: hidden">
             <div class=" steps clearfix">
                 <ul role="tablist">
-                    <li role="tab" class="first current" aria-disabled="false" aria-selected="true"><a><span class="number badge badge-info">1</span> 填写帐号</a></li>
-                    <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">2</span> 身份验证</a></li>
+                    <li role="tab" class="first " aria-disabled="false" aria-selected="true"><a><span class="number badge badge-info">1</span> 填写帐号</a></li>
+                    <li role="tab" class="disabled current" aria-disabled="true"><a><span class="number badge badge-info">2</span> 身份验证</a></li>
                     <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">3</span> 设置新密码</a></li>
                     <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">√</span> 完成</a></li>
                 </ul>
             </div>
         </div>
-        <div class="text-center loginscreen   animated fadeInDown"  style="width: 600px;padding: 10% 0;margin: 0 auto;">
+        <div class="text-center loginscreen   animated fadeInDown"  style="width: 500px;padding: 10% 0;margin: 0 auto;">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="row   white-bg dashboard-header">
                             <div class="col-sm-12">
-                                <h2>输入登录账户</h2>
+                                <h2>验证密保手机</h2>
                                 <hr>
                             </div>
-                            <div class="col-sm-12">
-                                <p class="text-muted text-left">
-                                    请输入用户登录账号
-                                </p>
-                                <form id="form_1" class="m-t" role="form" ng-submit="getAccount()">
-                                    <div class="input-group m-b">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" name="account" class="form-control" placeholder="请输入账号" required="">
+                            <div class="col-sm-12" style="margin-top: 50px;">
+                                <form class="m-t" role="form" ng-submit="verifyCaptcha();">
+                                    <p class="text-muted text-left" style="margin-left: 10px;">
+                                        短信验证码发送至<span ng-bind="accountInfo.phone1">***********</span>
+                                    </p>
+                                    <div class=" row" style="margin: 0 0 10px 10px;">
+                                        <input type="text" id="smsCaptcha" class="form-control" placeholder="请输入短信验证码" required="" style="float: left; width: 300px;">
+                                        <button onclick="sendSMS()" class="btn btn-primary block m-b" style="float: right;" id="sendSMSBtn">发送验证码</button>
                                     </div>
-                                    <div class="form-group m-b" style="width: 100%;margin-bottom: 100px;">
+                                    <div class="row m-b" style="margin: 0 0 10px 10px;">
                                         <input id="imgCaptchaId" name="imgCaptchaId" type="hidden" ng-value="imgCaptcha.id">
-                                        <input name="imgCaptchaCode" id="imgCaptchaCode"  style="width: 400px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
+                                        <input name="imgCaptchaCode" id="imgCaptchaCode"  style="width: 300px;height: 40px;float: left;" class="form-control col-md-4 " placeholder="请输入图片中的数字或字母" required="">
                                         <img ng-src="{{imgCaptcha.img}}" ng-click="loadImgCaptcha()" style="cursor: pointer;width: 100px;height: 40px;float: right;">
                                         <label id="captcha-error" class="error" for="imgCaptchaCode"></label>
                                     </div>
-                                    <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
+                                    <div class="col-sm-12" style="margin-top: 70px;margin-right: 10px;">
+                                        <button type="submit" class="btn btn-primary block full-width m-b">下一步</button>
+                                        <p class="text-muted ">
+                                            <a href="#" class="text-left" style="float: left;">短信验证码没收到</a>
+                                            <a href="findpwd_verify.html" class="text-right"  style="float: right;">选择其他验证方式</a>
+                                        </p>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -137,16 +144,9 @@
         </div>
         <!--右侧部分结束-->
     </div>
-
-    <div class="footer" style="clear: both;">
-        <div class="pull-right">
-            By：demo
-        </div>
-        <div>
-            <strong>Copyright</strong> demo &copy; 2017
-        </div>
-    </div>
-
+    <!--顶部footer开始-->
+    <div ng-include="'/html/account/actor/include/footer.html'"></div>
+    <!--顶部footer结束-->
 
     <!-- 全局js -->
     <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
@@ -155,23 +155,35 @@
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/channel-common.js"></script>
     <script type="text/javascript">
+        var timeCount=60;
         angular.module("app", []).controller("app-ctrl", function ($scope) {
             $data = $scope;
             $data.util = util;
             $data.channel = channel;
             channel.info(function(){});
-            $scope.getAccount=function(){
-                $.post(site.findpwd.getAccount, $('#form_1').serialize(),function (result) {
+            var accountStr=sessionStorage.getItem(site.findpwd.verify);
+            if(accountStr){
+                $data.accountInfo=JSON.parse(accountStr);
+            }else{
+                alert('请选输入账号!');
+                parent.location.href = site.findpwd.view+'.html';
+            }
+            $scope.verifyCaptcha=function(){
+                if(!util.notEmpty($('#smsCaptcha').val())){
+                    alert('请输入短信验证码');
+                    return;
+                }
+                $.post(site.findpwd.verifyCaptchaSms,{id:$data.accountInfo.id,captcha:$('#smsCaptcha').val()},function (result) {
                     if (result.code == 0) {
-                        sessionStorage.setItem(site.findpwd.verify,JSON.stringify(result.data));
-//                        alert('选择验证方式!');
-                        parent.location.href = site.findpwd.verify+'.html';
+                        sessionStorage.setItem(site.findpwd.view,location.href);
+                        parent.location.href = site.findpwd.view+'_update.html';
                     } else {
                         $scope.loadImgCaptcha();
                         alert(result.message);
                     }
                 }, 'json');
             }
+
             $scope.loadImgCaptcha=function(){
                 $.post(site.util.sms.imgCaptcha.json, {},function (result) {
                     if (result.code == 0) {
@@ -184,6 +196,45 @@
             }
             $scope.loadImgCaptcha();
         });
+
+        var sendSMS=function(){
+            if(!util.notEmpty($('#imgCaptchaCode').val())){
+                alert('图片中的数字或字母');
+                return;
+            }
+//            if($('#sendSMSBtn').attr("disabled")==false) return;
+            $('#sendSMSBtn').attr("disabled",true);
+            try {
+                $.post(site.findpwd.sendSms, {
+                    accid: $data.accountInfo.id,
+                    imgCaptchaId:$('#imgCaptchaId').val(),imgCaptchaCode:$('#imgCaptchaCode').val()
+                }, function (result) {
+                    if (result.code == 0) {
+                        timeCount = 60;
+                        sendSMSBtnOut();
+                    } else {
+                        timeCount = 0;
+                        sendSMSBtnOut();
+                        alert(result.message);
+                    }
+                }, 'json');
+            } catch (e){
+                $('#sendSMSBtn').attr("disabled",false);
+            }
+        }
+
+        var sendSMSBtnOut=function(){
+            if(timeCount<=0){
+                $('#sendSMSBtn').attr("disabled",false);
+                $('#sendSMSBtn').html('发送验证码');
+                return;
+            }
+            $('#sendSMSBtn').html('('+timeCount+')重新发送');
+            setTimeout(function(){
+                timeCount--;
+                sendSMSBtnOut();
+            },1000);
+        }
     </script>
 </body>
 

@@ -92,4 +92,7 @@ public interface IChannelInfoService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updataChannel")
 	public Response updataChannel(ChannelInfoDto dto) throws Exception;
 
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/restPwd")
+	public Response restPwd(ChannelInfoDto dto) throws Exception;
+
 }

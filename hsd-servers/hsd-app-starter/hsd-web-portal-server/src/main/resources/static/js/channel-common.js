@@ -5,29 +5,12 @@ var apiPath = {
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-portal",
         actor: "http://192.168.101.100:28890/hsd-account-actor-web-portal"
     }
+    ,util:{
+        sms: "http://192.168.101.100:28890/hsd-util-sms-web-portal"
+    }
 }
 var site = {
     portalHome:"/html/account/actor/user/home.html"
-    /*,user: {
-        login: apiPath.account.actor + "/api/account/actor/sign/login" //登录
-        , logout: apiPath.account.actor + "/api/account/actor/sign/logout" //登出
-        , refreshToken: apiPath.account.actor + "/api/account/actor/sign/refreshToken" //刷新token
-    }
-    ,findpwd: {
-        view: basePath + "/html/account/actor/user/findpwd"
-        , verify: basePath + "/html/account/actor/user/findpwd_verify"
-        , getAccount: apiPath.account.actor + "/api/account/actor/findpwd/getAccount"
-        , sendSms:apiPath.account.actor+"/api/account/actor/findpwd/send/captcha/sms"
-        , sendMmail:apiPath.account.actor+"/api/account/actor/findpwd/send/captcha/email"
-        , verifyCaptchaSms: apiPath.account.actor + "/api/account/actor/findpwd/verifyCaptchaSms" //验证码校验并设置密码重置状态
-        , verifyCaptchaEmail: apiPath.account.actor + "/api/account/actor/findpwd/verifyCaptchaEmail" //验证码校验并设置密码重置状态
-        , verifystate: apiPath.account.actor + "/api/account/actor/findpwd/verifystate" //校验密码重置状态
-        , update: apiPath.account.actor + "/api/account/actor/findpwd/update" //密码修改
-    }
-    ,register: {
-        view: basePath + "/html/account/actor/user/register"
-        , register: apiPath.account.actor + "/api/account/actor/register/reg"
-    }*/
     ,channel: { //渠道商
         login: apiPath.account.channel + "/api/account/channel/sign/login" //登录
         , logout: apiPath.account.channel + "/api/account/channel/sign/logout" //登出
@@ -36,6 +19,25 @@ var site = {
         , edit: apiPath.account.channel + "/api/account/channel/channelInfo/edit"
         , info: apiPath.account.channel + "/api/account/channel/channelInfo/info/"
         , list: apiPath.account.channel + "/api/account/channel/channelInfo/list"
+    }
+    ,util:{
+        sms:{
+            imgCaptcha:{
+                json: apiPath.util.sms+"/api/util/sms/imgCaptcha/json"
+                ,html: apiPath.util.sms+"/api/util/sms/imgCaptcha/html"
+            }
+        }
+    }
+    ,findpwd: {
+        view: basePath + "/html/account/channel/channel/findpwd"
+        , verify: basePath + "/html/account/channel/channel/findpwd_verify"
+        , getAccount: apiPath.account.channel + "/api/account/channel/findpwd/getAccount"
+        , sendSms:apiPath.account.channel+"/api/account/channel/findpwd/send/captcha/sms"
+        , sendMmail:apiPath.account.channel+"/api/account/channel/findpwd/send/captcha/email"
+        , verifyCaptchaSms: apiPath.account.channel + "/api/account/channel/findpwd/verifyCaptchaSms"
+        , verifyCaptchaEmail: apiPath.account.channel + "/api/account/channel/findpwd/verifyCaptchaEmail"
+        , verifystate: apiPath.account.channel + "/api/account/channel/findpwd/verifystate"
+        , update: apiPath.account.channel + "/api/account/channel/findpwd/restPwd"
     }
 }
 var $data, $ngHttp, $ngCompile, $ngSce;

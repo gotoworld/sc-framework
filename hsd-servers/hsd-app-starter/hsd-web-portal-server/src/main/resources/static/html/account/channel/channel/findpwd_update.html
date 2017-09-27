@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>验证身份</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+    <link href="/plugins/hplus/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <style>
+        .steps li{border-left: 1px dotted #ffffff;border-right: 1px dotted #ffffff;}
+        .show-gridA .tit{padding-top: 6px; color: #a9a9a9}
+    </style>
+</head>
+
+
+<body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
+    <!--头部菜单开始-->
+    <div class="fixed-sidebar border-bottom white-bg"  ng-include="'/html/account/actor/include/navigation.html'" ng-init="current=''"></div>
+    <!--头部菜单结束-->
+    <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
+        <div class="wizard" style="width: 1330px;background: #eeeeee;position: absolute;top:100px;margin: 0px 0px 0px -20px;padding: 0px;height: 35px;overflow: hidden">
+            <div class=" steps clearfix">
+                <ul role="tablist">
+                    <li role="tab" class="first " aria-disabled="false" aria-selected="true"><a><span class="number badge badge-info">1</span> 填写帐号</a></li>
+                    <li role="tab" class="disabled " aria-disabled="true"><a><span class="number badge badge-info">2</span> 身份验证</a></li>
+                    <li role="tab" class="disabled current" aria-disabled="true"><a><span class="number badge badge-info">3</span> 设置新密码</a></li>
+                    <li role="tab" class="disabled" aria-disabled="true"><a><span class="number badge badge-info">√</span> 完成</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class=" loginscreen   animated fadeInDown"  style="width: 600px;padding: 10% 0;margin: 0 auto;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="white-bg dashboard-header">
+                            <div class="col-sm-12 text-center">
+                                <h2>设置新密码</h2>
+                                <hr>
+                            </div>
+                            <div class="col-sm-12" style="">
+                                <form id="form_1" class="form m-t" role="form" ng-submit="updatePwd()">
+                                    <p class="col-md-12 text-muted text-left">
+                                        密码长度8-20位,建议字母,数字,标点的组合来提高账号安全度
+                                        <input type="hidden" name="id" ng-value="accountInfo.id">
+                                    </p>
+                                    <div class="col-md-12">
+                                        <input type="hidden" name="pwd" id="pwdA">
+                                        <input type="password" id="passwordA"
+                                               onkeydown="$('#pwdA').val($.md5($(this).val()));"
+                                               onchange="$('#pwdA').val($.md5($(this).val()));" class="form-control" placeholder="请输入密码" required="">
+                                    </div>
+                                    <div class="col-md-12" style="margin-top:30px; ">
+                                        <input type="hidden" name="confirmpwd" id="confirmpwdA">
+                                        <input type="password" equalTo="#passwordA"
+                                               onkeydown="$('#confirmpwdA').val($.md5($(this).val()));"
+                                               onchange="$('#confirmpwdA').val($.md5($(this).val()));" class="form-control" placeholder="请再次确认密码" required="">
+                                    </div>
+                                    <div class="col-sm-12" style="margin-top: 30px;margin-right: 10px;">
+                                        <button type="submit" class="btn btn-primary block full-width m-b">保存新密码</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+    <!--顶部footer开始-->
+    <div ng-include="'/html/account/actor/include/footer.html'"></div>
+    <!--顶部footer结束-->
+
+    <!-- 全局js -->
+    <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script><script type="text/javascript" src="/plugins/layer/layer.js"></script><script type="text/javascript" src="/js/global.js"></script>
+
+    <script src="/js/jQuery.md5.js" type="text/javascript"></script>
+
+    <script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script type="text/javascript" src="/js/channel-common.js"></script>
+    <script type="text/javascript">
+        function formValidate(){
+            setTimeout(function(){
+                $("#form_1").validate();
+            },1000);
+        }
+        angular.module("app", []).controller("app-ctrl", function ($scope) {
+            $data = $scope;
+            $data.util = util;
+            $data.channel = channel;
+            channel.info(function(){});
+            var accountStr=sessionStorage.getItem(site.findpwd.verify);
+            if(accountStr){
+                $data.accountInfo=JSON.parse(accountStr);
+            }else{
+                alert('请选输入账号!');
+                parent.location.href = site.findpwd.view+'.html';
+            }
+            $.post(site.findpwd.verifystate,{accid:$data.accountInfo.id},function (result) {
+                if (result.code != 0) {
+                    alert(result.message);
+                    if(sessionStorage.getItem(site.findpwd.view)){
+                        location.href=sessionStorage.getItem(site.findpwd.view);
+                    }else{
+                        location.href=site.findpwd.view+".html";
+                    }
+                }
+            }, 'json');
+            $scope.updatePwd=function() {
+                if ($("#form_1").valid()) {
+                    $.post(site.findpwd.update, $('#form_1').serialize(), function (result) {
+                        if (result.code == 0) {
+                            sessionStorage.removeItem(site.findpwd.view);
+                            parent.location.href = site.findpwd.view + '_success.html';
+                        } else {
+                            alert(result.message);
+                        }
+                    }, 'json');
+                }
+            }
+        });
+        $(document).ready(function(){
+            formValidate();
+        });
+    </script>
+</body>
+
+</html>

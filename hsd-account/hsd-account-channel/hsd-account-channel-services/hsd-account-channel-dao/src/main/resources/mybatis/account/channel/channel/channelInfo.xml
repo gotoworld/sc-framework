@@ -10,7 +10,7 @@
         ,t1.channeltype as "channeltype"
         ,t1.gender as "gender"
         ,t1.phone1 as "phone1"
-        ,t1.phone2 as "phone2"
+        ,t1.email as "email"
         ,t1.fax as "fax"
         ,t1.birthday as "birthday"
         ,t1.marital_status as "maritalStatus"
@@ -95,7 +95,7 @@
            ,channeltype 
            ,gender 
            ,phone1 
-           ,phone2 
+           ,email 
            ,fax 
            ,birthday 
            ,marital_status 
@@ -134,7 +134,7 @@
            ,#{channeltype} 
            ,#{gender} 
            ,#{phone1} 
-           ,#{phone2} 
+           ,#{email} 
            ,#{fax} 
            ,#{birthday} 
            ,#{maritalStatus} 
@@ -178,7 +178,7 @@
              <if test="channeltype!=null">,channeltype = #{channeltype}</if>
              <if test="gender!=null">,gender = #{gender}</if>
              <if test="phone1!=null">,phone1 = #{phone1}</if>
-             <if test="phone2!=null">,phone2 = #{phone2}</if>
+             <if test="email!=null">,email = #{email}</if>
              <if test="fax!=null">,fax = #{fax}</if>
              <if test="birthday!=null">,birthday = #{birthday}</if>
              <if test="maritalStatus!=null">,marital_status = #{maritalStatus}</if>

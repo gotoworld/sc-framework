@@ -63,4 +63,7 @@ public class OrgInfoDto extends BaseDto {
 
     private List<Long> roleIds;
     private List<Long> staffIds;
+
+    /**员工级别*/
+    private Integer level;
 }

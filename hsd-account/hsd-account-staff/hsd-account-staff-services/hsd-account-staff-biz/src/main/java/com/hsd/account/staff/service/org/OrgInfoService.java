@@ -191,6 +191,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
+            if(dto.getLevel()==null) dto.setLevel(0);
             orgOrgVsStaffDao.insert(copyTo(dto,OrgOrgVsStaff.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);

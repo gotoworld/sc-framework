@@ -39,6 +39,7 @@ public class BusinessTypeService extends BaseService implements IBusinessTypeSer
                 //数据存在
                 businessTypeDao.update(entity);
             } else {
+                entity.setId(idGenerator.nextId());
                 //新增
                 businessTypeDao.insert(entity);
                 result.data=entity.getId();

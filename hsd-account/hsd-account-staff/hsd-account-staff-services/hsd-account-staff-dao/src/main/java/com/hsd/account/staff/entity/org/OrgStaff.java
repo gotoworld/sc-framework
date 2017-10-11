@@ -19,6 +19,8 @@ public class OrgStaff extends BaseEntity {
      private String account;
      /**成员名称*/
      private String name;
+     /**工号*/
+     private String jobNo;
      /**性别[0男1女3保密]*/
      private Integer gender;
      /**手机号*/
@@ -64,4 +66,7 @@ public class OrgStaff extends BaseEntity {
      private String confirmpwd;
      /**机构id*/
      private String orgId;
+
+     /**员工级别*/
+     private Integer level;
 }

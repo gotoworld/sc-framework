@@ -6,6 +6,7 @@
 		 t1.id as "id"
         ,t1.account as "account"
         ,t1.name as "name"
+        ,t1.job_no as "jobNo"
         ,t1.gender as "gender"
         ,t1.cellphone as "cellphone"
         ,t1.avatar as "avatar"
@@ -36,6 +37,7 @@
             account
             ,pwd
             ,name
+            ,job_no
             ,gender
             ,cellphone
             ,avatar
@@ -60,6 +62,7 @@
              #{t.account}
             ,#{t.pwd}
             ,#{t.name}
+            ,#{t.jobNo}
             ,#{t.gender}
             ,#{t.cellphone}
             ,#{t.avatar}
@@ -87,6 +90,7 @@
             account
            ,pwd
            ,name
+           ,job_no
            ,gender
            ,cellphone
            ,avatar
@@ -109,6 +113,7 @@
             #{account}
            ,#{pwd}
            ,#{name}
+           ,#{jobNo}
            ,#{gender}
            ,#{cellphone}
            ,#{avatar}
@@ -133,6 +138,7 @@
     <update id="update" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
         update org_staff set version=version+1,date_updated=now()
         <if test="name!=null">,name = #{name}</if>
+        <if test="jobNo!=null">,job_no = #{jobNo}</if>
         <if test="gender!=null">,gender = #{gender}</if>
         <if test="cellphone!=null">,cellphone = #{cellphone}</if>
         <if test="avatar!=null">,avatar = #{avatar}</if>
@@ -210,6 +216,7 @@
         t1.id as "id"
         ,t1.account as "account"
         ,t1.name as "name"
+        ,t1.job_no as "jobNo"
         ,t1.gender as "gender"
         ,t1.avatar as "avatar"
         from org_staff t1

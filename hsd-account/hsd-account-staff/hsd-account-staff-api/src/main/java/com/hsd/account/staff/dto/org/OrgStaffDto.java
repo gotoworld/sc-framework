@@ -28,6 +28,8 @@ public class OrgStaffDto extends BaseDto {
      /**成员名称*/
 	 @NotNull(message="name不能为空")@Size(max=55,message="name最大55字符")
      private String name;
+     /**工号*/
+     private String jobNo;
      /**性别[0男1女3保密]*/
      private Integer gender;
      /**手机号*/
@@ -87,4 +89,7 @@ public class OrgStaffDto extends BaseDto {
 
      private List<Long> roleIds;
      private List<Long> orgIds;
+
+     /**员工级别*/
+     private Integer level;
 }

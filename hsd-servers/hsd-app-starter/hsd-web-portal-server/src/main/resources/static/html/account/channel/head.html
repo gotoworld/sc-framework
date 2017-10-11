@@ -1,0 +1,30 @@
+<div class="fixed-sidebar border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a ng-show="!util.notEmpty(channelInfoUser.account)" data-toggle="modal" href="/index.html#channel-form">
+                        <i class="fa fa-sign-in"></i> 渠道商登录
+                    </a>
+                    <a ng-show="util.notEmpty(channelInfoUser.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
+                    </a>
+                    <ul ng-show="util.notEmpty(channelInfoUser.account)" role="menu" class="dropdown-menu">
+                        <li><a href="#" ng-click="channel.logout()">安全退出 <i class="fa fa-sign-out"></i> </a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

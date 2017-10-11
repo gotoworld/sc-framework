@@ -23,37 +23,7 @@
 
 
 <body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
-    <div class="fixed-sidebar border-bottom white-bg">
-        <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
-            <div class="navbar-header">
-                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-                    <i class="fa fa-reorder"></i>
-                </button>
-                <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
-            </div>
-            <div class="navbar-collapse collapse" id="navbar">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-top-links navbar-right">
-                    <li class="dropdown">
-                        <!--<a ng-show="!util.notEmpty(channelInfoUser.account)" data-toggle="modal" href="/login.html">
-                        <i class="fa fa-sign-in"></i> 登录
-                        </a>-->
-                        <a ng-show="util.notEmpty(channelInfoUser.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
-                        </a>
-                        <ul ng-show="util.notEmpty(channelInfoUser.account)" role="menu" class="dropdown-menu">
-                            <li><a href="/html/account/actor/home.html">我的投资</a> </li>
-                            <li><a href="#" ng-click="channel.logout()">安全退出 <i class="fa fa-sign-out"></i> </a> </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+    <div ng-include="'/html/account/channel/head.html'" ng-init="current='home'"></div>
     <!--头部菜单结束-->
     <div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;min-height: 800px;">
         <nav class="navbar-default navbar-static-side" role="navigation" style="width: 200px;min-height:876px;float: left;background: #fff; margin-bottom: 10px;padding-right:10px;border-right:1px dashed #e0e0e0;">
@@ -199,7 +169,7 @@
 
         var sendSMS=function(){
             if(!util.notEmpty($('#imgCaptchaCode').val())){
-                alert('图片中的数字或字母');
+                layer.msg('请填写图片中的数字或字母');
                 return;
             }
 //            if($('#sendSMSBtn').attr("disabled")==false) return;

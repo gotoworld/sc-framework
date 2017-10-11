@@ -43,4 +43,6 @@ public class OrgInfo extends BaseEntity {
      private Date dateUpdated;
 
 
+     /**员工级别*/
+     private Integer level;
 }

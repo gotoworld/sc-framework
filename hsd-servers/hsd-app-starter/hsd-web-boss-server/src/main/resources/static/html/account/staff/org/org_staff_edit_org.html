@@ -48,6 +48,7 @@
 										<th>code</th>
 										<th>组织</th>
 										<th>类型</th>
+										<th>级别</th>
 										<th style="width: 60px;"></th>
 									</tr>
 									</thead>
@@ -58,12 +59,18 @@
 										<td>{{item.name}}</td>
 										<td>{{typeEnum(item.type)}}</td>
 										<td>
-											<a ng-if="checkAddOrg(item)==false" href="javascript:;" ng-click="addOrg(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 添加</a>
+											<select id="level_{{$index}}">
+												<option value="0">员工</option>
+												<option value="1" ng-selected="checkOrgLevel(item,1)">主管</option>
+											</select>
+										</td>
+										<td>
+											<a ng-if="checkAddOrg(item)==false" href="javascript:;" ng-click="addOrg(item,$index)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 添加</a>
 											<label ng-if="checkAddOrg(item)==true" >已存在</label>
 										</td>
 									</tr>
 									<tr ng-if="orgResult.data.data==null || orgResult.data.data==0">
-										<td colspan="5">
+										<td colspan="6">
 											<div class="alert"><strong>{{orgResult.message||'暂无数据'}}</strong></div>
 										</td>
 									</tr>
@@ -86,6 +93,7 @@
 										<th>code</th>
 										<th>组织</th>
 										<th>类型</th>
+										<th>级别</th>
 										<th style="width: 60px;"></th>
 									</tr>
 									</thead>
@@ -95,12 +103,13 @@
 										<td>{{item.code}}</td>
 										<td>{{item.name}}</td>
 										<td>{{typeEnum(item.type)}}</td>
+										<td>{{levelEnum(item.level)}}</td>
 										<td>
 											<a href="javascript:;" ng-click="delOrg(item)" rel="nofollow" class="" ><i class="fa fa-close"></i> 删除</a>
 										</td>
 									</tr>
 									<tr ng-if="orgStaffNodes==null || orgStaffNodes==0">
-										<td colspan="5">
+										<td colspan="6">
 											<div class="alert"><strong>{{orgStaffMessage||'暂无数据'}}</strong></div>
 										</td>
 									</tr>
@@ -157,6 +166,14 @@
 			}
 			return val;
 		}
+        $scope.levelEnum=function(key){
+            var val='未知';
+            switch (key){
+				case 0:val='员工';break;
+				case 1:val='主管';break;
+			}
+			return val;
+		}
         $scope.checkAddOrg=function (item) {
             var flag=false;
             if($data.orgStaffNodes){
@@ -169,11 +186,24 @@
             }
             return flag;
         }
-        $scope.addOrg = function (item) {
+        $scope.checkOrgLevel=function (item,level) {
+            var flag=false;
+            if($data.orgStaffNodes){
+                for(var i=0;i<$data.orgStaffNodes.length;i++){
+                    if($data.orgStaffNodes[i].id==item.id && $data.orgStaffNodes[i].level==level){
+                        //console.info("--已存在---");
+                        flag= true;
+                    }
+                }
+            }
+            return flag;
+        }
+        $scope.addOrg = function (item,index) {
             if(!$data.checkAddOrg(item)){
-                $.post(site.orgStaff.addOrg, {"staffId":$data.id,"orgId":item.id},function (result) {
+                $.post(site.orgStaff.addOrg, {"staffId":$data.id,"orgId":item.id,"level":$('#level_'+index).val()},function (result) {
                     //console.info("获取数据.." + JSON.stringify(result));
                     if (result.code == 0) {
+                        item.level=parseInt($('#level_'+index).val());
                         $data.orgStaffNodes.push(item);
                         if (!$data.$$phase) $data.$apply();
                     } else {
@@ -193,12 +223,16 @@
                 }
             }, 'json');
         }
-        $scope.page = function () {
-            loadOrgPage();
+        $scope.page = function (pageNum) {
+            loadOrgPage(pageNum);
         }
     });
-    function loadOrgPage() {
-        $.post( site.orgInfo.briefPage+$('#pageNumA').val(),{"keyword":$('#bean_name').val()}, function (result) {
+    function loadOrgPage(pageNum) {
+        if(!(pageNum)){
+            pageNum=$('#pageNumA').val();
+        }
+        if(!util.notEmpty(pageNum)) pageNum=1;
+        $.post( site.orgInfo.briefPage+pageNum,{"keyword":$('#bean_name').val()}, function (result) {
             if (result.code == 0) {
                 $data.orgResult = result;
                 $('#tagPages').html($ngCompile(tag.page(result.data))($data));

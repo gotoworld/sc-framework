@@ -48,6 +48,7 @@
                                             <th style="width:20px;">#</th>
                                             <th>账号</th>
                                             <th>人员</th>
+                                            <th>级别</th>
                                             <th style="width: 60px;"></th>
                                         </tr>
                                         </thead>
@@ -57,12 +58,18 @@
                                             <td>{{item.account}}</td>
                                             <td>{{item.name}}</td>
                                             <td>
-                                                <a ng-if="checkAddStaff(item)==false" href="javascript:;" ng-click="addStaff(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 添加</a>
+                                                <select id="level_{{$index}}">
+                                                    <option value="0">员工</option>
+                                                    <option value="1" ng-selected="checkOrgLevel(item,1)">主管</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <a ng-if="checkAddStaff(item)==false" href="javascript:;" ng-click="addStaff(item,$index)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 添加</a>
                                                 <label ng-if="checkAddStaff(item)==true" >已存在</label>
                                             </td>
                                         </tr>
                                         <tr ng-if="staffResult.data.data==null || staffResult.data.data==0">
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                 <div class="alert"><strong>{{staffResult.message||'暂无数据'}}</strong></div>
                                             </td>
                                         </tr>
@@ -84,6 +91,7 @@
                                             <th style="width:20px;">#</th>
                                             <th>账号</th>
                                             <th>人员</th>
+                                            <th>级别</th>
                                             <th style="width: 60px;"></th>
                                         </tr>
                                         </thead>
@@ -92,12 +100,13 @@
                                             <td>{{ $index+1}}</td>
                                             <td>{{item.account}}</td>
                                             <td>{{item.name}}</td>
+                                            <td>{{levelEnum(item.level)}}</td>
                                             <td>
                                                 <a href="javascript:;" ng-click="delStaff(item)" rel="nofollow" class="" ><i class="fa fa-close"></i> 删除</a>
                                             </td>
                                         </tr>
                                         <tr ng-if="orgStaffNodes==null || orgStaffNodes==0">
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                 <div class="alert"><strong>{{orgStaffMessage||'暂无数据'}}</strong></div>
                                             </td>
                                         </tr>
@@ -151,6 +160,14 @@
         staff.init(function(){
             loadOrgStaff();
         });
+        $scope.levelEnum=function(key){
+            var val='未知';
+            switch (key){
+                case 0:val='员工';break;
+                case 1:val='主管';break;
+            }
+            return val;
+        }
         $scope.checkAddStaff=function (item) {
             var flag=false;
             if($data.orgStaffNodes){
@@ -163,11 +180,24 @@
             }
             return flag;
         }
-        $scope.addStaff = function (item) {
+        $scope.checkOrgLevel=function (item,level) {
+            var flag=false;
+            if($data.orgStaffNodes){
+                for(var i=0;i<$data.orgStaffNodes.length;i++){
+                    if($data.orgStaffNodes[i].id==item.id && $data.orgStaffNodes[i].level==level){
+                        //console.info("--已存在---");
+                        flag= true;
+                    }
+                }
+            }
+            return flag;
+        }
+        $scope.addStaff = function (item,index) {
             if(!$data.checkAddStaff(item)){
-                $.post(site.orgInfo.addStaff, {"orgId":$data.id,"staffId":item.id},function (result) {
+                $.post(site.orgInfo.addStaff, {"orgId":$data.id,"staffId":item.id,"level":$('#level_'+index).val()},function (result) {
                     //console.info("获取数据.." + JSON.stringify(result));
                     if (result.code == 0) {
+                        item.level=parseInt($('#level_'+index).val());
                         $data.orgStaffNodes.push(item);
                         if (!$data.$$phase) $data.$apply();
                     } else {

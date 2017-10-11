@@ -14,7 +14,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BusinessType extends BaseEntity {
      /**id*/
-     private String id;
+     private Long id;
      /**编码*/
      private String code;
      /**名称*/

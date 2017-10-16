@@ -29,7 +29,11 @@ ribbon:
     enabled: true
 
 zuul:
-  sensitiveHeaders: Access-Control-Allow-Headers,Access-Control-Allow-Origin,Access-Control-Allow-Methods
+  sensitiveHeaders: Access-Control-Allow-Origin,Access-Control-Allow-Methods,Access-Control-Allow-Headers
+  cross:
+    origin: "*"
+    methods: "POST, GET, OPTIONS, PUT, DELETE, HEAD"
+    headers: "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,X-Cache"
   max:
     host:
       connections: 500

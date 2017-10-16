@@ -173,6 +173,9 @@
                 and t1.del_flag=0
             </otherwise>
         </choose>
+        <if test="level!=null">
+            and t1.level = #{level}
+        </if>
         <if test="keyword!=null and keyword!=''">
             and (t1.name like CONCAT('%',#{keyword},'%') or t1.account like CONCAT('%',#{keyword},'%'))
         </if>

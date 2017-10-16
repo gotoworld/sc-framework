@@ -47,7 +47,8 @@ public class OrgStaffController extends BaseController {
 	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page/{pageNum}")
 	@ApiOperation(value = "信息分页")
-	public Response page(@ModelAttribute OrgStaffDto dto, @PathVariable("pageNum") Integer pageNum) {
+	public Response page(@ModelAttribute OrgStaffDto dto, @PathVariable("pageNum") Integer pageNum
+			,@RequestParam(name = "level",required = false) Integer level) {
 		log.info("OrgStaffController page.........");
 		Response result = new Response("success");
 		try {
@@ -57,6 +58,7 @@ public class OrgStaffController extends BaseController {
 			}
 			dto.setPageNum(pageNum);
 			dto.setDelFlag(0);
+			dto.setLevel(level);
 			result.data=getPageDto(orgStaffService.findDataIsPage(dto));
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());

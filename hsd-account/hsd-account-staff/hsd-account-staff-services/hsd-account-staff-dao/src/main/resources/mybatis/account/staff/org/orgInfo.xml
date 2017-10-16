@@ -9,6 +9,7 @@
         ,t1.name as  "name"
         ,t1.parent_id as  "parentId"
         ,t1.state as  "state"
+        ,t1.manager as  "manager"
         ,t1.memo as  "memo"
         ,t1.version as  "version"
         ,t1.order_no as  "orderNo"
@@ -110,6 +111,7 @@
         ,t1.code as  "code"
         ,t1.type as  "type"
         ,t1.name as  "name"
+        ,t1.manager as  "manager"
         from org_info t1
         where 1=1
         <include refid="list_where_sql"/>
@@ -125,6 +127,7 @@
         ,t1.parent_id as  "parentId"
         ,t1.memo as  "memo"
         ,t1.state as  "state"
+        ,t1.manager as  "manager"
         ,t1.date_created as  "dateCreated"
         from org_info t1
         where 1=1
@@ -137,7 +140,7 @@
         ,t1.code as  "code"
         ,t1.type as  "type"
         ,t1.name as  "name"
-        ,t2.level as  "level"
+        ,t1.manager as  "manager"
         from org_info t1
         left join org_org_vs_staff t2 on (t1.id=t2.org_id)
         where t1.del_flag=0 and t2.staff_id=#{staffId}

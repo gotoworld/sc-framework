@@ -36,5 +36,5 @@ public interface IOrgOrgVsStaffDao extends IBaseDao {
     @Delete("delete from org_org_vs_staff where  org_id = #{orgId}")
     int deleteBulkDataByOrgId(IEntity entity) throws Exception;
 
-    List<String> findOrgStaffIsList(IEntity entity) throws Exception;
+    List findOrgStaffIsList(IEntity entity) throws Exception;
 }

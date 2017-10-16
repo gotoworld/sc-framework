@@ -47,7 +47,7 @@ public class OrgInfoDto extends BaseDto {
      private Long createId;
      /**创建时间*/
      private Date dateCreated;
-     /**更新时间*/
+    /**更新时间*/
      private Date dateUpdated;
 
     /** 子对象集合 */
@@ -63,7 +63,6 @@ public class OrgInfoDto extends BaseDto {
 
     private List<Long> roleIds;
     private List<Long> staffIds;
-
-    /**员工级别*/
-    private Integer level;
+    /**部门负责人id*/
+    private Long manager;
 }

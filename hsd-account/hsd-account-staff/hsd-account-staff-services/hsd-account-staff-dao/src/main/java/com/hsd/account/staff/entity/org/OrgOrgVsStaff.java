@@ -17,8 +17,6 @@ public class OrgOrgVsStaff extends BaseEntity {
      private Long staffId;
      /**组织id*/
      private Long orgId;
-     /**员工级别*/
-     private Integer level;
      /**建立者ID*/
      private Long createId;
      /**创建时间*/

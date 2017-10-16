@@ -269,7 +269,6 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            if(dto.getLevel()==null) dto.setLevel(0);
             orgOrgVsStaffDao.insert(copyTo(dto,OrgOrgVsStaff.class));
         } catch (Exception e) {
             log.error("信息保存失败!", e);
@@ -431,5 +430,17 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return results;
+    }
+    @RequiresPermissions("orgStaff:edit:leadership")
+    public Response setLeadership(@RequestBody OrgStaffDto dto) throws Exception {
+        Response result = new Response(0,"success");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            orgStaffDao.setLeadership(copyTo(dto,OrgStaff.class));
+        } catch (Exception e) {
+            log.error("上级领导设置失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
     }
 }

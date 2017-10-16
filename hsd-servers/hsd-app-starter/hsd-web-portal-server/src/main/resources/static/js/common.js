@@ -97,7 +97,7 @@ function getQueryString(name) {
 $.ajaxSetup({
     headers: {
         "Authorization": sessionStorage.getItem("hsd_actor_authorizationToken"),
-        "Cache-X": sessionStorage.getItem("cacheX")
+        "X-Cache": sessionStorage.getItem("XCache")
     }
 })
 $(document).ajaxComplete(function (event, xhr, settings) {
@@ -122,7 +122,7 @@ var user = {
                     if (result.data.authorizationToken) {
                         sessionStorage.setItem('hsd_actor_tokenExpMillis', result.data.tokenExpMillis);
                         sessionStorage.setItem("hsd_actor_authorizationToken", result.data.authorizationToken);
-                        sessionStorage.setItem('cacheX', result.data.cacheX);
+                        sessionStorage.setItem('XCache', result.data.XCache);
                     }
                 }
                 callback && callback();
@@ -140,7 +140,7 @@ var user = {
                     if (result.data.authorizationToken) {
                         sessionStorage.setItem('hsd_actor_tokenExpMillis', result.data.tokenExpMillis);
                         sessionStorage.setItem("hsd_actor_authorizationToken", result.data.authorizationToken);
-                        sessionStorage.setItem('cacheX', result.data.cacheX);
+                        sessionStorage.setItem('XCache', result.data.XCache);
                     }
                 }
                 callback && callback();

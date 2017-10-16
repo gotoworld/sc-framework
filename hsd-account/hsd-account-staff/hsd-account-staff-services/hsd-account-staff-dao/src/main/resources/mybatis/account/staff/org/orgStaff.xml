@@ -17,6 +17,8 @@
         ,t1.state as "state"
         ,t1.eff_date as "effDate"
         ,t1.exp_date as "expDate"
+        ,t1.level as "level"
+        ,t1.leadership as "leadership"
         ,t1.memo as "memo"
         ,t1.version as "version"
         ,t1.order_no as "orderNo"
@@ -48,6 +50,8 @@
             ,state
             ,eff_date
             ,exp_date
+            ,level
+            ,leadership
             ,memo
             ,version
             ,order_no
@@ -73,6 +77,8 @@
             ,#{t.state}
             ,#{t.effDate}
             ,#{t.expDate}
+            ,#{t.level}
+            ,#{t.leadership}
             ,#{t.memo}
             ,0
             ,#{t.orderNo}
@@ -101,6 +107,8 @@
            ,state
            ,eff_date
            ,exp_date
+           ,level
+           ,leadership
            ,memo
            ,version
            ,order_no
@@ -124,6 +132,8 @@
            ,#{state}
            ,#{effDate}
            ,#{expDate}
+           ,#{level}
+           ,#{leadership}
            ,#{memo}
            ,0
            ,#{orderNo}
@@ -147,6 +157,8 @@
         <if test="state!=null">,state = #{state}</if>
         <if test="effDate!=null">,eff_date = #{effDate}</if>
         <if test="expDate!=null">,exp_date = #{expDate}</if>
+        <if test="level!=null">,level = #{level}</if>
+        <if test="leadership!=null">,leadership = #{leadership}</if>
         <if test="memo!=null">,memo = #{memo}</if>
         <if test="orderNo!=null">,order_no = #{orderNo}</if>
         where id = #{id}
@@ -195,6 +207,8 @@
          t1.id as "id"
         ,t1.account as "account"
         ,t1.name as "name"
+        ,t1.level as "level"
+        ,t1.leadership as "leadership"
         from org_staff t1
         where t1.id!=1
         <include refid="list_where_sql"/>
@@ -213,12 +227,14 @@
     <!--信息列表 分页 -->
     <select id="findStaffIsPage" parameterType="com.hsd.account.staff.entity.org.OrgStaff" resultType="com.hsd.account.staff.entity.org.OrgStaff">
         select
-        t1.id as "id"
+         t1.id as "id"
         ,t1.account as "account"
         ,t1.name as "name"
         ,t1.job_no as "jobNo"
         ,t1.gender as "gender"
         ,t1.avatar as "avatar"
+        ,t1.level as "level"
+        ,t1.leadership as "leadership"
         from org_staff t1
         where t1.id!=1
         <include refid="list_where_sql"/>

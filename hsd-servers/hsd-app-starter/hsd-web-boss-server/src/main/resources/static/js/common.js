@@ -36,6 +36,7 @@ var site = {
         , getRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/get/role/"
         , addRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/role"
         , delRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/role"
+        , setManager: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/manager"
     }
     , orgStaff: {
         view: basePath + "/html/account/staff/org/org_staff"
@@ -56,6 +57,7 @@ var site = {
         , getOrgRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/get/role/org/"
         , addRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/role"
         , delRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/role"
+        , setLeadership: apiPath.account.staff + "/boss/account/staff/org/orgStaff/set/leadership"
     }
     , authPerm: {
         view: basePath + "/html/account/staff/auth/auth_perm"
@@ -213,7 +215,7 @@ function getQueryString(name) {
 $.ajaxSetup({
     headers: {
         "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken"),
-        "Cache-X": sessionStorage.getItem("cacheX")
+        "X-Cache": sessionStorage.getItem("XCache")
     }
 })
 $(document).ajaxComplete(function (event, xhr, settings) {
@@ -239,9 +241,9 @@ var staff = {
                         if (result.data.authorizationToken) {
                             sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
                             sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
-                            sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.authorizationInfoPerms);
-                            sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.authorizationInfoRoles);
-                            sessionStorage.setItem('cacheX', result.data.cacheX);
+                            sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.staff.authorizationInfoPerms);
+                            sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.staff.authorizationInfoRoles);
+                            sessionStorage.setItem('XCache', result.data.XCache);
                         }
                     }
                     callback && callback();
@@ -259,7 +261,7 @@ var staff = {
                     if (result.data.authorizationToken) {
                         sessionStorage.setItem('hsd_staff_tokenExpMillis', result.data.tokenExpMillis);
                         sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
-                        sessionStorage.setItem('cacheX', result.data.cacheX);
+                        sessionStorage.setItem('XCache', result.data.XCache);
                     }
                 }
                 callback && callback();

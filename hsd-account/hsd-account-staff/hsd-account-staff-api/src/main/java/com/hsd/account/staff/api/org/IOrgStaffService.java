@@ -140,4 +140,9 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffByRoleIsList")
     public List<OrgStaffDto> findStaffByRoleIsList(AuthStaffVsRoleDto dto);
+    /**
+     * <p>设置上级领导。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setLeadership")
+    public Response setLeadership(OrgStaffDto dto) throws Exception;
 }

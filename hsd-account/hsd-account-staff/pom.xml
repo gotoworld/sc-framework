@@ -19,6 +19,5 @@
         <module>hsd-account-staff-api</module>
         <module>hsd-account-staff-services</module>
         <module>hsd-account-staff-web-boss</module>
-        <module>hsd-account-staff-web-portal</module>
     </modules>
 </project>

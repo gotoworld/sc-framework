@@ -70,12 +70,13 @@
 													<th>账号</th>
 													<th>姓名</th>
 													<th>工号</th>
+													<th>职级</th>
 													<th>性别</th>
 													<th>状态</th>
 													<th>登录次数</th>
 													<th>最后登录日期</th>
 													<th>创建时间</th>
-													<th>操作</th>
+													<th style="width:320px;">操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
@@ -84,6 +85,7 @@
 													<td>{{item.account}}</td>
 													<td>{{item.name}}</td>
 													<td>{{item.jobNo}}</td>
+													<td>{{levelEnum(item.level)}}</td>
 													<td>{{genderEnum(item.gender)}}</td>
 													<td>{{item.state==0?'启用':'禁用'}}</td>
 													<td>{{item.count}}</td>
@@ -96,10 +98,11 @@
                                                       <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:resetpwd")'   ng-click="resetpwd(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-expeditedssl"></i> 密码重置</a>
                                                         <a href="javascript:;"   ng-click="getOrg(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-staff"></i> 组织查看</a>
                                                         <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:role")' ng-click="setRole(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 角色设置</a>
+                                                        <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:leadership")' ng-click="setLeadership(item)" rel="nofollow" class="label label-success" ><i class="fa fa-user-secret"></i> 设置上级</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="9">
+                                    				<td colspan="11">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -235,6 +238,11 @@
             sessionStorage.setItem(site.orgStaff.info,item.id);
             openMyBoxLayer('设置角色-'+item.name,site.orgStaff.view+'_edit_role.html');
         }
+        $scope.setLeadership = function (item) {
+            sessionStorage.setItem(site.orgStaff.info,item.id);
+            sessionStorage.setItem(site.orgStaff.info+'leadership',item.leadership);
+            openMyBoxLayer('设置上级领导-'+item.name,site.orgStaff.view+'_edit_leadership.html');
+        }
         $scope.addBatch = function () {
             openMyBoxLayer('员工批量上传',site.orgStaff.view+'_edit_batch.html');
         }
@@ -281,6 +289,15 @@
 				case 0:val='男';break;
 				case 1:val='女';break;
 				case 2:val='保密';break;
+			}
+			return val;
+		}
+        $scope.levelEnum=function(key){
+            var val='未知';
+            switch(key){
+				case 0:val='员工';break;
+				case 1:val='职级1';break;
+				case 2:val='职级2';break;
 			}
 			return val;
 		}

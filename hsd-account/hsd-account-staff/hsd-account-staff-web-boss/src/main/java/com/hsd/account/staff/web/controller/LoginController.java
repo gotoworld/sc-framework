@@ -94,9 +94,9 @@ public class LoginController extends BaseController {
             data.put("authorizationToken", authorizationToken);
             data.put("staff", JSONObject.parseObject(subject, OrgStaffDto.class));
 
-            data.put("authorizationInfoPerms", authorizationInfo.get("permissions"));
-            data.put("authorizationInfoRoles", authorizationInfo.get("roles"));
-            data.put("cacheX", request.getSession().getId());
+//            data.put("authorizationInfoPerms", authorizationInfo.get("permissions"));
+//            data.put("authorizationInfoRoles", authorizationInfo.get("roles"));
+            data.put("XCache", request.getSession().getId());
 
             try {
                 //读取session中的员工
@@ -175,7 +175,7 @@ public class LoginController extends BaseController {
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);
-            data.put("cacheX", request.getSession().getId());
+            data.put("XCache", request.getSession().getId());
             result.data = data;
         } catch (Exception e) {
             result = Response.error(e.getMessage());

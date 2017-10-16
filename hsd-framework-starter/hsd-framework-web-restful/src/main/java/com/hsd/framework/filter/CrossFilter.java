@@ -33,7 +33,7 @@ public class CrossFilter implements Filter {
     private void addHeadersFor200Response(HttpServletRequest request,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin","*");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-        response.setHeader("Access-Control-Allow-Headers", "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,Cache-X");
+        response.setHeader("Access-Control-Allow-Headers", "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,X-Cache");
     }
 
 }

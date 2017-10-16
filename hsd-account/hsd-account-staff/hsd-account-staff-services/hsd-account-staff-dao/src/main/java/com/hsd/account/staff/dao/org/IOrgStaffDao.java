@@ -62,6 +62,11 @@ public interface IOrgStaffDao extends IBaseDao {
      */
     @Update("update org_staff set count=count+1,last_login=now() where id = #{id}")
     int lastLogin(IEntity entity) throws Exception;
-
     List<?> findBriefDataIsPage(IEntity dto) throws Exception;
+
+    /**
+     * <p>设置上级领导
+     */
+    @Update("update org_staff set leadership=#{leadership} where id = #{id}")
+    int setLeadership(IEntity entity) throws Exception;
 }

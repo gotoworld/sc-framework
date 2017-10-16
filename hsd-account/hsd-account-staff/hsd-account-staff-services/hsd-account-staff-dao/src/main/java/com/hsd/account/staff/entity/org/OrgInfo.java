@@ -41,8 +41,6 @@ public class OrgInfo extends BaseEntity {
      private Date dateCreated;
      /**更新时间*/
      private Date dateUpdated;
-
-
-     /**员工级别*/
-     private Integer level;
+     /**部门负责人id*/
+     private Long manager;
 }

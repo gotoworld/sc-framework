@@ -212,12 +212,14 @@ public class OrgInfoController extends BaseController {
     }
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/staff/{orgId}")
     @ApiOperation(value = "获取员工-根据组织")
-    public Response getStaff(@PathVariable("orgId") Long orgId) {
+    public Response getStaff(@PathVariable("orgId") Long orgId
+                             ,@RequestParam(name = "level",required = false) Integer level) {
         log.info("OrgInfoController getStaff.........");
         Response result=new Response("success");
         try {
             OrgOrgVsStaffDto orgVsStaffDto=new OrgOrgVsStaffDto();
             orgVsStaffDto.setOrgId(orgId);
+            orgVsStaffDto.setLevel(level);
             result.data=orgInfoService.findOrgStaffIsList(orgVsStaffDto);
         } catch (Exception e) {
             result=Response.error(e.getMessage());

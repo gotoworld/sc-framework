@@ -30,7 +30,7 @@
                     <div class="clearfix "></div>
                     <div class="col-sm-6 b-r">
                         <div class="form-group clearfix" >
-                            <label class="col-md-12 control-label">--请选择组织人员--</label>
+                            <label class="col-md-12 control-label">--请选择上级领导--</label>
                             <div class="col-md-12">
                                     <input type="hidden" name="pageNum" id="pageNumA"  value="1">
                                     <div class="input-group">
@@ -48,8 +48,7 @@
                                             <th style="width:20px;">#</th>
                                             <th>账号</th>
                                             <th>人员</th>
-                                            <!--<th>级别</th>-->
-                                            <th style="width: 60px;"></th>
+                                            <th style="width: 100px;"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -57,15 +56,9 @@
                                             <td>{{(staffResult.data.pageIndex-1)*staffResult.data.pageSize + $index+1}}</td>
                                             <td>{{item.account}}</td>
                                             <td>{{item.name}}</td>
-                                            <!--<td>-->
-                                                <!--<select id="level_{{$index}}">-->
-                                                    <!--<option value="0">员工</option>-->
-                                                    <!--<option value="1" ng-selected="checkOrgLevel(item,1)">主管</option>-->
-                                                <!--</select>-->
-                                            <!--</td>-->
                                             <td>
-                                                <a ng-if="checkAddStaff(item)==false" href="javascript:;" ng-click="addStaff(item,$index)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 添加</a>
-                                                <label ng-if="checkAddStaff(item)==true" >已存在</label>
+                                                <a ng-if="checkAddStaff(item)==false && item.id!=id" href="javascript:;" ng-click="setLeadership(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 设置</a>
+                                                <label ng-if="checkAddStaff(item)==true" >当前领导</label>
                                             </td>
                                         </tr>
                                         <tr ng-if="staffResult.data.data==null || staffResult.data.data==0">
@@ -82,7 +75,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group clearfix" >
-                            <label class="col-md-12 control-label">--已选组织人员--</label>
+                            <label class="col-md-12 control-label">--当前上级领导--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <div class="table-responsive table-scrollable">
                                     <table class="table table-bordered table-striped  table-hover">
@@ -90,24 +83,18 @@
                                         <tr>
                                             <th style="width:20px;">#</th>
                                             <th>账号</th>
-                                            <th>人员</th>
-                                            <!--<th>级别</th>-->
-                                            <th style="width: 60px;"></th>
+                                            <th>领导</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-if="orgStaffNodes && orgStaffNodes.length>0" ng-repeat="item in orgStaffNodes">
-                                            <td>{{ $index+1}}</td>
-                                            <td>{{item.account}}</td>
-                                            <td>{{item.name}}</td>
-                                            <!--<td>{{levelEnum(item.level)}}</td>-->
-                                            <td>
-                                                <a href="javascript:;" ng-click="delStaff(item)" rel="nofollow" class="" ><i class="fa fa-close"></i> 删除</a>
-                                            </td>
+                                        <tr ng-if="leadership" >
+                                            <td></td>
+                                            <td>{{leadership.account}}</td>
+                                            <td>{{leadership.name}}</td>
                                         </tr>
-                                        <tr ng-if="orgStaffNodes==null || orgStaffNodes==0">
-                                            <td colspan="4">
-                                                <div class="alert"><strong>{{orgStaffMessage||'暂无数据'}}</strong></div>
+                                        <tr ng-if="!leadership">
+                                            <td colspan="3">
+                                                <div class="alert"><strong>{{leadershipMessage||'无上级'}}</strong></div>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -146,76 +133,33 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-    function formValidate(){
-        setTimeout(function(){
-            $("#orgInfo_01").validate();
-        },1000);
-    }
-
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
-        $data.orgStaffNodes=[];
-        $data.id=sessionStorage.getItem(site.orgInfo.info);
+        $data.id=sessionStorage.getItem(site.orgStaff.info);
         staff.init(function(){
-            loadOrgStaff();
+            loadLeadership();
         });
-//        $scope.levelEnum=function(key){
-//            var val='未知';
-//            switch (key){
-//                case 0:val='员工';break;
-//                case 1:val='主管';break;
-//            }
-//            return val;
-//        }
         $scope.checkAddStaff=function (item) {
             var flag=false;
-            if($data.orgStaffNodes){
-                for(var i=0;i<$data.orgStaffNodes.length;i++){
-                    if($data.orgStaffNodes[i].id==item.id){
-                        //console.info("--已存在---");
-                        flag= true;
-                    }
-                }
+            if($data.leadership && $data.leadership.id==item.id){
+                //console.info("--已存在---");
+                flag= true;
             }
             return flag;
         }
-//        $scope.checkOrgLevel=function (item,level) {
-//            var flag=false;
-//            if($data.orgStaffNodes){
-//                for(var i=0;i<$data.orgStaffNodes.length;i++){
-//                    if($data.orgStaffNodes[i].id==item.id && $data.orgStaffNodes[i].level==level){
-//                        //console.info("--已存在---");
-//                        flag= true;
-//                    }
-//                }
-//            }
-//            return flag;
-//        }
-        $scope.addStaff = function (item,index) {
-            if(!$data.checkAddStaff(item)){
-                $.post(site.orgInfo.addStaff, {"orgId":$data.id,"staffId":item.id/*,"level":$('#level_'+index).val()*/},function (result) {
+        $scope.setLeadership = function (item) {
+            if(!$data.checkAddStaff(item) && item.id!=$data.id){
+                $.post(site.orgStaff.setLeadership, {"staffId":$data.id,"leadership":item.id},function (result) {
                     //console.info("获取数据.." + JSON.stringify(result));
                     if (result.code == 0) {
-                        /*item.level=parseInt($('#level_'+index).val());*/
-                        $data.orgStaffNodes.push(item);
+                        $data.leadership=item;
                         if (!$data.$$phase) $data.$apply();
                     } else {
                         alert(result.message);
                     }
                 }, 'json');
             }
-        }
-        $scope.delStaff = function (item) {
-            $.post(site.orgInfo.delStaff, {"orgId":$data.id,"staffId":item.id},function (result) {
-                //console.info("获取数据.." + JSON.stringify(result));
-                if (result.code == 0) {
-                    util.removeArrItem($data.orgStaffNodes,item);
-                    if (!$data.$$phase) $data.$apply();
-                } else {
-                    alert(result.message);
-                }
-            }, 'json');
         }
         $scope.page = function (pageIndex) {
             loadStaffPage(pageIndex);
@@ -236,22 +180,20 @@
             if (!$data.$$phase) $data.$apply();
         }, 'json');
     }
-    function loadOrgStaff(){
-        $.get(site.orgInfo.getStaff+sessionStorage.getItem(site.orgInfo.info), {},function (result) {
+    function loadLeadership(){
+        if(!util.notEmpty(sessionStorage.getItem(site.orgStaff.info+'leadership'))) return;
+        $.get(site.orgStaff.info+sessionStorage.getItem(site.orgStaff.info+'leadership'), {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-//                    $data.orgStaffNodes.push.apply($data.orgStaffNodes,result.data);
-                    $data.orgStaffNodes=result.data;
-                    $data.orgStaffMessage=result.message;
+//                    $data.leadership.push.apply($data.leadership,result.data);
+                    $data.leadership=result.data;
+                    $data.leadershipMessage=result.message;
             } else {
                 alert(result.message);
             }
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
-    $(document).ready(function(){
-        formValidate();
-    });
 </script>
 </body>
 </html>

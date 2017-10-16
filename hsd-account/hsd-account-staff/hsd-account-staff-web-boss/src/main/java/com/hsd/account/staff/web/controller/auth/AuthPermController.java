@@ -55,7 +55,7 @@ public class AuthPermController extends BaseController {
     }
 
     /**
-     * <p> 信息树json。
+     * <p> 信息树json
      */
     @RequiresPermissions("authPerm:menu")
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"tree")

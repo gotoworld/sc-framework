@@ -6,7 +6,6 @@
         insert into org_org_vs_staff (
          staff_id
         ,org_id
-        ,level
         ,create_id
         ,date_created
         ) values
@@ -14,7 +13,6 @@
             (
              #{t.staffId}
             ,#{t.orgId}
-            ,#{t.level}
             ,#{t.createId}
             ,now()
             )
@@ -24,13 +22,11 @@
         insert into org_org_vs_staff (
          staff_id
         ,org_id
-        ,level
         ,create_id
         ,date_created
         ) values (
          #{staffId}
         ,#{orgId}
-        ,#{level}
         ,#{createId}
         ,now()
         )
@@ -40,7 +36,6 @@
          t2.id as "id"
         ,t2.account as "account"
         ,t2.name as "name"
-        ,t1.level as "level"
         from org_org_vs_staff t1
         inner join org_staff t2 on (t1.staff_id=t2.id and t2.del_flag=0)
         where t1.org_id=#{orgId}

@@ -38,11 +38,16 @@ public interface IOrgInfoDao extends IBaseDao {
      */
     @Update("update org_info set version=version+1 , date_updated=now(),del_flag=0 where  id = #{id} ")
     int recoveryDataById(IEntity dto) throws Exception;
-
     /**
      * 获取员工所在组织集合>根据员工id
      */
     List<?> getOrgListByStaffId(Map dto) throws Exception;
 
     List<?> findBriefDataIsPage(IEntity dto) throws Exception;
+
+    /**
+     * 设置部门负责人
+     */
+    @Update("update org_info set version=version+1 ,manager=#{manager}, date_updated=now() where  id = #{id} ")
+    int setManager(IEntity dto) throws Exception;
 }

@@ -22,7 +22,6 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
@@ -119,13 +118,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	public RedisTemplate<String, String> redisTemplate(@Qualifier("secondaryRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
 		log.info("2.2 初始化Redis模板(普通对象)... ...");
 		StringRedisTemplate template = new StringRedisTemplate(redisConnectionFactory);
-		ObjectMapper om = new ObjectMapper();
-		om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-		om.setSerializationInclusion(Include.NON_EMPTY);// 创建只输出非Null且非Empty(如List.isEmpty)的属性到Json字符串的Mapper
-		GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(om);
-		template.setValueSerializer(jackson2JsonRedisSerializer);
+		template.setValueSerializer(redisSerializer());
 		template.afterPropertiesSet();
 		return template;
 	}
@@ -138,8 +131,14 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 	/** 设置redisTemplate的存储格式 */
 	@Bean
-	public RedisSerializer sessionRedisSerializer() {
-		return new Jackson2JsonRedisSerializer<Object>(Object.class);
+	public RedisSerializer redisSerializer() {
+		ObjectMapper om = new ObjectMapper();
+		om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+		om.setSerializationInclusion(Include.NON_EMPTY);// 创建只输出非Null且非Empty(如List.isEmpty)的属性到Json字符串的Mapper
+//		GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(om);
+		return new GenericJackson2JsonRedisSerializer(om);
 	}
 	
 	/** RedisTemplate */
@@ -149,9 +148,9 @@ public class RedisConfig extends CachingConfigurerSupport {
 		template.setConnectionFactory(secondaryRedisConnectionFactory());
 		RedisSerializer stringSerializer = new StringRedisSerializer();
 		template.setKeySerializer(stringSerializer);
-		template.setValueSerializer(sessionRedisSerializer());
+		template.setValueSerializer(redisSerializer());
 		template.setHashKeySerializer(stringSerializer);
-		template.setHashValueSerializer(sessionRedisSerializer());
+		template.setHashValueSerializer(redisSerializer());
 		template.afterPropertiesSet();
 		return template;
 	}
@@ -174,7 +173,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	@Bean
 	public HttpSessionStrategy httpSessionStrategy() {
 		HeaderHttpSessionStrategy headerHttpSessionStrategy = new HeaderHttpSessionStrategy();
-		headerHttpSessionStrategy.setHeaderName("Cache-X");
+		headerHttpSessionStrategy.setHeaderName("X-Cache");
 		return headerHttpSessionStrategy;
 	}
 }

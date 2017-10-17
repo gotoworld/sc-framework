@@ -167,7 +167,6 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
-
     public String recoveryDataById(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "success";
         try {
@@ -231,6 +230,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
+
     public String resetPwd(@RequestBody OrgStaffDto dto) throws Exception {
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -245,7 +245,6 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
     }
-
     @Override
     public PageInfo findBriefDataIsPage(@RequestBody OrgStaffDto dto) throws Exception {
         PageInfo pageInfo=null;
@@ -289,6 +288,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
+
     //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RequiresPermissions("orgStaff:add:batch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
@@ -350,7 +350,6 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
-
     private int getGender(String gender){
         int val=3;
         switch (gender){
@@ -376,6 +375,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return results;
     }
+
     @Override
     public List<AuthRoleDto> findOrgRoleIsList(@RequestBody OrgStaffDto dto) {
         List<AuthRoleDto> results = null;
@@ -439,6 +439,16 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
             orgStaffDao.setLeadership(copyTo(dto,OrgStaff.class));
         } catch (Exception e) {
             log.error("上级领导设置失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    public OrgStaffDto getStaffByStaffIdAndleadershipLevel(@RequestBody OrgStaffDto dto) {
+        OrgStaffDto result = null;
+        try {
+            result = copyTo(orgStaffDao.getStaffByStaffIdAndleadershipLevel(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
+        } catch (Exception e) {
+            log.error("获取员工-根据员工和上级级别 异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;

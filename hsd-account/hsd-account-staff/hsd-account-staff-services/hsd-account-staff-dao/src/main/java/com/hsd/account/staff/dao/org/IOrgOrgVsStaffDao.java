@@ -37,4 +37,5 @@ public interface IOrgOrgVsStaffDao extends IBaseDao {
     int deleteBulkDataByOrgId(IEntity entity) throws Exception;
 
     List findOrgStaffIsList(IEntity entity) throws Exception;
+    List findOrgStaffByCodeIsList(IEntity entity) throws Exception;
 }

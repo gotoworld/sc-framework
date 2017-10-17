@@ -77,7 +77,6 @@ public interface IOrgInfoService {
 
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffByIdIsList")
     public List<OrgStaffDto> findOrgStaffIsList(OrgOrgVsStaffDto dto);
-
     /**
      * <p>添加人员。
      */
@@ -92,6 +91,7 @@ public interface IOrgInfoService {
 
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgRoleIsList")
     public List<AuthRoleDto> findOrgRoleIsList(OrgInfoDto dto);
+
     /**
      * <p>添加角色。
      */
@@ -107,4 +107,7 @@ public interface IOrgInfoService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setManager")
     public Response setManager(OrgInfoDto dto) throws Exception;
+
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgStaffByCodeIsList")
+    public List<OrgStaffDto> findOrgStaffByCodeIsList(OrgOrgVsStaffDto dto);
 }

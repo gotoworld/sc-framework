@@ -272,4 +272,20 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/staff/bycode/{orgCode}")
+    @ApiOperation(value = "获取员工-根据组织CODE")
+    public Response getStaffCode(@PathVariable("orgCode") String orgCode
+            ,@RequestParam(name = "level",required = false) Integer level) {
+        log.info("OrgInfoController getStaffCode.........");
+        Response result=new Response("success");
+        try {
+            OrgOrgVsStaffDto orgVsStaffDto=new OrgOrgVsStaffDto();
+            orgVsStaffDto.setCode(orgCode);
+            orgVsStaffDto.setLevel(level);
+            result.data=orgInfoService.findOrgStaffByCodeIsList(orgVsStaffDto);
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
 }

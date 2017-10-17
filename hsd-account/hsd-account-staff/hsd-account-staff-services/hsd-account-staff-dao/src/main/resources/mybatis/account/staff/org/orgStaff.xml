@@ -247,6 +247,6 @@
         select
         <include refid="Base_Column_List"/>
         from org_staff t1
-        where t1.id = queryStaffLeadership(#{id},#{level})
+        where t1.del_flag=0 and t1.id = queryStaffLeadership(#{id},#{level})
     </select>
 </mapper>

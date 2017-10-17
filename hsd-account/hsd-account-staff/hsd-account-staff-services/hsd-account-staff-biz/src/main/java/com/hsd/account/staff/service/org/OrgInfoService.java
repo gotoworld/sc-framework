@@ -197,7 +197,6 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return result;
     }
-
     @RequiresPermissions("orgInfo:edit:staff")
     public Response delStaff(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
         Response result = new Response(0,"success");
@@ -250,6 +249,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return result;
     }
+
     @RequiresPermissions("orgInfo:edit:setManager")
     public Response setManager(@RequestBody OrgInfoDto dto) throws Exception {
         Response result = new Response(0,"success");
@@ -261,5 +261,15 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
+    }
+    public List<OrgStaffDto> findOrgStaffByCodeIsList(@RequestBody OrgOrgVsStaffDto dto) {
+        List<OrgStaffDto> results = null;
+        try {
+            results = copyTo(orgOrgVsStaffDao.findOrgStaffByCodeIsList(copyTo(dto,OrgOrgVsStaff.class)),OrgStaffDto.class);
+        } catch (Exception e) {
+            log.error("获取组织->人员 根据组织编码 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
     }
 }

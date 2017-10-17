@@ -68,7 +68,6 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public OrgStaffDto findDataById(OrgStaffDto dto);
-
     /**
      * <p>获取员工所在组织集合。
      */
@@ -98,6 +97,7 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findBriefDataIsPage")
     public PageInfo findBriefDataIsPage(OrgStaffDto dto) throws Exception;
+
     /**
      * <p>获取员工->个人角色。
      */
@@ -113,12 +113,12 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addOrg")
     public Response addOrg(OrgOrgVsStaffDto dto) throws Exception;
-
     /**
      * <p>删除组织。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delOrg")
     public Response delOrg(OrgOrgVsStaffDto dto) throws Exception;
+
     /**
      * <p>批量新增。
      */
@@ -129,12 +129,12 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addRole")
     public Response addRole(AuthStaffVsRoleDto dto) throws Exception;
-
     /**
      * <p>添加角色。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delRole")
     public Response delRole(AuthStaffVsRoleDto dto) throws Exception;
+
     /**
      * <p>根据角色-获取员工列表。
      */
@@ -145,4 +145,9 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setLeadership")
     public Response setLeadership(OrgStaffDto dto) throws Exception;
+    /**
+     * <p>获取员工-根据员工和上级级别。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getStaffByStaffIdAndleadershipLevel")
+    public OrgStaffDto getStaffByStaffIdAndleadershipLevel(OrgStaffDto dto);
 }

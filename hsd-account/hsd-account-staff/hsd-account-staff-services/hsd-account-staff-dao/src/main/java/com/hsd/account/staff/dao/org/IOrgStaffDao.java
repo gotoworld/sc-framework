@@ -40,7 +40,6 @@ public interface IOrgStaffDao extends IBaseDao {
      * <p>获取员工信息>根据员工登录名。
      */
     Object findStaffByAccount(Map dto) throws Exception;
-
     /**
      * <p>判断员工账号是否存在
      */
@@ -52,6 +51,7 @@ public interface IOrgStaffDao extends IBaseDao {
      */
     @Update("update org_staff set version=version+1,date_updated=now(),pwd=#{confirmpwd} where id = #{id} and pwd=#{oldpwd}")
     int updatePwd(IEntity entity) throws Exception;
+
     /**
      * <p>密码重置
      */
@@ -63,10 +63,14 @@ public interface IOrgStaffDao extends IBaseDao {
     @Update("update org_staff set count=count+1,last_login=now() where id = #{id}")
     int lastLogin(IEntity entity) throws Exception;
     List<?> findBriefDataIsPage(IEntity dto) throws Exception;
-
     /**
      * <p>设置上级领导
      */
     @Update("update org_staff set leadership=#{leadership} where id = #{id}")
     int setLeadership(IEntity entity) throws Exception;
+
+    /**
+     * <p>获取员工-根据员工和上级级别。
+     */
+    Object getStaffByStaffIdAndleadershipLevel(IEntity entity) throws Exception;
 }

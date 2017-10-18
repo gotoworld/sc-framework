@@ -155,4 +155,9 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getStaffByStaffIdAndleadershipLevel")
     public OrgStaffDto getStaffByStaffIdAndleadershipLevel(OrgStaffDto dto);
+    /**
+     * <p>获取员工-所有上级。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getStaffLeadershipAll")
+    public List<OrgStaffDto> getStaffLeadershipAll(OrgStaffDto dto);
 }

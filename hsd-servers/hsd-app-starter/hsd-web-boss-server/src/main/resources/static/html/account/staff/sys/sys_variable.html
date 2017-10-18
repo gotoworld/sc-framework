@@ -104,7 +104,6 @@
 										<thead>
 										<tr>
 											<th style="width:20px;">#</th>
-											<th>所属应用</th>
 											<th>编码</th>
 											<th>名称</th>
 											<th>创建时间</th>
@@ -114,7 +113,6 @@
 										<tbody>
 										<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
 											<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-											<td>{{item.domainCode}}</td>
 											<td>{{item.code}}</td>
 											<td>{{item.name}}</td>
 											<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -125,7 +123,7 @@
 											</td>
 										</tr>
 										<tr ng-if="result.data.data==null || result.data.data.length==0">
-											<td colspan="7">
+											<td colspan="6">
 												<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
 											</td>
 										</tr>
@@ -233,11 +231,10 @@
         data: [],
         onNodeSelected: function (event, node) {
             var trStr ='';
-            trStr+=' <tr><th class="col-md-3">所属应用:</th><th class="">'+node.domainCode+'</th></tr>';
-            trStr+=' <tr><th class="col-md-3">编码:</th><th class="">'+node.code+'</th></tr>';
-            trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
-            trStr+=' <tr><th class="col-md-3">名称:</th><th class="">'+node.name+'</th></tr>';
+            trStr+=' <tr><th class="col-md-3">key:</th><th class="">'+node.code+'</th></tr>';
+            trStr+=' <tr><th class="col-md-3">value:</th><th class="">'+node.name+'</th></tr>';
             trStr+=' <tr><th class="col-md-3">备注:</th><th class="">'+node.memo+'</th></tr>';
+            trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
             if(staff.hasPermission("sysVariable:info") || staff.hasPermission("sysVariable:edit") || staff.hasPermission("sysVariable:del")){
                 trStr+=' <tr><th class="col-md-3">操作:</th><th> ';
                 if(staff.hasPermission("sysVariable:info")){

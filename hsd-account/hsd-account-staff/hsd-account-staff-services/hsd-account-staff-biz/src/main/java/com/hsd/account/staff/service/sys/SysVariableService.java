@@ -113,6 +113,18 @@ public class SysVariableService extends BaseService implements ISysVariableServi
         }
         return  results;
     }
+    @Override
+    public List<SysVariableDto> findChildDataIsList(@RequestBody SysVariableDto dto) throws Exception {
+        List<SysVariableDto>  results = null;
+        try {
+            SysVariable entity = copyTo(dto, SysVariable.class);
+            results = copyTo(sysVariableDao.findChildDataIsList(entity), SysVariableDto.class);
+        } catch (Exception e) {
+            log.error("信息[列表]查询异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return  results;
+    }
 
     @Override
     public SysVariableDto findDataById(@RequestBody SysVariableDto dto) throws Exception {

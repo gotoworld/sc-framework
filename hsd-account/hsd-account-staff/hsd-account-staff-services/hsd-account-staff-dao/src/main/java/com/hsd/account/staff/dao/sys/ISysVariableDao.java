@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * <p>系统_数据字典表 数据库处理接口类。
  */
@@ -30,4 +32,5 @@ public interface ISysVariableDao extends IBaseDao {
      */
     @Delete("delete from sys_variable where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
+    List findChildDataIsList(IEntity entity) throws Exception;
 }

@@ -56,4 +56,11 @@
         where t3.code=#{code}
         <if test="level!= null"> and t2.level=#{level}</if>
     </select>
+    <select id="findOrgLevel" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsStaff" resultType="string">
+        select GROUP_CONCAT(DISTINCT t2.level)
+        from org_org_vs_staff t1
+        inner join org_staff t2 on t1.staff_id=t2.id and t2.del_flag=0
+        inner join org_info t3 on (t1.org_id=t3.id and t3.del_flag=0)
+        where t3.code=#{code}
+    </select>
 </mapper>

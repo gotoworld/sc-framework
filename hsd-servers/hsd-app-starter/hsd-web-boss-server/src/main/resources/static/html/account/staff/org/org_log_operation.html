@@ -75,7 +75,7 @@
 										<thead>
 										<tr>
 											<th style="width:20px;">#</th>
-											<th>所属应用</th>
+											<!--<th>所属应用</th>-->
 											<th>操作类型</th>
 											<th>描述</th>
 											<th>操作人</th>
@@ -87,7 +87,7 @@
 										<tbody>
 										<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
 											<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-											<td>{{item.domainCode}}</td>
+											<!--<td>{{item.domainCode}}</td>-->
 											<td>{{item.type}}</td>
 											<td>{{item.memo}}</td>
 											<td>{{item.createName}}</td>

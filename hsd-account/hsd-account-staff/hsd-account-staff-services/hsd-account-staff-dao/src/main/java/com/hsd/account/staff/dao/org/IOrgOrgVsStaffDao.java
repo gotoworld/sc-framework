@@ -38,4 +38,5 @@ public interface IOrgOrgVsStaffDao extends IBaseDao {
 
     List findOrgStaffIsList(IEntity entity) throws Exception;
     List findOrgStaffByCodeIsList(IEntity entity) throws Exception;
+    String findOrgLevel(IEntity entity) throws Exception;
 }

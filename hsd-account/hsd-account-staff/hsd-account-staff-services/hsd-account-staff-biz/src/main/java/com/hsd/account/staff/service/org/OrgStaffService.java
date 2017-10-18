@@ -167,6 +167,16 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
+    public OrgStaffDto findDataByAccount(@RequestBody OrgStaffDto dto) {
+        OrgStaffDto result = null;
+        try {
+            result = copyTo(orgStaffDao.findDataByAccount(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
+        } catch (Exception e) {
+            log.error("信息详情查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
     public String recoveryDataById(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "success";
         try {

@@ -69,6 +69,11 @@ public interface IOrgStaffService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public OrgStaffDto findDataById(OrgStaffDto dto);
     /**
+     * <p>获取员工信息-根据账号。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByAccount")
+    public OrgStaffDto findDataByAccount(OrgStaffDto dto);
+    /**
      * <p>获取员工所在组织集合。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgIsList")

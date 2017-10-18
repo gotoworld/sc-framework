@@ -249,4 +249,20 @@
         from org_staff t1
         where t1.del_flag=0 and t1.id = queryStaffLeadership(#{id},#{level})
     </select>
+    <!-- 根据主键获取信息详情 -->
+    <select id="findDataByAccount" resultType="com.hsd.account.staff.entity.org.OrgStaff" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
+        select
+         t1.id as "id"
+        ,t1.account as "account"
+        ,t1.name as "name"
+        ,t1.job_no as "jobNo"
+        ,t1.gender as "gender"
+        ,t1.avatar as "avatar"
+        ,t1.level as "level"
+        ,t1.leadership as "leadership"
+        from org_staff t1
+        where t1.del_flag=0
+        and t1.state=0
+        and t1.account = #{account}
+    </select>
 </mapper>

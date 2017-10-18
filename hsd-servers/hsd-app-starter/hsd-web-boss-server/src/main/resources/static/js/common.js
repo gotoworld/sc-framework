@@ -88,6 +88,7 @@ var site = {
     , sysVariable: {
         view: basePath + "/html/account/staff/sys/sys_variable"
         , page: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/page/"
+        , list: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/list/"
         , tree: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/tree"
         , save: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/save"
         , info: apiPath.account.staff + "/boss/account/staff/sys/sysVariable/info/"

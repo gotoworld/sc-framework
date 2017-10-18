@@ -223,6 +223,18 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
+    var loadStaffLevel=function(id){
+        $.get(site.sysVariable.list+'staffLevel', {},function (result) {
+             //console.info("获取数据.." + JSON.stringify(result));
+             if (result.code == 0) {
+                 $data.item = result.data;
+             } else {
+                 $data.message = result.message;
+                 alert( result.message);
+             }
+             if(!$data.$$phase) $data.$apply();
+         }, 'json');
+    }
 
     $(document).ready(function(){
         formValidate();

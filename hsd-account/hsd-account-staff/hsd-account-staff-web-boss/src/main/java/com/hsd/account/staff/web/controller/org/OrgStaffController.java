@@ -426,14 +426,14 @@ public class OrgStaffController extends BaseController {
 	 * <p> 获取员工-根据员工和上级级别 (未删除)。
 	 */
 //	@RequiresPermissions("orgStaff:info")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"leadership/{staffId}")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"leadership/{account}")
 	@ApiOperation(value = "获取员工-根据员工和上级级别")
-	public Response getStaffByStaffIdAndleadershipLevel(@PathVariable("staffId") Long staffId,@RequestParam("level") Integer level) {
+	public Response getStaffByStaffIdAndleadershipLevel(@PathVariable("account") String account,@RequestParam("level") Integer level) {
 		log.info("OrgStaffController getStaffByStaffIdAndleadershipLevel.........");
 		Response result = new Response("success");
 		try {
 			OrgStaffDto dto = new OrgStaffDto();
-			dto.setId(staffId);
+			dto.setAccount(account);
 			dto.setLevel(level);
 			result.data=orgStaffService.getStaffByStaffIdAndleadershipLevel(dto);
 		} catch (Exception e) {

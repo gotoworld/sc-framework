@@ -247,7 +247,7 @@
         select
         <include refid="Base_Column_List"/>
         from org_staff t1
-        where t1.del_flag=0 and t1.id = queryStaffLeadership(#{id},#{level})
+        where t1.del_flag=0 and t1.account = queryStaffLeadership(#{account},#{level})
     </select>
     <!-- 根据主键获取信息详情 -->
     <select id="findDataByAccount" resultType="com.hsd.account.staff.entity.org.OrgStaff" parameterType="com.hsd.account.staff.entity.org.OrgStaff">

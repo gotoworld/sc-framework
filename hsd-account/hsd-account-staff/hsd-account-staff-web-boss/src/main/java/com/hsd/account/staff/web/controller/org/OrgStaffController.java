@@ -441,4 +441,22 @@ public class OrgStaffController extends BaseController {
 		}
 		return result;
 	}
+	/**
+	 * <p> 获取员工-所有上级(未删除)
+	 */
+//	@RequiresPermissions("orgStaff:info")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"leadership/all/{account}")
+	@ApiOperation(value = "获取员工-根据员工和上级级别")
+	public Response getStaffLeadershipAll(@PathVariable("account") String account) {
+		log.info("OrgStaffController getStaffLeadershipAll.........");
+		Response result = new Response("success");
+		try {
+			OrgStaffDto dto = new OrgStaffDto();
+			dto.setAccount(account);
+			result.data=orgStaffService.getStaffLeadershipAll(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
 }

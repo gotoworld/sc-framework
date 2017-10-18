@@ -54,11 +54,8 @@ public class OrgInfoDto extends BaseDto {
     private List<OrgInfoDto> nodes;
     private String text;
     private Integer[] tags;
-    public String getText(){
-        return name;
-    }
     public Integer[] getTags(){
-        return new Integer[]{nodes!=null?nodes.size():0};
+        if(text!=null) return new Integer[]{nodes!=null?nodes.size():0};else return  null;
     }
 
     private List<Long> roleIds;

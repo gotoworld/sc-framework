@@ -41,6 +41,10 @@ public interface IOrgStaffDao extends IBaseDao {
      */
     Object findStaffByAccount(Map dto) throws Exception;
     /**
+     * <p>获取员工信息>根据员工登录名。
+     */
+    Object findDataByAccount(IEntity entity) throws Exception;
+    /**
      * <p>判断员工账号是否存在
      */
     @Select(" select count(0) from org_staff where  account=#{account} ")

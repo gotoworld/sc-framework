@@ -48,7 +48,7 @@ public class OrgStaffController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page/{pageNum}")
 	@ApiOperation(value = "信息分页")
 	public Response page(@ModelAttribute OrgStaffDto dto, @PathVariable("pageNum") Integer pageNum
-			,@RequestParam(name = "level",required = false) Integer level) {
+			,@RequestParam(name = "level",required = false) String level) {
 		log.info("OrgStaffController page.........");
 		Response result = new Response("success");
 		try {
@@ -428,7 +428,7 @@ public class OrgStaffController extends BaseController {
 //	@RequiresPermissions("orgStaff:info")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"leadership/{account}")
 	@ApiOperation(value = "获取员工-根据员工和上级级别")
-	public Response getStaffByStaffIdAndleadershipLevel(@PathVariable("account") String account,@RequestParam("level") Integer level) {
+	public Response getStaffByStaffIdAndleadershipLevel(@PathVariable("account") String account,@RequestParam("level") String level) {
 		log.info("OrgStaffController getStaffByStaffIdAndleadershipLevel.........");
 		Response result = new Response("success");
 		try {

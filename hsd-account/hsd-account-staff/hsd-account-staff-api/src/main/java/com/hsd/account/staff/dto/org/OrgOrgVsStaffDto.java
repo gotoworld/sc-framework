@@ -23,7 +23,7 @@ public class OrgOrgVsStaffDto extends BaseDto {
     private Date dateCreated;
 
     /**员工职级*/
-    private Integer level;
+    private String level;
     /**组织编码*/
     private String code;
 }

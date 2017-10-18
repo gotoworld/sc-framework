@@ -213,7 +213,7 @@ public class OrgInfoController extends BaseController {
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/staff/{orgId}")
     @ApiOperation(value = "获取员工-根据组织")
     public Response getStaff(@PathVariable("orgId") Long orgId
-                             ,@RequestParam(name = "level",required = false) Integer level) {
+                             ,@RequestParam(name = "level",required = false) String level) {
         log.info("OrgInfoController getStaff.........");
         Response result=new Response("success");
         try {
@@ -275,7 +275,7 @@ public class OrgInfoController extends BaseController {
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/staff/bycode/{orgCode}")
     @ApiOperation(value = "获取员工-根据组织CODE")
     public Response getStaffCode(@PathVariable("orgCode") String orgCode
-            ,@RequestParam(name = "level",required = false) Integer level) {
+            ,@RequestParam(name = "level",required = false) String level) {
         log.info("OrgInfoController getStaffCode.........");
         Response result=new Response("success");
         try {

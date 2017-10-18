@@ -24,6 +24,10 @@ public class NodeTree<T> {
 
     public List<T> buildTree() {
         for (T node : nodes) {
+            try {
+                ReflectUtil.setValueByFieldName(node,"text",ReflectUtil.getValueByFieldName(node,"name"));
+            } catch (Exception e) {
+            }
             if (ValidatorUtil.isNullEmpty(ReflectUtil.getValueByFieldName(node, attr_parentId))) {
                 new_nodes.add(node);
                 build(node);

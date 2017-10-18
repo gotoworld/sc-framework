@@ -4,10 +4,11 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-	<meta name="description" content="memo of your site" />	<meta name="author" content="author of the site" />
-	<link rel="shortcut icon" href="favicon.ico"> 
-	
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="memo of your site"/>
+    <meta name="author" content="author of the site"/>
+    <link rel="shortcut icon" href="favicon.ico">
+
 
     <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -17,47 +18,68 @@
 
     <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
     <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
-
+    <style>.ui-sortable{margin-right: 10px;}</style>
 </head>
 
 <body class="gray-bg" ng-controller="app-ctrl" class="ng-cloak" ng-cloak>
 <div class="row">
     <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="ibox-content m-b-sm border-bottom">
-            <div class="p-xs">
-                <div class="pull-left m-r-md">
-                    <i class="fa fa-globe text-navy mid-icon"></i>
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>待办事务</h5>
                 </div>
-                <span>测试版V0.1。</span>
+                <div class="ibox-content col-sm-12">
+                    <p>
+                        <a class="btn btn-primary " ><i class="fa fa-check"></i>&nbsp;待办事务</a>
+                        <a class="btn btn-success " ><i class="fa fa-upload"></i>&nbsp;&nbsp;<span class="bold">待审核</span></a>
+                        <a class="btn btn-info " ><i class="fa fa-paste"></i> 满标待审核</a>
+                        <a class="btn btn-warning " ><i class="fa fa-warning"></i> <span class="bold">实名认证</span></a>
+                        <a class="btn btn-default " ><i class="fa fa-map-marker"></i>&nbsp;&nbsp;视频认证</a>
+                        <a class="btn btn-success"><i class="fa fa-weixin"> </i> 现场认证</a>
+                        <a class="btn btn-success btn-outline"> <i class="fa fa-qq"> </i> 手机认证</a>
+                        <a class="btn btn-white btn-bitbucket"> <i class="fa fa-user-md"></i>充值申请</a>
+                        <a class="btn btn-white btn-bitbucket"> <i class="fa fa-group"></i>提现申请</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
     <div class="wrapper wrapper-content  animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>进口好鸡汤</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <ol>
-                            <li>1</li>
-                            <li>2</li>
-                            <li>3</li>
-                            <li>4</li>
-                            <li>5</li>
-                            <li>6</li>
-                            <li>7</li>
-                            <li>8</li>
-                        </ol>
-                    </div>
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>网站统计</h5>
                 </div>
-
+                <div class="ibox-content col-sm-12">
+                    <ul class="sortable-list connectList agile-list ui-sortable col-sm-2">
+                        <li class="success-element">	会员总数：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0人	</div></li>
+                        <li class="warning-element">	平台总资金：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="success-element">	冻结总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="warning-element">	待收总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                    </ul>
+                    <ul class="sortable-list connectList agile-list ui-sortable col-sm-2">
+                        <li class="success-element">	未还总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="warning-element">	提现总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="success-element">	充值总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="warning-element">	今日会员数：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0人	</div></li>
+                    </ul>
+                    <ul class="sortable-list connectList agile-list ui-sortable col-sm-2">
+                        <li class="success-element">	今日提现总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="warning-element">	今日充值总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="success-element">	本周会员数：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0人	</div></li>
+                        <li class="warning-element">	本周提现总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                    </ul>
+                    <ul class="sortable-list connectList agile-list ui-sortable col-sm-2">
+                        <li class="success-element">	本周充值总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="warning-element">	本月会员数：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0人	</div></li>
+                        <li class="success-element">	本月提现总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                        <li class="warning-element">	本月充值总金额：	<div class="agile-detail"> <i class="fa fa-clock-o"></i>	0.00元	</div></li>
+                    </ul>
+                </div>
             </div>
-
-        </div>
+         </div>
     </div>
-</div>
 <script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
 <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
@@ -65,9 +87,10 @@
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
-    angular.module("app", []).controller("app-ctrl",  function ($scope) {
+    angular.module("app", []).controller("app-ctrl", function ($scope) {
         $data = $scope;
-        staff.init(function(){/*console.info($data.staffInfo.name)*/});
+        staff.init(function () {/*console.info($data.staffInfo.name)*/
+        });
     });
 </script>
 </body>

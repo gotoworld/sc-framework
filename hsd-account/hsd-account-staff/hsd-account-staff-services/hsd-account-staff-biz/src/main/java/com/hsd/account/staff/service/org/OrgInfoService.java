@@ -272,4 +272,14 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return results;
     }
+    public String findOrgLevel(@RequestBody OrgOrgVsStaffDto dto) {
+        String result = null;
+        try {
+            result = orgOrgVsStaffDao.findOrgLevel(copyTo(dto,OrgOrgVsStaff.class));
+        } catch (Exception e) {
+            log.error("获取组织内人员职级 根据组织编码 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
 }

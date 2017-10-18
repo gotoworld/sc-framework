@@ -17,8 +17,6 @@ public class SysVariable extends BaseEntity {
     private Long id;
     /**编码*/
     private String code;
-    /**所属系统域*/
-    private String domainCode;
     /**名称*/
     private String name;
     /**父级ID*/

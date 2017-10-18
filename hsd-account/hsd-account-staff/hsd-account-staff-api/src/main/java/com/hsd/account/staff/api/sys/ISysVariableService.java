@@ -45,6 +45,11 @@ public interface ISysVariableService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
     public List<SysVariableDto> findDataIsList(SysVariableDto dto) throws Exception;
+    /**
+     * <p>信息列表。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findChildDataIsList")
+    public List<SysVariableDto> findChildDataIsList(SysVariableDto dto) throws Exception;
 
     /**
      * <p>信息树。

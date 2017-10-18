@@ -7,7 +7,6 @@
         ,t1.code as "code"
         ,t1.name as "name"
         ,t1.parent_id as "parentId"
-        ,t1.domain_code as "domainCode"
         ,t1.memo as "memo"
         ,t1.version as "version"
         ,t1.order_no as "orderNo"
@@ -33,8 +32,7 @@
             code 
            ,name 
            ,parent_id
-           ,domain_code
-           ,memo 
+           ,memo
            ,version 
            ,order_no 
            ,del_flag 
@@ -46,8 +44,7 @@
             #{code} 
            ,#{name} 
            ,#{parentId}
-           ,#{domainCode}
-           ,#{memo} 
+           ,#{memo}
            ,0
            ,#{orderNo} 
            ,0
@@ -64,7 +61,6 @@
              <if test="code!=null">,code = #{code}</if>
              <if test="name!=null">,name = #{name}</if>
              ,parent_id = #{parentId}
-             <if test="domainCode!=null">,domain_code = #{domainCode}</if>
              <if test="memo!=null">,memo = #{memo}</if>
              <if test="orderNo!=null">,order_no = #{orderNo}</if>
              <if test="createId!=null">,create_id = #{createId}</if>
@@ -110,6 +106,14 @@
         from sys_variable t1
         where 1=1
         <include refid="list_where_sql"/>
+        order by t1.order_no desc,t1.date_created desc
+    </select>
+    <select id="findChildDataIsList" parameterType="com.hsd.account.staff.entity.sys.SysVariable" resultType="com.hsd.account.staff.entity.sys.SysVariable">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_variable t1
+        inner join sys_variable t2 on t2.id=t1.parent_id and t2.del_flag=0
+        where t1.del_flag=0 and t2.code=#{code}
         order by t1.order_no desc,t1.date_created desc
     </select>
 </mapper>

@@ -39,8 +39,6 @@ public class SysVariableDto extends BaseDto {
     /**名称*/
     @NotNull(message="name不能为空")@Size(max=100,message="name最大100字符")
     private String name;
-    /**所属系统域*/
-    private String domainCode;
     /**父级ID*/
     private Long parentId;
     /**备注*/

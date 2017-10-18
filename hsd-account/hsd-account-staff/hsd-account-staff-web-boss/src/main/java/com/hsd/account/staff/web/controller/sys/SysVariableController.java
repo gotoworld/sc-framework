@@ -53,6 +53,25 @@ public class SysVariableController extends BaseController {
         }
         return result;
     }
+    /**
+     * <p>信息列表 (未删除)。
+     */
+    @RequiresPermissions("sysVariable:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/{code}")
+    @ApiOperation(value = "信息列表")
+    public Response list(@PathVariable("code") String code) {
+        log.info("SysVariableController list.........");
+        Response result = new Response();
+        try {
+            SysVariableDto dto = new SysVariableDto();
+            dto.setCode(code);
+            // 信息列表
+            result.data = sysVariableService.findChildDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
     /**
      * <p> 信息树json。

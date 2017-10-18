@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+<meta charset="utf-8" />
+<title>//TODO 组织架构 新增/编辑</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description" content="memo of your site" />
+<meta name="author" content="author of the site" />
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+<link href="/css/common.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-md-12">
+				<form id="orgInfo_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+					<div class="clearfix "></div>
+                    <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    参数说明：
+                                </td>
+                                <td>
+                                    <input name="state" type="text" class="span10" placeholder="请输入参数说明...">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    输入提示：
+                                </td>
+                                <td>
+                                    <input name="prompt" type="text" class="span10" placeholder="请输入输入提示...">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    参数值：
+                                </td>
+                                <td>
+                                    <input name="value" type="text" class="span10" placeholder="请输入参数值...">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    变量名：
+                                </td>
+                                <td>
+                                    <input name="name" type="text" class="span10" placeholder="请输入变量名以sys_开头...">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    表单类型：
+                                </td>
+                                <td class="form-inline">
+                                    <label class="radio"><div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" name="type" value="1" checked="" style="opacity: 0;"></span></div> 文本域</label>
+                                    <label class="radio"><div class="radio" id="uniform-undefined"><span><input type="radio" name="type" value="2" style="opacity: 0;"></span></div> 文本区域</label>
+                                    <label class="radio"><div class="radio" id="uniform-undefined"><span><input type="radio" name="type" value="3" style="opacity: 0;"></span></div> 文件域</label>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
+						<div style="width: 200px; margin: 0 auto;">
+							<input class="btn btn-primary" type="submit" value="确认" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+<script type="text/javascript">
+    function formValidate(){
+        setTimeout(function(){
+            $("#orgInfo_01").validate();
+        },1000);
+    }
+
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
+        $data = $scope;
+        staff.init(function(){
+            $data.newFlag=sessionStorage.getItem(site.orgInfo.info);
+            if($data.newFlag) $data.uuidToken=util.guid();
+            loadTree();
+            loadInfo(sessionStorage.getItem(site.orgInfo.info));
+        });
+        $scope.save = function () {
+            if($("#orgInfo_01").valid()){
+                $.post(site.orgInfo.save, $('#orgInfo_01').serialize(),function (result) {
+                        //console.info("获取数据.." + JSON.stringify(result));
+                        if (result.code == 0) {
+                            alert('保存成功!');
+                            closeMyBoxLayer();
+                        } else {
+                            alert(result.message);
+                        }
+                }, 'json');
+            }
+        }
+    });
+
+    var loadInfo=function(id){
+        $.get(site.orgInfo.info + id, {},function (result) {
+             //console.info("获取数据.." + JSON.stringify(result));
+             if (result.code == 0) {
+                 $data.item = result.data;
+             } else {
+                 $data.message = result.message;
+                 alert( result.message);
+             }
+             if(!$data.$$phase) $data.$apply();
+         }, 'json');
+    }
+    function loadTree(){
+        $.get(site.orgInfo.tree, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.nodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+    $(document).ready(function(){
+        formValidate();
+    });
+</script>
+</body>
+</html>
+

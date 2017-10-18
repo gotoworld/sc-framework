@@ -97,9 +97,7 @@
                             <div class="col-md-12">
                                 <select data-placeholder="选择员工级别" id="bean-level" name="level" class="form-control"   aria-describedby="bean-level-error"   aria-invalid="true">
                                     <option value="">--请选择员工级别--</option>
-                                    <option value="0" ng-selected="selected(0,item.level)">普通员工</option>
-                                    <option value="1" ng-selected="selected(1,item.level)">职级1</option>
-                                    <option value="2" ng-selected="selected(2,item.level)">职级2</option>
+                                    <option ng-repeat="level in staffLevelNodes" ng-value="level.code" ng-selected="selected(level.code,item.level)">{{level.name}}</option>
                                 </select>
                                 <span id="bean-level-error" class="help-block m-b-none"></span>
                             </div>
@@ -184,10 +182,12 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
+        $data.staffLevelNodes=[];
         staff.init(function(){
            $data.newFlag=sessionStorage.getItem(site.orgStaff.info);
            if($data.newFlag) $data.uuidToken=util.guid();
            loadInfo(sessionStorage.getItem(site.orgStaff.info));
+            loadStaffLevel();
         });
         $scope.isAccountYN=function (account){
             $.post(site.orgStaff.isAccountYN, $('#orgStaff_01').serialize(),function (result) {
@@ -223,13 +223,12 @@
              if(!$data.$$phase) $data.$apply();
          }, 'json');
     }
-    var loadStaffLevel=function(id){
+    var loadStaffLevel=function(){
         $.get(site.sysVariable.list+'staffLevel', {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
              if (result.code == 0) {
-                 $data.item = result.data;
+                 $data.staffLevelNodes = result.data;
              } else {
-                 $data.message = result.message;
                  alert( result.message);
              }
              if(!$data.$$phase) $data.$apply();

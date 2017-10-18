@@ -68,7 +68,7 @@ public class OrgStaff extends BaseEntity {
      private String orgId;
 
      /**员工级别*/
-     private Integer level;
+     private String level;
      /**上级领导id*/
      private Long leadership;
 }

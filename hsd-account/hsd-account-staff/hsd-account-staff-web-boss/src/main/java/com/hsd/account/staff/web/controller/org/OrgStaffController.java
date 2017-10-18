@@ -105,6 +105,23 @@ public class OrgStaffController extends BaseController {
 		return result;
 	}
 	/**
+	 * <p> 详情。
+	 */
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/byaccount/{account}")
+	@ApiOperation(value = "详情")
+	public Response infoByAccount(@PathVariable("account") String account) {
+		log.info("OrgStaffController infoByAccount.........");
+		Response result = new Response("success");
+		try {
+			OrgStaffDto dto=new OrgStaffDto();
+			dto.setAccount(account);
+			result.data=orgStaffService.findDataByAccount(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**
 	 * <li>逻辑删除。
 	 */
 	@RequiresPermissions("orgStaff:del")

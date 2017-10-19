@@ -1,6 +1,8 @@
 package ${scfg._dto_pkg};
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel("${tcfg.tableComment} DTO")
 public class ${tcfg.tableNameFormat!}Dto extends BaseDto {
 @[ for( t in beanVo!){ /]
-     /**${t.columnComment!}*/${validator.notEmpty(t.JSR303)?'\n\t '+t.JSR303:''}
+     @ApiModelProperty("${t.columnComment!}")${validator.notEmpty(t.JSR303)?'\n\t '+t.JSR303:''}
      private ${t.javaType} ${t.columnNameFormat};
 @[ } /]
 

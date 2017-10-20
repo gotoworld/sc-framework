@@ -79,7 +79,7 @@ public class OrgStaffDto extends BaseDto {
      private String newpwd;
      private String confirmpwd;
      /**机构id*/
-     private String orgId;
+     private Long orgId;
      /**超级管理员标记*/
      private Integer iissuperman;
      /**员工权限,匹配字符集合*/

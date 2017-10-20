@@ -56,6 +56,26 @@ public class OrgInfoController extends BaseController {
         return result;
     }
     /**
+     * <p>获取组织列表-根据组织类型 (未删除)。
+     */
+    @RequiresPermissions("orgInfo:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/bytype/{type}")
+    @ApiOperation(value = "获取组织列表-根据组织类型")
+    public Response list(@PathVariable("type") Integer type) {
+        log.info("OrgInfoController list bytype.........");
+        Response result = new Response("success");
+        try {
+            OrgInfoDto dto = new OrgInfoDto();
+            dto.setType(type);//类型0企业1部门2组
+            dto.setDelFlag(0);
+            // 信息列表
+            result.data = orgInfoService.findDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
      * <p>信息分页 (未删除)。
      */
     @RequiresPermissions("orgInfo:menu")

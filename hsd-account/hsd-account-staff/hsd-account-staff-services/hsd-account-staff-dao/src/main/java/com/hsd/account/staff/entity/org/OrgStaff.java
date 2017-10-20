@@ -65,7 +65,7 @@ public class OrgStaff extends BaseEntity {
      /**员工密码(新)*/
      private String confirmpwd;
      /**机构id*/
-     private String orgId;
+     private Long orgId;
 
      /**员工级别*/
      private String level;

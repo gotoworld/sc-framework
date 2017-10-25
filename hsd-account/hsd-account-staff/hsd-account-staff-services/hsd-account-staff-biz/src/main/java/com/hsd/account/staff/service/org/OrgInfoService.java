@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @FeignService
@@ -281,5 +282,48 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
+    }
+    public List<OrgInfoDto> findChildDataIsList(@RequestBody OrgInfoDto dto) {
+        List<OrgInfoDto> results = null;
+        try {
+            OrgInfo orgInfo= (OrgInfo) orgInfoDao.getDataByPCode(new OrgInfo(){{setCode(dto.getCode());}});
+            if(orgInfo!=null){
+                results = new ArrayList<>();
+            }
+            int count=0;
+            while (orgInfo!=null){
+                results.add(copyTo(orgInfo,OrgInfoDto.class));
+                orgInfo= (OrgInfo) orgInfoDao.getDataByPCode(new OrgInfo(){{setCode(dto.getCode());}});
+                count++;
+                if(count>100){
+                    throw new RuntimeException("疑似递归死循环!");
+                }
+            }
+            if(orgInfo!=null) results.add(copyTo(orgInfo,OrgInfoDto.class));
+
+        } catch (Exception e) {
+            log.error("获取下级组织->传入公司或部门的code 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
+    public List<OrgInfoDto> findOrgChildStaffIsList(@RequestBody OrgInfoDto dto) {
+        List<OrgInfoDto> results = null;
+        try {
+            List<Long> childIdArr=new ArrayList<>();
+            Long orgId=orgInfoDao.getIdByPCode(copyTo(dto,OrgInfo.class));
+            if(orgId!=null) childIdArr.add(orgId);
+            List<OrgInfoDto> dtos=findChildDataIsList(dto);
+            if(dtos!=null){
+                dtos.forEach(orgDto->{
+                    childIdArr.add(orgDto.getId());
+                });
+            }
+            results = copyTo(orgOrgVsStaffDao.findOrgChildStaffIsList(childIdArr),OrgInfoDto.class);
+        } catch (Exception e) {
+            log.error("获取组织级下及组织内人员->传入公司或部门的code 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
     }
 }

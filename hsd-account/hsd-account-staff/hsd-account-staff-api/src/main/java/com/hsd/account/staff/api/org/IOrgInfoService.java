@@ -112,4 +112,9 @@ public interface IOrgInfoService {
     public List<OrgStaffDto> findOrgStaffByCodeIsList(OrgOrgVsStaffDto dto);
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgLevel")
     public String findOrgLevel(OrgOrgVsStaffDto dto);
+
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findChildDataIsList")
+    public List<OrgInfoDto> findChildDataIsList(OrgInfoDto dto);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgChildStaffIsList")
+    public List<OrgInfoDto> findOrgChildStaffIsList(OrgInfoDto dto);
 }

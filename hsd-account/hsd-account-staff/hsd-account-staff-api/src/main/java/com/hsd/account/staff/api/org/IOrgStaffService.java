@@ -29,6 +29,11 @@ public interface IOrgStaffService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     public Response saveOrUpdateData(OrgStaffDto dto) throws Exception;
     /**
+     * <p>信息新增。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/insert")
+    public Response insert(OrgStaffDto dto) throws Exception;
+    /**
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updateData")

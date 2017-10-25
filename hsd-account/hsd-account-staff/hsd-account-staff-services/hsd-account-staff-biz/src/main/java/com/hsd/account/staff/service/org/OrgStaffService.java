@@ -85,6 +85,31 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    @RfAccount2Bean
+    public Response insert(@RequestBody OrgStaffDto dto) throws Exception {
+        Response result = new Response(0,"success");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            OrgStaff entity=copyTo(dto,OrgStaff.class);
+            // 判断数据是否存在
+            if (orgStaffDao.isDataYN(entity) != 0) {
+                // 数据存在
+            } else {
+                if(orgStaffDao.isAccountYN(dto.getAccount())>0){
+                    throw new RuntimeException("账号已存在!");
+                }
+                entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
+                // 新增
+                orgStaffDao.insert(entity);
+                result.data=entity.getId();
+            }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean

@@ -305,7 +305,6 @@ public class OrgInfoController extends BaseController {
     /**
      * <p>获取组织列表-根据组织类型 (未删除)。
      */
-    @RequiresPermissions("orgInfo:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/bytype/{type}")
     @ApiOperation(value = "获取组织列表-根据组织类型")
     public Response list(@PathVariable("type") Integer type) {
@@ -325,7 +324,6 @@ public class OrgInfoController extends BaseController {
     /**
      * <p>根据上级机构获取下级机构(未删除)。
      */
-    @RequiresPermissions("orgInfo:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/sub/{orgCode}")
     @ApiOperation(value = "获取组织列表-根据上级机构")
     public Response listSub(@PathVariable("orgCode") String orgCode) {
@@ -345,11 +343,10 @@ public class OrgInfoController extends BaseController {
     /**
      * <p>获取组织及下级组织内人员->传入公司或部门的code(未删除)。
      */
-    @RequiresPermissions("orgInfo:menu")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/sub/{orgCode}")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/child/staff/{orgCode}")
     @ApiOperation(value = "获取组织及下级组织内人员->传入公司或部门的code")
     public Response findOrgChildStaffIsList(@PathVariable("orgCode") String orgCode) {
-        log.info("OrgInfoController listSub........");
+        log.info("OrgInfoController findOrgChildStaffIsList........");
         Response result = new Response("success");
         try {
             OrgInfoDto dto = new OrgInfoDto();

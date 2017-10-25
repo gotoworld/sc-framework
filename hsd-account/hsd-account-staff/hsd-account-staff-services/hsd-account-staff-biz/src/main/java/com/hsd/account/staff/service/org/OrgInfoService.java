@@ -293,7 +293,11 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
             int count=0;
             while (orgInfo!=null){
                 results.add(copyTo(orgInfo,OrgInfoDto.class));
-                orgInfo= (OrgInfo) orgInfoDao.getDataByPCode(new OrgInfo(){{setCode(dto.getCode());}});
+
+                OrgInfo entity=new OrgInfo();
+                entity.setCode(orgInfo.getCode());
+                orgInfo= (OrgInfo) orgInfoDao.getDataByPCode(entity);
+
                 count++;
                 if(count>100){
                     throw new RuntimeException("疑似递归死循环!");

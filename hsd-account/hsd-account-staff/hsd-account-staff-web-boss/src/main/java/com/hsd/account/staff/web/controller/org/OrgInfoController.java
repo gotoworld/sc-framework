@@ -56,26 +56,6 @@ public class OrgInfoController extends BaseController {
         return result;
     }
     /**
-     * <p>获取组织列表-根据组织类型 (未删除)。
-     */
-    @RequiresPermissions("orgInfo:menu")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/bytype/{type}")
-    @ApiOperation(value = "获取组织列表-根据组织类型")
-    public Response list(@PathVariable("type") Integer type) {
-        log.info("OrgInfoController list bytype.........");
-        Response result = new Response("success");
-        try {
-            OrgInfoDto dto = new OrgInfoDto();
-            dto.setType(type);//类型0企业1部门2组
-            dto.setDelFlag(0);
-            // 信息列表
-            result.data = orgInfoService.findDataIsList(dto);
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
-    /**
      * <p>信息分页 (未删除)。
      */
     @RequiresPermissions("orgInfo:menu")
@@ -98,7 +78,6 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
-
     /**
      * <p> 信息树json。
      */
@@ -116,6 +95,7 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
+
     /**
      * <p> 详情。
      */
@@ -152,7 +132,6 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
-
     /**
      * <p> 信息保存
      */
@@ -200,6 +179,7 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
+
     @RequiresPermissions("orgInfo:edit:role")
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "add/role")
     @ALogOperation(type = "添加角色", desc = "组织机构")
@@ -322,4 +302,65 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
+    /**
+     * <p>获取组织列表-根据组织类型 (未删除)。
+     */
+    @RequiresPermissions("orgInfo:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/bytype/{type}")
+    @ApiOperation(value = "获取组织列表-根据组织类型")
+    public Response list(@PathVariable("type") Integer type) {
+        log.info("OrgInfoController list bytype.........");
+        Response result = new Response("success");
+        try {
+            OrgInfoDto dto = new OrgInfoDto();
+            dto.setType(type);//类型0企业1部门2组
+            dto.setDelFlag(0);
+            // 信息列表
+            result.data = orgInfoService.findDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * <p>根据上级机构获取下级机构(未删除)。
+     */
+    @RequiresPermissions("orgInfo:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/sub/{orgCode}")
+    @ApiOperation(value = "获取组织列表-根据上级机构")
+    public Response listSub(@PathVariable("orgCode") String orgCode) {
+        log.info("OrgInfoController listSub........");
+        Response result = new Response("success");
+        try {
+            OrgInfoDto dto = new OrgInfoDto();
+            dto.setCode(orgCode);
+            dto.setDelFlag(0);
+            // 信息列表
+            result.data = orgInfoService.findChildDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * <p>获取组织及下级组织内人员->传入公司或部门的code(未删除)。
+     */
+    @RequiresPermissions("orgInfo:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list/sub/{orgCode}")
+    @ApiOperation(value = "获取组织及下级组织内人员->传入公司或部门的code")
+    public Response findOrgChildStaffIsList(@PathVariable("orgCode") String orgCode) {
+        log.info("OrgInfoController listSub........");
+        Response result = new Response("success");
+        try {
+            OrgInfoDto dto = new OrgInfoDto();
+            dto.setCode(orgCode);
+            dto.setDelFlag(0);
+            // 信息列表
+            result.data = orgInfoService.findOrgChildStaffIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
 }

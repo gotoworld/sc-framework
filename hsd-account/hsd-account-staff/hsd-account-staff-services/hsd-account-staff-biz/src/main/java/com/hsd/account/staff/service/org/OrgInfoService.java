@@ -148,6 +148,16 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return result;
     }
+    public OrgInfoDto findDataByCode(@RequestBody OrgInfoDto dto) {
+        OrgInfoDto result = null;
+        try {
+            result = copyTo(orgInfoDao.selectByCode(copyTo(dto,OrgInfo.class)),OrgInfoDto.class);
+        } catch (Exception e) {
+            log.error("信息详情获取失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
 
     public String recoveryDataById(@RequestBody OrgInfoDto dto) throws Exception {
         String result = "success";

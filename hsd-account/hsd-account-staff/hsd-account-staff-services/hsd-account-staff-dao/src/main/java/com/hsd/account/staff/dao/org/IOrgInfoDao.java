@@ -59,4 +59,5 @@ public interface IOrgInfoDao extends IBaseDao {
     Long getIdByPId(IEntity entity) throws Exception;
 
     Object getDataByPCode(IEntity entity) throws Exception;
+    Object selectByCode(IEntity entity) throws Exception;
 }

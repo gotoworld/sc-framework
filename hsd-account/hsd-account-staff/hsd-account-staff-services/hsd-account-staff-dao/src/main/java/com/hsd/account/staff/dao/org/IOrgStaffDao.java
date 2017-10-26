@@ -81,4 +81,8 @@ public interface IOrgStaffDao extends IBaseDao {
      * <p>获取员工-所有上级。
      */
     List getStaffLeadershipAll(IEntity entity) throws Exception;
+    /**
+     * <p>获取用户及用户所在组织。
+     */
+    List findStaffAndOrgDataIsList(IEntity entity) throws Exception;
 }

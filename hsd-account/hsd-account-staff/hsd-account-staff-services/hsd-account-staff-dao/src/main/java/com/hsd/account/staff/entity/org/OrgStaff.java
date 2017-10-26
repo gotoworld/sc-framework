@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -71,4 +72,8 @@ public class OrgStaff extends BaseEntity {
      private String level;
      /**上级领导id*/
      private Long leadership;
+
+     /**用户所在组织*/
+     private List<OrgInfo> orgInfos;
+
 }

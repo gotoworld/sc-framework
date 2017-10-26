@@ -181,6 +181,16 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return results;
     }
+    public List<OrgStaffDto> findStaffAndOrgDataIsList(@RequestBody OrgStaffDto dto) {
+        List<OrgStaffDto> results = null;
+        try {
+            results = copyTo(orgStaffDao.findStaffAndOrgDataIsList(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
+        } catch (Exception e) {
+            log.error("获取用户及用户所在组织 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
 
     public OrgStaffDto findDataById(@RequestBody OrgStaffDto dto) {
         OrgStaffDto result = null;

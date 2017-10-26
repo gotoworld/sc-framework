@@ -23,7 +23,7 @@ public class OrgInfo extends BaseEntity {
      private String name;
      /**父级ID*/
      private Long parentId;
-     /**状态0启动*/
+     /**状态0启用*/
      private Integer state;
      /**备注*/
      private String memo;

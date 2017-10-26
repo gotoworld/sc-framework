@@ -1,7 +1,5 @@
 package com.hsd.account.staff.web.controller.org;
 
-import com.hsd.account.staff.api.auth.IAuthRoleService;
-import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.api.org.IOrgStaffService;
 import com.hsd.account.staff.dto.org.AuthStaffVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
@@ -35,11 +33,6 @@ public class OrgStaffController extends BaseController {
 
 	@Autowired
 	private IOrgStaffService orgStaffService;
-	@Autowired
-	private IAuthRoleService authRoleService;
-
-	@Autowired
-	private IOrgInfoService orgDepartmentService;
 
 	/**
 	 * <p> 信息分页 (未删除)。
@@ -454,6 +447,19 @@ public class OrgStaffController extends BaseController {
 			OrgStaffDto dto = new OrgStaffDto();
 			dto.setAccount(account);
 			result.data=orgStaffService.getStaffLeadershipAll(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"list/staff/all")
+	@ApiOperation(value = "获取用户及用户所在组织")
+	public Response findStaffAndOrgDataIsList() {
+		log.info("OrgStaffController findStaffAndOrgDataIsList.........");
+		Response result = new Response("success");
+		try {
+			OrgStaffDto dto = new OrgStaffDto();
+			result.data=orgStaffService.findStaffAndOrgDataIsList(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}

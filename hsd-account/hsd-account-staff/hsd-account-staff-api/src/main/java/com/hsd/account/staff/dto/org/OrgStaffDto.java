@@ -94,4 +94,7 @@ public class OrgStaffDto extends BaseDto {
      private String level;
      /**上级领导id*/
      private Long leadership;
+
+     /**用户所在组织*/
+     private List<OrgInfoDto> orgInfos;
 }

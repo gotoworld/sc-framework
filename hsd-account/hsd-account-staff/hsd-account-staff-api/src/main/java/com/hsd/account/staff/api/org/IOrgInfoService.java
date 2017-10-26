@@ -67,6 +67,11 @@ public interface IOrgInfoService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     public OrgInfoDto findDataById(OrgInfoDto dto);
+    /**
+     * <p>信息详情。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByCode")
+    public OrgInfoDto findDataByCode(OrgInfoDto dto);
 
     /**
      * <p>信息树。

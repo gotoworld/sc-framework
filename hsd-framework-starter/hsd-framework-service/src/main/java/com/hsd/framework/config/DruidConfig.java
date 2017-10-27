@@ -58,7 +58,7 @@ public class DruidConfig implements EnvironmentAware {
     public ServletRegistrationBean dispatcherRegistration() {
         ServletRegistrationBean registration = new ServletRegistrationBean();
         registration.setServlet(new StatViewServlet());
-        registration.addUrlMappings("/hsd/druid/*");
+        registration.addUrlMappings("/hsd/druidAdmin/*");
 //        registration.addInitParameter("loginUsername", "druidAdmin");
 //        registration.addInitParameter("loginPassword", "druidAdmin-123");
         registration.addInitParameter("resetEnable", "false");// 禁用HTML页面上的“Reset All”功能
@@ -80,7 +80,7 @@ public class DruidConfig implements EnvironmentAware {
         //添加过滤规则.
         filterRegistrationBean.addUrlPatterns("/*");
         //添加不需要忽略的格式信息.
-        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/hsd/druid/*");
+        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/hsd/druidAdmin/*");
         filterRegistrationBean.addInitParameter("profileEnable", "true");
         return filterRegistrationBean;
     }

@@ -24,69 +24,69 @@
     
     
 #模块说明
-    hsd-servers                                                         |   
-        |--hsd-account                                                  |   
-        |-   |--hsd-account-actor                                       |   
-        |-        |--hsd-account-actor-api                              |   
-        |-        |--hsd-account-actor-services                         |   
-        |-             |--hsd-account-actor-biz                         |   
-        |-             |--hsd-account-actor-dao                         |   
-        |-             |--hsd-account-actor-server                      |   
-        |-        |--hsd-account-actor-web-boss                         |   
-        |-        |--hsd-account-actor-web-portal                       |   
-        |-   |--hsd-account-channel                                     |   
-        |-        |--hsd-account-channel-api                            |   
-        |-        |--hsd-account-channel-services                       |   
-        |-             |--hsd-account-channel-biz                       |   
-        |-             |--hsd-account-channel-dao                       |   
-        |-             |--hsd-account-channel-server                    |   
-        |-        |--hsd-account-channel-web-boss                       |   
-        |-        |--hsd-account-channel-web-portal                     |   
-        |-   |--hsd-account-platform                                    |   
-        |-        |--hsd-account-platform-api                           |   
-        |-        |--hsd-account-platform-services                      |   
-        |-             |--hsd-account-platform-biz                      |   
-        |-             |--hsd-account-platform-dao                      |   
-        |-             |--hsd-account-platform-server                   |   
-        |-        |--hsd-account-platform-web-boss                      |   
-        |-        |--hsd-account-platform-web-portal                    |   
-        |-   |--hsd-account-staff                                       |   
-        |-        |--hsd-account-staff-api                              |   
-        |-        |--hsd-account-staff-services                         |   
-        |-             |--hsd-account-staff-biz                         |   
-        |-             |--hsd-account-staff-dao                         |   
-        |-             |--hsd-account-staff-server                      |   
-        |-        |--hsd-account-staff-web-boss                         |   
-        |--hsd-common                                                   |   
-        |-   |--hsd-common-util-excel                                   |   
-        |-   |--hsd-common-util-sms                                     |   
-        |--hsd-framework-starter                                        |   
-        |-   |--hsd-framework-amqp                                      |   
-        |-   |--hsd-framework-api                                       |   
-        |-   |--hsd-framework-cache                                     |   
-        |-   |--hsd-framework-core                                      |   
-        |-   |--hsd-framework-rule                                      |   
-        |-   |--hsd-framework-server                                    |   
-        |-   |--hsd-framework-service                                   |   
-        |-   |--hsd-framework-web                                       |   
-        |-   |--hsd-framework-web-restful                               |   
-        |--hsd-util                                                     |   
-        |-   |--hsd-util-sms                                            |   
-        |-        |--hsd-util-sms-services                              |   
-        |-             |--hsd-util-sms-biz                              |   
-        |-             |--hsd-util-sms-dao                              |   
-        |-             |--hsd-util-sms-server                           |   
-        |-        |--hsd-util-sms-web-boss                              |   
-        |-        |--hsd-util-sms-web-portal                            |   
-        |--hsd-servers                                                  |   
-        |-   |--hsd-eycode-server                                       |   
-        |-   |--hsd-app-starter                                         |   
-        |-        |--hsd-service-server                                 |   
-        |-        |--hsd-web-boss-server                                |   
-        |-        |--hsd-web-portal-server                              |   
-        |-   |--hsd-server-starter                                      |   
-        |-        |--hsd-config-server                                  |   
-        |-        |--hsd-eureka-server                                  |   
-        |-        |--hsd-file-server                                    |   
-        |-        |--hsd-gateway-server                                 |   
-        |-        |--hsd-health-server                                  |   
+    hsd-servers                                                     | pom |   
+        |--hsd-account                                              | pom |   父模块，不应直接使用
+        |-   |--hsd-account-actor                                   | pom |   父模块，不应直接使用
+        |-        |--hsd-account-actor-api                          | jar |   
+        |-        |--hsd-account-actor-services                     | pom |   父模块，不应直接使用
+        |-             |--hsd-account-actor-biz                     | jar |   
+        |-             |--hsd-account-actor-dao                     | jar |   
+        |-             |--hsd-account-actor-server                  | jar |   
+        |-        |--hsd-account-actor-web-boss                     | jar |   app
+        |-        |--hsd-account-actor-web-portal                   | jar |   app
+        |-   |--hsd-account-channel                                 | pom |   
+        |-        |--hsd-account-channel-api                        | jar |   
+        |-        |--hsd-account-channel-services                   | pom |   父模块，不应直接使用
+        |-             |--hsd-account-channel-biz                   | jar |   
+        |-             |--hsd-account-channel-dao                   | jar |   
+        |-             |--hsd-account-channel-server                | jar |   
+        |-        |--hsd-account-channel-web-boss                   | jar |   
+        |-        |--hsd-account-channel-web-portal                 | jar |   
+        |-   |--hsd-account-platform                                | pom |   父模块，不应直接使用
+        |-        |--hsd-account-platform-api                       | jar |   
+        |-        |--hsd-account-platform-services                  | pom |   父模块，不应直接使用
+        |-             |--hsd-account-platform-biz                  | jar |   
+        |-             |--hsd-account-platform-dao                  | jar |   
+        |-             |--hsd-account-platform-server               | jar |   
+        |-        |--hsd-account-platform-web-boss                  | jar |   
+        |-        |--hsd-account-platform-web-portal                | jar |   
+        |-   |--hsd-account-staff                                   | pom |   父模块，不应直接使用
+        |-        |--hsd-account-staff-api                          | jar |   
+        |-        |--hsd-account-staff-services                     | pom |   父模块，不应直接使用
+        |-             |--hsd-account-staff-biz                     | jar |   
+        |-             |--hsd-account-staff-dao                     | jar |   
+        |-             |--hsd-account-staff-server                  | jar |   
+        |-        |--hsd-account-staff-web-boss                     | jar |   
+        |--hsd-common                                               | pom |   父模块，不应直接使用
+        |-   |--hsd-common-util-excel                               | jar |   
+        |-   |--hsd-common-util-sms                                 | jar |   
+        |--hsd-framework-starter                                    | pom |   架构父模块，不应直接使用
+        |-   |--hsd-framework-amqp                                  | jar |   消息队列依赖与工具配置,可直接使用
+        |-   |--hsd-framework-api                                   | jar |   服务api依赖与工具配置,可直接使用
+        |-   |--hsd-framework-cache                                 | jar |   缓存依赖与配置,session,分布式id工具类,,可直接使用
+        |-   |--hsd-framework-core                                  | jar |   架构核心,直接使用
+        |-   |--hsd-framework-rule                                  | jar |   规则引擎依赖与工具配置,可直接使用
+        |-   |--hsd-framework-server                                | jar |   分布式服务依赖与配置,可直接使用
+        |-   |--hsd-framework-service                               | jar |   数据层等依赖与配置,可直接使用
+        |-   |--hsd-framework-web                                   | jar |   后端模板控制层,可直接使用
+        |-   |--hsd-framework-web-restful                           | pom |   前后端分离restful控制层,可直接使用
+        |--hsd-util                                                 | pom |   父模块，不应直接使用
+        |-   |--hsd-util-sms                                        | pom |   父模块，不应直接使用
+        |-        |--hsd-util-sms-services                          | pom |   父模块，不应直接使用
+        |-             |--hsd-util-sms-biz                          | jar |   
+        |-             |--hsd-util-sms-dao                          | jar |   
+        |-             |--hsd-util-sms-server                       | jar |   
+        |-        |--hsd-util-sms-web-boss                          | jar |   
+        |-        |--hsd-util-sms-web-portal                        | jar |   
+        |--hsd-servers                                              | pom |   父模块，不应直接使用
+        |-   |--hsd-eycode-server                                   |     |   
+        |-   |--hsd-app-starter                                     | pom |   父模块，不应直接使用
+        |-        |--hsd-service-server                             | jar |   
+        |-        |--hsd-web-boss-server                            | jar |   
+        |-        |--hsd-web-portal-server                          | jar |   
+        |-   |--hsd-server-starter                                  | pom |   父模块，不应直接使用
+        |-        |--hsd-config-server                              | jar |   
+        |-        |--hsd-eureka-server                              | jar |   
+        |-        |--hsd-file-server                                | jar |   
+        |-        |--hsd-gateway-server                             | jar |   
+        |-        |--hsd-health-server                              | jar |   

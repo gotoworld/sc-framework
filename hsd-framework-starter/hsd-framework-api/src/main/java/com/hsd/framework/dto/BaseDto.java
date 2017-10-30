@@ -24,7 +24,7 @@ public class BaseDto implements IDto {
     private Long createId;
     String str;
     /**鉴权token*/
-    private String authorization;
+    private String Authorization;
 //    public String getToken(){
 //        if(token==null){
 //            token= IdUtil.createUUID(32);

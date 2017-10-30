@@ -21,6 +21,7 @@ import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.annotation.RfAccount2BeanX;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
@@ -86,6 +87,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    @RfAccount2BeanX
     public Response insert(@RequestBody OrgStaffDto dto) throws Exception {
         Response result = new Response(0,"success");
         try {
@@ -95,6 +97,9 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
             if (orgStaffDao.isDataYN(entity) != 0) {
                 // 数据存在
             } else {
+                if(!JwtUtil.isPermitted(dto,"orgStaff:add")){
+                    throw new RuntimeException("没用新增员工的权限!");
+                }
                 if(orgStaffDao.isAccountYN(dto.getAccount())>0){
                     throw new RuntimeException("账号已存在!");
                 }

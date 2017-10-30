@@ -122,5 +122,18 @@ public class JwtUtil {
         }
         return false;
     }
+    public static boolean isPermitted(Object obj,String authStr) throws Exception {
+        final String authorizationToken = ""+ReflectUtil.getValueByFieldName(obj,CommonConstant.JWT_HEADER_TOKEN_KEY);
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            throw new SignatureException("token头缺失");
+        }
+        final Claims claims = parseJWT(authorizationToken);
+        JSONObject jobj = JSON.parseObject(claims.getSubject());
+        JSONArray authorizationInfoPerms = jobj.getJSONArray("authorizationInfoPerms");
+        if (authorizationInfoPerms != null && authorizationInfoPerms.contains(authStr)) {
+            return true;
+        }
+        return false;
+    }
 
 }

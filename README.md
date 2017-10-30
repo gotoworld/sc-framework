@@ -1,5 +1,5 @@
 #servers
-====
+=====
     | 代码地址           | http://192.168.101.16/wuxiaogang/hsd-servers |          
     ---------------------------------------------------------------------------------------------------------
     |                    | http://192.168.101.100:8761/                 | admin/admin
@@ -25,7 +25,7 @@
     
     
 #模块说明
-====
+=====
     hsd-servers                                                     | pom |   
         |--hsd-account                                              | pom |   父模块，不应直接使用
         |-   |--hsd-account-actor                                   | pom |   父模块，不应直接使用
@@ -33,7 +33,7 @@
         |-        |--hsd-account-actor-services                     | pom |   父模块，不应直接使用
         |-             |--hsd-account-actor-biz                     | jar |   
         |-             |--hsd-account-actor-dao                     | jar |   
-        |-             |--hsd-account-actor-server                  | a+j |   
+        |-             |--hsd-account-actor-server                  | app |   
         |-        |--hsd-account-actor-web-boss                     | a+j |   
         |-        |--hsd-account-actor-web-portal                   | a+j |   
         |-   |--hsd-account-channel                                 | pom |   
@@ -41,7 +41,7 @@
         |-        |--hsd-account-channel-services                   | pom |   父模块，不应直接使用
         |-             |--hsd-account-channel-biz                   | jar |   
         |-             |--hsd-account-channel-dao                   | jar |   
-        |-             |--hsd-account-channel-server                | a+j |   
+        |-             |--hsd-account-channel-server                | app |   
         |-        |--hsd-account-channel-web-boss                   | a+j |   
         |-        |--hsd-account-channel-web-portal                 | a+j |   
         |-   |--hsd-account-platform                                | pom |   父模块，不应直接使用
@@ -49,7 +49,7 @@
         |-        |--hsd-account-platform-services                  | pom |   父模块，不应直接使用
         |-             |--hsd-account-platform-biz                  | jar |   
         |-             |--hsd-account-platform-dao                  | jar |   
-        |-             |--hsd-account-platform-server               | a+j |   
+        |-             |--hsd-account-platform-server               | app |   
         |-        |--hsd-account-platform-web-boss                  | a+j |   
         |-        |--hsd-account-platform-web-portal                | a+j |   
         |-   |--hsd-account-staff                                   | pom |   父模块，不应直接使用
@@ -57,7 +57,7 @@
         |-        |--hsd-account-staff-services                     | pom |   父模块，不应直接使用
         |-             |--hsd-account-staff-biz                     | jar |   
         |-             |--hsd-account-staff-dao                     | jar |   
-        |-             |--hsd-account-staff-server                  | a+j |   
+        |-             |--hsd-account-staff-server                  | app |   
         |-        |--hsd-account-staff-web-boss                     | a+j |   
         |--hsd-common                                               | pom |   父模块，不应直接使用
         |-   |--hsd-common-util-excel                               | jar |   
@@ -77,7 +77,7 @@
         |-        |--hsd-util-sms-services                          | pom |   父模块，不应直接使用
         |-             |--hsd-util-sms-biz                          | jar |   
         |-             |--hsd-util-sms-dao                          | jar |   
-        |-             |--hsd-util-sms-server                       | a+j |   
+        |-             |--hsd-util-sms-server                       | app |   
         |-        |--hsd-util-sms-web-boss                          | a+j |   
         |-        |--hsd-util-sms-web-portal                        | a+j |   
         |--hsd-servers                                              | pom |   父模块，不应直接使用

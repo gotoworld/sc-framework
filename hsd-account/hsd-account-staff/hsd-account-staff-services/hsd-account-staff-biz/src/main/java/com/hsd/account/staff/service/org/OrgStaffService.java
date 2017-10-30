@@ -86,7 +86,6 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    @RfAccount2Bean
     public Response insert(@RequestBody OrgStaffDto dto) throws Exception {
         Response result = new Response(0,"success");
         try {

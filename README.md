@@ -26,17 +26,17 @@
     
 #模块说明
 =====
-    hsd-servers                                                     | pom |   
-        |--hsd-account                                              | pom |   父模块，不应直接使用
-        |-   |--hsd-account-actor                                   | pom |   父模块，不应直接使用
-        |-        |--hsd-account-actor-api                          | jar |   
-        |-        |--hsd-account-actor-services                     | pom |   父模块，不应直接使用
-        |-             |--hsd-account-actor-biz                     | jar |   
-        |-             |--hsd-account-actor-dao                     | jar |   
-        |-             |--hsd-account-actor-server                  | app |   
-        |-        |--hsd-account-actor-web-boss                     | a+j |   
-        |-        |--hsd-account-actor-web-portal                   | a+j |   
-        |-   |--hsd-account-channel                                 | pom |   
+      servers                                                       | pom |   
+        |--hsd-account                                              | pom |   #用户域#父模块，不应直接使用
+        |-   |--hsd-account-actor                                   | pom |   #客户管理# 父模块，不应直接使用
+        |-        |--hsd-account-actor-api                          | jar |      服务api接口,兼FeignClient客户端
+        |-        |--hsd-account-actor-services                     | pom |      业务层 父模块，不应直接使用
+        |-             |--hsd-account-actor-biz                     | jar |         业务处理实现类
+        |-             |--hsd-account-actor-dao                     | jar |         数据持久层
+        |-             |--hsd-account-actor-server                  | app |         基础服务->启动类
+        |-        |--hsd-account-actor-web-boss                     | a+j |       boss系统rest接口  控制层
+        |-        |--hsd-account-actor-web-portal                   | a+j |       portal系统rest接口 控制层
+        |-   |--hsd-account-channel                                 | pom |   #渠道商管理#
         |-        |--hsd-account-channel-api                        | jar |   
         |-        |--hsd-account-channel-services                   | pom |   父模块，不应直接使用
         |-             |--hsd-account-channel-biz                   | jar |   
@@ -52,14 +52,14 @@
         |-             |--hsd-account-platform-server               | app |   
         |-        |--hsd-account-platform-web-boss                  | a+j |   
         |-        |--hsd-account-platform-web-portal                | a+j |   
-        |-   |--hsd-account-staff                                   | pom |   父模块，不应直接使用
+        |-   |--hsd-account-staff                                   | pom |   #员工管理# 父模块，不应直接使用
         |-        |--hsd-account-staff-api                          | jar |   
         |-        |--hsd-account-staff-services                     | pom |   父模块，不应直接使用
         |-             |--hsd-account-staff-biz                     | jar |   
         |-             |--hsd-account-staff-dao                     | jar |   
         |-             |--hsd-account-staff-server                  | app |   
         |-        |--hsd-account-staff-web-boss                     | a+j |   
-        |--hsd-common                                               | pom |   父模块，不应直接使用
+        |--hsd-common                                               | pom |   #通用服务# 父模块，不应直接使用
         |-   |--hsd-common-util-excel                               | jar |   
         |-   |--hsd-common-util-sms                                 | jar |   
         |--hsd-framework-starter                                    | pom |   架构父模块，不应直接使用
@@ -72,8 +72,8 @@
         |-   |--hsd-framework-service                               | jar |   数据层等依赖与配置,可直接使用
         |-   |--hsd-framework-web                                   | jar |   后端模板控制层,可直接使用
         |-   |--hsd-framework-web-restful                           | pom |   前后端分离restful控制层,可直接使用
-        |--hsd-util                                                 | pom |   父模块，不应直接使用
-        |-   |--hsd-util-sms                                        | pom |   父模块，不应直接使用
+        |--hsd-util                                                 | pom |   #工具服务#父模块，不应直接使用
+        |-   |--hsd-util-sms                                        | pom |   #短信服务#父模块，不应直接使用
         |-        |--hsd-util-sms-services                          | pom |   父模块，不应直接使用
         |-             |--hsd-util-sms-biz                          | jar |   
         |-             |--hsd-util-sms-dao                          | jar |   
@@ -81,14 +81,14 @@
         |-        |--hsd-util-sms-web-boss                          | a+j |   
         |-        |--hsd-util-sms-web-portal                        | a+j |   
         |--hsd-servers                                              | pom |   父模块，不应直接使用
-        |-   |--hsd-eycode-server                                   |     |   
-        |-   |--hsd-app-starter                                     | pom |   父模块，不应直接使用
-        |-        |--hsd-service-server                             | app |   
-        |-        |--hsd-web-boss-server                            | app |   
-        |-        |--hsd-web-portal-server                          | app |   
-        |-   |--hsd-server-starter                                  | pom |   父模块，不应直接使用
-        |-        |--hsd-config-server                              | app |   
-        |-        |--hsd-eureka-server                              | app |   
-        |-        |--hsd-file-server                                | app |   
-        |-        |--hsd-gateway-server                             | app |   
-        |-        |--hsd-health-server                              | app |   
+        |-   |--hsd-eycode-server                                   | app |   #简单代码生成器#
+        |-   |--hsd-app-starter                                     | pom |   #业务app集中部署#父模块，不应直接使用
+        |-        |--hsd-service-server                             | app |   #服务集中部署#
+        |-        |--hsd-web-boss-server                            | app |   #boss接口集中部署#
+        |-        |--hsd-web-portal-server                          | app |   #portal接口集中部署#
+        |-   |--hsd-server-starter                                  | pom |   #功能服务器端app#父模块，不应直接使用
+        |-        |--hsd-config-server                              | app |   #config分布式配置分发#
+        |-        |--hsd-eureka-server                              | app |   #eureka注册中心#
+        |-        |--hsd-file-server                                | app |   #简单文件上传服务器#
+        |-        |--hsd-gateway-server                             | app |   #接口网关#
+        |-        |--hsd-health-server                              | app |   #应用监控中心#

@@ -15,9 +15,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-/**
- * Created by wu1g119 on 2017/2/8.
- */
 @Slf4j
 public class JwtUtil {
     public enum UserType{

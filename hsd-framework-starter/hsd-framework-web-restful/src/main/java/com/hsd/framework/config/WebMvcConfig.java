@@ -24,7 +24,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        log.info("==拦截器注册==");
+        if (log.isDebugEnabled()) log.debug("==拦截器注册==");
         registry.addInterceptor(new JwtInterceptor()).addPathPatterns("/api/**","/boss/**");//权限验证拦截器
 
         super.addInterceptors(registry);

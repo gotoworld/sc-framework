@@ -47,4 +47,5 @@ public class CommonConstant {
 	public static final long JWT_TTL_REFRESH = 2 * 55 * 60 * 1000;  //jwt刷新 毫秒
 
 	public static final String SESSION_KEY_DOMAIN_CODE = "SESSION_KEY_DOMAIN_CODE";
+	public static final String FEIGN_ERROR_SYMBOL_STRING = "[Symbol/]";
 }

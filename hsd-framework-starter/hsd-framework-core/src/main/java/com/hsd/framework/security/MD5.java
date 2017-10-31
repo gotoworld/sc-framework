@@ -6,9 +6,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Administrator on 16-11-15.
- */
 public class MD5 {
     public static byte[] md5(final byte[] data) {
         return DigestUtils.md5(data );

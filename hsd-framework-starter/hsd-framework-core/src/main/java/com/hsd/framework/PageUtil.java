@@ -3,9 +3,6 @@ package com.hsd.framework;
 import com.github.pagehelper.PageInfo;
 import com.hsd.framework.page.PageDto;
 
-/**
- * Created by Administrator on 2016/11/9.
- */
 public class PageUtil {
     public static void copy(PageDto pageDto, PageInfo pageInfo){
         if(pageInfo==null){

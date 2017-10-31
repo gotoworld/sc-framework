@@ -5,7 +5,6 @@ import javax.crypto.spec.DESKeySpec;
 import java.security.spec.KeySpec;
 
 /**
- * Created by Administrator on 16-11-15.
  * DES 加解密
  */
 public class DES extends Crypt{

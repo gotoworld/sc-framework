@@ -3,7 +3,6 @@ package com.hsd.framework.util;
 /**
  * <p>系统使用路径常量</p>
  *
- * @author Huyunlin
  */
 public class PathCommonConstant extends CommonConstant {
 

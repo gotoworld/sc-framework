@@ -2,9 +2,6 @@ package com.hsd.framework;
 
 import java.io.Serializable;
 
-/**
- */
-
 public class AbstractEntity implements /*JsonClassSerializer,*/ Serializable {
     protected static long serialVersionUID = 1L;
 

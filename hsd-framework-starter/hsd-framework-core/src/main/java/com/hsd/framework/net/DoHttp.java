@@ -16,12 +16,7 @@ import java.security.AccessController;
 import java.util.Map;
 
 /**
- *
  * 类功能说明：httpclient工具类,基于httpclient 4.x
- * Title: DoHttp.java
- * @author 刘良旭
- * @date 2016
- * @version V1.0
  */
 @Slf4j
 public class DoHttp {

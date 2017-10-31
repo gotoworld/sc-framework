@@ -1,12 +1,10 @@
 package com.hsd.framework.security;
 
-import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
 import java.security.spec.KeySpec;
 
 /**
- * Created by Administrator on 16-11-15.
- * DES 加解密
+ * DES3 加解密
  */
 public class DES3 extends Crypt{
     private static Crypt crypt = new DES3();

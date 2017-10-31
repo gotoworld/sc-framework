@@ -25,10 +25,6 @@
             <artifactId>hsd-framework-core</artifactId>
             <version>1.0</version>
             <exclusions>
-                <!--<exclusion>-->
-                    <!--<groupId>io.github.openfeign</groupId>-->
-                    <!--<artifactId>feign-okhttp</artifactId>-->
-                <!--</exclusion>-->
                 <exclusion>
                     <groupId>de.codecentric</groupId>
                     <artifactId>spring-boot-admin-starter-client</artifactId>
@@ -36,10 +32,6 @@
                 <exclusion>
                     <groupId>com.ibeetl</groupId>
                     <artifactId>beetl</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.github.pagehelper</groupId>
-                    <artifactId>pagehelper-spring-boot-starter</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

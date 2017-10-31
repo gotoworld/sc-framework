@@ -5,8 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.spec.KeySpec;
 
 /**
- * Created by Administrator on 16-11-15.
- * DES 加解密
+ * AES 加解密
  */
 public class AES extends Crypt{
     private static Crypt crypt = new AES();

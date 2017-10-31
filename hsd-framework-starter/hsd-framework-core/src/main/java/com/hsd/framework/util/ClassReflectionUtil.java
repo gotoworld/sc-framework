@@ -1,13 +1,3 @@
-/*
- *  反射实体类赋值.
- *
- * VERSION  DATE        BY              REASON
- * -------- ----------- --------------- ------------------------------------
- * 1.00     2016-4-7  wxg      程序.发布
- * -------- ----------- --------------- ------------------------------------
- * Copyright 2016 baseos  System. - All Rights Reserved.
- *
- */
 package com.hsd.framework.util;
 
 import lombok.extern.slf4j.Slf4j;

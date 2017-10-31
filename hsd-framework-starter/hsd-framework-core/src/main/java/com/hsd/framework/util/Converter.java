@@ -14,8 +14,6 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- */
 @Slf4j
 public class Converter {
     private static final Map<String, ObjectMapper> objectMappers = new ConcurrentHashMap<>();

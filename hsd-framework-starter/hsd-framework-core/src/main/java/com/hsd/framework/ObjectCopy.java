@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 /**
- * Created by Administrator on 16-9-10.
  * 对象值复制：
  *  ——注：支持字段属性名相同的值复制。当属性名不相同时，可使用 属性注解@FieldMapped映射
  */

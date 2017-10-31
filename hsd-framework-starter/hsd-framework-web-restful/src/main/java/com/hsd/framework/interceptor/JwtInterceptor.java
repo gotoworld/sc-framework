@@ -27,11 +27,11 @@ public class JwtInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         //无需授权注解标记 类级+方法级
         if (handlerMethod.getBean().getClass().getAnnotation(NoAuthorize.class) != null || handlerMethod.getMethod().getAnnotation(NoAuthorize.class) != null) {
-            log.info("无需登陆可直接访问!" + request.getServletPath());
+            if (log.isDebugEnabled()) log.debug("无需登陆可直接访问!" + request.getServletPath());
             return true;
         }
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
-        log.info("authHeader=" + authorizationToken);
+        if (log.isDebugEnabled()) log.debug("authHeader=" + authorizationToken);
         try {
             if (ValidatorUtil.isEmpty(authorizationToken)) {
                 throw new SignatureException("头缺失");

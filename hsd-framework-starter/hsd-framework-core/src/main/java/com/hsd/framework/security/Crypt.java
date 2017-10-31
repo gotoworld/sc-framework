@@ -14,9 +14,6 @@ import java.security.Key;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 
-/**
- * Created by Administrator on 16-11-15.
- */
 @Slf4j
 public abstract class Crypt {
     public static enum Type {

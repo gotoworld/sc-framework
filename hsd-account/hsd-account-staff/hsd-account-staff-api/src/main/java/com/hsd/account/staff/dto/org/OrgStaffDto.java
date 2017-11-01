@@ -47,7 +47,7 @@ public class OrgStaffDto extends BaseDto {
      private Date lastLogin;
      /**登录次数*/
      private Integer count;
-     /**状态0启用1禁用*/
+     /**状态0在职1离职*/
      private Integer state;
      /**生效时间*/
      private Date effDate;

@@ -42,7 +42,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
                             code=501;
                         }
                         if (data.length() > idx + 1)
-                            message = data.substring(data.lastIndexOf(":") + 1);
+                            message = data.substring(data.lastIndexOf(CommonConstant.FEIGN_ERROR_SYMBOL_STRING) + 1);
                     }
                 }
 

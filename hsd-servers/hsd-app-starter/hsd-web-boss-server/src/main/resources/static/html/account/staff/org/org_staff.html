@@ -87,7 +87,7 @@
 													<td>{{item.jobNo}}</td>
 													<td>{{levelEnum(item.level)}}</td>
 													<td>{{genderEnum(item.gender)}}</td>
-													<td>{{item.state==0?'在职':'离职'}}</td>
+													<td>{{stateEnum(item.state)}}</td>
 													<td>{{item.count}}</td>
 													<td>{{item.lastLogin | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -289,6 +289,15 @@
 				case 0:val='男';break;
 				case 1:val='女';break;
 				case 2:val='保密';break;
+			}
+			return val;
+		}
+        $scope.stateEnum=function(key){
+            var val='未知';
+            switch(key){
+				case 0:val='在职';break;
+				case 1:val='离职';break;
+				case 2:val='试用期';break;
 			}
 			return val;
 		}

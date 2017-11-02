@@ -21,7 +21,6 @@ import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.framework.annotation.RfAccount2BeanX;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
@@ -87,7 +86,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    @RfAccount2BeanX
+    @RfAccount2Bean
     public Response insert(@RequestBody OrgStaffDto dto) throws Exception {
         Response result = new Response(0,"success");
         try {

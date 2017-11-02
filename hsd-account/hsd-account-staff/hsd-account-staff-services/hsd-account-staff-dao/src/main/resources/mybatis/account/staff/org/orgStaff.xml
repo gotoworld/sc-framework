@@ -224,7 +224,7 @@
         <include refid="Base_Column_List"/>
         ,t1.pwd as "pwd"
         from org_staff t1
-        where t1.del_flag=0 and t1.state=0
+        where t1.del_flag=0 and t1.state!=1
         and t1.account=#{account}
         and t1.type=#{staffType}
     </select>

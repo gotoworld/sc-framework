@@ -126,7 +126,15 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label"><input type="checkbox" name="state" value="1" ng-checked="item.state==1">离职</label>
+                            <label class="col-md-3 control-label">员工状态：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择员工状态" id="bean-state" name="state" class="form-control"   aria-describedby="state-level-error"   aria-invalid="true">
+                                    <option value="">--请选择员工状态--</option>
+                                    <option value="0" ng-selected="selected(0,item.state)">在职</option>
+                                    <option value="1" ng-selected="selected(1,item.state)">离职</option>
+                                    <option value="2" ng-selected="selected(2,item.state)">试用期</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group clearfix">
                             <div class="col-md-12">

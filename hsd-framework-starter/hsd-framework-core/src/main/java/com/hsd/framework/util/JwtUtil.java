@@ -120,7 +120,11 @@ public class JwtUtil {
         return false;
     }
     public static boolean isPermitted(Object obj,String authStr) throws Exception {
-        final String authorizationToken = ""+ReflectUtil.getValueByFieldName(obj,CommonConstant.JWT_HEADER_TOKEN_KEY);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            authorizationToken = ""+ReflectUtil.getValueByFieldName(obj,CommonConstant.JWT_HEADER_TOKEN_KEY);
+        }
         if (ValidatorUtil.isEmpty(authorizationToken)) {
             throw new SignatureException("token头缺失");
         }

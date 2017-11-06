@@ -3,21 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>com.hsd.util</groupId>
-        <artifactId>hsd-util</artifactId>
+        <artifactId>hsd-util-sms</artifactId>
         <version>1.0</version>
     </parent>
+    <artifactId>hsd-util-sms-api</artifactId>
+    <packaging>jar</packaging>
 
-    <groupId>com.hsd.util</groupId>
-    <artifactId>hsd-util-sms</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0</version>
-
-    <modules>
-        <module>hsd-util-sms-api</module>
-        <module>hsd-util-sms-services</module>
-        <module>hsd-util-sms-web-boss</module>
-        <module>hsd-util-sms-web-portal</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.hsd.framework</groupId>
+            <artifactId>hsd-framework-api</artifactId>
+            <version>${hsd.framework.version}</version>
+        </dependency>
+    </dependencies>
 </project>

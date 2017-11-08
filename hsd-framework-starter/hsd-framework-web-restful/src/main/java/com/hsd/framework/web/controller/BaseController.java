@@ -3,7 +3,7 @@ package com.hsd.framework.web.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.hsd.framework.PageUtil;
-import com.hsd.framework.page.PageDto;
+import com.hsd.framework.PageDto;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.ReflectUtil;
 import com.hsd.framework.util.ValidatorUtil;

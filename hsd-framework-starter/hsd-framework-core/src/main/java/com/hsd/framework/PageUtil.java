@@ -1,7 +1,6 @@
 package com.hsd.framework;
 
 import com.github.pagehelper.PageInfo;
-import com.hsd.framework.page.PageDto;
 
 public class PageUtil {
     public static void copy(PageDto pageDto, PageInfo pageInfo){

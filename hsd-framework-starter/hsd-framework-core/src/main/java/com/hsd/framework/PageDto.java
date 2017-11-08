@@ -1,4 +1,4 @@
-package com.hsd.framework.page;
+package com.hsd.framework;
 
 import lombok.Data;
 

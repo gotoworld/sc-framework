@@ -153,6 +153,84 @@
 								</div>
 							</div>
 						</div>
+						<div id="tab-2" class="tab-pane" >
+							<div class="ibox float-e-margins">
+								<div class="ibox-content">
+									<table class="table">
+										<tr>
+											<td>
+												<form id="recycle_info_search_form"
+													  role="form" class="form-inline"
+													  method="post"  accept-charset="UTF-8"
+													  ng-submit="recyclePage()">
+													<input type="hidden" name="pageNum" id="recycle_pageNumA" value="1" ng-value="recycle.data.pageIndex?recycle.data.pageIndex:1">
+													<div class="form-group" id="recycle_data_5">
+														<label class="font-noraml">创建时间</label>
+														<div class="input-daterange input-group" id="recycle_datepicker">
+															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+															<span class="input-group-addon">到</span>
+															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="font-noraml">组织类型</label>
+														<div class=" input-group">
+															<select data-placeholder="选择组织类型" id="recycle_type" name="type" class="form-control">
+																<option value="">--全部--</option>
+																<option value="0">企业</option>
+																<option value="1">部门</option>
+																<option value="2">组</option>
+															</select>
+														</div>
+													</div>
+													<div class="input-group">
+														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+														</span>
+													</div>
+												</form>
+											</td>
+										</tr>
+									</table>
+									<div class="table-responsive table-scrollable">
+										<table class="table table-bordered table-striped  table-hover">
+											<thead>
+											<tr>
+												<th style="width:20px;">#</th>
+												<th>编码</th>
+												<th>名称</th>
+												<th>类型</th>
+												<th>状态</th>
+												<th>创建时间</th>
+												<th>操作</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr ng-if="recycle.data.data && recycle.data.data.length>0" ng-repeat="item in recycle.data.data">
+												<td>{{(recycle.data.pageIndex-1)*recycle.data.pageSize + $index+1}}</td>
+												<td>{{item.code}}</td>
+												<td>{{item.name}}</td>
+												<td>{{typeEnum(item.type)}}</td>
+												<td>{{stateEnum(item.state)}}</td>
+												<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+												<td>
+													<a href="javascript:;" ng-show='staff.hasPermission("orgInfo:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+													<a href="javascript:;" ng-show='staff.hasPermission("orgInfo:recovery")'  ng-click="recovery(item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 恢复</a>
+												</td>
+											</tr>
+											<tr ng-if="recycle.data.data==null || recycle.data.data.length==0">
+												<td colspan="7">
+													<div class="alert"><strong>{{recycle.message||'暂无数据'}}</strong></div>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+										<div class="b_page" id="recycleTagPages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -179,22 +257,15 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-    /* copy to common.js
-    var site={
-        orgInfo: {//组织架构
-             view: basePath + "/html/account/staff/org/org_info"
-            ,page: apiPath.account.staff + "/boss/account/staff/org/orgInfo/page/"
-            ,tree: apiPath.account.staff + "/boss/account/staff/org/orgInfo/tree"
-            ,save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
-            ,info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
-            ,del: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/"
-        }
-    }
-    */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
         autoclose : !0
+    });
+    $("#recycle_data_5 .input-daterange").datepicker({
+        keyboardNavigation: !1,
+        forceParse: !1,
+        autoclose: !0
     });
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
@@ -262,6 +333,22 @@
 			}
 			return value;
 		}
+        $scope.recovery = function (item) {
+            if (confirm('确认要恢复[' + item.account + ']吗?')) {
+                $.post(site.orgStaff.recovery + item.id, {}, function (result) {
+                    if (result.code == 0) {
+                        alert("恢复成功!");
+                        loadRecyclePage();
+                        loadPage($('#pageNumA').val());
+                    } else {
+                        alert(result.message);
+                    }
+                });
+            }
+        }
+        $scope.recyclePage = function (pageIndex) {
+            loadRecyclePage(pageIndex);
+        }
     });
 
     var loadPage = function (pageIndex) {
@@ -276,6 +363,20 @@
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+
+    var loadRecyclePage = function (pageIndex) {
+        if (pageIndex) {
+            $('#recycle_pageNumA').val(pageIndex);
+        } else {
+            pageIndex = $('#recycle_pageNumA').val();
+        }
+        //console.info("加载页码"+pageIndex)
+        $.post(site.orgStaff.recyclePage + pageIndex, $('#recycle_info_search_form').serialize(), function (result) {
+            $data.recycle = result;
+            $('#recycleTagPages').html($ngCompile(tag.page(result.data, 'recyclePage'))($data));
+            if (!$data.$$phase) $data.$apply();
         }, 'json');
     }
     var treeviewA=$('#disTree').treeview({

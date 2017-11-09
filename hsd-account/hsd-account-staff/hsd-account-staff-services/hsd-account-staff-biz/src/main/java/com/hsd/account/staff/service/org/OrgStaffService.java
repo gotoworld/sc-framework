@@ -359,13 +359,17 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
                         finalMessage.append("<br/>空行:"+(i+1));
                         continue;
                     }
-                    orgStaff.setJobNo((String) data.get(0));
-                    orgStaff.setAccount((String) data.get(1));
-                    orgStaff.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(2))) );
-                    orgStaff.setName((String) data.get(3));
-                    orgStaff.setGender(getGender((String) data.get(4)));
-                    orgStaff.setCellphone((String) data.get(5));
-                    orgStaff.setEmail((String) data.get(6));
+                    orgStaff.setJobNo((String) data.get(0));//工号
+                    orgStaff.setAccount((String) data.get(1));//账号
+                    orgStaff.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(2))) );//密码
+                    orgStaff.setName((String) data.get(3));//姓名
+                    orgStaff.setGender(getGender((String) data.get(4)));//性别
+                    orgStaff.setCellphone((String) data.get(5));//手机号
+                    orgStaff.setEmail((String) data.get(6));//邮箱
+                    //部门
+                    //岗位
+                    //职级
+                    //上级领导
                     orgStaff.setMemo("批量导入");
 //                    orgStaff.setOrderNo(i);
                     orgStaff.setType(0);

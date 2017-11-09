@@ -1,14 +1,14 @@
 eureka:
   server:
     enableSelfPreservation: true
-   waitTimeInMsWhenSyncEmpty: 0.1
+    waitTimeInMsWhenSyncEmpty: 0.1
   instance:
-    hostname: discovery1
+    hostname: 192.168.101.199
     perferIpAddress: true
   client:
-    registerWithEureka: true
-    fetchRegistry: true
+    registerWithEureka: false
+    fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.100:${server.port}/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.101:${server.port}/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.199:${server.port}/eureka/
 
 spring.cloud.config.discovery.enabled: true

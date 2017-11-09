@@ -26,6 +26,7 @@ var site = {
         view: basePath + "/html/account/staff/org/org_info"
         , page: apiPath.account.staff + "/boss/account/staff/org/orgInfo/page/"
         , briefPage: apiPath.account.staff + "/boss/account/staff/org/orgInfo/briefPage/"
+        , recyclePage: apiPath.account.staff + "/boss/account/staff/org/orgInfo/recyclePage/"
         , tree: apiPath.account.staff + "/boss/account/staff/org/orgInfo/tree"
         , save: apiPath.account.staff + "/boss/account/staff/org/orgInfo/save"
         , info: apiPath.account.staff + "/boss/account/staff/org/orgInfo/info/"
@@ -37,6 +38,7 @@ var site = {
         , addRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/add/role"
         , delRole: apiPath.account.staff + "/boss/account/staff/org/orgInfo/del/role"
         , setManager: apiPath.account.staff + "/boss/account/staff/org/orgInfo/set/manager"
+        , recovery: apiPath.account.staff + "/boss/account/staff/org/orgInfo/recovery/"
     }
     , orgStaff: {
         view: basePath + "/html/account/staff/org/org_staff"

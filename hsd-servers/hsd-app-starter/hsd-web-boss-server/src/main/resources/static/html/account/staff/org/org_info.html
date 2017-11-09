@@ -30,6 +30,7 @@
 					<ul class="nav nav-tabs">
 					    <li class="active"><a data-toggle="tab" href="#tab-0" aria-expanded="true">信息树</a></li>
 						<li class=""><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="true">回收站</a></li>
 					</ul>
 					<div class="tab-content">
 					    <div id="tab-0" class="tab-pane active">
@@ -273,6 +274,7 @@
         staff.init(function(){
             loadPage(1);
             loadTree();
+            loadRecyclePage(1);
         });
         $scope.edit = function (title,id) {
 
@@ -334,8 +336,8 @@
 			return value;
 		}
         $scope.recovery = function (item) {
-            if (confirm('确认要恢复[' + item.account + ']吗?')) {
-                $.post(site.orgStaff.recovery + item.id, {}, function (result) {
+            if (confirm('确认要恢复[' + item.name + ']吗?')) {
+                $.post(site.orgInfo.recovery + item.id, {}, function (result) {
                     if (result.code == 0) {
                         alert("恢复成功!");
                         loadRecyclePage();
@@ -373,7 +375,7 @@
             pageIndex = $('#recycle_pageNumA').val();
         }
         //console.info("加载页码"+pageIndex)
-        $.post(site.orgStaff.recyclePage + pageIndex, $('#recycle_info_search_form').serialize(), function (result) {
+        $.post(site.orgInfo.recyclePage + pageIndex, $('#recycle_info_search_form').serialize(), function (result) {
             $data.recycle = result;
             $('#recycleTagPages').html($ngCompile(tag.page(result.data, 'recyclePage'))($data));
             if (!$data.$$phase) $data.$apply();

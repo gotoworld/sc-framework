@@ -140,7 +140,7 @@ public class OrgStaffController extends BaseController {
 	/**
 	 * <li>恢复。
 	 */
-	@RequiresPermissions("orgStaff:del")
+	@RequiresPermissions("orgStaff:recovery")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recovery/{id}")
 	@ALogOperation(type = "恢复", desc = "组织架构_员工")
 	@ApiOperation(value = "恢复")

@@ -79,6 +79,28 @@ public class OrgInfoController extends BaseController {
         return result;
     }
     /**
+     * <p> 回收站 (已删除)。
+     */
+    @RequiresPermissions("orgInfo:menu")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recyclePage/{pageNum}")
+    @ApiOperation(value = "回收站 分页")
+    public Response recyclePage(@ModelAttribute OrgInfoDto dto, @PathVariable("pageNum") Integer pageNum) {
+        log.info("OrgInfoController recyclePage.........");
+        Response result = new Response("success");
+        try {
+            if (dto == null) {
+                dto = new OrgInfoDto();
+                dto.setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+            }
+            dto.setPageNum(pageNum);
+            dto.setDelFlag(1);
+            result.data=getPageDto(orgInfoService.findDataIsPage(dto));
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
      * <p> 信息树json。
      */
     @RequiresPermissions("orgInfo:menu")
@@ -356,6 +378,25 @@ public class OrgInfoController extends BaseController {
             result.data = orgInfoService.findOrgChildStaffIsList(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * <li>恢复。
+     */
+    @RequiresPermissions("orgInfo:recovery")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recovery/{id}")
+    @ALogOperation(type = "恢复", desc = "组织架构")
+    @ApiOperation(value = "恢复")
+    public Response recovery(@PathVariable("id") Long id) {
+        log.info("OrgInfoController del.........");
+        Response result = new Response("success");
+        try {
+            OrgInfoDto dto=new OrgInfoDto();
+            dto.setId(id);
+            result.message=orgInfoService.recoveryDataById(dto);
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
         }
         return result;
     }

@@ -96,32 +96,31 @@
         
 #代码包说明
 =====
-    com.hsd
-           |- framework
-                   |- annotation
-                   |- aspect
-                        |- auth
-                   |- config
-                   |- exception
-                   |- lock
-                   |- net
-                   |- page
-                   |- security
-                   |- util
-                        |- resource
-                   |- dto
-                   |- service
-                   |- cache
-                        |- config
-                        |- redis
-                        |- util
-                   |- entity
-                   |- filter
-                   |- handler
-                   |- interceptor
-                   |- listener
-                   |- thread
-                   |- web
-                        |- servlet
-                        |- tag
-                            |- controller
+    com.hsd                                             |   
+           |- framework                                 |   
+               |- annotation                            |   
+               |- aspect                                |   
+                    |- auth                             |   
+               |- config                                |   
+               |- exception                             |   
+               |- lock                                  |   
+               |- net                                   |   
+               |- security                              |   
+               |- util                                  |   
+                    |- resource                         |   
+               |- dto                                   |   
+               |- service                               |   
+               |- cache                                 |   
+                    |- config                           |   
+                    |- redis                            |   
+                    |- util                             |   
+               |- entity                                |   
+               |- filter                                |   
+               |- handler                               |   
+               |- interceptor                           |   
+               |- listener                              |   
+               |- thread                                |   
+               |- web                                   |   
+                    |- servlet                          |   
+                    |- tag                              |   
+                    |- controller                       |   

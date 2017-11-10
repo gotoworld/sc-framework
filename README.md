@@ -74,6 +74,7 @@
         |-   |--hsd-framework-web-restful                           | pom |   前后端分离restful控制层,可直接使用
         |--hsd-util                                                 | pom |   #工具服务#父模块，不应直接使用
         |-   |--hsd-util-sms                                        | pom |   #短信服务#父模块，不应直接使用
+        |-        |--hsd-util-sms-api                               | pom |   
         |-        |--hsd-util-sms-services                          | pom |   父模块，不应直接使用
         |-             |--hsd-util-sms-biz                          | jar |   
         |-             |--hsd-util-sms-dao                          | jar |   

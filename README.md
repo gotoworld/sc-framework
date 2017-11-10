@@ -96,31 +96,58 @@
         
 #代码包说明
 =====
-    com.hsd                                             |   
-           |- framework                                 |   
-               |- annotation                            |   
-               |- aspect                                |   
-                    |- auth                             |   
-               |- config                                |   
-               |- exception                             |   
-               |- lock                                  |   
-               |- net                                   |   
-               |- security                              |   
-               |- util                                  |   
+    -----------------------------------------------------------------
+    |  ==java==                                         |
+    -----------------------------------------------------------------
+    |- com.hsd                                          |   
+    -----------------------------------------------------------------
+           |- framework                                 |   架构层
+               |- annotation                            |   自定义注解
+               |- aspect                                |   自定义注解实现
+                    |- auth                             |   权限
+               |- config                                |   配置
+               |- exception                             |   异常
+               |- lock                                  |   分布式锁
+               |- net                                   |   http连接工具
+               |- security                              |   数据加密/解密
+               |- util                                  |   工具类
                     |- resource                         |   
                |- dto                                   |   
-               |- service                               |   
+               |- service                               |   业务实现类封装
                |- cache                                 |   
                     |- config                           |   
                     |- redis                            |   
                     |- util                             |   
                |- entity                                |   
-               |- filter                                |   
+               |- filter                                |   过滤器
                |- handler                               |   
-               |- interceptor                           |   
-               |- listener                              |   
-               |- thread                                |   
+               |- interceptor                           |   拦截器
+               |- listener                              |   监听器
+               |- thread                                |   线程池
                |- web                                   |   
                     |- servlet                          |   
-                    |- tag                              |   
+                    |- tag                              |   自定义后台模板标签
                     |- controller                       |   
+    ------------------------------------------------------------------               
+           |- common                                    |
+                |- util                                 |
+                    |- excel                            |
+    ------------------------------------------------------------------      
+           |- account                                   |
+                |- staff                                |
+                    |- api                              |
+                    |- dto                              |
+                    |- aspect                           |
+                    |- service                          |
+                    |- task                             |
+                    |- dao                              |
+                    |- entity                           |
+                    |- web                              |
+                        |- controller                   |  
+    ------------------------------------------------------------------      
+    | ==resources==                                     |
+    ------------------------------------------------------------------      
+    |- mybatis                                          |
+        |- account                                      |
+            |- staff                                    |
+    ------------------------------------------------------------------                  

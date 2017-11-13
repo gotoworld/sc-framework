@@ -64,7 +64,7 @@ public class DruidConfig implements EnvironmentAware {
         registration.addInitParameter("resetEnable", "false");// 禁用HTML页面上的“Reset All”功能
         registration.addInitParameter("logSlowSql", "true");
         //白名单：
-        registration.addInitParameter("allow","127.0.0.1");
+        //registration.addInitParameter("allow","127.0.0.1");
         //IP黑名单 (存在共同时，deny优先于allow) : 如果满足deny的话提示:Sorry, you are not permitted to view this page.
         //registration.addInitParameter("deny","192.168.101.100");
         return registration;
@@ -100,7 +100,7 @@ public class DruidConfig implements EnvironmentAware {
     public BeanNameAutoProxyCreator beanNameAutoProxyCreator() {
         BeanNameAutoProxyCreator creator = new BeanNameAutoProxyCreator();
         creator.setProxyTargetClass(true);
-        creator.setBeanNames(new String[]{"*Dao*", "*Service*"});
+        creator.setBeanNames("*Dao*", "*Service*");
         creator.setInterceptorNames("druid-stat-interceptor");
         return creator;
     }

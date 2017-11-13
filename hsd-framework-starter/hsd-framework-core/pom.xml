@@ -59,6 +59,13 @@
             <!--<version>1.0.12</version>-->
         <!--</dependency>-->
 
+        <!--数据库 连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

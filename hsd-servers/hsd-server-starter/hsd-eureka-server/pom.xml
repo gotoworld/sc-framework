@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-parent</artifactId>
-        <version>Brixton.SR7</version>
+        <version>Dalston.SR4</version>
         <relativePath />
     </parent>
 
@@ -39,6 +39,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

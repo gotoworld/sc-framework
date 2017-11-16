@@ -96,6 +96,9 @@ hystrix:
     bus:
       enabled: true
 
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+
 # 自定义配置
 hsd:
   common:

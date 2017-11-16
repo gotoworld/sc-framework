@@ -39,4 +39,8 @@ management:
 
 hystrix.config.stream.maxConcurrentConnections: 50
 
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+
+
 

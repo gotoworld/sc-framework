@@ -23,7 +23,7 @@
         <mysql.version>6.0.6</mysql.version>
         <druid.version>1.1.5</druid.version>
         <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
-        <spring.cloud.version>Dalston.SR4</spring.cloud.version>
+        <spring.cloud.version>Dalston.RELEASE</spring.cloud.version>
         <docker.image.prefix>hsd</docker.image.prefix>
     </properties>
 

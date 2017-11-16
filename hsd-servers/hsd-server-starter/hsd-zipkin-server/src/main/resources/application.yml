@@ -1,12 +1,23 @@
 info:
   description: 服务链路追踪
   version : v1.0
-spring:
-  application:
-    name: hsd-sleuth-server
 server:
   port: 9411
   context-path: /
+spring:
+  application:
+    name: hsd-zipkin-server
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://${spring.boot.admin.url}/turbine.stream
 endpoints:
   restart:
     enabled: true

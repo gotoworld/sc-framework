@@ -91,9 +91,8 @@ feign:
   name:
     util.sms: ${spring.application.name}
 
-#
-#logging:
-#  file: "/logs/${spring.application.name}.log"
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 # 自定义配置
 hsd:

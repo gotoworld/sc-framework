@@ -21,8 +21,8 @@ spring:
         clusters: default
         url: http://192.168.101.100:${server.port}/turbine.stream
 security:
-  basic.enabled: false
-
+  basic:
+    enabled: false
   user:
     name: admin
     password: admin
@@ -33,10 +33,10 @@ endpoints:
   cors:
     allowed-methods: HEAD,GET,POST
 
-#
-logging:
-  file: "/logs/${spring.application.name}.log"
-
 management:
   security:
     enabled: false
+
+hystrix.config.stream.maxConcurrentConnections: 50
+
+

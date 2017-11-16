@@ -2,6 +2,7 @@ package com.hsd;
 
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -28,11 +29,14 @@ public class ServiceServer {
         SpringApplication.run(ServiceServer.class, args);
     }
 
+    @Value("${server.port}")
+    String port;
+
     @RequestMapping(value = "/")
     @HystrixCommand
     @ResponseBody
     public ResponseEntity<String> hello() {
-        return new ResponseEntity<String>("hello", HttpStatus.OK);
+        return new ResponseEntity<String>("hello"+port, HttpStatus.OK);
     }
 
 }

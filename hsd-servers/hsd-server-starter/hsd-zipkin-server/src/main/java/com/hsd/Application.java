@@ -1,7 +1,7 @@
 package com.hsd;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import zipkin.server.EnableZipkinServer;
 
-@SpringBootApplication
+@SpringCloudApplication
 @EnableCircuitBreaker
 @EnableZipkinServer
 @RestController

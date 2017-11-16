@@ -4,7 +4,7 @@ info:
   version: v1.0
 # HTTP Server ${random.int[10000,19999]}
 server:
-  port: 6064
+  port: 6100
   context-path: /
 spring:
   application:

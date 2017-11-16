@@ -19,7 +19,7 @@ spring:
       routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
       turbine:
         clusters: default
-        url: http://192.168.101.100:${server.port}/turbine.stream
+        url: ${spring.boot.admin.url}/turbine.stream
 security:
   basic:
     enabled: false

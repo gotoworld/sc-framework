@@ -9,8 +9,14 @@ server:
 spring:
   application:
     name: hsd-account-platform-server
-  profiles:
-    active: dev
+#  sleuth:
+#    sampler:
+#      percentage: 1
+  zipkin:
+    user:
+      name: admin
+      password: admin
+    base-url: http://${spring.zipkin.user.name}:${spring.zipkin.user.password}@192.168.101.101:9411
   boot:
     admin:
       url: http://192.168.101.100:8889
@@ -21,8 +27,7 @@ spring:
       routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
       turbine:
         clusters: default
-        url: http://192.168.101.100:8889/turbine.stream
-
+        url: http://${spring.boot.admin.url}/turbine.stream
   datasource:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
@@ -75,13 +80,6 @@ spring:
       min-idle: 0
     session-expire: 7200000
 
-security:
-  basic:
-    enabled: false
-  user:
-    name: admin
-    password: admin
-
 endpoints:
   health:
     sensitive: false
@@ -92,9 +90,11 @@ feign:
   name:
     account.platform: ${spring.application.name}
 
-#
-#logging:
-#  file: "d:/logs/${spring.application.name}.log"
+hystrix:
+  stream:
+    maxConcurrentConnections: 20
+    bus:
+      enabled: true
 
 # 自定义配置
 hsd:

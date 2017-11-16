@@ -1,0 +1,30 @@
+info:
+  description: 服务链路追踪
+  version : v1.0
+spring:
+  application:
+    name: hsd-sleuth-server
+server:
+  port: 9411
+  context-path: /
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
+
+management.security.enabled: false
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

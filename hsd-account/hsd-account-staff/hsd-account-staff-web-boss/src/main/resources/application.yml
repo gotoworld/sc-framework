@@ -9,8 +9,14 @@ server:
 spring:
   application:
     name: hsd-account-staff-web-boss
-  profiles:
-    active: dev
+#  sleuth:
+#    sampler:
+#      percentage: 1
+  zipkin:
+    user:
+      name: admin
+      password: admin
+    base-url: http://${spring.zipkin.user.name}:${spring.zipkin.user.password}@192.168.101.101:9411
   boot:
     admin:
       url: http://192.168.101.100:8889
@@ -18,6 +24,10 @@ spring:
 #          metadata:
 #            user.name: ${security.user.name}
 #            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://${spring.boot.admin.url}/turbine.stream
   redis:
     database: 10
     secondary-database: 11
@@ -40,13 +50,6 @@ spring:
       min-idle: 0
     session-expire: 7200000
 
-security:
-  basic:
-    enabled: false
-  user:
-    name: admin
-    password: admin
-
 endpoints:
   health:
     sensitive: false
@@ -55,13 +58,16 @@ endpoints:
 
 management.security.enabled: false
 
-#logging:
-#  file: "/logs/${spring.application.name}.log"
-
 #服务名
 feign:
   name:
     account.staff: hsd-account-staff-server
+
+hystrix:
+  stream:
+    maxConcurrentConnections: 20
+    bus:
+      enabled: true
 
 # 自定义配置
 hsd:

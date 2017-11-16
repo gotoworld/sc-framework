@@ -1,4 +1,3 @@
-
 spring:
   profiles:
     active: native
@@ -33,17 +32,3 @@ eureka:
       defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
-
-# 自定义配置
-hsd:
-  common:
-    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
-    fileServer:
-      rootFolder: d:/home/hsd/file/
-      upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: /upload/
-      image:
-        executorServiceSize: 5
-        n1:
-          width: 200
-          height: 200

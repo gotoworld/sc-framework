@@ -1,3 +1,6 @@
+info:
+  description: 配置分发
+  version : v1.0
 server:
   port: 8888
 spring:
@@ -5,12 +8,13 @@ spring:
     name: config-server
   profiles:
     active: native
-    search-locations: classpath:/config
-#  cloud:
-#    config:
-#      server:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/yml-config
 #        git:
-#          uri: https://git.oschina.net/wu1g119/servers.git
+#          uri: http://192.168.101.16/wuxiaogang/hsd-servers.git
 #          searchPaths: doc/yml-config/
 
 security:

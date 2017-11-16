@@ -4,7 +4,7 @@ info:
   version : 1.0
 # HTTP Server
 server:
-  port: 6081
+  port: 6201
   context-path: /
 spring:
   application:

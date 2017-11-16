@@ -4,7 +4,7 @@ info:
   version : v${pom.version}
 # HTTP Server
 server:
-  port: 6062
+  port: 6112
   context-path: /
 spring:
   application:

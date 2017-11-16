@@ -1,7 +1,8 @@
 spring:
   application:
     name: eureka
-
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static/
 server:
   port: 8761
 

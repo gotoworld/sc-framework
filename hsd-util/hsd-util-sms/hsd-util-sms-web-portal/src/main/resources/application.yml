@@ -67,6 +67,9 @@ feign:
   name:
     util.sms: hsd-util-sms-server
 
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+
 # 自定义配置
 hsd:
   common:

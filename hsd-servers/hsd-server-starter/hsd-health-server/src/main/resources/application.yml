@@ -5,8 +5,6 @@ info:
 server:
   port: 8889
 spring:
-  application:
-    name: hsd-health-server
   boot:
     admin:
       url: http://192.168.101.100:${server.port}
@@ -21,6 +19,7 @@ spring:
       turbine:
         clusters: default
         url: ${spring.boot.admin.url}/turbine.stream
+
 security:
   basic:
     enabled: false
@@ -34,9 +33,24 @@ endpoints:
   cors:
     allowed-methods: HEAD,GET,POST
 
-management:
-  security:
-    enabled: false
+management.security.enabled: false
+
+eureka:
+  user:
+    name: admin
+    password: admin
+  instance:
+    preferIpAddress: true
+#    lease-renewal-interval-in-seconds: 10 # 续约到期时间（默认90秒）
+#    lease-expiration-duration-in-seconds: 30 # 续约更新时间间隔（默认30秒）
+  client:
+    registryFetchIntervalSeconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔(s),默认为30秒
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
+    serviceUrl:
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
 hystrix.config.stream.maxConcurrentConnections: 50
 

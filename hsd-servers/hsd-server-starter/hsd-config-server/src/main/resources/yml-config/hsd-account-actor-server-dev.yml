@@ -13,10 +13,7 @@ spring:
 #    sampler:
 #      percentage: 1
   zipkin:
-    user:
-      name: admin
-      password: admin
-    base-url: http://${spring.zipkin.user.name}:${spring.zipkin.user.password}@192.168.101.101:9411
+    base-url: http://192.168.101.101:9411
   boot:
     admin:
       url: http://192.168.101.100:8889

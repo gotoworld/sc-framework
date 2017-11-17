@@ -1,10 +1,24 @@
-spring:
-  application:
-    name: eureka
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static/
 server:
   port: 8761
+
+spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static/
+
+eureka:
+  server:
+    enableSelfPreservation: true
+    waitTimeInMsWhenSyncEmpty: 0.1
+  instance:
+    hostname: localhost
+#    perferIpAddress: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+
+spring.cloud.config.discovery.enabled: true
 
 security:
   basic:

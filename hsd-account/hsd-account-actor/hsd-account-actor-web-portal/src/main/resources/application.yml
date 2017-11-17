@@ -7,16 +7,21 @@ server:
   port: 6103
   context-path: /
 spring:
-  application:
-    name: hsd-account-actor-web-portal
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static/
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  aop:
+    auto: true
+    proxy-target-class: true
 #  sleuth:
 #    sampler:
 #      percentage: 1
   zipkin:
-    user:
-      name: admin
-      password: admin
-    base-url: http://${spring.zipkin.user.name}:${spring.zipkin.user.password}@192.168.101.101:9411
+    base-url: http://192.168.101.101:9411
   boot:
     admin:
       url: http://192.168.101.100:8889
@@ -58,8 +63,27 @@ endpoints:
 
 management.security.enabled: false
 
+eureka:
+  user:
+    name: admin
+    password: admin
+  instance:
+    preferIpAddress: true
+#    lease-renewal-interval-in-seconds: 10 # 续约到期时间（默认90秒）
+#    lease-expiration-duration-in-seconds: 30 # 续约更新时间间隔（默认30秒）
+  client:
+    registryFetchIntervalSeconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔(s),默认为30秒
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
+    serviceUrl:
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
+
 #服务名
 feign:
+  okhttp:
+    enabled: true
   name:
     account.actor: hsd-account-actor-server
     util.sms: hsd-util-sms-server

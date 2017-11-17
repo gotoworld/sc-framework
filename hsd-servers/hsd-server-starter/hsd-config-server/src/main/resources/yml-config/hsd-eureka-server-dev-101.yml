@@ -1,0 +1,29 @@
+server:
+  port: 8761
+
+spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static/
+    
+eureka:
+  server:
+    enableSelfPreservation: true
+    waitTimeInMsWhenSyncEmpty: 0.1
+  instance:
+    hostname: 192.168.101.101
+    perferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.100:${server.port}/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.102:${server.port}/eureka/
+
+spring.cloud.config.discovery.enabled: true
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
+

@@ -3,6 +3,7 @@ package com.hsd;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import zipkin.server.EnableZipkinServer;
 @SpringCloudApplication
 @EnableCircuitBreaker
 @EnableZipkinServer
+@RefreshScope
 @RestController
 public class Application {
     public static void main(String[] args) {

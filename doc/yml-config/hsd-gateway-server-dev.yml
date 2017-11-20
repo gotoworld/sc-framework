@@ -41,6 +41,8 @@ hystrix:
           thread:
             timeoutInMilliseconds: 60000
 ribbon:
+  okhttp:
+    enabled: true
   ReadTimeout: 60000
   ConnectTimeout: 60000
   MaxAutoRetries: 0
@@ -98,10 +100,9 @@ feign:
   okhttp:
     enabled: true
 
-ribbon:
-  okhttp:
-    enabled: true
 # 自定义配置
 hsd:
   common:
-    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
+    appPrefix: dev_
+    
+    

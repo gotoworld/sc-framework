@@ -24,6 +24,8 @@
         select
          t2.id as "id"
         ,t2.name as "name"
+        ,t2.parent_id as "parentId"
+        ,t2.url as "url"
         from auth_role_vs_menu t1
         inner join sys_menu t2 on (t1.menu_id=t2.id)
         where t2.del_flag=0 and t1.role_id=#{roleId}

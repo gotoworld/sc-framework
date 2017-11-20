@@ -1,10 +1,10 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: 基础服务->客户
-  version: v1.0
-# HTTP Server ${random.int[10000,19999]}
+  description: 基础服务->账户
+  version: 1.0
+# HTTP Server
 server:
-  port: 6100
+  port: 6090
   context-path: /
 spring:
   http:
@@ -60,6 +60,7 @@ spring:
     connectionProperties: "druid.stat.mergeSql:true;druid.stat.slowSqlMillis:5000"
     # 合并多个DruidDataSource的监控数据
     useGlobalDataSourceStat: true
+
   redis:
     database: 10
     secondary-database: 11
@@ -82,6 +83,23 @@ spring:
       min-idle: 0
     session-expire: 7200000
 
+mybatis:
+#  type-aliases-package: com.hsd.dto
+  mapper-locations: classpath*:mybatis/**/*.xml
+mapper:
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+#  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+endpoints:
+  health:
+    sensitive: false
+
+management.security.enabled: false
 
 
 eureka:
@@ -101,31 +119,11 @@ eureka:
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
-
-mybatis:
-#  type-aliases-package: com.hsd.dto
-  mapper-locations: classpath*:mybatis/**/*.xml
-mapper:
-  not-empty: false
-  identity: MYSQL
-pagehelper:
-  helperDialect: mysql
-#  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
-endpoints:
-  health:
-    sensitive: false
-  cors:
-    allowed-methods: HEAD,GET,POST
-
-management.security.enabled: false
-
 feign:
   okhttp:
     enabled: true
   name:
-    account.actor: ${spring.application.name}
+    account.platform: ${spring.application.name}
 
 hystrix:
   stream:

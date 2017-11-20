@@ -1,10 +1,6 @@
 server:
   port: 8761
 
-spring:
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static/
-
 eureka:
   server:
     enableSelfPreservation: false

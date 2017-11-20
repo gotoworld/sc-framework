@@ -87,6 +87,10 @@
     <logger name="java.sql" level="DEBUG" />
     <logger name="org.springframework" level="INFO" />
     <logger name="com.ibatis" level="DEBUG" />
+    <logger name="org.apache.http" level="INFO" />
+    <logger name="com.netflix" level="INFO" />
+    <logger name="de.codecentric.boot.admin" level="INFO" />
+    <logger name="org.springframework.cloud" level="INFO" />
     <root level="debug">
         <!-- 控制台输出 -->
         <appender-ref ref="STDOUT" />

@@ -41,6 +41,8 @@ hystrix:
           thread:
             timeoutInMilliseconds: 60000
 ribbon:
+  okhttp:
+    enabled: true
   ReadTimeout: 60000
   ConnectTimeout: 60000
   MaxAutoRetries: 0
@@ -98,9 +100,6 @@ feign:
   okhttp:
     enabled: true
 
-ribbon:
-  okhttp:
-    enabled: true
 # 自定义配置
 hsd:
   common:

@@ -11,11 +11,11 @@ spring:
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/yml-config
+#        native:
+#          search-locations: classpath:/yml-config
         git:
           uri: http://192.168.101.16/wuxiaogang/hsd-servers.git
-          searchPaths: doc/yml-config/
+          searchPaths: doc/yml-config
 
 security:
   user:

@@ -39,6 +39,7 @@
         ,t2.leadership as "leadership"
         ,t2.level as "level"
         ,t2.email as "email"
+        ,t2.cellphone as "cellphone"
         from org_org_vs_staff t1
         inner join org_staff t2 on (t1.staff_id=t2.id and t2.del_flag=0)
         where t1.org_id=#{orgId}

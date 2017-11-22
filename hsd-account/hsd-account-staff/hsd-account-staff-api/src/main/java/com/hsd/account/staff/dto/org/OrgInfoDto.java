@@ -21,7 +21,7 @@ public class OrgInfoDto extends BaseDto {
      /**编码*/
 	 @Size(max=32,message="code最大32字符")
      private String code;
-     /**类型0企业1部门2组*/
+     /**类型0企业1部门2组3岗位*/
 	 @NotNull(message="type不能为空")
      private Integer type;
      /**名称*/

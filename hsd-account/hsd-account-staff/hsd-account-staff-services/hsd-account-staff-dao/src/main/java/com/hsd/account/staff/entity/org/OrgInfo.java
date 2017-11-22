@@ -17,7 +17,7 @@ public class OrgInfo extends BaseEntity {
      private Long id;
      /**编码*/
      private String code;
-     /**类型0企业1部门2组*/
+     /**类型0企业1部门2组3岗位*/
      private Integer type;
      /**名称*/
      private String name;

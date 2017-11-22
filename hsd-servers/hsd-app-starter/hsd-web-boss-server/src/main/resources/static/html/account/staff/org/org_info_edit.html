@@ -30,7 +30,7 @@
 				<form id="orgInfo_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
@@ -61,6 +61,7 @@
                                     <option value="0" ng-selected="selected(0,item.type)">企业</option>
                                     <option value="1" ng-selected="selected(1,item.type)">部门</option>
                                     <option value="2" ng-selected="selected(2,item.type)">组</option>
+                                    <option value="3" ng-selected="selected(3,item.type)">岗位</option>
                                 </select>
                                 <span id="bean-type-error" class="help-block m-b-none"></span>
                             </div>
@@ -99,7 +100,7 @@
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 				</form>
@@ -166,7 +167,7 @@
              }
              if(!$data.$$phase) $data.$apply();
          }, 'json');
-    }
+    };
     function loadTree(){
         $.get(site.orgInfo.tree, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));

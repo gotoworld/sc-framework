@@ -41,7 +41,7 @@
                                             <div class="col-md-4">
                                                 <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
-                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("orgInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+                                                        <a href="javascript:" ng-click="edit('a',0);" ng-show='staff.hasPermission("orgInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
                                                         <div class="ibox-tools">
                                                             <a href="#" onclick="loadTree()">
                                                                 <i class="glyphicon glyphicon-refresh"></i>
@@ -98,6 +98,7 @@
 																<option value="0">企业</option>
 																<option value="1">部门</option>
 																<option value="2">组</option>
+																<option value="3">岗位</option>
 															</select>
 														</div>
 													</div>
@@ -111,7 +112,7 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("orgInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:" ng-click="edit('a',0);" ng-show='staff.hasPermission("orgInfo:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -134,12 +135,12 @@
 													<td>{{stateEnum(item.state)}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgInfo:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgInfo:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgInfo:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgInfo:edit:staff")'  ng-click="setStaff(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-staff"></i> 设置成员</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgInfo:edit:role")'  ng-click="setRole(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 设置角色</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("orgInfo:edit:setManager")'  ng-click="setManager(item)" rel="nofollow" class="label label-success" ><i class="fa fa-sun-o"></i> 设置负责人</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("orgInfo:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("orgInfo:edit")' ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("orgInfo:del")' ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("orgInfo:edit:staff")' ng-click="setStaff(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-staff"></i> 设置成员</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("orgInfo:edit:role")' ng-click="setRole(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 设置角色</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("orgInfo:edit:setManager")' ng-click="setManager(item)" rel="nofollow" class="label label-success" ><i class="fa fa-sun-o"></i> 设置负责人</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -181,6 +182,7 @@
 																<option value="0">企业</option>
 																<option value="1">部门</option>
 																<option value="2">组</option>
+																<option value="3">岗位</option>
 															</select>
 														</div>
 													</div>
@@ -216,8 +218,8 @@
 												<td>{{stateEnum(item.state)}}</td>
 												<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 												<td>
-													<a href="javascript:;" ng-show='staff.hasPermission("orgInfo:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-													<a href="javascript:;" ng-show='staff.hasPermission("orgInfo:recovery")'  ng-click="recovery(item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 恢复</a>
+													<a href="javascript:" ng-show='staff.hasPermission("orgInfo:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+													<a href="javascript:" ng-show='staff.hasPermission("orgInfo:recovery")' ng-click="recovery(item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 恢复</a>
 												</td>
 											</tr>
 											<tr ng-if="recycle.data.data==null || recycle.data.data.length==0">
@@ -280,28 +282,28 @@
 
             sessionStorage.setItem(site.orgInfo.info,id);
             openMyBoxLayer(title,site.orgInfo.view+'_edit.html');
-        }
+        };
         $scope.info = function (title,id) {
             sessionStorage.setItem(site.orgInfo.info,id);
             openMyBoxLayer(title,site.orgInfo.view+'_info.html');
-        }
+        };
         $scope.setStaff = function (item) {
             sessionStorage.setItem(site.orgInfo.info,item.id);
             openMyBoxLayer('人员设置-'+item.name,site.orgInfo.view+'_edit_staff.html');
-        }
+        };
         $scope.setRole = function (item) {
             sessionStorage.setItem(site.orgInfo.info,item.id);
             openMyBoxLayer('角色设置-'+item.name,site.orgInfo.view+'_edit_role.html');
-        }
+        };
         $scope.setManager = function (item) {
             sessionStorage.setItem(site.orgInfo.info,item.id);
             sessionStorage.setItem(site.orgInfo.info+'manager',item.manager);
             openMyBoxLayer('设置组织负责人-'+item.name,site.orgInfo.view+'_edit_manager.html');
-        }
+        };
         $scope.info = function (title,id) {
             sessionStorage.setItem(site.orgInfo.info,id);
             openMyBoxLayer(title,site.orgInfo.view+'_info.html');
-        }
+        };
         $scope.del = function (id) {
             if(confirm('确认删除吗?')) {
                 $.post( site.orgInfo.del + id,{}, function (result) {
@@ -314,19 +316,20 @@
                     }
                 });
             }
-        }
+        };
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
-        }
+        };
         $scope.typeEnum=function(key){
             var value='未知';
             switch (key){
 				case 0:value='企业';break;
 				case 1:value='部门';break;
 				case 2:value='组';break;
+				case 3:value='岗位';break;
 			}
 			return value;
-		}
+		};
         $scope.stateEnum=function(key){
             var value='未知';
             switch (key){
@@ -334,7 +337,7 @@
 				case 1:value='启用';break;
 			}
 			return value;
-		}
+		};
         $scope.recovery = function (item) {
             if (confirm('确认要恢复[' + item.name + ']吗?')) {
                 $.post(site.orgInfo.recovery + item.id, {}, function (result) {
@@ -347,7 +350,7 @@
                     }
                 });
             }
-        }
+        };
         $scope.recyclePage = function (pageIndex) {
             loadRecyclePage(pageIndex);
         }
@@ -366,7 +369,7 @@
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();
         }, 'json');
-    }
+    };
 
     var loadRecyclePage = function (pageIndex) {
         if (pageIndex) {
@@ -380,7 +383,7 @@
             $('#recycleTagPages').html($ngCompile(tag.page(result.data, 'recyclePage'))($data));
             if (!$data.$$phase) $data.$apply();
         }, 'json');
-    }
+    };
     var treeviewA=$('#disTree').treeview({
         color: "#428bca",
         showTags: true,

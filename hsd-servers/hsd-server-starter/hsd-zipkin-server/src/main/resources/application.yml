@@ -5,6 +5,11 @@ server:
   port: 9411
   context-path: /
 spring:
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
   boot:
     admin:
       url: http://192.168.101.100:8889

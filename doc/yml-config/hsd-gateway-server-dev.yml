@@ -38,6 +38,7 @@ hystrix:
         timeout:
           enabled: true
         isolation:
+          strategy: SEMAPHORE
           thread:
             timeoutInMilliseconds: 60000
 ribbon:

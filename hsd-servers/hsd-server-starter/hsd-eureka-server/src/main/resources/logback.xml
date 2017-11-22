@@ -148,7 +148,7 @@
     <logger name="de.codecentric.boot.admin" level="INFO" />
     <logger name="org.springframework.cloud" level="INFO" />
     <!-- root级别   DEBUG -->
-    <root level="debug">
+    <root level="ERROR">
         <!-- 控制台输出 -->
         <appender-ref ref="console" />
         <!-- 文件输出 -->

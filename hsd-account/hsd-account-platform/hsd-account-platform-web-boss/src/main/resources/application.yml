@@ -17,10 +17,11 @@ spring:
   aop:
     auto: true
     proxy-target-class: true
-#  sleuth:
-#    sampler:
-#      percentage: 1
+  sleuth:
+    sampler:
+      percentage: 0.1
   zipkin:
+    enabled: true
     base-url: http://192.168.101.101:9411
   boot:
     admin:
@@ -82,6 +83,11 @@ eureka:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
 hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
   stream:
     maxConcurrentConnections: 20
     bus:

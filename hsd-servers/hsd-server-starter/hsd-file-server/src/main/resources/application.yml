@@ -53,7 +53,7 @@ hsd:
     fileServer:
       rootFolder: d:/home/hsd/file/
       upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: /upload/
+      download: /upload/ #http://192.168.101.100:28888/upload/
       image:
         executorServiceSize: 5
         n1:

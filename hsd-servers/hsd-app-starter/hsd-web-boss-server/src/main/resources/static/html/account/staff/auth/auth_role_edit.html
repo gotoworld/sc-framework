@@ -30,7 +30,7 @@
 				<form id="authRole_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
@@ -64,7 +64,7 @@
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in permNodes">
-                                        <label style="{{checkPermId(t.id)?'color:red':''}}"><input type="checkbox" name="permIds" ng-value="t.id" ng-checked="checkPermId(t.id)">{{t.name}}</label>
+                                        <label ng-style="checkPermId(t.id)?{color:'red'}:''"><input type="checkbox" name="permIds" ng-value="t.id" ng-checked="checkPermId(t.id)">{{t.name}}</label>
                                         <ul ng-include="'tree_checkbox_role_vs_perm.html'" ng-init="child=t.nodes;name='permIds'"></ul>
                                     </li>
                                 </ul>
@@ -78,7 +78,7 @@
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in menuNodes">
-                                        <label style="{{checkMenuId(t.id)?'color:red':''}}"><input type="checkbox" name="menuIds" ng-value="t.id" ng-checked="checkMenuId(t.id)">{{t.name}}</label>
+                                        <label ng-style="checkMenuId(t.id)?{color:'red'}:''"><input type="checkbox" name="menuIds" ng-value="t.id" ng-checked="checkMenuId(t.id)">{{t.name}}</label>
                                         <ul ng-include="'tree_checkbox_role_vs_menu.html'" ng-init="child=t.nodes;name='menuIds'"></ul>
                                     </li>
                                 </ul>
@@ -89,7 +89,7 @@
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 				</form>
@@ -151,13 +151,13 @@
                         }
                 }, 'json');
             }
-        }
+        };
         $scope.checkPermId=function(permId){
             if($data.rolePermNodes && $data.rolePermNodes.indexOf(permId)!=-1){
                 return true;
             }
             return false;
-        }
+        };
         $scope.checkMenuId=function(menuId){
             if($data.roleMenuNodes && $data.roleMenuNodes.indexOf(menuId)!=-1){
                 return true;
@@ -176,7 +176,7 @@
              }
              if(!$data.$$phase) $data.$apply();
          }, 'json');
-    }
+    };
 
     function loadPermTree(){
         $.get(site.authPerm.tree, {},function (result) {

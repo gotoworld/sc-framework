@@ -192,7 +192,7 @@ public class OrgStaffController extends BaseController {
 				}
 				result = Response.error(errorresult);
 			}else{
-				OrgStaffDto orgStaff = (OrgStaffDto) JwtUtil.getSubject(OrgStaffDto.class);
+				OrgStaffDto orgStaff = JwtUtil.getSubject(OrgStaffDto.class);
 				if(orgStaff !=null){
 					if(ValidatorUtil.isEmpty(dto.getAccount())){
 						dto.setAccount(orgStaff.getAccount());
@@ -212,12 +212,11 @@ public class OrgStaffController extends BaseController {
 	 * <p> 密码修改
 	 */
 	@RequiresPermissions("orgStaff:edit:pwd")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update/pwd")
+	@RequestMapping(method={RequestMethod.POST},value=acPrefix+"update/pwd")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="员工密码")
-	@ResponseBody
 	@ApiOperation(value = "密码修改")
-	public Response updatePwd(@ModelAttribute @Validated OrgStaffDto dto) throws IOException {
+	public Response updatePwd(@ModelAttribute OrgStaffDto dto) throws IOException {
 		log.info("OrgStaffController updatePwd.........");
 		Response result = new Response("success");
 		try {
@@ -239,7 +238,6 @@ public class OrgStaffController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"reset/pwd/{id}")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="员工密码重置")
-	@ResponseBody
 	@ApiOperation(value = "员工密码重置")
 	public Response resetPwd(@PathVariable("id") Long id) throws IOException {
 		log.info("OrgStaffController resetPwd.........");

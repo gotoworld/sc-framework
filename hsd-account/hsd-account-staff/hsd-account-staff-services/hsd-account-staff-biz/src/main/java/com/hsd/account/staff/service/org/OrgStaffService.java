@@ -258,12 +258,12 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+//    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String updatePwd(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            OrgStaffDto orgStaffDto=findDataById(dto);
+            OrgStaffDto orgStaffDto=copyTo(orgStaffDao.selectUserPwdByPrimaryKey(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
             if (orgStaffDto==null) throw new RuntimeException("员工不存在!");
 
             orgStaffDto.setOldpwd(MD5.pwdMd5Hex(dto.getOldpwd()));

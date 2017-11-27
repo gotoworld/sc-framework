@@ -30,7 +30,7 @@
 				<form id="authPerm_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
@@ -72,10 +72,10 @@
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li>
-                                        <label style="{{item.parentId==null||item.parentId==''?'color:red':''}}"><input type="radio" name="parentId" value="" ng-checked="item.parentId==null||item.parentId==''">根节点</label>
+                                        <label ng-style="item.parentId==null||item.parentId==''?{color:'red'}:''"><input type="radio" name="parentId" value="" ng-checked="item.parentId==null||item.parentId==''">根节点</label>
                                     </li>
                                     <li ng-repeat="t in nodes">
-                                        <label style="{{item.parentId==t.id?'color:red':''}}"><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
+                                        <label ng-style="{{item.parentId==t.id?{color:'red'}:''}}"><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
                                         <ul ng-include="'../tree_radio.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id;name='parentId'"></ul>
                                     </li>
                                 </ul>
@@ -86,7 +86,7 @@
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 				</form>
@@ -153,7 +153,7 @@
              }
              if(!$data.$$phase) $data.$apply();
          }, 'json');
-    }
+    };
     function loadTree(){
         $.get(site.authPerm.tree, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));

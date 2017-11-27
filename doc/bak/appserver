@@ -23,6 +23,8 @@ start() {
 	cd $_APP
 	nohup $_JAVA $_PARAMS -jar $_APP/hsd-*.jar > $_LOG 2>&1 &
 
+	# crontab -e 0,30 * * * * current_date=`date -d "-1 day" "+%Y%m%d"`; split -b 65535000 -d -a 4 $_APP/$_LOG $_APP/$_LOG_${current_date}_; cat /dev/null > $_APP/$_LOG
+
 	echo "Server is started..."
 }
 

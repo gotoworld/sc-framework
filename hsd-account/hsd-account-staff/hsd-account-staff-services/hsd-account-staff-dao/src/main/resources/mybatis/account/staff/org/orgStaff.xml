@@ -33,6 +33,15 @@
         from org_staff t1
         where t1.id = #{id}
     </select>
+    <!-- 获取用户密码 -->
+    <select id="selectUserPwdByPrimaryKey" resultType="com.hsd.account.staff.entity.org.OrgStaff" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
+        select
+         t1.id as "id"
+        ,t1.account as "account"
+        ,t1.pwd as "pwd"
+        from org_staff t1
+        where t1.id = #{id}
+    </select>
     <!-- 新增 批量数据 -->
     <insert id="insertBatch"  >
         insert into org_staff (

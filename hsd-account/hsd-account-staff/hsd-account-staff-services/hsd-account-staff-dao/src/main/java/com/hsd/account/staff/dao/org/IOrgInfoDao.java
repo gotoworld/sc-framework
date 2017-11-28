@@ -53,6 +53,9 @@ public interface IOrgInfoDao extends IBaseDao {
     /** 根据父code获取组织id */
     @Select("select id from org_info where  code = #{code} ")
     Long getIdByPCode(IEntity entity) throws Exception;
+    /** 根据name获取组织id */
+    @Select("select id from org_info where  name = #{name} ")
+    Long getIdByName(IEntity entity) throws Exception;
 
     /** 根据父id获取组织id */
     @Select("select id from org_info where  parent_id = #{id} ")

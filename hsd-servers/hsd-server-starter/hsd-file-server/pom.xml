@@ -5,15 +5,34 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
+        <groupId>com.hsd.framework</groupId>
+        <artifactId>hsd-framework-starter</artifactId>
+        <version>1.0</version>
         <relativePath />
     </parent>
+
     <groupId>com.hsd.servers</groupId>
     <artifactId>hsd-file-server</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <start-class>com.hsd.Application</start-class>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -21,14 +40,14 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.hsd.framework</groupId>
             <artifactId>hsd-framework-core</artifactId>
-            <version>1.0</version>
+            <version>${hsd.framework.version}</version>
             <exclusions>
-                <!--<exclusion>-->
-                    <!--<groupId>io.github.openfeign</groupId>-->
-                    <!--<artifactId>feign-okhttp</artifactId>-->
-                <!--</exclusion>-->
                 <exclusion>
                     <groupId>de.codecentric</groupId>
                     <artifactId>spring-boot-admin-starter-client</artifactId>
@@ -37,13 +56,8 @@
                     <groupId>com.ibeetl</groupId>
                     <artifactId>beetl</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>com.github.pagehelper</groupId>
-                    <artifactId>pagehelper-spring-boot-starter</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
-        <!-- 图片 -->
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>

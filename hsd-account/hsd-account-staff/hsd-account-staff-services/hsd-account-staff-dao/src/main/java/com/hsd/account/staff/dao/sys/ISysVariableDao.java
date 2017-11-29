@@ -20,7 +20,6 @@ public interface ISysVariableDao extends IBaseDao {
      */
     @Select("select IFNULL(count(0),0) as count from sys_variable where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
-
     /**
      * 逻辑删除
      */
@@ -32,5 +31,9 @@ public interface ISysVariableDao extends IBaseDao {
      */
     @Delete("delete from sys_variable where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
+
     List findChildDataIsList(IEntity entity) throws Exception;
+
+    @Select("select t1.code from sys_variable t1 INNER JOIN sys_variable t2 on (t2.`code`='stafflevel' and t1.parent_id=t2.id) where t1.del_flag=0 and t1.`name`=#{name}")
+    String getCodeByVariableName(IEntity entity) throws Exception;
 }

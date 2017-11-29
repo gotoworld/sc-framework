@@ -1,51 +1,12 @@
 #系统级别的一些参数配置，这些参数一般是不会变动的
 spring:
+  application:
+    name: hsd-account-staff-server
+  profiles:
+    active: native
   cloud:
     config:
       enabled: false
-##      uri: http://192.168.101.100:8888
-#      profile: dev
-#      label: trunk
-#      discovery:
-#        enabled: true             # 默认false，设为true表示使用注册中心中的configserver配置而不自己配置configserver的uri
-#        serviceId: config-server  # 指定config server在服务发现中的serviceId，默认为：configserver
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
-  aop:
-    auto: true
-    proxy-target-class: true
-eureka:
-  instance:
-    preferIpAddress: true
-#    lease-renewal-interval-in-seconds: 10 # 续约到期时间（默认90秒）
-#    lease-expiration-duration-in-seconds: 30 # 续约更新时间间隔（默认30秒）
-  client:
-    registerWithEureka: true #服务注册
-    fetchRegistry: true #服务获取
-    serviceUrl:
-      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.100:8761/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.101:8761/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.102:8761/eureka/
-    healthcheck:
-      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
-
-hystrix:
-  stream:
-    maxConcurrentConnections: 20
-    bus:
-      enabled: true
-feign:
-  okhttp:
-    enabled: true
-mybatis:
-#  type-aliases-package: com.hsd.dto
-  mapper-locations: classpath*:mybatis/**/*.xml
-mapper:
-  not-empty: false
-  identity: MYSQL
-pagehelper:
-  helperDialect: mysql
-#  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
+      uri: http://192.168.101.100:8888
+      profile: dev
+      label: trunk

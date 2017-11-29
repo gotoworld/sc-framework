@@ -2,6 +2,7 @@ package com.hsd.filter;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.*;
@@ -45,7 +46,7 @@ public class CrossFilter implements Filter {
     private void addHeadersCookieForAuthorization(HttpServletRequest request,HttpServletResponse response) {
         String authorization=request.getHeader("Authorization");
         if(authorization!=null && !"".equals(authorization)){
-//            response.setHeader("X-Cache",DigestUtils.md5Hex(authorization ));
+            response.setHeader("X-Cache", DigestUtils.md5Hex(authorization ));
         }
     }
 }

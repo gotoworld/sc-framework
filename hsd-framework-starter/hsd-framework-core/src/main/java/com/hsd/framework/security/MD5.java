@@ -6,9 +6,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Administrator on 16-11-15.
- */
 public class MD5 {
     public static byte[] md5(final byte[] data) {
         return DigestUtils.md5(data );
@@ -85,6 +82,6 @@ public class MD5 {
     }
 
     public static void main(String[] args) {
-        System.out.println(pwdMd5Hex("21232f297a57a5a743894a0e4a801fc3"));
+        System.out.println(pwdMd5Hex(md5Hex("test")));
     }
 }

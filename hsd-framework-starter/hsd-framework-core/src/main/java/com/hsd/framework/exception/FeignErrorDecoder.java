@@ -1,6 +1,7 @@
 package com.hsd.framework.exception;
 
 import com.hsd.framework.FeignErrorDTO;
+import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.Converter;
 import feign.Response;
 import feign.Util;
@@ -33,11 +34,15 @@ public class FeignErrorDecoder implements ErrorDecoder {
                     message = errDto.getError();
                 if (message != null) {
                     data = message;
-                    int idx = data.indexOf(":");
+                    int idx = data.indexOf(errDto.getException()+":");
                     if (idx >= 0) {
-                        code = Integer.parseInt(data.substring(idx+1,data.lastIndexOf(":")).trim());
-                        if (data.length() > idx + 1)
-                            message = data.substring(data.lastIndexOf(":") + 1);
+                        try {
+                            code = Integer.parseInt(data.substring(idx+1,data.lastIndexOf(CommonConstant.FEIGN_ERROR_SYMBOL_STRING)).trim());
+                        } catch (NumberFormatException e) {
+                            code=501;
+                        }
+                        if (data.length() > idx + CommonConstant.FEIGN_ERROR_SYMBOL_STRING.length())
+                            message = data.substring(data.lastIndexOf(CommonConstant.FEIGN_ERROR_SYMBOL_STRING) + CommonConstant.FEIGN_ERROR_SYMBOL_STRING.length());
                     }
                 }
 
@@ -46,9 +51,6 @@ public class FeignErrorDecoder implements ErrorDecoder {
         } catch (IOException ignored) { // NOPMD
 //            log.error("FeignErrorDecoder:",ignored);
         }
-
-        ServiceFeignException exception = new ServiceFeignException(code, message , data);
-
-        return exception;
+        return new ServiceFeignException(code, message , data);
     }
 }

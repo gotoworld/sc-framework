@@ -1,13 +1,3 @@
-/*
- *  类描述待补充.
- *
- * VERSION  DATE        BY              REASON
- * -------- ----------- --------------- ------------------------------------
- * 1.00     2016-3-25  wu1wu1g      程序.发布
- * -------- ----------- --------------- ------------------------------------
- * Copyright 2016 baseos  System. - All Rights Reserved.
- *
- */
 package com.hsd.framework.listener;
 
 import lombok.extern.slf4j.Slf4j;

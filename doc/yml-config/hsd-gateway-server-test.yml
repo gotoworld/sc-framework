@@ -1,0 +1,107 @@
+server:
+  port: 28890
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://${spring.boot.admin.url}/turbine.stream
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+hystrix:
+  stream:
+    maxConcurrentConnections: 20
+    bus:
+      enabled: true
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  okhttp:
+    enabled: true
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: true
+
+zuul:
+  sensitiveHeaders: Access-Control-Allow-Origin,Access-Control-Allow-Methods,Access-Control-Allow-Headers
+  cross:
+    origin: "*"
+    methods: "POST, GET, OPTIONS, PUT, DELETE, HEAD"
+    headers: "Origin,Authorization,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,X-Cache"
+  max:
+    host:
+      connections: 500
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+#  ignored-services: "*"
+#  routes:
+#    product:
+#      path: /product/**
+#      url: http://product:9001/product
+
+management.security.enabled: false
+
+
+eureka:
+  user:
+    name: admin
+    password: admin
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 2 # 续约更新时间间隔（默认30秒）
+  client:
+    registryFetchIntervalSeconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔(s),默认为30秒
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
+    serviceUrl:
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.199:8761/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
+
+
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+
+security:
+  basic:
+    enabled: false
+
+feign:
+  okhttp:
+    enabled: true
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: test_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

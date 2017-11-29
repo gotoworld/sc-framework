@@ -25,16 +25,11 @@ import java.util.Map;
  * Servlet implementation class upload
  */
 @AutoConfigureBefore(AppConfig.class)
-//@WebServlet(urlPatterns = "/file/fileUpload", description = "文件上传")
 @NoAuthorize
 @Slf4j
 @RestController
 public class UploadServlet {
     private final long serialVersionUID = 1L;
-    //    @Autowired
-//    private ISysMaterialService materialService;
-    // 线程池 默认大小
-//    private static ExecutorService threadPool = null;
     private static String rootFolderUpload = null;
     private static String rootFolderDownload = null;
     private static Integer imageN1Width = null;
@@ -43,8 +38,6 @@ public class UploadServlet {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMM/");
 
     private void setAppConfig() {
-//        if(threadPool==null)
-//        this.threadPool = Executors.newScheduledThreadPool(Integer.parseInt(AppConfig.getProperty("common.fileServer.image.executorServiceSize")));
         if (rootFolderUpload == null) {
             this.rootFolderUpload = AppConfig.getProperty("common.fileServer.upload");
         }

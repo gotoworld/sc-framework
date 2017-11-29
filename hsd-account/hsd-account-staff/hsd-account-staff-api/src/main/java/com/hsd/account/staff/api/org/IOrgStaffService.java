@@ -29,6 +29,11 @@ public interface IOrgStaffService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     public Response saveOrUpdateData(OrgStaffDto dto) throws Exception;
     /**
+     * <p>信息新增。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/insert")
+    public Response insert(OrgStaffDto dto) throws Exception;
+    /**
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updateData")
@@ -63,6 +68,12 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
     public List<OrgStaffDto> findDataIsList(OrgStaffDto dto);
+
+    /**
+     * <p>获取用户及用户所在组织。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffAndOrgDataIsList")
+    public List<OrgStaffDto> findStaffAndOrgDataIsList(OrgStaffDto dto);
     /**
      * <p>信息详情。
      */

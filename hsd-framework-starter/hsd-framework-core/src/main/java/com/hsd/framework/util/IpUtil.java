@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Administrator on 16-11-17.
- */
 public class IpUtil {
 
     class IpSub {

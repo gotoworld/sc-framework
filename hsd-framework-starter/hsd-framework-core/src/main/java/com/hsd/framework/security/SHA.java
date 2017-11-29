@@ -6,9 +6,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Administrator on 16-11-15.
- */
 public class SHA {
     public static byte[] sha1(final byte[] data) {
         return DigestUtils.sha1(data);

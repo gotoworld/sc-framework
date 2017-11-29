@@ -9,10 +9,12 @@ server:
 spring:
   application:
     name: hsd-account-web-boss
-  profiles:
-    active: dev
-  resources:
-      static-locations: classpath:/META-INF/resources/,classpath:/static/
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
+    base-url: http://192.168.101.101:9411
   boot:
     admin:
       url: http://192.168.101.100:8889
@@ -20,6 +22,12 @@ spring:
 #          metadata:
 #            user.name: ${security.user.name}
 #            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://${spring.boot.admin.url}/turbine.stream
+  resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/static/
   redis:
     database: 10
     secondary-database: 11
@@ -28,10 +36,18 @@ spring:
 #    password:
     timeout: 1800000
     idGenNodes:
-      - host: 192.168.101.101
+      - host: 192.168.101.100
         port: 6379
     #    password:
         luaSha: c5809078fa6d652e0b0232d552a9d06d37fe819c
+      - host: 192.168.101.101
+        port: 6379
+    #    password:
+        luaSha: accb7a987d4fb0fd85c57dc5a609529f80ec3722
+      - host: 192.168.101.102
+        port: 6379
+    #    password:
+        luaSha: f55f781ca4a00a133728488e15a554c070b17255
     pool:
       max-active: 8
       max-total: 50
@@ -42,13 +58,6 @@ spring:
       min-idle: 0
     session-expire: 7200000
 
-security:
-  basic:
-    enabled: false
-  user:
-    name: admin
-    password: admin
-
 endpoints:
   health:
     sensitive: false
@@ -57,13 +66,24 @@ endpoints:
 
 management.security.enabled: false
 
-#logging:
-#  file: "/logs/${spring.application.name}.log"
-
 #服务名
 feign:
   name:
     account: hsd-account-server
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+  stream:
+    maxConcurrentConnections: 20
+    bus:
+      enabled: true
+
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 # 自定义配置
 hsd:

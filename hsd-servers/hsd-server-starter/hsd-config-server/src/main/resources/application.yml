@@ -1,3 +1,6 @@
+info:
+  description: 配置分发
+  version : v1.0
 server:
   port: 8888
 spring:
@@ -5,15 +8,13 @@ spring:
     name: config-server
   profiles:
     active: native
-    search-locations: classpath:/config
-#  cloud:
-#    config:
-#      server:
-#        git:
-#          uri: https://git.oschina.net/wu1g119/servers.git
-#          searchPaths: doc/yml-config/
-
-security:
-  user:
-    name: admin
-    password: admin
+  cloud:
+    config:
+      server:
+#        native:
+#          search-locations: classpath:/yml-config
+        git:
+          uri: http://192.168.101.16/wuxiaogang/hsd-servers.git         # 配置git仓库的地址
+          searchPaths: doc/yml-config                             # git仓库地址下的相对地址，可以配置多个，用,分割。
+          username: wuxiaogang@heshidai.com                         # git仓库的账号
+          password: wuxiaogang                                      # git仓库的密码

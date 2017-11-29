@@ -44,12 +44,12 @@ public interface IOrgStaffDao extends IBaseDao {
      * <p>获取员工信息>根据员工登录名。
      */
     Object findDataByAccount(IEntity entity) throws Exception;
+    Object selectUserPwdByPrimaryKey(IEntity entity) throws Exception;
     /**
      * <p>判断员工账号是否存在
      */
     @Select(" select count(0) from org_staff where  account=#{account} ")
     int isAccountYN(@Param("account") String account) throws Exception;
-
     /**
      * <p>密码修改
      */
@@ -61,6 +61,7 @@ public interface IOrgStaffDao extends IBaseDao {
      */
     @Update("update org_staff set version=version+1,date_updated=now(),pwd=#{pwd} where id = #{id}")
     int resetPwd(IEntity entity) throws Exception;
+
     /**
      * <p>最后登陆记录
      */
@@ -72,13 +73,20 @@ public interface IOrgStaffDao extends IBaseDao {
      */
     @Update("update org_staff set leadership=#{leadership} where id = #{id}")
     int setLeadership(IEntity entity) throws Exception;
-
     /**
      * <p>获取员工-根据员工和上级级别。
      */
     Object getStaffByStaffIdAndleadershipLevel(IEntity entity) throws Exception;
+
     /**
      * <p>获取员工-所有上级。
      */
     List getStaffLeadershipAll(IEntity entity) throws Exception;
+    /**
+     * <p>获取用户及用户所在组织。
+     */
+    List findStaffAndOrgDataIsList(IEntity entity) throws Exception;
+
+    @Select(" select id from org_staff where  account=#{account} ")
+    int getIdbyAcccount(@Param("account") String account) throws Exception;
 }

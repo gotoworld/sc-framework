@@ -1,0 +1,117 @@
+#定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
+info:
+  description: PORTAL系统->客户
+  version : v1.0
+# HTTP Server
+server:
+  port: 6103
+  context-path: /
+spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static/
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  aop:
+    auto: true
+    proxy-target-class: true
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
+    base-url: http://192.168.101.101:9411
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://${spring.boot.admin.url}/turbine.stream
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+#    password:
+    timeout: 1800000
+    idGenNodes:
+      - host: 192.168.101.100
+        port: 6379
+    #    password:
+        luaSha: c5809078fa6d652e0b0232d552a9d06d37fe819c
+      - host: 192.168.101.101
+        port: 6379
+    #    password:
+        luaSha: accb7a987d4fb0fd85c57dc5a609529f80ec3722
+      - host: 192.168.101.102
+        port: 6379
+    #    password:
+        luaSha: f55f781ca4a00a133728488e15a554c070b17255
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 7200000
+
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
+eureka:
+  user:
+    name: admin
+    password: admin
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 2 # 续约更新时间间隔（默认30秒）
+  client:
+    registryFetchIntervalSeconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔(s),默认为30秒
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
+    serviceUrl:
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.199:8761/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
+
+#服务名
+feign:
+  okhttp:
+    enabled: true
+  name:
+    account.actor: hsd-account-actor-server
+    util.sms: hsd-util-sms-server
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+  stream:
+    maxConcurrentConnections: 20
+    bus:
+      enabled: true
+
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: test_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

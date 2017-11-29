@@ -3,9 +3,6 @@ package com.hsd.framework;
 
 import com.hsd.framework.exception.ErrorCode;
 
-/**
- * Created by Administrator on 16-9-14.
- */
 public enum SysErrorCode implements ErrorCode {
 
 	SUCCESS(0, "操作成功!"), 

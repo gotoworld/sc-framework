@@ -2,15 +2,25 @@
 info:
   description: 基础服务->客户
   version: v1.0
-# HTTP Server
+# HTTP Server ${random.int[10000,19999]}
 server:
-  port: 6064
+  port: 6100
   context-path: /
 spring:
-  application:
-    name: hsd-account-actor-server
-  profiles:
-    active: dev
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  aop:
+    auto: true
+    proxy-target-class: true
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
+    base-url: http://192.168.101.101:9411
   boot:
     admin:
       url: http://192.168.101.100:8889
@@ -21,8 +31,7 @@ spring:
       routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
       turbine:
         clusters: default
-        url: http://192.168.101.100:8889/turbine.stream
-
+        url: http://${spring.boot.admin.url}/turbine.stream
   datasource:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
@@ -52,7 +61,6 @@ spring:
     connectionProperties: "druid.stat.mergeSql:true;druid.stat.slowSqlMillis:5000"
     # 合并多个DruidDataSource的监控数据
     useGlobalDataSourceStat: true
-
   redis:
     database: 10
     secondary-database: 11
@@ -61,10 +69,18 @@ spring:
 #    password:
     timeout: 1800000
     idGenNodes:
-      - host: 192.168.101.101
+      - host: 192.168.101.100
         port: 6379
     #    password:
         luaSha: c5809078fa6d652e0b0232d552a9d06d37fe819c
+      - host: 192.168.101.101
+        port: 6379
+    #    password:
+        luaSha: accb7a987d4fb0fd85c57dc5a609529f80ec3722
+      - host: 192.168.101.102
+        port: 6379
+    #    password:
+        luaSha: f55f781ca4a00a133728488e15a554c070b17255
     pool:
       max-active: 8
       max-total: 50
@@ -75,13 +91,36 @@ spring:
       min-idle: 0
     session-expire: 7200000
 
-security:
-  basic:
-    enabled: false
+
+eureka:
   user:
     name: admin
     password: admin
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 2 # 续约更新时间间隔（默认30秒）
+  client:
+    registryFetchIntervalSeconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔(s),默认为30秒
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
+    serviceUrl:
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
+
+mybatis:
+#  type-aliases-package: com.hsd.dto
+  mapper-locations: classpath*:mybatis/**/*.xml
+mapper:
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+#  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 endpoints:
   health:
     sensitive: false
@@ -91,12 +130,24 @@ endpoints:
 management.security.enabled: false
 
 feign:
+  okhttp:
+    enabled: true
   name:
     account.actor: ${spring.application.name}
 
-#
-#logging:
-#  file: "d:/logs/${spring.application.name}.log"
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+  stream:
+    maxConcurrentConnections: 20
+    bus:
+      enabled: true
+
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 # 自定义配置
 hsd:

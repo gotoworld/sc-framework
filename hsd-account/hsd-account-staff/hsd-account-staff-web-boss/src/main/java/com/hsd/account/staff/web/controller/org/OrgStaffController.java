@@ -1,7 +1,5 @@
 package com.hsd.account.staff.web.controller.org;
 
-import com.hsd.account.staff.api.auth.IAuthRoleService;
-import com.hsd.account.staff.api.org.IOrgInfoService;
 import com.hsd.account.staff.api.org.IOrgStaffService;
 import com.hsd.account.staff.dto.org.AuthStaffVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
@@ -35,11 +33,6 @@ public class OrgStaffController extends BaseController {
 
 	@Autowired
 	private IOrgStaffService orgStaffService;
-	@Autowired
-	private IAuthRoleService authRoleService;
-
-	@Autowired
-	private IOrgInfoService orgDepartmentService;
 
 	/**
 	 * <p> 信息分页 (未删除)。
@@ -147,7 +140,7 @@ public class OrgStaffController extends BaseController {
 	/**
 	 * <li>恢复。
 	 */
-	@RequiresPermissions("orgStaff:del")
+	@RequiresPermissions("orgStaff:recovery")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recovery/{id}")
 	@ALogOperation(type = "恢复", desc = "组织架构_员工")
 	@ApiOperation(value = "恢复")
@@ -199,13 +192,13 @@ public class OrgStaffController extends BaseController {
 				}
 				result = Response.error(errorresult);
 			}else{
-				OrgStaffDto orgStaff = (OrgStaffDto) JwtUtil.getSubject(OrgStaffDto.class);
+				OrgStaffDto orgStaff = JwtUtil.getSubject(OrgStaffDto.class);
 				if(orgStaff !=null){
 					if(ValidatorUtil.isEmpty(dto.getAccount())){
 						dto.setAccount(orgStaff.getAccount());
 					}
 				}
-				if(null==dto.getState()) dto.setState(0);//启用
+				if(null==dto.getState()) dto.setState(0);//在职
 				result=orgStaffService.saveOrUpdateData(dto);
 				request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
 			}
@@ -219,12 +212,11 @@ public class OrgStaffController extends BaseController {
 	 * <p> 密码修改
 	 */
 	@RequiresPermissions("orgStaff:edit:pwd")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"update/pwd")
+	@RequestMapping(method={RequestMethod.POST},value=acPrefix+"update/pwd")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="员工密码")
-	@ResponseBody
 	@ApiOperation(value = "密码修改")
-	public Response updatePwd(@ModelAttribute @Validated OrgStaffDto dto) throws IOException {
+	public Response updatePwd(@ModelAttribute OrgStaffDto dto) throws IOException {
 		log.info("OrgStaffController updatePwd.........");
 		Response result = new Response("success");
 		try {
@@ -246,7 +238,6 @@ public class OrgStaffController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"reset/pwd/{id}")
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="员工密码重置")
-	@ResponseBody
 	@ApiOperation(value = "员工密码重置")
 	public Response resetPwd(@PathVariable("id") Long id) throws IOException {
 		log.info("OrgStaffController resetPwd.........");
@@ -454,6 +445,19 @@ public class OrgStaffController extends BaseController {
 			OrgStaffDto dto = new OrgStaffDto();
 			dto.setAccount(account);
 			result.data=orgStaffService.getStaffLeadershipAll(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"list/staff/all")
+	@ApiOperation(value = "获取用户及用户所在组织")
+	public Response findStaffAndOrgDataIsList() {
+		log.info("OrgStaffController findStaffAndOrgDataIsList.........");
+		Response result = new Response("success");
+		try {
+			OrgStaffDto dto = new OrgStaffDto();
+			result.data=orgStaffService.findStaffAndOrgDataIsList(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}

@@ -15,7 +15,7 @@
     <version>1.0</version>
 
     <modules>
-        <module>../../hsd-common/hsd-common-util-sms</module>
+        <module>hsd-util-sms-api</module>
         <module>hsd-util-sms-services</module>
         <module>hsd-util-sms-web-boss</module>
         <module>hsd-util-sms-web-portal</module>

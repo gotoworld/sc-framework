@@ -1,0 +1,87 @@
+#/bin/sh
+
+export LANG="en_US.UTF-8"
+
+_JAVA=$JAVA_HOME/bin/java
+_APP=$(cd $(dirname $0); pwd)
+
+_JARS=.:$_APP/config
+
+ #-Xdebug -Xrunjdwp:transport=dt_socket,address=6062,suspend=n,server=y 
+_PARAMS="-Xverify:none -server -Xms128m -Xmx256m -Xmn128m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -XX:ParallelGCThreads=1 -XX:+DisableExplicitGC -XX:MaxTenuringThreshold=7 -XX:MaxGCPauseMillis=100 -XX:CMSInitiatingOccupancyFraction=80 -XX:-PrintGC -XX:-PrintGCDetails -Xloggc:$_APP/logs/gc.log -XX:ErrorFile=$_APP/logs/hs_error%p.log"
+
+
+# script configuration
+_TIMEOUT=10
+_LOG="logs/log_start.log"
+
+start() {
+	[ -d $_APP ] || exit 5;
+
+	echo "Server is starting..."
+	
+	cd $_APP
+	nohup $_JAVA $_PARAMS -jar $_APP/hsd-*.jar > $_LOG 2>&1 &
+
+	# crontab -e 0,30 * * * * current_date=`date -d "-1 day" "+%Y%m%d"`; split -b 65535000 -d -a 4 $_APP/$_LOG $_APP/$_LOG_${current_date}_; cat /dev/null > $_APP/$_LOG
+
+	echo "Server is started..."
+}
+
+stop() {
+	echo "Server is stoping..."
+	pid=$(ps -ef | grep $_APP | grep -v grep | awk '{print $2}')
+	if [ ! -n "$pid" ]; then
+		echo "Server process is not find."
+		return 1;
+	fi
+	kill -15 $pid
+	echo "Server is stoped..."
+	
+	return 0;
+}
+
+restart() {
+	if stop ; then
+		wait_for
+	fi
+	start
+}
+
+state() {
+	pid=$(ps -ef | grep $_APP | grep -v grep | awk '{print $2}')
+	if [ ! -n "$pid" ]; then
+		echo "Server process is not find."
+	else
+		echo "Server is run...pid="$pid
+	fi
+}
+
+wait_for() {
+	echo -n "Waitting server stop..."
+	i=0
+	while test $i -ne $_TIMEOUT; do
+		echo -n '.'
+		i=$(expr $i + 1)
+		sleep 1
+	done
+	echo
+}
+
+case "$1" in
+	start)
+		$1
+		;;
+	stop)
+		$1
+		;;
+	restart)
+		$1
+		;;
+	state)
+		$1
+		;;
+   *)
+		echo $"Useage: $0 {start|stop|state|restart}"
+		exit 2
+esac

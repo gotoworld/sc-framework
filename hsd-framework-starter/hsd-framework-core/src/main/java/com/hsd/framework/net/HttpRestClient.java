@@ -1,10 +1,8 @@
 package com.hsd.framework.net;
 
-import com.hsd.framework.util.Converter;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JavaType;
+import com.hsd.framework.util.Converter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.MapUtils;
 import org.apache.http.Header;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -32,7 +30,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import java.nio.charset.Charset;
@@ -48,9 +45,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @title：使用spring的restTemplate替代httpclient工具
  *   提供配置连接池管理。可以针对相同的配置建立配置池。
- *
- * @author：刘良旭
- * @date：2016
  */
 @Component
 @Slf4j

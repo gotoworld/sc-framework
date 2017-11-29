@@ -18,13 +18,6 @@
             <artifactId>hsd-framework-core</artifactId>
             <version>${hsd.framework.version}</version>
         </dependency>
-        <!--数据库 连接池-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
-        </dependency>
-
         <!--数据库 驱动-->
         <dependency>
             <groupId>mysql</groupId>

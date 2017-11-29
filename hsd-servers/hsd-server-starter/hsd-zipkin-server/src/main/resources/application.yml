@@ -1,0 +1,65 @@
+info:
+  description: 服务链路追踪
+  version : v1.0
+server:
+  port: 9411
+  context-path: /
+spring:
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user:
+#              name: ${security.user.name}
+#              password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://${spring.boot.admin.url}/turbine.stream
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+security:
+  basic:
+    enabled: false
+  user:
+    name: admin
+    password: admin
+
+management.security.enabled: false
+
+eureka:
+  user:
+    name: admin
+    password: admin
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 2 # 续约更新时间间隔（默认30秒）
+  client:
+    registryFetchIntervalSeconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔(s),默认为30秒
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
+    serviceUrl:
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
+
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

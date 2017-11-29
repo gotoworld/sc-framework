@@ -26,6 +26,13 @@
         from org_info t1
         where t1.id = #{id}
     </select>
+    <!-- 根据code获取信息详情 -->
+    <select id="selectByCode" resultType="com.hsd.account.staff.entity.org.OrgInfo" parameterType="com.hsd.account.staff.entity.org.OrgInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from org_info t1
+        where t1.code = #{code}
+    </select>
     <!-- 新增单条数据 -->
     <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into org_info (
@@ -143,5 +150,19 @@
         from org_info t1
         left join org_org_vs_staff t2 on (t1.id=t2.org_id)
         where t1.del_flag=0 and t2.staff_id=#{staffId}
+    </select>
+    <select id="getDataByPCode" parameterType="com.hsd.account.staff.entity.org.OrgInfo" resultType="com.hsd.account.staff.entity.org.OrgInfo">
+        select
+         t1.id as  "id"
+        ,t1.code as  "code"
+        ,t1.type as  "type"
+        ,t1.name as  "name"
+        ,t1.parent_id as  "parentId"
+        ,t1.memo as  "memo"
+        ,t1.state as  "state"
+        ,t1.manager as  "manager"
+        from org_info t1
+        inner join org_info t2 on t2.del_flag=0 and t1.parent_id=t2.id
+        where t1.del_flag=0 and t2.code=#{code}
     </select>
 </mapper>

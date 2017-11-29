@@ -8,12 +8,15 @@ import com.hsd.account.staff.dao.auth.IAuthStaffVsRoleDao;
 import com.hsd.account.staff.dao.org.IOrgInfoDao;
 import com.hsd.account.staff.dao.org.IOrgOrgVsStaffDao;
 import com.hsd.account.staff.dao.org.IOrgStaffDao;
+import com.hsd.account.staff.dao.sys.ISysVariableDao;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.AuthStaffVsRoleDto;
 import com.hsd.account.staff.dto.org.OrgInfoDto;
 import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
 import com.hsd.account.staff.dto.org.OrgStaffDto;
+import com.hsd.account.staff.entity.auth.AuthRole;
 import com.hsd.account.staff.entity.auth.AuthStaffVsRole;
+import com.hsd.account.staff.entity.org.OrgInfo;
 import com.hsd.account.staff.entity.org.OrgOrgVsStaff;
 import com.hsd.account.staff.entity.org.OrgStaff;
 import com.hsd.common.util.excel.ExcelUtil;
@@ -55,6 +58,8 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     private IOrgInfoDao orgInfoDao;
     @Autowired
     private IOrgOrgVsStaffDao orgOrgVsStaffDao;
+    @Autowired
+    private ISysVariableDao sysVariableDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
@@ -69,6 +74,34 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
                 orgStaffDao.update(entity);
             } else {
                 if(!JwtUtil.isPermitted("orgStaff:add")){
+                    throw new RuntimeException("没用新增员工的权限!");
+                }
+                if(orgStaffDao.isAccountYN(dto.getAccount())>0){
+                    throw new RuntimeException("账号已存在!");
+                }
+                entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
+                // 新增
+                orgStaffDao.insert(entity);
+                result.data=entity.getId();
+            }
+        } catch (Exception e) {
+            log.error("信息保存失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    @RfAccount2Bean
+    public Response insert(@RequestBody OrgStaffDto dto) throws Exception {
+        Response result = new Response(0,"success");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            OrgStaff entity=copyTo(dto,OrgStaff.class);
+            // 判断数据是否存在
+            if (orgStaffDao.isDataYN(entity) != 0) {
+                // 数据存在
+            } else {
+                if(!JwtUtil.isPermitted(dto,"orgStaff:add")){
                     throw new RuntimeException("没用新增员工的权限!");
                 }
                 if(orgStaffDao.isAccountYN(dto.getAccount())>0){
@@ -156,6 +189,16 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return results;
     }
+    public List<OrgStaffDto> findStaffAndOrgDataIsList(@RequestBody OrgStaffDto dto) {
+        List<OrgStaffDto> results = null;
+        try {
+            results = copyTo(orgStaffDao.findStaffAndOrgDataIsList(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
+        } catch (Exception e) {
+            log.error("获取用户及用户所在组织 异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
 
     public OrgStaffDto findDataById(@RequestBody OrgStaffDto dto) {
         OrgStaffDto result = null;
@@ -220,12 +263,12 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+//    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public String updatePwd(@RequestBody OrgStaffDto dto) throws Exception {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            OrgStaffDto orgStaffDto=findDataById(dto);
+            OrgStaffDto orgStaffDto=copyTo(orgStaffDao.selectUserPwdByPrimaryKey(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
             if (orgStaffDto==null) throw new RuntimeException("员工不存在!");
 
             orgStaffDto.setOldpwd(MD5.pwdMd5Hex(dto.getOldpwd()));
@@ -321,25 +364,51 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
                         finalMessage.append("<br/>空行:"+(i+1));
                         continue;
                     }
-                    orgStaff.setAccount((String) data.get(0));
-                    orgStaff.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(1))) );
-                    orgStaff.setName((String) data.get(2));
-                    orgStaff.setGender(getGender((String) data.get(3)));
-                    orgStaff.setCellphone((String) data.get(4));
-                    orgStaff.setEmail((String) data.get(5));
+                    orgStaff.setJobNo((String) data.get(0));//工号
+                    orgStaff.setAccount((String) data.get(1));//账号
+                    orgStaff.setPwd(MD5.pwdMd5Hex(MD5.md5Hex((String) data.get(2))) );//密码
+                    orgStaff.setName((String) data.get(3));//姓名
+                    orgStaff.setGender(getGender((String) data.get(4)));//性别
+                    orgStaff.setCellphone((String) data.get(5));//手机号
+                    orgStaff.setEmail((String) data.get(6));//邮箱
                     orgStaff.setMemo("批量导入");
 //                    orgStaff.setOrderNo(i);
                     orgStaff.setType(0);
                     orgStaff.setState(0);
                     orgStaff.setCreateId(createId);
                     orgStaffs.add(orgStaff);
-                    if((i+1)%100==0||(i+1)==datas.size()){
-                        try {
-                            orgStaffDao.insertBatch(orgStaffs);
-                        } catch (Exception e) {
+
+//                    if((i+1)%100==0||(i+1)==datas.size()){
+//                        try {
+//                            orgStaffDao.insertBatch(orgStaffs);
+//                        } catch (Exception e) {
                             orgStaffs.forEach(ou -> {
                                 try {
-                                    orgStaffDao.insert(ou);
+                                    try {
+                                        ou.setLevel(sysVariableDao.getCodeByVariableName(new AuthRole(){{setName((String) data.get(9));}}));//职级 9
+                                    } catch (Exception e) {
+                                        log.error(ou.getAccount()+"员工批量导入-异常:职级,"+e.getMessage());
+                                    }
+                                    try {
+                                        ou.setLeadership((long)orgStaffDao.getIdbyAcccount((String) data.get(10)));//上级领导 10
+                                    } catch (Exception e) {
+                                        log.error(ou.getAccount()+"员工批量导入-异常:上级领导,"+e.getMessage());
+                                    }
+                                    long staffId = orgStaffDao.insert(ou);
+                                    try {
+                                        //部门 7
+                                        long orgId=orgInfoDao.getIdByName(new OrgInfo(){{setName((String) data.get(7));}});//根据部门名称获取部门id
+                                        orgOrgVsStaffDao.insert(new OrgOrgVsStaff(){{setStaffId(staffId);setOrgId(orgId);}});
+                                    } catch (Exception e) {
+                                        log.error(ou.getAccount()+"员工批量导入-异常:部门,"+e.getMessage());
+                                    }
+                                    try {
+                                        //岗位 8
+                                        long roleId=authRoleDao.getIdByName(new AuthRole(){{setName((String) data.get(8));}});
+                                        authStaffVsRoleDao.insert(new AuthStaffVsRole(){{setStaffId(staffId);setRoleId(roleId);}});
+                                    } catch (Exception e) {
+                                        log.error(ou.getAccount()+"员工批量导入-异常:岗位,"+e.getMessage());
+                                    }
                                 } catch (Exception e1) {
                                     String msg=""+e1.getMessage();
                                     int indexOf=e1.getMessage().indexOf("for key");
@@ -347,9 +416,9 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
                                     finalMessage.append("<br/>==>"+ou.getAccount()+","+ou.getName()+","+ou.getCellphone());
                                 }
                             });
-                        }
+//                        }
                         orgStaffs=new ArrayList<>();
-                    }
+//                    }
                 }
             }
             result.code=500;

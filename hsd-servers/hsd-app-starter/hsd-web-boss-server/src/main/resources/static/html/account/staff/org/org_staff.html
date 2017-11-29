@@ -87,7 +87,7 @@
 													<td>{{item.jobNo}}</td>
 													<td>{{levelEnum(item.level)}}</td>
 													<td>{{genderEnum(item.gender)}}</td>
-													<td>{{item.state==0?'启用':'禁用'}}</td>
+													<td>{{stateEnum(item.state)}}</td>
 													<td>{{item.count}}</td>
 													<td>{{item.lastLogin | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -123,7 +123,7 @@
 													role="form" class="form-inline"
 													method="post"  accept-charset="UTF-8"
 													ng-submit="recyclePage()">
-													<input type="hidden" name="pageNum" id="recycle_pageNumA" value="1" ng-value="result.data.pageIndex?result.data.pageIndex:1">
+													<input type="hidden" name="pageNum" id="recycle_pageNumA" value="1" ng-value="recycle.data.pageIndex?recycle.data.pageIndex:1">
 													<div class="form-group" id="recycle_data_5">
 														<label class="font-noraml">创建时间</label>
 														<div class="input-daterange input-group" id="recycle_datepicker">
@@ -157,7 +157,7 @@
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="recycle.data.data && recycle.data.data.length>0" ng-repeat="item in recycle.data.data">
-                                    				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
+                                    				<td>{{(recycle.data.pageIndex-1)*recycle.data.pageSize + $index+1}}</td>
 													<td>{{item.account}}</td>
 													<td>{{item.name}}</td>
 													<td>{{item.count}}</td>
@@ -169,7 +169,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="recycle.data.data==null || recycle.data.data.length==0">
-                                    				<td colspan="10">
+                                    				<td colspan="7">
                                     				<div class="alert"><strong>{{recycle.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -289,6 +289,15 @@
 				case 0:val='男';break;
 				case 1:val='女';break;
 				case 2:val='保密';break;
+			}
+			return val;
+		}
+        $scope.stateEnum=function(key){
+            var val='未知';
+            switch(key){
+				case 0:val='在职';break;
+				case 1:val='离职';break;
+				case 2:val='试用期';break;
 			}
 			return val;
 		}

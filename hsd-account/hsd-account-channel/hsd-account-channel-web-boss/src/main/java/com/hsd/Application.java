@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableHystrix
 @EnableHystrixDashboard
 
+@RefreshScope
 @RestController
 public class Application extends SpringBootServletInitializer {
     @Override

@@ -1,0 +1,155 @@
+#定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
+info:
+  description: ${pom.description}
+  version: v${pom.version}
+# HTTP Server
+server:
+  port: 6110
+  context-path: /
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  aop:
+    auto: true
+    proxy-target-class: true
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
+    base-url: http://192.168.101.101:9411
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://${spring.boot.admin.url}/turbine.stream
+  datasource:
+    driverClass: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.101.101:3306/hsd_test?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+    username: root
+    password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+#    # 下面为连接池的补充设置，应用到上面所有数据源中
+#    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 300000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 600000
+    #validationQuery: select "1"
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: "druid.stat.mergeSql:true;druid.stat.slowSqlMillis:5000"
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+#    password:
+    timeout: 1800000
+    idGenNodes:
+      - host: 192.168.101.100
+        port: 6379
+    #    password:
+        luaSha: c5809078fa6d652e0b0232d552a9d06d37fe819c
+      - host: 192.168.101.101
+        port: 6379
+    #    password:
+        luaSha: accb7a987d4fb0fd85c57dc5a609529f80ec3722
+      - host: 192.168.101.102
+        port: 6379
+    #    password:
+        luaSha: f55f781ca4a00a133728488e15a554c070b17255
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 7200000
+
+
+mybatis:
+#  type-aliases-package: com.hsd.dto
+  mapper-locations: classpath*:mybatis/**/*.xml
+mapper:
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+#  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+eureka:
+  user:
+    name: admin
+    password: admin
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 2 # 续约更新时间间隔（默认30秒）
+  client:
+    registryFetchIntervalSeconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔(s),默认为30秒
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
+    serviceUrl:
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.199:8761/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
+
+endpoints:
+  health:
+    sensitive: false
+
+management.security.enabled: false
+
+feign:
+  okhttp:
+    enabled: true
+  name:
+    account.staff: hsd-account-staff-server
+    account.channel: ${spring.application.name}
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+  stream:
+    maxConcurrentConnections: 20
+    bus:
+      enabled: true
+
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: test_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

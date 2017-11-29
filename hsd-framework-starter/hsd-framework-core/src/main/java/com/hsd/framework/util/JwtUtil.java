@@ -15,9 +15,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-/**
- * Created by wu1g119 on 2017/2/8.
- */
 @Slf4j
 public class JwtUtil {
     public enum UserType{
@@ -111,6 +108,23 @@ public class JwtUtil {
     public static boolean isPermitted(String authStr) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            throw new SignatureException("token头缺失");
+        }
+        final Claims claims = parseJWT(authorizationToken);
+        JSONObject jobj = JSON.parseObject(claims.getSubject());
+        JSONArray authorizationInfoPerms = jobj.getJSONArray("authorizationInfoPerms");
+        if (authorizationInfoPerms != null && authorizationInfoPerms.contains(authStr)) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean isPermitted(Object obj,String authStr) throws Exception {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            authorizationToken = ""+ReflectUtil.getValueByFieldName(obj,CommonConstant.JWT_HEADER_TOKEN_KEY);
+        }
         if (ValidatorUtil.isEmpty(authorizationToken)) {
             throw new SignatureException("token头缺失");
         }

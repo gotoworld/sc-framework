@@ -1,0 +1,31 @@
+server:
+  port: 8761
+
+spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static/
+    
+eureka:
+  server:
+    enableSelfPreservation: false
+    #waitTimeInMsWhenSyncEmpty: 3000 #单位为毫秒，默认为1000 * 60 * 5
+  instance:
+    hostname: 192.168.101.100
+    perferIpAddress: true
+    lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 2 # 续约更新时间间隔（默认30秒）
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.101:${server.port}/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.102:${server.port}/eureka/
+
+spring.cloud.config.discovery.enabled: true
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
+

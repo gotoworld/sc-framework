@@ -33,6 +33,15 @@
         from org_staff t1
         where t1.id = #{id}
     </select>
+    <!-- 获取用户密码 -->
+    <select id="selectUserPwdByPrimaryKey" resultType="com.hsd.account.staff.entity.org.OrgStaff" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
+        select
+         t1.id as "id"
+        ,t1.account as "account"
+        ,t1.pwd as "pwd"
+        from org_staff t1
+        where t1.id = #{id}
+    </select>
     <!-- 新增 批量数据 -->
     <insert id="insertBatch"  >
         insert into org_staff (
@@ -212,6 +221,7 @@
         ,t1.name as "name"
         ,t1.level as "level"
         ,t1.leadership as "leadership"
+        ,t1.state as "state"
         from org_staff t1
         where t1.id!=1
         <include refid="list_where_sql"/>
@@ -223,7 +233,7 @@
         <include refid="Base_Column_List"/>
         ,t1.pwd as "pwd"
         from org_staff t1
-        where t1.del_flag=0 and t1.state=0
+        where t1.del_flag=0 and t1.state!=1
         and t1.account=#{account}
         and t1.type=#{staffType}
     </select>
@@ -238,6 +248,7 @@
         ,t1.avatar as "avatar"
         ,t1.level as "level"
         ,t1.leadership as "leadership"
+        ,t1.state as "state"
         from org_staff t1
         where t1.id!=1
         <include refid="list_where_sql"/>
@@ -247,7 +258,7 @@
         select
         <include refid="Base_Column_List"/>
         from org_staff t1
-        where t1.del_flag=0 and t1.account = queryStaffLeadership(#{account},#{level})
+        where t1.del_flag=0 and t1.id = queryStaffLeadership(#{account},#{level})
     </select>
     <!-- 根据主键获取信息详情 -->
     <select id="findDataByAccount" resultType="com.hsd.account.staff.entity.org.OrgStaff" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
@@ -260,9 +271,9 @@
         ,t1.avatar as "avatar"
         ,t1.level as "level"
         ,t1.leadership as "leadership"
+        ,t1.state as "state"
         from org_staff t1
         where t1.del_flag=0
-        and t1.state=0
         and t1.account = #{account}
     </select>
     <!-- 获取员工 所有上级 -->
@@ -276,8 +287,40 @@
         ,t1.avatar as "avatar"
         ,t1.level as "level"
         ,t1.leadership as "leadership"
+        ,t1.state as "state"
         from org_staff t1
         where t1.del_flag=0
         and FIND_IN_SET(t1.id,queryStaffLeadershipAll(#{account}))
+    </select>
+
+    <resultMap id="staffAndOrgResultMap" type="com.hsd.account.staff.entity.org.OrgStaff">
+        <collection property="orgInfos" column="{staffId = id}" ofType="com.hsd.account.staff.entity.org.OrgInfo"  select="findDataByStaffId" />
+    </resultMap>
+    <select id="findDataByStaffId" parameterType="com.hsd.account.staff.entity.org.OrgOrgVsStaff" resultType="com.hsd.account.staff.entity.org.OrgInfo">
+         select
+             t1.id as  "id"
+            ,t1.code as  "code"
+            ,t1.type as  "type"
+            ,t1.name as  "name"
+            ,t1.manager as  "manager"
+        from org_info t1
+        LEFT JOIN org_org_vs_staff t2 on t1.id=t2.org_id
+        where t1.del_flag=0  and t1.state=0 and t2.staff_id=#{staffId}
+    </select>
+    <!-- 获取用户及用户所在组织 -->
+    <select id="findStaffAndOrgDataIsList"  resultMap="staffAndOrgResultMap" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
+        select
+         t1.id as "id"
+        ,t1.account as "account"
+        ,t1.name as "name"
+        ,t1.job_no as "jobNo"
+        ,t1.gender as "gender"
+        ,t1.avatar as "avatar"
+        ,t1.level as "level"
+        ,t1.leadership as "leadership"
+        ,t1.state as "state"
+        from org_staff t1
+        where t1.del_flag=0
+        order by t1.name asc
     </select>
 </mapper>

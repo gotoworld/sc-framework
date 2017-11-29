@@ -20,7 +20,6 @@ public interface IOrgInfoDao extends IBaseDao {
      */
     @Select("select IFNULL(count(0),0) as count from org_info where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
-
     /**
      * 逻辑删除
      */
@@ -38,11 +37,11 @@ public interface IOrgInfoDao extends IBaseDao {
      */
     @Update("update org_info set version=version+1 , date_updated=now(),del_flag=0 where  id = #{id} ")
     int recoveryDataById(IEntity dto) throws Exception;
+
     /**
      * 获取员工所在组织集合>根据员工id
      */
     List<?> getOrgListByStaffId(Map dto) throws Exception;
-
     List<?> findBriefDataIsPage(IEntity dto) throws Exception;
 
     /**
@@ -50,4 +49,18 @@ public interface IOrgInfoDao extends IBaseDao {
      */
     @Update("update org_info set version=version+1 ,manager=#{manager}, date_updated=now() where  id = #{id} ")
     int setManager(IEntity dto) throws Exception;
+
+    /** 根据父code获取组织id */
+    @Select("select id from org_info where  code = #{code} ")
+    Long getIdByPCode(IEntity entity) throws Exception;
+    /** 根据name获取组织id */
+    @Select("select id from org_info where  name = #{name} ")
+    Long getIdByName(IEntity entity) throws Exception;
+
+    /** 根据父id获取组织id */
+    @Select("select id from org_info where  parent_id = #{id} ")
+    Long getIdByPId(IEntity entity) throws Exception;
+
+    Object getDataByPCode(IEntity entity) throws Exception;
+    Object selectByCode(IEntity entity) throws Exception;
 }

@@ -20,7 +20,6 @@ public interface IAuthRoleDao extends IBaseDao {
      */
     @Select("select IFNULL(count(0),0) as count from auth_role where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
-
     /**
      * 逻辑删除
      */
@@ -42,4 +41,7 @@ public interface IAuthRoleDao extends IBaseDao {
      * 根据员工id,判断员工是否为超级管理员,要的就是特权.
      */
     int isSuperAdmin(Map dto) throws Exception;
+
+    @Select("select id from auth_role where  name = #{name} ")
+    int getIdByName(IEntity entity) throws Exception;
 }

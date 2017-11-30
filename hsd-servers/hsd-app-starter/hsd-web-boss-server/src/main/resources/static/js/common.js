@@ -2,7 +2,7 @@ var uploadPath = "http://192.168.101.100:28888/";
 var basePath = "http://localhost/";
 var apiPath = {
     account: {
-        staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss",
+        staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss-lilin",
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-boss",
         actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss"
     }
@@ -21,6 +21,13 @@ var site = {
         , save: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/save"
         , info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
         , del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"
+    }
+    , sysApp: {//APP应用表
+        view: basePath + "/html/account/staff/sys/sys_app"
+        ,page: apiPath.account.staff + "/boss/account/staff/sys/sysApp/page/"       //分页
+        ,save: apiPath.account.staff + "/boss/account/staff/sys/sysApp/save"        //新增or保存
+        ,info: apiPath.account.staff + "/boss/account/staff/sys/sysApp/info/"       //详情
+        ,phydel: apiPath.account.staff + "/boss/account/staff/sys/sysApp/phydel/"   //物理删除
     }
     , orgInfo: {
         view: basePath + "/html/account/staff/org/org_info"

@@ -335,7 +335,7 @@ public class SpringResourceLoader implements ResourceLoader, ApplicationContextA
      */
     public static BeetlException createTemplateLoadError(String resourceId, Throwable e) {
         BeetlException beetlException = new BeetlException(BeetlException.TEMPLATE_LOAD_ERROR, e);
-        beetlException.resourceId = resourceId;
+        beetlException.detailCode = resourceId;
         return beetlException;
     }
 
@@ -347,7 +347,7 @@ public class SpringResourceLoader implements ResourceLoader, ApplicationContextA
      */
     public static BeetlException createTemplateLoadError(String resourceId) {
         BeetlException beetlException = new BeetlException(BeetlException.TEMPLATE_LOAD_ERROR);
-        beetlException.resourceId = resourceId;
+        beetlException.detailCode = resourceId;
         return beetlException;
     }
 }

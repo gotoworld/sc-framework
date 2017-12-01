@@ -94,7 +94,7 @@ feign:
   okhttp:
     enabled: true
   name:
-    account.staff: hsd-account-staff-server-cc
+    account.staff: hsd-account-staff-server
 
 hystrix:
   command:

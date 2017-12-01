@@ -171,4 +171,12 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getStaffLeadershipAll")
     public List<OrgStaffDto> getStaffLeadershipAll(OrgStaffDto dto);
+
+    /**
+     * 获取员工号最大的员工信息
+     * @param dto
+     * @return
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getDataByMaxJobNo")
+    public List<OrgStaffDto> getDataByMaxJobNo(OrgStaffDto dto)throws Exception;
 }

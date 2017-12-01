@@ -1,5 +1,6 @@
 package com.hsd.account.staff.dao.org;
 
+import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
 import org.apache.ibatis.annotations.*;
@@ -89,4 +90,14 @@ public interface IOrgStaffDao extends IBaseDao {
 
     @Select(" select id from org_staff where  account=#{account} ")
     int getIdbyAcccount(@Param("account") String account) throws Exception;
+
+    /**
+     * 获取每一类最大员工号 员工信息
+     * @param entity
+     * @return
+     * @throws Exception
+     */
+   /* @Select("select MAX(t.job_no) from org_staff t WHERE t.job_no is not null GROUP BY SUBSTR(t.job_no,1,1)")
+    String[] findMaxJobNo(IEntity entity)throws Exception;*/
+    List findDataByMaxJobNo(IEntity entity) throws Exception;
 }

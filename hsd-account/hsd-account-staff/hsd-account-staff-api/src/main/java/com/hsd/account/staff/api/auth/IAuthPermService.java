@@ -72,4 +72,12 @@ public interface IAuthPermService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findPermDataIsListByRoleId")
     public List<AuthPermDto> findPermDataIsListByRoleId(Map dto);
 
+    /**
+     * 禁止删除已存在的信息
+     * @param dto
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/noDelete")
+    public String noDelete(AuthPermDto dto) throws Exception;
 }

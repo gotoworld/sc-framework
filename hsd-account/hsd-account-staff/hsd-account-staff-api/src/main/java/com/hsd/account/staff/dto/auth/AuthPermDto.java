@@ -46,6 +46,8 @@ public class AuthPermDto extends BaseDto {
      private Date dateCreated;
      /**更新时间*/
      private Date dateUpdated;
+    /**已存在的禁止删除(0否1是)*/
+    private Integer noDelFlag;
 
     /**
      * 子对象集合

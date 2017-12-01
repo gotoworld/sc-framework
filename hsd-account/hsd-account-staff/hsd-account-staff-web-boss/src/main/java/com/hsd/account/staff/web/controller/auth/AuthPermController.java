@@ -5,6 +5,7 @@ import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
+import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
@@ -24,6 +25,7 @@ import java.util.List;
 @Api(description = "权限_功能信息")
 @RestController
 @Slf4j
+@NoAuthorize
 public class AuthPermController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
@@ -143,6 +145,19 @@ public class AuthPermController extends BaseController {
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }
         } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix +"nodel")
+    @ApiOperation(value = "禁止删除已存在的信息")
+    public Response noDelete(){
+        log.info("OrgInfoController noDelete.........");
+        Response result = new Response("success");
+        try {
+            AuthPermDto dto=new AuthPermDto();
+            result.message = authPermService.noDelete(dto);
+        }catch (Exception e){
             result = Response.error(e.getMessage());
         }
         return result;

@@ -31,7 +31,7 @@ public class BeetlUtils {
 			Configuration cfg=Configuration.defaultConfiguration();
 			cfg.setStatementStart("@[");
 			cfg.setStatementEnd("/]");
-			cfg.addPkg( "com.vr" );
+			cfg.addPkg( "com.hsd" );
 			GroupTemplate gt=new GroupTemplate(resourceLoader,cfg);
 			gt.registerFunctionPackage("validator", new ValidatorUtil());
 			gt.registerFunctionPackage("strUtil", new StrUtil());
@@ -66,7 +66,7 @@ public class BeetlUtils {
 		try {
 			ClasspathResourceLoader resourceLoader=new ClasspathResourceLoader();
 			Configuration cfg=Configuration.defaultConfiguration();
-			cfg.addPkg( "com.vr" );
+			cfg.addPkg( "com.hsd" );
 			GroupTemplate gt=new GroupTemplate(resourceLoader,cfg);
 			Template template=gt.getTemplate( readTlFileName );
 			template.binding( context );

@@ -46,4 +46,11 @@ public interface IAuthPermDao extends IBaseDao {
      * <p>根据角色id获取对应的权限信息列表。
      */
     List<?> findPermDataIsListByRoleId(Map dto) throws Exception;
+
+    /** 获取禁止删除标志*/
+    @Select("select IFNULL(count(0),0) as count from auth_perm where nodel_flag = 1")
+    int findDataByNoDelFlag (IEntity entity)throws Exception;
+    /** 禁止删除已存在的信息*/
+    @Update("UPDATE auth_perm set nodel_flag = 1 where del_flag = 0")
+    int noDelete(IEntity entity) throws Exception;
 }

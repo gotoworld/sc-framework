@@ -6,6 +6,7 @@ import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
 import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
+import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
@@ -28,6 +29,7 @@ import java.util.List;
 @Api(description = "组织架构_员工")
 @RestController
 @Slf4j
+
 public class OrgStaffController extends BaseController {
 	private static final String acPrefix="/boss/account/staff/org/orgStaff/";
 
@@ -458,6 +460,20 @@ public class OrgStaffController extends BaseController {
 		try {
 			OrgStaffDto dto = new OrgStaffDto();
 			result.data=orgStaffService.findStaffAndOrgDataIsList(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	//@RequiresPermissions("orgStaff:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "page/MaxJobNo")
+	@ApiOperation(value = "获取不同类型最大的员工号")
+	public Response getMaxJobNo() {
+		log.info("OrgStaffController getMaxJobNo.........");
+		Response result = new Response("success");
+		try {
+			OrgStaffDto dto = new OrgStaffDto();
+			result.data=orgStaffService.getDataByMaxJobNo(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}

@@ -152,4 +152,21 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         }
         return results;
     }
+
+    @Override
+    public String noDelete(AuthPermDto dto) throws Exception {
+        String result = "success";
+        if (dto != null) {
+            try {
+                AuthPerm entity = copyTo(dto, AuthPerm.class);
+                if (authPermDao.findDataByNoDelFlag(entity) != 0) {
+                    authPermDao.noDelete(entity);
+                }
+            } catch (Exception e) {
+                log.error("禁止删除已存在信息 异常！", e);
+                throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+            }
+        }
+        return result;
+    }
 }

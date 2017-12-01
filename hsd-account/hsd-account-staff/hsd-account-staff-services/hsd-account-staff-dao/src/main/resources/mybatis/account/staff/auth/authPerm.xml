@@ -15,6 +15,7 @@
         ,t1.create_id as "createId"
         ,t1.date_created as "dateCreated"
         ,t1.date_updated as "dateUpdated"
+        ,t1.nodel_flag as "noDelFlag"
 	</sql>
     <!-- 根据主键获取信息详情 -->
     <select id="selectByPrimaryKey" resultType="com.hsd.account.staff.entity.auth.AuthPerm" parameterType="com.hsd.account.staff.entity.auth.AuthPerm">
@@ -38,6 +39,7 @@
            ,create_id
            ,date_created
            ,date_updated
+           ,nodel_flag
         ) values (
             #{id}
            ,#{name}
@@ -51,6 +53,7 @@
            ,#{createId}
            ,now()
            ,now()
+           ,1
         )
 	</insert>
     <!-- 数据更新 -->

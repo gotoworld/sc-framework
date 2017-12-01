@@ -543,12 +543,10 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return results;
     }
     //获取最大员工号的员工信息
-    @Override
-    public List<OrgStaffDto> getDataByMaxJobNo(@RequestBody OrgStaffDto dto) throws Exception {
-        List<OrgStaffDto> results = null;
+    public List<String> getMaxJobNo() throws Exception {
+        List<String> results = null;
         try{
-            //dto.setJobNo(orgStaffDao.findMaxJobNo());
-            results = copyTo(orgStaffDao.findDataByMaxJobNo(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
+            results = orgStaffDao.findMaxJobNo();
         }catch (Exception e) {
             log.error("获取最大员工号 异常！", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

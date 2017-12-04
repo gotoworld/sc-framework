@@ -5,6 +5,8 @@
     <sql id="Base_Column_List">
          t1.id as "id"
         ,t1.staff_id as "staffId"
+        ,t1.app_user_id as "appUserId"
+        ,t1.app_id as "appId"
         ,t1.staff_name as "staffName"
         ,t1.type as "type"
         ,t1.ip_addr as "ipAddr"
@@ -26,6 +28,8 @@
         insert into org_log_login (
          
             staff_id
+           ,app_user_id
+           ,app_id
            ,staff_name
            ,type 
            ,ip_addr 
@@ -34,6 +38,8 @@
         ) values (
          
             #{staffId}
+           ,#{appUserId}
+           ,#{appId}
            ,#{staffName}
            ,#{type} 
            ,#{ipAddr} 
@@ -48,6 +54,9 @@
     <sql id="list_where_sql">
         <if test="type!=null">
             and t1.type=#{type}
+        </if>
+        <if test="appId!=null and appId!=''">
+            and t1.app_id=#{appId}
         </if>
 
         <if test="dateBegin!=null and dateBegin!=''">

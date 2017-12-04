@@ -1,17 +1,16 @@
 package com.hsd.account.staff.dto.sys;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.dto.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.dto.BaseDto;
-import javax.validation.constraints.Max;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,6 +33,8 @@ public class SysAppDto extends BaseDto {
      @ApiModelProperty("备注")
 	 @Size(max=255,message="memo最大255字符")
      private String memo;
+     @Size(max=255,message="memo最大255字符")
+     private String keyword;
      @ApiModelProperty("建立者id")
      private Long createId;
      @ApiModelProperty("创建时间")

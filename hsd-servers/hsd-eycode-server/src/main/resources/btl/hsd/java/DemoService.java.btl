@@ -161,6 +161,7 @@ public class ${tcfg.tableNameFormat!}Service extends BaseService implements I${t
         @[ } /]
 
         @[ if ("1"==scfg._tree) { /]
+        @Override
         public List<${tcfg.tableNameFormat!}Dto> findDataIsTree(@RequestBody(required = false) ${tcfg.tableNameFormat!}Dto dto) {
             try {
                 List<${tcfg.tableNameFormat!}Dto> results = findDataIsList(dto);

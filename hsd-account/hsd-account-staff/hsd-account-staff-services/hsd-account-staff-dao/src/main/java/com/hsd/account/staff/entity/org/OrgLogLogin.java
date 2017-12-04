@@ -27,4 +27,8 @@ public class OrgLogLogin extends BaseEntity {
      private String deviceMac;
      /**创建时间*/
      private Date dateCreated;
+     /**app用户id*/
+     private long appUserId;
+     /**系统id*/
+     private String appId;
 }

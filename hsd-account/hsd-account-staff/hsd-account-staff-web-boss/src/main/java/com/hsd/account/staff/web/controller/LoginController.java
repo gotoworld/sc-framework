@@ -24,6 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,9 @@ public class LoginController extends BaseController {
     private ISysAppService sysAppService;
     @Autowired
     private IUserAppService userAppService;
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
+
 
     /**
      * <p>员工登录
@@ -75,7 +79,7 @@ public class LoginController extends BaseController {
             dto.setUserId(orgStaff.getId());
             dto.setAppId(appDto.getId());
             UserAppDto userAppDto = userAppService.findDate(dto);
-            orgStaff.setId(userAppDto.getId());
+            orgStaff.setAppUserId(userAppDto.getId());
             roleSourceService.lastLogin(orgStaff);
 
             Map<String, Set<String>> authorizationInfo = new HashMap();
@@ -112,10 +116,10 @@ public class LoginController extends BaseController {
             data.put("authorizationToken", authorizationToken);
             data.put("staff", JSONObject.parseObject(subject, OrgStaffDto.class));
 
-//            data.put("authorizationInfoPerms", authorizationInfo.get("permissions"));
-//            data.put("authorizationInfoRoles", authorizationInfo.get("roles"));
+//          data.put("authorizationInfoPerms", authorizationInfo.get("permissions"));
+//          data.put("authorizationInfoRoles", authorizationInfo.get("roles"));
             data.put("XCache", request.getSession().getId());
-
+            redisTemplate.opsForValue().set("u:"+orgStaff.getId()+":"+orgStaff.getAppUserId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime());
             try {
                 //读取session中的员工
                 OrgStaffDto staff = orgStaff;
@@ -123,6 +127,8 @@ public class LoginController extends BaseController {
                 logDto.setType(0);//类型0登录1登出
                 logDto.setIpAddr(IpUtil.getIpAddr(request));//请求的IP
                 logDto.setStaffId(staff.getId());//id
+                logDto.setAppUserId(staff.getAppUserId());//app用户id
+                logDto.setAppId(userAppDto.getAppId());//系统ID
                 logDto.setStaffName(staff.getName());//员工名称
 //                logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
                 logLoginService.saveOrUpdateData(logDto);
@@ -194,6 +200,7 @@ public class LoginController extends BaseController {
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);
             data.put("XCache", request.getSession().getId());
+            redisTemplate.opsForValue().set("u:"+staff.getId()+":"+staff.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime());
             result.data = data;
         } catch (Exception e) {
             result = Response.error(e.getMessage());

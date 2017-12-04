@@ -17,9 +17,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-@WebFilter(filterName = "jwtFilter", urlPatterns = {"/boss/*","/api/*","/file/*"})
+@WebFilter(filterName = "jwtFilter", urlPatterns = {"/*"})
 @Slf4j
 public class JwtFilter implements Filter {
     @Autowired
@@ -27,7 +26,7 @@ public class JwtFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        log.info("===============设置“跨域”访问头=============");
+        log.info("===============“授权签名”过滤=============");
     }
     @Override
     public void destroy() {}
@@ -41,17 +40,25 @@ public class JwtFilter implements Filter {
             String authorizationToken=httpServletRequest.getHeader("Authorization");
             try {
                 if(authorizationToken!=null && !"".equals(authorizationToken)){
-                        final Claims claims = JwtUtil.parseJWT(authorizationToken);
-                        if(chain!=null){
-                            JSONObject jsonObject=JSONObject.parseObject(claims.getSubject());
-                            String key="u:"+jsonObject.getString("id")+":"+jsonObject.getString("appUserId");
-                            Long issuedAt=Long.parseLong(""+redisTemplate.opsForValue().get(key));//用户最新token签发时间
-                            if(claims.getIssuedAt().getTime()==issuedAt){
-                                chain.doFilter(request, response);
-                            }else{
-                                WebUtil.sendJson(httpServletResponse, Response.error(110, "您的授权已失效或已在其它地方登录!"));
+                    final Claims claims = JwtUtil.parseJWT(authorizationToken);
+                    if(chain!=null){
+                        JSONObject jsonObject=JSONObject.parseObject(claims.getSubject());
+                        //强制下线时间
+                        String key="u:offline:"+jsonObject.getString("id");
+                        if(redisTemplate.opsForValue().get(key)!=null){
+                            if(claims.getIssuedAt().getTime()<Long.parseLong(""+redisTemplate.opsForValue().get(key))){
+                                throw new SignatureException("凭证已被强制吊销！");
                             }
                         }
+
+                        key="u:"+jsonObject.getString("id")+":"+jsonObject.getString("appUserId");
+                        if(redisTemplate.opsForValue().get(key)==null || claims.getIssuedAt().getTime()!=Long.parseLong(""+redisTemplate.opsForValue().get(key))){//用户最新token签发时间
+                            WebUtil.sendJson(httpServletResponse, Response.error(110, "您的授权已失效或已在其它地方登录!"));
+                            return;
+                        }
+
+                        chain.doFilter(request, response);
+                    }
                 }
             } catch (final SignatureException e) {
                 WebUtil.sendJson(httpServletResponse,Response.error(403, "签名验证失败!" + e.getMessage()));

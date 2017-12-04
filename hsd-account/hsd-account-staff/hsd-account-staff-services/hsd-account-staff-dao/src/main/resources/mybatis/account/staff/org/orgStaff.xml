@@ -327,13 +327,4 @@
         where t1.del_flag=0
         order by t1.name asc
     </select>
-    <!-- 获取最大员工号的员工信息-->
-    <select id="findDataByMaxJobNo" resultType="com.hsd.account.staff.entity.org.OrgStaff" parameterType="com.hsd.account.staff.entity.org.OrgStaff">
-        select
-        <include refid="Base_Column_List"/>
-        ,MAX(t1.job_no) as "jobNo"
-        from org_staff t1
-        where t1.job_no is not null
-        GROUP BY SUBSTR(t1.job_no,1,1)
-    </select>
 </mapper>

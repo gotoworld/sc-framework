@@ -97,4 +97,6 @@ public class OrgStaffDto extends BaseDto {
 
      /**用户所在组织*/
      private List<OrgInfoDto> orgInfos;
+     /**用户appID*/
+     private long appUserId;
 }

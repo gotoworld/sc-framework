@@ -7,15 +7,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * <p>APP应用表 数据库处理接口类。
+ * <p>APP用户表 数据库处理接口类。
  */
 @Mapper
-public interface ISysAppDao extends IBaseDao {
+public interface IUserAppDao extends IBaseDao {
 
     /**
      * 判断是否存在
      */
-    @Select("select IFNULL(count(0),0) as count from sys_app where  id = #{id} ")
+    @Select("select IFNULL(count(0),0) as count from user_app where   id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
 
 
@@ -23,8 +23,9 @@ public interface ISysAppDao extends IBaseDao {
     /**
      * 根据主键 物理删除
      */
-    @Delete("delete from sys_app where  id = #{id} ")
+    @Delete("delete from user_app where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
-    Object findAppByName(String appname) throws Exception;
+
+    Object findDate(IEntity entity) throws Exception;
 }

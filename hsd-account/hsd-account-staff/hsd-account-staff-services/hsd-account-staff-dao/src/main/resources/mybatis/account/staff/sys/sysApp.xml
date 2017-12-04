@@ -90,4 +90,11 @@
         <include refid="list_where_sql"/>
         order by t1.date_created desc
     </select>
+    <!-- 根据名称查询-->
+    <select id="findAppByName" parameterType="string" resultType="com.hsd.account.staff.entity.sys.SysApp">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_app t1
+        where t1.name=#{appname}
+    </select>
 </mapper>

@@ -18,7 +18,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(filterName = "jwtFilter", urlPatterns = {"/boss/*","/api/*","/file/*"})
+@WebFilter(filterName = "jwtFilter", urlPatterns = {"/*"})
 @Slf4j
 public class JwtFilter implements Filter {
     @Autowired
@@ -26,7 +26,7 @@ public class JwtFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        log.info("===============设置“跨域”访问头=============");
+        log.info("===============“授权签名”过滤=============");
     }
     @Override
     public void destroy() {}

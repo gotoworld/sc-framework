@@ -64,7 +64,7 @@
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in permNodes">
-                                        <label ng-style="checkPermId(t.id)?{color:'red'}:''"><input type="checkbox" name="permIds" ng-value="t.id" ng-checked="checkPermId(t.id)">{{t.name}}</label>
+                                        <label ng-style="checkPermId(t.id)?{color:'red'}:''"><input type="checkbox" name="permIds" ng-value="t.id" ng-checked="checkPermId(t.id)"  ng-click="checkChildPermId($event)">{{t.name}}</label>
                                         <ul ng-include="'tree_checkbox_role_vs_perm.html'" ng-init="child=t.nodes;name='permIds'"></ul>
                                     </li>
                                 </ul>
@@ -78,7 +78,7 @@
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
                                 <ul>
                                     <li ng-repeat="t in menuNodes">
-                                        <label ng-style="checkMenuId(t.id)?{color:'red'}:''"><input type="checkbox" name="menuIds" ng-value="t.id" ng-checked="checkMenuId(t.id)">{{t.name}}</label>
+                                        <label ng-style="checkMenuId(t.id)?{color:'red'}:''"><input type="checkbox" name="menuIds" ng-value="t.id" ng-checked="checkMenuId(t.id)" ng-click="checkChildMenuId($event)">{{t.name}}</label>
                                         <ul ng-include="'tree_checkbox_role_vs_menu.html'" ng-init="child=t.nodes;name='menuIds'"></ul>
                                     </li>
                                 </ul>
@@ -163,6 +163,32 @@
                 return true;
             }
             return false;
+        };
+        $scope.checkChildPermId=function(event){
+            if($(event.target).is(':checked')){
+                $(event.target).parent().parent().find('input[type=checkbox]').each(function(i){
+                    if(!($scope.checkPermId($(this).val()))){
+                        $data.rolePermNodes.push($(this).val());
+                    }
+                });
+            }else{
+                $(event.target).parent().parent().find('input[type=checkbox]').each(function(i){
+                    util.removeArrItem($data.rolePermNodes,$(this).val());
+                });
+            }
+        };
+        $scope.checkChildMenuId=function(event){
+            if($(event.target).is(':checked')){
+                $(event.target).parent().parent().find('input[type=checkbox]').each(function(i){
+                    if(!($scope.checkMenuId($(this).val()))){
+                        $data.roleMenuNodes.push(util.parseInt($(this).val()));
+                    }
+                });
+            }else{
+                $(event.target).parent().parent().find('input[type=checkbox]').each(function(i){
+                    util.removeArrItem($data.roleMenuNodes,$(this).val());
+                });
+            }
         }
     });
     var loadInfo=function(id){

@@ -149,17 +149,4 @@ public class AuthPermController extends BaseController {
         }
         return result;
     }
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix +"nodel")
-    @ApiOperation(value = "禁止删除已存在的信息")
-    public Response noDelete(){
-        log.info("OrgInfoController noDelete.........");
-        Response result = new Response("success");
-        try {
-            AuthPermDto dto=new AuthPermDto();
-            result.message = authPermService.noDelete(dto);
-        }catch (Exception e){
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
 }

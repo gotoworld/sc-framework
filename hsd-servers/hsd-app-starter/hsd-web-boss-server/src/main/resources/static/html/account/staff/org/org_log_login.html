@@ -60,6 +60,7 @@
 														</div>
 													</div>
 													<div class="input-group">
+														<input type="text" name="appId" placeholder="请输入系统ID" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
 														</span>
@@ -75,6 +76,8 @@
                                     				<th style="width:20px;">#</th>
                                     				<th>时间</th>
                                     				<th>员工</th>
+													<th>员工APPID</th>
+													<th>系统ID</th>
                                     				<th>类型</th>
                                     				<th>IP地址</th>
                                     				<th>操作</th>
@@ -85,6 +88,8 @@
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.staffName}}</td>
+													<td>{{item.appUserId}}</td>
+													<td>{{item.appId}}</td>
                                     				<td>{{item.type==0?'登录':'登出'}}</td>
                                     				<td>{{item.ipAddr}}</td>
                                     				<td>

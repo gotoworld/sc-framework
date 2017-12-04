@@ -67,7 +67,7 @@ var site = {
         , addRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/role"
         , delRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/role"
         , setLeadership: apiPath.account.staff + "/boss/account/staff/org/orgStaff/set/leadership"
-        , getMaxJobNo: apiPath.account.staff + "/boss/account/staff/org/orgStaff/page/MaxJobNo"
+        , getMaxJobNo: apiPath.account.staff + "/boss/account/staff/org/orgStaff/maxJobNo"
     }
     , authPerm: {
         view: basePath + "/html/account/staff/auth/auth_perm"

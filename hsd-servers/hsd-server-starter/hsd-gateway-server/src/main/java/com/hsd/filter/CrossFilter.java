@@ -2,7 +2,6 @@ package com.hsd.filter;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.*;
@@ -15,7 +14,7 @@ import java.io.IOException;
 @Slf4j
 public class CrossFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         log.info("===============设置“跨域”访问头=============");
     }
     @Value("${zuul.cross.origin}")
@@ -30,10 +29,9 @@ public class CrossFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,FilterChain chain) throws IOException, ServletException {
         if (response instanceof HttpServletResponse) {
-            HttpServletRequest alteredRequest = ((HttpServletRequest) request);
-            HttpServletResponse alteredResponse = ((HttpServletResponse) response);
-            addHeadersFor200Response(alteredRequest,alteredResponse);
-            addHeadersCookieForAuthorization(alteredRequest,alteredResponse);
+            HttpServletRequest servletRequest = ((HttpServletRequest) request);
+            HttpServletResponse servletResponse = ((HttpServletResponse) response);
+            addHeadersFor200Response(servletRequest,servletResponse);
             chain.doFilter(request, response);
         }
     }
@@ -42,11 +40,5 @@ public class CrossFilter implements Filter {
         response.setHeader("Access-Control-Allow-Origin",accessControlAllowOrigin);
         response.addHeader("Access-Control-Allow-Methods", accessControlAllowMethods);
         response.setHeader("Access-Control-Allow-Headers", accessControlAllowHeaders);
-    }
-    private void addHeadersCookieForAuthorization(HttpServletRequest request,HttpServletResponse response) {
-        String authorization=request.getHeader("Authorization");
-        if(authorization!=null && !"".equals(authorization)){
-            response.setHeader("X-Cache", DigestUtils.md5Hex(authorization ));
-        }
     }
 }

@@ -234,8 +234,11 @@ $(document).ajaxComplete(function (event, xhr, settings) {
         var result = JSON.parse(xhr.responseText);
         //console.info("result=="+JSON.stringify(result))
         if (result.code == 403) {//授权验证失败!
-            // console.info('授权验证失败!需跳转到登陆界面');
             //alert('授权验证失败,请重新登陆!');
+            location.href = '/login.html';
+        }
+        if (result.code == 110) {//授权验证失败!
+            alert(result.message);
             location.href = '/login.html';
         }
     }

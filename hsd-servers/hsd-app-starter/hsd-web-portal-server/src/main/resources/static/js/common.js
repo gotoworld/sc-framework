@@ -8,7 +8,7 @@ var apiPath = {
     ,util:{
         sms: "http://192.168.101.100:28890/hsd-util-sms-web-portal"
     }
-}
+};
 var site = {
     portalHome:"/html/account/actor/user/home.html"
     ,uploadFile:uploadPath+"/file/fileUpload"
@@ -82,7 +82,7 @@ var site = {
             }
         }
     }
-}
+};
 var $data, $ngHttp, $ngCompile, $ngSce;
 var page;
 
@@ -99,14 +99,17 @@ $.ajaxSetup({
         "Authorization": sessionStorage.getItem("hsd_actor_authorizationToken"),
         "X-Cache": sessionStorage.getItem("XCache")
     }
-})
+});
 $(document).ajaxComplete(function (event, xhr, settings) {
     if (xhr && xhr.responseText) {
         var result = JSON.parse(xhr.responseText);
         //console.info("result=="+JSON.stringify(result))
         if (result.code == 403) {//授权验证失败!
-            // console.info('授权验证失败!需跳转到登陆界面');
-            alert('授权验证失败,请重新登陆!');
+            //alert('授权验证失败,请重新登陆!');
+            location.href = '/login.html';
+        }
+        if (result.code == 110) {//授权验证失败!
+            alert(result.message);
             location.href = '/login.html';
         }
     }
@@ -160,7 +163,7 @@ var user = {
     },
     info: function (callback) {
         try {
-            console.info("user.info.............")
+            console.info("user.info.............");
             var userJson = sessionStorage.getItem('hsd_actor_user');
             if (userJson) {
                 var userInfo = JSON.parse(userJson);
@@ -173,7 +176,7 @@ var user = {
                 user.login($('#_login_form_modal').serialize(), function () {
                     location.href = '/html/account/actor/home.html';
                 });
-            }
+            };
             if ($data) {
                 if (!$data.$$phase) $data.$apply();
             }
@@ -212,7 +215,7 @@ var user = {
             }
         }
     }
-}
+};
 
 /**
  * 判断是否为空
@@ -221,7 +224,7 @@ var user = {
 //工具类
 var util = {
     notEmpty: function (p) {
-        console.info('notEmpty...........')
+        console.info('notEmpty...........');
         if (p == undefined || p == null ||  p == '' || p == 'null'  || p == 'undefined') {
             return false;
         } else {
@@ -275,4 +278,4 @@ var util = {
             }
         }
     }
-}
+};

@@ -3,10 +3,14 @@ package com.hsd.account.staff.web.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hsd.account.staff.api.auth.IRoleSourceService;
 import com.hsd.account.staff.api.org.IOrgLogLoginService;
+import com.hsd.account.staff.api.sys.ISysAppService;
+import com.hsd.account.staff.api.sys.IUserAppService;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgLogLoginDto;
 import com.hsd.account.staff.dto.org.OrgStaffDto;
+import com.hsd.account.staff.dto.sys.SysAppDto;
+import com.hsd.account.staff.dto.sys.UserAppDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.security.MD5;
@@ -40,24 +44,38 @@ public class LoginController extends BaseController {
     private IRoleSourceService roleSourceService;
     @Autowired
     private IOrgLogLoginService logLoginService;
+    @Autowired
+    private ISysAppService sysAppService;
+    @Autowired
+    private IUserAppService userAppService;
 
     /**
      * <p>员工登录
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/login")
     @ApiOperation(value = "登录")
-    public Response login(@RequestParam("account") String account, @RequestParam("password") String password) throws Exception {
+    public Response login(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("appname") String appname) throws Exception {
         log.info("LoginController login");
         Response result = new Response();
         try {
             if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                 return Response.error("员工名或密码不能为空!");
             }
+            SysAppDto appDto = sysAppService.findAppByName(appname);
+            if (appDto == null){
+                return  Response.error("APP应用不存在!");
+            }
             OrgStaffDto orgStaff = roleSourceService.findStaffByAccount(account, 0);
             String pwdhex = MD5.pwdMd5Hex(password);
             if (orgStaff==null || !(account.equals(orgStaff.getAccount()) && pwdhex.equals(orgStaff.getPwd()))) {
                 return Response.error("登录失败,员工名或密码错误!");
             }
+            //查询app用户表
+            UserAppDto dto = new UserAppDto();
+            dto.setUserId(orgStaff.getId());
+            dto.setAppId(appDto.getId());
+            UserAppDto userAppDto = userAppService.findDate(dto);
+            orgStaff.setId(userAppDto.getId());
             roleSourceService.lastLogin(orgStaff);
 
             Map<String, Set<String>> authorizationInfo = new HashMap();

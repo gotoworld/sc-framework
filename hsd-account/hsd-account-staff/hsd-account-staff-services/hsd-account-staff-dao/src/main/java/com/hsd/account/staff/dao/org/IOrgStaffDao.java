@@ -92,12 +92,8 @@ public interface IOrgStaffDao extends IBaseDao {
     int getIdbyAcccount(@Param("account") String account) throws Exception;
 
     /**
-     * 获取每一类最大员工号 员工信息
-     * @param entity
-     * @return
-     * @throws Exception
+     * 获取每一类最大员工号
      */
-   /* @Select("select MAX(t.job_no) from org_staff t WHERE t.job_no is not null GROUP BY SUBSTR(t.job_no,1,1)")
-    String[] findMaxJobNo(IEntity entity)throws Exception;*/
-    List findDataByMaxJobNo(IEntity entity) throws Exception;
+    @Select("select MAX(t.job_no) from org_staff t WHERE t.job_no is not null GROUP BY SUBSTR(t.job_no,1,1)")
+    List<String> findMaxJobNo() throws Exception;
 }

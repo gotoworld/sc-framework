@@ -29,7 +29,7 @@ import java.util.List;
 @Api(description = "组织架构_员工")
 @RestController
 @Slf4j
-
+@NoAuthorize
 public class OrgStaffController extends BaseController {
 	private static final String acPrefix="/boss/account/staff/org/orgStaff/";
 
@@ -466,14 +466,13 @@ public class OrgStaffController extends BaseController {
 		return result;
 	}
 	//@RequiresPermissions("orgStaff:menu")
-	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "page/MaxJobNo")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "maxJobNo")
 	@ApiOperation(value = "获取不同类型最大的员工号")
 	public Response getMaxJobNo() {
 		log.info("OrgStaffController getMaxJobNo.........");
 		Response result = new Response("success");
 		try {
-			OrgStaffDto dto = new OrgStaffDto();
-			result.data=orgStaffService.getDataByMaxJobNo(dto);
+			result.data=orgStaffService.getMaxJobNo();
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}

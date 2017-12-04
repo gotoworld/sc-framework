@@ -73,7 +73,9 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            authPermDao.deleteById(copyTo(dto,AuthPerm.class));
+            AuthPerm entity=copyTo(dto,AuthPerm.class);
+            if (authPermDao.findDataByNoDelFlag(entity) != 0) throw new RuntimeException("当前数据为系统保留数据，不能删除！");
+            authPermDao.deleteById(entity);
         } catch (Exception e) {
             log.error("信息删除失败", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -153,20 +155,4 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         return results;
     }
 
-    @Override
-    public String noDelete(AuthPermDto dto) throws Exception {
-        String result = "success";
-        if (dto != null) {
-            try {
-                AuthPerm entity = copyTo(dto, AuthPerm.class);
-                if (authPermDao.findDataByNoDelFlag(entity) != 0) {
-                    authPermDao.noDelete(entity);
-                }
-            } catch (Exception e) {
-                log.error("禁止删除已存在信息 异常！", e);
-                throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
-            }
-        }
-        return result;
-    }
 }

@@ -54,6 +54,7 @@
 														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+															<button type="submit" class="btn ">查询员工号</button>
 														</span>
 													</div>
 												</form>
@@ -96,7 +97,7 @@
                                                       <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                       <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
                                                       <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:resetpwd")'   ng-click="resetpwd(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-expeditedssl"></i> 密码重置</a>
-                                                        <a href="javascript:;"   ng-click="getOrg(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-staff"></i> 组织查看</a>
+                                                        <a href="javascript:;"  ng-click="getOrg(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-staff"></i> 组织查看</a>
                                                         <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:role")' ng-click="setRole(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 角色设置</a>
                                                         <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:leadership")' ng-click="setLeadership(item)" rel="nofollow" class="label label-success" ><i class="fa fa-user-secret"></i> 设置上级</a>
                                                     </td>

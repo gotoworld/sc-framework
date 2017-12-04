@@ -2,49 +2,45 @@ package com.hsd.account.staff.service.sys;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.hsd.account.staff.api.sys.ISysAppService;
-import com.hsd.account.staff.dao.sys.ISysAppDao;
-import com.hsd.account.staff.dto.sys.SysAppDto;
-import com.hsd.account.staff.entity.sys.SysApp;
+import com.hsd.account.staff.api.sys.IUserAppService;
+import com.hsd.account.staff.dao.sys.IUserAppDao;
+import com.hsd.account.staff.dto.sys.UserAppDto;
+import com.hsd.account.staff.entity.sys.UserApp;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.IdUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @FeignService
 @Slf4j
-public class SysAppService extends BaseService implements ISysAppService {
+public class UserAppService extends BaseService implements IUserAppService {
     @Autowired
-    private ISysAppDao sysAppDao;
+    private IUserAppDao userAppDao;
 
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-        public Response saveOrUpdateData(@RequestBody SysAppDto dto) throws Exception {
+        public Response saveOrUpdateData(@RequestBody UserAppDto dto) throws Exception {
             Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
-                SysApp entity = copyTo(dto, SysApp.class);
+                UserApp entity = copyTo(dto, UserApp.class);
                 //判断数据是否存在
-                if (sysAppDao.isDataYN(entity) != 0) {
+                if (userAppDao.isDataYN(entity) != 0) {
                     //数据存在
-                    sysAppDao.update(entity);
+                    userAppDao.update(entity);
                 } else {
                     //新增
-
-                     entity.setId(IdUtil.createUUID(22));
-                     sysAppDao.insert(entity);
+                     userAppDao.insert(entity);
                      result.data=entity.getId();
                 }
             } catch (Exception e) {
@@ -55,12 +51,12 @@ public class SysAppService extends BaseService implements ISysAppService {
         }
 
         @Override
-        public String deleteData(@RequestBody SysAppDto dto) throws Exception {
+        public String deleteData(@RequestBody UserAppDto dto) throws Exception {
             String result = "success";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
-                SysApp entity = copyTo(dto, SysApp.class);
-                if(sysAppDao.deleteByPrimaryKey(entity)==0){
+                UserApp entity = copyTo(dto, UserApp.class);
+                if(userAppDao.deleteByPrimaryKey(entity)==0){
                     throw new RuntimeException("数据不存在!");
                 }
             } catch (Exception e) {
@@ -72,15 +68,15 @@ public class SysAppService extends BaseService implements ISysAppService {
 
 
         @Override
-        public PageInfo findDataIsPage(@RequestBody SysAppDto dto) throws Exception {
+        public PageInfo findDataIsPage(@RequestBody UserAppDto dto) throws Exception {
            PageInfo pageInfo=null;
            try {
                if (dto == null)throw new RuntimeException("参数异常!");
-               SysApp entity = copyTo(dto, SysApp.class);
+               UserApp entity = copyTo(dto, UserApp.class);
                PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-               List list = sysAppDao.findDataIsPage(entity);
+               List list = userAppDao.findDataIsPage(entity);
                pageInfo=new PageInfo(list);
-               pageInfo.setList(copyTo(pageInfo.getList(), SysAppDto.class));
+               pageInfo.setList(copyTo(pageInfo.getList(), UserAppDto.class));
            } catch (Exception e) {
                log.error("信息[分页]查询异常!", e);
                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -89,11 +85,11 @@ public class SysAppService extends BaseService implements ISysAppService {
         }
 
         @Override
-        public List<SysAppDto> findDataIsList(@RequestBody SysAppDto dto) throws Exception {
-            List<SysAppDto>  results = null;
+        public List<UserAppDto> findDataIsList(@RequestBody UserAppDto dto) throws Exception {
+            List<UserAppDto>  results = null;
             try {
-                SysApp entity = copyTo(dto, SysApp.class);
-                 results = copyTo(sysAppDao.findDataIsList(entity), SysAppDto.class);
+                UserApp entity = copyTo(dto, UserApp.class);
+                 results = copyTo(userAppDao.findDataIsList(entity), UserAppDto.class);
             } catch (Exception e) {
                 log.error("信息[列表]查询异常!", e);
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -102,11 +98,11 @@ public class SysAppService extends BaseService implements ISysAppService {
         }
 
         @Override
-        public SysAppDto findDataById(@RequestBody SysAppDto dto) throws Exception {
-            SysAppDto result = null;
+        public UserAppDto findDataById(@RequestBody UserAppDto dto) throws Exception {
+            UserAppDto result = null;
             try {
-                SysApp entity = copyTo(dto, SysApp.class);
-                result = copyTo(sysAppDao.selectByPrimaryKey(entity),SysAppDto.class);
+                UserApp entity = copyTo(dto, UserApp.class);
+                result = copyTo(userAppDao.selectByPrimaryKey(entity),UserAppDto.class);
             } catch (Exception e) {
                 log.error("信息[详情]查询异常!", e);
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -115,14 +111,19 @@ public class SysAppService extends BaseService implements ISysAppService {
         }
 
     @Override
-    public SysAppDto findAppByName(@RequestParam("appname") String appname) throws Exception {
-        SysAppDto result = null;
-            try{
-                result =  copyTo(sysAppDao.findAppByName(appname),SysAppDto.class);
-            }catch (Exception e){
-                log.error("信息查询异常!", e);
-                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+    public UserAppDto findDate(@RequestBody UserAppDto dto) throws Exception {
+        UserAppDto result = null;
+        try {
+            UserApp entity = copyTo(dto, UserApp.class);
+            result = copyTo(userAppDao.findDate(entity),UserAppDto.class);
+            if(result == null){
+                userAppDao.insert(entity);
+                result =copyTo(userAppDao.findDate(entity),UserAppDto.class);
             }
+        } catch (Exception e) {
+            log.error("信息查询异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
         return result;
     }
 

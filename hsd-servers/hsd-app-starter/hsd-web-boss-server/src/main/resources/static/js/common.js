@@ -1,12 +1,12 @@
 var uploadPath = "http://192.168.101.100:28888/";
-var basePath = "http://localhost/";
+var basePath = "http://192.168.101.100:8080/";
 var apiPath = {
     account: {
         staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss-lilin",
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-boss",
         actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss"
     }
-}
+};
 var site = {
     staff: {
         login: apiPath.account.staff + "/boss/account/staff/sign/login" //登录
@@ -211,7 +211,7 @@ var site = {
         ,info: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/info/"
     }
 
-}
+};
 var $data, $ngHttp, $ngCompile, $ngSce;
 var page;
 
@@ -228,7 +228,7 @@ $.ajaxSetup({
         "Authorization": sessionStorage.getItem("hsd_staff_authorizationToken"),
         "X-Cache": sessionStorage.getItem("XCache")
     }
-})
+});
 $(document).ajaxComplete(function (event, xhr, settings) {
     if (xhr && xhr.responseText) {
         var result = JSON.parse(xhr.responseText);
@@ -331,18 +331,18 @@ var staff = {
                 //定义全局函数
                 $data.openMyBoxLayer = function (mytitle, myurl) {
                     openMyBoxLayer(mytitle, myurl);
-                }
+                };
                 $data.closeMyBoxLayer = function () {
                     closeMyBoxLayer();
-                }
+                };
                 $data.kfReady=function(key,val){
                     if(KindEditor) KindEditor.html('#'+key,val);
                     return val;
-                }
+                };
                 $data.selected=function(val1,val2){
-                    if(val1==val2) return true
+                    if(val1==val2) return true;
                     return false;
-                }
+                };
                 $data.staff = staff;
                 $data.util = util;
             }
@@ -377,7 +377,7 @@ var staff = {
         }
         return false;
     }
-}
+};
 
 /**
  * 判断是否为空
@@ -423,6 +423,7 @@ var util = {
         return [];
     }
     , removeArrItem: function (_arr, _obj) {
+        if(!_arr || _arr.length ==0) return;
         var length = _arr.length;
         for (var i = 0; i < length; i++) {
             if (_arr[i] == _obj) {
@@ -439,4 +440,4 @@ var util = {
             }
         }
     }
-}
+};

@@ -1,13 +1,11 @@
 package com.hsd.account.staff.dto.org;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.dto.BaseDto;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 @Data
@@ -29,5 +27,9 @@ public class OrgLogLoginDto extends BaseDto {
      private String deviceMac;
      /**创建时间*/
      private Date dateCreated;
+     /**app用户id*/
+     private long appUserId;
+     /**系统id*/
+     private String appId;
 
 }

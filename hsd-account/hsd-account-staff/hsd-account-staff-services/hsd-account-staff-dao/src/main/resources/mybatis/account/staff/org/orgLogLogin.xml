@@ -7,6 +7,7 @@
         ,t1.staff_id as "staffId"
         ,t1.app_user_id as "appUserId"
         ,t1.app_id as "appId"
+        ,t1.app_name as "appName"
         ,t1.staff_name as "staffName"
         ,t1.type as "type"
         ,t1.ip_addr as "ipAddr"
@@ -30,6 +31,7 @@
             staff_id
            ,app_user_id
            ,app_id
+           ,app_name
            ,staff_name
            ,type 
            ,ip_addr 
@@ -40,6 +42,7 @@
             #{staffId}
            ,#{appUserId}
            ,#{appId}
+           ,#{appName}
            ,#{staffName}
            ,#{type} 
            ,#{ipAddr} 
@@ -55,8 +58,8 @@
         <if test="type!=null">
             and t1.type=#{type}
         </if>
-        <if test="appId!=null and appId!=''">
-            and t1.app_id=#{appId}
+        <if test="appName!=null and appName!=''">
+            and t1.app_name like concat('%',#{appName},'%')
         </if>
 
         <if test="dateBegin!=null and dateBegin!=''">

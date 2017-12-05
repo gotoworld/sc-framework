@@ -31,5 +31,7 @@ public class OrgLogLoginDto extends BaseDto {
      private long appUserId;
      /**系统id*/
      private String appId;
+     /**系统名称*/
+     private String appName;
 
 }

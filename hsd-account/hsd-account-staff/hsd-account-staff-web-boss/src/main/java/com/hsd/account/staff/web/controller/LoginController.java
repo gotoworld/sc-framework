@@ -83,6 +83,7 @@ public class LoginController extends BaseController {
             UserAppDto userAppDto = userAppService.findDate(dto);
             orgStaff.setAppUserId(userAppDto.getId());
             orgStaff.setAppName(appDto.getName());
+            orgStaff.setAppId(appDto.getId());
             roleSourceService.lastLogin(orgStaff);
 
             Map<String, Set<String>> authorizationInfo = new HashMap();
@@ -169,6 +170,9 @@ public class LoginController extends BaseController {
                 logDto.setIpAddr(IpUtil.getIpAddr(request));//请求的IP
                 logDto.setStaffId(staff.getId());//id
                 logDto.setStaffName(staff.getName());//员工名称
+                logDto.setAppName(staff.getAppName());
+                logDto.setAppUserId(staff.getAppUserId());
+                logDto.setAppId(staff.getAppId());
 //            logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
                 logLoginService.saveOrUpdateData(logDto);
             } catch (Exception e) {

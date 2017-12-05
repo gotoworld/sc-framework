@@ -31,4 +31,6 @@ public class OrgLogLogin extends BaseEntity {
      private long appUserId;
      /**系统id*/
      private String appId;
+     /**系统名称*/
+     private String appName;
 }

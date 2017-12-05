@@ -17,6 +17,24 @@ spring:
       turbine:
         clusters: default
         url: http://${spring.boot.admin.url}/turbine.stream
+
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+#    password:
+    timeout: 1800000
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 7200000
+
 endpoints:
   restart:
     enabled: true

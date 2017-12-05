@@ -101,4 +101,6 @@ public class OrgStaffDto extends BaseDto {
      private long appUserId;
      /**系统名称*/
      private String appName;
+     /**系统Id*/
+     private String appId;
 }

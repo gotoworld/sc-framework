@@ -84,6 +84,7 @@ public class JwtUtil {
         JSONObject jo = new JSONObject();
         jo.put("id", ReflectUtil.getValueByFieldName(obj, "id"));
         jo.put("appUserId", ReflectUtil.getValueByFieldName(obj, "appUserId"));
+        jo.put("appName", ReflectUtil.getValueByFieldName(obj, "appName"));
         jo.put("account", ReflectUtil.getValueByFieldName(obj, "account"));
         jo.put("name", ReflectUtil.getValueByFieldName(obj, "name"));
         jo.put("channelName", ReflectUtil.getValueByFieldName(obj, "channelName"));

@@ -58,14 +58,16 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/login")
     @ApiOperation(value = "登录")
-    public Response login(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("appname") String appname) throws Exception {
+    public Response login(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("appId") String appId) throws Exception {
         log.info("LoginController login");
         Response result = new Response();
         try {
             if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                 return Response.error("员工名或密码不能为空!");
             }
-            SysAppDto appDto = sysAppService.findAppByName(appname);
+            SysAppDto sysAppDto = new SysAppDto();
+            sysAppDto.setId(appId);
+            SysAppDto appDto = sysAppService.findDataById(sysAppDto);
             if (appDto == null){
                 return  Response.error("APP应用不存在!");
             }
@@ -80,6 +82,7 @@ public class LoginController extends BaseController {
             dto.setAppId(appDto.getId());
             UserAppDto userAppDto = userAppService.findDate(dto);
             orgStaff.setAppUserId(userAppDto.getId());
+            orgStaff.setAppName(appDto.getName());
             roleSourceService.lastLogin(orgStaff);
 
             Map<String, Set<String>> authorizationInfo = new HashMap();
@@ -130,6 +133,7 @@ public class LoginController extends BaseController {
                 logDto.setAppUserId(staff.getAppUserId());//app用户id
                 logDto.setAppId(userAppDto.getAppId());//系统ID
                 logDto.setStaffName(staff.getName());//员工名称
+                logDto.setAppName(staff.getAppName());
 //                logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
                 logLoginService.saveOrUpdateData(logDto);
             } catch (Exception e) {
@@ -203,6 +207,26 @@ public class LoginController extends BaseController {
             redisTemplate.opsForValue().set("u:"+staff.getId()+":"+staff.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime());
             result.data = data;
         } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 停止用户
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "stopUser")
+    @ApiOperation(value = "停止用户")
+    public  Response stopUser(){
+        Response result = new Response();
+        try{
+            String authorization = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+            Claims claims = JwtUtil.parseJWT(authorization);
+            String json = claims.getSubject();
+            OrgStaffDto staff = JSONObject.parseObject(json, OrgStaffDto.class);
+            redisTemplate.opsForValue().set("u:stop:"+staff.getId()+"",new Date().getTime());
+        }catch (Exception e){
             result = Response.error(e.getMessage());
         }
         return result;

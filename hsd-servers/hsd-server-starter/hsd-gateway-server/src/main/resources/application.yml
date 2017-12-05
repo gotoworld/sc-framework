@@ -17,6 +17,24 @@ spring:
       turbine:
         clusters: default
         url: http://${spring.boot.admin.url}/turbine.stream
+
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+#    password:
+    timeout: 1800000
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 7200000
+
 endpoints:
   restart:
     enabled: true
@@ -88,7 +106,6 @@ eureka:
       defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
-
 
 #logging:
 #  file: "/mnt/app/${spring.application.name}/logs/log_start.log"

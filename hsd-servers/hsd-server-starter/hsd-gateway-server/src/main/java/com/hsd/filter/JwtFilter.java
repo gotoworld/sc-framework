@@ -17,6 +17,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @WebFilter(filterName = "jwtFilter", urlPatterns = {"/*"})
 @Slf4j
@@ -56,10 +57,9 @@ public class JwtFilter implements Filter {
                             WebUtil.sendJson(httpServletResponse, Response.error(110, "您的授权已失效或已在其它地方登录!"));
                             return;
                         }
-
-                        chain.doFilter(request, response);
                     }
                 }
+                chain.doFilter(request, response);
             } catch (final SignatureException e) {
                 WebUtil.sendJson(httpServletResponse,Response.error(403, "签名验证失败!" + e.getMessage()));
             } catch (ExpiredJwtException e) {

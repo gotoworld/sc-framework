@@ -11,19 +11,24 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @WebFilter(filterName = "jwtFilter", urlPatterns = {"/*"})
 @Slf4j
 public class JwtFilter implements Filter {
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
+
+    @Value("${hsd.message.forceOffline}")
+    String forceOffline;
+    @Value("${hsd.message.tokenExpire}")
+    String tokenExpire;
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -48,13 +53,14 @@ public class JwtFilter implements Filter {
                         String key="u:offline:"+jsonObject.getString("id");
                         if(redisTemplate.opsForValue().get(key)!=null){
                             if(claims.getIssuedAt().getTime()<Long.parseLong(""+redisTemplate.opsForValue().get(key))){
-                                throw new SignatureException("凭证已被强制吊销！");
+                                redisTemplate.opsForValue().getOperations().delete(key);
+                                throw new SignatureException(forceOffline);
                             }
                         }
 
                         key="u:"+jsonObject.getString("id")+":"+jsonObject.getString("appUserId");
                         if(redisTemplate.opsForValue().get(key)==null || claims.getIssuedAt().getTime()!=Long.parseLong(""+redisTemplate.opsForValue().get(key))){//用户最新token签发时间
-                            WebUtil.sendJson(httpServletResponse, Response.error(110, "您的授权已失效或已在其它地方登录!"));
+                            WebUtil.sendJson(httpServletResponse, Response.error(110, tokenExpire));
                             return;
                         }
                     }

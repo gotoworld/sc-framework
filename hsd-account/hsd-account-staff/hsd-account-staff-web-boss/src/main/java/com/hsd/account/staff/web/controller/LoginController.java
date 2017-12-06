@@ -58,7 +58,7 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/login")
     @ApiOperation(value = "登录")
-    public Response login(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("appId") String appId) throws Exception {
+    public Response login(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("appId") String appId) {
         log.info("LoginController login");
         Response result = new Response();
         try {
@@ -123,7 +123,7 @@ public class LoginController extends BaseController {
 //          data.put("authorizationInfoPerms", authorizationInfo.get("permissions"));
 //          data.put("authorizationInfoRoles", authorizationInfo.get("roles"));
             data.put("XCache", request.getSession().getId());
-            redisTemplate.opsForValue().set("u:"+orgStaff.getId()+":"+orgStaff.getAppUserId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime());
+            redisTemplate.opsForValue().set("u:"+orgStaff.getId()+":"+orgStaff.getAppUserId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime(), CommonConstant.JWT_TTL);
             try {
                 //读取session中的员工
                 OrgStaffDto staff = orgStaff;
@@ -208,7 +208,7 @@ public class LoginController extends BaseController {
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);
             data.put("XCache", request.getSession().getId());
-            redisTemplate.opsForValue().set("u:"+staff.getId()+":"+staff.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime());
+            redisTemplate.opsForValue().set("u:"+staff.getId()+":"+staff.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime(), CommonConstant.JWT_TTL);
             result.data = data;
         } catch (Exception e) {
             result = Response.error(e.getMessage());

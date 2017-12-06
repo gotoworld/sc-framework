@@ -100,6 +100,7 @@
                                                         <a href="javascript:;"  ng-click="getOrg(item)" rel="nofollow" class="label label-primary" ><i class="fa fa-staff"></i> 组织查看</a>
                                                         <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:role")' ng-click="setRole(item)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 角色设置</a>
                                                         <a href="javascript:;" ng-show='staff.hasPermission("orgStaff:edit:leadership")' ng-click="setLeadership(item)" rel="nofollow" class="label label-success" ><i class="fa fa-user-secret"></i> 设置上级</a>
+														<a href="javascript:;" ng-show='staff.hasPermission("orgStaff:offline")' ng-click="offline(item.id)" rel="nofollow" class="label label-warning" ><i class="fa fa-sun-o"></i> 强制下线</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -316,6 +317,19 @@
         }
         $scope.recyclePage = function (pageIndex) {
             loadRecyclePage(pageIndex);
+        }
+        $scope.offline = function (id) {
+            if (confirm('确认下线吗?')) {
+				$.post(site.orgStaff.offline + id, {}, function (result) {
+                    if (result.code == 0) {
+                        loadPage($('#pageNumA').val());
+                        alert('下线成功');
+                        loadRecyclePage();
+                    } else {
+                        alert(result.message);
+                    }
+                });
+            }
         }
     });
 

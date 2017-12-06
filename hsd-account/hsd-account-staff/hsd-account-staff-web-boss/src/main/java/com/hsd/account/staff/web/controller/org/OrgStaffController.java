@@ -18,12 +18,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Api(description = "组织架构_员工")
@@ -35,6 +37,9 @@ public class OrgStaffController extends BaseController {
 
 	@Autowired
 	private IOrgStaffService orgStaffService;
+
+	@Autowired
+	private RedisTemplate<String,Object> redisTemplate;
 
 	/**
 	 * <p> 信息分页 (未删除)。
@@ -474,6 +479,23 @@ public class OrgStaffController extends BaseController {
 			result.data=orgStaffService.getMaxJobNo();
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	/**
+	 * 强制下线
+	 * @return
+	 */
+	@RequiresPermissions("orgStaff:offline")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST}, value = acPrefix + "offline/{id}")
+	@ApiOperation(value = "offline")
+	public  Response offline(@PathVariable("id") Long id){
+		log.info("OrgStaffController offline.........");
+		Response result = new Response("success");
+		try{
+			redisTemplate.opsForValue().set("u:offline:"+id+"",new Date().getTime());
+		}catch (Exception e){
+			result = Response.error(e.getMessage());
 		}
 		return result;
 	}

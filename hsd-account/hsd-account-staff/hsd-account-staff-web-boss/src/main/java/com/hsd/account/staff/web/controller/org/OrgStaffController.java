@@ -6,7 +6,6 @@ import com.hsd.account.staff.dto.org.OrgOrgVsStaffDto;
 import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
-import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
@@ -31,7 +30,6 @@ import java.util.List;
 @Api(description = "组织架构_员工")
 @RestController
 @Slf4j
-@NoAuthorize
 public class OrgStaffController extends BaseController {
 	private static final String acPrefix="/boss/account/staff/org/orgStaff/";
 
@@ -166,7 +164,7 @@ public class OrgStaffController extends BaseController {
 	/**判断员工id是否存在 */
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isAccountYN/{account}")
 	@ApiOperation(value = "判断员工id是否存在")
-	public Response isAccountYN(@PathVariable("account") String account) throws IOException{
+	public Response isAccountYN(@PathVariable("account") String account) {
 		Response result = new Response("success");
 		try {
 			result.data=orgStaffService.isAccountYN(account);
@@ -223,7 +221,7 @@ public class OrgStaffController extends BaseController {
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="员工密码")
 	@ApiOperation(value = "密码修改")
-	public Response updatePwd(@ModelAttribute OrgStaffDto dto) throws IOException {
+	public Response updatePwd(@ModelAttribute OrgStaffDto dto) {
 		log.info("OrgStaffController updatePwd.........");
 		Response result = new Response("success");
 		try {
@@ -246,7 +244,7 @@ public class OrgStaffController extends BaseController {
 	@RfAccount2Bean
 	@ALogOperation(type="修改",desc="员工密码重置")
 	@ApiOperation(value = "员工密码重置")
-	public Response resetPwd(@PathVariable("id") Long id) throws IOException {
+	public Response resetPwd(@PathVariable("id") Long id) {
 		log.info("OrgStaffController resetPwd.........");
 		Response result = new Response("success");
 		try {

@@ -49,6 +49,25 @@ public class SysAppController extends BaseController {
         }
         return result;
     }
+    /**
+     * <p>信息列表 (未删除)。
+     */
+    @RequiresPermissions("sysApp:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
+    @ApiOperation(value = "信息列表")
+    public Response list(@ModelAttribute  SysAppDto dto) {
+        log.info("SysAppController list.........");
+        Response result = new Response();
+        try {
+            if (dto == null) {
+                dto = new SysAppDto();
+            }
+            result.data = sysAppService.findDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
 
 
@@ -62,7 +81,7 @@ public class SysAppController extends BaseController {
         log.info("SysAppController info.........");
         Response result = new Response();
         try {
-            if (id == null) {throw new RuntimeException("参数异常!");};
+            if (id == null) {throw new RuntimeException("参数异常!");}
             SysAppDto dto = new SysAppDto(){{
                 setId(id);
             
@@ -85,8 +104,8 @@ public class SysAppController extends BaseController {
         log.info("SysAppController phydel.........");
         Response result = new Response();
         try {
-           if (id==null) {throw new RuntimeException("参数异常!");};
-           SysAppDto dto = new SysAppDto(){{
+           if (id==null) {throw new RuntimeException("参数异常!");}
+            SysAppDto dto = new SysAppDto(){{
             setId(id);
            }};
             result.message = sysAppService.deleteData(dto);

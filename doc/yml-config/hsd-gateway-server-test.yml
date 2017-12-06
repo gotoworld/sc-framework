@@ -123,10 +123,10 @@ feign:
 hsd:
   common:
     appPrefix: test_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
-  message:
-    forceOffline: 凭证已被强制吊销！
-    tokenExpire: 您的授权已失效或已在其它地方登录!
   jwtFilter:
+    message:
+      forceOffline: 凭证已被强制吊销！
+      tokenExpire: 您的授权已失效或已在其它地方登录!
     excludeUrlPatterns:
       - /hsd-account-staff-web-boss/boss/account/staff/sign/*
       - /hsd-account-channel-web-portal/api/account/channel/sign/*

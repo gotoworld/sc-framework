@@ -2,7 +2,7 @@ var uploadPath = "http://192.168.101.100:28888/";
 var basePath = "http://192.168.101.100:8080/";
 var apiPath = {
     account: {
-        staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss-lilin",
+        staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss",
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-boss",
         actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss"
     }
@@ -13,14 +13,6 @@ var site = {
         , logout: apiPath.account.staff + "/boss/account/staff/sign/logout" //登出
         , refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
         , updatePwd: apiPath.account.staff + "/boss/account/staff/org/orgStaff/update/pwd" //密码更新
-    }
-    , sysDomain: {
-        view: basePath + "/html/account/staff/sys/sys_domain"
-        , page: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/page/"
-        , list: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/list"
-        , save: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/save"
-        , info: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/info/"
-        , del: apiPath.account.staff + "/boss/account/staff/sys/sysDomain/del/"
     }
     , sysApp: {//APP应用表
         view: basePath + "/html/account/staff/sys/sys_app"
@@ -68,6 +60,7 @@ var site = {
         , delRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/role"
         , setLeadership: apiPath.account.staff + "/boss/account/staff/org/orgStaff/set/leadership"
         , getMaxJobNo: apiPath.account.staff + "/boss/account/staff/org/orgStaff/maxJobNo"
+        ,offline :apiPath.account.staff + "/boss/account/staff/org/orgStaff/offline/"
     }
     , authPerm: {
         view: basePath + "/html/account/staff/auth/auth_perm"

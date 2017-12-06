@@ -389,6 +389,7 @@
         showTags: true,
         data: [],
         onNodeSelected: function (event, node) {
+            sessionStorage.setItem(site.orgInfo.view+'/addParentId',node.id);
             var trStr ='';
                  trStr+=' <tr><th class="col-md-3">编码:</th><th class="">'+node.code+'</th></tr>';
                  trStr+=' <tr><th class="col-md-3">名称:</th><th class="">'+node.name+'</th></tr>';

@@ -25,7 +25,6 @@ import java.util.List;
 @Api(description = "权限_功能信息")
 @RestController
 @Slf4j
-@NoAuthorize
 public class AuthPermController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired

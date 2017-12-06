@@ -59,10 +59,9 @@ public class JwtFilter implements Filter {
                     }
                 }
             }
-            if(flag) return;
             String authorizationToken = httpServletRequest.getHeader("Authorization");
             try {
-                if (authorizationToken != null && !"".equals(authorizationToken)) {
+                if (!flag && authorizationToken != null && !"".equals(authorizationToken)) {
                     final Claims claims = JwtUtil.parseJWT(authorizationToken);
                     if (chain != null) {
                         JSONObject jsonObject = JSONObject.parseObject(claims.getSubject());

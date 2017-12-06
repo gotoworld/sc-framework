@@ -54,10 +54,10 @@
 														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
 															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
-															<button type="submit" class="btn ">查询员工号</button>
 														</span>
 													</div>
 												</form>
+												<a href="javascript:;" ng-click="maxJobNo()" rel="nofollow" class="btn btn-sm btn-primary"><i class="fa fa-bookmark"></i>查询员工号</a>
 											</td>
 										</tr>
 									</table>
@@ -230,6 +230,9 @@
         $scope.info = function (title, id) {
             sessionStorage.setItem(site.orgStaff.info, id);
             openMyBoxLayer(title, site.orgStaff.view + '_info.html');
+        }
+        $scope.maxJobNo = function () {
+            openMyBoxLayer('获取最大员工号', site.orgStaff.view + '_maxjobno.html');
         }
         $scope.getOrg = function (item) {
             sessionStorage.setItem(site.orgStaff.info,item.id);

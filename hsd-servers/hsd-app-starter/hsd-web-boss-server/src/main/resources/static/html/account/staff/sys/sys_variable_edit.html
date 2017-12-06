@@ -144,6 +144,10 @@
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 $data.item = result.data;
+                var addParentId=sessionStorage.getItem(site.sysVariable.view+'/addParentId');
+                if(addParentId){
+                    $data.item={'parentId':addParentId};
+                }
             } else {
                 $data.message = result.message;
                 alert( result.message);

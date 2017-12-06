@@ -40,7 +40,7 @@
                                             <div class="col-md-4">
                                                 <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
-                                                        <a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("authPerm:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+                                                        <a href="javascript:" ng-click="edit('a',0);" ng-show='staff.hasPermission("authPerm:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
                                                         <div class="ibox-tools">
                                                             <a href="#" onclick="loadTree()">
                                                                 <i class="glyphicon glyphicon-refresh"></i>
@@ -97,7 +97,7 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:;" ng-click="edit('a',0);" ng-show='staff.hasPermission("authPerm:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+									<a href="javascript:" ng-click="edit('a',0);" ng-show='staff.hasPermission("authPerm:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -116,9 +116,9 @@
 													<td>{{item.matchStr}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("authPerm:info")'  ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("authPerm:edit")'  ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-                                                      <a href="javascript:;" ng-show='staff.hasPermission("authPerm:del")'   ng-click="del(item.id)" rel="nofollow" class="label label-danger label-nodel" ><i class="fa fa-trash-o"></i> 删除</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("authPerm:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("authPerm:edit")' ng-click="edit('e',item.id)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("authPerm:del")' ng-click="del(item.id)" rel="nofollow" class="label label-danger label-nodel" ><i class="fa fa-trash-o"></i> 删除</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -174,11 +174,11 @@
         $scope.edit = function (title,id) {
             sessionStorage.setItem(site.authPerm.info,id);
             openMyBoxLayer(title,site.authPerm.view+'_edit.html');
-        }
+        };
         $scope.info = function (title,id) {
             sessionStorage.setItem(site.authPerm.info,id);
             openMyBoxLayer(title,site.authPerm.view+'_info.html');
-        }
+        };
         $scope.del = function (id) {
             if(confirm('确认删除吗?')) {
                 $.post( site.authPerm.del + id,{}, function (result) {
@@ -191,7 +191,7 @@
                     }
                 });
             }
-        }
+        };
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }
@@ -209,12 +209,13 @@
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();
         }, 'json');
-    }
+    };
     var treeviewA=$('#disTree').treeview({
         color: "#428bca",
         showTags: true,
         data: [],
         onNodeSelected: function (event, node) {
+            sessionStorage.setItem(site.authPerm.view+'/addParentId',node.id);
             var trStr ='';
                  trStr+=' <tr><th class="col-md-3">权限名称:</th><th class="">'+node.name+'</th></tr>';
 				trStr+=' <tr><th class="col-md-3">权限匹配符:</th><th class="">'+node.matchStr+'</th></tr>';

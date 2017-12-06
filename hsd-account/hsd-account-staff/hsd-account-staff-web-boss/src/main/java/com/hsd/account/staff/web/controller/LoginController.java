@@ -216,23 +216,5 @@ public class LoginController extends BaseController {
         return result;
     }
 
-    /**
-     * 停止用户
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "stopUser")
-    @ApiOperation(value = "停止用户")
-    public  Response stopUser(){
-        Response result = new Response();
-        try{
-            String authorization = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
-            Claims claims = JwtUtil.parseJWT(authorization);
-            String json = claims.getSubject();
-            OrgStaffDto staff = JSONObject.parseObject(json, OrgStaffDto.class);
-            redisTemplate.opsForValue().set("u:stop:"+staff.getId()+"",new Date().getTime());
-        }catch (Exception e){
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
+
 }

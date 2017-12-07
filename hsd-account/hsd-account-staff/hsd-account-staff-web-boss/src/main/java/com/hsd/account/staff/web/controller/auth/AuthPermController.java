@@ -5,15 +5,14 @@ import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
-import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.annotation.RfAccount2Bean;
+import com.hsd.framework.annotation.auth.Logical;
+import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import com.hsd.framework.annotation.auth.Logical;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -107,9 +106,7 @@ public class AuthPermController extends BaseController {
         log.info("AuthPermController del.........");
         Response result = new Response();
         try {
-            AuthPermDto dto = new AuthPermDto();
-            dto.setId(id);
-            result.message = authPermService.deleteDataById(dto);
+            result.message = authPermService.deleteDataById(new AuthPermDto(){{setId(id);}});
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

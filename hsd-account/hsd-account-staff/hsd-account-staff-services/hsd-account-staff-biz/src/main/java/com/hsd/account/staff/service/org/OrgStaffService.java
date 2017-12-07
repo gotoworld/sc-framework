@@ -534,7 +534,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgStaffDao.getLeadership(copyTo(dto,OrgStaff.class));
+            result.data=orgStaffDao.getLeadership(copyTo(dto,OrgStaff.class));
         } catch (Exception e) {
             log.error("获取领导设置失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

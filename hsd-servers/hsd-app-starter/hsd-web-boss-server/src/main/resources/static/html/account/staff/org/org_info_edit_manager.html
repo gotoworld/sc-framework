@@ -57,7 +57,7 @@
                                             <td>{{item.account}}</td>
                                             <td>{{item.name}}</td>
                                             <td>
-                                                <a ng-if="checkAddStaff(item)==false" href="javascript:;" ng-click="setManager(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 设置</a>
+                                                <a ng-if="checkAddStaff(item)==false" href="javascript:" ng-click="setManager(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 设置</a>
                                                 <label ng-if="checkAddStaff(item)==true" >当前负责人</label>
                                             </td>
                                         </tr>
@@ -106,7 +106,7 @@
                 <div class="clearfix "></div>
                 <div class="col-md-12" style="height: 50px;">
                     <div style="width: 200px; margin: 0 auto;">
-                        <a href="javascript:;" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
+                        <a href="javascript:" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
                     </div>
                 </div>
 			</div>
@@ -147,7 +147,7 @@
                 flag= true;
             }
             return flag;
-        }
+        };
         $scope.setManager = function (item) {
             if(!$data.checkAddStaff(item)){
                 $.post(site.orgInfo.setManager, {"orgId":$data.id,"manager":item.id},function (result) {
@@ -160,7 +160,7 @@
                     }
                 }, 'json');
             }
-        }
+        };
         $scope.page = function (pageIndex) {
             loadStaffPage(pageIndex);
         }
@@ -181,11 +181,9 @@
         }, 'json');
     }
     function loadManager(){
-        if(!util.notEmpty(sessionStorage.getItem(site.orgInfo.info+'manager'))) return;
-        $.get(site.orgStaff.info+sessionStorage.getItem(site.orgInfo.info+'manager'), {},function (result) {
+        $.get(site.orgStaff.getManager+sessionStorage.getItem(site.orgInfo.info), {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-//                    $data.manager.push.apply($data.manager,result.data);
                     $data.manager=result.data;
                     $data.managerMessage=result.message;
             } else {

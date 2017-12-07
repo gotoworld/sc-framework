@@ -37,7 +37,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
                     int idx = data.indexOf(errDto.getException()+":");
                     if (idx >= 0) {
                         try {
-                            code = Integer.parseInt(data.substring(idx+1,data.lastIndexOf(CommonConstant.FEIGN_ERROR_SYMBOL_STRING)).trim());
+                            code = Integer.parseInt(data.substring(idx+(errDto.getException()+":").length(),data.lastIndexOf(CommonConstant.FEIGN_ERROR_SYMBOL_STRING)).trim());
                         } catch (NumberFormatException e) {
                             code=501;
                         }

@@ -26,4 +26,9 @@ public class OrgOrgVsStaffDto extends BaseDto {
     private String level;
     /**组织编码*/
     private String code;
+
+    /**员工账号*/
+    private String staffAccount;
+    /**组织编码*/
+    private String orgCode;
 }

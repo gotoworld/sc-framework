@@ -50,7 +50,7 @@ public interface IOrgInfoDao extends IBaseDao {
     @Update("update org_info set version=version+1 ,manager=#{manager}, date_updated=now() where  id = #{id} ")
     int setManager(IEntity dto) throws Exception;
 
-    /** 根据父code获取组织id */
+    /** 根据code获取组织id */
     @Select("select id from org_info where  code = #{code} ")
     Long getIdByPCode(IEntity entity) throws Exception;
     /** 根据name获取组织id */

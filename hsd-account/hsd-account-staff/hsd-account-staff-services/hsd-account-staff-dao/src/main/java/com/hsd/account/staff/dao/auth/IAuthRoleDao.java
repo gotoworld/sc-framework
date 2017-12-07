@@ -43,5 +43,5 @@ public interface IAuthRoleDao extends IBaseDao {
     int isSuperAdmin(Map dto) throws Exception;
 
     @Select("select id from auth_role where  name = #{name} ")
-    int getIdByName(IEntity entity) throws Exception;
+    Long getIdByName(IEntity entity) throws Exception;
 }

@@ -55,13 +55,18 @@ public class RedisConfig extends CachingConfigurerSupport {
 		RedisProperties redisProperties=redisProperties();
 		IdGeneratorIsRedis.IdGeneratorBuilder idGeneratorBuilder = IdGeneratorIsRedis.builder();
 		if(redisProperties.getIdGenNodes()!=null){
-			List<RedisProperties.IdGenNode> idGenNodes=redisProperties.getIdGenNodes();
-			idGenNodes.forEach(idGenNode -> {
-				String pwd=idGenNode.getPassword();
-				if(ValidatorUtil.notEmpty(pwd)){
-					idGeneratorBuilder.addHost(idGenNode.getHost(), idGenNode.getPort(),redisProperties.getTimeout(),idGenNode.getPassword(), idGenNode.getLuaSha());
+			List<String> idGenNodes=redisProperties.getIdGenNodes();
+			idGenNodes.forEach(idGenNodeStr -> {
+				String[] idGenNodeArr=idGenNodeStr.split("@");//host:port:luaSha@password
+				String[] hostAndPortAndLuaSha=idGenNodeArr[0].split(":");
+				String host=hostAndPortAndLuaSha[0];
+				int port=Integer.parseInt(hostAndPortAndLuaSha[1]);
+				String luaSha=hostAndPortAndLuaSha[2];
+				String password=idGenNodeArr.length>1?idGenNodeArr[1]:null;
+				if(ValidatorUtil.notEmpty(password)){
+					idGeneratorBuilder.addHost(host, port,redisProperties.getTimeout(),AppConfig.checkPassword(password), luaSha);
 				}else{
-					idGeneratorBuilder.addHost(idGenNode.getHost(), idGenNode.getPort(), idGenNode.getLuaSha());
+					idGeneratorBuilder.addHost(host, port, luaSha);
 				}
 			});
 		}
@@ -175,5 +180,18 @@ public class RedisConfig extends CachingConfigurerSupport {
 		HeaderHttpSessionStrategy headerHttpSessionStrategy = new HeaderHttpSessionStrategy();
 		headerHttpSessionStrategy.setHeaderName("X-Cache");
 		return headerHttpSessionStrategy;
+	}
+	public static void main(String[] args) {
+		String[] idGenNodeArr="192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==".split("@");//host:port:luaSha&password
+		String[] hostAndPortAndLuaSha=idGenNodeArr[0].split(":");
+		String host=hostAndPortAndLuaSha[0];
+		int port=Integer.parseInt(hostAndPortAndLuaSha[1]);
+		String luaSha=hostAndPortAndLuaSha[2];
+		String password=idGenNodeArr.length>1?idGenNodeArr[1]:null;
+		if(ValidatorUtil.notEmpty(password)){
+			System.out.println(host+":"+port+":"+AppConfig.checkPassword(password)+":"+luaSha);
+		}else{
+			System.out.println(host+":"+port+":"+luaSha);
+		}
 	}
 }

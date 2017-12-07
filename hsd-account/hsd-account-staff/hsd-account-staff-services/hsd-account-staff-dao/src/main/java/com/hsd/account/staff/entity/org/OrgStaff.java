@@ -76,7 +76,7 @@ public class OrgStaff extends BaseEntity {
      /**用户所在组织*/
      private List<OrgInfo> orgInfos;
      /**用户appID*/
-     private long appUserId;
+     private Long appUserId;
      /**系统名称*/
      private String appName;
      /**系统Id*/

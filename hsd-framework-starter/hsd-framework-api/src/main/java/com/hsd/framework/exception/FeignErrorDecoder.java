@@ -3,11 +3,11 @@ package com.hsd.framework.exception;
 import com.hsd.framework.FeignErrorDTO;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.Converter;
+import com.netflix.hystrix.exception.HystrixBadRequestException;
 import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
@@ -15,7 +15,6 @@ import static java.lang.String.format;
 
 /** 服务发现错误、例外处理
  */
-@Configuration
 @Slf4j
 public class FeignErrorDecoder implements ErrorDecoder {
     @Override
@@ -45,12 +44,13 @@ public class FeignErrorDecoder implements ErrorDecoder {
                             message = data.substring(data.lastIndexOf(CommonConstant.FEIGN_ERROR_SYMBOL_STRING) + CommonConstant.FEIGN_ERROR_SYMBOL_STRING.length());
                     }
                 }
-
                 data = body;
             }
         } catch (IOException ignored) { // NOPMD
 //            log.error("FeignErrorDecoder:",ignored);
         }
-        return new ServiceFeignException(code, message , data);
+
+//        return new FeignServiceException(code, message , data);
+        return new HystrixBadRequestException(message);
     }
 }

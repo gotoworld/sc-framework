@@ -32,25 +32,26 @@ public class RfAccount2BeanAspect {
      * 用于 将当前操作人员的信息写入实体对象
      */
     @Before("account2BeanAspect()")
-    public void doBefore(JoinPoint joinPoint) throws Exception {
+    public void doBefore(JoinPoint joinPoint) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        //读取session中的员工
-        OrgStaffDto platform = JwtUtil.getSubject(OrgStaffDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         try {
-            if(log.isDebugEnabled()) {
-                log.debug("=====前置通知开始=====");
-                log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-                log.debug("请求人:" + platform.getName());
-                log.debug("请求IP:" + ip);
-            }
-            Object[] objArr=joinPoint.getArgs();
-            if(objArr!=null){
-                for(Object obj:objArr){
-                    if(obj instanceof IDto){
+            Object[] objArr = joinPoint.getArgs();
+            if (objArr != null) {
+                for (Object obj : objArr) {
+                    if (obj instanceof IDto) {
+                        //读取session中的员工
+                        OrgStaffDto dto = JwtUtil.getSubject(obj, OrgStaffDto.class);
+                        if (log.isDebugEnabled()) {
+                            //*========控制台输出=========*//
+                            log.debug("=====前置通知开始=====");
+                            log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
+                            log.debug("请求人:" + dto.getName());
+                            log.debug("请求IP:" + ip);
+                        }
 //                      System.out.printf(JSON.toJSONString(obj));
-                        ReflectUtil.setValueByFieldName2(obj,"createId", platform.getId());//创建者id
+                        ReflectUtil.setValueByFieldName2(obj, "createId", dto.getId());//创建者id
 //                        ReflectUtil.setValueByFieldName2(obj,"account", OrgStaff.getAccount());//id
 //                        ReflectUtil.setValueByFieldName2(obj,"createIp",ip);//创建者ip
 //                        ReflectUtil.setValueByFieldName2(obj,"updateId",OrgStaff.getId());//修改者id

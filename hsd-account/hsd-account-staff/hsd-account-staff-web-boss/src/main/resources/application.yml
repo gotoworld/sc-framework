@@ -85,7 +85,7 @@ feign:
   okhttp:
     enabled: true
   name:
-    account.staff: hsd-account-staff-server
+    account.staff: hsd-account-staff-server-wxg
 
 hystrix:
   command:
@@ -93,6 +93,8 @@ hystrix:
       execution:
         isolation:
           strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 1000
   stream:
     maxConcurrentConnections: 20
     bus:

@@ -57,7 +57,7 @@
                                             <td>{{item.account}}</td>
                                             <td>{{item.name}}</td>
                                             <td>
-                                                <a ng-if="checkAddStaff(item)==false && item.id!=id" href="javascript:;" ng-click="setLeadership(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 设置</a>
+                                                <a ng-if="checkAddStaff(item)==false && item.id!=id" href="javascript:" ng-click="setLeadership(item)" rel="nofollow" class="" ><i class="fa fa-staff-md"></i> 设置</a>
                                                 <label ng-if="item.id==id" >#####</label>
                                                 <label ng-if="checkAddStaff(item)==true" >当前领导</label>
                                             </td>
@@ -107,7 +107,7 @@
                 <div class="clearfix "></div>
                 <div class="col-md-12" style="height: 50px;">
                     <div style="width: 200px; margin: 0 auto;">
-                        <a href="javascript:;" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
+                        <a href="javascript:" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
                     </div>
                 </div>
 			</div>
@@ -148,7 +148,7 @@
                 flag= true;
             }
             return flag;
-        }
+        };
         $scope.setLeadership = function (item) {
             if(!$data.checkAddStaff(item) && item.id!=$data.id){
                 $.post(site.orgStaff.setLeadership, {"staffId":$data.id,"leadership":item.id},function (result) {
@@ -161,7 +161,7 @@
                     }
                 }, 'json');
             }
-        }
+        };
         $scope.page = function (pageIndex) {
             loadStaffPage(pageIndex);
         }
@@ -182,11 +182,9 @@
         }, 'json');
     }
     function loadLeadership(){
-        if(!util.notEmpty(sessionStorage.getItem(site.orgStaff.info+'leadership'))) return;
-        $.get(site.orgStaff.info+sessionStorage.getItem(site.orgStaff.info+'leadership'), {},function (result) {
+        $.get(site.orgStaff.getLeadership+sessionStorage.getItem(site.orgStaff.info), {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-//                    $data.leadership.push.apply($data.leadership,result.data);
                     $data.leadership=result.data;
                     $data.leadershipMessage=result.message;
             } else {

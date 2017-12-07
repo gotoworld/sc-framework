@@ -66,44 +66,40 @@ public class LoginController extends BaseController {
             if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                 return Response.error("员工名或密码不能为空!");
             }
-            SysAppDto sysAppDto = new SysAppDto();
-            sysAppDto.setId(appId);
-            SysAppDto appDto = sysAppService.findDataById(sysAppDto);
-            if (appDto == null){
+            SysAppDto sysAppDto = sysAppService.findDataById(new SysAppDto(){{setId(appId);}});
+            if (sysAppDto == null){
                 return  Response.error("APP应用不存在!");
             }
-            OrgStaffDto orgStaff = roleSourceService.findStaffByAccount(account, 0);
+            OrgStaffDto orgStaffDto = roleSourceService.findStaffByAccount(account, 0);
             String pwdhex = MD5.pwdMd5Hex(password);
-            if (orgStaff==null || !(account.equals(orgStaff.getAccount()) && pwdhex.equals(orgStaff.getPwd()))) {
+            if (orgStaffDto==null || !(account.equals(orgStaffDto.getAccount()) && pwdhex.equals(orgStaffDto.getPwd()))) {
                 return Response.error("登录失败,员工名或密码错误!");
             }
+            roleSourceService.lastLogin(orgStaffDto);
+
             //查询app用户表
-            UserAppDto dto = new UserAppDto();
-            dto.setUserId(orgStaff.getId());
-            dto.setAppId(appDto.getId());
-            UserAppDto userAppDto = userAppService.findDate(dto);
-            orgStaff.setAppUserId(userAppDto.getId());
-            orgStaff.setAppName(appDto.getName());
-            orgStaff.setAppId(appDto.getId());
-            roleSourceService.lastLogin(orgStaff);
+            UserAppDto userAppDto = userAppService.findDataByAppIdAndUserId(new UserAppDto(){{setUserId(orgStaffDto.getId());setAppId(sysAppDto.getId());}});
+            orgStaffDto.setAppUserId(userAppDto.getId());
+            orgStaffDto.setAppId(sysAppDto.getId());
+            orgStaffDto.setAppName(sysAppDto.getName());
 
             Map<String, Set<String>> authorizationInfo = new HashMap();
             authorizationInfo.put("roles", new HashSet<>());
             authorizationInfo.put("permissions", new HashSet<>());
-            if (0 == (orgStaff.getType()) && roleSourceService.isSuperAdmin(orgStaff) > 0) {
+            if (0 == (orgStaffDto.getType()) && roleSourceService.isSuperAdmin(orgStaffDto) > 0) {
                 //超级管理员标记
-                orgStaff.setIissuperman(1);
+                orgStaffDto.setIissuperman(1);
                 request.getSession().setAttribute("isSuper", "1");
             }
             //2.获取角色集合
-            List<AuthRoleDto> roleList = roleSourceService.getRoleListByStaffId(orgStaff);
+            List<AuthRoleDto> roleList = roleSourceService.getRoleListByStaffId(orgStaffDto);
             if (roleList != null) {
                 for (AuthRoleDto role : roleList) {
                     authorizationInfo.get("roles").add(role.getName());
                 }
             }
             //3.获取功能集合
-            List<AuthPermDto> permList = roleSourceService.getPermListByStaffId(orgStaff);
+            List<AuthPermDto> permList = roleSourceService.getPermListByStaffId(orgStaffDto);
             if (permList != null) {
                 for (AuthPermDto perm : permList) {
                     if (perm.getMatchStr() != null && !"".equals(perm.getMatchStr())) {
@@ -111,31 +107,29 @@ public class LoginController extends BaseController {
                     }
                 }
             }
-            orgStaff.setAuthorizationInfoPerms(authorizationInfo.get("permissions"));
-            orgStaff.setAuthorizationInfoRoles(authorizationInfo.get("roles"));
-            String subject = JwtUtil.generalSubject(orgStaff);
+            orgStaffDto.setAuthorizationInfoPerms(authorizationInfo.get("permissions"));
+            orgStaffDto.setAuthorizationInfoRoles(authorizationInfo.get("roles"));
+            String subject = JwtUtil.generalSubject(orgStaffDto);
             String authorizationToken = JwtUtil.createJWT(JwtUtil.UserType.STAFF,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
             Map<String, Object> data = new HashMap<>();
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", authorizationToken);
             data.put("staff", JSONObject.parseObject(subject, OrgStaffDto.class));
-
-//          data.put("authorizationInfoPerms", authorizationInfo.get("permissions"));
-//          data.put("authorizationInfoRoles", authorizationInfo.get("roles"));
             data.put("XCache", request.getSession().getId());
-            redisTemplate.opsForValue().set("u:"+orgStaff.getId()+":"+orgStaff.getAppUserId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
+
+            redisTemplate.opsForValue().set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppUserId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
+
             try {
                 //读取session中的员工
-                OrgStaffDto staff = orgStaff;
                 OrgLogLoginDto logDto = new OrgLogLoginDto();
                 logDto.setType(0);//类型0登录1登出
                 logDto.setIpAddr(IpUtil.getIpAddr(request));//请求的IP
-                logDto.setStaffId(staff.getId());//id
-                logDto.setAppUserId(staff.getAppUserId());//app用户id
-                logDto.setAppId(userAppDto.getAppId());//系统ID
-                logDto.setStaffName(staff.getName());//员工名称
-                logDto.setAppName(staff.getAppName());
+                logDto.setStaffId(orgStaffDto.getId());//id
+                logDto.setStaffName(orgStaffDto.getName());//员工名称
+                logDto.setAppUserId(orgStaffDto.getAppUserId());//app用户id
+                logDto.setAppId(orgStaffDto.getAppId());//系统ID
+                logDto.setAppName(orgStaffDto.getAppName());
 //                logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
                 logLoginService.saveOrUpdateData(logDto);
             } catch (Exception e) {
@@ -164,16 +158,16 @@ public class LoginController extends BaseController {
                 String authorization = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
                 Claims claims = JwtUtil.parseJWT(authorization);
                 String json = claims.getSubject();
-                OrgStaffDto staff = JSONObject.parseObject(json, OrgStaffDto.class);
+                OrgStaffDto orgStaffDto = JSONObject.parseObject(json, OrgStaffDto.class);
 
                 OrgLogLoginDto logDto = new OrgLogLoginDto();
                 logDto.setType(1);//类型0登录1登出
                 logDto.setIpAddr(IpUtil.getIpAddr(request));//请求的IP
-                logDto.setStaffId(staff.getId());//id
-                logDto.setStaffName(staff.getName());//员工名称
-                logDto.setAppName(staff.getAppName());
-                logDto.setAppUserId(staff.getAppUserId());
-                logDto.setAppId(staff.getAppId());
+                logDto.setStaffId(orgStaffDto.getId());//id
+                logDto.setStaffName(orgStaffDto.getName());//员工名称
+                logDto.setAppName(orgStaffDto.getAppName());
+                logDto.setAppUserId(orgStaffDto.getAppUserId());
+                logDto.setAppId(orgStaffDto.getAppId());
 //            logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
                 logLoginService.saveOrUpdateData(logDto);
             } catch (Exception e) {
@@ -202,14 +196,14 @@ public class LoginController extends BaseController {
 
             Map data = new HashMap<>();
             String json = claims.getSubject();
-            OrgStaffDto staff = JSONObject.parseObject(json, OrgStaffDto.class);
-            String subject = JwtUtil.generalSubject(staff);
+            OrgStaffDto orgStaffDto = JSONObject.parseObject(json, OrgStaffDto.class);
+            String subject = JwtUtil.generalSubject(orgStaffDto);
             String refreshToken = JwtUtil.createJWT(JwtUtil.UserType.STAFF,CommonConstant.JWT_ID, subject, CommonConstant.JWT_TTL);
 
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);
             data.put("XCache", request.getSession().getId());
-            redisTemplate.opsForValue().set("u:"+staff.getId()+":"+staff.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime(), CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
+            redisTemplate.opsForValue().set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime(), CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
             result.data = data;
         } catch (Exception e) {
             result = Response.error(e.getMessage());

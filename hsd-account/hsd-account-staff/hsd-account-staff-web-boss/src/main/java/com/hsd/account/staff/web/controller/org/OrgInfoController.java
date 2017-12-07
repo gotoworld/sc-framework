@@ -294,6 +294,20 @@ public class OrgInfoController extends BaseController {
         }
         return result;
     }
+    @RequiresPermissions("orgInfo:menu")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "get/manager/orgId")
+    @ALogOperation(type = "获取部门负责人", desc = "组织机构")
+    @ApiOperation(value = "获取部门负责人")
+    public Response getManager(@PathVariable("orgId") Long orgId) {
+        log.info("OrgInfoController getManager.........");
+        Response result = new Response("success");
+        try {
+            result = orgInfoService.getManager(new OrgInfoDto(){{setId(orgId);}});
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/staff/bycode/{orgCode}")
     @ApiOperation(value = "获取员工-根据组织CODE")
     public Response getStaffCode(@PathVariable("orgCode") String orgCode

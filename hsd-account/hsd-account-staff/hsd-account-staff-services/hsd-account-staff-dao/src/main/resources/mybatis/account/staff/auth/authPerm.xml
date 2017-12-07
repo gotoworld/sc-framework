@@ -53,7 +53,7 @@
            ,#{createId}
            ,now()
            ,now()
-           ,1
+           ,0
         )
 	</insert>
     <!-- 数据更新 -->
@@ -106,6 +106,7 @@
         ,t1.parent_id as  "parentId"
         ,t1.date_created as "dateCreated"
         ,t1.memo as  "memo"
+        ,t1.nodel_flag as  "noDelFlag"
         from auth_perm t1
         where 1=1
         <include refid="list_where_sql"/>

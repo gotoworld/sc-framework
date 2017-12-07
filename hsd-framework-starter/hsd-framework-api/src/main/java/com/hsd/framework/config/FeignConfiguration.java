@@ -1,7 +1,9 @@
 package com.hsd.framework.config;
 
+import com.hsd.framework.exception.FeignErrorDecoder;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestAttributes;
@@ -35,5 +37,9 @@ public class FeignConfiguration {
                 }
             }
         };
+    }
+    @Bean
+    public ErrorDecoder errorDecoder(){
+        return new FeignErrorDecoder();
     }
 }

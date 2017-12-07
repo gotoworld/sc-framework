@@ -48,7 +48,7 @@ public class JwtUtil {
     /**
      * 创建jwt
      */
-    public static String createJWT(UserType userType,String id, String subject, long ttlMillis) throws Exception {
+    public static String createJWT(UserType userType,String id, String subject, long ttlMillis) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         SecretKey key = generalKey();
@@ -69,7 +69,7 @@ public class JwtUtil {
     /**
      * 解密jwt
      */
-    public static Claims parseJWT(String jwt) throws Exception {
+    public static Claims parseJWT(String jwt) {
         SecretKey key = generalKey();
         Claims claims = Jwts.parser()
                 .setSigningKey(key)
@@ -102,9 +102,20 @@ public class JwtUtil {
         final Claims claims = parseJWT(authorizationToken);
         return JSONObject.parseObject(claims.getSubject());
     }
-
     public static <T> T getSubject(Class<T> obj) throws Exception {
         return getSubject().toJavaObject(obj);
+    }
+    public static <T> T  getSubject(Object obj,Class<T> tClass) throws Exception {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            authorizationToken = ""+ReflectUtil.getValueByFieldName(obj,CommonConstant.JWT_HEADER_TOKEN_KEY);
+        }
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            throw new SignatureException("token头缺失");
+        }
+        final Claims claims = parseJWT(authorizationToken);
+        return JSONObject.parseObject(claims.getSubject()).toJavaObject(tClass);
     }
 
     public static boolean isPermitted(String authStr) throws Exception {
@@ -116,10 +127,7 @@ public class JwtUtil {
         final Claims claims = parseJWT(authorizationToken);
         JSONObject jobj = JSON.parseObject(claims.getSubject());
         JSONArray authorizationInfoPerms = jobj.getJSONArray("authorizationInfoPerms");
-        if (authorizationInfoPerms != null && authorizationInfoPerms.contains(authStr)) {
-            return true;
-        }
-        return false;
+        return authorizationInfoPerms != null && authorizationInfoPerms.contains(authStr);
     }
     public static boolean isPermitted(Object obj,String authStr) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -133,10 +141,7 @@ public class JwtUtil {
         final Claims claims = parseJWT(authorizationToken);
         JSONObject jobj = JSON.parseObject(claims.getSubject());
         JSONArray authorizationInfoPerms = jobj.getJSONArray("authorizationInfoPerms");
-        if (authorizationInfoPerms != null && authorizationInfoPerms.contains(authStr)) {
-            return true;
-        }
-        return false;
+        return authorizationInfoPerms != null && authorizationInfoPerms.contains(authStr);
     }
 
 }

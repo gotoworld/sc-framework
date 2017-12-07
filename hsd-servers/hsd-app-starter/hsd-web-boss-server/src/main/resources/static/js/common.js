@@ -229,21 +229,17 @@ $(document).ajaxComplete(function (event, xhr, settings) {
     if (xhr && xhr.responseText) {
         var result = JSON.parse(xhr.responseText);
         //console.info("result=="+JSON.stringify(result))
-        if (result.code == 403) {//授权验证失败!
+        if (result.code == 403||result.code == 110) {//授权验证失败!
             //alert('授权验证失败,请重新登陆!');
             sessionStorage.removeItem('hsd_staff_tokenExpMillis');
             sessionStorage.removeItem('hsd_staff_staff');
             sessionStorage.removeItem("hsd_staff_authorizationToken");
             sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
             sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
-        }
-        if (result.code == 110) {//授权验证失败!
-            alert(result.message);
-            sessionStorage.removeItem('hsd_staff_tokenExpMillis');
-            sessionStorage.removeItem('hsd_staff_staff');
-            sessionStorage.removeItem("hsd_staff_authorizationToken");
-            sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
-            sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
+            if (result.code == 110) {
+                alert(result.message);
+            }
+            top.location.href = '/login.html';
         }
     }
 });

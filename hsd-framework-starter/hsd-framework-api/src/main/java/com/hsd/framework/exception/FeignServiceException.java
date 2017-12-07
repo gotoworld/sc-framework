@@ -1,29 +1,26 @@
-/**
- *
- */
 package com.hsd.framework.exception;
 
 /**
  * @Description: 异常基类
  */
-public class ServiceFeignException extends RuntimeException  {
+public class FeignServiceException extends RuntimeException  {
     private static final long serialVersionUID = 5692243177785821696L;
 
     private int error ;
     private Object data = "";
 
-    public ServiceFeignException(int error) {
+    public FeignServiceException(int error) {
         this(error, "", "");
     }
 
-    public ServiceFeignException(int error, String msg) {
+    public FeignServiceException(int error, String msg) {
         this(error, msg, "");
     }
 
-    public ServiceFeignException(int error, String msg, Object data) {
+    public FeignServiceException(int error, String msg, Object data) {
         super(msg );
-    	this.error = error;
-    	this.data = data;
+        this.error = error;
+        this.data = data;
     }
 
     public int getError() {

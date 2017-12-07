@@ -165,4 +165,20 @@
         inner join org_info t2 on t2.del_flag=0 and t1.parent_id=t2.id
         where t1.del_flag=0 and t2.code=#{code}
     </select>
+    <select id="getManager" parameterType="com.hsd.account.staff.entity.org.OrgInfo" resultType="com.hsd.account.staff.entity.org.OrgStaff">
+         select
+         t1.id as "id"
+        ,t1.account as "account"
+        ,t1.name as "name"
+        ,t1.job_no as "jobNo"
+        ,t1.gender as "gender"
+        ,t1.avatar as "avatar"
+        ,t1.level as "level"
+        ,t1.leadership as "leadership"
+        ,t1.state as "state"
+         ,t1.email as "email"
+        from org_staff t1
+        inner join org_info t2 on t1.id=t2.manager
+        where  t2.del_flag=0 and t2.id=#{id}
+    </select>
 </mapper>

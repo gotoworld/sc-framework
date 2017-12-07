@@ -56,7 +56,7 @@ public class RedisProperties {
 
 	private Pool pool;
 
-	private List<IdGenNode> idGenNodes;
+	private List<String> idGenNodes;
 
 	/**
 	 * Pool properties.
@@ -89,13 +89,13 @@ public class RedisProperties {
 		 */
 		private int maxWait = -1;
 	}
-	@Getter
-	@Setter
-	public static class IdGenNode {
-		private String host;
-		private int port;
-		private String password;
-		private String luaSha;
-	}
+//	@Getter
+//	@Setter
+//	public static class IdGenNode {
+//		private String host;
+//		private int port;
+//		private String password;
+//		private String luaSha;
+//	}
 
 }

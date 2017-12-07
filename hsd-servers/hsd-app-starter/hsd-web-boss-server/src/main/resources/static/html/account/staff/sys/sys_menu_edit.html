@@ -52,7 +52,7 @@
                             <div class="col-md-12">
                                 <select data-placeholder="选择所属应用" id="bean-domainCode" name="domainCode" class="form-control"   required="" aria-required="true"  aria-describedby="bean-domainCode-error"  maxlength="50"   aria-invalid="true">
                                     <option value="">--请选择所属应用--</option>
-                                    <option ng-repeat="d in domainNodes" ng-value="d.code" ng-selected="d.code==item.domainCode" ng-bind="d.name"></option>
+                                    <option ng-repeat="d in appNodes" ng-value="d.id" ng-selected="d.id   ==item.domainCode" ng-bind="d.name"></option>
                                 </select>
                                 <span id="bean-domainCode-error" class="help-block m-b-none"></span>
                             </div>
@@ -126,7 +126,7 @@
             $data.newFlag=sessionStorage.getItem(site.sysMenu.info);
             if($data.newFlag) $data.uuidToken=util.guid();
             loadTree();
-            loadDomainList();
+            loadAppList();
             loadInfo(sessionStorage.getItem(site.sysMenu.info));
         });
         $scope.save = function () {
@@ -144,14 +144,18 @@
         }
     });
     var loadInfo=function(id){
+        console.info("===id:"+id+",======addParentId:"+addParentId);
+        if(id==0){
+            var addParentId=sessionStorage.getItem(site.sysMenu.view+'/addParentId');
+            if(addParentId){
+                $data.item={'parentId':addParentId};
+            }
+            return;
+        }
         $.get(site.sysMenu.info + id, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 $data.item = result.data;
-                var addParentId=sessionStorage.getItem(site.sysMenu.view+'/addParentId');
-                if(addParentId){
-                    $data.item={'parentId':addParentId};
-                }
             } else {
                 $data.message = result.message;
                 alert( result.message);
@@ -171,11 +175,11 @@
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
-    function loadDomainList(){
-        $.get(site.sysDomain.list, {},function (result) {
+    function loadAppList(){
+        $.get(site.sysApp.list, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
-                $data.domainNodes=result.data;
+                $data.appNodes=result.data;
             } else {
                 alert(result.message);
             }

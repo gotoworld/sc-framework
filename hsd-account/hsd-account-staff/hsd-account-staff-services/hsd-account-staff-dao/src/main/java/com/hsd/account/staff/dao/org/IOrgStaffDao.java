@@ -1,6 +1,5 @@
 package com.hsd.account.staff.dao.org;
 
-import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
 import org.apache.ibatis.annotations.*;
@@ -74,6 +73,7 @@ public interface IOrgStaffDao extends IBaseDao {
      */
     @Update("update org_staff set leadership=#{leadership} where id = #{id}")
     int setLeadership(IEntity entity) throws Exception;
+    Object getLeadership(IEntity entity) throws Exception;
     /**
      * <p>获取员工-根据员工和上级级别。
      */
@@ -89,7 +89,7 @@ public interface IOrgStaffDao extends IBaseDao {
     List findStaffAndOrgDataIsList(IEntity entity) throws Exception;
 
     @Select(" select id from org_staff where  account=#{account} ")
-    int getIdbyAcccount(@Param("account") String account) throws Exception;
+    Long getIdbyAcccount(@Param("account") String account) throws Exception;
 
     /**
      * 获取每一类最大员工号

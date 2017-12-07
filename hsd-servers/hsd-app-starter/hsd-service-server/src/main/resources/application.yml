@@ -63,19 +63,10 @@ spring:
     port: 6379
 #    password:
     timeout: 1800000
-    idGenNodes:
-      - host: 192.168.101.100
-        port: 6379
-    #    password:
-        luaSha: c5809078fa6d652e0b0232d552a9d06d37fe819c
-      - host: 192.168.101.101
-        port: 6379
-    #    password:
-        luaSha: accb7a987d4fb0fd85c57dc5a609529f80ec3722
-      - host: 192.168.101.102
-        port: 6379
-    #    password:
-        luaSha: f55f781ca4a00a133728488e15a554c070b17255
+    idGenNodes: #host:port:luaSha@password 192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==
+      - 192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c
+      - 192.168.101.101:6379:accb7a987d4fb0fd85c57dc5a609529f80ec3722
+      - 192.168.101.102:6379:f55f781ca4a00a133728488e15a554c070b17255
     pool:
       max-active: 8
       max-total: 50

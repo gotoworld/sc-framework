@@ -27,154 +27,159 @@ public interface IOrgStaffService {
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
-    public Response saveOrUpdateData(OrgStaffDto dto) throws Exception;
+    Response saveOrUpdateData(OrgStaffDto dto) throws Exception;
     /**
      * <p>信息新增。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/insert")
-    public Response insert(OrgStaffDto dto) throws Exception;
+    Response insert(OrgStaffDto dto) throws Exception;
     /**
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updateData")
-    public String updateData(OrgStaffDto dto) throws Exception;
+    String updateData(OrgStaffDto dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteData")
-    public String deleteData(OrgStaffDto dto) throws Exception;
+    String deleteData(OrgStaffDto dto) throws Exception;
 
     /**
      * <p>恢复逻辑删除的数据 单条。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/recoveryDataById")
-    public String recoveryDataById(OrgStaffDto dto) throws Exception;
+    String recoveryDataById(OrgStaffDto dto) throws Exception;
 
     /**
      * <p>逻辑删除 单条。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteDataById")
-    public String deleteDataById(OrgStaffDto dto) throws Exception;
+    String deleteDataById(OrgStaffDto dto) throws Exception;
 
     /**
      * <p>信息列表 分页。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
-    public PageInfo findDataIsPage(OrgStaffDto dto) throws Exception;
+    PageInfo findDataIsPage(OrgStaffDto dto) throws Exception;
 
     /**
      * <p>信息列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
-    public List<OrgStaffDto> findDataIsList(OrgStaffDto dto);
+    List<OrgStaffDto> findDataIsList(OrgStaffDto dto);
 
     /**
      * <p>获取用户及用户所在组织。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffAndOrgDataIsList")
-    public List<OrgStaffDto> findStaffAndOrgDataIsList(OrgStaffDto dto);
+    List<OrgStaffDto> findStaffAndOrgDataIsList(OrgStaffDto dto);
     /**
      * <p>信息详情。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
-    public OrgStaffDto findDataById(OrgStaffDto dto);
+    OrgStaffDto findDataById(OrgStaffDto dto);
     /**
      * <p>获取员工信息-根据账号。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByAccount")
-    public OrgStaffDto findDataByAccount(OrgStaffDto dto);
+    OrgStaffDto findDataByAccount(OrgStaffDto dto);
     /**
      * <p>获取员工所在组织集合。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgIsList")
-    public List<OrgInfoDto> findOrgIsList(OrgStaffDto dto);
+    List<OrgInfoDto> findOrgIsList(OrgStaffDto dto);
 
     /**
      * <p>判断员工账号是否存在
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isAccountYN")
-    public String isAccountYN(@RequestParam(name ="account") String account);
+    String isAccountYN(@RequestParam(name = "account") String account);
 
     /**
      * <p>密码修改
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/updatePwd")
-    public String updatePwd(OrgStaffDto dto) throws Exception;
+    String updatePwd(OrgStaffDto dto) throws Exception;
 
     /**
      * <p>密码重置
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/resetPwd")
-    public String resetPwd(OrgStaffDto dto) throws Exception;
+    String resetPwd(OrgStaffDto dto) throws Exception;
 
     /**
      * <p>信息列表(精简) 分页。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findBriefDataIsPage")
-    public PageInfo findBriefDataIsPage(OrgStaffDto dto) throws Exception;
+    PageInfo findBriefDataIsPage(OrgStaffDto dto) throws Exception;
 
     /**
      * <p>获取员工->个人角色。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffRoleIsList")
-    public List<AuthRoleDto> findStaffRoleIsList(OrgStaffDto dto);
+    List<AuthRoleDto> findStaffRoleIsList(OrgStaffDto dto);
     /**
      * <p>获取员工->组织角色。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgRoleIsList")
-    public List<AuthRoleDto> findOrgRoleIsList(OrgStaffDto dto);
+    List<AuthRoleDto> findOrgRoleIsList(OrgStaffDto dto);
     /**
      * <p>添加组织。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addOrg")
-    public Response addOrg(OrgOrgVsStaffDto dto) throws Exception;
+    Response addOrg(OrgOrgVsStaffDto dto) throws Exception;
     /**
      * <p>删除组织。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delOrg")
-    public Response delOrg(OrgOrgVsStaffDto dto) throws Exception;
+    Response delOrg(OrgOrgVsStaffDto dto) throws Exception;
 
     /**
      * <p>批量新增。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addBatch")
-    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception;
+    Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception;
     /**
      * <p>添加角色。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/addRole")
-    public Response addRole(AuthStaffVsRoleDto dto) throws Exception;
+    Response addRole(AuthStaffVsRoleDto dto) throws Exception;
     /**
      * <p>添加角色。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/delRole")
-    public Response delRole(AuthStaffVsRoleDto dto) throws Exception;
+    Response delRole(AuthStaffVsRoleDto dto) throws Exception;
 
     /**
      * <p>根据角色-获取员工列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findStaffByRoleIsList")
-    public List<OrgStaffDto> findStaffByRoleIsList(AuthStaffVsRoleDto dto);
+    List<OrgStaffDto> findStaffByRoleIsList(AuthStaffVsRoleDto dto);
     /**
      * <p>设置上级领导。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/setLeadership")
-    public Response setLeadership(OrgStaffDto dto) throws Exception;
+    Response setLeadership(OrgStaffDto dto) throws Exception;
+    /**
+     * <p>获取上级领导。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getLeadership")
+    Response getLeadership(OrgStaffDto dto) throws Exception;
     /**
      * <p>获取员工-根据员工和上级级别。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getStaffByStaffIdAndleadershipLevel")
-    public OrgStaffDto getStaffByStaffIdAndleadershipLevel(OrgStaffDto dto);
+    OrgStaffDto getStaffByStaffIdAndleadershipLevel(OrgStaffDto dto);
     /**
      * <p>获取员工-所有上级。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getStaffLeadershipAll")
-    public List<OrgStaffDto> getStaffLeadershipAll(OrgStaffDto dto);
+    List<OrgStaffDto> getStaffLeadershipAll(OrgStaffDto dto);
 
     /**
      * 获取最大员工号
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getDataByMaxJobNo")
-    public List<String> getMaxJobNo()throws Exception;
+    List<String> getMaxJobNo()throws Exception;
 }

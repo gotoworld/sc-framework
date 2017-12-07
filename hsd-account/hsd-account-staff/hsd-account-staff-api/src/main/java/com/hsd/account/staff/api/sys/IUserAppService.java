@@ -19,13 +19,13 @@ public interface IUserAppService {
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
-    public Response saveOrUpdateData(UserAppDto dto) throws Exception;
+    Response saveOrUpdateData(UserAppDto dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteData")
-    public String deleteData(UserAppDto dto) throws Exception;
+    String deleteData(UserAppDto dto) throws Exception;
 
 
 
@@ -33,23 +33,23 @@ public interface IUserAppService {
      * <p>信息列表 分页。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
-    public PageInfo findDataIsPage(UserAppDto dto) throws Exception;
+    PageInfo findDataIsPage(UserAppDto dto) throws Exception;
 
     /**
      * <p>信息列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
-    public List<UserAppDto> findDataIsList(UserAppDto dto) throws Exception;
+    List<UserAppDto> findDataIsList(UserAppDto dto) throws Exception;
 
 
     /**
      * <p>信息详情。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
-    public UserAppDto findDataById(UserAppDto dto) throws Exception;
+    UserAppDto findDataById(UserAppDto dto) throws Exception;
 
 
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDate")
-    public UserAppDto findDate(UserAppDto dto)throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByAppIdAndUserId")
+    UserAppDto findDataByAppIdAndUserId(UserAppDto dto)throws Exception;
 
 }

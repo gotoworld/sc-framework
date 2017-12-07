@@ -297,7 +297,6 @@
         };
         $scope.setManager = function (item) {
             sessionStorage.setItem(site.orgInfo.info,item.id);
-            sessionStorage.setItem(site.orgInfo.info+'manager',item.manager);
             openMyBoxLayer('设置组织负责人-'+item.name,site.orgInfo.view+'_edit_manager.html');
         };
         $scope.info = function (title,id) {

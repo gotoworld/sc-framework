@@ -46,7 +46,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public Response saveOrUpdateData(@RequestBody OrgInfoDto dto) throws Exception {
+    public Response saveOrUpdateData(@RequestBody OrgInfoDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -68,7 +68,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
     @RfAccount2Bean
-    public String deleteData(@RequestBody OrgInfoDto dto) throws Exception {
+    public String deleteData(@RequestBody OrgInfoDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -82,7 +82,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String deleteDataById(@RequestBody OrgInfoDto dto) throws Exception {
+    public String deleteDataById(@RequestBody OrgInfoDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -95,7 +95,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     }
 
     @Override
-    public PageInfo findDataIsPage(@RequestBody OrgInfoDto dto) throws Exception {
+    public PageInfo findDataIsPage(@RequestBody OrgInfoDto dto) {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -111,7 +111,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return pageInfo;
     }
     @Override
-    public PageInfo findBriefDataIsPage(@RequestBody OrgInfoDto dto) throws Exception {
+    public PageInfo findBriefDataIsPage(@RequestBody OrgInfoDto dto) {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -159,7 +159,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
 
-    public String recoveryDataById(@RequestBody OrgInfoDto dto) throws Exception {
+    public String recoveryDataById(@RequestBody OrgInfoDto dto) {
         String result = "success";
         if (dto != null) {
             try {
@@ -197,7 +197,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     }
     @RfAccount2Bean
     @RequiresPermissions("orgInfo:edit:staff")
-    public Response addStaff(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
+    public Response addStaff(@RequestBody OrgOrgVsStaffDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -209,7 +209,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
     @RequiresPermissions("orgInfo:edit:staff")
-    public Response delStaff(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
+    public Response delStaff(@RequestBody OrgOrgVsStaffDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -236,7 +236,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
 
     @RfAccount2Bean
     @RequiresPermissions("orgInfo:edit:role")
-    public Response addRole(@RequestBody OrgOrgVsRoleDto dto) throws Exception {
+    public Response addRole(@RequestBody OrgOrgVsRoleDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -249,7 +249,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     }
 
     @RequiresPermissions("orgInfo:edit:role")
-    public Response delRole(@RequestBody OrgOrgVsRoleDto dto) throws Exception {
+    public Response delRole(@RequestBody OrgOrgVsRoleDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -262,13 +262,23 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     }
 
     @RequiresPermissions("orgInfo:edit:setManager")
-    public Response setManager(@RequestBody OrgInfoDto dto) throws Exception {
+    public Response setManager(@RequestBody OrgInfoDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getManager())) throw new RuntimeException("参数对象不能为null");
             orgInfoDao.setManager(copyTo(dto,OrgInfo.class));
         } catch (Exception e) {
             log.error("部门负责人设置失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    public Response getManager(@RequestBody OrgInfoDto dto) {
+        Response result = new Response(0,"success");
+        try {
+            result.data=copyTo(orgInfoDao.getManager(copyTo(dto,OrgInfo.class)),OrgStaffDto.class);
+        } catch (Exception e) {
+            log.error("获取部门负责人失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;

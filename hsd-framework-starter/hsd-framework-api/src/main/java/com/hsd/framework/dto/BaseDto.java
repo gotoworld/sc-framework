@@ -5,30 +5,31 @@ import lombok.Data;
 
 @Data
 public class BaseDto implements IDto {
-    String token;
+    private String token;
     /**新增标记0否1是*/
-    Integer newFlag;
+    private Integer newFlag;
     /** 开始时间 */
-    String dateBegin;
+    private String dateBegin;
     /** 结束时间 */
-    String dateEnd;
+    private String dateEnd;
     /** 页码 */
-    Integer pageNum;
+    private Integer pageNum;
     /** 每页显示条数 */
-    Integer pageSize;
+    private Integer pageSize;
     /** 关键字 */
-    String keyword;
+    private  String keyword;
     /** 用户名 */
-    String account;
+    private String account;
     /**  建立者ID */
     private Long createId;
-    String str;
+    /** app用户id */
+    private Long appUserId;
+    /** appId */
+    private String appId;
+    /** app名称 */
+    private String appName;
     /**鉴权token*/
     private String Authorization;
-//    public String getToken(){
-//        if(token==null){
-//            token= IdUtil.createUUID(32);
-//        }
-//        return token;
-//    }
+
+    private String str;
 }

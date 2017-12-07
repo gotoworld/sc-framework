@@ -63,7 +63,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public Response saveOrUpdateData(@RequestBody OrgStaffDto dto) throws Exception {
+    public Response saveOrUpdateData(@RequestBody OrgStaffDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -92,7 +92,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public Response insert(@RequestBody OrgStaffDto dto) throws Exception {
+    public Response insert(@RequestBody OrgStaffDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -121,7 +121,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String updateData(@RequestBody OrgStaffDto dto) throws Exception {
+    public String updateData(@RequestBody OrgStaffDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -137,7 +137,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
-    public String deleteData(@RequestBody OrgStaffDto dto) throws Exception {
+    public String deleteData(@RequestBody OrgStaffDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -151,7 +151,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RfAccount2Bean
-    public String deleteDataById(@RequestBody OrgStaffDto dto) throws Exception {
+    public String deleteDataById(@RequestBody OrgStaffDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -164,7 +164,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
 
     @Override
-    public PageInfo findDataIsPage(@RequestBody OrgStaffDto dto) throws Exception {
+    public PageInfo findDataIsPage(@RequestBody OrgStaffDto dto) {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -220,7 +220,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
-    public String recoveryDataById(@RequestBody OrgStaffDto dto) throws Exception {
+    public String recoveryDataById(@RequestBody OrgStaffDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -264,7 +264,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
 
 //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public String updatePwd(@RequestBody OrgStaffDto dto) throws Exception {
+    public String updatePwd(@RequestBody OrgStaffDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -284,7 +284,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
 
-    public String resetPwd(@RequestBody OrgStaffDto dto) throws Exception {
+    public String resetPwd(@RequestBody OrgStaffDto dto) {
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             String newPwd=IdUtil.createUUID(8);
@@ -299,7 +299,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
     }
     @Override
-    public PageInfo findBriefDataIsPage(@RequestBody OrgStaffDto dto) throws Exception {
+    public PageInfo findBriefDataIsPage(@RequestBody OrgStaffDto dto) {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -317,26 +317,34 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
 
     @RfAccount2Bean
     @RequiresPermissions("orgStaff:edit:org")
-    public Response addOrg(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
+    public Response addOrg(@RequestBody OrgOrgVsStaffDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgOrgVsStaffDao.insert(copyTo(dto,OrgOrgVsStaff.class));
         } catch (Exception e) {
-            log.error("信息保存失败!", e);
+            log.error("信息添加失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
     }
 
     @RequiresPermissions("orgStaff:edit:org")
-    public Response delOrg(@RequestBody OrgOrgVsStaffDto dto) throws Exception {
+    public Response delOrg(@RequestBody OrgOrgVsStaffDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgOrgVsStaffDao.deleteByPrimaryKey(copyTo(dto,OrgOrgVsStaff.class));
+
+            OrgOrgVsStaff orgOrgVsStaff=copyTo(dto,OrgOrgVsStaff.class);
+            if(ValidatorUtil.notEmpty(dto.getStaffAccount()) && ValidatorUtil.notEmpty(dto.getOrgCode())){
+                //根据account获取staffId
+                orgOrgVsStaff.setStaffId(orgStaffDao.getIdbyAcccount(dto.getStaffAccount()));
+                //根据orgCode获取orgId
+                orgOrgVsStaff.setOrgId(orgInfoDao.getIdByPCode(new OrgInfo(){{setCode(dto.getOrgCode());}}));
+            }
+            orgOrgVsStaffDao.deleteByPrimaryKey(orgOrgVsStaff);
         } catch (Exception e) {
-            log.error("信息保存失败!", e);
+            log.error("信息删除失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
@@ -344,7 +352,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
 
     //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     @RequiresPermissions("orgStaff:add:batch")
-    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
+    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) {
         Response result = new Response(0,"success");
         try {
             if (fileUrl == null) throw new RuntimeException("文件路径不存在!");
@@ -390,7 +398,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
                                         log.error(ou.getAccount()+"员工批量导入-异常:职级,"+e.getMessage());
                                     }
                                     try {
-                                        ou.setLeadership((long)orgStaffDao.getIdbyAcccount((String) data.get(10)));//上级领导 10
+                                        ou.setLeadership(orgStaffDao.getIdbyAcccount((String) data.get(10)));//上级领导 10
                                     } catch (Exception e) {
                                         log.error(ou.getAccount()+"员工批量导入-异常:上级领导,"+e.getMessage());
                                     }
@@ -472,7 +480,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
     @RfAccount2Bean
     @RequiresPermissions("orgStaff:edit:role")
-    public Response addRole(@RequestBody AuthStaffVsRoleDto dto) throws Exception {
+    public Response addRole(@RequestBody AuthStaffVsRoleDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -484,7 +492,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
     @RequiresPermissions("orgStaff:edit:role")
-    public Response delRole(@RequestBody AuthStaffVsRoleDto dto) throws Exception {
+    public Response delRole(@RequestBody AuthStaffVsRoleDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -511,13 +519,24 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return results;
     }
     @RequiresPermissions("orgStaff:edit:leadership")
-    public Response setLeadership(@RequestBody OrgStaffDto dto) throws Exception {
+    public Response setLeadership(@RequestBody OrgStaffDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             orgStaffDao.setLeadership(copyTo(dto,OrgStaff.class));
         } catch (Exception e) {
             log.error("上级领导设置失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    public Response getLeadership(@RequestBody OrgStaffDto dto) {
+        Response result = new Response(0,"success");
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            orgStaffDao.getLeadership(copyTo(dto,OrgStaff.class));
+        } catch (Exception e) {
+            log.error("获取领导设置失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
@@ -543,7 +562,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return results;
     }
     //获取最大员工号的员工信息
-    public List<String> getMaxJobNo() throws Exception {
+    public List<String> getMaxJobNo() {
         List<String> results = null;
         try{
             results = orgStaffDao.findMaxJobNo();

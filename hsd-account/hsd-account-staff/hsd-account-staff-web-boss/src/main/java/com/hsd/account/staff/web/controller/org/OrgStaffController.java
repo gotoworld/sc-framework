@@ -23,9 +23,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Api(description = "组织架构_员工")
 @RestController
@@ -88,6 +88,7 @@ public class OrgStaffController extends BaseController {
 	/**
 	 * <p> 详情。
 	 */
+	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
 	@ApiOperation(value = "详情")
 	public Response info(@PathVariable("id") Long id) {
@@ -105,6 +106,7 @@ public class OrgStaffController extends BaseController {
 	/**
 	 * <p> 详情。
 	 */
+	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/byaccount/{account}")
 	@ApiOperation(value = "详情")
 	public Response infoByAccount(@PathVariable("account") String account) {
@@ -280,6 +282,7 @@ public class OrgStaffController extends BaseController {
 		}
 		return result;
 	}
+	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/org/{staffId}")
 	@ApiOperation(value = "获取所属组织")
 	public Response getStaff(@PathVariable("staffId") Long staffId) {
@@ -313,6 +316,7 @@ public class OrgStaffController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "del/org")
 	@ALogOperation(type = "删除组织", desc = "组织架构_员工")
 	@ApiOperation(value = "删除组织")
+	@RfAccount2Bean
 	public Response delOrg(@ModelAttribute OrgOrgVsStaffDto dto) {
 		log.info("OrgStaffController delOrg.........");
 		Response result = new Response("success");
@@ -340,6 +344,7 @@ public class OrgStaffController extends BaseController {
 		}
 		return result;
 	}
+	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/staff/{staffId}")
 	@ApiOperation(value = "获取个人已设置角色")
 	public Response getStaffRole(@PathVariable("staffId") Long staffId) {
@@ -354,7 +359,7 @@ public class OrgStaffController extends BaseController {
 		}
 		return result;
 	}
-
+	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"get/role/org/{staffId}")
 	@ApiOperation(value = "获取组织已设置角色")
 	public Response getOrgRole(@PathVariable("staffId") Long staffId) {
@@ -413,6 +418,20 @@ public class OrgStaffController extends BaseController {
 			dto.setId(staffId);
 			dto.setLeadership(leadership);
 			result = orgStaffService.setLeadership(dto);
+		} catch (Exception e) {
+			result = Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequiresPermissions("orgStaff:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "get/leadership/{staffId}")
+	@ALogOperation(type = "获取上级领导", desc = "组织架构_员工")
+	@ApiOperation(value = "获取上级领导")
+	public Response getLeadership(@PathVariable("staffId") Long staffId) {
+		log.info("OrgStaffController getLeadership.........");
+		Response result = new Response("success");
+		try {
+			result = orgStaffService.getLeadership(new OrgStaffDto(){{setId(staffId);}});
 		} catch (Exception e) {
 			result = Response.error(e.getMessage());
 		}
@@ -492,7 +511,7 @@ public class OrgStaffController extends BaseController {
 		log.info("OrgStaffController offline.........");
 		Response result = new Response("success");
 		try{
-			redisTemplate.opsForValue().set("u:offline:"+id+"",new Date().getTime());
+			redisTemplate.opsForValue().set("u:offline:"+id,new Date().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
 		}catch (Exception e){
 			result = Response.error(e.getMessage());
 		}

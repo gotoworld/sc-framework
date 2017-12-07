@@ -158,14 +158,17 @@
     });
 
     var loadInfo=function(id){
+        if(id==0){
+            var addParentId=sessionStorage.getItem(site.orgInfo.view+'/addParentId');
+            if(addParentId){
+                $data.item={'parentId':addParentId};
+            }
+            return;
+        }
         $.get(site.orgInfo.info + id, {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
              if (result.code == 0) {
                  $data.item = result.data;
-                 var addParentId=sessionStorage.getItem(site.orgInfo.view+'/addParentId');
-                 if(addParentId){
-                     $data.item={'parentId':addParentId};
-                 }
              } else {
                  $data.message = result.message;
                  alert( result.message);

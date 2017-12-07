@@ -27,5 +27,5 @@ public interface IUserAppDao extends IBaseDao {
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
 
-    Object findDate(IEntity entity) throws Exception;
+    Object findDataByAppIdAndUserId(IEntity entity) throws Exception;
 }

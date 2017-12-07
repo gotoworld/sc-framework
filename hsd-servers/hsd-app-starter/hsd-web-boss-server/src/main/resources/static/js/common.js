@@ -17,6 +17,7 @@ var site = {
     , sysApp: {//APP应用表
         view: basePath + "/html/account/staff/sys/sys_app"
         ,page: apiPath.account.staff + "/boss/account/staff/sys/sysApp/page/"       //分页
+        ,list: apiPath.account.staff + "/boss/account/staff/sys/sysApp/list"       //列表
         ,save: apiPath.account.staff + "/boss/account/staff/sys/sysApp/save"        //新增or保存
         ,info: apiPath.account.staff + "/boss/account/staff/sys/sysApp/info/"       //详情
         ,phydel: apiPath.account.staff + "/boss/account/staff/sys/sysApp/phydel/"   //物理删除
@@ -59,6 +60,7 @@ var site = {
         , addRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/add/role"
         , delRole: apiPath.account.staff + "/boss/account/staff/org/orgStaff/del/role"
         , setLeadership: apiPath.account.staff + "/boss/account/staff/org/orgStaff/set/leadership"
+        , getLeadership: apiPath.account.staff + "/boss/account/staff/org/orgStaff/get/leadership/"
         , getMaxJobNo: apiPath.account.staff + "/boss/account/staff/org/orgStaff/maxJobNo"
         ,offline :apiPath.account.staff + "/boss/account/staff/org/orgStaff/offline/"
     }
@@ -228,11 +230,19 @@ $(document).ajaxComplete(function (event, xhr, settings) {
         //console.info("result=="+JSON.stringify(result))
         if (result.code == 403) {//授权验证失败!
             //alert('授权验证失败,请重新登陆!');
-            location.href = '/login.html';
+            sessionStorage.removeItem('hsd_staff_tokenExpMillis');
+            sessionStorage.removeItem('hsd_staff_staff');
+            sessionStorage.removeItem("hsd_staff_authorizationToken");
+            sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
+            sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
         }
         if (result.code == 110) {//授权验证失败!
             alert(result.message);
-            location.href = '/login.html';
+            sessionStorage.removeItem('hsd_staff_tokenExpMillis');
+            sessionStorage.removeItem('hsd_staff_staff');
+            sessionStorage.removeItem("hsd_staff_authorizationToken");
+            sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
+            sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
         }
     }
 });

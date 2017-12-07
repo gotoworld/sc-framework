@@ -78,9 +78,11 @@
         order by t1.date_created desc
     </select>
 
-    <select id="findDate" resultType="com.hsd.account.staff.entity.sys.UserApp" parameterType="com.hsd.account.staff.entity.sys.UserApp">
+    <select id="findDataByAppIdAndUserId" resultType="com.hsd.account.staff.entity.sys.UserApp" parameterType="com.hsd.account.staff.entity.sys.UserApp">
         select
-        <include refid="Base_Column_List"/>
+         t1.id as "id"
+        ,t1.user_id as "userId"
+        ,t1.app_id as "appId"
         from user_app t1
         where  t1.user_id = #{userId}
         AND  t1.app_id =#{appId}

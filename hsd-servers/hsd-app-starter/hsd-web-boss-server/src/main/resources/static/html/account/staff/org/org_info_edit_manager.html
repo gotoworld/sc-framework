@@ -185,8 +185,8 @@
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                     $data.manager=result.data;
-                    $data.managerMessage=result.message;
             } else {
+                $data.managerMessage=result.message;
                 alert(result.message);
             }
             if(!$data.$$phase) $data.$apply();

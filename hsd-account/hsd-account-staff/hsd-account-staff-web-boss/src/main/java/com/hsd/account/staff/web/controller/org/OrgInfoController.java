@@ -295,7 +295,7 @@ public class OrgInfoController extends BaseController {
         return result;
     }
     @RequiresPermissions("orgInfo:menu")
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "get/manager/orgId")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "get/manager/{orgId}")
     @ALogOperation(type = "获取部门负责人", desc = "组织机构")
     @ApiOperation(value = "获取部门负责人")
     public Response getManager(@PathVariable("orgId") Long orgId) {

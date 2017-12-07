@@ -1,11 +1,10 @@
 package com.hsd.account.actor.aspect;
 
-import com.alibaba.fastjson.JSON;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.IDto;
-import com.hsd.framework.util.*;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.SignatureException;
+import com.hsd.framework.util.IpUtil;
+import com.hsd.framework.util.JwtUtil;
+import com.hsd.framework.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -33,31 +32,26 @@ public class RfAccount2BeanAspect {
      * 用于 将当前操作人员的信息写入实体对象
      */
     @Before("account2BeanAspect()")
-    public void doBefore(JoinPoint joinPoint) throws Exception {
+    public void doBefore(JoinPoint joinPoint) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
-        log.info("authHeader=" + authorizationToken);
-        if (ValidatorUtil.isEmpty(authorizationToken)) {
-            throw new SignatureException("token头缺失");
-        }
-        final Claims claims = JwtUtil.parseJWT(authorizationToken);
-        UserDto orgActor=JSON.parseObject(claims.getSubject(), UserDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         try {
-            if(log.isDebugEnabled()) {
-                //*========控制台输出=========*//
-                log.debug("=====前置通知开始=====");
-                log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-                log.debug("请求人:" + orgActor.getName());
-                log.debug("请求IP:" + ip);
-            }
             Object[] objArr=joinPoint.getArgs();
             if(objArr!=null){
                 for(Object obj:objArr){
                     if(obj instanceof IDto){
+                        //读取session中的员工
+                        UserDto dto = JwtUtil.getSubject(obj,UserDto.class);
+                        if(log.isDebugEnabled()) {
+                            //*========控制台输出=========*//
+                            log.debug("=====前置通知开始=====");
+                            log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
+                            log.debug("请求人:" + dto.getName());
+                            log.debug("请求IP:" + ip);
+                        }
 //                      System.out.printf(JSON.toJSONString(obj));
-                        ReflectUtil.setValueByFieldName2(obj,"createId", orgActor.getId());//创建者id
+                        ReflectUtil.setValueByFieldName2(obj,"createId", dto.getId());//创建者id
 //                        ReflectUtil.setValueByFieldName2(obj,"account", orgActor.getAccount());//id
 //                        ReflectUtil.setValueByFieldName2(obj,"createIp",ip);//创建者ip
 //                        ReflectUtil.setValueByFieldName2(obj,"updateId",orgActor.getId());//修改者id

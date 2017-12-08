@@ -4,13 +4,11 @@ package com.hsd.framework.aspect.auth;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.hsd.framework.IDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresRoles;
-import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.JwtUtil;
-import com.hsd.framework.util.ValidatorUtil;
-import com.hsd.framework.util.WebUtil;
+import com.hsd.framework.util.*;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -41,7 +39,19 @@ public class RequiresRolesAspect {
         Object result = null;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-        final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+        String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
+        if (ValidatorUtil.isEmpty(authorizationToken)) {
+            //-------第二类情况----服务层直接相互调用--------
+            Object[] objArr = pjp.getArgs();
+            if (objArr != null) {
+                for (Object obj : objArr) {
+                    if (obj instanceof IDto) {
+                        authorizationToken = "" + ReflectUtil.getValueByFieldName(obj, CommonConstant.JWT_HEADER_TOKEN_KEY);
+                        break;
+                    }
+                }
+            }
+        }
         if (ValidatorUtil.isEmpty(authorizationToken)) {
             //经过JwtInterceptor过滤 理论情况不会进入这里
             WebUtil.sendJson(response, Response.error(403, "签名验证失败!" + "token头缺失"));

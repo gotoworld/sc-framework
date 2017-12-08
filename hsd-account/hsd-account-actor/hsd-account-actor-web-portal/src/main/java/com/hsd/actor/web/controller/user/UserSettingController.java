@@ -7,6 +7,7 @@ import com.hsd.account.actor.dto.actor.MemberDto;
 import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.Response;
+import com.hsd.framework.cache.util.RedisHelper;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
@@ -16,7 +17,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
@@ -35,7 +35,7 @@ public class UserSettingController extends BaseController {
     @Autowired
     private IMemberService memberService;
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisHelper redisHelper;
 
     /**
      * 获取当前登录客户的id
@@ -198,7 +198,7 @@ public class UserSettingController extends BaseController {
             verifyDto.setVerifyCode(smsCaptcha);
             msgVerifyService.checkVerifyCode(verifyDto);
 
-            redisTemplate.opsForValue().set("user:setting:phone:captcha:update:verify:" + userId,"1",30,TimeUnit.MINUTES);
+            redisHelper.set("user:setting:phone:captcha:update:verify:" + userId,"1",30,TimeUnit.MINUTES);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -245,7 +245,7 @@ public class UserSettingController extends BaseController {
         try {
             if (ValidatorUtil.isEmpty(cellphone) || ValidatorUtil.isEmpty(smsCaptcha)) return Response.error("参数有误!");
             Long userId = getCurrentUserId();
-            String verifyFlag = (String) redisTemplate.opsForValue().get("user:setting:phone:captcha:update:verify:" + userId);
+            String verifyFlag = (String) redisHelper.get("user:setting:phone:captcha:update:verify:" + userId);
             if (verifyFlag == null || !"1".equals(verifyFlag)) return Response.error("原手机验证过期或未验证!");
 
             MsgVerifyDto verifyDto = new MsgVerifyDto() {{
@@ -261,7 +261,7 @@ public class UserSettingController extends BaseController {
             }};
             userService.phoneBind(dto);
 
-            redisTemplate.opsForValue().getOperations().delete("user:setting:phone:captcha:update:verify:" + userId);
+            redisHelper.del("user:setting:phone:captcha:update:verify:" + userId);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -410,7 +410,7 @@ public class UserSettingController extends BaseController {
             if (!("" + credentialNumber).equals(identityDto.getCredentialNumber()))
                 return Response.error("请输入正确的身份证号!");
 
-            redisTemplate.opsForValue().set("user:setting:trade:reset:captcha:setting:" + userId, "1", 30, TimeUnit.MINUTES);//校验成功状态 有效期30分钟
+            redisHelper.set("user:setting:trade:reset:captcha:setting:" + userId, "1", 30, TimeUnit.MINUTES);//校验成功状态 有效期30分钟
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -425,14 +425,14 @@ public class UserSettingController extends BaseController {
         try {
             if (ValidatorUtil.isEmpty(tradePwd)) return Response.error("参数有误!");
             Long userId = getCurrentUserId();
-            String verifyFlag = (String) redisTemplate.opsForValue().get("user:setting:trade:reset:captcha:setting:" + userId);
+            String verifyFlag = (String) redisHelper.get("user:setting:trade:reset:captcha:setting:" + userId);
             if (verifyFlag == null || !"1".equals(verifyFlag)) return Response.error("找回交易密码-前置验证未通过!");
             userService.pwdTradeResetSetting(new UserDto() {{
                 setId(userId);
                 setTradePwd(tradePwd);
             }});
 
-            redisTemplate.opsForValue().getOperations().delete("user:setting:trade:reset:captcha:setting:" + userId);
+            redisHelper.del("user:setting:trade:reset:captcha:setting:" + userId);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

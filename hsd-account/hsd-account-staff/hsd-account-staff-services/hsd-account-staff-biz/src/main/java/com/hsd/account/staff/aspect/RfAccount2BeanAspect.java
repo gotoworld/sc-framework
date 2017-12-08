@@ -54,8 +54,8 @@ public class RfAccount2BeanAspect {
 //                        ReflectUtil.setValueByFieldName2(obj,"createIp",ip);//创建者ip
 //                        ReflectUtil.setValueByFieldName2(obj,"updateId",dto.getId());//修改者id
 //                        ReflectUtil.setValueByFieldName2(obj,"updateIp",ip);//修改者ip
+                        break;
                     }
-                    break;
                 }
             }
             log.debug("=====前置通知结束=====");

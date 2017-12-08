@@ -10,7 +10,6 @@ import com.hsd.common.util.excel.ExcelUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
@@ -39,7 +38,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-        public Response saveOrUpdateData(@RequestBody ChannelInfoDto dto) throws Exception {
+        public Response saveOrUpdateData(@RequestBody ChannelInfoDto dto) {
             Response result = new Response(0,"seccuss");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
@@ -61,7 +60,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
         }
 
         @Override
-        public String deleteData(@RequestBody ChannelInfoDto dto) throws Exception {
+        public String deleteData(@RequestBody ChannelInfoDto dto) {
             String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
@@ -78,7 +77,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-        public String deleteDataById(@RequestBody ChannelInfoDto dto) throws Exception {
+        public String deleteDataById(@RequestBody ChannelInfoDto dto) {
             String result = "seccuss";
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
@@ -94,7 +93,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
         }
 
         @Override
-        public PageInfo findDataIsPage(@RequestBody ChannelInfoDto dto) throws Exception {
+        public PageInfo findDataIsPage(@RequestBody ChannelInfoDto dto) {
            PageInfo pageInfo=null;
            try {
                if (dto == null)throw new RuntimeException("参数异常!");
@@ -111,7 +110,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
         }
 
         @Override
-        public List<ChannelInfoDto> findDataIsList(@RequestBody ChannelInfoDto dto) throws Exception {
+        public List<ChannelInfoDto> findDataIsList(@RequestBody ChannelInfoDto dto) {
             List<ChannelInfoDto>  results = null;
             try {
                 ChannelInfo entity = copyTo(dto, ChannelInfo.class);
@@ -124,7 +123,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
         }
 
         @Override
-        public ChannelInfoDto findDataById(@RequestBody ChannelInfoDto dto) throws Exception {
+        public ChannelInfoDto findDataById(@RequestBody ChannelInfoDto dto) {
             ChannelInfoDto result = null;
             try {
                 ChannelInfo entity = copyTo(dto, ChannelInfo.class);
@@ -137,7 +136,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
         }
 
 		@Override
-		public String recoveryData(@RequestBody ChannelInfoDto dto) throws Exception{
+		public String recoveryData(@RequestBody ChannelInfoDto dto) {
 			  String result = "seccuss";
 	            try {
 	                if (dto == null)throw new RuntimeException("参数异常!");
@@ -150,7 +149,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 		}
 
 		@Override
-		public String resetPwd(@RequestBody ChannelInfoDto dto) throws Exception {
+		public String resetPwd(@RequestBody ChannelInfoDto dto) {
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
 				String newPwd=IdUtil.createUUID(6);
@@ -176,7 +175,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 		}
 
 		@Override
-		public Response modifyPwd(@RequestBody ChannelInfoDto dto) throws Exception {
+		public Response modifyPwd(@RequestBody ChannelInfoDto dto) {
 			Response result = new Response(0,"seccuss");
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
@@ -189,8 +188,8 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 			return result;
 		}
 
-		@RequiresPermissions("channelInfo:edit:batch")
-	    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) throws Exception {
+		//@RequiresPermissions("channelInfo:edit:batch")
+	    public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) {
 	        Response result = new Response(0,"seccuss");
 	        try {
 	            if (fileUrl == null) throw new RuntimeException("文件路径不存在!");
@@ -270,7 +269,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 	    }
 
 	    @Override
-		public Response updataChannel(@RequestBody ChannelInfoDto dto) throws Exception {
+		public Response updataChannel(@RequestBody ChannelInfoDto dto) {
 			Response result = new Response(0,"seccuss");
 			try {
 				if (dto == null)throw new RuntimeException("参数异常!");
@@ -284,7 +283,7 @@ public class ChannelInfoService extends BaseService implements IChannelInfoServi
 		}
 
 		@Override
-		public Response restPwd(@RequestBody ChannelInfoDto dto) throws Exception {
+		public Response restPwd(@RequestBody ChannelInfoDto dto) {
 			 Response result = new Response(0,"success");
 		        try {
 		            if (dto == null) throw new RuntimeException("参数异常!");

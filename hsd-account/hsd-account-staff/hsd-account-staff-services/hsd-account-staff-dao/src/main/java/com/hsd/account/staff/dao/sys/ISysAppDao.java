@@ -18,7 +18,8 @@ public interface ISysAppDao extends IBaseDao {
     @Select("select IFNULL(count(0),0) as count from sys_app where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
 
-
+    @Select("select IFNULL(count(0),0) as count from sys_app where  id = #{id} and nodel_flag=1 ")
+    int isNoDelFlag(IEntity entity) throws Exception;
 
     /**
      * 根据主键 物理删除

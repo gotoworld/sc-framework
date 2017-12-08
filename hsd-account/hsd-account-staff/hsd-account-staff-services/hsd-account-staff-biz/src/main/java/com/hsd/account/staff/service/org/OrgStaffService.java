@@ -24,7 +24,6 @@ import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
@@ -316,7 +315,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
 
     @RfAccount2Bean
-    @RequiresPermissions("orgStaff:edit:org")
+    //@RequiresPermissions("orgStaff:edit:org")
     public Response addOrg(@RequestBody OrgOrgVsStaffDto dto) {
         Response result = new Response(0,"success");
         try {
@@ -329,7 +328,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return result;
     }
 
-    @RequiresPermissions("orgStaff:edit:org")
+    //@RequiresPermissions("orgStaff:edit:org")
     public Response delOrg(@RequestBody OrgOrgVsStaffDto dto) {
         Response result = new Response(0,"success");
         try {
@@ -351,7 +350,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
     }
 
     //    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    @RequiresPermissions("orgStaff:add:batch")
+    //@RequiresPermissions("orgStaff:add:batch")
     public Response addBatch(@RequestParam(name = "fileUrl") String fileUrl) {
         Response result = new Response(0,"success");
         try {
@@ -479,7 +478,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         return results;
     }
     @RfAccount2Bean
-    @RequiresPermissions("orgStaff:edit:role")
+    //@RequiresPermissions("orgStaff:edit:role")
     public Response addRole(@RequestBody AuthStaffVsRoleDto dto) {
         Response result = new Response(0,"success");
         try {
@@ -491,7 +490,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return result;
     }
-    @RequiresPermissions("orgStaff:edit:role")
+    //@RequiresPermissions("orgStaff:edit:role")
     public Response delRole(@RequestBody AuthStaffVsRoleDto dto) {
         Response result = new Response(0,"success");
         try {
@@ -518,7 +517,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         }
         return results;
     }
-    @RequiresPermissions("orgStaff:edit:leadership")
+    //@RequiresPermissions("orgStaff:edit:leadership")
     public Response setLeadership(@RequestBody OrgStaffDto dto) {
         Response result = new Response(0,"success");
         try {

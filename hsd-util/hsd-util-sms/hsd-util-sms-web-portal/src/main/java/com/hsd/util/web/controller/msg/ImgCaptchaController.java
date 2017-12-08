@@ -2,10 +2,10 @@ package com.hsd.util.web.controller.msg;
 
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
+import com.hsd.framework.cache.util.RedisHelper;
 import com.hsd.framework.security.MD5;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,10 +34,10 @@ public class ImgCaptchaController {
     private static final String acPrefix = "/api/util/sms/imgCaptcha/";
     public static final String prefix = "verify:img:";
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisHelper redisHelper;
     /** 校验码json */
     @RequestMapping(value = acPrefix+"/json", method = {RequestMethod.POST, RequestMethod.GET})
-    public Response json(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public Response json(HttpServletRequest request, HttpServletResponse response) {
         Response result=new Response("success");
         try {
             // 设置页面不缓存
@@ -137,7 +137,7 @@ public class ImgCaptchaController {
 
         return image;
     }
-    private Map encodeBase64ImgCode() throws ServletException, IOException {
+    private Map encodeBase64ImgCode() throws IOException {
         Map captchaMap=new HashMap();
         //生成认证码
         String captcha=generateCaptcha(5);
@@ -150,7 +150,7 @@ public class ImgCaptchaController {
         captchaMap.put("id", uuid);
         captchaMap.put("img",imgString);
         //将认证码存入redis
-        redisTemplate.opsForValue().set(prefix+uuid,captcha,30, TimeUnit.MINUTES);//N分钟
+        redisHelper.set(prefix+uuid,captcha,30, TimeUnit.MINUTES);//N分钟
         return  captchaMap;
     }
 }

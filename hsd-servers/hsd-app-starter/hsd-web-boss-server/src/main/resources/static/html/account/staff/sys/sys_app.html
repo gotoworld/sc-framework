@@ -59,34 +59,34 @@
 										</td>
 									</tr>
 								</table>
-								<a href="javascript:;" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("sysApp:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
+								<a href="javascript:" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("sysApp:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 								<div class="table-responsive table-scrollable">
 									<table class="table table-bordered table-striped  table-hover">
 										<thead>
 										<tr>
 											<th style="width:20px;">#</th>
-											<th>创建时间</th>
-											<th>主页登链</th>
-											<th>建立者id</th>
-											<th>系统名称</th>
+											<th style="width:50px;">编码</th>
+											<th class="col-md-2">名称</th>
+											<th class="col-md-2">主页</th>
+											<th class="col-md-2">登录</th>
 											<th>备注</th>
-											<th>登录链接</th>
-											<th>操作</th>
+											<th style="width:140px;">创建时间</th>
+											<th style="width:250px;">操作</th>
 										</tr>
 										</thead>
 										<tbody>
 										<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
 											<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-											<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-											<td>{{item.loginUrl}}</td>
-											<td>{{item.createId}}</td>
+											<td>{{item.id}}</td>
 											<td>{{item.name}}</td>
-											<td>{{item.memo}}</td>
+											<td>{{item.loginUrl}}</td>
 											<td>{{item.mainUrl}}</td>
+											<td>{{item.memo}}</td>
+											<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 											<td>
-												<a href="javascript:;" ng-show='staff.hasPermission("sysApp:info")'  ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-												<a href="javascript:;" ng-show='staff.hasPermission("sysApp:edit")'  ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-												<a href="javascript:;" ng-show='staff.hasPermission("sysApp:phydel")'   ng-click="phydel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
+												<a href="javascript:" ng-show='staff.hasPermission("sysApp:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+												<a href="javascript:" ng-show='staff.hasPermission("sysApp:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+												<a href="javascript:" ng-show='staff.hasPermission("sysApp:phydel") && item.noDelFlag==1' ng-click="phydel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
 											</td>
 										</tr>
 										<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -126,17 +126,6 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-	/* copy to common.js
-	 var site={
-	 , sysApp: {//APP应用表
-	 view: basePath + "/html/account/staff/sys/sys_app"
-	 ,page: apiPath.account.staff + "/boss/account/staff/sys/sysApp/page/"       //分页
-	 ,save: apiPath.account.staff + "/boss/account/staff/sys/sysApp/save"        //新增or保存
-	 ,info: apiPath.account.staff + "/boss/account/staff/sys/sysApp/info/"       //详情
-	 ,phydel: apiPath.account.staff + "/boss/account/staff/sys/sysApp/phydel/"   //物理删除
-	 }
-	 }
-	 */
     $("#data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
@@ -151,11 +140,11 @@
         $scope.edit = function (title,item) {
             sessionStorage.setItem(site.sysApp.info,item.id);
             openMyBoxLayer(title,site.sysApp.view+'_edit.html');
-        }
+        };
         $scope.info = function (title,item) {
             sessionStorage.setItem(site.sysApp.info,item.id);
             openMyBoxLayer(title,site.sysApp.view+'_info.html');
-        }
+        };
         $scope.phydel = function (item) {
             if(confirm('确认删除吗?此操作无法恢复!')) {
                 $.post( site.sysApp.phydel + item.id,{}, function (result) {
@@ -167,7 +156,7 @@
                     }
                 });
             }
-        }
+        };
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         }
@@ -179,9 +168,8 @@
         }else{
             pageIndex=$('#pageNumA').val();
         }
-        console.info("加载页码"+pageIndex)
+        // console.info("加载页码"+pageIndex)
         $.post( site.sysApp.page+pageIndex,$('#info_search_form').serialize(), function (result) {
-
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();

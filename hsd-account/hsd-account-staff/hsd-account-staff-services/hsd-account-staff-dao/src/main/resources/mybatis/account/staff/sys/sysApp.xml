@@ -11,6 +11,7 @@
         ,t1.create_id as "createId"
         ,t1.date_created as "dateCreated"
         ,t1.date_updated as "dateUpdated"
+        ,t1.nodel_flag as "noDelFlag"
     </sql>
 
     <!-- 根据主键获取信息详情 -->
@@ -33,6 +34,7 @@
            ,create_id 
            ,date_created 
            ,date_updated 
+           ,nodel_flag
         ) values (
             #{id} 
            ,#{name} 
@@ -42,6 +44,8 @@
            ,#{createId} 
            ,now()
            ,now()
+           ,now()
+           ,0
         )
     </insert>
 
@@ -61,7 +65,7 @@
     <!--列表通用条件-->
     <sql id="list_where_sql">
         <if test="keyword!=null and keyword!=''">
-            and t1.name like concat('%',#{keyword},'%')
+            and (t1.name like concat('%',#{keyword},'%') or t1.id like concat('%',#{keyword},'%'))
         </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>

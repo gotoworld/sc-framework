@@ -55,6 +55,9 @@
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
+        <if test="appId!=null and appId!=''">
+            and t1.app_id=#{appId}
+        </if>
         <if test="type!=null">
             and t1.type=#{type}
         </if>

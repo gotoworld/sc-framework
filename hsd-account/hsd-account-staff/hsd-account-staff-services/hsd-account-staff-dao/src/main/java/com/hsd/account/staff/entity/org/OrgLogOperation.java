@@ -18,7 +18,7 @@ public class OrgLogOperation extends BaseEntity {
      /**操作类型*/
      private String type;
      /**所属系统域*/
-     private String domainCode;
+     private String appId;
      /**描述*/
      private String memo;
      /**对象信息*/

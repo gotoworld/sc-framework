@@ -5,7 +5,7 @@
     <sql id="Base_Column_List">
          t1.id as "id"
         ,t1.type as "type"
-        ,t1.domain_code as "domainCode"
+        ,t1.app_id as "appId"
         ,t1.memo as "memo"
         ,t1.detail_info as "detailInfo"
         ,t1.date_created as "dateCreated"
@@ -28,7 +28,7 @@
         insert into org_log_operation (
          
             type 
-           ,domain_code 
+           ,app_id
            ,memo 
            ,detail_info 
            ,date_created 
@@ -38,7 +38,7 @@
         ) values (
          
             #{type} 
-           ,#{domainCode} 
+           ,#{appId}
            ,#{memo} 
            ,#{detailInfo} 
            ,now()

@@ -13,6 +13,7 @@ import com.hsd.account.staff.dto.sys.SysAppDto;
 import com.hsd.account.staff.dto.sys.UserAppDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
+import com.hsd.framework.cache.util.RedisHelper;
 import com.hsd.framework.security.MD5;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
@@ -24,7 +25,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,7 +51,7 @@ public class LoginController extends BaseController {
     @Autowired
     private IUserAppService userAppService;
     @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisHelper redisHelper;
 
 
     /**
@@ -118,7 +118,7 @@ public class LoginController extends BaseController {
             data.put("staff", JSONObject.parseObject(subject, OrgStaffDto.class));
             data.put("XCache", request.getSession().getId());
 
-            redisTemplate.opsForValue().set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppUserId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
+            redisHelper.set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppUserId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
 
             try {
                 //读取session中的员工
@@ -203,7 +203,7 @@ public class LoginController extends BaseController {
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);
             data.put("XCache", request.getSession().getId());
-            redisTemplate.opsForValue().set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime(), CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
+            redisHelper.set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime(), CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
             result.data = data;
         } catch (Exception e) {
             result = Response.error(e.getMessage());

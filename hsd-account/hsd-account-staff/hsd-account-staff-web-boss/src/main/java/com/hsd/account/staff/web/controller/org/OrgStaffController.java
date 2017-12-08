@@ -9,6 +9,7 @@ import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
+import com.hsd.framework.cache.util.RedisHelper;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ValidatorUtil;
@@ -17,7 +18,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +37,7 @@ public class OrgStaffController extends BaseController {
 	private IOrgStaffService orgStaffService;
 
 	@Autowired
-	private RedisTemplate<String,Object> redisTemplate;
+	private RedisHelper redisHelper;
 
 	/**
 	 * <p> 信息分页 (未删除)。
@@ -511,7 +511,7 @@ public class OrgStaffController extends BaseController {
 		log.info("OrgStaffController offline.........");
 		Response result = new Response("success");
 		try{
-			redisTemplate.opsForValue().set("u:offline:"+id,new Date().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
+			redisHelper.set("u:offline:"+id,new Date().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
 		}catch (Exception e){
 			result = Response.error(e.getMessage());
 		}

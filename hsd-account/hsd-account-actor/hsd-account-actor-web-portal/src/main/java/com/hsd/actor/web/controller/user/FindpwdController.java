@@ -4,6 +4,7 @@ import com.hsd.account.actor.api.user.IUserService;
 import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
+import com.hsd.framework.cache.util.RedisHelper;
 import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
 import com.hsd.util.api.msg.IMsgVerifyService;
@@ -12,7 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
@@ -28,7 +28,7 @@ public class FindpwdController extends BaseController {
     @Autowired
     private IMsgVerifyService msgVerifyService;
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisHelper redisHelper;
     private static final String acPrefix = "/api/account/actor/findpwd/";
 
     private static final String findPwdStatePreix = "captcha:find:pwd:success:";
@@ -66,7 +66,7 @@ public class FindpwdController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/send/captcha/sms")
     @ApiOperation(value = "验证码-短信推送")
-    public Response captchaSms(@RequestParam("accid") Long accid, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) throws Exception {
+    public Response captchaSms(@RequestParam("accid") Long accid, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("LoginController captchaSms");
         Response result = new Response();
         try {
@@ -96,7 +96,7 @@ public class FindpwdController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "/send/captcha/email")
     @ApiOperation(value = "验证码-邮件推送")
-    public Response captchaEmail(@RequestParam("accid") Long accid) throws Exception {
+    public Response captchaEmail(@RequestParam("accid") Long accid) {
         log.info("LoginController captchaEmail");
         Response result = new Response();
         try {
@@ -141,7 +141,7 @@ public class FindpwdController extends BaseController {
             verifyDto.setVerifyCode(captcha);
             result.data = msgVerifyService.checkVerifyCode(verifyDto);
 
-            redisTemplate.opsForValue().set(findPwdStatePreix + finalDto.getId(), "1", 5, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
+            redisHelper.set(findPwdStatePreix + finalDto.getId(), "1", 5, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -168,7 +168,7 @@ public class FindpwdController extends BaseController {
             verifyDto.setVerifyCode(captcha);
             result.data = msgVerifyService.checkVerifyCode(verifyDto);
 
-            redisTemplate.opsForValue().set(findPwdStatePreix + finalDto.getId(), "1", 5, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
+            redisHelper.set(findPwdStatePreix + finalDto.getId(), "1", 5, TimeUnit.MINUTES);//校验成功状态 有效期5分钟
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -182,7 +182,7 @@ public class FindpwdController extends BaseController {
         Response result = new Response("success");
         try {
             if (accid == null ) return Response.error("参数有误!");
-            if(!"1".equals(redisTemplate.opsForValue().get(findPwdStatePreix + accid)))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
+            if(!"1".equals(redisHelper.get(findPwdStatePreix + accid)))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -195,7 +195,7 @@ public class FindpwdController extends BaseController {
         Response result = new Response("success");
         try {
             if (dto == null || dto.getId()==null || ValidatorUtil.isEmpty(dto.getPwd())) return Response.error("参数有误!");
-            if(!"1".equals(redisTemplate.opsForValue().get(findPwdStatePreix + dto.getId())))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
+            if(!"1".equals(redisHelper.get(findPwdStatePreix + dto.getId())))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
             result=userService.restPwd(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());

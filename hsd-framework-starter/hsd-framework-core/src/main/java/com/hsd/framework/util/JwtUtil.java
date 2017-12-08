@@ -83,17 +83,18 @@ public class JwtUtil {
     public static String generalSubject(Object obj) {
         JSONObject jo = new JSONObject();
         jo.put("id", ReflectUtil.getValueByFieldName(obj, "id"));
-        jo.put("appUserId", ReflectUtil.getValueByFieldName(obj, "appUserId"));
-        jo.put("appName", ReflectUtil.getValueByFieldName(obj, "appName"));
         jo.put("account", ReflectUtil.getValueByFieldName(obj, "account"));
         jo.put("name", ReflectUtil.getValueByFieldName(obj, "name"));
+        jo.put("appId", ReflectUtil.getValueByFieldName(obj, "appId"));
+        jo.put("appName", ReflectUtil.getValueByFieldName(obj, "appName"));
+        jo.put("appUserId", ReflectUtil.getValueByFieldName(obj, "appUserId"));
         jo.put("channelName", ReflectUtil.getValueByFieldName(obj, "channelName"));
         jo.put("authorizationInfoPerms", ReflectUtil.getValueByFieldName(obj, "authorizationInfoPerms"));
         jo.put("authorizationInfoRoles", ReflectUtil.getValueByFieldName(obj, "authorizationInfoRoles"));
         return jo.toJSONString();
     }
 
-    public static JSONObject getSubject() throws Exception {
+    public static JSONObject getSubject() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
         if (ValidatorUtil.isEmpty(authorizationToken)) {
@@ -105,7 +106,7 @@ public class JwtUtil {
     public static <T> T getSubject(Class<T> obj) throws Exception {
         return getSubject().toJavaObject(obj);
     }
-    public static <T> T  getSubject(Object obj,Class<T> tClass) throws Exception {
+    public static <T> T  getSubject(Object obj,Class<T> tClass) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
         if (ValidatorUtil.isEmpty(authorizationToken)) {
@@ -118,7 +119,7 @@ public class JwtUtil {
         return JSONObject.parseObject(claims.getSubject()).toJavaObject(tClass);
     }
 
-    public static boolean isPermitted(String authStr) throws Exception {
+    public static boolean isPermitted(String authStr) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
         if (ValidatorUtil.isEmpty(authorizationToken)) {
@@ -129,7 +130,7 @@ public class JwtUtil {
         JSONArray authorizationInfoPerms = jobj.getJSONArray("authorizationInfoPerms");
         return authorizationInfoPerms != null && authorizationInfoPerms.contains(authStr);
     }
-    public static boolean isPermitted(Object obj,String authStr) throws Exception {
+    public static boolean isPermitted(Object obj,String authStr) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String authorizationToken = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
         if (ValidatorUtil.isEmpty(authorizationToken)) {

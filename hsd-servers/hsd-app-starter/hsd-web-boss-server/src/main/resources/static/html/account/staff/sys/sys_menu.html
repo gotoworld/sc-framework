@@ -88,6 +88,15 @@
 														<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
 													</div>
 												</div>
+												<div class="form-group">
+													<label class="font-noraml">所属应用</label>
+													<div class=" input-group">
+														<select data-placeholder="选择所属应用" id="bean-appId" name="appId" class="form-control">
+															<option value="">--全部--</option>
+															<option ng-repeat="d in appNodes" ng-value="d.id" ng-selected="d.id   ==item.domainCode" ng-bind="d.name"></option>
+														</select>
+													</div>
+												</div>
 												<div class="input-group">
 													<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
@@ -183,6 +192,7 @@
         $data = $scope;
         $ngCompile=$compile;
         staff.init(function(){
+            loadAppList();
             loadPage(1);
             loadTree();
         });
@@ -262,6 +272,17 @@
             } else {
                 alert(result.message);
             }
+        }, 'json');
+    }
+    function loadAppList(){
+        $.get(site.sysApp.list, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.appNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
 </script>

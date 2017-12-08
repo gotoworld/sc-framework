@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
+import com.hsd.framework.cache.util.RedisHelper;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.ValidatorUtil;
@@ -14,7 +15,6 @@ import com.hsd.util.dto.msg.MsgVerifyDto;
 import com.hsd.util.entity.msg.MsgVerify;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -26,10 +26,10 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
     private IMsgVerifyDao msgVerifyDao;
     public static final String prefix = "verify:msg:";
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisHelper redisHelper;
 
     @Override
-    public PageInfo findDataIsPage(@RequestBody MsgVerifyDto dto) throws Exception {
+    public PageInfo findDataIsPage(@RequestBody MsgVerifyDto dto) {
         PageInfo pageInfo = null;
         try {
             if (dto == null) throw new RuntimeException("参数有误!");
@@ -46,7 +46,7 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
     }
 
     @Override
-    public MsgVerifyDto findDataById(@RequestBody MsgVerifyDto dto) throws Exception {
+    public MsgVerifyDto findDataById(@RequestBody MsgVerifyDto dto) {
         MsgVerifyDto result = null;
         try {
             MsgVerify entity = copyTo(dto, MsgVerify.class);
@@ -59,13 +59,13 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
     }
 
     @Override
-    public boolean verifyImgCode(@RequestBody MsgVerifyDto dto) throws Exception {
+    public boolean verifyImgCode(@RequestBody MsgVerifyDto dto) {
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getImgCaptchaId()) || ValidatorUtil.isEmpty(dto.getImgCaptchaCode()))
                 throw new RuntimeException("认证码不能为空!");
-            if (dto.getImgCaptchaCode().equalsIgnoreCase("" + redisTemplate.opsForValue().get("verify:img:"+dto.getImgCaptchaId()))){
+            if (dto.getImgCaptchaCode().equalsIgnoreCase("" + redisHelper.get("verify:img:"+dto.getImgCaptchaId()))){
                 if(dto.isImgCaptchaDel()){
-                    redisTemplate.opsForValue().getOperations().delete("verify:img:"+dto.getImgCaptchaId());
+                    redisHelper.del("verify:img:"+dto.getImgCaptchaId());
                 }
                 return true;
             }else{
@@ -78,7 +78,7 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
     }
 
     @Override
-    public Response pushVerifyCode(@RequestBody MsgVerifyDto dto) throws Exception {
+    public Response pushVerifyCode(@RequestBody MsgVerifyDto dto) {
         Response result = new Response(0, "success");
         try {
             //检查图片验证码是否正确//限制恶意刷短信
@@ -103,7 +103,7 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
         return result;
     }
 
-    public Response checkVerifyCode(@RequestBody MsgVerifyDto dto) throws Exception {
+    public Response checkVerifyCode(@RequestBody MsgVerifyDto dto) {
         Response result = new Response(0, "success");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getSmsAddress())) throw new RuntimeException("参数有误!");

@@ -87,6 +87,15 @@
 															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
 														</div>
 													</div>
+													<div class="form-group">
+														<label class="font-noraml">所属应用</label>
+														<div class=" input-group">
+															<select data-placeholder="选择所属应用" id="bean-appId" name="appId" class="form-control">
+																<option value="">--全部--</option>
+																<option ng-repeat="d in appNodes" ng-value="d.id" ng-selected="d.id   ==item.domainCode" ng-bind="d.name"></option>
+															</select>
+														</div>
+													</div>
 													<div class="input-group">
 														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
 															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
@@ -103,6 +112,7 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
+                                    				<th>所属应用</th>
                                     				<th>权限名称</th>
 													<th>权限匹配符</th>
 													<th>创建时间</th>
@@ -112,6 +122,7 @@
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
+                                    				<td>{{item.appName}}</td>
                                     				<td>{{item.name}}</td>
 													<td>{{item.matchStr}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -122,7 +133,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="5">
+                                    				<td colspan="6">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>
@@ -168,6 +179,7 @@
         $data = $scope;
         $ngCompile=$compile;
         staff.init(function(){
+            loadAppList();
             loadPage(1);
             loadTree();
         });
@@ -219,6 +231,7 @@
             var trStr ='';
                  trStr+=' <tr><th class="col-md-3">权限名称:</th><th class="">'+node.name+'</th></tr>';
 				trStr+=' <tr><th class="col-md-3">权限匹配符:</th><th class="">'+node.matchStr+'</th></tr>';
+				trStr+=' <tr><th class="col-md-3">所属应用:</th><th class="">'+(util.notEmpty(node.appName)?node.appName:'')+'</th></tr>';
 				trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
             if(staff.hasPermission("authPerm:info") || staff.hasPermission("authPerm:edit") || staff.hasPermission("authPerm:del")){
                     trStr+=' <tr><th class="col-md-3">操作:</th><th> ';
@@ -244,6 +257,17 @@
             } else {
                 alert(result.message);
             }
+        }, 'json');
+    }
+    function loadAppList(){
+        $.get(site.sysApp.list, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.appNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
 </script>

@@ -78,7 +78,7 @@
             and (t1.name like concat('%',#{keyword},'%') or t1.match_str like concat('%',#{keyword},'%'))
         </if>
         <if test="appId!=null and appId!=''">
-            and (t1.app_id = #{appId})
+            and t1.app_id=#{appId}
         </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>

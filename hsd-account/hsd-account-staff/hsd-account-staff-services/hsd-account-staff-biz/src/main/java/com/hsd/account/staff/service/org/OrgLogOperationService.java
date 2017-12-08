@@ -6,6 +6,7 @@ import com.hsd.account.staff.api.org.IOrgLogOperationService;
 import com.hsd.account.staff.dao.org.IOrgLogOperationDao;
 import com.hsd.account.staff.dto.org.OrgLogOperationDto;
 import com.hsd.account.staff.entity.org.OrgLogOperation;
+import com.hsd.framework.IdGenerator;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;
@@ -23,6 +24,8 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
 
     @Autowired
     private IOrgLogOperationDao logOperationDao;
+    @Autowired
+    private IdGenerator idGenerator;
 
     @Override
     public PageInfo findDataIsPage(@RequestBody OrgLogOperationDto dto) {
@@ -49,6 +52,7 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
                      @RequestParam("ip")String ip) {
         try {
             OrgLogOperation entity = new OrgLogOperation();
+            entity.setId(idGenerator.nextId());
             entity.setType(type);// 操作类型(a增d删u改q查)
             entity.setMemo(memo);// 描述
             entity.setAppId(appId);// 所属系统域

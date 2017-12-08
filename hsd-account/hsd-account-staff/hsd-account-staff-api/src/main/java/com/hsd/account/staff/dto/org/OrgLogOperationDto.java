@@ -1,13 +1,11 @@
 package com.hsd.account.staff.dto.org;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.dto.BaseDto;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 @Data
@@ -20,7 +18,7 @@ public class OrgLogOperationDto extends BaseDto {
      /**操作类型*/
      private String type;
      /**所属系统域*/
-     private String domainCode;
+     private String appId;
      /**描述*/
      private String memo;
      /**对象信息*/

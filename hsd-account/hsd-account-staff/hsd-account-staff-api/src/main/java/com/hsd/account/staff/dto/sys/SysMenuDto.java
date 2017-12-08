@@ -22,8 +22,8 @@ public class SysMenuDto extends BaseDto {
 	@NotNull(message="name不能为空")@Size(max=50,message="name最大50字符")
      private String name;
      /**所属系统域*/
-	@NotNull(message="domain_code不能为空")@Size(max=50,message="domain_code最大50字符")
-     private String domainCode;
+	@NotNull(message="app_id不能为空")@Size(max=50,message="app_id最大50字符")
+     private String appId;
      /**父节点*/
      private Long parentId;
      /**页面链接*/

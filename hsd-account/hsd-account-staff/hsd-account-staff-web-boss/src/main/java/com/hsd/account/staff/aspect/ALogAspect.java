@@ -5,7 +5,6 @@ import com.hsd.account.staff.api.org.IOrgLogOperationService;
 import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.IDto;
 import com.hsd.framework.annotation.ALogOperation;
-import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ReflectUtil;
@@ -79,7 +78,7 @@ public class ALogAspect {
                 }
             } catch (Exception e) {
             }
-            sysStaffLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), JSON.toJSONString(object), staff.getId(), staff.getName(), ip);
+            sysStaffLogService.info(logArr[0], logArr[1], "" + staff.getAppId(), JSON.toJSONString(object), staff.getId(), staff.getName(), ip);
             log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -94,7 +93,7 @@ public class ALogAspect {
      * @param e
      */
     @AfterThrowing(pointcut = "alogOperationAspect()", throwing = "e")
-    public void doAfterThrowing(JoinPoint joinPoint, Throwable e) throws Exception {
+    public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //获取员工请求方法的参数并序列化为JSON格式字符串
         String params = "";
@@ -120,7 +119,7 @@ public class ALogAspect {
                 log.debug("请求参数:" + params);
                 log.debug("=====异常通知结束=====");
             }
-            sysStaffLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), staff.getId(), staff.getName(), ip);
+            sysStaffLogService.info(logArr[0], logArr[1], "" + staff.getAppId(), e.getMessage(), staff.getId(), staff.getName(), ip);
         } catch (Exception ex) {
             log.error("异常信息:{}", ex.getMessage());
         }

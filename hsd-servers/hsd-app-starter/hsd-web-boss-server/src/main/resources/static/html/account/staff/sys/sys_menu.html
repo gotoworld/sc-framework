@@ -93,7 +93,7 @@
 													<div class=" input-group">
 														<select data-placeholder="选择所属应用" id="bean-appId" name="appId" class="form-control">
 															<option value="">--全部--</option>
-															<option ng-repeat="d in appNodes" ng-value="d.id" ng-selected="d.id   ==item.domainCode" ng-bind="d.name"></option>
+															<option ng-repeat="d in appNodes" ng-value="d.id" ng-selected="d.id   ==item.appId" ng-bind="d.name"></option>
 														</select>
 													</div>
 												</div>
@@ -125,7 +125,7 @@
 											<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
 											<td>{{item.name}}</td>
 											<td>{{item.url}}</td>
-											<td>{{item.domainCode}}</td>
+											<td>{{item.appId}}</td>
 											<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 											<td>
 												<a href="javascript:" ng-show='staff.hasPermission("sysMenu:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
@@ -246,7 +246,7 @@
             var trStr ='';
             trStr+=' <tr><th class="col-md-3">名称:</th><th class="">'+node.name+'</th></tr>';
             trStr+=' <tr><th class="col-md-3">页面链接:</th><th class="">'+node.url+'</th></tr>';
-            trStr+=' <tr><th class="col-md-3">所属应用:</th><th class="">'+node.domainCode+'</th></tr>';
+            trStr+=' <tr><th class="col-md-3">所属应用:</th><th class="">'+node.appId+'</th></tr>';
             trStr+=' <tr><th class="col-md-3">创建时间:</th><th class="">'+util.dateTimeFormat(node.dateCreated)+'</th></tr>';
             if(staff.hasPermission("sysMenu:info") || staff.hasPermission("sysMenu:edit") || staff.hasPermission("sysMenu:del")){
                 trStr+=' <tr><th class="col-md-3">操作:</th><th> ';

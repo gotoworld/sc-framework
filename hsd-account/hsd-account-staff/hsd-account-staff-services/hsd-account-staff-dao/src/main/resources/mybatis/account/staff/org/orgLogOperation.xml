@@ -24,10 +24,10 @@
     </select>
 
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgLogOperation"  useGeneratedKeys="true" keyProperty="id"  >
+    <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgLogOperation" >
         insert into org_log_operation (
-         
-            type 
+            id
+           ,type
            ,app_id
            ,memo 
            ,detail_info 
@@ -36,8 +36,8 @@
            ,create_name 
            ,create_ip 
         ) values (
-         
-            #{type} 
+            #{id}
+           ,#{type}
            ,#{appId}
            ,#{memo} 
            ,#{detailInfo} 
@@ -52,6 +52,9 @@
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
+        <if test="appId!=null and appId!=''">
+            and t1.app_id=#{appId}
+        </if>
         <if test="type!=null and type!=''">
             and t1.type=#{type}
         </if>

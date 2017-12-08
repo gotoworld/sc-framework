@@ -19,16 +19,16 @@ public interface IOrgLogOperationService {
      * 管理员操作日志记录。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/info")
-    public void info(@RequestParam("type") String type,@RequestParam("memo")  String memo,@RequestParam("domainCode")String domainCode,@RequestParam("detailInfo")  String detailInfo,@RequestParam("staffId")  Long staffId,@RequestParam("staffName")  String staffName,@RequestParam("ip")  String ip);
+    void info(@RequestParam("type") String type, @RequestParam("memo") String memo, @RequestParam("appId") String appId, @RequestParam("detailInfo") String detailInfo, @RequestParam("staffId") Long staffId, @RequestParam("staffName") String staffName, @RequestParam("ip") String ip);
     /**
      * <p>信息列表 分页。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
-    public PageInfo findDataIsPage(OrgLogOperationDto dto);
+    PageInfo findDataIsPage(OrgLogOperationDto dto);
 
     /**
      * <p>信息详情。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
-    public OrgLogOperationDto findDataById(OrgLogOperationDto dto) throws Exception;
+    OrgLogOperationDto findDataById(OrgLogOperationDto dto) throws Exception;
 }

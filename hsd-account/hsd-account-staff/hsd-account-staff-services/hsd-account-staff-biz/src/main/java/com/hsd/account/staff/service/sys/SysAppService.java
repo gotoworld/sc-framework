@@ -59,7 +59,7 @@ public class SysAppService extends BaseService implements ISysAppService {
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             SysApp entity = copyTo(dto, SysApp.class);
-            if (sysAppDao.isNoDelFlag(entity) == 1) {
+            if (sysAppDao.isNoDelFlag(entity) > 0) {
                 throw new RuntimeException("当前数据为系统保留数据，不能删除!");
             }
             if (sysAppDao.deleteByPrimaryKey(entity) == 0) {

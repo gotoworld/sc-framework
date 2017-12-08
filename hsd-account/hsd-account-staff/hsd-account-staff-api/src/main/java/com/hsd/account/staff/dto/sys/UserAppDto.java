@@ -22,7 +22,7 @@ public class UserAppDto extends BaseDto {
      @ApiModelProperty("用户id")
      private Long userId;
      @ApiModelProperty("应用id")
-	 @Size(max=22,message="app_id最大22字符")
+	 @Size(max=22,message="appId最大22字符")
      private String appId;
      @ApiModelProperty("注册时间")
      private Date dateCreated;

@@ -49814,7 +49814,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <o:Column Id="o788">
 <a:ObjectID>A773FBB1-1C65-4EA4-86B8-6C1BEFB780A4</a:ObjectID>
 <a:Name>所属系统域</a:Name>
-<a:Code>domain_code</a:Code>
+<a:Code>app_id</a:Code>
 <a:CreationDate>1508491374</a:CreationDate>
 <a:Creator>Administrator</a:Creator>
 <a:ModificationDate>1508491374</a:ModificationDate>

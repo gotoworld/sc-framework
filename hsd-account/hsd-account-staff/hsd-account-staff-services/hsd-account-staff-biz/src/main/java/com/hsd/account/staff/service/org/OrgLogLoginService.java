@@ -2,10 +2,11 @@ package com.hsd.account.staff.service.org;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.hsd.account.staff.dao.org.IOrgLogLoginDao;
 import com.hsd.account.staff.api.org.IOrgLogLoginService;
+import com.hsd.account.staff.dao.org.IOrgLogLoginDao;
 import com.hsd.account.staff.dto.org.OrgLogLoginDto;
 import com.hsd.account.staff.entity.org.OrgLogLogin;
+import com.hsd.framework.IdGenerator;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
@@ -26,14 +27,17 @@ import java.util.List;
 public class OrgLogLoginService extends BaseService implements IOrgLogLoginService {
     @Autowired
     private IOrgLogLoginDao orgLogLoginDao;
+    @Autowired
+    private IdGenerator idGenerator;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(@RequestBody OrgLogLoginDto dto) throws Exception {
+    public Response saveOrUpdateData(@RequestBody OrgLogLoginDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             OrgLogLogin entity = copyTo(dto, OrgLogLogin.class);
+            entity.setId(idGenerator.nextId());
             //新增
             orgLogLoginDao.insert(entity);
             dto.setId(entity.getId());
@@ -45,7 +49,7 @@ public class OrgLogLoginService extends BaseService implements IOrgLogLoginServi
     }
 
     @Override
-    public PageInfo findDataIsPage(@RequestBody OrgLogLoginDto dto) throws Exception {
+    public PageInfo findDataIsPage(@RequestBody OrgLogLoginDto dto) {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -62,7 +66,7 @@ public class OrgLogLoginService extends BaseService implements IOrgLogLoginServi
     }
 
     @Override
-    public List<OrgLogLoginDto> findDataIsList(@RequestBody OrgLogLoginDto dto) throws Exception {
+    public List<OrgLogLoginDto> findDataIsList(@RequestBody OrgLogLoginDto dto) {
         List<OrgLogLoginDto>  results = null;
         try {
             OrgLogLogin entity = copyTo(dto, OrgLogLogin.class);
@@ -75,7 +79,7 @@ public class OrgLogLoginService extends BaseService implements IOrgLogLoginServi
     }
 
     @Override
-    public OrgLogLoginDto findDataById(@RequestBody OrgLogLoginDto dto) throws Exception {
+    public OrgLogLoginDto findDataById(@RequestBody OrgLogLoginDto dto) {
         OrgLogLoginDto result = null;
         try {
             OrgLogLogin entity = copyTo(dto, OrgLogLogin.class);

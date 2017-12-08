@@ -18,7 +18,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("APP应用表 DTO")
 public class SysAppDto extends BaseDto {
-     @ApiModelProperty("AppId")
+     @ApiModelProperty("appId")
 	 @Size(max=22,message="id最大22字符")
      private String id;
      @ApiModelProperty("系统名称")

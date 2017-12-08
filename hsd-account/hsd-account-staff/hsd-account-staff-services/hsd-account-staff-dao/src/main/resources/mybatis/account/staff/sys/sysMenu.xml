@@ -5,7 +5,7 @@
     <sql id="Base_Column_List">
          t1.id as "id"
         ,t1.name as "name"
-        ,t1.domain_code as "domainCode"
+        ,t1.app_id as "appId"
         ,t1.parent_id as "parentId"
         ,t1.url as "url"
         ,t1.order_no as "orderNo"
@@ -30,7 +30,7 @@
         insert into sys_menu (
          
             name 
-           ,domain_code 
+           ,app_id
            ,parent_id 
            ,url
            ,order_no 
@@ -42,7 +42,7 @@
         ) values (
          
             #{name} 
-           ,#{domainCode} 
+           ,#{appId}
            ,#{parentId} 
            ,#{url}
            ,#{orderNo} 
@@ -59,7 +59,7 @@
     <update id="update" parameterType="com.hsd.account.staff.entity.sys.SysMenu">
         update sys_menu set bi_update_ts=now() ,version=version+1
              <if test="name!=null">,name = #{name}</if>
-             <if test="domainCode!=null">,domain_code = #{domainCode}</if>
+             <if test="appId!=null">,app_id = #{appId}</if>
              ,parent_id = #{parentId}
              <if test="url!=null">,url = #{url}</if>
              <if test="orderNo!=null">,order_no = #{orderNo}</if>

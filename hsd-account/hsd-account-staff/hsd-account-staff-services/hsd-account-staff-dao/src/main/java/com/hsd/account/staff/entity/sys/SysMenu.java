@@ -18,7 +18,7 @@ public class SysMenu extends BaseEntity {
      /**名称*/
      private String name;
      /**所属系统域*/
-     private String domainCode;
+     private String appId;
      /**父节点*/
      private Long parentId;
      /**页面链接*/

@@ -42,7 +42,7 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
     }
     public void info(@RequestParam("type") String type,
                      @RequestParam("memo")String memo,
-                     @RequestParam("domainCode")String domainCode,
+                     @RequestParam("appId")String appId,
                      @RequestParam("detailInfo")String detailInfo,
                      @RequestParam("staffId")Long staffId,
                      @RequestParam("staffName")String staffName,
@@ -51,7 +51,7 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
             OrgLogOperation entity = new OrgLogOperation();
             entity.setType(type);// 操作类型(a增d删u改q查)
             entity.setMemo(memo);// 描述
-            entity.setDomainCode(domainCode);// 所属系统域
+            entity.setAppId(appId);// 所属系统域
             entity.setDetailInfo(detailInfo);// 具体
             entity.setCreateId(staffId);// 操作人id
             entity.setCreateName(staffName);// 操作人姓名
@@ -63,7 +63,7 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
         }
     }
     @Override
-    public OrgLogOperationDto findDataById(@RequestBody OrgLogOperationDto dto) throws Exception {
+    public OrgLogOperationDto findDataById(@RequestBody OrgLogOperationDto dto) {
         OrgLogOperationDto result = null;
         try {
             OrgLogOperation entity = copyTo(dto, OrgLogOperation.class);

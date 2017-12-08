@@ -7,7 +7,7 @@
         ,t1.name as "name"
         ,t1.match_str as "matchStr"
         ,t1.parent_id as "parentId"
-        ,t1.appid as "appId"
+        ,t1.app_id as "appId"
         ,t1.memo as "memo"
         ,t1.create_id as "createId"
         ,t1.date_created as "dateCreated"
@@ -78,7 +78,7 @@
             and (t1.name like concat('%',#{keyword},'%') or t1.match_str like concat('%',#{keyword},'%'))
         </if>
         <if test="appId!=null and appId!=''">
-            and (t1.appid = #{appId})
+            and (t1.app_id = #{appId})
         </if>
         <if test="dateBegin!=null and dateBegin!=''">
             <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d')]]>
@@ -94,7 +94,7 @@
         <include refid="Base_Column_List"/>
         ,t2.name as "appName"
         from auth_perm t1
-        left join sys_app t2 on (t1.appid=t2.id)
+        left join sys_app t2 on (t1.app_id=t2.id)
         where 1=1
         <include refid="list_where_sql"/>
         order by t1.order_no desc,t1.date_created desc
@@ -105,7 +105,7 @@
         <include refid="Base_Column_List"/>
         ,t2.name as "appName"
         from auth_perm t1
-        left join sys_app t2 on (t1.appid=t2.id)
+        left join sys_app t2 on (t1.app_id=t2.id)
         where 1=1
         <include refid="list_where_sql"/>
         order by t1.order_no desc,t1.date_created desc

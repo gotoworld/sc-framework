@@ -23,7 +23,7 @@
         insert into user_app (
             id 
            ,user_id 
-           ,app_id 
+           ,app_id
            ,date_created 
            ,bi_update_ts 
         ) values (
@@ -40,7 +40,7 @@
     <update id="update" parameterType="com.hsd.account.staff.entity.sys.UserApp">
         update user_app set bi_update_ts=now()
         <if test="user_id!=null">,user_id = #{userId}</if>
-        <if test="app_id!=null">,app_id = #{appId}</if>
+        <if test="appId!=null">,app_id = #{appId}</if>
         where
         id = #{id}
     </update>

@@ -25,10 +25,10 @@
     </select>
 
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgLogLogin"  useGeneratedKeys="true" keyProperty="id"  >
+    <insert id="insert" parameterType="com.hsd.account.staff.entity.org.OrgLogLogin">
         insert into org_log_login (
-         
-            staff_id
+            id
+           ,staff_id
            ,app_user_id
            ,app_id
            ,app_name
@@ -38,8 +38,8 @@
            ,device_mac 
            ,date_created 
         ) values (
-         
-            #{staffId}
+            #{id}
+           ,#{staffId}
            ,#{appUserId}
            ,#{appId}
            ,#{appName}

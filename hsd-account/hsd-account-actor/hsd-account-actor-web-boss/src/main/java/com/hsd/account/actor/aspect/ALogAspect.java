@@ -37,11 +37,11 @@ public class ALogAspect {
      * 用于记录员工的操作
      */
     @After("alogOperationAspect()")
-    public void doAfter(JoinPoint joinPoint) throws Exception {
+    public void doAfter(JoinPoint joinPoint) {
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             //读取session中的员工
-            UserDto actor = JwtUtil.getSubject(UserDto.class);
+            UserDto dto = JwtUtil.getSubject(UserDto.class);
             //请求的IP
             String ip = IpUtil.getIpAddr(request);
             String[] logArr = getMethodDesc(joinPoint);
@@ -49,7 +49,7 @@ public class ALogAspect {
                 log.debug("=====前置通知开始=====");
                 log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
                 log.debug("方法描述:" + logArr[1]);
-                log.debug("请求人:" + actor.getName());
+                log.debug("请求人:" + dto.getName());
                 log.debug("请求IP:" + ip);
             }
             Object object = new Object();
@@ -72,7 +72,7 @@ public class ALogAspect {
                 }
             } catch (Exception e) {
             }
-//            sysActorLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), JSON.toJSONString(object), actor.getId(), actor.getName(), ip);
+//            sysActorLogService.info(logArr[0], logArr[1], "" + dto.getAppId(), JSON.toJSONString(object), actor.getId(), actor.getName(), ip);
             log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -87,7 +87,7 @@ public class ALogAspect {
      * @param e
      */
     @AfterThrowing(pointcut = "alogOperationAspect()", throwing = "e")
-    public void doAfterThrowing(JoinPoint joinPoint, Throwable e) throws Exception {
+    public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //获取员工请求方法的参数并序列化为JSON格式字符串
         String params = "";
@@ -112,7 +112,7 @@ public class ALogAspect {
                 log.debug("请求参数:" + params);
                 log.debug("=====异常通知结束=====");
             }
-//            sysActorLogService.info(logArr[0], logArr[1], "" + request.getSession().getAttribute(CommonConstant.SESSION_KEY_DOMAIN_CODE), e.getMessage(), actor.getId(), actor.getName(), ip);
+//            sysActorLogService.info(logArr[0], logArr[1], "" + dto.getAppId(), e.getMessage(), actor.getId(), actor.getName(), ip);
         } catch (Exception ex) {
             log.error("异常信息:{}", ex.getMessage());
         }

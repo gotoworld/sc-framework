@@ -16,6 +16,7 @@ import com.hsd.account.actor.entity.user.User;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
+import com.hsd.framework.cache.util.RedisHelper;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.security.MD5;
 import com.hsd.framework.service.BaseService;
@@ -23,7 +24,6 @@ import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,10 +47,10 @@ public class UserService extends BaseService implements IUserService {
     @Autowired
     private IMemberDao memberDao;
     @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisHelper redisHelper;
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(@RequestBody UserDto dto) throws Exception {
+    public Response saveOrUpdateData(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -85,7 +85,7 @@ public class UserService extends BaseService implements IUserService {
         return result;
     }
     @Override
-    public String deleteData(@RequestBody UserDto dto) throws Exception {
+    public String deleteData(@RequestBody UserDto dto) {
         String result = "success";
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -101,7 +101,7 @@ public class UserService extends BaseService implements IUserService {
     }
 
     @Override
-    public PageInfo findDataIsPage(@RequestBody UserDto dto) throws Exception {
+    public PageInfo findDataIsPage(@RequestBody UserDto dto) {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -118,7 +118,7 @@ public class UserService extends BaseService implements IUserService {
     }
 
     @Override
-    public List<UserDto> findDataIsList(@RequestBody UserDto dto) throws Exception {
+    public List<UserDto> findDataIsList(@RequestBody UserDto dto) {
         List<UserDto>  results = null;
         try {
             User entity = copyTo(dto, User.class);
@@ -131,7 +131,7 @@ public class UserService extends BaseService implements IUserService {
     }
 
     @Override
-    public UserDto findDataById(@RequestBody UserDto dto) throws Exception {
+    public UserDto findDataById(@RequestBody UserDto dto) {
         UserDto result = null;
         try {
             User entity = copyTo(dto, User.class);
@@ -145,7 +145,7 @@ public class UserService extends BaseService implements IUserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response setTags(@RequestBody UserDto dto) throws Exception {
+    public Response setTags(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -159,7 +159,7 @@ public class UserService extends BaseService implements IUserService {
 
     @Override
 //        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response setBlacklist(@RequestBody UserDto dto) throws Exception {
+    public Response setBlacklist(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -174,7 +174,7 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
 //  @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response delBlacklist(@RequestBody UserDto dto) throws Exception {
+    public Response delBlacklist(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -211,7 +211,7 @@ public class UserService extends BaseService implements IUserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response register(@RequestBody UserDto dto) throws Exception {
+    public Response register(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -251,7 +251,7 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response restPwd(@RequestBody UserDto dto) throws Exception {
+    public Response restPwd(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
@@ -268,7 +268,7 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response phoneBind(@RequestBody UserDto dto) throws Exception {
+    public Response phoneBind(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
@@ -287,7 +287,7 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response emailBind(@RequestBody UserDto dto) throws Exception {
+    public Response emailBind(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
@@ -306,11 +306,11 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response updatePwd(@RequestBody UserDto dto) throws Exception {
+    public Response updatePwd(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
-            Integer count= (Integer) redisTemplate.opsForValue().get("user:setting:loginpwd:"+dto.getId());
+            Integer count= (Integer) redisHelper.get("user:setting:loginpwd:"+dto.getId());
             if(count==null) count=0;
             if(count>=5)  throw new RuntimeException("已超过24小时内最大重试次数!");
             User entity = copyTo(dto, User.class);
@@ -320,7 +320,7 @@ public class UserService extends BaseService implements IUserService {
             //验证原密码
             String hashOldPwd=MD5.pwdMd5Hex(dto.getPwd());
             if(!(""+hashOldPwd).equals(user.getPwd())){
-                redisTemplate.opsForValue().set("user:setting:loginpwd:"+dto.getId(),++count,24, TimeUnit.HOURS);
+                redisHelper.set("user:setting:loginpwd:"+dto.getId(),++count,24, TimeUnit.HOURS);
                 throw new RuntimeException("原始密码错误!剩余重试次数,"+(5-count));
             }
             //修改新密码
@@ -328,7 +328,7 @@ public class UserService extends BaseService implements IUserService {
             if(userDao.updateLoginPwd(entity)==0){
                 throw new RuntimeException("密码修改失败!");
             }
-            redisTemplate.opsForValue().set("user:setting:loginpwd:"+dto.getId(),++count,0, TimeUnit.MILLISECONDS);
+            redisHelper.set("user:setting:loginpwd:"+dto.getId(),++count,0, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             log.error("密码修改失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -337,7 +337,7 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response identity(@RequestBody IdentityDto dto) throws Exception {
+    public Response identity(@RequestBody IdentityDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
@@ -362,7 +362,7 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response pwdTradeSetting(@RequestBody UserDto dto) throws Exception{
+    public Response pwdTradeSetting(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
@@ -376,7 +376,7 @@ public class UserService extends BaseService implements IUserService {
             if(userDao.updateTradePwd(entity)==0){
                 throw new RuntimeException("交易密码修改失败!");
             }
-            redisTemplate.opsForValue().getOperations().delete("user:setting:tradepwd:"+dto.getId());
+            redisHelper.del("user:setting:tradepwd:"+dto.getId());
         } catch (Exception e) {
             log.error("交易密码修改失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -385,11 +385,11 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response pwdTradeUpdate(@RequestBody UserDto dto) throws Exception{
+    public Response pwdTradeUpdate(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
-            Integer count= (Integer) redisTemplate.opsForValue().get("user:setting:tradepwd:"+dto.getId());
+            Integer count= (Integer) redisHelper.get("user:setting:tradepwd:"+dto.getId());
             if(count==null) count=0;
             if(count>=5)  throw new RuntimeException("已超过24小时内最大重试次数!");
 
@@ -402,7 +402,7 @@ public class UserService extends BaseService implements IUserService {
             //验证原交易密码
             String hashOldTradePwd=MD5.pwdMd5Hex(dto.getTradePwd());
             if(!(""+hashOldTradePwd).equals(user.getTradePwd())){
-                redisTemplate.opsForValue().set("user:setting:tradepwd:"+dto.getId(),++count,24, TimeUnit.HOURS);
+                redisHelper.set("user:setting:tradepwd:"+dto.getId(),++count,24, TimeUnit.HOURS);
                 throw new RuntimeException("原始交易密码错误!剩余重试次数,"+(5-count));
             }
 
@@ -410,7 +410,7 @@ public class UserService extends BaseService implements IUserService {
             if(userDao.updateTradePwd(entity)==0){
                 throw new RuntimeException("交易密码修改失败!");
             }
-            redisTemplate.opsForValue().getOperations().delete("user:setting:tradepwd:"+dto.getId());
+            redisHelper.del("user:setting:tradepwd:"+dto.getId());
         } catch (Exception e) {
             log.error("交易密码修改失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -419,7 +419,7 @@ public class UserService extends BaseService implements IUserService {
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response pwdTradeResetSetting(@RequestBody UserDto dto) throws Exception{
+    public Response pwdTradeResetSetting(@RequestBody UserDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
@@ -428,7 +428,7 @@ public class UserService extends BaseService implements IUserService {
             if(userDao.updateTradePwd(entity)==0){
                 throw new RuntimeException("交易密码重置失败!");
             }
-            redisTemplate.opsForValue().getOperations().delete("user:setting:tradepwd:"+dto.getId());
+            redisHelper.del("user:setting:tradepwd:"+dto.getId());
         } catch (Exception e) {
             log.error("交易密码重置失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

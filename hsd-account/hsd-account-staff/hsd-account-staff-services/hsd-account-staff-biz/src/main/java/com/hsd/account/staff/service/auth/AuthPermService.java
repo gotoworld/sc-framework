@@ -32,7 +32,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
     private IAuthPermDao authPermDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(@RequestBody AuthPermDto dto) throws Exception {
+    public Response saveOrUpdateData(@RequestBody AuthPermDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -55,7 +55,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         return result;
     }
 
-    public String deleteData(@RequestBody AuthPermDto dto) throws Exception {
+    public String deleteData(@RequestBody AuthPermDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -69,12 +69,12 @@ public class AuthPermService extends BaseService implements IAuthPermService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {
             Exception.class, RuntimeException.class})
-    public String deleteDataById(@RequestBody AuthPermDto dto) throws Exception {
+    public String deleteDataById(@RequestBody AuthPermDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
             AuthPerm entity=copyTo(dto,AuthPerm.class);
-            if (authPermDao.findDataByNoDelFlag(entity) != 0) throw new RuntimeException("当前数据为系统保留数据，不能删除！");
+            if (authPermDao.isNoDelFlag(entity) > 0) throw new RuntimeException("当前数据为系统保留数据，不能删除！");
             authPermDao.deleteById(entity);
         } catch (Exception e) {
             log.error("信息删除失败", e);
@@ -83,7 +83,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         return result;
     }
     @Override
-    public PageInfo findDataIsPage(@RequestBody AuthPermDto dto) throws Exception {
+    public PageInfo findDataIsPage(@RequestBody AuthPermDto dto) {
         PageInfo pageInfo=null;
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -121,7 +121,7 @@ public class AuthPermService extends BaseService implements IAuthPermService {
         return result;
     }
 
-    public String recoveryDataById(@RequestBody AuthPermDto dto) throws Exception {
+    public String recoveryDataById(@RequestBody AuthPermDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");

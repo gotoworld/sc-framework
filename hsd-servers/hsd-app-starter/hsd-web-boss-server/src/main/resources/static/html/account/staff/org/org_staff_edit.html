@@ -32,7 +32,7 @@
 				<form id="orgStaff_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<div class="col-md-12" style="height: 50px;">
 						<div style="float:right;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 					<input type="hidden" name="id" value="{{item.id}}" />
@@ -45,7 +45,7 @@
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">员工账号：</label>
                             <div class="col-md-12">
-                                <input id="bean-account" name="account" value="{{item.account}}" class="form-control" type="text"  placeholder="请输入员工账号"  required="" aria-required="true"  aria-describedby="bean-account-error"  maxlength="55"   aria-invalid="true">
+                                <input id="bean-account" name="account" value="{{item.account}}" ng-disabled="item.account!=''" class="form-control" type="text"  placeholder="请输入员工账号"  required="" aria-required="true"  aria-describedby="bean-account-error"  maxlength="55"   aria-invalid="true">
                                 <span id="bean-account-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -151,7 +151,7 @@
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 				</form>
@@ -204,7 +204,7 @@
                     alert(result.message);
                 }
             }, 'json');
-        }
+        };
         $scope.save = function () {
             if($("#orgStaff_01").valid()){
                 $.post(site.orgStaff.save, $('#orgStaff_01').serialize(),function (result) {
@@ -230,7 +230,7 @@
              }
              if(!$data.$$phase) $data.$apply();
          }, 'json');
-    }
+    };
     var loadStaffLevel=function(){
         $.get(site.sysVariable.list+'staffLevel', {},function (result) {
              //console.info("获取数据.." + JSON.stringify(result));
@@ -241,7 +241,7 @@
              }
              if(!$data.$$phase) $data.$apply();
          }, 'json');
-    }
+    };
 
     $(document).ready(function(){
         formValidate();

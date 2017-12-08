@@ -196,7 +196,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return results;
     }
     @RfAccount2Bean
-    @RequiresPermissions("orgInfo:edit:staff")
+    //@RequiresPermissions("orgInfo:edit:staff")
     public Response addStaff(@RequestBody OrgOrgVsStaffDto dto) {
         Response result = new Response(0,"success");
         try {
@@ -208,7 +208,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         }
         return result;
     }
-    @RequiresPermissions("orgInfo:edit:staff")
+    //@RequiresPermissions("orgInfo:edit:staff")
     public Response delStaff(@RequestBody OrgOrgVsStaffDto dto) {
         Response result = new Response(0,"success");
         try {
@@ -235,7 +235,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
     }
 
     @RfAccount2Bean
-    @RequiresPermissions("orgInfo:edit:role")
+    //@RequiresPermissions("orgInfo:edit:role")
     public Response addRole(@RequestBody OrgOrgVsRoleDto dto) {
         Response result = new Response(0,"success");
         try {
@@ -248,7 +248,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
 
-    @RequiresPermissions("orgInfo:edit:role")
+    //@RequiresPermissions("orgInfo:edit:role")
     public Response delRole(@RequestBody OrgOrgVsRoleDto dto) {
         Response result = new Response(0,"success");
         try {
@@ -261,7 +261,7 @@ public class OrgInfoService extends BaseService implements IOrgInfoService {
         return result;
     }
 
-    @RequiresPermissions("orgInfo:edit:setManager")
+    //@RequiresPermissions("orgInfo:edit:setManager")
     public Response setManager(@RequestBody OrgInfoDto dto) {
         Response result = new Response(0,"success");
         try {

@@ -88,6 +88,7 @@ public class JwtUtil {
         jo.put("appId", ReflectUtil.getValueByFieldName(obj, "appId"));
         jo.put("appName", ReflectUtil.getValueByFieldName(obj, "appName"));
         jo.put("appUserId", ReflectUtil.getValueByFieldName(obj, "appUserId"));
+        jo.put("appStaffId", ReflectUtil.getValueByFieldName(obj, "appStaffId"));
         jo.put("channelName", ReflectUtil.getValueByFieldName(obj, "channelName"));
         jo.put("authorizationInfoPerms", ReflectUtil.getValueByFieldName(obj, "authorizationInfoPerms"));
         jo.put("authorizationInfoRoles", ReflectUtil.getValueByFieldName(obj, "authorizationInfoRoles"));
@@ -103,7 +104,7 @@ public class JwtUtil {
         final Claims claims = parseJWT(authorizationToken);
         return JSONObject.parseObject(claims.getSubject());
     }
-    public static <T> T getSubject(Class<T> obj) throws Exception {
+    public static <T> T getSubject(Class<T> obj) {
         return getSubject().toJavaObject(obj);
     }
     public static <T> T  getSubject(Object obj,Class<T> tClass) {

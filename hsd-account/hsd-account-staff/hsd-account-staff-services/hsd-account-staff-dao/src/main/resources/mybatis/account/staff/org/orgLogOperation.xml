@@ -6,6 +6,7 @@
          t1.id as "id"
         ,t1.type as "type"
         ,t1.app_id as "appId"
+        ,t1.app_name as "appName"
         ,t1.memo as "memo"
         ,t1.detail_info as "detailInfo"
         ,t1.date_created as "dateCreated"
@@ -29,7 +30,8 @@
             id
            ,type
            ,app_id
-           ,memo 
+           ,app_name
+           ,memo
            ,detail_info 
            ,date_created 
            ,create_id 
@@ -39,7 +41,8 @@
             #{id}
            ,#{type}
            ,#{appId}
-           ,#{memo} 
+           ,#{appName}
+           ,#{memo}
            ,#{detailInfo} 
            ,now()
            ,#{createId} 

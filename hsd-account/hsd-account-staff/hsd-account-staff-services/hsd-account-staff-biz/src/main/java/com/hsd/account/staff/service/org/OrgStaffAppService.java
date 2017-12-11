@@ -1,11 +1,11 @@
-package com.hsd.account.staff.service.sys;
+package com.hsd.account.staff.service.org;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.hsd.account.staff.api.sys.IUserAppService;
-import com.hsd.account.staff.dao.sys.IUserAppDao;
-import com.hsd.account.staff.dto.sys.UserAppDto;
-import com.hsd.account.staff.entity.sys.UserApp;
+import com.hsd.account.staff.api.org.IOrgStaffAppService;
+import com.hsd.account.staff.dao.org.IOrgStaffAppDao;
+import com.hsd.account.staff.dto.org.OrgStaffAppDto;
+import com.hsd.account.staff.entity.org.OrgStaffApp;
 import com.hsd.framework.IdGenerator;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -24,26 +24,26 @@ import java.util.List;
 
 @FeignService
 @Slf4j
-public class UserAppService extends BaseService implements IUserAppService {
+public class OrgStaffAppService extends BaseService implements IOrgStaffAppService {
     @Autowired
-    private IUserAppDao userAppDao;
+    private IOrgStaffAppDao orgStaffAppDao;
     @Autowired
     private IdGenerator idGenerator;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(@RequestBody UserAppDto dto) {
+    public Response saveOrUpdateData(@RequestBody OrgStaffAppDto dto) {
         Response result = new Response(0, "success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
-            UserApp entity = copyTo(dto, UserApp.class);
+            OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
             //判断数据是否存在
-            if (userAppDao.isDataYN(entity) != 0) {
+            if (orgStaffAppDao.isDataYN(entity) != 0) {
                 //数据存在
-                userAppDao.update(entity);
+                orgStaffAppDao.update(entity);
             } else {
                 //新增
-                userAppDao.insert(entity);
+                orgStaffAppDao.insert(entity);
                 result.data = entity.getId();
             }
         } catch (Exception e) {
@@ -54,12 +54,12 @@ public class UserAppService extends BaseService implements IUserAppService {
     }
 
     @Override
-    public String deleteData(@RequestBody UserAppDto dto) {
+    public String deleteData(@RequestBody OrgStaffAppDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
-            UserApp entity = copyTo(dto, UserApp.class);
-            if (userAppDao.deleteByPrimaryKey(entity) == 0) {
+            OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
+            if (orgStaffAppDao.deleteByPrimaryKey(entity) == 0) {
                 throw new RuntimeException("数据不存在!");
             }
         } catch (Exception e) {
@@ -71,15 +71,15 @@ public class UserAppService extends BaseService implements IUserAppService {
 
 
     @Override
-    public PageInfo findDataIsPage(@RequestBody UserAppDto dto) {
+    public PageInfo findDataIsPage(@RequestBody OrgStaffAppDto dto) {
         PageInfo pageInfo = null;
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
-            UserApp entity = copyTo(dto, UserApp.class);
+            OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
             PageHelper.startPage(PN(dto.getPageNum()), PS(dto.getPageSize()));
-            List list = userAppDao.findDataIsPage(entity);
+            List list = orgStaffAppDao.findDataIsPage(entity);
             pageInfo = new PageInfo(list);
-            pageInfo.setList(copyTo(pageInfo.getList(), UserAppDto.class));
+            pageInfo.setList(copyTo(pageInfo.getList(), OrgStaffAppDto.class));
         } catch (Exception e) {
             log.error("信息[分页]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
@@ -88,11 +88,11 @@ public class UserAppService extends BaseService implements IUserAppService {
     }
 
     @Override
-    public List<UserAppDto> findDataIsList(@RequestBody UserAppDto dto) {
-        List<UserAppDto> results = null;
+    public List<OrgStaffAppDto> findDataIsList(@RequestBody OrgStaffAppDto dto) {
+        List<OrgStaffAppDto> results = null;
         try {
-            UserApp entity = copyTo(dto, UserApp.class);
-            results = copyTo(userAppDao.findDataIsList(entity), UserAppDto.class);
+            OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
+            results = copyTo(orgStaffAppDao.findDataIsList(entity), OrgStaffAppDto.class);
         } catch (Exception e) {
             log.error("信息[列表]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
@@ -101,11 +101,11 @@ public class UserAppService extends BaseService implements IUserAppService {
     }
 
     @Override
-    public UserAppDto findDataById(@RequestBody UserAppDto dto) {
-        UserAppDto result = null;
+    public OrgStaffAppDto findDataById(@RequestBody OrgStaffAppDto dto) {
+        OrgStaffAppDto result = null;
         try {
-            UserApp entity = copyTo(dto, UserApp.class);
-            result = copyTo(userAppDao.selectByPrimaryKey(entity), UserAppDto.class);
+            OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
+            result = copyTo(orgStaffAppDao.selectByPrimaryKey(entity), OrgStaffAppDto.class);
         } catch (Exception e) {
             log.error("信息[详情]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
@@ -114,14 +114,14 @@ public class UserAppService extends BaseService implements IUserAppService {
     }
 
     @Override
-    public UserAppDto findDataByAppIdAndUserId(@RequestBody UserAppDto dto) {
-        UserAppDto result = null;
+    public OrgStaffAppDto findDataByAppIdAndUserId(@RequestBody OrgStaffAppDto dto) {
+        OrgStaffAppDto result = null;
         try {
-            UserApp entity = copyTo(dto, UserApp.class);
-            result = copyTo(userAppDao.findDataByAppIdAndUserId(entity), UserAppDto.class);
+            OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
+            result = copyTo(orgStaffAppDao.findDataByAppIdAndUserId(entity), OrgStaffAppDto.class);
             if (result == null) {
                 entity.setId(idGenerator.nextId());
-                userAppDao.insert(entity);
+                orgStaffAppDao.insert(entity);
                 dto.setId(entity.getId());
                 result=dto;
             }

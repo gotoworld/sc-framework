@@ -1,4 +1,4 @@
-package com.hsd.account.staff.dto.sys;
+package com.hsd.account.staff.dto.org;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hsd.framework.dto.BaseDto;
@@ -15,8 +15,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("APP用户表 DTO")
-public class UserAppDto extends BaseDto {
+@ApiModel("APP员工表 DTO")
+public class OrgStaffAppDto extends BaseDto {
      @ApiModelProperty("app用户id")
      private Long id;
      @ApiModelProperty("用户id")

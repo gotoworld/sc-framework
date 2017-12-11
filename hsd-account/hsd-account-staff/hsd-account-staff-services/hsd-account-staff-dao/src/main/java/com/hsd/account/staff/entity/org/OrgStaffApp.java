@@ -15,8 +15,8 @@ import java.util.Date;
 public class OrgStaffApp extends BaseEntity {
      /**app用户id*/
      private Long id;
-     /**用户id*/
-     private Long userId;
+     /**员工id*/
+     private Long staffId;
      /**应用id*/
      private String appId;
      /**注册时间*/

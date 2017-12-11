@@ -85,12 +85,9 @@ public class OrgStaffController extends BaseController {
 		}
 		return result;
 	}
-	/**
-	 * <p> 详情。
-	 */
 	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/{id}")
-	@ApiOperation(value = "详情")
+	@ApiOperation(value = "详情-根据id")
 	public Response info(@PathVariable("id") Long id) {
 		log.info("OrgStaffController info.........");
 		Response result = new Response("success");
@@ -103,12 +100,9 @@ public class OrgStaffController extends BaseController {
 		}
 		return result;
 	}
-	/**
-	 * <p> 详情。
-	 */
 	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/byaccount/{account}")
-	@ApiOperation(value = "详情")
+	@ApiOperation(value = "详情-根据账号")
 	public Response infoByAccount(@PathVariable("account") String account) {
 		log.info("OrgStaffController infoByAccount.........");
 		Response result = new Response("success");
@@ -116,6 +110,21 @@ public class OrgStaffController extends BaseController {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setAccount(account);
 			result.data=orgStaffService.findDataByAccount(dto);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequiresPermissions("orgStaff:menu")
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"info/byjobno/{jobNo}")
+	@ApiOperation(value = "详情-根据工号")
+	public Response infoByJobNo(@PathVariable("jobNo") String jobNo) {
+		log.info("OrgStaffController infoByJobNo.........");
+		Response result = new Response("success");
+		try {
+			OrgStaffDto dto=new OrgStaffDto();
+			dto.setJobNo(jobNo);
+			result.data=orgStaffService.findDataByJobNo(dto);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}
@@ -165,11 +174,22 @@ public class OrgStaffController extends BaseController {
 	}
 	/**判断员工id是否存在 */
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isAccountYN/{account}")
-	@ApiOperation(value = "判断员工id是否存在")
+	@ApiOperation(value = "判断员工[账号]是否存在")
 	public Response isAccountYN(@PathVariable("account") String account) {
 		Response result = new Response("success");
 		try {
 			result.data=orgStaffService.isAccountYN(account);
+		} catch (Exception e) {
+			result=Response.error(e.getMessage());
+		}
+		return result;
+	}
+	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isJobNoYN/{jobNo}")
+	@ApiOperation(value = "判断员工[工号]是否存在")
+	public Response isJobNoYN(@PathVariable("jobNo") String jobNo) {
+		Response result = new Response("success");
+		try {
+			result.data=orgStaffService.isJobNoYN(jobNo);
 		} catch (Exception e) {
 			result=Response.error(e.getMessage());
 		}

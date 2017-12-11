@@ -14,9 +14,9 @@ import com.hsd.framework.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 @FeignService
 @Slf4j
@@ -43,25 +43,21 @@ public class OrgLogOperationService extends BaseService implements IOrgLogOperat
         }
         return pageInfo;
     }
-    public void info(@RequestParam("type") String type,
-                     @RequestParam("memo")String memo,
-                     @RequestParam("appId")String appId,
-                     @RequestParam("detailInfo")String detailInfo,
-                     @RequestParam("staffId")Long staffId,
-                     @RequestParam("staffName")String staffName,
-                     @RequestParam("ip")String ip) {
+    public void log(@RequestBody Map<String,Object> map) {
         try {
-            OrgLogOperation entity = new OrgLogOperation();
-            entity.setId(idGenerator.nextId());
-            entity.setType(type);// 操作类型(a增d删u改q查)
-            entity.setMemo(memo);// 描述
-            entity.setAppId(appId);// 所属系统域
-            entity.setDetailInfo(detailInfo);// 具体
-            entity.setCreateId(staffId);// 操作人id
-            entity.setCreateName(staffName);// 操作人姓名
-            entity.setCreateIp(ip);// 建立者IP
+            OrgLogOperation orgLogOperation= new OrgLogOperation(){{
+                setId(idGenerator.nextId());
+                setType((String)map.get("type"));// 操作类型a增d删u改q查)
+                setMemo((String)map.get("memo"));// 描述
+                setAppId((String)map.get("appId"));// 所属系统域
+                setAppName((String)map.get("appName"));// 所属系统域
+                setDetailInfo((String)map.get("detailInfo"));// 具体
+                setCreateId(Long.parseLong(""+map.get("createId")));// 操作人id
+                setCreateName((String)map.get("createName"));// 操作人姓名
+                setCreateIp((String)map.get("createIp"));// 建立者IP
+            }};
             // 新增
-            logOperationDao.insert(entity);
+            logOperationDao.insert(orgLogOperation);
         } catch (Exception e) {
             log.error("操作日志信息保存失败!", e);
         }

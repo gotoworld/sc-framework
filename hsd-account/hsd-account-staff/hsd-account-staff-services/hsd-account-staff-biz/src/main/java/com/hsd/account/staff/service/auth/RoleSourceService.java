@@ -36,6 +36,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
             Map<String, Object> map = new HashMap<>();
             map.put("staffId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
+            map.put("appId", dto.getAppId());
             return authRoleDao.isSuperAdmin(map);
         } catch (Exception e) {
             log.error("根据员工id,判断员工是否为超级管理员,要特权.,数据库处理异常!", e);
@@ -49,6 +50,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
             Map<String, Object> map = new HashMap<>();
             map.put("staffId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
+            map.put("appId", dto.getAppId());
             return copyTo(authRoleDao.getRoleListByStaffId(map),AuthRoleDto.class);
         } catch (Exception e) {
             log.error("角色信息列表>根据员工id,数据库处理异常!", e);
@@ -62,6 +64,7 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
             Map<String, Object> map = new HashMap<>();
             map.put("staffId", dto.getId());
             map.put("iissuperman", dto.getIissuperman());
+            map.put("appId", dto.getAppId());
             return copyTo(authPermDao.getPermListByStaffId(map),AuthPermDto.class);
         } catch (Exception e) {
             log.error("角色权限信息列表>根据员工id,数据库处理异常!", e);

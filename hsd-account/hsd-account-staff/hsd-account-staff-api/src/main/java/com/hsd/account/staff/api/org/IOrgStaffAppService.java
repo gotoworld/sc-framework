@@ -49,7 +49,7 @@ public interface IOrgStaffAppService {
     OrgStaffAppDto findDataById(OrgStaffAppDto dto) throws Exception;
 
 
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByAppIdAndUserId")
-    OrgStaffAppDto findDataByAppIdAndUserId(OrgStaffAppDto dto)throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByAppIdAndStaffId")
+    OrgStaffAppDto findDataByAppIdAndStaffId(OrgStaffAppDto dto)throws Exception;
 
 }

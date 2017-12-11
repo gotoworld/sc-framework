@@ -30,7 +30,7 @@
 				<form id="userSignContract_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<input type="hidden" name="id" value="{{item.id}}" />
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
-					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
+					<input type="hidden" name="newFlag" value="{{newFlag!=0?0:1}}" />
 
 					<input type="hidden" name="userId" value="{{item.userId}}" />
 					<input type="hidden" name="contractId" value="{{item.contractId}}" />

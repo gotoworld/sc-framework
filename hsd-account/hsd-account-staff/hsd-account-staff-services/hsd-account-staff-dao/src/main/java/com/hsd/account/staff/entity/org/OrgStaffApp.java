@@ -1,20 +1,18 @@
-package com.hsd.account.staff.entity.sys;
+package com.hsd.account.staff.entity.org;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.entity.BaseEntity;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserApp extends BaseEntity {
+public class OrgStaffApp extends BaseEntity {
      /**app用户id*/
      private Long id;
      /**用户id*/

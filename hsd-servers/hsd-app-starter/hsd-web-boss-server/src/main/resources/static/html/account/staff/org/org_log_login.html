@@ -83,9 +83,9 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>时间</th>
-                                    				<th>员工</th>
-													<th>系统名称</th>
+													<th>应用</th>
+													<th>时间</th>
+													<th>员工</th>
                                     				<th>类型</th>
                                     				<th>IP地址</th>
                                     				<th>操作</th>
@@ -94,9 +94,9 @@
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                    				<td>{{item.staffName}}</td>
 													<td>{{item.appName}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td>{{item.staffName}}</td>
                                     				<td>{{item.type==0?'登录':'登出'}}</td>
                                     				<td>{{item.ipAddr}}</td>
                                     				<td>
@@ -104,7 +104,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="8">
+                                    				<td colspan="7">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

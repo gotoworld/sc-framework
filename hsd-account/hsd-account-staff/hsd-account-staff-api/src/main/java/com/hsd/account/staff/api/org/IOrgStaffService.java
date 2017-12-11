@@ -85,6 +85,11 @@ public interface IOrgStaffService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByAccount")
     OrgStaffDto findDataByAccount(OrgStaffDto dto);
     /**
+     * <p>获取员工信息-根据工号。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByJobNo")
+    OrgStaffDto findDataByJobNo(OrgStaffDto dto);
+    /**
      * <p>获取员工所在组织集合。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findOrgIsList")
@@ -95,6 +100,9 @@ public interface IOrgStaffService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isAccountYN")
     String isAccountYN(@RequestParam(name = "account") String account);
+
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/isJobNoYN")
+    String isJobNoYN(@RequestParam(name = "jobNo") String jobNo);
 
     /**
      * <p>密码修改

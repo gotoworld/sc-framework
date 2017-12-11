@@ -1,9 +1,9 @@
 var uploadPath = "http://192.168.101.100:28888/";
-var basePath = "http://localhost/";
-// var basePath = "http://192.168.101.100:8080/";
+// var basePath = "http://localhost/";
+var basePath = "http://192.168.101.100:8080/";
 var apiPath = {
     account: {
-        staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss-wxg",
+        staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss",
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-boss",
         actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss"
     }

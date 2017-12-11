@@ -114,11 +114,11 @@ public class OrgStaffAppService extends BaseService implements IOrgStaffAppServi
     }
 
     @Override
-    public OrgStaffAppDto findDataByAppIdAndUserId(@RequestBody OrgStaffAppDto dto) {
+    public OrgStaffAppDto findDataByAppIdAndStaffId(@RequestBody OrgStaffAppDto dto) {
         OrgStaffAppDto result = null;
         try {
             OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
-            result = copyTo(orgStaffAppDao.findDataByAppIdAndUserId(entity), OrgStaffAppDto.class);
+            result = copyTo(orgStaffAppDao.findDataByAppIdAndStaffId(entity), OrgStaffAppDto.class);
             if (result == null) {
                 entity.setId(idGenerator.nextId());
                 orgStaffAppDao.insert(entity);

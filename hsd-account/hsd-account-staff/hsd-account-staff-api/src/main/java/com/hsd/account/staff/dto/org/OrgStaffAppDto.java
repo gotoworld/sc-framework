@@ -17,10 +17,10 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("APP员工表 DTO")
 public class OrgStaffAppDto extends BaseDto {
-     @ApiModelProperty("app用户id")
+     @ApiModelProperty("app员工id")
      private Long id;
-     @ApiModelProperty("用户id")
-     private Long userId;
+     @ApiModelProperty("员工id")
+     private Long staffId;
      @ApiModelProperty("应用id")
 	 @Size(max=22,message="appId最大22字符")
      private String appId;

@@ -52,7 +52,7 @@ public class SysAppController extends BaseController {
     /**
      * <p>信息列表 (未删除)。
      */
-    @RequiresPermissions("sysApp:menu")
+//    @RequiresPermissions("sysApp:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
     @ApiOperation(value = "信息列表")
     public Response list(@ModelAttribute  SysAppDto dto) {

@@ -44,12 +44,16 @@ public interface IOrgStaffDao extends IBaseDao {
      * <p>获取员工信息>根据员工登录名。
      */
     Object findDataByAccount(IEntity entity) throws Exception;
+    Object findDataByJobNo(IEntity entity) throws Exception;
     Object selectUserPwdByPrimaryKey(IEntity entity) throws Exception;
     /**
      * <p>判断员工账号是否存在
      */
     @Select(" select count(0) from org_staff where  account=#{account} ")
     int isAccountYN(@Param("account") String account) throws Exception;
+
+    @Select(" select count(0) from org_staff where  job_no=#{jobNo} ")
+    int isJobNoYN(@Param("jobNo") String jobNo) throws Exception;
     /**
      * <p>密码修改
      */

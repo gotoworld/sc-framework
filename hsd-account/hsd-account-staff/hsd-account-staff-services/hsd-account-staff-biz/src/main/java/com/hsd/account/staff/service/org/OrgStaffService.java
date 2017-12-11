@@ -204,7 +204,7 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         try {
             result = copyTo(orgStaffDao.selectByPrimaryKey(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
         } catch (Exception e) {
-            log.error("信息详情查询失败!", e);
+            log.error("信息详情byid查询失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
@@ -214,7 +214,17 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         try {
             result = copyTo(orgStaffDao.findDataByAccount(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
         } catch (Exception e) {
-            log.error("信息详情查询失败!", e);
+            log.error("信息详情byAccount查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    public OrgStaffDto findDataByJobNo(@RequestBody OrgStaffDto dto) {
+        OrgStaffDto result = null;
+        try {
+            result = copyTo(orgStaffDao.findDataByJobNo(copyTo(dto,OrgStaff.class)),OrgStaffDto.class);
+        } catch (Exception e) {
+            log.error("信息详情byJobNo查询失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;
@@ -256,7 +266,21 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
                 }
             }
         } catch (Exception e) {
-            log.error("判断员工id是否存在,数据库处理异常!", e);
+            log.error("判断员工account是否存在,数据库处理异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
+    public String isJobNoYN(@RequestParam(name ="jobNo") String jobNo) {
+        String result = "success";
+        try {
+            if (ValidatorUtil.notEmpty(jobNo)) {
+                if (orgStaffDao.isJobNoYN(jobNo) > 0) {
+                    throw new RuntimeException("工号["+jobNo+"]已存在!");
+                }
+            }
+        } catch (Exception e) {
+            log.error("判断员工工号是否存在,数据库处理异常!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
         }
         return result;

@@ -17,6 +17,8 @@ public class BaseEntity implements IEntity {
     private Long createId;
     /** app用户id */
     private Long appUserId;
+    /** app员工id */
+    private Long appStaffId;
     /** appId */
     private String appId;
     /** app名称 */

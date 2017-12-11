@@ -31,7 +31,7 @@
 				<form id="identity_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
 					<input type="hidden" name="userId" value="{{item.userId}}" />
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
-					<input type="hidden" name="newFlag" value="{{newFlag!=0?1:0}}" />
+					<input type="hidden" name="newFlag" value="{{newFlag!=0?0:1}}" />
 					<div class="clearfix "></div>
 					<div class="col-sm-6 b-r">
 

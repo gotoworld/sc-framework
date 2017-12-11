@@ -50,7 +50,7 @@ public class RfAccount2BeanAspect {
                         }
 //                      System.out.printf(JSON.toJSONString(obj));
                         ReflectUtil.setValueByFieldName2(obj, "createId", dto.getId());//创建者id
-                        ReflectUtil.setValueByFieldName2(obj, "appUserId", dto.getAppUserId());//app用户id
+                        ReflectUtil.setValueByFieldName2(obj, "appStaffId", dto.getAppStaffId());//app用户id
                         ReflectUtil.setValueByFieldName2(obj, "appId", dto.getAppId());//appId
                         ReflectUtil.setValueByFieldName2(obj, "appName", dto.getAppName());//app名称
                         ReflectUtil.setValueByFieldName2(obj, "account", dto.getAccount());//id

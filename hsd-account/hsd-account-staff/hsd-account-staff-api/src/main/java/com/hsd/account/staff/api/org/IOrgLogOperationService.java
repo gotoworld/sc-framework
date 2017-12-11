@@ -6,7 +6,8 @@ import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
 
 /**
  * <p>系统_管理员操作日志   业务处理接口类。
@@ -18,8 +19,8 @@ public interface IOrgLogOperationService {
     /**
      * 管理员操作日志记录。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/info")
-    void info(@RequestParam("type") String type, @RequestParam("memo") String memo, @RequestParam("appId") String appId, @RequestParam("detailInfo") String detailInfo, @RequestParam("staffId") Long staffId, @RequestParam("staffName") String staffName, @RequestParam("ip") String ip);
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/log")
+    void log(Map<String,Object> map);
     /**
      * <p>信息列表 分页。
      */

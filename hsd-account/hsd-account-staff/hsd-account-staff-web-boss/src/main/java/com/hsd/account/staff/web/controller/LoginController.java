@@ -4,13 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.hsd.account.staff.api.auth.IRoleSourceService;
 import com.hsd.account.staff.api.org.IOrgLogLoginService;
 import com.hsd.account.staff.api.sys.ISysAppService;
-import com.hsd.account.staff.api.sys.IUserAppService;
+import com.hsd.account.staff.api.org.IOrgStaffAppService;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
 import com.hsd.account.staff.dto.org.OrgLogLoginDto;
+import com.hsd.account.staff.dto.org.OrgStaffAppDto;
 import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.account.staff.dto.sys.SysAppDto;
-import com.hsd.account.staff.dto.sys.UserAppDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.NoAuthorize;
 import com.hsd.framework.cache.util.RedisHelper;
@@ -49,7 +49,7 @@ public class LoginController extends BaseController {
     @Autowired
     private ISysAppService sysAppService;
     @Autowired
-    private IUserAppService userAppService;
+    private IOrgStaffAppService userAppService;
     @Autowired
     private RedisHelper redisHelper;
 
@@ -77,9 +77,9 @@ public class LoginController extends BaseController {
             }
             roleSourceService.lastLogin(orgStaffDto);
 
-            //查询app用户表
-            UserAppDto userAppDto = userAppService.findDataByAppIdAndUserId(new UserAppDto(){{setUserId(orgStaffDto.getId());setAppId(sysAppDto.getId());}});
-            orgStaffDto.setAppUserId(userAppDto.getId());
+            //查询APP员工表
+            OrgStaffAppDto userAppDto = userAppService.findDataByAppIdAndUserId(new OrgStaffAppDto(){{setUserId(orgStaffDto.getId());setAppId(sysAppDto.getId());}});
+            orgStaffDto.setAppStaffId(userAppDto.getId());
             orgStaffDto.setAppId(sysAppDto.getId());
             orgStaffDto.setAppName(sysAppDto.getName());
 
@@ -118,7 +118,7 @@ public class LoginController extends BaseController {
             data.put("staff", JSONObject.parseObject(subject, OrgStaffDto.class));
             data.put("XCache", request.getSession().getId());
 
-            redisHelper.set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppUserId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
+            redisHelper.set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppStaffId()+"",JwtUtil.parseJWT(authorizationToken).getIssuedAt().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
 
             try {
                 //读取session中的员工
@@ -127,7 +127,7 @@ public class LoginController extends BaseController {
                 logDto.setIpAddr(IpUtil.getIpAddr(request));//请求的IP
                 logDto.setStaffId(orgStaffDto.getId());//id
                 logDto.setStaffName(orgStaffDto.getName());//员工名称
-                logDto.setAppUserId(orgStaffDto.getAppUserId());//app用户id
+                logDto.setAppStaffId(orgStaffDto.getAppStaffId());//app用户id
                 logDto.setAppId(orgStaffDto.getAppId());//系统ID
                 logDto.setAppName(orgStaffDto.getAppName());
 //                logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
@@ -166,7 +166,7 @@ public class LoginController extends BaseController {
                 logDto.setStaffId(orgStaffDto.getId());//id
                 logDto.setStaffName(orgStaffDto.getName());//员工名称
                 logDto.setAppName(orgStaffDto.getAppName());
-                logDto.setAppUserId(orgStaffDto.getAppUserId());
+                logDto.setAppStaffId(orgStaffDto.getAppStaffId());
                 logDto.setAppId(orgStaffDto.getAppId());
 //            logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
                 logLoginService.saveOrUpdateData(logDto);
@@ -203,7 +203,7 @@ public class LoginController extends BaseController {
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", refreshToken);
             data.put("XCache", request.getSession().getId());
-            redisHelper.set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppUserId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime(), CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
+            redisHelper.set("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppStaffId()+"",JwtUtil.parseJWT(refreshToken).getIssuedAt().getTime(), CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
             result.data = data;
         } catch (Exception e) {
             result = Response.error(e.getMessage());

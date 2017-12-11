@@ -21,6 +21,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 /**
  * 切点类
@@ -78,7 +79,17 @@ public class ALogAspect {
                 }
             } catch (Exception e) {
             }
-            orgLogService.info(logArr[0], logArr[1], "" + dto.getAppId(), JSON.toJSONString(object), dto.getId(), dto.getName(), ip);
+            Object finalObject = object;
+            orgLogService.log(new HashMap(){{
+                put("type",logArr[0]);// 操作类型(a增d删u改q查)
+                put("memo",logArr[1]);// 描述
+                put("appId",dto.getAppId());// 应用id
+                put("appName",dto.getAppName());// 应用名称
+                put("detailInfo",JSON.toJSONString(finalObject));// 具体
+                put("createId",dto.getId());// 操作人id
+                put("createName",dto.getName());// 操作人姓名
+                put("createIp",ip);// 建立者IP
+            }});
             log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -119,7 +130,16 @@ public class ALogAspect {
                 log.debug("请求参数:" + params);
                 log.debug("=====异常通知结束=====");
             }
-            orgLogService.info(logArr[0], logArr[1], "" +dto.getAppId(), e.getMessage(), dto.getId(), dto.getName(), ip);
+            orgLogService.log(new HashMap(){{
+                put("type",logArr[0]);// 操作类型(a增d删u改q查)
+                put("memo",logArr[1]);// 描述
+                put("appId",dto.getAppId());// 应用id
+                put("appName",dto.getAppName());// 应用名称
+                put("detailInfo",e.getMessage());// 具体
+                put("createId",dto.getId());// 操作人id
+                put("createName",dto.getName());// 操作人姓名
+                put("createIp",ip);// 建立者IP
+            }});
         } catch (Exception ex) {
             log.error("异常信息:{}", ex.getMessage());
         }

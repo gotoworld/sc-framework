@@ -78,7 +78,7 @@
         order by t1.date_created desc
     </select>
 
-    <select id="findDataByAppIdAndUserId" resultType="com.hsd.account.staff.entity.org.OrgStaffApp" parameterType="com.hsd.account.staff.entity.org.OrgStaffApp">
+    <select id="findDataByAppIdAndStaffId" resultType="com.hsd.account.staff.entity.org.OrgStaffApp" parameterType="com.hsd.account.staff.entity.org.OrgStaffApp">
         select
          t1.id as "id"
         ,t1.staff_id as "staffId"

@@ -78,7 +78,7 @@ public class LoginController extends BaseController {
             roleSourceService.lastLogin(orgStaffDto);
 
             //查询APP员工表
-            OrgStaffAppDto userAppDto = userAppService.findDataByAppIdAndUserId(new OrgStaffAppDto(){{setUserId(orgStaffDto.getId());setAppId(sysAppDto.getId());}});
+            OrgStaffAppDto userAppDto = userAppService.findDataByAppIdAndStaffId(new OrgStaffAppDto(){{setStaffId(orgStaffDto.getId());setAppId(sysAppDto.getId());}});
             orgStaffDto.setAppStaffId(userAppDto.getId());
             orgStaffDto.setAppId(sysAppDto.getId());
             orgStaffDto.setAppName(sysAppDto.getName());

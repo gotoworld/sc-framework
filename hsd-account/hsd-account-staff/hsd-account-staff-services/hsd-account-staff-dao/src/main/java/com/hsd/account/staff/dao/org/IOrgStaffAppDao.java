@@ -24,5 +24,5 @@ public interface IOrgStaffAppDao extends IBaseDao {
     @Delete("delete from org_staff_app where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
 
-    Object findDataByAppIdAndUserId(IEntity entity) throws Exception;
+    Object findDataByAppIdAndStaffId(IEntity entity) throws Exception;
 }

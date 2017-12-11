@@ -320,7 +320,14 @@ public class OrgStaffService extends BaseService implements IOrgStaffService {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
-            orgOrgVsStaffDao.insert(copyTo(dto,OrgOrgVsStaff.class));
+            OrgOrgVsStaff orgOrgVsStaff=copyTo(dto,OrgOrgVsStaff.class);
+            if(ValidatorUtil.notEmpty(dto.getStaffAccount()) && ValidatorUtil.notEmpty(dto.getOrgCode())){
+                //根据account获取staffId
+                orgOrgVsStaff.setStaffId(orgStaffDao.getIdbyAcccount(dto.getStaffAccount()));
+                //根据orgCode获取orgId
+                orgOrgVsStaff.setOrgId(orgInfoDao.getIdByPCode(new OrgInfo(){{setCode(dto.getOrgCode());}}));
+            }
+            orgOrgVsStaffDao.insert(orgOrgVsStaff);
         } catch (Exception e) {
             log.error("信息添加失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

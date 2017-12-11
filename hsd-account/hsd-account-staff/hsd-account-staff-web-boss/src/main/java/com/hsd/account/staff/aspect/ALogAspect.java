@@ -21,6 +21,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 /**
  * 切点类
@@ -32,7 +33,7 @@ public class ALogAspect {
 
     //注入Service用于把日志保存数据库
     @Autowired
-    private IOrgLogOperationService sysStaffLogService;
+    private IOrgLogOperationService orgLogService;
 
     //操作日志切点
     @Pointcut("@annotation(com.hsd.framework.annotation.ALogOperation)")
@@ -46,7 +47,7 @@ public class ALogAspect {
     public void doAfter(JoinPoint joinPoint) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //读取session中的员工
-        OrgStaffDto staff = JwtUtil.getSubject(OrgStaffDto.class);
+        OrgStaffDto dto = JwtUtil.getSubject(OrgStaffDto.class);
         //请求的IP
         String ip = IpUtil.getIpAddr(request);
         String[] logArr = getMethodDesc(joinPoint);
@@ -55,7 +56,7 @@ public class ALogAspect {
                 log.debug("=====前置通知开始=====");
                 log.debug("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
                 log.debug("方法描述:" + logArr[1]);
-                log.debug("请求人:" + staff.getName());
+                log.debug("请求人:" + dto.getName());
                 log.debug("请求IP:" + ip);
             }
             Object object = new Object();
@@ -78,7 +79,17 @@ public class ALogAspect {
                 }
             } catch (Exception e) {
             }
-            sysStaffLogService.info(logArr[0], logArr[1], "" + staff.getAppId(), JSON.toJSONString(object), staff.getId(), staff.getName(), ip);
+            Object finalObject = object;
+            orgLogService.log(new HashMap(){{
+                put("type",logArr[0]);// 操作类型(a增d删u改q查)
+                put("memo",logArr[1]);// 描述
+                put("appId",dto.getAppId());// 应用id
+                put("appName",dto.getAppName());// 应用名称
+                put("detailInfo",JSON.toJSONString(finalObject));// 具体
+                put("createId",dto.getId());// 操作人id
+                put("createName",dto.getName());// 操作人姓名
+                put("createIp",ip);// 建立者IP
+            }});
             log.debug("=====前置通知结束=====");
         } catch (Exception e) {
             //记录本地异常日志
@@ -104,7 +115,7 @@ public class ALogAspect {
         }
         try {
             //读取session中的员工
-            OrgStaffDto staff = JwtUtil.getSubject(OrgStaffDto.class);
+            OrgStaffDto dto = JwtUtil.getSubject(OrgStaffDto.class);
             //获取请求ip
             String ip = IpUtil.getIpAddr(request);
             String[] logArr = getMethodDesc(joinPoint);
@@ -114,12 +125,21 @@ public class ALogAspect {
                 log.debug("异常信息:" + e.getMessage());
                 log.debug("异常方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
                 log.debug("方法描述:" + logArr[1]);
-                log.debug("请求人:" + staff.getName());
+                log.debug("请求人:" + dto.getName());
                 log.debug("请求IP:" + ip);
                 log.debug("请求参数:" + params);
                 log.debug("=====异常通知结束=====");
             }
-            sysStaffLogService.info(logArr[0], logArr[1], "" + staff.getAppId(), e.getMessage(), staff.getId(), staff.getName(), ip);
+            orgLogService.log(new HashMap(){{
+                put("type",logArr[0]);// 操作类型(a增d删u改q查)
+                put("memo",logArr[1]);// 描述
+                put("appId",dto.getAppId());// 应用id
+                put("appName",dto.getAppName());// 应用名称
+                put("detailInfo",e.getMessage());// 具体
+                put("createId",dto.getId());// 操作人id
+                put("createName",dto.getName());// 操作人姓名
+                put("createIp",ip);// 建立者IP
+            }});
         } catch (Exception ex) {
             log.error("异常信息:{}", ex.getMessage());
         }

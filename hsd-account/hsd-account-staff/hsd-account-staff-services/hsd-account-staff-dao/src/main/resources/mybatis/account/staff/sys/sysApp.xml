@@ -44,7 +44,6 @@
            ,#{createId} 
            ,now()
            ,now()
-           ,now()
            ,0
         )
     </insert>

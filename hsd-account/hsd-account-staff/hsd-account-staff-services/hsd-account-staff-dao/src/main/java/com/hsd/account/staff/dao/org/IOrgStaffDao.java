@@ -98,6 +98,8 @@ public interface IOrgStaffDao extends IBaseDao {
     /**
      * 获取每一类最大员工号
      */
-    @Select("select MAX(t.job_no) from org_staff t WHERE t.job_no is not null GROUP BY SUBSTR(t.job_no,1,1)")
+    @Select("select MAX(t.job_no+0) as jobNo from org_staff t where LENGTH(0+t.job_no)=LENGTH(t.job_no) " +
+            "UNION " +
+            "select MAX(t.job_no) as jobNo from org_staff t where LENGTH(0+t.job_no)!=LENGTH(t.job_no) GROUP BY SUBSTR(t.job_no,1,1)")
     List<String> findMaxJobNo() throws Exception;
 }

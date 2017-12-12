@@ -206,7 +206,7 @@ public class RedisHelper {
      * @param key 键
      * @return 对应的多个键值
      */
-    public Map<Object, Object> hmget(String key) {
+    public Map<?, ?> hmget(String key) {
         return redisTemplate.opsForHash().entries(getPrefix() + key);
     }
 
@@ -341,7 +341,7 @@ public class RedisHelper {
      * @param key 键
      * @return
      */
-    public Set<Object> sGet(String key) {
+    public Set<?> sGet(String key) {
         try {
             return redisTemplate.opsForSet().members(getPrefix() + key);
         } catch (Exception e) {
@@ -442,7 +442,7 @@ public class RedisHelper {
      * @param end   结束  0 到 -1代表所有值
      * @return
      */
-    public List<Object> lGet(String key, long start, long end) {
+    public List<?> lGet(String key, long start, long end) {
         try {
             return redisTemplate.opsForList().range(getPrefix() + key, start, end);
         } catch (Exception e) {
@@ -525,7 +525,7 @@ public class RedisHelper {
      * @param value 值
      * @return
      */
-    public boolean lSet(String key, List<Object> value) {
+    public boolean lSet(String key, List<?> value) {
         try {
             redisTemplate.opsForList().rightPushAll(getPrefix() + key, value);
             return true;
@@ -543,7 +543,7 @@ public class RedisHelper {
      * @param time  时间(毫秒)
      * @return
      */
-    public boolean lSet(String key, List<Object> value, long time) {
+    public boolean lSet(String key, List<?> value, long time) {
         try {
             redisTemplate.opsForList().rightPushAll(getPrefix() + key, value);
             if (time > 0) expire(key, time);
@@ -589,5 +589,4 @@ public class RedisHelper {
             return 0;
         }
     }
-
 }

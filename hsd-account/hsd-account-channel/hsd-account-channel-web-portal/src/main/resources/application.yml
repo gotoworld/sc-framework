@@ -82,6 +82,8 @@ eureka:
 
 #服务名
 feign:
+  hystrix:
+    enabled: true
   okhttp:
     enabled: true
   name:
@@ -90,14 +92,40 @@ feign:
 
 hystrix:
   command:
+    threadpool:
+      default:
+        coreSize: 500  #并发执行的最大线程数，默认10
+    command:
+      paas-file:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 3600000
     default:
-      execution:
+      execution: #execution配置
         isolation:
-          strategy: SEMAPHORE
-  stream:
-    maxConcurrentConnections: 20
-    bus:
-      enabled: true
+          strategy: SEMAPHORE #隔离策略，默认是Thread, 可选Thread｜Semaphore
+          thread:
+            timeoutInMilliseconds: 8000 #命令执行超时时间，默认1000ms ，超出此时间配置，Hystrix 会将该执行命令为 TIMEOUT 并进入服务降级处理逻辑
+            interruptOnTimeout: true #发生超时是是否中断，默认true
+          semaphore:
+            maxConcurrentRequests: 10 # 最大并发请求数，默认10，当隔离策略使用信号量时(semaphore)，该属性用来配置信号量的大小，当最大并发请求数达到该设置值，后续的请求将会被拒绝;理论上选择semaphore size的原则和选择thread size一致，但选用semaphore时每次执行的单元要比较小且执行速度快（ms级别），否则的话应该用thread。semaphore应该占整个容器（tomcat）的线程池的一小部分。
+        timeout: #fallback配置
+          enabled: true #执行是否启用超时，默认启用true ,如果设置为 false，则 execution.isolation.thread.timeoutInMilliseconds 属性的配置将不起作用
+      fallback:
+        enabled: true #该属性用来设置服务降级策略是否启用，默认值 true ，如果设置为false，当请求失败或拒绝发生时，将不会调用 HystrixCommand.getFallback() 来执行服务降级逻辑
+      circuitBreaker: #circuitBreaker 配置
+        enabled: true #该属性用来确定当服务请求命令失败时，是否使用断路器来跟踪其健康指标和熔断请求，默认值 true
+        requestVolumeThreshold: 20 #该属性用来设置在滚动时间窗中，断路器的最小请求数。例如：默认值 20 的情况下，如果滚动时间窗（默认值 10秒）内仅收到19个请求，即使这19个请求都失败了，断路器也不会打开。
+        sleepWindowInMilliseconds: 5000 #该属性用来设置当断路器打开之后的休眠时间窗。默认值 5000 毫秒，休眠时间窗结束之后，会将断路器设置为"半开"状态，尝试熔断的请求命令，如果依然失败就将断路器继续设置为"打开"状态，如果成功就设置为"关闭"状态。
+        errorThresholdPercentage: 50 #该属性用来设置断路器打开的错误百分比条件。例如，默认值为 50 的情况下，表示在滚动时间窗中，在请求数量超过 circuitBreaker.requestVolumeThreshold 阈值的请求下，如果错误请求数的百分比超过50，就把断路器设置为"打开"状态，否则就设置为"关闭"状态。
+        #forceOpen: false #该属性用来设置断路器强制进入"打开"状态，会拒绝所有请求，该属性优先于 circuitBreaker.forceClosed
+        #forceClosed: false #该属性用来设置断路器强制进入"关闭"状态，会接收所有请求。
+  config:
+    stream:
+      maxConcurrentConnections: 20
+      bus:
+        enabled: true
 
 logging:
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"

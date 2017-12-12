@@ -8,6 +8,7 @@ import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 
@@ -17,6 +18,8 @@ import static java.lang.String.format;
  */
 @Slf4j
 public class FeignErrorDecoder implements ErrorDecoder {
+    @Value("${feign.hystrix.enabled:true}")
+    private Boolean feignHystrixEnabled;
     @Override
     public Exception decode(String methodKey, Response response) {
         int code = response.status() ;
@@ -49,8 +52,10 @@ public class FeignErrorDecoder implements ErrorDecoder {
         } catch (IOException ignored) { // NOPMD
 //            log.error("FeignErrorDecoder:",ignored);
         }
-
-//        return new FeignServiceException(code, message , data);
-        return new HystrixBadRequestException(message);
+        if(feignHystrixEnabled){
+            return new HystrixBadRequestException(message);
+        }else{
+            return new FeignServiceException(code, message , data);
+        }
     }
 }

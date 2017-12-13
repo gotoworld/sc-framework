@@ -83,7 +83,6 @@ spring:
     session-expire: 7200000
 
 
-
 eureka:
   user:
     name: admin
@@ -97,7 +96,7 @@ eureka:
     registerWithEureka: true #服务注册
     fetchRegistry: true #服务获取
     serviceUrl:
-      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.199:8761/eureka/
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
@@ -173,4 +172,4 @@ logging:
 # 自定义配置
 hsd:
   common:
-    appPrefix: test_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

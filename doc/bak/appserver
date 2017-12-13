@@ -29,7 +29,7 @@ start() {
 }
 
 stop() {
-	echo "Server is stoping..."
+	echo "find Server process..."
 	pid=$(ps -ef | grep $_APP | grep -v grep | awk '{print $2}')
 	if [ ! -n "$pid" ]; then
 		echo "Server process is not find."

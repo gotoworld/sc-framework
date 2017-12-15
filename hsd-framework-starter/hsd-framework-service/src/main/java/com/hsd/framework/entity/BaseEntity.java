@@ -1,10 +1,11 @@
 package com.hsd.framework.entity;
 
+import com.hsd.framework.AbstractEntity;
 import com.hsd.framework.IEntity;
 import lombok.Data;
 
 @Data
-public class BaseEntity implements IEntity {
+public class BaseEntity extends AbstractEntity implements IEntity {
     /** 开始时间 */
     private String dateBegin;
     /** 结束时间 */

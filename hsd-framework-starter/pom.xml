@@ -24,7 +24,9 @@
         <druid.version>1.1.5</druid.version>
         <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
         <spring.cloud.version>Dalston.RELEASE</spring.cloud.version>
+        <spring-boot-admin-server.version>1.5.5</spring-boot-admin-server.version>
         <docker.image.prefix>hsd</docker.image.prefix>
+        <docker.host>192.168.101.150</docker.host>
     </properties>
 
     <modules>
@@ -49,7 +51,7 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>1.5.2</version>
+            <version>${spring-boot-admin-server.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -150,11 +152,11 @@
                 <version>1.0.0</version>
                 <configuration>
                     <serverId>docker-hub</serverId>
-                    <registryUrl>http://192.168.101.150</registryUrl>
-                    <dockerHost>http://192.168.101.150:2375</dockerHost>
+                    <registryUrl>http://${docker.host}</registryUrl>
+                    <dockerHost>http://${docker.host}:2375</dockerHost>
                     <exposes>80</exposes>
                     <pushImage>true</pushImage>
-                    <imageName>192.168.101.150/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
+                    <imageName>${docker.host}/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
                     <imageTags>
                         <imageTag>1.0</imageTag>
                     </imageTags>

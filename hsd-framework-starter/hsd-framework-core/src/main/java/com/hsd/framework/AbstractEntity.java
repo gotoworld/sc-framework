@@ -2,7 +2,7 @@ package com.hsd.framework;
 
 import java.io.Serializable;
 
-public class AbstractEntity implements /*JsonClassSerializer,*/ Serializable {
+public class AbstractEntity implements JsonClassSerializer, Serializable {
     protected static long serialVersionUID = 1L;
 
     /**
@@ -13,7 +13,7 @@ public class AbstractEntity implements /*JsonClassSerializer,*/ Serializable {
      * @throws Exception
      */
     public <T> T copyTo(Class<T> to) throws Exception {
-        T obj = (T) ObjectCopy.copyTo(this, to);
+        T obj = ObjectCopy.copyTo(this, to);
         return obj;
     }
 

@@ -1,0 +1,12 @@
+spring:
+  rabbitmq: 
+    addresses: 192.168.101.100:5672,192.168.101.101:5672,192.168.101.102:5672
+    username: user-dev
+    password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+    virtualHost: /vhost/dev
+    #publisher-confirms: true
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

@@ -2,9 +2,13 @@ server:
   port: 8762
 
 spring:
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static/
-    
+  #rabbitmq:
+    #addresses: 192.168.101.100:5672,192.168.101.101:5672,192.168.101.102:5672
+    #username: user-dev
+    #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+    #virtualHost: /vhost/dev
+    #publisher-confirms: true
+
 eureka:
   server:
     enableSelfPreservation: false

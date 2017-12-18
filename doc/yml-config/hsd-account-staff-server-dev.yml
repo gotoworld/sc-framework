@@ -21,6 +21,13 @@ spring:
   zipkin:
     enabled: true
     base-url: http://192.168.101.101:9411
+  cloud.bus.trace.enabled: true #跟踪总线事件
+  #rabbitmq:
+    #addresses: 192.168.101.100:5672,192.168.101.101:5672,192.168.101.102:5672
+    #username: user-dev
+    #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+    #virtualHost: /vhost/dev
+    #publisher-confirms: true
   boot:
     admin:
       url: http://192.168.101.100:8889
@@ -36,7 +43,7 @@ spring:
     driverClass: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
-    password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+    #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
 #    # 下面为连接池的补充设置，应用到上面所有数据源中
 #    # 初始化大小，最小，最大
     initialSize: 5

@@ -6,6 +6,12 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  #rabbitmq:
+    #addresses: 192.168.101.100:5672,192.168.101.101:5672,192.168.101.102:5672
+    #username: user-dev
+    #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+    #virtualHost: /vhost/dev
+    #publisher-confirms: true
   boot:
     admin:
       url: http://192.168.101.100:8889

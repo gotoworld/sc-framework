@@ -44,38 +44,44 @@
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
-            <artifactId>spring.boot-admin.server</artifactId>
-            <version>1.5.5</version>
+            <artifactId>spring-boot-admin-server</artifactId>
+            <version>${spring.admin.version}</version>
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
-            <artifactId>spring.boot-admin.server-ui</artifactId>
+            <artifactId>spring-boot-admin-server-ui</artifactId>
             <version>${spring.admin.version}</version>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>de.codecentric</groupId>-->
-            <!--<artifactId>spring.boot-admin.server-ui-activiti</artifactId>-->
+            <!--<artifactId>spring-boot-admin-server-ui-activiti</artifactId>-->
             <!--<version>${spring.admin.version}</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>de.codecentric</groupId>
-            <artifactId>spring.boot-admin.server-ui-hystrix</artifactId>
+            <artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
             <version>${spring.admin.version}</version>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>de.codecentric</groupId>-->
-            <!--<artifactId>spring.boot-admin.server-ui-turbine</artifactId>-->
+            <!--<artifactId>spring-boot-admin-server-ui-turbine</artifactId>-->
             <!--<version>${spring.admin.version}</version>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-server-ui-login</artifactId>
+            <version>${spring.admin.version}</version>
+        </dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-        </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>${spring.admin.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jolokia</groupId>
@@ -92,13 +98,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-turbine</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring.boot-admin.server-ui-login</artifactId>
-            <version>${spring.admin.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

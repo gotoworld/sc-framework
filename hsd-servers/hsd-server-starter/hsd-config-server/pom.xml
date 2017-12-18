@@ -50,6 +50,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hsd.framework</groupId>
+            <artifactId>hsd-framework-amqp</artifactId>
+            <version>${hsd.framework.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

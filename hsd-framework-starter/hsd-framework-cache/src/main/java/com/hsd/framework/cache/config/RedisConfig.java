@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,11 +24,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.session.data.redis.RedisOperationsSessionRepository;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-import org.springframework.session.web.http.HeaderHttpSessionStrategy;
-import org.springframework.session.web.http.HttpSessionStrategy;
-import org.springframework.session.web.http.SessionRepositoryFilter;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.lang.reflect.Method;
@@ -38,8 +33,7 @@ import java.util.List;
  * Redis服务器对象缓存配置(对象缓存和Session缓存)
  */
 @Configuration
-@EnableCaching
-@EnableRedisHttpSession
+//@EnableCaching
 @Slf4j
 public class RedisConfig extends CachingConfigurerSupport {
 
@@ -107,15 +101,20 @@ public class RedisConfig extends CachingConfigurerSupport {
 	public RedisConnectionFactory secondaryRedisConnectionFactory() {
 		log.info("2.1 初始化Redis缓存服务器(普通对象)... ...");
 		RedisProperties redisProperties=redisProperties();
-		JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig());
-		redisConnectionFactory.setDatabase(redisProperties.getSecondaryDatabase());
-		if(redisProperties.getPassword()!=null){
+		JedisConnectionFactory redisConnectionFactory =null;
+		if(redisProperties().getCluster().isEnable()){
+			redisConnectionFactory=new JedisConnectionFactory(new RedisClusterConfiguration(redisProperties.getCluster().getNodes()));
+		}else{
+			redisConnectionFactory=new JedisConnectionFactory(jedisPoolConfig());
+			redisConnectionFactory.setDatabase(redisProperties.getSecondaryDatabase());
+			redisConnectionFactory.setHostName(redisProperties.getHost());
+			redisConnectionFactory.setTimeout(redisProperties.getTimeout());
+			redisConnectionFactory.setPort(redisProperties.getPort());
+			redisConnectionFactory.afterPropertiesSet();
+		}
+		if(ValidatorUtil.notEmpty(redisProperties.getPassword())){
 			redisConnectionFactory.setPassword(AppConfig.checkPassword(redisProperties.getPassword()));
 		}
-		redisConnectionFactory.setHostName(redisProperties.getHost());
-		redisConnectionFactory.setTimeout(redisProperties.getTimeout());
-		redisConnectionFactory.setPort(redisProperties.getPort());
-		redisConnectionFactory.afterPropertiesSet();
 		return redisConnectionFactory;
 	}
 
@@ -160,27 +159,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 		return template;
 	}
 
-	/** Session设置 */
-	@Bean
-	public RedisOperationsSessionRepository sessionRepository() {
-		RedisOperationsSessionRepository sessionRepository = new RedisOperationsSessionRepository(secondaryRedisConnectionFactory());
-		sessionRepository.setDefaultMaxInactiveInterval(redisProperties().getSessionExpire());// 设置session的有效时长
-		return sessionRepository;
-	}
-
-	@Bean
-	public SessionRepositoryFilter sessionRepositoryFilter(){
-		SessionRepositoryFilter sessionRepositoryFilter=new SessionRepositoryFilter(sessionRepository());
-		sessionRepositoryFilter.setHttpSessionStrategy(httpSessionStrategy());
-		return sessionRepositoryFilter;
-	}
-
-	@Bean
-	public HttpSessionStrategy httpSessionStrategy() {
-		HeaderHttpSessionStrategy headerHttpSessionStrategy = new HeaderHttpSessionStrategy();
-		headerHttpSessionStrategy.setHeaderName("X-Cache");
-		return headerHttpSessionStrategy;
-	}
 	public static void main(String[] args) {
 		String[] idGenNodeArr="192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==".split("@");//host:port:luaSha&password
 		String[] hostAndPortAndLuaSha=idGenNodeArr[0].split(":");

@@ -1,7 +1,7 @@
 package com.hsd.framework.cache;
 
 import com.hsd.Application;
-import com.hsd.framework.cache.util.IdGeneratorIsRedis;
+import com.hsd.framework.IdGenerator;
 import com.hsd.framework.cache.util.RedisHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,7 @@ public class RedisHelperTest {
     private RedisHelper redisHelper;
 
     @Autowired
-    private IdGeneratorIsRedis idGeneratorIsRedis;
+    private IdGenerator idGenerator;
 
     @Test
     public void testRedisCluster(){
@@ -30,6 +30,6 @@ public class RedisHelperTest {
     @Test
     public void testIdGenerator(){
         for (int i=0;i<1000;i++)
-        System.out.println(idGeneratorIsRedis.nextId());
+        System.out.println(this.idGenerator.nextId());
     }
 }

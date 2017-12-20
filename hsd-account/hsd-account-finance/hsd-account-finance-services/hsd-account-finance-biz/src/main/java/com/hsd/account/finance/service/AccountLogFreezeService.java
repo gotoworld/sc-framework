@@ -1,6 +1,7 @@
 package com.hsd.account.finance.service;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hsd.account.finance.api.IAccountLogFreezeService;
 import com.hsd.account.finance.dao.IAccountLogFreezeDao;
 import com.hsd.account.finance.dto.AccountLogFreezeDto;

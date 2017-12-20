@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.finance.dao.IAccountBindThirdpartyDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.app_user_id as "appUserId"
+        ,t1.account_id as "accountId"
+        ,t1.real_name as "realName"
+        ,t1.card_no as "cardNo"
+        ,t1.cellphone as "cellphone"
+        ,t1.thirdparty_currency as "thirdpartyCurrency"
+        ,t1.thirdparty_type as "thirdpartyType"
+        ,t1.thirdparty_name as "thirdpartyName"
+        ,t1.thirdparty_branch as "thirdpartyBranch"
+        ,t1.thirdparty_account as "thirdpartyAccount"
+        ,t1.thirdparty_date_expiry as "thirdpartyDateExpiry"
+        ,t1.state as "state"
+        ,t1.date_bind as "dateBind"
+        ,t1.date_success as "dateSuccess"
+        ,t1.date_unbind as "dateUnbind"
+        ,t1.memo as "memo"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.finance.entity.AccountBindThirdparty" parameterType="com.hsd.account.finance.entity.AccountBindThirdparty">
+        select
+        <include refid="Base_Column_List"/>
+        from account_bind_thirdparty t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.finance.entity.AccountBindThirdparty"  >
+        insert into account_bind_thirdparty (
+            id 
+           ,app_user_id 
+           ,account_id 
+           ,real_name 
+           ,card_no 
+           ,cellphone 
+           ,thirdparty_currency 
+           ,thirdparty_type 
+           ,thirdparty_name 
+           ,thirdparty_branch 
+           ,thirdparty_account 
+           ,thirdparty_date_expiry 
+           ,state 
+           ,date_bind 
+           ,date_success 
+           ,date_unbind 
+           ,memo 
+           ,bi_update_ts 
+        ) values (
+            #{id} 
+           ,#{appUserId} 
+           ,#{accountId} 
+           ,#{realName} 
+           ,#{cardNo} 
+           ,#{cellphone} 
+           ,#{thirdpartyCurrency} 
+           ,#{thirdpartyType} 
+           ,#{thirdpartyName} 
+           ,#{thirdpartyBranch} 
+           ,#{thirdpartyAccount} 
+           ,#{thirdpartyDateExpiry} 
+           ,#{state} 
+           ,#{dateBind} 
+           ,#{dateSuccess} 
+           ,#{dateUnbind} 
+           ,#{memo} 
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.finance.entity.AccountBindThirdparty">
+        update account_bind_thirdparty set bi_update_ts=now() 
+             <if test="appUserId!=null">,app_user_id = #{appUserId}</if>
+             <if test="accountId!=null">,account_id = #{accountId}</if>
+             <if test="realName!=null">,real_name = #{realName}</if>
+             <if test="cardNo!=null">,card_no = #{cardNo}</if>
+             <if test="cellphone!=null">,cellphone = #{cellphone}</if>
+             <if test="thirdpartyCurrency!=null">,thirdparty_currency = #{thirdpartyCurrency}</if>
+             <if test="thirdpartyType!=null">,thirdparty_type = #{thirdpartyType}</if>
+             <if test="thirdpartyName!=null">,thirdparty_name = #{thirdpartyName}</if>
+             <if test="thirdpartyBranch!=null">,thirdparty_branch = #{thirdpartyBranch}</if>
+             <if test="thirdpartyAccount!=null">,thirdparty_account = #{thirdpartyAccount}</if>
+             <if test="thirdpartyDateExpiry!=null">,thirdparty_date_expiry = #{thirdpartyDateExpiry}</if>
+             <if test="state!=null">,state = #{state}</if>
+             <if test="dateBind!=null">,date_bind = #{dateBind}</if>
+             <if test="dateSuccess!=null">,date_success = #{dateSuccess}</if>
+             <if test="dateUnbind!=null">,date_unbind = #{dateUnbind}</if>
+             <if test="memo!=null">,memo = #{memo}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.finance.entity.AccountBindThirdparty" resultType="com.hsd.account.finance.entity.AccountBindThirdparty">
+        select
+        <include refid="Base_Column_List"/>
+        from account_bind_thirdparty t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.finance.entity.AccountBindThirdparty" resultType="com.hsd.account.finance.entity.AccountBindThirdparty">
+        select
+        <include refid="Base_Column_List"/>
+        from account_bind_thirdparty t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+</mapper>

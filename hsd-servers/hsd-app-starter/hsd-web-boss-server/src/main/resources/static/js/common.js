@@ -5,7 +5,8 @@ var apiPath = {
     account: {
         staff: "http://192.168.101.100:28890/hsd-account-staff-web-boss-wxg",
         channel: "http://192.168.101.100:28890/hsd-account-channel-web-boss",
-        actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss"
+        actor: "http://192.168.101.100:28890/hsd-account-actor-web-boss",
+        finance: "http://192.168.101.100:28890/hsd-account-finance-web-boss-wxg"
     }
 };
 var site = {
@@ -206,6 +207,79 @@ var site = {
         view: basePath + "/html/account/actor/user/user_login_log"
         ,page: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/page/"
         ,info: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/info/"
+    }
+    //------------------------金融账户------------------------
+    , account: {//支付账户
+        view: basePath + "/html/account/finance/account"
+        ,page: apiPath.account.finance + "/boss/account/finance/account/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/account/info/"       //详情
+    }
+    , accountBindThirdparty: {//支付账户与三方账户绑定
+        view: basePath + "/html/account/finance/account_bind_thirdparty"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountBindThirdparty/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountBindThirdparty/info/"       //详情
+    }
+    , accountSubGold: {//子账户-实物贵金属
+        view: basePath + "/html/account/finance/account_sub_gold"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountSubGold/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountSubGold/info/"       //详情
+    }
+    , accountSubLoan: {//子账户-P2P网贷
+        view: basePath + "/html/account/finance/account_sub_loan"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountSubLoan/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountSubLoan/info/"       //详情
+    }
+    , accountTemplate: {//账户模板
+        view: basePath + "/html/account/finance/account_template"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountTemplate/page/"       //分页
+        ,save: apiPath.account.finance + "/boss/account/finance/accountTemplate/save"        //新增or保存
+        ,info: apiPath.account.finance + "/boss/account/finance/accountTemplate/info/"       //详情
+        ,del: apiPath.account.finance + "/boss/account/finance/accountTemplate/del/"         //逻辑删除
+    }
+    , accountType: {//账户类型
+        view: basePath + "/html/account/finance/account_type"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountType/page/"       //分页
+        ,save: apiPath.account.finance + "/boss/account/finance/accountType/save"        //新增or保存
+        ,info: apiPath.account.finance + "/boss/account/finance/accountType/info/"       //详情
+        ,del: apiPath.account.finance + "/boss/account/finance/accountType/del/"         //逻辑删除
+    }
+    , accountTemplateAttribute: {//账户模板属性
+        list: apiPath.account.finance + "/boss/account/finance/accountTemplateAttribute/list"        //列表
+    }
+    , accountLog: {//账户-日志-资金流水
+        view: basePath + "/html/account/finance/account_log"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountLog/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountLog/info/"       //详情
+    }
+    , accountLogCapital: {//账户-日志-资金流水
+        view: basePath + "/html/account/finance/account_log_capital"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountLogCapital/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountLogCapital/info/"       //详情
+    }
+    , accountLogFreeze: {//账户-日志-资金冻结记录
+        view: basePath + "/html/account/finance/account_log_freeze"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountLogFreeze/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountLogFreeze/info/"       //详情
+    }
+    , accountLogOperational: {//用户账户-操作日志
+        view: basePath + "/html/account/finance/account_log_operational"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountLogOperational/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountLogOperational/info/"       //详情
+    }
+    , accountLogRecharge: {//账户-日志-充值记录
+        view: basePath + "/html/account/finance/account_log_recharge"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountLogRecharge/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountLogRecharge/info/"       //详情
+    }
+    , accountLogTransaction: {//账户-日志-交易记录
+        view: basePath + "/html/account/finance/account_log_transaction"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountLogTransaction/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountLogTransaction/info/"       //详情
+    }
+    , accountLogWithdrawal: {//账户-日志-提现流水
+        view: basePath + "/html/account/finance/account_log_withdrawal"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountLogWithdrawal/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountLogWithdrawal/info/"       //详情
     }
 
 };

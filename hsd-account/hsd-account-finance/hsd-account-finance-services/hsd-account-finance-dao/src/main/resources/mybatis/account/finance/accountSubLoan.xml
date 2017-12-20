@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.finance.dao.IAccountSubLoanDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.app_user_id as "appUserId"
+        ,t1.account_type as "accountType"
+        ,t1.balance_direction as "balanceDirection"
+        ,t1.alias_name as "aliasName"
+        ,t1.account_id as "accountId"
+        ,t1.currency as "currency"
+        ,t1.total_money as "totalMoney"
+        ,t1.available_money as "availableMoney"
+        ,t1.freeze_money as "freezeMoney"
+        ,t1.due_in as "dueIn"
+        ,t1.stay_still as "stayStill"
+        ,t1.stay_interest as "stayInterest"
+        ,t1.make_interest as "makeInterest"
+        ,t1.make_reward as "makeReward"
+        ,t1.overdue as "overdue"
+        ,t1.state as "state"
+        ,t1.account_template_id as "accountTemplateId"
+        ,t1.expand_json as "expandJson"
+        ,t1.check_value as "checkValue"
+        ,t1.date_open as "dateOpen"
+        ,t1.date_close as "dateClose"
+        ,t1.credit_amount as "creditAmount"
+        ,t1.deposit_amount as "depositAmount"
+        ,t1.ctu_amount as "ctuAmount"
+        ,t1.sys_amount as "sysAmount"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.finance.entity.AccountSubLoan" parameterType="com.hsd.account.finance.entity.AccountSubLoan">
+        select
+        <include refid="Base_Column_List"/>
+        from account_sub_loan t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.finance.entity.AccountSubLoan"  >
+        insert into account_sub_loan (
+            id 
+           ,app_user_id 
+           ,account_type 
+           ,balance_direction 
+           ,alias_name 
+           ,account_id 
+           ,currency 
+           ,total_money 
+           ,available_money 
+           ,freeze_money 
+           ,due_in 
+           ,stay_still 
+           ,stay_interest 
+           ,make_interest 
+           ,make_reward 
+           ,overdue 
+           ,state 
+           ,account_template_id 
+           ,expand_json 
+           ,check_value 
+           ,date_open 
+           ,date_close 
+           ,credit_amount 
+           ,deposit_amount 
+           ,ctu_amount 
+           ,sys_amount 
+           ,bi_update_ts 
+        ) values (
+            #{id} 
+           ,#{appUserId} 
+           ,#{accountType} 
+           ,#{balanceDirection} 
+           ,#{aliasName} 
+           ,#{accountId} 
+           ,#{currency} 
+           ,#{totalMoney} 
+           ,#{availableMoney} 
+           ,#{freezeMoney} 
+           ,#{dueIn} 
+           ,#{stayStill} 
+           ,#{stayInterest} 
+           ,#{makeInterest} 
+           ,#{makeReward} 
+           ,#{overdue} 
+           ,#{state} 
+           ,#{accountTemplateId} 
+           ,#{expandJson} 
+           ,#{checkValue} 
+           ,#{dateOpen} 
+           ,#{dateClose} 
+           ,#{creditAmount} 
+           ,#{depositAmount} 
+           ,#{ctuAmount} 
+           ,#{sysAmount} 
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.finance.entity.AccountSubLoan">
+        update account_sub_loan set bi_update_ts=now() 
+             <if test="appUserId!=null">,app_user_id = #{appUserId}</if>
+             <if test="accountType!=null">,account_type = #{accountType}</if>
+             <if test="balanceDirection!=null">,balance_direction = #{balanceDirection}</if>
+             <if test="aliasName!=null">,alias_name = #{aliasName}</if>
+             <if test="accountId!=null">,account_id = #{accountId}</if>
+             <if test="currency!=null">,currency = #{currency}</if>
+             <if test="totalMoney!=null">,total_money = #{totalMoney}</if>
+             <if test="availableMoney!=null">,available_money = #{availableMoney}</if>
+             <if test="freezeMoney!=null">,freeze_money = #{freezeMoney}</if>
+             <if test="dueIn!=null">,due_in = #{dueIn}</if>
+             <if test="stayStill!=null">,stay_still = #{stayStill}</if>
+             <if test="stayInterest!=null">,stay_interest = #{stayInterest}</if>
+             <if test="makeInterest!=null">,make_interest = #{makeInterest}</if>
+             <if test="makeReward!=null">,make_reward = #{makeReward}</if>
+             <if test="overdue!=null">,overdue = #{overdue}</if>
+             <if test="state!=null">,state = #{state}</if>
+             <if test="accountTemplateId!=null">,account_template_id = #{accountTemplateId}</if>
+             <if test="expandJson!=null">,expand_json = #{expandJson}</if>
+             <if test="checkValue!=null">,check_value = #{checkValue}</if>
+             <if test="dateOpen!=null">,date_open = #{dateOpen}</if>
+             <if test="dateClose!=null">,date_close = #{dateClose}</if>
+             <if test="creditAmount!=null">,credit_amount = #{creditAmount}</if>
+             <if test="depositAmount!=null">,deposit_amount = #{depositAmount}</if>
+             <if test="ctuAmount!=null">,ctu_amount = #{ctuAmount}</if>
+             <if test="sysAmount!=null">,sys_amount = #{sysAmount}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.finance.entity.AccountSubLoan" resultType="com.hsd.account.finance.entity.AccountSubLoan">
+        select
+        <include refid="Base_Column_List"/>
+        from account_sub_loan t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.finance.entity.AccountSubLoan" resultType="com.hsd.account.finance.entity.AccountSubLoan">
+        select
+        <include refid="Base_Column_List"/>
+        from account_sub_loan t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+</mapper>

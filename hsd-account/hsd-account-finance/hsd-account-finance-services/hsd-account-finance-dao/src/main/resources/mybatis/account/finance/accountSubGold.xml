@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.finance.dao.IAccountSubGoldDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.app_user_id as "appUserId"
+        ,t1.type as "type"
+        ,t1.alias_name as "aliasName"
+        ,t1.account_id as "accountId"
+        ,t1.total_gold as "totalGold"
+        ,t1.buy_count as "buyCount"
+        ,t1.total_amount as "totalAmount"
+        ,t1.cumulative_income as "cumulativeIncome"
+        ,t1.date_buy_first as "dateBuyFirst"
+        ,t1.is_buy_novice as "isBuyNovice"
+        ,t1.state as "state"
+        ,t1.check_value as "checkValue"
+        ,t1.date_open as "dateOpen"
+        ,t1.date_close as "dateClose"
+        ,t1.account_template_id as "accountTemplateId"
+        ,t1.expand_json as "expandJson"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.finance.entity.AccountSubGold" parameterType="com.hsd.account.finance.entity.AccountSubGold">
+        select
+        <include refid="Base_Column_List"/>
+        from account_sub_gold t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.finance.entity.AccountSubGold"  >
+        insert into account_sub_gold (
+            id 
+           ,app_user_id 
+           ,type 
+           ,alias_name 
+           ,account_id 
+           ,total_gold 
+           ,buy_count 
+           ,total_amount 
+           ,cumulative_income 
+           ,date_buy_first 
+           ,is_buy_novice 
+           ,state 
+           ,check_value 
+           ,date_open 
+           ,date_close 
+           ,account_template_id 
+           ,expand_json 
+           ,bi_update_ts 
+        ) values (
+            #{id} 
+           ,#{appUserId} 
+           ,#{type} 
+           ,#{aliasName} 
+           ,#{accountId} 
+           ,#{totalGold} 
+           ,#{buyCount} 
+           ,#{totalAmount} 
+           ,#{cumulativeIncome} 
+           ,#{dateBuyFirst} 
+           ,#{isBuyNovice} 
+           ,#{state} 
+           ,#{checkValue} 
+           ,#{dateOpen} 
+           ,#{dateClose} 
+           ,#{accountTemplateId} 
+           ,#{expandJson} 
+           ,now()
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.finance.entity.AccountSubGold">
+        update account_sub_gold set bi_update_ts=now() 
+             <if test="appUserId!=null">,app_user_id = #{appUserId}</if>
+             <if test="type!=null">,type = #{type}</if>
+             <if test="aliasName!=null">,alias_name = #{aliasName}</if>
+             <if test="accountId!=null">,account_id = #{accountId}</if>
+             <if test="totalGold!=null">,total_gold = #{totalGold}</if>
+             <if test="buyCount!=null">,buy_count = #{buyCount}</if>
+             <if test="totalAmount!=null">,total_amount = #{totalAmount}</if>
+             <if test="cumulativeIncome!=null">,cumulative_income = #{cumulativeIncome}</if>
+             <if test="dateBuyFirst!=null">,date_buy_first = #{dateBuyFirst}</if>
+             <if test="isBuyNovice!=null">,is_buy_novice = #{isBuyNovice}</if>
+             <if test="state!=null">,state = #{state}</if>
+             <if test="checkValue!=null">,check_value = #{checkValue}</if>
+             <if test="dateOpen!=null">,date_open = #{dateOpen}</if>
+             <if test="dateClose!=null">,date_close = #{dateClose}</if>
+             <if test="accountTemplateId!=null">,account_template_id = #{accountTemplateId}</if>
+             <if test="expandJson!=null">,expand_json = #{expandJson}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.finance.entity.AccountSubGold" resultType="com.hsd.account.finance.entity.AccountSubGold">
+        select
+        <include refid="Base_Column_List"/>
+        from account_sub_gold t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.finance.entity.AccountSubGold" resultType="com.hsd.account.finance.entity.AccountSubGold">
+        select
+        <include refid="Base_Column_List"/>
+        from account_sub_gold t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        
+    </select>
+</mapper>

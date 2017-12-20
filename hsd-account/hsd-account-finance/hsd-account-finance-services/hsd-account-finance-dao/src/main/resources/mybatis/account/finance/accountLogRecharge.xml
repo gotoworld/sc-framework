@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.finance.dao.IAccountLogRechargeDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.app_user_id as "appUserId"
+        ,t1.account_id as "accountId"
+        ,t1.account_sub_type as "accountSubType"
+        ,t1.account_sub_id as "accountSubId"
+        ,t1.trade_no as "tradeNo"
+        ,t1.user_name as "userName"
+        ,t1.real_name as "realName"
+        ,t1.pay_type as "payType"
+        ,t1.money as "money"
+        ,t1.fee as "fee"
+        ,t1.account_money as "accountMoney"
+        ,t1.state as "state"
+        ,t1.data as "data"
+        ,t1.pay_trade_no as "payTradeNo"
+        ,t1.pay_result as "payResult"
+        ,t1.memo as "memo"
+        ,t1.create_ip as "createIp"
+        ,t1.date_created as "dateCreated"
+        ,t1.date_updated as "dateUpdated"
+        ,t1.date_success as "dateSuccess"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.finance.entity.AccountLogRecharge" parameterType="com.hsd.account.finance.entity.AccountLogRecharge">
+        select
+        <include refid="Base_Column_List"/>
+        from account_log_recharge t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.finance.entity.AccountLogRecharge"  >
+        insert into account_log_recharge (
+            id 
+           ,app_user_id 
+           ,account_id 
+           ,account_sub_type 
+           ,account_sub_id 
+           ,trade_no 
+           ,user_name 
+           ,real_name 
+           ,pay_type 
+           ,money 
+           ,fee 
+           ,account_money 
+           ,state 
+           ,data 
+           ,pay_trade_no 
+           ,pay_result 
+           ,memo 
+           ,create_ip 
+           ,date_created 
+           ,date_updated 
+           ,date_success 
+           ,bi_update_ts 
+        ) values (
+            #{id} 
+           ,#{appUserId} 
+           ,#{accountId} 
+           ,#{accountSubType} 
+           ,#{accountSubId} 
+           ,#{tradeNo} 
+           ,#{userName} 
+           ,#{realName} 
+           ,#{payType} 
+           ,#{money} 
+           ,#{fee} 
+           ,#{accountMoney} 
+           ,#{state} 
+           ,#{data} 
+           ,#{payTradeNo} 
+           ,#{payResult} 
+           ,#{memo} 
+           ,#{createIp} 
+           ,now()
+           ,now()
+           ,#{dateSuccess} 
+           ,#{biUpdateTs} 
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.finance.entity.AccountLogRecharge">
+        update account_log_recharge set date_updated=now() 
+             <if test="appUserId!=null">,app_user_id = #{appUserId}</if>
+             <if test="accountId!=null">,account_id = #{accountId}</if>
+             <if test="accountSubType!=null">,account_sub_type = #{accountSubType}</if>
+             <if test="accountSubId!=null">,account_sub_id = #{accountSubId}</if>
+             <if test="tradeNo!=null">,trade_no = #{tradeNo}</if>
+             <if test="userName!=null">,user_name = #{userName}</if>
+             <if test="realName!=null">,real_name = #{realName}</if>
+             <if test="payType!=null">,pay_type = #{payType}</if>
+             <if test="money!=null">,money = #{money}</if>
+             <if test="fee!=null">,fee = #{fee}</if>
+             <if test="accountMoney!=null">,account_money = #{accountMoney}</if>
+             <if test="state!=null">,state = #{state}</if>
+             <if test="data!=null">,data = #{data}</if>
+             <if test="payTradeNo!=null">,pay_trade_no = #{payTradeNo}</if>
+             <if test="payResult!=null">,pay_result = #{payResult}</if>
+             <if test="memo!=null">,memo = #{memo}</if>
+             <if test="createIp!=null">,create_ip = #{createIp}</if>
+             <if test="dateSuccess!=null">,date_success = #{dateSuccess}</if>
+             <if test="biUpdateTs!=null">,bi_update_ts = #{biUpdateTs}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.finance.entity.AccountLogRecharge" resultType="com.hsd.account.finance.entity.AccountLogRecharge">
+        select
+        <include refid="Base_Column_List"/>
+        from account_log_recharge t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.finance.entity.AccountLogRecharge" resultType="com.hsd.account.finance.entity.AccountLogRecharge">
+        select
+        <include refid="Base_Column_List"/>
+        from account_log_recharge t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+</mapper>

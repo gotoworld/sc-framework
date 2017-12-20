@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+<meta charset="utf-8" />
+<title>//TODO 用户账户-操作日志 新增/编辑</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description" content="memo of your site" />
+<meta name="author" content="author of the site" />
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+<link href="/css/common.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/plugins/editor/themes/default/default.css" />
+<link rel="stylesheet" href="/plugins/editor/plugins/code/prettify.css" />
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content col-md-12">
+				<form id="accountLogOperational_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+					<div class="col-md-12" style="height: 50px;">
+						<div style="float:right;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+					<input type="hidden" name="id" value="{{item.id}}" />
+					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
+					<input type="hidden" name="newFlag" value="{{newFlag!=0?0:1}}" />
+					<div class="clearfix "></div>
+					<div class="col-sm-6 b-r">
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">域用户id：</label>
+                            <div class="col-md-12">
+                                <input id="bean-appUserId" name="appUserId" value="{{item.appUserId}}" class="form-control" type="text"  placeholder="请输入域用户id"  required="" aria-required="true"  aria-describedby="bean-appUserId-error"   aria-invalid="true">
+                                <span id="bean-appUserId-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">用户名称：</label>
+                            <div class="col-md-12">
+                                <input id="bean-userName" name="userName" value="{{item.userName}}" class="form-control" type="text"  placeholder="请输入用户名称"  aria-describedby="bean-userName-error"  maxlength="25"   aria-invalid="true">
+                                <span id="bean-userName-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">支付账户id：</label>
+                            <div class="col-md-12">
+                                <input id="bean-accountId" name="accountId" value="{{item.accountId}}" class="form-control" type="text"  placeholder="请输入支付账户id"  required="" aria-required="true"  aria-describedby="bean-accountId-error"   aria-invalid="true">
+                                <span id="bean-accountId-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">子账户类型：</label>
+                            <div class="col-md-12">
+                                <input id="bean-accountSubType" name="accountSubType" value="{{item.accountSubType}}" class="form-control" type="text"  placeholder="请输入子账户类型"  aria-describedby="bean-accountSubType-error"   aria-invalid="true">
+                                <span id="bean-accountSubType-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">子账户id：</label>
+                            <div class="col-md-12">
+                                <input id="bean-accountSubId" name="accountSubId" value="{{item.accountSubId}}" class="form-control" type="text"  placeholder="请输入子账户id"  aria-describedby="bean-accountSubId-error"   aria-invalid="true">
+                                <span id="bean-accountSubId-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+					</div>
+					<div class="col-sm-6">
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">流水类型：</label>
+                            <div class="col-md-12">
+                                <input id="bean-type" name="type" value="{{item.type}}" class="form-control" type="text"  placeholder="请输入流水类型"  required="" aria-required="true"  aria-describedby="bean-type-error"   aria-invalid="true">
+                                <span id="bean-type-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">交易说明：</label>
+                            <div class="col-md-12">
+                                <input id="bean-memo" name="memo" value="{{item.memo}}" class="form-control" type="text"  placeholder="请输入交易说明"  required="" aria-required="true"  aria-describedby="bean-memo-error"  maxlength="80"   aria-invalid="true">
+                                <span id="bean-memo-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">IP地址：</label>
+                            <div class="col-md-12">
+                                <input id="bean-ip" name="ip" value="{{item.ip}}" class="form-control" type="text"  placeholder="请输入IP地址"  required="" aria-required="true"  aria-describedby="bean-ip-error"  maxlength="20"   aria-invalid="true">
+                                <span id="bean-ip-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+					</div>
+
+					<div class="clearfix "></div>
+					<div class="col-md-12">
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">交易数据json：</label>
+                            <div class="col-md-12">
+                                <textarea ng-bind-html="kfReady('bean-data',item.data)" id="bean-data" name="data" style="height: 300px;width: 100%;" class="form-control"  placeholder="请输入交易数据json"  aria-describedby="bean-data-error"  maxlength="65535"   aria-invalid="true">
+                                </textarea>
+                                <span id="bean-data-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+					</div>
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
+						<div style="width: 200px; margin: 0 auto;">
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/plugins/hplus/js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+<script charset="utf-8" src="/plugins/editor/kindeditor-all-min.js"></script>
+<script type="text/javascript">
+    KindEditor.ready(function(K) {
+
+            //--编辑框(完整)[交易数据json]
+            K.create('#bean-data', {
+                resizeType : 2,
+                uploadJson : '/fileUpload?isrich=1',
+                fileManagerJson : '/fileManagerServlet',
+                allowFileManager : true,
+                afterBlur: function () { this.sync();}
+            });
+    });
+    function formValidate(){
+        setTimeout(function(){
+            $("#accountLogOperational_01").validate();
+        },1000);
+    }
+
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
+        $data = $scope;
+        $ngCompile=$compile;
+        staff.init(function(){
+           $data.newFlag=sessionStorage.getItem(site.accountLogOperational.info);
+           if($data.newFlag) $data.uuidToken=util.guid();
+           if(sessionStorage.getItem(site.accountLogOperational.info) && sessionStorage.getItem(site.accountLogOperational.info)!=0){
+               loadInfo(sessionStorage.getItem(site.accountLogOperational.info));
+           }
+        });
+        $scope.save = function () {
+            if($("#accountLogOperational_01").valid()){
+                $.post(site.accountLogOperational.save, $('#accountLogOperational_01').serialize(),function (result) {
+                        //console.info("获取数据.." + JSON.stringify(result));
+                        if (result.code == 0) {
+                            alert('保存成功!');
+                            parent.location.href = site.accountLogOperational.view+'.html';
+                        } else {
+                            alert(result.message);
+                        }
+                }, 'json');
+            }
+        }
+    });
+    var loadInfo=function(id){
+        $.get(site.accountLogOperational.info + id, {},function (result) {
+             //console.info("获取数据.." + JSON.stringify(result));
+             if (result.code == 0) {
+                 $data.item = result.data;
+             } else {
+                 $data.message = result.message;
+                 alert( result.message);
+             }
+             if(!$data.$$phase) $data.$apply();
+         }, 'json');
+    };
+
+    $(document).ready(function(){
+        formValidate();
+    });
+</script>
+</body>
+</html>
+

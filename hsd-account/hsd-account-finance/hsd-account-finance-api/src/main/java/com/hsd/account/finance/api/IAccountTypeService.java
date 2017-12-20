@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * <p>账户类型 业务处理接口类。
  */
-@FeignClient(value = "${feign.name.account}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
+@FeignClient(value = "${feign.name.account.finance}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IAccountTypeService {
     String acPrefix = "/feign/account/IAccountTypeService";
     /**

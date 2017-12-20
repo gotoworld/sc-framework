@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * <p>子账户-P2P网贷 业务处理接口类。
  */
-@FeignClient(value = "${feign.name.account}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
+@FeignClient(value = "${feign.name.account.finance}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IAccountSubLoanService {
     String acPrefix = "/feign/account/IAccountSubLoanService";
     /**

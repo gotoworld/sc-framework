@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * <p>支付账户与三方账户绑定 业务处理接口类。
  */
-@FeignClient(value = "${feign.name.account}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
+@FeignClient(value = "${feign.name.account.finance}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface IAccountBindThirdpartyService {
     String acPrefix = "/feign/account/IAccountBindThirdpartyService";
     /**

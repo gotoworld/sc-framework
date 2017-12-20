@@ -1,0 +1,143 @@
+#定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
+info:
+  description: BOSS系统->金融账户
+  version : 1.0
+# HTTP Server
+server:
+  port: 6141
+  context-path: /
+spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static/
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  aop:
+    auto: true
+    proxy-target-class: true
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
+    base-url: http://192.168.101.101:9411
+  #rabbitmq:
+    #addresses: 192.168.101.100:5672,192.168.101.101:5672,192.168.101.102:5672
+    #username: user-dev
+    #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+    #virtualHost: /vhost/dev
+    #publisher-confirms: true
+  boot:
+    admin:
+      url: http://192.168.101.100:8889
+#      client:
+#          metadata:
+#            user.name: ${security.user.name}
+#            user.password: ${security.user.password}
+      routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        url: http://${spring.boot.admin.url}/turbine.stream
+  redis:
+    database: 10
+    secondary-database: 11
+    host: 192.168.101.101
+    port: 6379
+#    password:
+    timeout: 1800000
+    idGenNodes: #host:port:luaSha@password 192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==
+      - 192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c
+      - 192.168.101.101:6379:accb7a987d4fb0fd85c57dc5a609529f80ec3722
+      - 192.168.101.102:6379:f55f781ca4a00a133728488e15a554c070b17255
+    pool:
+      max-active: 8
+      max-total: 50
+      max-wait-millis: 15000
+      test-on-borrow: true
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+    session-expire: 7200000
+
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
+
+eureka:
+  user:
+    name: admin
+    password: admin
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 2 # 续约更新时间间隔（默认30秒）
+  client:
+    registryFetchIntervalSeconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔(s),默认为30秒
+    registerWithEureka: true #服务注册
+    fetchRegistry: true #服务获取
+    serviceUrl:
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
+    healthcheck:
+      enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
+
+hystrix:
+  command:
+    threadpool:
+      default:
+        coreSize: 500  #并发执行的最大线程数，默认10
+    command:
+      paas-file:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 3600000
+    default:
+      execution: #execution配置
+        isolation:
+          strategy: SEMAPHORE #隔离策略，默认是Thread, 可选Thread｜Semaphore
+          thread:
+            timeoutInMilliseconds: 8000 #命令执行超时时间，默认1000ms ，超出此时间配置，Hystrix 会将该执行命令为 TIMEOUT 并进入服务降级处理逻辑
+            interruptOnTimeout: true #发生超时是是否中断，默认true
+          semaphore:
+            maxConcurrentRequests: 10 # 最大并发请求数，默认10，当隔离策略使用信号量时(semaphore)，该属性用来配置信号量的大小，当最大并发请求数达到该设置值，后续的请求将会被拒绝;理论上选择semaphore size的原则和选择thread size一致，但选用semaphore时每次执行的单元要比较小且执行速度快（ms级别），否则的话应该用thread。semaphore应该占整个容器（tomcat）的线程池的一小部分。
+        timeout: #fallback配置
+          enabled: true #执行是否启用超时，默认启用true ,如果设置为 false，则 execution.isolation.thread.timeoutInMilliseconds 属性的配置将不起作用
+      fallback:
+        enabled: true #该属性用来设置服务降级策略是否启用，默认值 true ，如果设置为false，当请求失败或拒绝发生时，将不会调用 HystrixCommand.getFallback() 来执行服务降级逻辑
+      circuitBreaker: #circuitBreaker 配置
+        enabled: true #该属性用来确定当服务请求命令失败时，是否使用断路器来跟踪其健康指标和熔断请求，默认值 true
+        requestVolumeThreshold: 20 #该属性用来设置在滚动时间窗中，断路器的最小请求数。例如：默认值 20 的情况下，如果滚动时间窗（默认值 10秒）内仅收到19个请求，即使这19个请求都失败了，断路器也不会打开。
+        sleepWindowInMilliseconds: 5000 #该属性用来设置当断路器打开之后的休眠时间窗。默认值 5000 毫秒，休眠时间窗结束之后，会将断路器设置为"半开"状态，尝试熔断的请求命令，如果依然失败就将断路器继续设置为"打开"状态，如果成功就设置为"关闭"状态。
+        errorThresholdPercentage: 50 #该属性用来设置断路器打开的错误百分比条件。例如，默认值为 50 的情况下，表示在滚动时间窗中，在请求数量超过 circuitBreaker.requestVolumeThreshold 阈值的请求下，如果错误请求数的百分比超过50，就把断路器设置为"打开"状态，否则就设置为"关闭"状态。
+        #forceOpen: false #该属性用来设置断路器强制进入"打开"状态，会拒绝所有请求，该属性优先于 circuitBreaker.forceClosed
+        #forceClosed: false #该属性用来设置断路器强制进入"关闭"状态，会接收所有请求。
+  config:
+    stream:
+      maxConcurrentConnections: 20
+      bus:
+        enabled: true
+
+
+#服务名
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  name:
+    account.finance: hsd-account-finance-server
+
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+
+# 自定义配置
+hsd:
+  common:
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

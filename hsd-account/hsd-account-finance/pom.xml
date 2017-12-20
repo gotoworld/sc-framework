@@ -11,14 +11,14 @@
     </parent>
 
     <groupId>com.hsd.account</groupId>
-    <artifactId>hsd-account-platform</artifactId>
+    <artifactId>hsd-account-finance</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
 
     <modules>
-        <module>hsd-account-platform-api</module>
-        <module>hsd-account-platform-services</module>
-        <module>hsd-account-platform-web-boss</module>
-        <module>hsd-account-platform-web-portal</module>
+        <module>hsd-account-finance-api</module>
+        <module>hsd-account-finance-services</module>
+        <module>hsd-account-finance-web-boss</module>
+        <module>hsd-account-finance-web-portal</module>
     </modules>
 </project>

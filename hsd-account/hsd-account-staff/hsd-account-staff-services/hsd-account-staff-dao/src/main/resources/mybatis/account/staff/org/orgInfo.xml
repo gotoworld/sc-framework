@@ -135,6 +135,7 @@
         ,t1.memo as  "memo"
         ,t1.state as  "state"
         ,t1.manager as  "manager"
+        ,t1.date_created as  "dateCreated"
         from org_info t1
         where 1=1
         <include refid="list_where_sql"/>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.finance.dao.IAccountDao">
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+         t1.id as "id"
+        ,t1.app_user_id as "appUserId"
+        ,t1.account_type as "accountType"
+        ,t1.alias_name as "aliasName"
+        ,t1.currency as "currency"
+        ,t1.total_money as "totalMoney"
+        ,t1.available_money as "availableMoney"
+        ,t1.freeze_money as "freezeMoney"
+        ,t1.in_float_money as "inFloatMoney"
+        ,t1.state as "state"
+        ,t1.account_template_id as "accountTemplateId"
+        ,t1.expand_json as "expandJson"
+        ,t1.date_created as "dateCreated"
+        ,t1.date_updated as "dateUpdated"
+        ,t1.check_value as "checkValue"
+        ,t1.recharge_count as "rechargeCount"
+        ,t1.recharge_total_amount as "rechargeTotalAmount"
+        ,t1.date_recharge_first as "dateRechargeFirst"
+        ,t1.withdraw_count as "withdrawCount"
+        ,t1.withdraw_total_amount as "withdrawTotalAmount"
+        ,t1.date_user_register as "dateUserRegister"
+        ,t1.fin_subject_code as "finSubjectCode"
+        ,t1.bi_update_ts as "biUpdateTs"
+    </sql>
+
+    <!-- 根据主键获取信息详情 -->
+    <select id="selectByPrimaryKey" resultType="com.hsd.account.finance.entity.Account" parameterType="com.hsd.account.finance.entity.Account">
+        select
+        <include refid="Base_Column_List"/>
+        from account t1
+        where
+        t1.id = #{id}
+    </select>
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.finance.entity.Account"  >
+        insert into account (
+            id 
+           ,app_user_id 
+           ,account_type 
+           ,alias_name 
+           ,currency 
+           ,total_money 
+           ,available_money 
+           ,freeze_money 
+           ,in_float_money 
+           ,state 
+           ,account_template_id 
+           ,expand_json 
+           ,date_created 
+           ,date_updated 
+           ,check_value 
+           ,recharge_count 
+           ,recharge_total_amount 
+           ,date_recharge_first 
+           ,withdraw_count 
+           ,withdraw_total_amount 
+           ,date_user_register 
+           ,fin_subject_code 
+           ,bi_update_ts 
+        ) values (
+            #{id} 
+           ,#{appUserId} 
+           ,#{accountType} 
+           ,#{aliasName} 
+           ,#{currency} 
+           ,#{totalMoney} 
+           ,#{availableMoney} 
+           ,#{freezeMoney} 
+           ,#{inFloatMoney} 
+           ,#{state} 
+           ,#{accountTemplateId} 
+           ,#{expandJson} 
+           ,now()
+           ,now()
+           ,#{checkValue} 
+           ,#{rechargeCount} 
+           ,#{rechargeTotalAmount} 
+           ,#{dateRechargeFirst} 
+           ,#{withdrawCount} 
+           ,#{withdrawTotalAmount} 
+           ,#{dateUserRegister} 
+           ,#{finSubjectCode} 
+           ,#{biUpdateTs} 
+        )
+    </insert>
+
+
+    <!-- 数据更新 -->
+    <update id="update" parameterType="com.hsd.account.finance.entity.Account">
+        update account set date_updated=now() 
+             <if test="appUserId!=null">,app_user_id = #{appUserId}</if>
+             <if test="accountType!=null">,account_type = #{accountType}</if>
+             <if test="aliasName!=null">,alias_name = #{aliasName}</if>
+             <if test="currency!=null">,currency = #{currency}</if>
+             <if test="totalMoney!=null">,total_money = #{totalMoney}</if>
+             <if test="availableMoney!=null">,available_money = #{availableMoney}</if>
+             <if test="freezeMoney!=null">,freeze_money = #{freezeMoney}</if>
+             <if test="inFloatMoney!=null">,in_float_money = #{inFloatMoney}</if>
+             <if test="state!=null">,state = #{state}</if>
+             <if test="accountTemplateId!=null">,account_template_id = #{accountTemplateId}</if>
+             <if test="expandJson!=null">,expand_json = #{expandJson}</if>
+             <if test="checkValue!=null">,check_value = #{checkValue}</if>
+             <if test="rechargeCount!=null">,recharge_count = #{rechargeCount}</if>
+             <if test="rechargeTotalAmount!=null">,recharge_total_amount = #{rechargeTotalAmount}</if>
+             <if test="dateRechargeFirst!=null">,date_recharge_first = #{dateRechargeFirst}</if>
+             <if test="withdrawCount!=null">,withdraw_count = #{withdrawCount}</if>
+             <if test="withdrawTotalAmount!=null">,withdraw_total_amount = #{withdrawTotalAmount}</if>
+             <if test="dateUserRegister!=null">,date_user_register = #{dateUserRegister}</if>
+             <if test="finSubjectCode!=null">,fin_subject_code = #{finSubjectCode}</if>
+             <if test="biUpdateTs!=null">,bi_update_ts = #{biUpdateTs}</if>
+        where
+        id = #{id}
+    </update>
+
+    <!--列表通用条件-->
+    <sql id="list_where_sql">
+        <if test="dateBegin!=null and dateBegin!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')>=DATE_FORMAT(#{dateBegin},'%Y-%m-%d') ]]>
+        </if>
+        <if test="dateEnd!=null and dateEnd!=''">
+            <![CDATA[ and DATE_FORMAT(t1.date_created,'%Y-%m-%d')<=DATE_FORMAT(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+    </sql>
+
+    <!--信息分页 -->
+    <select id="findDataIsPage" parameterType="com.hsd.account.finance.entity.Account" resultType="com.hsd.account.finance.entity.Account">
+        select
+        <include refid="Base_Column_List"/>
+        from account t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+
+    <!--信息列表 -->
+    <select id="findDataIsList" parameterType="com.hsd.account.finance.entity.Account" resultType="com.hsd.account.finance.entity.Account">
+        select
+        <include refid="Base_Column_List"/>
+        from account t1
+        where 1=1
+        <include refid="list_where_sql"/>
+        order by t1.date_created desc
+    </select>
+</mapper>

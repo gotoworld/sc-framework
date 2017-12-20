@@ -131,7 +131,9 @@ feign:
   okhttp:
     enabled: true
   name:
-    account.finance: ${spring.application.name}
+    account:
+      finance: ${spring.application.name}
+      staff: hsd-account-actor-server
 
 hystrix:
   command:

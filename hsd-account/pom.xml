@@ -18,6 +18,6 @@
         <module>hsd-account-staff</module>
         <module>hsd-account-channel</module>
         <module>hsd-account-actor</module>
-        <module>hsd-account-platform</module>
+        <module>hsd-account-finance</module>
     </modules>
 </project>

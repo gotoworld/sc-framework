@@ -1,0 +1,12 @@
+#系统级别的一些参数配置，这些参数一般是不会变动的
+spring:
+  application:
+    name: hsd-account-finance-web-portal
+  profiles:
+    active: native
+  cloud:
+    config:
+      enabled: true
+      uri: http://192.168.101.100:8888
+      profile: dev
+      label: trunk

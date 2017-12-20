@@ -40,4 +40,8 @@ public class RedisProperties {
 		private int maxActive = 8;
 		private int maxWait = -1;
 	}
+	public Cluster getCluster(){
+		if(cluster==null) cluster=new Cluster();
+		return cluster;
+	}
 }

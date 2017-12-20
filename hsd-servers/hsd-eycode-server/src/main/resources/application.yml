@@ -23,7 +23,8 @@ spring:
     #表示所有的访问都经过静态资源路径
     static-path-pattern: /**
     view:
-      prefix: classpath*:template/
+      resource: classpath:/template
+      prefix: /
       suffix: .html
   datasource:
     driverClass: com.mysql.jdbc.Driver

@@ -34,7 +34,6 @@ public class AccountBindThirdpartyController extends BaseController {
         try {
             if (dto == null) dto = new AccountBindThirdpartyDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            
             result.data = PageUtil.copy(accountBindThirdpartyService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -51,10 +50,8 @@ public class AccountBindThirdpartyController extends BaseController {
         log.info("AccountBindThirdpartyController info.........");
         Response result = new Response();
         try {
-
             AccountBindThirdpartyDto dto = new AccountBindThirdpartyDto(){{
                 setId(id);
-            
             }};
             result.data = accountBindThirdpartyService.findDataById(dto);
         } catch (Exception e) {

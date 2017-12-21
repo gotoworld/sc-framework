@@ -1,12 +1,12 @@
-var uploadPath = "http://192.168.101.100:28888/";
+var uploadPath = "http://192.168.108.100:28888/";
 var basePath = "http://localhost:8080/";
 var apiPath = {
     account: {
-        channel: "http://192.168.101.100:28890/hsd-account-channel-web-portal",
-        actor: "http://192.168.101.100:28890/hsd-account-actor-web-portal"
+        channel: "http://192.168.108.100:28890/hsd-account-channel-web-portal",
+        actor: "http://192.168.108.100:28890/hsd-account-actor-web-portal"
     }
     ,util:{
-        sms: "http://192.168.101.100:28890/hsd-util-sms-web-portal"
+        sms: "http://192.168.108.100:28890/hsd-util-sms-web-portal"
     }
 };
 var site = {

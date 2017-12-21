@@ -59,7 +59,6 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("accountBindThirdparty:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -67,11 +66,13 @@
                                     				<th style="width:20px;">#</th>
                                     				<th>解绑时间</th>
                                     				<th>真实姓名</th>
-                                    				<th>成功时间</th>
+                                    				<th>三方账户类型0银行卡</th>
+                                    				<th>三方账号失效日期</th>
                                     				<th>三方账户币种</th>
                                     				<th>绑定时间</th>
+                                    				<th>预留手机号码</th>
                                     				<th>状态</th>
-                                    				<th>三方账户组织名称</th>
+                                    				<th>身份证号码</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
@@ -80,18 +81,20 @@
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.dateUnbind | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.realName}}</td>
-                                    				<td>{{item.dateSuccess | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.thirdpartyType}}</td>
+                                    				<td>{{item.thirdpartyDateExpiry | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.thirdpartyCurrency}}</td>
                                     				<td>{{item.dateBind | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.cellphone}}</td>
                                     				<td>{{item.state}}</td>
-                                    				<td>{{item.thirdpartyName}}</td>
+                                    				<td>{{item.cardNo}}</td>
                                     				<td>
                                                       <a href="javascript:" ng-show='staff.hasPermission("accountBindThirdparty:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:" ng-show='staff.hasPermission("accountBindThirdparty:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="9">
+                                    				<td colspan="11">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

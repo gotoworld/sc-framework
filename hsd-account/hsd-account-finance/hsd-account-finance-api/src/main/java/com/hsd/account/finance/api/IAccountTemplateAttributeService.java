@@ -6,9 +6,9 @@ import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.github.pagehelper.PageInfo;
+
 import java.util.List;
-import java.util.Map;
+
 /**
  * <p>账户模板属性 业务处理接口类。
  */
@@ -37,4 +37,9 @@ public interface IAccountTemplateAttributeService {
     List<AccountTemplateAttributeDto> findDataIsList(AccountTemplateAttributeDto dto) throws Exception;
 
 
+    /**
+     * <p>信息详情。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
+    AccountTemplateAttributeDto findDataById(AccountTemplateAttributeDto dto) throws Exception;
 }

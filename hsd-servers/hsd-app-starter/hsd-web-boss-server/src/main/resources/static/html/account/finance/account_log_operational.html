@@ -59,18 +59,15 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("accountLogOperational:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>支付账户id</th>
                                     				<th>交易时间</th>
                                     				<th>子账户类型</th>
                                     				<th>IP地址</th>
                                     				<th>交易说明</th>
-                                    				<th>子账户id</th>
                                     				<th>用户名称</th>
                                     				<th>流水类型</th>
                                     				<th>操作</th>
@@ -79,12 +76,10 @@
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.accountId}}</td>
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.accountSubType}}</td>
                                     				<td>{{item.ip}}</td>
                                     				<td>{{item.memo}}</td>
-                                    				<td>{{item.accountSubId}}</td>
                                     				<td>{{item.userName}}</td>
                                     				<td>{{item.type}}</td>
                                     				<td>
@@ -93,7 +88,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="10">
+                                    				<td colspan="8">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

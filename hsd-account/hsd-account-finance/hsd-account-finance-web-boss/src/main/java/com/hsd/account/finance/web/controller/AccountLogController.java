@@ -51,7 +51,7 @@ public class AccountLogController extends BaseController {
         log.info("AccountLogController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountLogDto dto = new AccountLogDto(){{
                 setId(id);
             

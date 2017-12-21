@@ -51,7 +51,7 @@ public class AccountLogWithdrawalController extends BaseController {
         log.info("AccountLogWithdrawalController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountLogWithdrawalDto dto = new AccountLogWithdrawalDto(){{
                 setId(id);
             

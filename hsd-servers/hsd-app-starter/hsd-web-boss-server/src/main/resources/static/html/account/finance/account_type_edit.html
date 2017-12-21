@@ -48,78 +48,33 @@
                                 <span id="bean-name-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">账户性质0个人1企业：</label>
-                            <div class="col-sm-9">
-                                <label class="radio-inline">
-                                    <input type="radio" checked="" value="option1" name="isEnterprise">选项1</label>
-                                <label class="radio-inline">
-                                    <input type="radio" value="option2" name="isEnterprise">选项2</label>
-                                <span id="bean-isEnterprise-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">允许充值：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="isRecharge" value="option1">启用允许充值</label>
-                                <span id="bean-isRecharge-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">允许提现：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="isWithdraw" value="option1">启用允许提现</label>
-                                <span id="bean-isWithdraw-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">允许透支：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="isOverdraft" value="option1">启用允许透支</label>
-                                <span id="bean-isOverdraft-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">允许支付：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="isPay" value="option1">启用允许支付</label>
-                                <span id="bean-isPay-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-					</div>
-					<div class="col-sm-6">
-
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">允许转入：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="isShiftIn" value="option1">启用允许转入</label>
-                                <span id="bean-isShiftIn-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-3 control-label">允许转出：</label>
-                            <div class="col-sm-9">
-                                <label class="">
-                                    <input type="checkbox" name="isShiftOut" value="option1">启用允许转出</label>
-                                <span id="bean-isShiftOut-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">安全保障等级：</label>
                             <div class="col-md-12">
-                                <select data-placeholder="选择安全保障等级" id="bean-securityLevel" name="securityLevel" class="form-control"   required="" aria-required="true"  aria-describedby="bean-securityLevel-error"   aria-invalid="true">
-                                    <option value="">--请选择安全保障等级--</option>
+                                <select data-placeholder="选择安全保障等级" id="bean-securityLevel" name="securityLevel" class="form-control">
+                                    <option value="0">普通</option>
                                 </select>
                                 <span id="bean-securityLevel-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-
+					</div>
+					<div class="col-sm-6">
+                        <div class="form-group clearfix">
+                            <label class="col-sm-9 control-label">账户性质：
+                                <label class="radio-inline"> <input type="radio" checked="" value="0" name="isEnterprise">个人</label>
+                                <label class="radio-inline"> <input type="radio" value="1" name="isEnterprise">企业</label>
+                            </label>
+                        </div>
+                        <div class="form-group clearfix">
+                            <div class="col-sm-12">
+                                <label class="col-sm-4"><input type="checkbox" checked name="isRecharge" value="1">允许充值</label>
+                                <label class="col-sm-4"><input type="checkbox" checked name="isWithdraw" value="1">允许提现</label>
+                                <label class="col-sm-4"><input type="checkbox" checked name="isPay" value="1">允许支付</label>
+                                <label class="col-sm-4"><input type="checkbox" checked name="isShiftIn" value="1">允许转入</label>
+                                <label class="col-sm-4"><input type="checkbox" checked name="isShiftOut" value="1">允许转出</label>
+                                <label class="col-sm-4"><input type="checkbox" checked name="isOverdraft" value="1">允许透支</label>
+                            </div>
+                        </div>
 					</div>
 
 					<div class="clearfix "></div>

@@ -59,7 +59,7 @@ public class AccountSubLoanController extends BaseController {
         log.info("AccountSubLoanController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountSubLoanDto dto = new AccountSubLoanDto(){{
                 setId(id);
             

@@ -3,7 +3,7 @@ server:
 
 spring:
   #rabbitmq:
-    #addresses: 192.168.101.100:5672,192.168.101.101:5672,192.168.101.102:5672
+    #addresses: 192.168.108.100:5672,192.168.108.101:5672,192.168.108.102:5672
     #username: user-dev
     #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
     #virtualHost: /vhost/dev
@@ -14,7 +14,7 @@ eureka:
     enableSelfPreservation: false
     #waitTimeInMsWhenSyncEmpty: 3000 #单位为毫秒，默认为1000 * 60 * 5
   instance:
-    hostname: 192.168.101.100
+    hostname: 192.168.108.100
     perferIpAddress: true
     lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）
     lease-expiration-duration-in-seconds: 2 # 续约更新时间间隔（默认30秒）
@@ -22,7 +22,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://${security.user.name}:${security.user.password}@192.168.101.101:${server.port}/eureka/,http://${security.user.name}:${security.user.password}@192.168.101.102:${server.port}/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.108.101:${server.port}/eureka/,http://${security.user.name}:${security.user.password}@192.168.108.102:${server.port}/eureka/
 
 spring.cloud.config.discovery.enabled: true
 

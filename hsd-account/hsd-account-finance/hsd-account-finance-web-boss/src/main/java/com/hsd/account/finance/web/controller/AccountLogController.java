@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Api(description = "账户-日志-资金流水")
+@Api(description = "账户-日志")
 @RestController
 @Slf4j
 public class AccountLogController extends BaseController {
@@ -34,16 +34,13 @@ public class AccountLogController extends BaseController {
         try {
             if (dto == null) dto = new AccountLogDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            dto.setDelFlag(0);
+            
             result.data = PageUtil.copy(accountLogService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
-
-
-
     /**
      * <p> 信息详情。
      */
@@ -57,7 +54,7 @@ public class AccountLogController extends BaseController {
             if (id!=null) {throw new RuntimeException("参数异常!");}
             AccountLogDto dto = new AccountLogDto(){{
                 setId(id);
-              setDelFlag(0);
+            
             }};
             result.data = accountLogService.findDataById(dto);
         } catch (Exception e) {
@@ -65,4 +62,5 @@ public class AccountLogController extends BaseController {
         }
         return result;
     }
+
 }

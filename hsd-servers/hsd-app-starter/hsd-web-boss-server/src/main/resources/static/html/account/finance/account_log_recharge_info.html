@@ -76,12 +76,6 @@
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">支付方式：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.payType}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
                     <label class="col-md-3 control-label">充值金额：</label>
                     <div class="col-md-9 form-control-static">
                     {{item.money}}
@@ -112,13 +106,19 @@
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">三方机构交易码,充值成功后回写,用于对账：</label>
+                    <label class="col-md-3 control-label">支付方式：</label>
+                    <div class="col-md-9 form-control-static">
+                    {{item.payType}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">支付机构交易码,充值成功后回写,用于对账：</label>
                     <div class="col-md-9 form-control-static">
                     {{item.payTradeNo}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">三方回馈：</label>
+                    <label class="col-md-3 control-label">支付回馈：</label>
                     <div class="col-md-9 form-control-static">
                     {{item.payResult}}
                     </div>

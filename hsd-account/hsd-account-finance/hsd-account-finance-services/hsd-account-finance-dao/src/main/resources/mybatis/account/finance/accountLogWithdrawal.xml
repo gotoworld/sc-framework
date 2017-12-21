@@ -14,12 +14,12 @@
         ,t1.money as "money"
         ,t1.fee as "fee"
         ,t1.arrive_money as "arriveMoney"
+        ,t1.bank_trade_no as "bankTradeNo"
+        ,t1.bank_result as "bankResult"
         ,t1.date_created as "dateCreated"
-        ,t1.pay_trade_no as "payTradeNo"
-        ,t1.pay_result as "payResult"
+        ,t1.date_audited as "dateAudited"
         ,t1.state as "state"
         ,t1.auditor_id as "auditorId"
-        ,t1.date_audited as "dateAudited"
         ,t1.bi_update_ts as "biUpdateTs"
     </sql>
 
@@ -46,12 +46,12 @@
            ,money 
            ,fee 
            ,arrive_money 
+           ,bank_trade_no 
+           ,bank_result 
            ,date_created 
-           ,pay_trade_no 
-           ,pay_result 
+           ,date_audited 
            ,state 
            ,auditor_id 
-           ,date_audited 
            ,bi_update_ts 
         ) values (
             #{id} 
@@ -65,12 +65,12 @@
            ,#{money} 
            ,#{fee} 
            ,#{arriveMoney} 
+           ,#{bankTradeNo} 
+           ,#{bankResult} 
            ,now()
-           ,#{payTradeNo} 
-           ,#{payResult} 
+           ,#{dateAudited} 
            ,#{state} 
            ,#{auditorId} 
-           ,#{dateAudited} 
            ,now()
         )
     </insert>
@@ -89,11 +89,11 @@
              <if test="money!=null">,money = #{money}</if>
              <if test="fee!=null">,fee = #{fee}</if>
              <if test="arriveMoney!=null">,arrive_money = #{arriveMoney}</if>
-             <if test="payTradeNo!=null">,pay_trade_no = #{payTradeNo}</if>
-             <if test="payResult!=null">,pay_result = #{payResult}</if>
+             <if test="bankTradeNo!=null">,bank_trade_no = #{bankTradeNo}</if>
+             <if test="bankResult!=null">,bank_result = #{bankResult}</if>
+             <if test="dateAudited!=null">,date_audited = #{dateAudited}</if>
              <if test="state!=null">,state = #{state}</if>
              <if test="auditorId!=null">,auditor_id = #{auditorId}</if>
-             <if test="dateAudited!=null">,date_audited = #{dateAudited}</if>
         where
         id = #{id}
     </update>

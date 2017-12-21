@@ -2,10 +2,8 @@ package com.hsd.account.finance.dao;
 
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>支付账户 数据库处理接口类。

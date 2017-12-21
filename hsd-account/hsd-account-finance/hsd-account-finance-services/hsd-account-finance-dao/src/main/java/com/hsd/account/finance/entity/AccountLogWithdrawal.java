@@ -36,18 +36,18 @@ public class AccountLogWithdrawal extends BaseEntity {
      private BigDecimal fee;
      /**到账金额*/
      private BigDecimal arriveMoney;
+     /**提现机构交易码,成功后回写,用于对账*/
+     private String bankTradeNo;
+     /**提现回馈*/
+     private String bankResult;
      /**提现时间*/
      private Date dateCreated;
-     /**三方机构交易码,充值成功后回写,用于对账*/
-     private String payTradeNo;
-     /**三方回馈*/
-     private String payResult;
+     /**审核时间*/
+     private Date dateAudited;
      /**状态1待审核,2提现成功,3提现失败,4撤销提现*/
      private Integer state;
      /**审核人*/
      private Long auditorId;
-     /**审核时间*/
-     private Date dateAudited;
      /**BI时间戳*/
      private Date biUpdateTs;
 }

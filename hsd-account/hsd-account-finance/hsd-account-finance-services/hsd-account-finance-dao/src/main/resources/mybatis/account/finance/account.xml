@@ -77,7 +77,7 @@
            ,#{accountTemplateId} 
            ,#{expandJson} 
            ,now()
-           ,now()
+           ,#{dateUpdated} 
            ,#{checkValue} 
            ,#{rechargeCount} 
            ,#{rechargeTotalAmount} 
@@ -86,14 +86,14 @@
            ,#{withdrawTotalAmount} 
            ,#{dateUserRegister} 
            ,#{finSubjectCode} 
-           ,#{biUpdateTs} 
+           ,now()
         )
     </insert>
 
 
     <!-- 数据更新 -->
     <update id="update" parameterType="com.hsd.account.finance.entity.Account">
-        update account set date_updated=now() 
+        update account set bi_update_ts=now() 
              <if test="appUserId!=null">,app_user_id = #{appUserId}</if>
              <if test="accountType!=null">,account_type = #{accountType}</if>
              <if test="aliasName!=null">,alias_name = #{aliasName}</if>
@@ -105,6 +105,7 @@
              <if test="state!=null">,state = #{state}</if>
              <if test="accountTemplateId!=null">,account_template_id = #{accountTemplateId}</if>
              <if test="expandJson!=null">,expand_json = #{expandJson}</if>
+             <if test="dateUpdated!=null">,date_updated = #{dateUpdated}</if>
              <if test="checkValue!=null">,check_value = #{checkValue}</if>
              <if test="rechargeCount!=null">,recharge_count = #{rechargeCount}</if>
              <if test="rechargeTotalAmount!=null">,recharge_total_amount = #{rechargeTotalAmount}</if>
@@ -113,7 +114,6 @@
              <if test="withdrawTotalAmount!=null">,withdraw_total_amount = #{withdrawTotalAmount}</if>
              <if test="dateUserRegister!=null">,date_user_register = #{dateUserRegister}</if>
              <if test="finSubjectCode!=null">,fin_subject_code = #{finSubjectCode}</if>
-             <if test="biUpdateTs!=null">,bi_update_ts = #{biUpdateTs}</if>
         where
         id = #{id}
     </update>

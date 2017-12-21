@@ -59,7 +59,7 @@ public class AccountTypeController extends BaseController {
         log.info("AccountTypeController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountTypeDto dto = new AccountTypeDto(){{
                 setId(id);
               setDelFlag(0);

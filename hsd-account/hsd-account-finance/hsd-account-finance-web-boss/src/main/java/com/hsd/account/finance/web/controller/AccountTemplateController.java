@@ -59,7 +59,7 @@ public class AccountTemplateController extends BaseController {
         log.info("AccountTemplateController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountTemplateDto dto = new AccountTemplateDto(){{
                 setId(id);
               setDelFlag(0);

@@ -52,7 +52,7 @@ public class AccountLogOperationalController extends BaseController {
         log.info("AccountLogOperationalController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountLogOperationalDto dto = new AccountLogOperationalDto(){{
                 setId(id);
             

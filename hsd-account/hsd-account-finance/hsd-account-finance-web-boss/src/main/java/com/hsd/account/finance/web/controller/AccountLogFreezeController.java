@@ -51,7 +51,7 @@ public class AccountLogFreezeController extends BaseController {
         log.info("AccountLogFreezeController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountLogFreezeDto dto = new AccountLogFreezeDto(){{
                 setId(id);
             

@@ -93,8 +93,10 @@ feign:
   okhttp:
     enabled: true
   name:
-    account.actor: hsd-account-actor-server
     util.sms: hsd-util-sms-server
+    account:
+      actor: hsd-account-actor-server
+      finance: hsd-account-finance-server
 
 hystrix:
   command:

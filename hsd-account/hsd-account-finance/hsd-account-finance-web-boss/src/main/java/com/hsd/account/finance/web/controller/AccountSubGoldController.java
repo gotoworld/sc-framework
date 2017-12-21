@@ -4,9 +4,6 @@ import com.hsd.account.finance.api.IAccountSubGoldService;
 import com.hsd.account.finance.dto.AccountSubGoldDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.ALogOperation;
-import com.hsd.framework.annotation.RfAccount2Bean;
-import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
@@ -14,12 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Api(description = "子账户-实物贵金属")
 @RestController
@@ -42,7 +34,6 @@ public class AccountSubGoldController extends BaseController {
         try {
             if (dto == null) dto = new AccountSubGoldDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            
             result.data = PageUtil.copy(accountSubGoldService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -59,44 +50,10 @@ public class AccountSubGoldController extends BaseController {
         log.info("AccountSubGoldController info.........");
         Response result = new Response();
         try {
-
             AccountSubGoldDto dto = new AccountSubGoldDto(){{
                 setId(id);
-            
             }};
             result.data = accountSubGoldService.findDataById(dto);
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
-    /**
-     * <p> 信息保存
-     */
-    @RequiresPermissions(value = {"accountSubGold:add", "accountSubGold:edit"}, logical = Logical.OR)
-    @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
-    @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "子账户-实物贵金属")
-    @ApiOperation(value = "信息保存")
-    public Response save(@Validated @ModelAttribute AccountSubGoldDto dto, BindingResult bindingResult) {
-        log.info("AccountSubGoldController save.........");
-        Response result = new Response();
-        try {
-            if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
-                throw new RuntimeException("请不要重复提交!");
-            }
-            if (bindingResult.hasErrors()) {
-                String errorMsg = "";
-                List<ObjectError> errorList = bindingResult.getAllErrors();
-                for (ObjectError error : errorList) {
-                    errorMsg += (error.getDefaultMessage()) + ";";
-                }
-                result = Response.error(errorMsg);
-            } else {
-                result = accountSubGoldService.saveOrUpdateData(dto);
-                request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
-            }
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

@@ -34,7 +34,6 @@ public class AccountLogRechargeController extends BaseController {
         try {
             if (dto == null) dto = new AccountLogRechargeDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            
             result.data = PageUtil.copy(accountLogRechargeService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -51,10 +50,8 @@ public class AccountLogRechargeController extends BaseController {
         log.info("AccountLogRechargeController info.........");
         Response result = new Response();
         try {
-
             AccountLogRechargeDto dto = new AccountLogRechargeDto(){{
                 setId(id);
-            
             }};
             result.data = accountLogRechargeService.findDataById(dto);
         } catch (Exception e) {

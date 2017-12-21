@@ -34,7 +34,6 @@ public class AccountLogWithdrawalController extends BaseController {
         try {
             if (dto == null) dto = new AccountLogWithdrawalDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            
             result.data = PageUtil.copy(accountLogWithdrawalService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -51,10 +50,8 @@ public class AccountLogWithdrawalController extends BaseController {
         log.info("AccountLogWithdrawalController info.........");
         Response result = new Response();
         try {
-
             AccountLogWithdrawalDto dto = new AccountLogWithdrawalDto(){{
                 setId(id);
-            
             }};
             result.data = accountLogWithdrawalService.findDataById(dto);
         } catch (Exception e) {

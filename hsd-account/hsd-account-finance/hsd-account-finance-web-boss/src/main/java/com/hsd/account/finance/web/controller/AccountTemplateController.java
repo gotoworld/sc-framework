@@ -59,7 +59,6 @@ public class AccountTemplateController extends BaseController {
         log.info("AccountTemplateController info.........");
         Response result = new Response();
         try {
-
             AccountTemplateDto dto = new AccountTemplateDto(){{
                 setId(id);
               setDelFlag(0);

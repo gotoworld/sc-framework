@@ -34,7 +34,6 @@ public class AccountLogController extends BaseController {
         try {
             if (dto == null) dto = new AccountLogDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            
             result.data = PageUtil.copy(accountLogService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -51,10 +50,8 @@ public class AccountLogController extends BaseController {
         log.info("AccountLogController info.........");
         Response result = new Response();
         try {
-
             AccountLogDto dto = new AccountLogDto(){{
                 setId(id);
-            
             }};
             result.data = accountLogService.findDataById(dto);
         } catch (Exception e) {

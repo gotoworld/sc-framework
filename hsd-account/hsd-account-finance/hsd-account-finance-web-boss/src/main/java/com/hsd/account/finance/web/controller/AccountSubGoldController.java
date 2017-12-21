@@ -49,9 +49,6 @@ public class AccountSubGoldController extends BaseController {
         }
         return result;
     }
-
-
-
     /**
      * <p> 信息详情。
      */
@@ -73,8 +70,6 @@ public class AccountSubGoldController extends BaseController {
         }
         return result;
     }
-
-
     /**
      * <p> 信息保存
      */

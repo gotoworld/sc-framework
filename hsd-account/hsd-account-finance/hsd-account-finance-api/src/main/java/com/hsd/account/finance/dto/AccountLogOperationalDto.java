@@ -1,17 +1,16 @@
 package com.hsd.account.finance.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.dto.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.dto.BaseDto;
-import javax.validation.constraints.Max;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -40,7 +39,7 @@ public class AccountLogOperationalDto extends BaseDto {
      @ApiModelProperty("交易时间")
      private Date dateCreated;
      @ApiModelProperty("交易数据json")
-	 @Size(max=65535,message="data最大65535字符")
+	 @Size(max=255,message="data最大255字符")
      private String data;
      @ApiModelProperty("交易说明")
 	 @NotNull(message="memo不能为空")@Size(max=80,message="memo最大80字符")

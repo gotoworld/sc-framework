@@ -6,14 +6,14 @@ server:
   port: 8889
 spring:
   #rabbitmq:
-    #addresses: 192.168.101.100:5672,192.168.101.101:5672,192.168.101.102:5672
+    #addresses: 192.168.108.100:5672,192.168.108.101:5672,192.168.108.102:5672
     #username: user-dev
     #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
     #virtualHost: /vhost/dev
     #publisher-confirms: true
   boot:
     admin:
-      url: http://192.168.101.100:${server.port}
+      url: http://192.168.108.100:${server.port}
       username: "${security.user.name}"
       password: "${security.user.password}"
       client:
@@ -54,7 +54,7 @@ eureka:
     registerWithEureka: true #服务注册
     fetchRegistry: true #服务获取
     serviceUrl:
-      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.199:8761/eureka/
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.108.199:8761/eureka/
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 

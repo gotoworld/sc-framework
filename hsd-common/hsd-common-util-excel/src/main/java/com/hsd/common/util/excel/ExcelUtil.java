@@ -22,7 +22,7 @@ public class ExcelUtil {
     private enum ReturnTypeEnum {
         MAP, LIST;
 
-        private ReturnTypeEnum() {
+        ReturnTypeEnum() {
         }
     }
 
@@ -162,7 +162,7 @@ public class ExcelUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        Map<String, List> result = readExcelIsList("http://192.168.101.100:8080/11.xlsx", true);
+        Map<String, List> result = readExcelIsList("http://192.168.108.100:8080/11.xlsx", true);
 //        Map<String, List> result = readExcelIsList("d:/staff1.xlsx", true);
         result.get("datas").forEach(map -> {
             System.out.println(map);

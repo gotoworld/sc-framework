@@ -28,9 +28,27 @@ public class AccountTemplateAttributeController extends BaseController {
     private IAccountTemplateAttributeService accountTemplateAttributeService;
     private static final String acPrefix = "/boss/account/finance/accountTemplateAttribute/";
 
-
-
-
+    /**
+     * <p> 信息详情。
+     */
+    @RequiresPermissions("accountTemplateAttribute:info")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
+    @ApiOperation(value = "信息详情")
+    public Response info(@PathVariable("id") Long id) {
+        log.info("AccountTemplateAttributeController info.........");
+        Response result = new Response();
+        try {
+            if (id!=null) {throw new RuntimeException("参数异常!");}
+            AccountTemplateAttributeDto dto = new AccountTemplateAttributeDto(){{
+                setId(id);
+            
+            }};
+            result.data = accountTemplateAttributeService.findDataById(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
     /**
      * <p>物理删除。

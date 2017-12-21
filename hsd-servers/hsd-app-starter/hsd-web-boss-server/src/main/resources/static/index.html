@@ -168,20 +168,19 @@
                 <!--</li>-->
                 <li ng-show='staff.hasPermission("finance:menu")' ><a href="#"><i class="fa fa-jsfiddle"></i> <span class="nav-label">金融账户</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li ng-show='staff.hasPermission("account:menu")' ><a class="J_menuItem" href="/html/account/finance/account.html">支付账户</a></li>
+                        <li ng-show='staff.hasPermission("accountType:menu")' ><a class="J_menuItem" href="/html/account/finance/account_type.html">账户类型</a></li>
+                        <li ng-show='staff.hasPermission("accountTemplate:menu")' ><a class="J_menuItem" href="/html/account/finance/account_template.html">账户模板</a></li>
+                        <li ng-show='staff.hasPermission("account:menu")' ><a class="J_menuItem" href="/html/account/finance/account.html">金融账户</a></li>
+
+                        <li ng-show='staff.hasPermission("accountLog:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log.html">日志-交易记录</a></li>
+                        <li ng-show='staff.hasPermission("accountLogFreeze:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_freeze.html">日志-资金冻结记录</a></li>
+                        <li ng-show='staff.hasPermission("accountLogRecharge:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_recharge.html">日志-充值记录</a></li>
+                        <li ng-show='staff.hasPermission("accountLogWithdrawal:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_withdrawal.html">日志-提现流水</a></li>
+                        <li ng-show='staff.hasPermission("accountLogOperational:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_operational.html">操作日志</a></li>
+
                         <li ng-show='staff.hasPermission("accountBindThirdparty:menu")' ><a class="J_menuItem" href="/html/account/finance/account_bind_thirdparty.html">支付账户与三方账户绑定</a></li>
-                        <li ng-show='staff.hasPermission("accountLog:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log.html">账户-日志-资金流水</a></li>
-                        <li ng-show='staff.hasPermission("accountLogCapital:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_capital.html">账户-日志-资金流水</a></li>
-                        <li ng-show='staff.hasPermission("accountLogFreeze:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_freeze.html">账户-日志-资金冻结记录</a></li>
-                        <li ng-show='staff.hasPermission("accountLogOperational:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_operational.html">用户账户-操作日志</a></li>
-                        <li ng-show='staff.hasPermission("accountLogRecharge:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_recharge.html">账户-日志-充值记录</a></li>
-                        <li ng-show='staff.hasPermission("accountLogTransaction:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_transaction.html">账户-日志-交易记录</a></li>
-                        <li ng-show='staff.hasPermission("accountLogWithdrawal:menu")' ><a class="J_menuItem" href="/html/account/finance/account_log_withdrawal.html">账户-日志-提现流水</a></li>
                         <li ng-show='staff.hasPermission("accountSubGold:menu")' ><a class="J_menuItem" href="/html/account/finance/account_sub_gold.html">子账户-实物贵金属</a></li>
                         <li ng-show='staff.hasPermission("accountSubLoan:menu")' ><a class="J_menuItem" href="/html/account/finance/account_sub_loan.html">子账户-P2P网贷</a></li>
-                        <li ng-show='staff.hasPermission("accountTemplate:menu")' ><a class="J_menuItem" href="/html/account/finance/account_template.html">账户模板</a></li>
-                        <li ng-show='staff.hasPermission("accountTemplateAttribute:menu")' ><a class="J_menuItem" href="/html/account/finance/account_template_attribute.html">账户模板属性</a></li>
-                        <li ng-show='staff.hasPermission("accountType:menu")' ><a class="J_menuItem" href="/html/account/finance/account_type.html">账户类型</a></li>
                     </ul>
                 </li>
             </ul>

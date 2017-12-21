@@ -59,17 +59,21 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("account:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
                                     				<th>账户名称</th>
+                                    				<th>充值次数</th>
                                     				<th>开户时间</th>
+                                    				<th>首次充值时间</th>
                                     				<th>账户类型,安全控制值</th>
                                     				<th>账户币种,安全控制值</th>
                                     				<th>账户状态0生效1冻结2注销</th>
+                                    				<th>提现次数</th>
+                                    				<th>客户注册时间</th>
+                                    				<th>更新时间</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
@@ -77,17 +81,22 @@
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.aliasName}}</td>
+                                    				<td>{{item.rechargeCount}}</td>
                                     				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.dateRechargeFirst | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.accountType}}</td>
                                     				<td>{{item.currency}}</td>
                                     				<td>{{item.state}}</td>
+                                    				<td>{{item.withdrawCount}}</td>
+                                    				<td>{{item.dateUserRegister | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>
                                                       <a href="javascript:" ng-show='staff.hasPermission("account:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:" ng-show='staff.hasPermission("account:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="7">
+                                    				<td colspan="12">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

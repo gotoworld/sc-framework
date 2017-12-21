@@ -24,7 +24,7 @@ public class AccountBindThirdparty extends BaseEntity {
      /**身份证号码*/
      private String cardNo;
      /**预留手机号码*/
-     private Integer cellphone;
+     private String cellphone;
      /**三方账户币种*/
      private Integer thirdpartyCurrency;
      /**三方账户类型0银行卡*/

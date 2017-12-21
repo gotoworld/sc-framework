@@ -64,7 +64,7 @@ public class DruidConfig implements EnvironmentAware {
         //白名单：
         //registration.addInitParameter("allow","127.0.0.1");
         //IP黑名单 (存在共同时，deny优先于allow) : 如果满足deny的话提示:Sorry, you are not permitted to view this page.
-        //registration.addInitParameter("deny","192.168.101.100");
+        //registration.addInitParameter("deny","192.168.108.100");
         return registration;
     }
 

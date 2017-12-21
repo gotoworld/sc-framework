@@ -5,7 +5,7 @@ spring:
   cloud:
     config:
       enabled: false
-      uri: http://192.168.101.100:8888
+      uri: http://192.168.108.100:8888
       profile: dev
       label: trunk
 #      discovery:
@@ -33,7 +33,7 @@ eureka:
     registerWithEureka: true #服务注册
     fetchRegistry: true #服务获取
     serviceUrl:
-      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.108.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.108.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.108.102:8761/eureka/
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 

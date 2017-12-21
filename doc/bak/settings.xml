@@ -52,7 +52,7 @@
             <id>central</id>
             <mirrorOf>hsd</mirrorOf>
            <name>Nexus</name>
-           <url>http://192.168.101.100:8081/nexus/content/groups/public/</url>
+           <url>http://192.168.108.100:8081/nexus/content/groups/public/</url>
 	   </mirror>
     </mirrors>
 
@@ -67,7 +67,7 @@
 				<!-- 私有库地址-->
 				<repository>
 					<id>nexus</id>
-					<url>http://192.168.101.100:8081/nexus/content/groups/public/</url>
+					<url>http://192.168.108.100:8081/nexus/content/groups/public/</url>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
@@ -80,7 +80,7 @@
 				<!--插件库地址-->
 				<pluginRepository>
 					<id>nexus</id>
-					<url>http://192.168.101.100:8081/nexus/content/groups/public/</url>
+					<url>http://192.168.108.100:8081/nexus/content/groups/public/</url>
 					<releases>
 						<enabled>true</enabled>
 					</releases>

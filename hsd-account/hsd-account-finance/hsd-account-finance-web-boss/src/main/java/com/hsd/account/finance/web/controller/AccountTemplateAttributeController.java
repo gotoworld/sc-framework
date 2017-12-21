@@ -38,7 +38,7 @@ public class AccountTemplateAttributeController extends BaseController {
         log.info("AccountTemplateAttributeController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountTemplateAttributeDto dto = new AccountTemplateAttributeDto(){{
                 setId(id);
             

@@ -51,22 +51,22 @@ public class AccountLogWithdrawalDto extends BaseDto {
      @ApiModelProperty("到账金额")
 	 @NotNull(message="arrive_money不能为空")
      private BigDecimal arriveMoney;
+     @ApiModelProperty("提现机构交易码,成功后回写,用于对账")
+	 @Size(max=36,message="bank_trade_no最大36字符")
+     private String bankTradeNo;
+     @ApiModelProperty("提现回馈")
+	 @Size(max=255,message="bank_result最大255字符")
+     private String bankResult;
      @ApiModelProperty("提现时间")
      private Date dateCreated;
-     @ApiModelProperty("三方机构交易码,充值成功后回写,用于对账")
-	 @Size(max=36,message="pay_trade_no最大36字符")
-     private String payTradeNo;
-     @ApiModelProperty("三方回馈")
-	 @Size(max=65535,message="pay_result最大65535字符")
-     private String payResult;
+     @ApiModelProperty("审核时间")
+     private Date dateAudited;
      @ApiModelProperty("状态1待审核,2提现成功,3提现失败,4撤销提现")
 	 @NotNull(message="state不能为空")
      private Integer state;
      @ApiModelProperty("审核人")
 	 @NotNull(message="auditor_id不能为空")
      private Long auditorId;
-     @ApiModelProperty("审核时间")
-     private Date dateAudited;
      @ApiModelProperty("BI时间戳")
      private Date biUpdateTs;
 

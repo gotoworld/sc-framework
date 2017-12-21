@@ -42,8 +42,6 @@ public class AccountLogOperationalController extends BaseController {
         return result;
     }
 
-
-
     /**
      * <p> 信息详情。
      */

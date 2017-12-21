@@ -59,18 +59,13 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("accountLogFreeze:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>外部业务id</th>
-                                    				<th>支付账户id</th>
                                     				<th>操作类型</th>
                                     				<th>金额</th>
-                                    				<th>创建时间</th>
-                                    				<th>冻结总额</th>
                                     				<th>冻结类型</th>
                                     				<th>操作</th>
                                     			</tr>
@@ -78,12 +73,8 @@
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.outRefId}}</td>
-                                    				<td>{{item.accountId}}</td>
                                     				<td>{{item.actionType}}</td>
                                     				<td>{{item.amount}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                    				<td>{{item.freezeTotalAmount}}</td>
                                     				<td>{{item.freezeType}}</td>
                                     				<td>
                                                       <a href="javascript:" ng-show='staff.hasPermission("accountLogFreeze:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
@@ -91,7 +82,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="9">
+                                    				<td colspan="5">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

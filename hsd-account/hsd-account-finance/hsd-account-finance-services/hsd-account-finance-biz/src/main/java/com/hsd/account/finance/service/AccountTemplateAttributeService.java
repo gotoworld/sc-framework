@@ -79,6 +79,18 @@ public class AccountTemplateAttributeService extends BaseService implements IAcc
             return  results;
         }
 
+        @Override
+        public AccountTemplateAttributeDto findDataById(@RequestBody AccountTemplateAttributeDto dto) {
+            AccountTemplateAttributeDto result = null;
+            try {
+                AccountTemplateAttribute entity = copyTo(dto, AccountTemplateAttribute.class);
+                result = copyTo(accountTemplateAttributeDao.selectByPrimaryKey(entity),AccountTemplateAttributeDto.class);
+            } catch (Exception e) {
+                log.error("信息[详情]查询异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            return result;
+        }
 
 
 }

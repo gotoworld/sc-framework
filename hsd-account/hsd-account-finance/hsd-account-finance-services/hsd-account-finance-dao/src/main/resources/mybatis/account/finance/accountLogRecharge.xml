@@ -11,12 +11,12 @@
         ,t1.trade_no as "tradeNo"
         ,t1.user_name as "userName"
         ,t1.real_name as "realName"
-        ,t1.pay_type as "payType"
         ,t1.money as "money"
         ,t1.fee as "fee"
         ,t1.account_money as "accountMoney"
         ,t1.state as "state"
         ,t1.data as "data"
+        ,t1.pay_type as "payType"
         ,t1.pay_trade_no as "payTradeNo"
         ,t1.pay_result as "payResult"
         ,t1.memo as "memo"
@@ -47,12 +47,12 @@
            ,trade_no 
            ,user_name 
            ,real_name 
-           ,pay_type 
            ,money 
            ,fee 
            ,account_money 
            ,state 
            ,data 
+           ,pay_type 
            ,pay_trade_no 
            ,pay_result 
            ,memo 
@@ -70,27 +70,27 @@
            ,#{tradeNo} 
            ,#{userName} 
            ,#{realName} 
-           ,#{payType} 
            ,#{money} 
            ,#{fee} 
            ,#{accountMoney} 
            ,#{state} 
            ,#{data} 
+           ,#{payType} 
            ,#{payTradeNo} 
            ,#{payResult} 
            ,#{memo} 
            ,#{createIp} 
            ,now()
-           ,now()
+           ,#{dateUpdated} 
            ,#{dateSuccess} 
-           ,#{biUpdateTs} 
+           ,now()
         )
     </insert>
 
 
     <!-- 数据更新 -->
     <update id="update" parameterType="com.hsd.account.finance.entity.AccountLogRecharge">
-        update account_log_recharge set date_updated=now() 
+        update account_log_recharge set bi_update_ts=now() 
              <if test="appUserId!=null">,app_user_id = #{appUserId}</if>
              <if test="accountId!=null">,account_id = #{accountId}</if>
              <if test="accountSubType!=null">,account_sub_type = #{accountSubType}</if>
@@ -98,18 +98,18 @@
              <if test="tradeNo!=null">,trade_no = #{tradeNo}</if>
              <if test="userName!=null">,user_name = #{userName}</if>
              <if test="realName!=null">,real_name = #{realName}</if>
-             <if test="payType!=null">,pay_type = #{payType}</if>
              <if test="money!=null">,money = #{money}</if>
              <if test="fee!=null">,fee = #{fee}</if>
              <if test="accountMoney!=null">,account_money = #{accountMoney}</if>
              <if test="state!=null">,state = #{state}</if>
              <if test="data!=null">,data = #{data}</if>
+             <if test="payType!=null">,pay_type = #{payType}</if>
              <if test="payTradeNo!=null">,pay_trade_no = #{payTradeNo}</if>
              <if test="payResult!=null">,pay_result = #{payResult}</if>
              <if test="memo!=null">,memo = #{memo}</if>
              <if test="createIp!=null">,create_ip = #{createIp}</if>
+             <if test="dateUpdated!=null">,date_updated = #{dateUpdated}</if>
              <if test="dateSuccess!=null">,date_success = #{dateSuccess}</if>
-             <if test="biUpdateTs!=null">,bi_update_ts = #{biUpdateTs}</if>
         where
         id = #{id}
     </update>

@@ -41,9 +41,6 @@ public class AccountLogWithdrawalController extends BaseController {
         }
         return result;
     }
-
-
-
     /**
      * <p> 信息详情。
      */
@@ -65,4 +62,5 @@ public class AccountLogWithdrawalController extends BaseController {
         }
         return result;
     }
+
 }

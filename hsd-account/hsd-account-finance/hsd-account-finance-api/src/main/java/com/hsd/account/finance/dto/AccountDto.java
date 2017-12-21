@@ -52,7 +52,7 @@ public class AccountDto extends BaseDto {
 	 @NotNull(message="account_template_id不能为空")
      private Long accountTemplateId;
      @ApiModelProperty("模板值（json形式保存）")
-	 @NotNull(message="expand_json不能为空")@Size(max=65535,message="expand_json最大65535字符")
+	 @NotNull(message="expand_json不能为空")@Size(max=255,message="expand_json最大255字符")
      private String expandJson;
      @ApiModelProperty("开户时间")
      private Date dateCreated;

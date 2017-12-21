@@ -40,9 +40,6 @@ public class AccountLogRechargeDto extends BaseDto {
      @ApiModelProperty("真实姓名")
 	 @Size(max=22,message="real_name最大22字符")
      private String realName;
-     @ApiModelProperty("支付方式")
-	 @NotNull(message="pay_type不能为空")
-     private Integer payType;
      @ApiModelProperty("充值金额")
 	 @NotNull(message="money不能为空")
      private BigDecimal money;
@@ -56,13 +53,16 @@ public class AccountLogRechargeDto extends BaseDto {
 	 @NotNull(message="state不能为空")
      private Integer state;
      @ApiModelProperty("充值数据json")
-	 @NotNull(message="data不能为空")@Size(max=65535,message="data最大65535字符")
+	 @NotNull(message="data不能为空")@Size(max=255,message="data最大255字符")
      private String data;
-     @ApiModelProperty("三方机构交易码,充值成功后回写,用于对账")
+     @ApiModelProperty("支付方式")
+	 @NotNull(message="pay_type不能为空")
+     private Integer payType;
+     @ApiModelProperty("支付机构交易码,充值成功后回写,用于对账")
 	 @Size(max=36,message="pay_trade_no最大36字符")
      private String payTradeNo;
-     @ApiModelProperty("三方回馈")
-	 @Size(max=65535,message="pay_result最大65535字符")
+     @ApiModelProperty("支付回馈")
+	 @Size(max=255,message="pay_result最大255字符")
      private String payResult;
      @ApiModelProperty("备注")
 	 @Size(max=55,message="memo最大55字符")

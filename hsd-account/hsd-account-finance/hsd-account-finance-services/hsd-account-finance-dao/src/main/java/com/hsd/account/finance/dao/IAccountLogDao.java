@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 /**
- * <p>账户-日志-资金流水 数据库处理接口类。
+ * <p>账户-日志 数据库处理接口类。
  */
 @Mapper
 public interface IAccountLogDao extends IBaseDao {

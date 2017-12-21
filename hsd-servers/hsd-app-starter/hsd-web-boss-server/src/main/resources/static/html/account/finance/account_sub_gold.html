@@ -59,7 +59,6 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("accountSubGold:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -69,7 +68,6 @@
                                     				<th>开户日期</th>
                                     				<th>购买次数</th>
                                     				<th>销户日期</th>
-                                    				<th>首次购买时间</th>
                                     				<th>账户状态</th>
                                     				<th>子账户类型</th>
                                     				<th>操作</th>
@@ -82,7 +80,6 @@
                                     				<td>{{item.dateOpen | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.buyCount}}</td>
                                     				<td>{{item.dateClose | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                    				<td>{{item.dateBuyFirst | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.state}}</td>
                                     				<td>{{item.type}}</td>
                                     				<td>
@@ -91,7 +88,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="9">
+                                    				<td colspan="8">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

@@ -91,7 +91,9 @@ feign:
   okhttp:
     enabled: true
   name:
-    account.actor: hsd-account-actor-server
+    account:
+      actor: hsd-account-actor-server
+      finance: hsd-account-finance-server
 
 hystrix:
   command:

@@ -84,7 +84,6 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller info.........");
         Response result = new Response();
         try {
-            if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {throw new RuntimeException("参数异常!");};
             ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
             @[ for(t in pks){ /]
                 set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
@@ -111,7 +110,6 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller del.........");
         Response result = new Response();
         try {
-            if (@[ for(t in pks){ /]${tLP.index==1?'':' || '}${t.columnNameFormat}==null@[ } /]) {throw new RuntimeException("参数异常!");};
             ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
             @[ for(t in pks){ /]
                 set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});
@@ -135,7 +133,6 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
         log.info("${tcfg.tableNameFormat!}Controller phydel.........");
         Response result = new Response();
         try {
-           if (@[ for(t in pks){ /]${tLP.index==1?'':' || '}${t.columnNameFormat}==null@[ } /]) {throw new RuntimeException("参数异常!");};
            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
            @[ for(t in pks){ /]
             set${strUtil.toUpperCaseFirstOne(t.columnNameFormat)}(${t.columnNameFormat});

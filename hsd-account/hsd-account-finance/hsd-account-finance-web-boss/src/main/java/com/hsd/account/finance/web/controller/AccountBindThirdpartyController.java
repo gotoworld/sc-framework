@@ -51,7 +51,7 @@ public class AccountBindThirdpartyController extends BaseController {
         log.info("AccountBindThirdpartyController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountBindThirdpartyDto dto = new AccountBindThirdpartyDto(){{
                 setId(id);
             

@@ -59,7 +59,7 @@ public class AccountSubGoldController extends BaseController {
         log.info("AccountSubGoldController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountSubGoldDto dto = new AccountSubGoldDto(){{
                 setId(id);
             

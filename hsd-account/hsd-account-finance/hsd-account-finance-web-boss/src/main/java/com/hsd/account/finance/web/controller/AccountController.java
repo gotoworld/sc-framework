@@ -51,7 +51,7 @@ public class AccountController extends BaseController {
         log.info("AccountController info.........");
         Response result = new Response();
         try {
-            if (id!=null) {throw new RuntimeException("参数异常!");}
+
             AccountDto dto = new AccountDto(){{
                 setId(id);
             

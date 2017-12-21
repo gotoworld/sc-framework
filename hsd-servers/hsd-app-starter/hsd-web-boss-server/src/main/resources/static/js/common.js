@@ -246,15 +246,10 @@ var site = {
     , accountTemplateAttribute: {//账户模板属性
         list: apiPath.account.finance + "/boss/account/finance/accountTemplateAttribute/list"        //列表
     }
-    , accountLog: {//账户-日志-资金流水
+    , accountLog: {//账户-日志-交易记录
         view: basePath + "/html/account/finance/account_log"
         ,page: apiPath.account.finance + "/boss/account/finance/accountLog/page/"       //分页
         ,info: apiPath.account.finance + "/boss/account/finance/accountLog/info/"       //详情
-    }
-    , accountLogCapital: {//账户-日志-资金流水
-        view: basePath + "/html/account/finance/account_log_capital"
-        ,page: apiPath.account.finance + "/boss/account/finance/accountLogCapital/page/"       //分页
-        ,info: apiPath.account.finance + "/boss/account/finance/accountLogCapital/info/"       //详情
     }
     , accountLogFreeze: {//账户-日志-资金冻结记录
         view: basePath + "/html/account/finance/account_log_freeze"
@@ -270,11 +265,6 @@ var site = {
         view: basePath + "/html/account/finance/account_log_recharge"
         ,page: apiPath.account.finance + "/boss/account/finance/accountLogRecharge/page/"       //分页
         ,info: apiPath.account.finance + "/boss/account/finance/accountLogRecharge/info/"       //详情
-    }
-    , accountLogTransaction: {//账户-日志-交易记录
-        view: basePath + "/html/account/finance/account_log_transaction"
-        ,page: apiPath.account.finance + "/boss/account/finance/accountLogTransaction/page/"       //分页
-        ,info: apiPath.account.finance + "/boss/account/finance/accountLogTransaction/info/"       //详情
     }
     , accountLogWithdrawal: {//账户-日志-提现流水
         view: basePath + "/html/account/finance/account_log_withdrawal"

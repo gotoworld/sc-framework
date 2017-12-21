@@ -1,19 +1,19 @@
 windows系统环境变量
-DOCKER_HOST=tcp://192.168.101.150:2375
+DOCKER_HOST=tcp://192.168.108.150:2375
 
-#远程启动某台机器上的镜像 -H 192.168.101.150:2375
+#远程启动某台机器上的镜像 -H 192.168.108.150:2375
 docker run -dit -v /logs:/logs --net="host" -p 6060:6060 hsd/hsd-account-server:1.0
 
-docker run -dit -v /logs/hsd-account-staff-server:/logs --net="host" --name="hsd-account-staff-server" -p 6060:6060 192.168.101.150/hsd/hsd-account-staff-server:1.0
-docker run -dit -v /logs/hsd-account-staff-web-boss:/logs --net="host" --name="hsd-account-staff-web-boss" -p 6061:6061 192.168.101.150/hsd/hsd-account-staff-web-boss:1.0
+docker run -dit -v /logs/hsd-account-staff-server:/logs --net="host" --name="hsd-account-staff-server" -p 6060:6060 192.168.108.150/hsd/hsd-account-staff-server:1.0
+docker run -dit -v /logs/hsd-account-staff-web-boss:/logs --net="host" --name="hsd-account-staff-web-boss" -p 6061:6061 192.168.108.150/hsd/hsd-account-staff-web-boss:1.0
 
-docker run -dit -v /logs/hsd-account-actor-server:/logs --net="host" --name="hsd-account-actor-server" -p 6064:6064 192.168.101.150/hsd/hsd-account-actor-server:1.0
-docker run -dit -v /logs/hsd-account-actor-web-boss:/logs --net="host" --name="" -p 6065:6065 192.168.101.150/hsd/hsd-account-actor-web-boss:1.0
-docker run -dit -v /logs/hsd-account-actor-web-portal:/logs --net="host" --name="hsd-account-actor-web-portal" -p 6066:6066 192.168.101.150/hsd/hsd-account-actor-web-portal:1.0
+docker run -dit -v /logs/hsd-account-actor-server:/logs --net="host" --name="hsd-account-actor-server" -p 6064:6064 192.168.108.150/hsd/hsd-account-actor-server:1.0
+docker run -dit -v /logs/hsd-account-actor-web-boss:/logs --net="host" --name="" -p 6065:6065 192.168.108.150/hsd/hsd-account-actor-web-boss:1.0
+docker run -dit -v /logs/hsd-account-actor-web-portal:/logs --net="host" --name="hsd-account-actor-web-portal" -p 6066:6066 192.168.108.150/hsd/hsd-account-actor-web-portal:1.0
 
-docker run -dit -v /logs/hsd-util-sms-server:/logs --net="host" --name="hsd-util-sms-server" -p 6080:6080 192.168.101.150/hsd/hsd-util-sms-server:1.0
-docker run -dit -v /logs/hsd-util-sms-web-boss:/logs --net="host" --name="hsd-util-sms-web-boss" -p 6081:6081 192.168.101.150/hsd/hsd-util-sms-web-boss:1.0
-docker run -dit -v /logs/hsd-util-sms-web-portal:/logs --net="host" --name="hsd-util-sms-web-portal" -p 6082:6082 192.168.101.150/hsd/hsd-util-sms-web-portal:1.0
+docker run -dit -v /logs/hsd-util-sms-server:/logs --net="host" --name="hsd-util-sms-server" -p 6080:6080 192.168.108.150/hsd/hsd-util-sms-server:1.0
+docker run -dit -v /logs/hsd-util-sms-web-boss:/logs --net="host" --name="hsd-util-sms-web-boss" -p 6081:6081 192.168.108.150/hsd/hsd-util-sms-web-boss:1.0
+docker run -dit -v /logs/hsd-util-sms-web-portal:/logs --net="host" --name="hsd-util-sms-web-portal" -p 6082:6082 192.168.108.150/hsd/hsd-util-sms-web-portal:1.0
 
 docker run ：创建一个新的容器并运行一个命令
 语法

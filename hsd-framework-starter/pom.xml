@@ -26,7 +26,7 @@
         <spring.cloud.version>Dalston.RELEASE</spring.cloud.version>
         <spring.admin.version>1.5.5</spring.admin.version>
         <docker.image.prefix>hsd</docker.image.prefix>
-        <docker.host>192.168.101.150</docker.host>
+        <docker.host>192.168.108.150</docker.host>
     </properties>
 
     <modules>
@@ -194,12 +194,12 @@
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://192.168.101.100:8081/nexus/content/repositories/releases/</url>
+            <url>http://192.168.108.100:8081/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://192.168.101.100:8081/nexus/content/repositories/snapshots/</url>
+            <url>http://192.168.108.100:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 

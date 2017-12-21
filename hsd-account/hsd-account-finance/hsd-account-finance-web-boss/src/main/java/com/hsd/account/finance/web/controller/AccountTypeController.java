@@ -59,7 +59,6 @@ public class AccountTypeController extends BaseController {
         log.info("AccountTypeController info.........");
         Response result = new Response();
         try {
-
             AccountTypeDto dto = new AccountTypeDto(){{
                 setId(id);
               setDelFlag(0);

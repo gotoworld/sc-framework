@@ -69,7 +69,6 @@
                                     				<th>安全保障等级</th>
                                     				<th>允许转出</th>
                                     				<th>允许支付</th>
-                                    				<th>创建时间</th>
                                     				<th>名称</th>
                                     				<th>允许提现</th>
                                     				<th>账户性质0个人1企业</th>
@@ -85,7 +84,6 @@
                                     				<td>{{item.securityLevel}}</td>
                                     				<td>{{item.isShiftOut}}</td>
                                     				<td>{{item.isPay}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.name}}</td>
                                     				<td>{{item.isWithdraw}}</td>
                                     				<td>{{item.isEnterprise}}</td>
@@ -98,7 +96,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="12">
+                                    				<td colspan="11">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

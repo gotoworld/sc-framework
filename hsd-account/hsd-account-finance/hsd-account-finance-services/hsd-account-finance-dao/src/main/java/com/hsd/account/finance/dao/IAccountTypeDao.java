@@ -22,13 +22,13 @@ public interface IAccountTypeDao extends IBaseDao {
     /**
      * 逻辑删除
      */
-    @Update("update account_type set  date_updated=now(), del_flag=1 where  id = #{id} ")
+    @Update("update account_type set  bi_update_ts=now(), del_flag=1 where  id = #{id} ")
     int deleteById(IEntity entity) throws Exception;
 
     /**
      * 恢复逻辑删除的数据
      */
-    @Update("update account_type set   date_updated=now(), del_flag=0 where  id = #{id} ")
+    @Update("update account_type set   bi_update_ts=now(), del_flag=0 where  id = #{id} ")
     int recoveryDataById(IEntity entity) throws Exception;
 
     /**

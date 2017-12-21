@@ -1,17 +1,16 @@
 package com.hsd.account.finance.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.dto.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.dto.BaseDto;
-import javax.validation.constraints.Max;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,7 +33,8 @@ public class AccountBindThirdpartyDto extends BaseDto {
 	 @Size(max=19,message="card_no最大19字符")
      private String cardNo;
      @ApiModelProperty("预留手机号码")
-     private Integer cellphone;
+	 @Size(max=19,message="cellphone最大19字符")
+     private String cellphone;
      @ApiModelProperty("三方账户币种")
 	 @NotNull(message="thirdparty_currency不能为空")
      private Integer thirdpartyCurrency;

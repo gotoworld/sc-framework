@@ -30,8 +30,6 @@ public class AccountLogRecharge extends BaseEntity {
      private String userName;
      /**真实姓名*/
      private String realName;
-     /**支付方式*/
-     private Integer payType;
      /**充值金额*/
      private BigDecimal money;
      /**手续费*/
@@ -42,9 +40,11 @@ public class AccountLogRecharge extends BaseEntity {
      private Integer state;
      /**充值数据json*/
      private String data;
-     /**三方机构交易码,充值成功后回写,用于对账*/
+     /**支付方式*/
+     private Integer payType;
+     /**支付机构交易码,充值成功后回写,用于对账*/
      private String payTradeNo;
-     /**三方回馈*/
+     /**支付回馈*/
      private String payResult;
      /**备注*/
      private String memo;

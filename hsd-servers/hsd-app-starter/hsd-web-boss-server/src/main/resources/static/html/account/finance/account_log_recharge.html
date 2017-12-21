@@ -59,39 +59,50 @@
 											</td>
 										</tr>
 									</table>
-									<a href="javascript:" ng-click="edit('a',{id:0});" ng-show='staff.hasPermission("accountLogRecharge:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-                                    				<th>支付账户id</th>
-                                    				<th>用户IP</th>
-                                    				<th>申请时间</th>
+                                    				<th>支付回馈</th>
                                     				<th>交易订单号</th>
+                                    				<th>成功时间</th>
                                     				<th>子账户类型</th>
-                                    				<th>子账户id</th>
+                                    				<th>手续费</th>
+                                    				<th>支付机构交易码,充值成功后回写,用于对账</th>
+                                    				<th>用户名称</th>
+                                    				<th>支付账户id</th>
+                                    				<th>支付方式</th>
+                                    				<th>申请时间</th>
+                                    				<th>充值金额</th>
                                     				<th>充值状态1申请2成功3失败4撤销</th>
+                                    				<th>到帐金额</th>
                                     				<th>操作</th>
                                     			</tr>
                                     		</thead>
                                     		<tbody>
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
-                                    				<td>{{item.accountId}}</td>
-                                    				<td>{{item.createIp}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.payResult}}</td>
                                     				<td>{{item.tradeNo}}</td>
+                                    				<td>{{item.dateSuccess | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.accountSubType}}</td>
-                                    				<td>{{item.accountSubId}}</td>
+                                    				<td>{{item.fee}}</td>
+                                    				<td>{{item.payTradeNo}}</td>
+                                    				<td>{{item.userName}}</td>
+                                    				<td>{{item.accountId}}</td>
+                                    				<td>{{item.payType}}</td>
+                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>{{item.money}}</td>
                                     				<td>{{item.state}}</td>
+                                    				<td>{{item.accountMoney}}</td>
                                     				<td>
                                                       <a href="javascript:" ng-show='staff.hasPermission("accountLogRecharge:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:" ng-show='staff.hasPermission("accountLogRecharge:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="9">
+                                    				<td colspan="15">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

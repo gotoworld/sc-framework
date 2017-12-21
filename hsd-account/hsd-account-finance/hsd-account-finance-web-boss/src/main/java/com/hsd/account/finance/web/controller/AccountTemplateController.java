@@ -49,9 +49,6 @@ public class AccountTemplateController extends BaseController {
         }
         return result;
     }
-
-
-
     /**
      * <p> 信息详情。
      */

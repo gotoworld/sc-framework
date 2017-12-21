@@ -20,16 +20,16 @@ spring:
       percentage: 0.1
   zipkin:
     enabled: true
-    base-url: http://192.168.101.101:9411
+    base-url: http://192.168.108.101:9411
   #rabbitmq:
-    #addresses: 192.168.101.100:5672,192.168.101.101:5672,192.168.101.102:5672
+    #addresses: 192.168.108.100:5672,192.168.108.101:5672,192.168.108.102:5672
     #username: user-dev
     #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
     #virtualHost: /vhost/dev
     #publisher-confirms: true
   boot:
     admin:
-      url: http://192.168.101.100:8889
+      url: http://192.168.108.100:8889
 #      client:
 #          metadata:
 #            user.name: ${security.user.name}
@@ -40,7 +40,7 @@ spring:
         url: http://${spring.boot.admin.url}/turbine.stream
   datasource:
     driverClass: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.101.101:3306/hsd?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+    url: jdbc:mysql://192.168.108.101:3306/hsd?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
     password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
 #    # 下面为连接池的补充设置，应用到上面所有数据源中
@@ -70,14 +70,14 @@ spring:
   redis:
     database: 10
     secondary-database: 11
-    host: 192.168.101.101
+    host: 192.168.108.101
     port: 6379
 #    password:
     timeout: 1800000
-    idGenNodes: #host:port:luaSha@password 192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==
-      - 192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c
-      - 192.168.101.101:6379:accb7a987d4fb0fd85c57dc5a609529f80ec3722
-      - 192.168.101.102:6379:f55f781ca4a00a133728488e15a554c070b17255
+    idGenNodes: #host:port:luaSha@password 192.168.108.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==
+      - 192.168.108.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c
+      - 192.168.108.101:6379:accb7a987d4fb0fd85c57dc5a609529f80ec3722
+      - 192.168.108.102:6379:f55f781ca4a00a133728488e15a554c070b17255
     pool:
       max-active: 8
       max-total: 50
@@ -102,7 +102,7 @@ eureka:
     registerWithEureka: true #服务注册
     fetchRegistry: true #服务获取
     serviceUrl:
-      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.101.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.101.102:8761/eureka/
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@192.168.108.100:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.108.101:8761/eureka/,http://${eureka.user.name}:${eureka.user.password}@192.168.108.102:8761/eureka/
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 

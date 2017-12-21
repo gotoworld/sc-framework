@@ -160,7 +160,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	}
 
 	public static void main(String[] args) {
-		String[] idGenNodeArr="192.168.101.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==".split("@");//host:port:luaSha&password
+		String[] idGenNodeArr="192.168.108.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==".split("@");//host:port:luaSha&password
 		String[] hostAndPortAndLuaSha=idGenNodeArr[0].split(":");
 		String host=hostAndPortAndLuaSha[0];
 		int port=Integer.parseInt(hostAndPortAndLuaSha[1]);

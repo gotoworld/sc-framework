@@ -1,14 +1,14 @@
-var uploadPath = "http://192.168.101.100:28888/";
+var uploadPath = "http://192.168.108.100:28888/";
 var basePath = "http://localhost:8080/";
 var apiPath = {
     account: {
-        channel: "http://192.168.101.100:28890/hsd-account-channel-web-portal",
-        actor: "http://192.168.101.100:28890/hsd-account-actor-web-portal"
+        channel: "http://192.168.108.100:28890/hsd-account-channel-web-portal",
+        actor: "http://192.168.108.100:28890/hsd-account-actor-web-portal"
     }
     ,util:{
-        sms: "http://192.168.101.100:28890/hsd-util-sms-web-portal"
+        sms: "http://192.168.108.100:28890/hsd-util-sms-web-portal"
     }
-}
+};
 var site = {
     portalHome:"/html/account/actor/user/home.html"
     ,channel: { //渠道商
@@ -39,7 +39,7 @@ var site = {
         , verifystate: apiPath.account.channel + "/api/account/channel/findpwd/verifystate"
         , update: apiPath.account.channel + "/api/account/channel/findpwd/restPwd"
     }
-}
+};
 var $data, $ngHttp, $ngCompile, $ngSce;
 var page;
 
@@ -56,7 +56,7 @@ $.ajaxSetup({
     headers: {
         "Authorization": sessionStorage.getItem("hsd_channel_authorizationToken")
     }
-})
+});
 $(document).ajaxComplete(function (event, xhr, settings) {
     if (xhr && xhr.responseText) {
         var result = JSON.parse(xhr.responseText);
@@ -114,7 +114,7 @@ var channel = {
     },
     info: function (callback) {
         try {
-            console.info("channel.info.............")
+            console.info("channel.info.............");
             var channelJson = sessionStorage.getItem('hsd_channel_channel');
             if (channelJson) {
                 var channelInfoUser = JSON.parse(channelJson);
@@ -154,7 +154,7 @@ var channel = {
             }
         }
     }
-}
+};
 /**
  * 判断是否为空
  */
@@ -162,7 +162,7 @@ var channel = {
 //工具类
 var util = {
     notEmpty: function (p) {
-        console.info('notEmpty...........')
+        console.info('notEmpty...........');
         if (p == undefined || p == null ||  p == '' || p == 'null'  || p == 'undefined') {
             return false;
         } else {
@@ -216,4 +216,4 @@ var util = {
             }
         }
     }
-}
+};

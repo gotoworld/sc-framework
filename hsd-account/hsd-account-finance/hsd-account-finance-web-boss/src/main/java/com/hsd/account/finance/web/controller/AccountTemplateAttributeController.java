@@ -41,7 +41,6 @@ public class AccountTemplateAttributeController extends BaseController {
 
             AccountTemplateAttributeDto dto = new AccountTemplateAttributeDto(){{
                 setId(id);
-            
             }};
             result.data = accountTemplateAttributeService.findDataById(dto);
         } catch (Exception e) {

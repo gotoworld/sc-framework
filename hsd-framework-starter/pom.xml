@@ -24,7 +24,7 @@
         <druid.version>1.1.5</druid.version>
         <mybatis.spring-boot.version>1.2.0</mybatis.spring-boot.version>
         <spring.cloud.version>Dalston.RELEASE</spring.cloud.version>
-        <spring.admin.version>1.5.6</spring.admin.version>
+        <spring.admin.version>1.5.3</spring.admin.version>
         <docker.image.prefix>hsd</docker.image.prefix>
         <docker.host>192.168.108.150</docker.host>
     </properties>

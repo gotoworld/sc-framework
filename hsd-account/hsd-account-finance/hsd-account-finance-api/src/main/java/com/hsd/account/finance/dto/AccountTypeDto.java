@@ -24,31 +24,23 @@ public class AccountTypeDto extends BaseDto {
 	 @NotNull(message="name不能为空")@Size(max=25,message="name最大25字符")
      private String name;
      @ApiModelProperty("账户性质0个人1企业")
-	 @NotNull(message="is_enterprise不能为空")
      private Integer isEnterprise;
      @ApiModelProperty("允许充值")
 	 @NotNull(message="is_recharge不能为空")
      private Integer isRecharge;
      @ApiModelProperty("允许提现")
-	 @NotNull(message="is_withdraw不能为空")
      private Integer isWithdraw;
      @ApiModelProperty("允许透支")
-	 @NotNull(message="is_overdraft不能为空")
      private Integer isOverdraft;
      @ApiModelProperty("允许支付")
-	 @NotNull(message="is_pay不能为空")
      private Integer isPay;
      @ApiModelProperty("允许转入")
-	 @NotNull(message="is_shift_in不能为空")
      private Integer isShiftIn;
      @ApiModelProperty("允许转出")
-	 @NotNull(message="is_shift_out不能为空")
      private Integer isShiftOut;
      @ApiModelProperty("安全保障等级")
-	 @NotNull(message="security_level不能为空")
      private Integer securityLevel;
      @ApiModelProperty("简介")
-	 @Size(max=255,message="brief_info最大255字符")
      private String briefInfo;
      @ApiModelProperty("排序")
      private Integer orderNo;

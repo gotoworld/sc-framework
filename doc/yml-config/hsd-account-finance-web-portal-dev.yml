@@ -1,10 +1,10 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: PORTAL系统->账户
+  description: PORTAL系统->金融账户
   version : v1.0
 # HTTP Server
 server:
-  port: 6092
+  port: 6142
   context-path: /
 spring:
   resources:
@@ -127,7 +127,9 @@ feign:
   okhttp:
     enabled: true
   name:
-    account.platform: hsd-account-platform-server
+    account:
+      finance: hsd-account-finance-server
+      actor: hsd-account-actor-server
 
 logging:
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"

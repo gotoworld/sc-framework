@@ -29,8 +29,6 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SysVariableDto extends BaseDto {
-
-    private static final long serialVersionUID = -762636592679599049L;
     /**ID*/
     private Long id;
     /**编码*/

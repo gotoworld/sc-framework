@@ -127,7 +127,9 @@ feign:
   okhttp:
     enabled: true
   name:
-    account.finance: hsd-account-finance-server
+    account:
+      finance: hsd-account-finance-server
+      actor: hsd-account-actor-server
 
 logging:
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"

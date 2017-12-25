@@ -65,12 +65,12 @@
                                     		<thead>
                                     			<tr>
                                     				<th style="width:20px;">#</th>
-													<th>类型</th>
+													<th>账户类型</th>
+													<th>账户性质</th>
 													<th>转入</th>
 													<th>转出</th>
 													<th>支付</th>
 													<th>提现</th>
-													<th>账户性质</th>
 													<th>充值</th>
 													<th>透支</th>
 													<th>安全等级</th>
@@ -81,11 +81,11 @@
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
 													<td>{{item.name}}</td>
+													<td>{{item.isEnterprise==1?'企业账户':'个人账户'}}</td>
 													<td>{{item.isShiftIn==1?'启用':'禁止'}}</td>
 													<td>{{item.isShiftOut==1?'启用':'禁止'}}</td>
 													<td>{{item.isPay==1?'启用':'禁止'}}</td>
 													<td>{{item.isWithdraw==1?'启用':'禁止'}}</td>
-													<td>{{item.isEnterprise==1?'企业':'个人'}}</td>
 													<td>{{item.isRecharge==1?'启用':'禁止'}}</td>
 													<td>{{item.isOverdraft==1?'启用':'禁止'}}</td>
 													<td>{{item.securityLevel}}</td>

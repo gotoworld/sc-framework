@@ -29,7 +29,7 @@ start() {
 }
 
 stop() {
-    #kill -9  `ps -ef | grep /usr/local/bin/redis-server | grep -v grep | awk '{print  $2}'`
+    #kill -9  `ps -ef | grep $_APP | grep -v grep | awk '{print  $2}'`
 	echo "find Server process..."
 	pid=$(ps -ef | grep $_APP | grep -v grep | awk '{print $2}')
 	if [ ! -n "$pid" ]; then

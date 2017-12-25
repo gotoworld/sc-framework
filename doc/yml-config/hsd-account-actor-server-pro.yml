@@ -1,14 +1,12 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: BOSS系统->员工
-  version : 1.0
-# HTTP Server
+  description: 基础服务->客户
+  version: v1.0
+# HTTP Server ${random.int[10000,19999]}
 server:
-  port: 6131
+  port: 6100
   context-path: /
 spring:
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static/
   http:
     encoding:
       charset: UTF-8
@@ -40,11 +38,36 @@ spring:
       turbine:
         clusters: default
         url: http://${spring.boot.admin.url}/turbine.stream
+  datasource:
+    driverClass: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.108.101:3306/hsd?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+    username: root
+    #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
+#    # 下面为连接池的补充设置，应用到上面所有数据源中
+#    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 300000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 600000
+    #validationQuery: select "1"
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: "druid.stat.mergeSql:true;druid.stat.slowSqlMillis:5000"
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
   redis:
-    cluster:
-      enable: false #启用redis集群
-      #max-redirects: 3
-      nodes: 192.168.108.100:7000,192.168.108.100:7001,192.168.108.100:7002,192.168.108.100:7003,192.168.108.100:7004,192.168.108.100:7005
     database: 10
     secondary-database: 11
     host: 192.168.108.101
@@ -65,14 +88,6 @@ spring:
       min-idle: 0
     session-expire: 7200000
 
-endpoints:
-  health:
-    sensitive: false
-  cors:
-    allowed-methods: HEAD,GET,POST
-
-management.security.enabled: false
-
 eureka:
   user:
     name: admin
@@ -90,15 +105,33 @@ eureka:
     healthcheck:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
-#服务名
+
+mybatis:
+#  type-aliases-package: com.hsd.dto
+  mapper-locations: classpath*:mybatis/**/*.xml
+mapper:
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+#  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+endpoints:
+  health:
+    sensitive: false
+  cors:
+    allowed-methods: HEAD,GET,POST
+
+management.security.enabled: false
+
 feign:
   hystrix:
     enabled: true
   okhttp:
     enabled: true
   name:
-    account.staff: hsd-account-staff-server-wxg
-
+    account.actor: ${spring.application.name}
 
 hystrix:
   command:
@@ -138,10 +171,10 @@ hystrix:
         enabled: true
 
 
-#logging:
-#  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 # 自定义配置
 hsd:
   common:
-    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
+    appPrefix: pro_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

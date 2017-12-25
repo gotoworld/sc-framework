@@ -86,13 +86,13 @@
                                 <span id="bean-email-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">注册渠道：</label>
-                            <div class="col-md-12">
-                                <input id="bean-registerChannel" name="registerChannel" value="{{item.registerChannel}}" class="form-control" type="text"  placeholder="请输入注册渠道 默认为other"  aria-describedby="bean-registerChannel-error"  maxlength="50"   aria-invalid="true">
-                                <span id="bean-registerChannel-error" class="help-block m-b-none"></span>
-                            </div>
-                        </div>
+                        <!--<div class="form-group clearfix">-->
+                            <!--<label class="col-md-5 control-label">注册渠道：</label>-->
+                            <!--<div class="col-md-12">-->
+                                <!--<input id="bean-registerChannel" name="registerChannel" value="{{item.registerChannel}}" class="form-control" type="text"  placeholder="请输入注册渠道 默认为other"  aria-describedby="bean-registerChannel-error"  maxlength="50"   aria-invalid="true">-->
+                                <!--<span id="bean-registerChannel-error" class="help-block m-b-none"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
                     </div>
                     <div class="col-sm-6">
@@ -133,7 +133,7 @@
                         <div class="form-group clearfix">
                             <label class="col-md-5 control-label">标签：</label>
                             <div class="col-md-12">
-                                <textarea id="bean-tags" name="tags" class="form-control"  placeholder="请输入标签" style="height: 150px" aria-describedby="bean-tags-error"  maxlength="2000"   aria-invalid="true">{{item.tags}}</textarea>
+                                <textarea id="bean-tags" name="tags" class="form-control"  placeholder="请输入标签" style="height: 150px" aria-describedby="bean-tags-error"  maxlength="1000"   aria-invalid="true">{{item.tags}}</textarea>
                                 <span id="bean-tags-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
 						<div style="width: 200px; margin: 0 auto;">
-							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:;" onclick="closeMyBoxLayer();">返回</a>
+							<input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
 						</div>
 					</div>
 				</form>
@@ -210,7 +210,7 @@
              }
              if(!$data.$$phase) $data.$apply();
          }, 'json');
-    }
+    };
 
     $(document).ready(function(){
         formValidate();

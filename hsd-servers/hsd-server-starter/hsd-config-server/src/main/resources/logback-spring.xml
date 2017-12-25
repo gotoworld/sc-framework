@@ -1,21 +1,65 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!--定义日志文件的存储地址和前缀名-->
+    <property name="LOG_HOME" value="d:/opt/logs/java" />
+    <property name="PROJECT" value="hsdgold_wechat_pc" />
 
-    <!-- ch.qos.logback.core.ConsoleAppender 控制台输出 -->
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- 全部日志（每天一个） -->
+    <appender name="ALL_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT}.log</file>
         <encoder>
-            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
+            <pattern>[hsd-config-server] %d{MM/dd HH:mm:ss.SSS} [%-16thread] %-5level [%logger{10}.%-3line] %msg%n</pattern>
         </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>14</maxHistory>
+        </rollingPolicy>
     </appender>
 
-    <!-- 日志级别 -->
-    <root>
-        <!-- 定义了ERROR和INFO级别的日志，分别在FILE文件和控制台输出 -->
-        <!--<level value="all" />-->
+    <!-- ERROR日志（每天一个） -->
+    <appender name="ERR_LOG"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT}-err.log</file>
+        <encoder>
+            <pattern>[hsd-config-server] %d{MM/dd HH:mm:ss.SSS} [%-16thread] %-5level [%logger{10}.%-3line] %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT}-err.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>14</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 总开关 -->
+    <root level="INFO">
         <level value="error" />
         <level value="warn" />
         <level value="debug" />
         <level value="info" />
-        <appender-ref ref="console" />
+        <appender-ref ref="ALL_LOG" />
+        <appender-ref ref="ERR_LOG" />
     </root>
+
+    <!-- 日志过滤 -->
+    <logger name="org.springframework" level="INFO" />
+    <logger name="org.springframework.remoting" level="ERROR" />
+    <logger name="org.springframework.remoting.caucho" level="INFO" />
+    <logger name="org.springframework.transaction" level="INFO" />
+    <logger name="org.springframework.jdbc" level="INFO" />
+    <logger name="org.apache.commons" level="INFO" />
+    <logger name="org.apache.activemq" level="INFO" />
+    <logger name="org.apache.axis" level="INFO" />
+    <logger name="org.apache.http" level="INFO" />
+    <logger name="org.mybatis" level="INFO" />
+    <logger name="httpclient.wire.content" level="ERROR" />
+    <logger name="httpclient.wire.header" level="ERROR" />
+    <logger name="com.mchange" level="INFO" />
+    <logger name="org.apache.zookeeper" level="INFO" />
+    <logger name="org.apache.zookeeper.ClientCnxn" level="ERROR" />
+    <logger name="com.alibaba.dubbo" level="INFO" />
+    <logger name="com.alibaba.dubbo.remoting.exchange.support.header.HeartBeatTask" level="ERROR" />
 </configuration>

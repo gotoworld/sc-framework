@@ -1,10 +1,10 @@
 #定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 info:
-  description: BOSS系统->员工
-  version : 1.0
+  description: ${pom.description}
+  version : v${pom.version}
 # HTTP Server
 server:
-  port: 6131
+  port: 6111
   context-path: /
 spring:
   resources:
@@ -41,10 +41,6 @@ spring:
         clusters: default
         url: http://${spring.boot.admin.url}/turbine.stream
   redis:
-    cluster:
-      enable: false #启用redis集群
-      #max-redirects: 3
-      nodes: 192.168.108.100:7000,192.168.108.100:7001,192.168.108.100:7002,192.168.108.100:7003,192.168.108.100:7004,192.168.108.100:7005
     database: 10
     secondary-database: 11
     host: 192.168.108.101
@@ -97,8 +93,8 @@ feign:
   okhttp:
     enabled: true
   name:
-    account.staff: hsd-account-staff-server-wxg
-
+    account.staff: hsd-account-staff-server
+    account.channel: hsd-account-channel-server
 
 hystrix:
   command:
@@ -138,10 +134,10 @@ hystrix:
         enabled: true
 
 
-#logging:
-#  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
+logging:
+  file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 # 自定义配置
 hsd:
   common:
-    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
+    appPrefix: pro_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突

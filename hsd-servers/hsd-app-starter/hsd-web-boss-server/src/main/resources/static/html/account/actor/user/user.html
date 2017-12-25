@@ -19,6 +19,9 @@
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
     <link href="/css/common.css" rel="stylesheet">
+	<style>
+		.ibox .open > .dropdown-menu{left: -150px;width: 300px;top:15px;background:#245269;padding: 8px;}
+	</style>
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
@@ -82,7 +85,6 @@
 													<th>注册渠道</th>
 													<th>状态</th>
 													<th>客户类型</th>
-													<th>email</th>
 													<th>注册时间</th>
 													<th style="width:320px;">操作</th>
                                     			</tr>
@@ -96,24 +98,29 @@
 													<td>{{item.registerChannel}}</td>
 													<td>{{stateEnum(item.state)}}</td>
 													<td>{{item.type==1?'会员':'渠道商'}}</td>
-													<td>{{item.email}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
 														<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 														<a href="javascript:" ng-show='staff.hasPermission("user:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-														<a href="javascript:" ng-show='staff.hasPermission("user:edit")' ng-click="member(item)" class="label label-warning" ><i class="fa "></i> 会员信息</a>
-														<a href="javascript:" ng-show='staff.hasPermission("user:edit:tag")' ng-click="tag(item)" class="label label-info" ><i class="fa "></i> 标签</a>
-														<a href="javascript:" ng-show='staff.hasPermission("user:edit:blacklist")' ng-if="item.state==1" ng-click="setBlacklist(item)" class="label label-danger" ><i class="fa "></i> 设置黑名单</a>
-														<a href="javascript:" ng-show='staff.hasPermission("user:edit:blacklist")' ng-if="item.state==3" ng-click="delBlacklist(item)" class="label label-danger" ><i class="fa "></i> 移除黑名单</a>
-														<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('login',item)" class="label label-info" ><i class="fa "></i> 登录记录</a>
-														<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('sign',item)" class="label label-success" ><i class="fa "></i> 网签记录</a>
-														<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('identity',item)" class="label label-warning" ><i class="fa "></i> 实名认证记录</a>
-														<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="userSnapshot(item)" class="label label-primary" ><i class="fa "></i> 账户快照</a>
-														<li ng-show='staff.hasPermission("account:menu")' ><a class="J_menuItem" href="/html/account/finance/account.html">金融账户</a></li>
+														<div class="input-group-btn" style="display: inline-block">
+															<a  href="javascript:" data-toggle="dropdown" class="label label-white dropdown-toggle" style="background:#245269;color: #FFFFFF;">更多操作..<span class="caret"></span></a>
+															<div class="dropdown-menu">
+																<a href="javascript:" ng-show='staff.hasPermission("user:edit")' ng-click="member(item)" class="label label-warning" ><i class="fa "></i> 会员信息</a>
+																<a href="javascript:" ng-show='staff.hasPermission("user:edit:tag")' ng-click="tag(item)" class="label label-info" ><i class="fa "></i> 标签</a>
+																<a href="javascript:" ng-show='staff.hasPermission("user:edit:blacklist")' ng-if="item.state==1" ng-click="setBlacklist(item)" class="label label-danger" ><i class="fa "></i> 设置黑名单</a>
+																<a href="javascript:" ng-show='staff.hasPermission("user:edit:blacklist")' ng-if="item.state==3" ng-click="delBlacklist(item)" class="label label-danger" ><i class="fa "></i> 移除黑名单</a>
+																<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="userSnapshot(item)" class="label label-primary" ><i class="fa "></i> 账户快照</a>
+																<br>
+																<div style="clear: left;width: 100%;margin-top: 8px;"></div>
+																<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('sign',item)" class="label label-success" ><i class="fa "></i> 网签记录</a>
+																<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('identity',item)" class="label label-warning" ><i class="fa "></i> 实名认证记录</a>
+																<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('login',item)" class="label label-info" ><i class="fa "></i> 登录日志</a>
+															</div>
+														</div>
 													</td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="10">
+                                    				<td colspan="9">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

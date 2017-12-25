@@ -65,14 +65,14 @@
                                     			<tr>
                                     				<th style="width:20px;">#</th>
                                     				<th>账户名称</th>
-                                    				<th>充值次数</th>
-                                    				<th>开户时间</th>
-                                    				<th>首次充值时间</th>
-                                    				<th>账户类型,安全控制值</th>
-                                    				<th>账户币种,安全控制值</th>
-                                    				<th>账户状态0生效1冻结2注销</th>
+													<th>账户类型</th>
+													<th>充值次数</th>
+													<th>开户时间</th>
+													<th>首充时间</th>
+                                    				<th>账户币种</th>
+                                    				<th>账户状态</th>
                                     				<th>提现次数</th>
-                                    				<th>客户注册时间</th>
+                                    				<th>注册时间</th>
                                     				<th>更新时间</th>
                                     				<th>操作</th>
                                     			</tr>
@@ -81,10 +81,10 @@
                                     			<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
                                     				<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
                                     				<td>{{item.aliasName}}</td>
-                                    				<td>{{item.rechargeCount}}</td>
-                                    				<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                    				<td>{{item.dateRechargeFirst | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                    				<td>{{item.accountType}}</td>
+													<td>{{item.accountType}}</td>
+													<td>{{item.rechargeCount}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td>{{item.dateRechargeFirst | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     				<td>{{item.currency}}</td>
                                     				<td>{{item.state}}</td>
                                     				<td>{{item.withdrawCount}}</td>

@@ -132,6 +132,7 @@ feign:
       actor: hsd-account-actor-server
 
 logging:
+  #config: ./config/logback-spring.xml
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 # 自定义配置

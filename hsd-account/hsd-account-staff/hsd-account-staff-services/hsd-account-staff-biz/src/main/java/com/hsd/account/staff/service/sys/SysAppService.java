@@ -13,6 +13,7 @@ import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IdUtil;
+import com.hsd.framework.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -42,7 +43,7 @@ public class SysAppService extends BaseService implements ISysAppService {
                 sysAppDao.update(entity);
             } else {
                 //新增
-                entity.setId(IdUtil.createUUID(22));
+                if(ValidatorUtil.isEmpty(dto.getId()))entity.setId(IdUtil.createUUID(22));
                 sysAppDao.insert(entity);
                 result.data = entity.getId();
             }

@@ -17,7 +17,7 @@ public class CrossFilter implements Filter {
     public void init(FilterConfig filterConfig) {
         log.info("===============设置“跨域”访问头=============");
     }
-    @Value("${zuul.cross.origin}")
+    @Value("${zuul.cross.origin:*}")
     private String accessControlAllowOrigin;
     @Value("${zuul.cross.methods}")
     private String accessControlAllowMethods;

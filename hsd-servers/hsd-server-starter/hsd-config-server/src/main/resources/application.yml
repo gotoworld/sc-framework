@@ -24,3 +24,5 @@ spring:
 #    password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
 #    virtualHost: /vhost/dev
 #    #publisher-confirms: true
+logging:
+#  config: d:/logback-spring.xml

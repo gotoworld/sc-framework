@@ -9,4 +9,4 @@ spring:
       enabled: true
       uri: http://192.168.108.100:8888
       profile: dev
-      label: trunk
+      label: master

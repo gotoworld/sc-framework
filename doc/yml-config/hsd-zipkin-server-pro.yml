@@ -58,6 +58,7 @@ eureka:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
 logging:
+  #config: ./config/logback-spring.xml
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 # 自定义配置

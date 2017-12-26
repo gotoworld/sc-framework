@@ -139,6 +139,7 @@ eureka:
 
 
 logging:
+  #config: ./config/logback-spring.xml
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 security:

@@ -1,4 +1,3 @@
-#系统级别的一些参数配置，这些参数一般是不会变动的
 spring:
   application:
     name: hsd-gateway-server

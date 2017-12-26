@@ -39,15 +39,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-web</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-actuator</artifactId>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter</artifactId>
@@ -75,11 +66,27 @@
             <artifactId>commons-codec</artifactId>
             <version>1.10</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.hsd.framework</groupId>
+            <artifactId>hsd-framework-core</artifactId>
+            <version>${hsd.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-xml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>com.hsd.framework</groupId>
             <artifactId>hsd-framework-cache</artifactId>
             <version>${hsd.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.hsd.framework</groupId>
+                    <artifactId>hsd-framework-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

@@ -70,23 +70,11 @@
             <groupId>com.hsd.framework</groupId>
             <artifactId>hsd-framework-core</artifactId>
             <version>${hsd.framework.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.dataformat</groupId>
-                    <artifactId>jackson-dataformat-xml</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.hsd.framework</groupId>
             <artifactId>hsd-framework-cache</artifactId>
             <version>${hsd.framework.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.hsd.framework</groupId>
-                    <artifactId>hsd-framework-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

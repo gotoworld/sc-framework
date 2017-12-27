@@ -3,9 +3,12 @@ package com.hsd.account.finance.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.finance.api.IAccountTemplateService;
+import com.hsd.account.finance.dao.IAccountTemplateAttributeDao;
 import com.hsd.account.finance.dao.IAccountTemplateDao;
+import com.hsd.account.finance.dto.AccountTemplateAttributeDto;
 import com.hsd.account.finance.dto.AccountTemplateDto;
 import com.hsd.account.finance.entity.AccountTemplate;
+import com.hsd.account.finance.entity.AccountTemplateAttribute;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
@@ -26,6 +29,8 @@ import java.util.List;
 public class AccountTemplateService extends BaseService implements IAccountTemplateService {
     @Autowired
     private IAccountTemplateDao accountTemplateDao;
+    @Autowired
+    private IAccountTemplateAttributeDao accountTemplateAttributeDao;
 
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -42,6 +47,19 @@ public class AccountTemplateService extends BaseService implements IAccountTempl
                     //新增
                      accountTemplateDao.insert(entity);
                      result.data=entity.getId();
+                }
+                //删除已有
+                AccountTemplateAttribute tempAttr=new AccountTemplateAttribute();
+                tempAttr.setTemplateId(entity.getId());
+                accountTemplateDao.deleteByTemplateId(tempAttr);
+
+                if(dto.getAttributes()!=null){
+                    for(AccountTemplateAttributeDto accountTemplateAttributeDto:dto.getAttributes()) {
+                        accountTemplateAttributeDto.setCreateId(entity.getCreateId());
+                        accountTemplateAttributeDto.setTemplateId(entity.getId());
+                        accountTemplateAttributeDto.setType(entity.getType());
+                        accountTemplateAttributeDao.insert(copyTo(accountTemplateAttributeDto, AccountTemplateAttribute.class));
+                    }
                 }
             } catch (Exception e) {
                 log.error("信息保存异常!", e);
@@ -119,6 +137,11 @@ public class AccountTemplateService extends BaseService implements IAccountTempl
             try {
                 AccountTemplate entity = copyTo(dto, AccountTemplate.class);
                 result = copyTo(accountTemplateDao.selectByPrimaryKey(entity),AccountTemplateDto.class);
+                if(result!=null){
+                    AccountTemplateAttribute attribute=new AccountTemplateAttribute();
+                    attribute.setTemplateId(result.getId());
+                    result.setAttributes(copyTo(accountTemplateAttributeDao.findDataIsList(attribute),AccountTemplateAttributeDto.class));
+                }
             } catch (Exception e) {
                 log.error("信息[详情]查询异常!", e);
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

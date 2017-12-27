@@ -239,6 +239,7 @@ var site = {
     , accountType: {//账户类型
         view: basePath + "/html/account/finance/account_type"
         ,page: apiPath.account.finance + "/boss/account/finance/accountType/page/"       //分页
+        ,list: apiPath.account.finance + "/boss/account/finance/accountType/list"       //列表
         ,save: apiPath.account.finance + "/boss/account/finance/accountType/save"        //新增or保存
         ,info: apiPath.account.finance + "/boss/account/finance/accountType/info/"       //详情
         ,del: apiPath.account.finance + "/boss/account/finance/accountType/del/"         //逻辑删除

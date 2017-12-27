@@ -43,37 +43,35 @@
 
                         <div class="form-group clearfix">
                             <label class="col-md-3 control-label">名称：</label>
-                            <div class="col-md-12">
+                            <div class="col-md-12 ">
                                 <input id="bean-name" name="name" value="{{item.name}}" class="form-control" type="text"  placeholder="请输入名称"  required="" aria-required="true"  aria-describedby="bean-name-error"  maxlength="25"   aria-invalid="true">
-                                <span id="bean-name-error" class="help-block m-b-none"></span>
                             </div>
                         </div>
                         <div class="form-group clearfix">
-                            <label class="col-md-3 control-label">安全保障等级：</label>
-                            <div class="col-md-12">
-                                <select data-placeholder="选择安全保障等级" id="bean-securityLevel" name="securityLevel" class="form-control">
+                            <p class="col-md-12 control-label"><span style="font-weight: 700;">安全保障等级：</span>
+                                <select data-placeholder="选择安全保障等级" id="bean-securityLevel" name="securityLevel" class="label label-success" style="width: 100px;">
                                     <option value="0">普通</option>
                                 </select>
-                                <span id="bean-securityLevel-error" class="help-block m-b-none"></span>
-                            </div>
+                            </p>
                         </div>
 					</div>
 					<div class="col-sm-6">
                         <div class="form-group clearfix">
                             <label class="col-sm-9 control-label">账户性质：
-                                <label class="radio-inline"> <input type="radio" checked="" value="0" name="isEnterprise">个人</label>
-                                <label class="radio-inline"> <input type="radio" value="1" name="isEnterprise">企业</label>
+                                <label class="radio-inline"> <input type="radio" ng-checked="item.isEnterprise==1?true:false" value="1" name="isEnterprise" required="">企业</label>
+                                <label class="radio-inline"> <input type="radio" ng-checked="item.isEnterprise==0?true:false" value="0" name="isEnterprise" required="">个人</label>
+                                <label id="isEnterprise-error" class="error" for="isEnterprise"></label>
                             </label>
                         </div>
                         <div class="form-group clearfix">
-                            <div class="col-sm-12">
-                                <label class="col-sm-4"><input type="checkbox" checked name="isRecharge" value="1">允许充值</label>
-                                <label class="col-sm-4"><input type="checkbox" checked name="isWithdraw" value="1">允许提现</label>
-                                <label class="col-sm-4"><input type="checkbox" checked name="isPay" value="1">允许支付</label>
-                                <label class="col-sm-4"><input type="checkbox" checked name="isShiftIn" value="1">允许转入</label>
-                                <label class="col-sm-4"><input type="checkbox" checked name="isShiftOut" value="1">允许转出</label>
-                                <label class="col-sm-4"><input type="checkbox" checked name="isOverdraft" value="1">允许透支</label>
-                            </div>
+                            <label class="col-sm-12 control-label">账户参数：
+                                <label class="label"><input type="checkbox" ng-checked="isChecked(item.isRecharge,1)" name="isRecharge" value="1">允许充值</label>
+                                <label class="label"><input type="checkbox" ng-checked="isChecked(item.isWithdraw,1)" name="isWithdraw" value="1">允许提现</label>
+                                <label class="label"><input type="checkbox" ng-checked="isChecked(item.isPay,1)" name="isPay" value="1">允许支付</label>
+                                <label class="label"><input type="checkbox" ng-checked="isChecked(item.isShiftIn,1)" name="isShiftIn" value="1">允许转入</label>
+                                <label class="label"><input type="checkbox" ng-checked="isChecked(item.isShiftOut,1)" name="isShiftOut" value="1">允许转出</label>
+                                <label class="label"><input type="checkbox" ng-checked="isChecked(item.isOverdraft,1)" name="isOverdraft" value="1">允许透支</label>
+                            </label>
                         </div>
 					</div>
 
@@ -162,6 +160,12 @@
                         }
                 }, 'json');
             }
+        };
+        $scope.isChecked=function(val1,val2){
+            if(val1==null || val1==val2){
+                return true;
+            }
+            return false;
         }
     });
     var loadInfo=function(id){

@@ -1,13 +1,11 @@
 package com.hsd.account.finance.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.entity.BaseEntity;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 @Data
@@ -29,4 +27,7 @@ public class AccountTemplate extends BaseEntity {
      private Long createId;
      /**创建时间*/
      private Date dateCreated;
+     private String memo;
+
+     private String typeName;
 }

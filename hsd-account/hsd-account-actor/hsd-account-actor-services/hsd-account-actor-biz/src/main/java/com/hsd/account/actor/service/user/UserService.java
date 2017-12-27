@@ -13,6 +13,7 @@ import com.hsd.account.actor.entity.actor.Member;
 import com.hsd.account.actor.entity.identity.Identity;
 import com.hsd.account.actor.entity.identity.IdentityLog;
 import com.hsd.account.actor.entity.user.User;
+import com.hsd.framework.IdGenerator;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
@@ -48,6 +49,8 @@ public class UserService extends BaseService implements IUserService {
     private IMemberDao memberDao;
     @Autowired
     private RedisHelper redisHelper;
+    @Autowired
+    private IdGenerator idGenerator;
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response saveOrUpdateData(@RequestBody UserDto dto) {
@@ -74,6 +77,7 @@ public class UserService extends BaseService implements IUserService {
                 }
                 if(ValidatorUtil.notEmpty(dto.getPwd())) entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
                 if(ValidatorUtil.notEmpty(dto.getTradePwd())) entity.setTradePwd(MD5.pwdMd5Hex(entity.getTradePwd()));
+                entity.setId(idGenerator.nextId());
                 //新增
                 userDao.insert(entity);
                 result.data=entity.getId();

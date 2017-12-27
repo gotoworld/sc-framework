@@ -69,9 +69,9 @@
             <artifactId>hsd-framework-cache</artifactId>
             <version>${hsd.framework.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.dataformat</groupId>-->
+            <!--<artifactId>jackson-dataformat-xml</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

@@ -26,7 +26,6 @@ public class AccountTypeDto extends BaseDto {
      @ApiModelProperty("账户性质0个人1企业")
      private Integer isEnterprise;
      @ApiModelProperty("允许充值")
-	 @NotNull(message="is_recharge不能为空")
      private Integer isRecharge;
      @ApiModelProperty("允许提现")
      private Integer isWithdraw;

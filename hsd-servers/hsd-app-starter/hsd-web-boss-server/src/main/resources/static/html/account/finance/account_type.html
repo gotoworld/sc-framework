@@ -74,6 +74,7 @@
 													<th>充值</th>
 													<th>透支</th>
 													<th>安全等级</th>
+													<th>创建时间</th>
 													<th>操作</th>
                                     			</tr>
                                     		</thead>
@@ -89,6 +90,7 @@
 													<td>{{item.isRecharge==1?'启用':'禁止'}}</td>
 													<td>{{item.isOverdraft==1?'启用':'禁止'}}</td>
 													<td>{{item.securityLevel}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
                                                       <a href="javascript:" ng-show='staff.hasPermission("accountType:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
                                                       <a href="javascript:" ng-show='staff.hasPermission("accountType:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
@@ -96,7 +98,7 @@
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="result.data.data==null || result.data.data.length==0">
-                                    				<td colspan="11">
+                                    				<td colspan="12">
                                     				<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
                                     				</td>
                                     			</tr>

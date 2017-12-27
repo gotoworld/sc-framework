@@ -1,7 +1,6 @@
 package com.hsd.account.finance.api;
 
 import com.hsd.account.finance.dto.AccountTemplateAttributeDto;
-import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,30 +15,8 @@ import java.util.List;
 public interface IAccountTemplateAttributeService {
     String acPrefix = "/feign/account/IAccountTemplateAttributeService";
     /**
-     * <p>信息编辑。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
-    Response saveOrUpdateData(AccountTemplateAttributeDto dto) throws Exception;
-
-    /**
-     * <p>物理删除。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteData")
-    String deleteData(AccountTemplateAttributeDto dto) throws Exception;
-
-
-
-
-    /**
      * <p>信息列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
     List<AccountTemplateAttributeDto> findDataIsList(AccountTemplateAttributeDto dto) throws Exception;
-
-
-    /**
-     * <p>信息详情。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
-    AccountTemplateAttributeDto findDataById(AccountTemplateAttributeDto dto) throws Exception;
 }

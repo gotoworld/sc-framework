@@ -10,6 +10,7 @@
         ,t1.del_flag as "delFlag"
         ,t1.create_id as "createId"
         ,t1.date_created as "dateCreated"
+        ,t1.memo as "memo"
     </sql>
 
     <!-- 根据主键获取信息详情 -->
@@ -31,6 +32,7 @@
            ,del_flag 
            ,create_id 
            ,date_created 
+           ,memo
         ) values (
             #{id} 
            ,#{type} 
@@ -39,17 +41,18 @@
            ,0
            ,#{createId} 
            ,now()
+           ,#{memo}
         )
     </insert>
 
 
     <!-- 数据更新 -->
     <update id="update" parameterType="com.hsd.account.finance.entity.AccountTemplate">
-        update account_template set  
+        update account_template set bi_update_ts=now()
              <if test="type!=null">,type = #{type}</if>
              <if test="name!=null">,name = #{name}</if>
              <if test="orderNo!=null">,order_no = #{orderNo}</if>
-             <if test="createId!=null">,create_id = #{createId}</if>
+             <if test="memo!=null">,memo = #{memo}</if>
         where
         id = #{id}
     </update>
@@ -76,7 +79,9 @@
     <select id="findDataIsPage" parameterType="com.hsd.account.finance.entity.AccountTemplate" resultType="com.hsd.account.finance.entity.AccountTemplate">
         select
         <include refid="Base_Column_List"/>
+        ,t2.name as "typeName"
         from account_template t1
+        left join account_type t2 on t1.type=t2.id
         where 1=1
         <include refid="list_where_sql"/>
         order by t1.date_created desc
@@ -85,7 +90,9 @@
     <!--信息列表 -->
     <select id="findDataIsList" parameterType="com.hsd.account.finance.entity.AccountTemplate" resultType="com.hsd.account.finance.entity.AccountTemplate">
         select
-        <include refid="Base_Column_List"/>
+         t1.id as "id"
+        ,t1.type as "type"
+        ,t1.name as "name"
         from account_template t1
         where 1=1
         <include refid="list_where_sql"/>

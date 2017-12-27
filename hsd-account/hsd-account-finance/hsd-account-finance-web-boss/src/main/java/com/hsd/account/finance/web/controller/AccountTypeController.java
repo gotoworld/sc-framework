@@ -50,6 +50,24 @@ public class AccountTypeController extends BaseController {
         return result;
     }
     /**
+     * <p>信息列表 (未删除)。
+     */
+    @RequiresPermissions("accountType:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "list")
+    @ApiOperation(value = "信息列表")
+    public Response list(@ModelAttribute  AccountTypeDto dto) {
+        log.info("AccountTypeController list.........");
+        Response result = new Response();
+        try {
+            if (dto == null) dto = new AccountTypeDto();
+            dto.setDelFlag(0);
+            result.data = accountTypeService.findDataIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
      * <p> 信息详情。
      */
     @RequiresPermissions("accountType:info")
@@ -116,6 +134,12 @@ public class AccountTypeController extends BaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                if(dto.getIsOverdraft()==null) dto.setIsOverdraft(0);
+                if(dto.getIsPay()==null) dto.setIsPay(0);
+                if(dto.getIsRecharge()==null) dto.setIsRecharge(0);
+                if(dto.getIsWithdraw()==null) dto.setIsWithdraw(0);
+                if(dto.getIsShiftIn()==null) dto.setIsShiftIn(0);
+                if(dto.getIsShiftOut()==null) dto.setIsShiftOut(0);
                 result = accountTypeService.saveOrUpdateData(dto);
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }

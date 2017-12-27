@@ -1,6 +1,7 @@
 package com.hsd.account.finance.web.controller;
 
 import com.hsd.account.finance.api.IAccountTemplateService;
+import com.hsd.account.finance.dto.AccountTemplateAttributeDto;
 import com.hsd.account.finance.dto.AccountTemplateDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
@@ -9,6 +10,7 @@ import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.ValidatorUtil;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +21,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(description = "账户模板")
@@ -116,6 +119,18 @@ public class AccountTemplateController extends BaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                if(dto.getAttrName()!=null){
+                    dto.getAttrName().forEach(attrName->{
+                        AccountTemplateAttributeDto attributeDto=new AccountTemplateAttributeDto();
+                        attributeDto.setAttributeCode(request.getParameter("attributeCode"+attrName));
+                        attributeDto.setAttributeName(request.getParameter("attributeName"+attrName));
+                        attributeDto.setInputType(request.getParameter("inputType"+attrName));
+                        attributeDto.setOptionValues(request.getParameter("optionValues"+attrName));
+                        attributeDto.setRequired(ValidatorUtil.notEmpty(request.getParameter("required"+attrName))?1:0);
+                        if(dto.getAttributes()==null) dto.setAttributes(new ArrayList<>());
+                        dto.getAttributes().add(attributeDto);
+                    });
+                }
                 result = accountTemplateService.saveOrUpdateData(dto);
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }

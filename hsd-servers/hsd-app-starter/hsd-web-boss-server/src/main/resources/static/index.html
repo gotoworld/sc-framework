@@ -57,31 +57,17 @@
 
                 <li ng-show='staff.hasPermission("sys:menu")' ><a href="#"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label"> 系统管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/sys/sys_edit.html"> 系统设置</a></li>-->
                         <li ng-show='staff.hasPermission("sysApp:menu")' ><a class="J_menuItem" href="/html/account/staff/sys/sys_app.html">应用管理</a></li>
                         <li ng-show='staff.hasPermission("orgInfo:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_info.html">组织机构</a></li>
                         <li ng-show='staff.hasPermission("orgStaff:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_staff.html">员工管理</a></li>
                         <li ng-show='staff.hasPermission("authPerm:menu")' ><a class="J_menuItem" href="/html/account/staff/auth/auth_perm.html">功能(权限)</a></li>
                         <li ng-show='staff.hasPermission("sysMenu:menu")' ><a class="J_menuItem" href="/html/account/staff/sys/sys_menu.html">菜单管理</a></li>
                         <li ng-show='staff.hasPermission("authRole:menu")' ><a class="J_menuItem" href="/html/account/staff/auth/auth_role.html">角色管理</a></li>
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html"> 邮箱设置</a></li>-->
                         <li ng-show='staff.hasPermission("sysVariable:menu")' ><a class="J_menuItem" href="/html/account/staff/sys/sys_variable.html">数据字典</a></li>
                         <li ng-show='staff.hasPermission("orgLogLogin:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_log_login.html">员工登录日志</a></li>
                         <li ng-show='staff.hasPermission("orgLogOperation:menu")' ><a class="J_menuItem" href="/html/account/staff/org/org_log_operation.html">员工操作日志</a></li>
                     </ul>
                 </li>
-                <!--<li ng-show='staff.hasPermission("actor:menu")' ><a href="#"><i class="fa  fa-sitemap"></i> <span class="nav-label">基础配置</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   线下银行</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   网上银行</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   积分等级</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   轮播图片</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   友情链接</a></li>-->
-                        <!--&lt;!&ndash;<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   数据库备份</a></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   数据库优化</a></li>&ndash;&gt;-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   资源管理</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
                 <li ng-show='staff.hasPermission("channelInfo:menu")' ><a href="#"><i class="glyphicon glyphicon-sort-by-attributes-alt"></i> <span class="nav-label">渠道管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li ng-show='staff.hasPermission("channelInfo:menu")' ><a class="J_menuItem" href="/html/account/channel/channel/channel_info.html">渠道商信息</a></li>
@@ -97,75 +83,6 @@
                     </ul>
                 </li>
 
-                <!--<li ng-show='staff.hasPermission("actor:menu")' ><a href="#"><i class="fa fa-book"></i> <span class="nav-label">文章管理</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    栏目管理</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   文章管理</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-
-                <!--<li ng-show='staff.hasPermission("actor:menu")' ><a href="#"><i class="fa fa-trophy"></i> <span class="nav-label">认证管理</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   认证列表</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   实名认证</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   视频认证</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   现场认证</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   手机认证</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-
-                <!--<li ng-show='staff.hasPermission("actor:menu")' ><a href="#"><i class="fa fa-exchange"></i> <span class="nav-label">贷款管理</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html"> 待审核</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    满标待审核</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    贷款列表</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    逾期列表</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   投资记录</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-
-                <!--<li ng-show='staff.hasPermission("actor:menu")' ><a href="#"><i class="fa fa-commenting"></i> <span class="nav-label">站内信</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html"> 站内信发送</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-
-                <!--<li ng-show='staff.hasPermission("actor:menu")' ><a href="#"><i class="fa fa-money"></i> <span class="nav-label">资金管理</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html"> 用户资金汇总</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   充值列表</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    提现列表</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    资金记录</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   其它费用操作</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-
-                <!--<li ng-show='staff.hasPermission("actor:menu")' ><a href="#"><i class="fa fa-gg"></i> <span class="nav-label">联动管理</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html"> 借款用途</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    借款期限（月）</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    借款期限（天）</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    还款方式</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    有效时间</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    最低投标金额</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    最高投标金额</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    学历</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    月收入</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    住房条件</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   购车情况</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">    当前所在行业</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   56个民族</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   开户银行</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   充值类型</a></li>-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">   后台栏目分组</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-
-                <!--<li ng-show='staff.hasPermission("actor:menu")' ><a href="#"><i class="fa fa-jsfiddle"></i> <span class="nav-label">征信查询</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li ng-show='staff.hasPermission("user:menu")' ><a class="J_menuItem" href="/html/account/actor/user/user.html">客户表</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
                 <li ng-show='staff.hasPermission("finance:menu")' ><a href="#"><i class="fa fa-jsfiddle"></i> <span class="nav-label">金融账户</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li ng-show='staff.hasPermission("accountType:menu")' ><a class="J_menuItem" href="/html/account/finance/account_type.html">账户类型</a></li>
@@ -201,7 +118,7 @@
                     <!--</form> -->
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> <i
+                   <!-- <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> <i
                             class="fa fa-bell"></i> <span class="label label-primary">8</span>
                     </a>
                         <ul class="dropdown-menu dropdown-alerts">
@@ -227,7 +144,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                     <li class="dropdown hidden-xs"><a class="right-sidebar-toggle" aria-expanded="false"> <i
                             class="fa fa-tasks"></i> 主题
                     </a></li>

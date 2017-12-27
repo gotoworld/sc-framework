@@ -36,5 +36,9 @@ public interface IAccountTemplateDao extends IBaseDao {
      */
     @Delete("delete from account_template where  id = #{id} ")
     int deleteByPrimaryKey(IEntity entity) throws Exception;
-
+    /**
+     * 根据模板id 物理删除
+     */
+    @Delete("delete from account_template_attribute where  template_id = #{templateId} ")
+    int deleteByTemplateId(IEntity entity) throws Exception;
 }

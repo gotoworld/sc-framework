@@ -180,4 +180,19 @@ public class AuthRoleController extends BaseController {
         }
         return result;
     }
+    @RequiresPermissions(value = {"authRole:menu"}, logical = Logical.OR)
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "app")
+    @ApiOperation(value = "获取当前角色已有(应用)")
+    public Response app(@RequestParam(name = "roleId") Long roleId) {
+        log.info("AuthRoleController app.........");
+        Response result = new Response();
+        try {
+            AuthRoleDto dto=new AuthRoleDto();
+            dto.setId(roleId);
+            result.data = authRoleService.findAppIsList(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 }

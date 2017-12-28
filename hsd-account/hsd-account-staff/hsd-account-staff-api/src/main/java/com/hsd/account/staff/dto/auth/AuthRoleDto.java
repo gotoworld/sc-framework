@@ -48,4 +48,8 @@ public class AuthRoleDto extends BaseDto {
      * 菜单id集合
      */
     private List<Long> menuIds;
+    /**
+     * 应用id集合
+     */
+    private List<String> appIds;
 }

@@ -4,12 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.staff.api.auth.IAuthRoleService;
 import com.hsd.account.staff.dao.auth.IAuthRoleDao;
+import com.hsd.account.staff.dao.auth.IAuthRoleVsAppDao;
 import com.hsd.account.staff.dao.auth.IAuthRoleVsMenuDao;
 import com.hsd.account.staff.dao.auth.IAuthRoleVsPermDao;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
+import com.hsd.account.staff.dto.sys.SysAppDto;
 import com.hsd.account.staff.dto.sys.SysMenuDto;
 import com.hsd.account.staff.entity.auth.AuthRole;
+import com.hsd.account.staff.entity.auth.AuthRoleVsApp;
 import com.hsd.account.staff.entity.auth.AuthRoleVsMenu;
 import com.hsd.account.staff.entity.auth.AuthRoleVsPerm;
 import com.hsd.framework.Response;
@@ -38,9 +41,11 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
     private IAuthRoleVsPermDao authRoleVsPermDao;
     @Autowired
     private IAuthRoleVsMenuDao authRoleVsMenuDao;
+    @Autowired
+    private IAuthRoleVsAppDao authRoleVsAppDao;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(@RequestBody AuthRoleDto dto) throws Exception {
+    public Response saveOrUpdateData(@RequestBody AuthRoleDto dto) {
         Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -65,6 +70,12 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                     AuthRoleVsMenu roleVsMenu = new AuthRoleVsMenu();
                     roleVsMenu.setRoleId(entity.getId());
                     authRoleVsMenuDao.deleteBulkDataByRoleId(roleVsMenu);
+                }
+                if (JwtUtil.isPermitted("authRole:edit:app")) {
+                    // 1.清空当前角色应用关联信息
+                    AuthRoleVsApp roleVsApp = new AuthRoleVsApp();
+                    roleVsApp.setRoleId(entity.getId());
+                    authRoleVsAppDao.deleteBulkDataByRoleId(roleVsApp);
                 }
             } else {
                 // 新增
@@ -99,6 +110,20 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
                     authRoleVsMenuDao.insertBatch(xdtos);
                 }
             }
+            if (JwtUtil.isPermitted("authRole:edit:app")) {
+                // 2.新增角色应用关联信息
+                if (dto.getAppIds() != null) {
+                    List<AuthRoleVsApp> xdtos = new ArrayList<>();
+                    for (String appId : dto.getAppIds()) {
+                        AuthRoleVsApp authRoleVsApp = new AuthRoleVsApp();
+                        authRoleVsApp.setRoleId(entity.getId());
+                        authRoleVsApp.setAppId(appId);
+                        authRoleVsApp.setCreateId(dto.getCreateId());
+                        xdtos.add(authRoleVsApp);
+                    }
+                    authRoleVsAppDao.insertBatch(xdtos);
+                }
+            }
         } catch (Exception e) {
             log.error("信息保存失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
@@ -106,7 +131,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return result;
     }
 
-    public String deleteData(@RequestBody AuthRoleDto dto) throws Exception {
+    public String deleteData(@RequestBody AuthRoleDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -118,7 +143,7 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
         return result;
     }
 
-    public String deleteDataById(@RequestBody AuthRoleDto dto) throws Exception {
+    public String deleteDataById(@RequestBody AuthRoleDto dto) {
         String result = "success";
         try {
             if (dto == null) throw new RuntimeException("参数对象不能为null");
@@ -186,6 +211,18 @@ public class AuthRoleService extends BaseService implements IAuthRoleService {
             AuthRoleVsMenu authRoleVsMenu=new AuthRoleVsMenu();
             authRoleVsMenu.setRoleId(dto.getId());
             results = copyTo(authRoleVsMenuDao.findMenuIsList(authRoleVsMenu),SysMenuDto.class);
+        } catch (Exception e) {
+            log.error("信息查询失败!", e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return results;
+    }
+    public List<SysAppDto> findAppIsList(@RequestBody AuthRoleDto dto) {
+        List<SysAppDto> results = null;
+        try {
+            AuthRoleVsApp authRoleVsApp=new AuthRoleVsApp();
+            authRoleVsApp.setRoleId(dto.getId());
+            results = copyTo(authRoleVsAppDao.findAppIsList(authRoleVsApp),SysAppDto.class);
         } catch (Exception e) {
             log.error("信息查询失败!", e);
             throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

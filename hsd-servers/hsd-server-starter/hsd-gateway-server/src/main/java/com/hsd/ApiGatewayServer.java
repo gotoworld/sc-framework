@@ -35,6 +35,11 @@ public class ApiGatewayServer {
     @RequestMapping(value = "/aes/{str}")
     @ResponseBody
     public ResponseEntity<String> aes(@PathVariable("str") String str) {
-        return new ResponseEntity<String>("${AES:XXX-"+AES.encrypt(str, ""+ReflectUtil.getValueByFieldName(new AppConfig(),"prikey"))+"-XXX}", HttpStatus.OK);
+        return new ResponseEntity<String>("encrypt:"+AES.encrypt(str, ""+ReflectUtil.getValueByFieldName(new AppConfig(),"prikey"))+"", HttpStatus.OK);
+    }
+    @RequestMapping(value = "/state")
+    @ResponseBody
+    public ResponseEntity<String> state() {
+        return new ResponseEntity<String>("success", HttpStatus.OK);
     }
 }

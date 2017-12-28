@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.staff.dao.auth.IAuthRoleVsAppDao">
+    <!-- 新增 批量数据 -->
+    <insert id="insertBatch"  >
+        insert into auth_role_vs_app (
+         role_id
+        ,app_id
+        ,create_id
+        ,date_created
+        ) values
+        <foreach collection="list" item="t" separator=",">
+            (
+             #{t.roleId}
+            ,#{t.appId}
+            ,#{t.createId}
+            ,now()
+            )
+        </foreach>
+    </insert>
+
+    <select id="findAppIsList" parameterType="com.hsd.account.staff.entity.auth.AuthRoleVsApp" resultType="com.hsd.account.staff.entity.sys.SysApp">
+         select
+         t2.id as "id"
+        ,t2.name as "name"
+        ,t2.login_url as "loginUrl"
+        ,t2.main_url as "mainUrl"
+        from auth_role_vs_app t1
+        inner join sys_app t2 on (t1.app_id=t2.id)
+        where t1.role_id=#{roleId}
+    </select>
+</mapper>

@@ -35,7 +35,7 @@
                 <li class="nav-header" style="text-align:center;">
                     <div class="dropdown profile-element">
                         <span>
-                            <img alt="image" style="width: 64px; height: 64px;" class="img-circle" src="/img/avatar.png"/>
+                            <img alt="image" style="width: 64px; height: 64px;" class="img-circle" ng-src="{{util.notEmpty(staffInfo.avatar)?staffInfo.avatar:'/img/avatar.png'}}"/>
                         </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="">

@@ -3,7 +3,7 @@ var basePath = "http://localhost/";
 // var basePath = "http://192.168.108.100:8080/";
 var apiPath = {
     account: {
-        staff: "http://192.168.108.100:28890/hsd-account-staff-web-boss",
+        staff: "http://192.168.108.100:28890/hsd-account-staff-web-boss-wxg",
         channel: "http://192.168.108.100:28890/hsd-account-channel-web-boss",
         actor: "http://192.168.108.100:28890/hsd-account-actor-web-boss",
         finance: "http://192.168.108.100:28890/hsd-account-finance-web-boss"
@@ -90,6 +90,7 @@ var site = {
         , save: apiPath.account.staff + "/boss/account/staff/auth/authRole/save"
         , perm: apiPath.account.staff + "/boss/account/staff/auth/authRole/perm"
         , menu: apiPath.account.staff + "/boss/account/staff/auth/authRole/menu"
+        , app: apiPath.account.staff + "/boss/account/staff/auth/authRole/app"
         , info: apiPath.account.staff + "/boss/account/staff/auth/authRole/info/"
         , del: apiPath.account.staff + "/boss/account/staff/auth/authRole/del/"
     }

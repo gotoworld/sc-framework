@@ -37,8 +37,7 @@
 					<input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
 					<input type="hidden" name="newFlag" value="{{newFlag!=0?0:1}}" />
 					<div class="clearfix "></div>
-					<div class="col-sm-4 b-r">
-
+					<div class="col-sm-3 b-r">
                         <div class="form-group clearfix">
                             <label class="col-md-6 control-label">角色名称：</label>
                             <div class="col-md-12">
@@ -58,7 +57,7 @@
                             </div>
                         </div>
 					</div>
-					<div class="col-sm-4 b-r" ng-if="staff.hasPermission('authRole:edit:perm')">
+					<div class="col-sm-3 b-r" ng-if="staff.hasPermission('authRole:edit:perm')">
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择角色功能--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
@@ -72,7 +71,7 @@
                         </div>
 
 					</div>
-                    <div class="col-sm-4" ng-if="staff.hasPermission('authRole:edit:menu')">
+                    <div class="col-sm-3 b-r" ng-if="staff.hasPermission('authRole:edit:menu')">
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择角色菜单--</label>
                             <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
@@ -84,7 +83,18 @@
                                 </ul>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="col-sm-3" ng-if="staff.hasPermission('authRole:edit:menu')">
+                        <div class="form-group clearfix" >
+                            <label class="col-md-12 control-label">--请选择角色应用--</label>
+                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
+                                <ul>
+                                    <li ng-repeat="t in appNodes">
+                                        <label ng-style="checkAppId(t.id)?{color:'red'}:''"><input type="checkbox" name="appIds" ng-value="t.id" ng-checked="checkAppId(t.id)" ng-click="checkChildAppId($event)">{{t.name}}</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 					<div class="clearfix "></div>
 					<div class="col-md-12" style="height: 50px;">
@@ -137,6 +147,10 @@
                     loadMenuTree();
                     if(flag) loadRoleMenuList(sessionStorage.getItem(site.authRole.info));
                 }
+                if(staff.hasPermission('authRole:edit:app')){
+                    loadAppList();
+                    if(flag) loadRoleAppList(sessionStorage.getItem(site.authRole.info));
+                }
                 if(flag) loadInfo(sessionStorage.getItem(site.authRole.info));
         });
         $scope.save = function () {
@@ -160,6 +174,12 @@
         };
         $scope.checkMenuId=function(menuId){
             if($data.roleMenuNodes && $data.roleMenuNodes.indexOf(menuId)!=-1){
+                return true;
+            }
+            return false;
+        };
+        $scope.checkAppId=function(appId){
+            if($data.roleAppNodes && $data.roleAppNodes.indexOf(appId)!=-1){
                 return true;
             }
             return false;
@@ -245,6 +265,16 @@
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }
+    function loadAppList(){
+        $.get(site.sysApp.list, {},function (result) {
+            if (result.code == 0) {
+                $data.appNodes=result.data;
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
 
     function loadRoleMenuList(roleId){
         $data.roleMenuNodes=[];
@@ -254,6 +284,21 @@
                 if(result.data){
                     for(var i=0;i<result.data.length;i++){
                         $data.roleMenuNodes.push(result.data[i].id);
+                    }
+                }
+            } else {
+                alert(result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+    function loadRoleAppList(roleId){
+        $data.roleAppNodes=[];
+        $.post(site.authRole.app, {"roleId":roleId},function (result) {
+            if (result.code == 0) {
+                if(result.data){
+                    for(var i=0;i<result.data.length;i++){
+                        $data.roleAppNodes.push(result.data[i].id);
                     }
                 }
             } else {

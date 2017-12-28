@@ -85,6 +85,7 @@ public class JwtUtil {
         jo.put("id", ReflectUtil.getValueByFieldName(obj, "id"));
         jo.put("account", ReflectUtil.getValueByFieldName(obj, "account"));
         jo.put("name", ReflectUtil.getValueByFieldName(obj, "name"));
+        jo.put("avatar", ReflectUtil.getValueByFieldName(obj, "avatar"));
         jo.put("appId", ReflectUtil.getValueByFieldName(obj, "appId"));
         jo.put("appName", ReflectUtil.getValueByFieldName(obj, "appName"));
         jo.put("appUserId", ReflectUtil.getValueByFieldName(obj, "appUserId"));

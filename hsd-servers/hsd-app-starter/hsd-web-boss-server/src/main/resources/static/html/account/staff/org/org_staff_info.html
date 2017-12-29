@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
 <meta charset="utf-8" />
-<title>//TODO 组织架构_员工 详情</title>
+<title>//TODO 组织架构_员工 新增/编辑</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta name="description" content="memo of your site" />
@@ -19,161 +19,122 @@
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
 <link href="/css/common.css" rel="stylesheet">
+
+<link href="/css/upload.css" rel="stylesheet">
+<script src="/js/jQuery.md5.js" type="text/javascript"></script>
+    <style>
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{background-color: #fffffe;}
+    </style>
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="ibox float-e-margins">
-			<div class="form-horizontal ibox-content col-md-12">
+			<div class="ibox-content col-md-12">
+				<div  class="form m-t">
+					<div class="clearfix "></div>
+					<div class="col-sm-4 b-r">
 
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">ID：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.id}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">员工账号：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.account}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">员工密码：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.pwd}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">成员名称：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.name}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">工号：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.jobNo}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">性别[0男1女3保密]：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.gender}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">手机号：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.cellphone}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">头像url：</label>
-                    <div class="col-md-9 form-control-static">
-                    <img ng-src="{{item.avatar}}" style="max-width:264px;max-height:264px">
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">邮箱：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.email}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">用户类型0管理员1普通用户：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.type}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">最后登录日期：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.lastLogin | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">登录次数：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.count}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">状态0在职1离职：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.state}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">生效时间：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.effDate | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">失效时间：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.expDate | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">备注：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.memo}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">版本号：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.version}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">排序：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.orderNo}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">删除标记(0正常1删除)：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.delFlag}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">建立者ID：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.createId}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">创建时间：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">更新时间：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">BI时间戳：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.biUpdateTs | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">员工账号：</label>
+                            <div class="col-md-12">
+                                <input value="{{item.account}}" disabled class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">成员名称：</label>
+                            <div class="col-md-12">
+                                <input value="{{item.name}}" disabled class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-12 control-label">工号：</label>
+                            <div class="col-md-12">
+                                <input value="{{item.jobNo}}" disabled class="form-control">
+                            </div>
+                        </div>
 
-            <div class="clearfix "></div>
-            <div class="col-md-12" style="height: 50px;">
-                <div style="width: 200px; margin: 0 auto;">
-                    <a href="javascript:;" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
-                </div>
-            </div>
-        </div>
-    </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">性别：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择性别" disabled class="form-control">
+                                    <option value="">--请选择性别--</option>
+                                    <option value="0" ng-selected="selected(0,item.gender)">男</option>
+                                    <option value="1" ng-selected="selected(1,item.gender)">女</option>
+                                    <option value="2" ng-selected="selected(2,item.gender)">保密</option>
+                                </select>
+                                <span id="bean-gender-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-sm-4 b-r">
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">员工级别：</label>
+                            <div class="col-md-12">
+                                <select disabled class="form-control">
+                                    <option value="">--请选择员工级别--</option>
+                                    <option ng-repeat="level in staffLevelNodes" ng-value="level.code" ng-selected="selected(level.code,item.level)">{{level.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">手机号：</label>
+                            <div class="col-md-12">
+                                <input  value="{{item.cellphone}}" disabled class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">邮箱：</label>
+                            <div class="col-md-12">
+                                <input  value="{{item.email}}" disabled class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">备注：</label>
+                            <div class="col-md-12">
+                                <input value="{{item.memo}}" disabled class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group clearfix">
+                            <label class="col-sm-12 control-label">
+                                <label class="">创建时间：{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                                <label class="">#</label>
+                                <label class="">更新时间：{{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                            </label>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-3 control-label">员工状态：</label>
+                            <div class="col-md-12">
+                                <select disabled class="form-control" >
+                                    <option value="">--请选择员工状态--</option>
+                                    <option value="0" ng-selected="selected(0,item.state)">在职</option>
+                                    <option value="1" ng-selected="selected(1,item.state)">离职</option>
+                                    <option value="2" ng-selected="selected(2,item.state)">试用期</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <div class="col-md-12">
+                                <span  class="help-block m-b-none">头像url：</span>
+                                <div class="img-grid-2" ng-if="item.avatar">
+                                    <img ng-srcset="{{item.avatar}}" style="max-width:264px;max-height:264px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="clearfix "></div>
+					<div class="col-md-12" style="height: 50px;">
+						<div style="width: 200px; margin: 0 auto;">
+							 <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
@@ -192,10 +153,17 @@
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
+
 <script type="text/javascript">
+
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
+        $ngCompile=$compile;
+        $data.staffLevelNodes=[];
         staff.init(function(){
+           $data.newFlag=sessionStorage.getItem(site.orgStaff.info);
+           if($data.newFlag) $data.uuidToken=util.guid();
+            loadStaffLevel();
             loadInfo(sessionStorage.getItem(site.orgStaff.info));
         });
     });
@@ -210,7 +178,20 @@
              }
              if(!$data.$$phase) $data.$apply();
          }, 'json');
-    }
+    };
+    var loadStaffLevel=function(){
+        $.get(site.sysVariable.list+'staffLevel', {},function (result) {
+             //console.info("获取数据.." + JSON.stringify(result));
+             if (result.code == 0) {
+                 $data.staffLevelNodes = result.data;
+             } else {
+                 alert( result.message);
+             }
+             if(!$data.$$phase) $data.$apply();
+         }, 'json');
+    };
+
 </script>
 </body>
 </html>
+

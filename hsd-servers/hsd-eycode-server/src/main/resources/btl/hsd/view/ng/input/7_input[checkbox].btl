@@ -4,6 +4,6 @@
                             <div class="col-sm-9">
                                 <label class="">
                                     <input type="checkbox" name="${t.columnNameFormat}" value="option1">启用${t.columnComment}</label>
-                                <span id="bean-${t.columnNameFormat}-error" class="help-block m-b-none"></span>
+                                <label id="bean-${t.columnNameFormat}-error" class="help-block m-b-none" for="bean-${t.columnNameFormat}"></label>
                             </div>
                         </div>

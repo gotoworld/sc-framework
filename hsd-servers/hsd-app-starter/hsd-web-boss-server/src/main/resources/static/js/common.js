@@ -236,13 +236,16 @@ var site = {
         view: basePath + "/html/account/finance/account_template"
         ,page: apiPath.account.finance + "/boss/account/finance/accountTemplate/page/"       //分页
         ,save: apiPath.account.finance + "/boss/account/finance/accountTemplate/save"        //新增or保存
+        ,list: apiPath.account.finance + "/boss/account/finance/accountTemplate/list"        //列表
+        ,recycle: apiPath.account.finance + "/boss/account/finance/accountTemplate/recycle/" //回收站
         ,info: apiPath.account.finance + "/boss/account/finance/accountTemplate/info/"       //详情
         ,del: apiPath.account.finance + "/boss/account/finance/accountTemplate/del/"         //逻辑删除
     }
     , accountType: {//账户类型
         view: basePath + "/html/account/finance/account_type"
         ,page: apiPath.account.finance + "/boss/account/finance/accountType/page/"       //分页
-        ,list: apiPath.account.finance + "/boss/account/finance/accountType/list"       //列表
+        ,list: apiPath.account.finance + "/boss/account/finance/accountType/list"        //列表
+        ,recycle: apiPath.account.finance + "/boss/account/finance/accountType/recycle/" //回收站
         ,save: apiPath.account.finance + "/boss/account/finance/accountType/save"        //新增or保存
         ,info: apiPath.account.finance + "/boss/account/finance/accountType/info/"       //详情
         ,del: apiPath.account.finance + "/boss/account/finance/accountType/del/"         //逻辑删除

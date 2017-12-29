@@ -1,13 +1,11 @@
 package com.hsd.account.staff.entity.sys;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hsd.framework.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hsd.framework.entity.BaseEntity;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 @Data
@@ -25,6 +23,8 @@ public class SysApp extends BaseEntity {
      private String mainUrl;
      /**备注*/
      private String memo;
+     /**是否删除*/
+     private Integer delFlag;
      /**建立者id*/
      private Long createId;
      /**创建时间*/

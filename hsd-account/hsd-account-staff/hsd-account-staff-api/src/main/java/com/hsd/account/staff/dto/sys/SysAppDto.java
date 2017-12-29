@@ -33,13 +33,15 @@ public class SysAppDto extends BaseDto {
      @ApiModelProperty("备注")
 	 @Size(max=255,message="memo最大255字符")
      private String memo;
-     @Size(max=255,message="memo最大255字符")
+    @ApiModelProperty("是否删除")
+    private Integer delFlag;
+    @Size(max=255,message="memo最大255字符")
      private String keyword;
-     @ApiModelProperty("建立者id")
+    @ApiModelProperty("建立者id")
      private Long createId;
-     @ApiModelProperty("创建时间")
+    @ApiModelProperty("创建时间")
      private Date dateCreated;
-     @ApiModelProperty("更新时间")
+    @ApiModelProperty("更新时间")
      private Date dateUpdated;
 
 }

@@ -42,7 +42,26 @@ public class SysAppController extends BaseController {
         try {
             if (dto == null) dto = new SysAppDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
-            
+            dto.setDelFlag(0);
+            result.data = PageUtil.copy(sysAppService.findDataIsPage(dto));
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * <p>回收站。
+     */
+    @RequiresPermissions("sysApp:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "recycle/{pageNum}")
+    @ApiOperation(value = "回收站")
+    public Response recycle(@ModelAttribute  SysAppDto dto, @PathVariable("pageNum") Integer pageNum) {
+        log.info("SysAppController recycle.........");
+        Response result = new Response();
+        try {
+            if (dto == null) dto = new SysAppDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
+            dto.setPageNum(pageNum);
+            dto.setDelFlag(1);
             result.data = PageUtil.copy(sysAppService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -114,7 +133,44 @@ public class SysAppController extends BaseController {
         }
         return result;
     }
-
+    /**
+     * <p>逻辑删除。
+     */
+    @RequiresPermissions("sysApp:del")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
+    @ALogOperation(type = "删除", desc = "APP应用表-逻辑删除")
+    @ApiOperation(value = "逻辑删除")
+    public Response del(@PathVariable("id") String id) {
+        log.info("SysAppController del.........");
+        Response result = new Response();
+        try {
+           if (id==null) {throw new RuntimeException("参数异常!");}
+            SysAppDto dto = new SysAppDto(){{
+            setId(id);
+           }};
+            result.message = sysAppService.deleteData(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * <li>恢复。
+     */
+    @RequiresPermissions("sysApp:recovery")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recovery/{id}")
+    @ALogOperation(type = "恢复", desc = "APP应用表")
+    @ApiOperation(value = "恢复")
+    public Response recovery(@PathVariable("id") String id) {
+        log.info("SysAppController del.........");
+        Response result = new Response("success");
+        try {
+            result.message=sysAppService.recoveryDataById(new SysAppDto(){{setId(id);}});
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
     /**
      * <p> 信息保存
      */

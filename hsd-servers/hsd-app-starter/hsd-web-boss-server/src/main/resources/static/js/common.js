@@ -19,10 +19,12 @@ var site = {
     , sysApp: {//APP应用表
         view: basePath + "/html/account/staff/sys/sys_app"
         ,page: apiPath.account.staff + "/boss/account/staff/sys/sysApp/page/"       //分页
+        ,recycle: apiPath.account.staff + "/boss/account/staff/sys/sysApp/recycle/"       //回收站
         ,list: apiPath.account.staff + "/boss/account/staff/sys/sysApp/list"       //列表
         ,save: apiPath.account.staff + "/boss/account/staff/sys/sysApp/save"        //新增or保存
         ,info: apiPath.account.staff + "/boss/account/staff/sys/sysApp/info/"       //详情
         ,phydel: apiPath.account.staff + "/boss/account/staff/sys/sysApp/phydel/"   //物理删除
+        ,del: apiPath.account.staff + "/boss/account/staff/sys/sysApp/del/"   //删除
     }
     , orgInfo: {
         view: basePath + "/html/account/staff/org/org_info"
@@ -303,6 +305,7 @@ $(document).ajaxComplete(function (event, xhr, settings) {
             sessionStorage.removeItem("hsd_staff_authorizationToken");
             sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
             sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
+            sessionStorage.removeItem("hsd_staff_app");
             if (result.code == 110) {
                 alert(result.message);
             }
@@ -324,6 +327,7 @@ var staff = {
                             sessionStorage.setItem("hsd_staff_authorizationToken", result.data.authorizationToken);
                             sessionStorage.setItem("hsd_staff_authorizationInfoPerms", result.data.staff.authorizationInfoPerms);
                             sessionStorage.setItem("hsd_staff_authorizationInfoRoles", result.data.staff.authorizationInfoRoles);
+                            sessionStorage.setItem("hsd_staff_app", JSON.stringify(result.data.app));
                             sessionStorage.setItem('XCache', result.data.XCache);
                         }
                     }

@@ -223,7 +223,7 @@
         $ngCompile=$compile;
         staff.init(function(){
             loadPage(1);
-            recyclePage(1);
+            recycleLoadPage(1);
         });
         $scope.edit = function (title,item) {
             sessionStorage.setItem(site.accountType.info,item.id);
@@ -249,7 +249,7 @@
             if(confirm('确认删除吗?此操作无法恢复!')) {
                 $.post( site.accountType.phydel + item.id,{}, function (result) {
                     if(result.code==0){
-                        loadPage($('#recyclePageNumA').val());
+                        recycleLoadPage($('#recyclePageNumA').val());
                         alert('删除成功');
                     }else{
                         alert(result.message);
@@ -261,7 +261,7 @@
             if(confirm('确认恢复吗?')) {
                 $.post( site.accountType.recovery + item.id,{}, function (result) {
                     if(result.code==0){
-                        loadPage($('#pageNumA').val());
+                        recycleLoadPage($('#recyclePageNumA').val());
                         alert('恢复成功');
                     }else{
                         alert(result.message);

@@ -6,6 +6,6 @@
                                     <option value="">--请选择${t.columnComment}--</option>
                                     <option value="110000" hassubinfo="true" selected>示例</option>
                                 </select>
-                                <span id="bean-${t.columnNameFormat}-error" class="help-block m-b-none"></span>
+                                <label id="bean-${t.columnNameFormat}-error" class="help-block m-b-none" for="bean-${t.columnNameFormat}"></label>
                             </div>
                         </div>

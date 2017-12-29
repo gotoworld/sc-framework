@@ -57,12 +57,12 @@
 														</span>
 													</div>
 												</form>
-												<a href="javascript:" ng-click="maxJobNo();" rel="nofollow" class="btn btn-sm btn-primary"><i class="fa fa-bookmark"></i>查询员工号</a>
 											</td>
 										</tr>
 									</table>
 									<a href="javascript:" ng-click="edit('a',0);" ng-show='staff.hasPermission("orgStaff:add")' class="btn btn-xs btn-success"><i class="fa fa-edit"></i> 新增/添加</a>
 									<a href="javascript:" ng-click="addBatch();" ng-show='staff.hasPermission("orgStaff:add:batch")' class="btn btn-xs btn-info"><i class="fa fa-edit"></i> EXCEL导入</a>
+									<!--<a href="javascript:" ng-click="maxJobNo();" rel="nofollow" class="btn btn-sm btn-primary"><i class="fa fa-bookmark"></i>查询员工号</a>-->
 									<div class="table-responsive table-scrollable">
                                     	<table class="table table-bordered table-striped  table-hover">
                                     		<thead>
@@ -86,7 +86,7 @@
 													<td>{{item.account}}</td>
 													<td>{{item.name}}</td>
 													<td>{{item.jobNo}}</td>
-													<td>{{levelEnum(item.level)}}</td>
+													<td ng-bind-html="levelEnum(item.level)">{{}}</td>
 													<td>{{genderEnum(item.gender)}}</td>
 													<td>{{stateEnum(item.state)}}</td>
 													<td>{{item.count}}</td>
@@ -313,7 +313,7 @@
 				case 1:val='职级1';break;
 				case 2:val='职级2';break;
 			}
-			return val;
+			return ''+val+'';
 		};
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);

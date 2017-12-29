@@ -30,7 +30,8 @@
            ,name 
            ,login_url 
            ,main_url 
-           ,memo 
+           ,memo
+           ,del_flag
            ,create_id 
            ,date_created 
            ,date_updated 
@@ -40,7 +41,8 @@
            ,#{name} 
            ,#{loginUrl} 
            ,#{mainUrl} 
-           ,#{memo} 
+           ,#{memo}
+           ,0
            ,#{createId} 
            ,now()
            ,now()
@@ -63,6 +65,14 @@
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
+        <choose>
+            <when test="delFlag!=null">
+                and t1.del_flag=#{delFlag}
+            </when>
+            <otherwise>
+                and t1.del_flag=0
+            </otherwise>
+        </choose>
         <if test="keyword!=null and keyword!=''">
             and (t1.name like concat('%',#{keyword},'%') or t1.id like concat('%',#{keyword},'%'))
         </if>
@@ -99,5 +109,44 @@
         <include refid="Base_Column_List"/>
         from sys_app t1
         where t1.name=#{appname}
+    </select>
+
+    <!-- 角色应用信息列表>根据员工id -->
+    <select id="getAppListByStaffId" resultType="com.hsd.account.staff.entity.sys.SysApp" parameterType="map">
+        <choose>
+            <when test="iissuperman==1"><!-- i'm superman -->
+                select
+                 t1.id as "id"
+                ,t1.name as "name"
+                ,t1.login_url as "loginUrl"
+                ,t1.main_url as "mainUrl"
+                from sys_app t1
+                where t1.del_flag=0
+            </when>
+            <otherwise>
+                select
+                 t1.id as "id"
+                ,t1.name as "name"
+                ,t1.login_url as "loginUrl"
+                ,t1.main_url as "mainUrl"
+                from sys_app t1
+                inner join auth_role_vs_app t2 on (t1.id=t2.app_id)
+                inner join auth_staff_vs_role t3 on (t2.role_id=t3.role_id and t3.staff_id= #{staffId})
+                where t1.del_flag=0
+
+                union
+
+                select
+                 t1.id as "id"
+                ,t1.name as "name"
+                ,t1.login_url as "loginUrl"
+                ,t1.main_url as "mainUrl"
+                from sys_app t1
+                inner join auth_role_vs_app t4 on (t1.id=t4.app_id)
+                inner join org_org_vs_role t2 on (t2.role_id=t2.role_id)
+                inner join org_org_vs_staff t3 on (t2.org_id=t3.org_id and t3.staff_id=#{staffId})
+                where t1.del_flag=0
+            </otherwise>
+        </choose>
     </select>
 </mapper>

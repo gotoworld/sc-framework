@@ -25,6 +25,7 @@ var site = {
         ,info: apiPath.account.staff + "/boss/account/staff/sys/sysApp/info/"       //详情
         ,phydel: apiPath.account.staff + "/boss/account/staff/sys/sysApp/phydel/"   //物理删除
         ,del: apiPath.account.staff + "/boss/account/staff/sys/sysApp/del/"   //删除
+        ,recovery: apiPath.account.staff + "/boss/account/staff/sys/sysApp/recovery/"   //恢复
     }
     , orgInfo: {
         view: basePath + "/html/account/staff/org/org_info"
@@ -240,6 +241,7 @@ var site = {
         ,recycle: apiPath.account.finance + "/boss/account/finance/accountTemplate/recycle/" //回收站
         ,info: apiPath.account.finance + "/boss/account/finance/accountTemplate/info/"       //详情
         ,del: apiPath.account.finance + "/boss/account/finance/accountTemplate/del/"         //逻辑删除
+        ,recovery: apiPath.account.finance + "/boss/account/finance/accountTemplate/recovery/"  //恢复删除
     }
     , accountType: {//账户类型
         view: basePath + "/html/account/finance/account_type"
@@ -249,6 +251,7 @@ var site = {
         ,save: apiPath.account.finance + "/boss/account/finance/accountType/save"        //新增or保存
         ,info: apiPath.account.finance + "/boss/account/finance/accountType/info/"       //详情
         ,del: apiPath.account.finance + "/boss/account/finance/accountType/del/"         //逻辑删除
+        ,recovery: apiPath.account.finance + "/boss/account/finance/accountType/recovery/"  //恢复删除
     }
     , accountTemplateAttribute: {//账户模板属性
         list: apiPath.account.finance + "/boss/account/finance/accountTemplateAttribute/list"        //列表

@@ -72,8 +72,34 @@ public class SysAppService extends BaseService implements ISysAppService {
         }
         return result;
     }
+    @Override
+    public String deleteDataById(@RequestBody SysAppDto dto) {
+        String result = "success";
+        try {
+            if (dto == null) throw new RuntimeException("参数异常!");
+            SysApp entity = copyTo(dto, SysApp.class);
+            if (sysAppDao.deleteById(entity) == 0) {
+                throw new RuntimeException("数据不存在!");
+            }
+        } catch (Exception e) {
+            log.error("物理删除异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }
+        return result;
+    }
 
-
+    public String recoveryDataById(@RequestBody SysAppDto dto) {
+        String result = "success";
+        try {
+            if (dto == null) throw new RuntimeException("参数对象不能为null");
+            sysAppDao.recoveryDataById(copyTo(dto,SysApp.class));
+        } catch (Exception e) {
+            result = "信息恢复失败!";
+            log.error(result, e);
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        return result;
+    }
     @Override
     public PageInfo findDataIsPage(@RequestBody SysAppDto dto) {
         PageInfo pageInfo = null;

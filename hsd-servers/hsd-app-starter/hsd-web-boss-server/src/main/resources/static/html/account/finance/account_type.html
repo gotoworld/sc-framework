@@ -257,9 +257,9 @@
                 });
             }
         };
-        $scope.recovery = function (id) {
+        $scope.recovery = function (item) {
             if(confirm('确认恢复吗?')) {
-                $.post( site.accountType.recovery + id,{}, function (result) {
+                $.post( site.accountType.recovery + item.id,{}, function (result) {
                     if(result.code==0){
                         loadPage($('#pageNumA').val());
                         alert('恢复成功');

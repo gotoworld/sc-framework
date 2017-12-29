@@ -162,7 +162,7 @@ public class SysAppController extends BaseController {
     @ALogOperation(type = "恢复", desc = "APP应用表")
     @ApiOperation(value = "恢复")
     public Response recovery(@PathVariable("id") String id) {
-        log.info("SysAppController del.........");
+        log.info("SysAppController recovery.........");
         Response result = new Response("success");
         try {
             result.message=sysAppService.recoveryDataById(new SysAppDto(){{setId(id);}});

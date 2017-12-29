@@ -4,6 +4,8 @@ import com.hsd.account.staff.api.auth.IRoleSourceService;
 import com.hsd.account.staff.dao.auth.IAuthPermDao;
 import com.hsd.account.staff.dao.auth.IAuthRoleDao;
 import com.hsd.account.staff.dao.org.IOrgStaffDao;
+import com.hsd.account.staff.dao.sys.ISysAppDao;
+import com.hsd.account.staff.dto.sys.SysAppDto;
 import com.hsd.account.staff.entity.org.OrgStaff;
 import com.hsd.account.staff.dto.auth.AuthPermDto;
 import com.hsd.account.staff.dto.auth.AuthRoleDto;
@@ -29,6 +31,8 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
     private IAuthPermDao authPermDao;
     @Autowired
     private IOrgStaffDao orgStaffDao;
+    @Autowired
+    private ISysAppDao sysAppDao;
 
     @Override
     public Integer isSuperAdmin(@RequestBody OrgStaffDto dto) {
@@ -68,6 +72,19 @@ public class RoleSourceService extends BaseService implements IRoleSourceService
             return copyTo(authPermDao.getPermListByStaffId(map),AuthPermDto.class);
         } catch (Exception e) {
             log.error("角色权限信息列表>根据员工id,数据库处理异常!", e);
+        }
+        return null;
+    }
+    @Override
+    public List<SysAppDto> getAppListByStaffId(@RequestBody OrgStaffDto dto) {
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("staffId", dto.getId());
+            map.put("iissuperman", dto.getIissuperman());
+            map.put("appId", dto.getAppId());
+            return copyTo(sysAppDao.getAppListByStaffId(map),SysAppDto.class);
+        } catch (Exception e) {
+            log.error("角色应用信息列表>根据员工id,数据库处理异常!", e);
         }
         return null;
     }

@@ -20,39 +20,49 @@ public interface ISysAppService {
      * <p>信息编辑。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
-    public Response saveOrUpdateData(SysAppDto dto) throws Exception;
+    Response saveOrUpdateData(SysAppDto dto) throws Exception;
 
     /**
      * <p>物理删除。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteData")
-    public String deleteData(SysAppDto dto) throws Exception;
+    String deleteData(SysAppDto dto) throws Exception;
 
+    /**
+     * <li>逻辑删除。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deleteDataById")
+    String deleteDataById(SysAppDto dto) throws Exception;
+    /**
+     * <p>恢复逻辑删除的数据 单条。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/recoveryDataById")
+    String recoveryDataById(SysAppDto dto) throws Exception;
 
 
     /**
      * <p>信息列表 分页。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsPage")
-    public PageInfo findDataIsPage(SysAppDto dto) throws Exception;
+    PageInfo findDataIsPage(SysAppDto dto) throws Exception;
 
     /**
      * <p>信息列表。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
-    public List<SysAppDto> findDataIsList(SysAppDto dto) throws Exception;
+    List<SysAppDto> findDataIsList(SysAppDto dto) throws Exception;
 
 
     /**
      * <p>信息详情。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
-    public SysAppDto findDataById(SysAppDto dto) throws Exception;
+    SysAppDto findDataById(SysAppDto dto) throws Exception;
 
     /**
      *
      * <p>根据名称查询
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix +"/findAppByName")
-    public SysAppDto findAppByName(@RequestParam("appname") String appname)throws  Exception;
+    SysAppDto findAppByName(@RequestParam("appname") String appname)throws  Exception;
 }

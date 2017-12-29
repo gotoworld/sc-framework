@@ -241,6 +241,7 @@ var site = {
         ,recycle: apiPath.account.finance + "/boss/account/finance/accountTemplate/recycle/" //回收站
         ,info: apiPath.account.finance + "/boss/account/finance/accountTemplate/info/"       //详情
         ,del: apiPath.account.finance + "/boss/account/finance/accountTemplate/del/"         //逻辑删除
+        ,phydel: apiPath.account.finance + "/boss/account/finance/accountTemplate/phydel/"   //物理删除
         ,recovery: apiPath.account.finance + "/boss/account/finance/accountTemplate/recovery/"  //恢复删除
     }
     , accountType: {//账户类型
@@ -251,6 +252,7 @@ var site = {
         ,save: apiPath.account.finance + "/boss/account/finance/accountType/save"        //新增or保存
         ,info: apiPath.account.finance + "/boss/account/finance/accountType/info/"       //详情
         ,del: apiPath.account.finance + "/boss/account/finance/accountType/del/"         //逻辑删除
+        ,phydel: apiPath.account.finance + "/boss/account/finance/accountType/phydel/"   //物理删除
         ,recovery: apiPath.account.finance + "/boss/account/finance/accountType/recovery/"  //恢复删除
     }
     , accountTemplateAttribute: {//账户模板属性

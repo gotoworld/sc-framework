@@ -98,8 +98,9 @@
                     <input type="hidden" value="21232f297a57a5a743894a0e4a801fc3" autocomplete="off" id="passwordA"
                            name="password"/>
                     <input type="password" value="admin"
-                           onkeydown="$('#passwordA').val($.md5($(this).val()));"
+                           onkeyup="$('#passwordA').val($.md5($(this).val()));"
                            onchange="$('#passwordA').val($.md5($(this).val()));"
+                           onblur="$('#passwordA').val($.md5($(this).val()));"
                            class="form-control pword m-b"
                            placeholder="密码"/>
                     <!--<div class="checkbox" > -->

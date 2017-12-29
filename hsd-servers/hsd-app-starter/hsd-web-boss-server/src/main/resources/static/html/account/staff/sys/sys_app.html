@@ -102,7 +102,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="tab-2" class="tab-pane active">
+					<div id="tab-2" class="tab-pane">
 						<div class="ibox float-e-margins">
 							<div class="ibox-content">
 								<table class="table">
@@ -111,8 +111,8 @@
 											<form id="recycle_info_search_form"
 												  role="form" class="form-inline"
 												  method="post"  accept-charset="UTF-8"
-												  ng-submit="recycle_page()">
-												<input type="hidden" name="pageNum" id="recycle_pageNumA" value="{{result.recycle.pageIndex?result.recycle.pageIndex:1}}">
+												  ng-submit="recyclePage()">
+												<input type="hidden" name="pageNum" id="recyclePageNumA" value="{{recycle.data.pageIndex?recycle.data.pageIndex:1}}">
 												<div class="form-group" id="recycle_data_5">
 													<label class="font-noraml">创建时间</label>
 													<div class="input-daterange input-group" id="recycle_datepicker">
@@ -166,7 +166,7 @@
 										</tr>
 										</tbody>
 									</table>
-									<div class="b_page" id="recycle_tagPages"></div>
+									<div class="b_page" id="recycleTagPages"></div>
 								</div>
 							</div>
 						</div>
@@ -196,12 +196,7 @@
 <script type="text/javascript" src="/js/pageTag.js"></script>
 
 <script type="text/javascript">
-    $("#data_5 .input-daterange").datepicker({
-        keyboardNavigation : !1,
-        forceParse : !1,
-        autoclose : !0
-    });
-    $("#recycle_data_5 .input-daterange").datepicker({
+    $("#data_5 .input-daterange,#recycle_data_5 .input-daterange").datepicker({
         keyboardNavigation : !1,
         forceParse : !1,
         autoclose : !0
@@ -211,6 +206,7 @@
         $ngCompile=$compile;
         staff.init(function(){
             loadPage(1);
+            recyclePage(1);
         });
         $scope.edit = function (title,item) {
             sessionStorage.setItem(site.sysApp.info,item.id);
@@ -219,18 +215,6 @@
         $scope.info = function (title,item) {
             sessionStorage.setItem(site.sysApp.info,item.id);
             openMyBoxLayer(title,site.sysApp.view+'_info.html');
-        };
-        $scope.phydel = function (item) {
-            if(confirm('确认删除吗?此操作无法恢复!')) {
-                $.post( site.sysApp.phydel + item.id,{}, function (result) {
-                    if(result.code==0){
-                        loadPage($('#recycle_pageNumA').val());
-                        alert('删除成功');
-                    }else{
-                        alert(result.message);
-                    }
-                });
-            }
         };
         $scope.del = function (item) {
             if(confirm('确认删除吗!')) {
@@ -244,11 +228,23 @@
                 });
             }
         };
+        $scope.phydel = function (item) {
+            if(confirm('确认删除吗?此操作无法恢复!')) {
+                $.post( site.sysApp.phydel + item.id,{}, function (result) {
+                    if(result.code==0){
+                        loadPage($('#recyclePageNumA').val());
+                        alert('删除成功');
+                    }else{
+                        alert(result.message);
+                    }
+                });
+            }
+        };
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
         };
-        $scope.recycle_page = function (pageIndex) {
-            recycle_loadPage(pageIndex);
+        $scope.recyclePage = function (pageIndex) {
+            recycleLoadPage(pageIndex);
         }
     });
 
@@ -265,16 +261,16 @@
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     };
-    var recycle_loadPage = function (pageIndex) {
+    var recycleLoadPage = function (pageIndex) {
         if(pageIndex){
-            $('#recycle_pageNumA').val(pageIndex);
+            $('#recyclePageNumA').val(pageIndex);
         }else{
-            pageIndex=$('#recycle_pageNumA').val();
+            pageIndex=$('#recyclePageNumA').val();
         }
         // console.info("加载页码"+pageIndex)
         $.post( site.sysApp.recycle+pageIndex,$('#recycle_info_search_form').serialize(), function (result) {
-            $data.result=result;
-            $('#recycle_tagPages').html($ngCompile(tag.page(result.data))($data));
+            $data.recycle=result;
+            $('#recycleTagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }

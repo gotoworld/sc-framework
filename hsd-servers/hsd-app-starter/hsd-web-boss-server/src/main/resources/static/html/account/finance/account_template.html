@@ -28,6 +28,7 @@
 				<div class="clients-list">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="true">回收站</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
@@ -95,6 +96,70 @@
 								</div>
 							</div>
 						</div>
+						<div id="tab-2" class="tab-pane ">
+							<div class="ibox float-e-margins">
+								<div class="ibox-content">
+									<table class="table">
+										<tr>
+											<td>
+												<form id="recycle_info_search_form"
+													role="form" class="form-inline"
+													method="post"  accept-charset="UTF-8"
+													ng-submit="recyclePage()">
+													<input type="hidden" name="pageNum" id="recyclePageNumA" value="{{recycle.data.pageIndex?recycle.data.pageIndex:1}}">
+													<div class="form-group" id="recycle_data_5">
+														<label class="font-noraml">创建时间</label>
+														<div class="input-daterange input-group" id="recycle_datepicker">
+															<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+															<span class="input-group-addon">到</span>
+															<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+														</div>
+													</div>
+													<div class="input-group">
+														<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+														</span>
+													</div>
+												</form>
+											</td>
+										</tr>
+									</table>
+									<div class="table-responsive table-scrollable">
+                                    	<table class="table table-bordered table-striped  table-hover">
+                                    		<thead>
+                                    			<tr>
+                                    				<th style="width:20px;">#</th>
+                                    				<th>模板名称</th>
+                                    				<th>账户类型</th>
+                                    				<th>创建时间</th>
+                                    				<th>操作</th>
+                                    			</tr>
+                                    		</thead>
+                                    		<tbody>
+                                    			<tr ng-if="recycle.data.data && result.data.data.length>0" ng-repeat="item in recycle.data.data">
+                                    				<td>{{(recycle.data.pageIndex-1)*recycle.data.pageSize + $index+1}}</td>
+                                    				<td>{{item.name}}</td>
+                                    				<td>{{item.typeName}}</td>
+													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    				<td>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("accountTemplate:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("accountTemplate:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("accountTemplate:pyhdel")' ng-click="pyhdel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
+                                                    </td>
+                                    			</tr>
+                                    			<tr ng-if="recycle.data.data==null || recycle.data.data.length==0">
+                                    				<td colspan="5">
+                                    				<div class="alert"><strong>{{recycle.message||'暂无数据'}}</strong></div>
+                                    				</td>
+                                    			</tr>
+                                    		</tbody>
+                                    	</table>
+										<div class="b_page" id="recycleTagPages"></div>
+                                    </div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -151,8 +216,24 @@
                 });
             }
         };
+        $scope.phydel = function (item) {
+            if(confirm('确认删除吗?此操作无法恢复!')) {
+                $.post( site.sysApp.phydel + item.id,{}, function (result) {
+                    if(result.code==0){
+                        loadPage($('#recyclePageNumA').val());
+                        alert('删除成功');
+                    }else{
+                        alert(result.message);
+                    }
+                });
+            }
+        };
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
+        };
+
+        $scope.recyclePage = function (pageIndex) {
+            recycleLoadPage(pageIndex);
         }
     });
 
@@ -167,6 +248,19 @@
             
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    };
+    var recycleLoadPage = function (pageIndex) {
+        if(pageIndex){
+            $('#recyclePageNumA').val(pageIndex);
+        }else{
+            pageIndex=$('#recyclePageNumA').val();
+        }
+        // console.info("加载页码"+pageIndex)
+        $.post( site.accountTemplate.recycle+pageIndex,$('#recycle_info_search_form').serialize(), function (result) {
+            $data.recycle=result;
+            $('#recycleTagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }

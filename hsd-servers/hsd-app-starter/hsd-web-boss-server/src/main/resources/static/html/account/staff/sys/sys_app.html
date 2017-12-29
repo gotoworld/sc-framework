@@ -28,6 +28,7 @@
 			<div class="clients-list">
 				<ul class="nav nav-tabs">
 					<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">信息列表</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="true">回收站</a></li>
 				</ul>
 				<div class="tab-content">
 					<div id="tab-1" class="tab-pane active">
@@ -86,7 +87,7 @@
 											<td>
 												<a href="javascript:" ng-show='staff.hasPermission("sysApp:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 												<a href="javascript:" ng-show='staff.hasPermission("sysApp:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-												<a href="javascript:" ng-show='staff.hasPermission("sysApp:phydel") && item.noDelFlag==1' ng-click="phydel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
+												<a href="javascript:" ng-show='staff.hasPermission("sysApp:del")' ng-click="del(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
 											</td>
 										</tr>
 										<tr ng-if="result.data.data==null || result.data.data.length==0">
@@ -97,6 +98,75 @@
 										</tbody>
 									</table>
 									<div class="b_page" id="tagPages"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tab-2" class="tab-pane active">
+						<div class="ibox float-e-margins">
+							<div class="ibox-content">
+								<table class="table">
+									<tr>
+										<td>
+											<form id="recycle_info_search_form"
+												  role="form" class="form-inline"
+												  method="post"  accept-charset="UTF-8"
+												  ng-submit="recycle_page()">
+												<input type="hidden" name="pageNum" id="recycle_pageNumA" value="{{result.recycle.pageIndex?result.recycle.pageIndex:1}}">
+												<div class="form-group" id="recycle_data_5">
+													<label class="font-noraml">创建时间</label>
+													<div class="input-daterange input-group" id="recycle_datepicker">
+														<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+														<span class="input-group-addon">到</span>
+														<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+													</div>
+												</div>
+												<div class="input-group">
+													<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+															<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+															<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+														</span>
+												</div>
+											</form>
+										</td>
+									</tr>
+								</table>
+								<div class="table-responsive table-scrollable">
+									<table class="table table-bordered table-striped  table-hover">
+										<thead>
+										<tr>
+											<th style="width:20px;">#</th>
+											<th style="width:50px;">编码</th>
+											<th class="col-md-2">名称</th>
+											<th class="col-md-2">主页</th>
+											<th class="col-md-2">登录</th>
+											<th>备注</th>
+											<th style="width:140px;">创建时间</th>
+											<th style="width:250px;">操作</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr ng-if="recycle.data.data && recycle.data.data.length>0" ng-repeat="item in recycle.data.data">
+											<td>{{(recycle.data.pageIndex-1)*recycle.data.pageSize + $index+1}}</td>
+											<td>{{item.id}}</td>
+											<td>{{item.name}}</td>
+											<td>{{item.loginUrl}}</td>
+											<td>{{item.mainUrl}}</td>
+											<td>{{item.memo}}</td>
+											<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+											<td>
+												<a href="javascript:" ng-show='staff.hasPermission("sysApp:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+												<a href="javascript:" ng-show='staff.hasPermission("sysApp:phydel") && item.noDelFlag==1' ng-click="phydel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
+											</td>
+										</tr>
+										<tr ng-if="recycle.data.data==null || recycle.data.data.length==0">
+											<td colspan="8">
+												<div class="alert"><strong>{{recycle.message||'暂无数据'}}</strong></div>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+									<div class="b_page" id="recycle_tagPages"></div>
 								</div>
 							</div>
 						</div>
@@ -131,6 +201,11 @@
         forceParse : !1,
         autoclose : !0
     });
+    $("#recycle_data_5 .input-daterange").datepicker({
+        keyboardNavigation : !1,
+        forceParse : !1,
+        autoclose : !0
+    });
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
@@ -149,6 +224,18 @@
             if(confirm('确认删除吗?此操作无法恢复!')) {
                 $.post( site.sysApp.phydel + item.id,{}, function (result) {
                     if(result.code==0){
+                        loadPage($('#recycle_pageNumA').val());
+                        alert('删除成功');
+                    }else{
+                        alert(result.message);
+                    }
+                });
+            }
+        };
+        $scope.del = function (item) {
+            if(confirm('确认删除吗!')) {
+                $.post( site.sysApp.del + item.id,{}, function (result) {
+                    if(result.code==0){
                         loadPage($('#pageNumA').val());
                         alert('删除成功');
                     }else{
@@ -159,6 +246,9 @@
         };
         $scope.page = function (pageIndex) {
             loadPage(pageIndex);
+        };
+        $scope.recycle_page = function (pageIndex) {
+            recycle_loadPage(pageIndex);
         }
     });
 
@@ -172,6 +262,19 @@
         $.post( site.sysApp.page+pageIndex,$('#info_search_form').serialize(), function (result) {
             $data.result=result;
             $('#tagPages').html($ngCompile(tag.page(result.data))($data));
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    };
+    var recycle_loadPage = function (pageIndex) {
+        if(pageIndex){
+            $('#recycle_pageNumA').val(pageIndex);
+        }else{
+            pageIndex=$('#recycle_pageNumA').val();
+        }
+        // console.info("加载页码"+pageIndex)
+        $.post( site.sysApp.recycle+pageIndex,$('#recycle_info_search_form').serialize(), function (result) {
+            $data.result=result;
+            $('#recycle_tagPages').html($ngCompile(tag.page(result.data))($data));
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }

@@ -77,6 +77,23 @@ public class LoginController extends BaseController {
             }
             roleSourceService.lastLogin(orgStaffDto);
 
+            if (0 == (orgStaffDto.getType()) && roleSourceService.isSuperAdmin(orgStaffDto) > 0) {
+                //超级管理员标记
+                orgStaffDto.setIissuperman(1);
+                request.getSession().setAttribute("isSuper", "1");
+            }
+            //3.获取应用集合
+            List<SysAppDto> appList = roleSourceService.getAppListByStaffId(orgStaffDto);
+            boolean appFlag=false;
+            if(appList!=null){
+                for (SysAppDto app : appList) {
+                    if(appId.equals(app.getId())){
+                        appFlag=true;break;
+                    }
+                }
+            }
+            if(!appFlag) return Response.error("登录失败,应用权限受限!");
+
             //查询APP员工表
             OrgStaffAppDto userAppDto = userAppService.findDataByAppIdAndStaffId(new OrgStaffAppDto(){{setStaffId(orgStaffDto.getId());setAppId(sysAppDto.getId());}});
             orgStaffDto.setAppStaffId(userAppDto.getId());
@@ -86,11 +103,6 @@ public class LoginController extends BaseController {
             Map<String, Set<String>> authorizationInfo = new HashMap();
             authorizationInfo.put("roles", new HashSet<>());
             authorizationInfo.put("permissions", new HashSet<>());
-            if (0 == (orgStaffDto.getType()) && roleSourceService.isSuperAdmin(orgStaffDto) > 0) {
-                //超级管理员标记
-                orgStaffDto.setIissuperman(1);
-                request.getSession().setAttribute("isSuper", "1");
-            }
             //2.获取角色集合
             List<AuthRoleDto> roleList = roleSourceService.getRoleListByStaffId(orgStaffDto);
             if (roleList != null) {
@@ -115,6 +127,7 @@ public class LoginController extends BaseController {
             Map<String, Object> data = new HashMap<>();
             data.put("tokenExpMillis", System.currentTimeMillis() + CommonConstant.JWT_TTL_REFRESH);
             data.put("authorizationToken", authorizationToken);
+            data.put("app", appList);
             data.put("staff", JSONObject.parseObject(subject, OrgStaffDto.class));
             data.put("XCache", request.getSession().getId());
 

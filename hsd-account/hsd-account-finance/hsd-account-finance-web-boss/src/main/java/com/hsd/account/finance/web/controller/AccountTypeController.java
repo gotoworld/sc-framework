@@ -50,6 +50,25 @@ public class AccountTypeController extends BaseController {
         return result;
     }
     /**
+     * <p>回收站 (已删除)。
+     */
+    @RequiresPermissions("accountType:menu")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "recycle/{pageNum}")
+    @ApiOperation(value = "回收站")
+    public Response recycle(@ModelAttribute  AccountTypeDto dto, @PathVariable("pageNum") Integer pageNum) {
+        log.info("AccountTypeController recycle.........");
+        Response result = new Response();
+        try {
+            if (dto == null) dto = new AccountTypeDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
+            dto.setPageNum(pageNum);
+            dto.setDelFlag(1);
+            result.data = PageUtil.copy(accountTypeService.findDataIsPage(dto));
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
      * <p>信息列表 (未删除)。
      */
     @RequiresPermissions("accountType:menu")
@@ -104,6 +123,44 @@ public class AccountTypeController extends BaseController {
                 setId(id);
             }};
             result.message = accountTypeService.deleteDataById(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * <li>恢复。
+     */
+    @RequiresPermissions("accountTemplate:recovery")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recovery/{id}")
+    @ALogOperation(type = "恢复", desc = "账户模板-恢复数据")
+    @ApiOperation(value = "恢复")
+    public Response recovery(@PathVariable("id") Long id) {
+        log.info("AccountTypeController recovery.........");
+        Response result = new Response("success");
+        try {
+            result.message=accountTypeService.recoveryDataById(new AccountTypeDto(){{setId(id);}});
+        } catch (Exception e) {
+            result=Response.error(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * <p>物理删除。
+     */
+    @RequiresPermissions("accountType:pyhdel")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "pyhdel/{id}")
+    @ALogOperation(type = "删除", desc = "账户类型-物理删除")
+    @ApiOperation(value = "物理删除")
+    public Response pyhdel(@PathVariable("id") Long id) {
+        log.info("AccountTypeController pyhdel.........");
+        Response result = new Response();
+        try {
+            if (id==null) {throw new RuntimeException("参数异常!");}
+            AccountTypeDto dto = new AccountTypeDto(){{
+                setId(id);
+            }};
+            result.message = accountTypeService.deleteData(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

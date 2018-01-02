@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>//TODO 客户账户</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="memo of your site" />
+    <meta name="author" content="author of the site" />
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+
+    <link href="/css/common.css" rel="stylesheet">
+	<style>
+		.tabs-left >.nav-tabs ,.tabs-left > nav-tabs > li,.tabs-container .tabs-left > .nav-tabs, .tabs-container .tabs-right > .nav-tabs{width: 10%;}
+		.tabs-container .tabs-left .panel-body { width: 88%; margin-left: 10%; }
+		.clients-list { margin-top:0px; }
+		.tabs-container .panel-body {padding-top: 5px;}
+		.clients-list > nav-tabs{background: #9ea6b9}
+		.float-e-margins{border-left:1px solid #eeeeee;/*min-height: 600px;*/ height: 100%; }
+	</style>
+</head>
+
+<body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tabs-container">
+					<div class="tabs-left">
+						<ul class="nav nav-tabs">
+							<li class="{{$index==0?'active':''}}"  ng-repeat="app in staffApps"><a data-toggle="tab" href="#tab-app-{{$index}}" aria-expanded="{{$index==0?true:false}}">{{app.name}}</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab-app-{{$index}}" class="tab-pane {{$index==0?'active':''}}"  ng-repeat="app in staffApps">
+								<div class="panel-body">
+									<div class="clients-list">
+										<ul class="nav nav-tabs" style="height: 39px;background-color:#EEEEEE">
+											<li class="active"><a data-toggle="tab" href="#tab-acc-{{$index}}-1" aria-expanded="true">账户快照</a></li>
+											<li class=""><a data-toggle="tab" href="#tab-acc-{{$index}}-2" aria-expanded="false">黄金账户</a></li>
+											<li class=""><a data-toggle="tab" href="#tab-acc-{{$index}}-3" aria-expanded="false">网贷账户</a></li>
+											<li class=""><a data-toggle="tab" href="#tab-acc-{{$index}}-4" aria-expanded="false">支付账户</a></li>
+											<li class=""><a data-toggle="tab" href="#tab-acc-{{$index}}-5" aria-expanded="false">支付账户</a></li>
+										</ul>
+										<div class="tab-content">
+											<div id="tab-acc-{{$index}}-1" class="tab-pane active">
+												<div class="float-e-margins">
+													<div class="">
+														<table class="table">
+															<tr>
+																<td>
+																	<form id="info_search_form_{{app.id}}"
+																		  role="form" class="form-inline"
+																		  method="post"  accept-charset="UTF-8"
+																		  ng-submit="pageX(app)">
+																		<input type="hidden" name="userId" ng-value="userId">
+																		<input type="hidden" name="appId" ng-value="app.id">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{app.id}}" value="{{result.data.pageIndex?result.data.pageIndex:1}}">
+																		<div class="form-group data_5" >
+																			<label class="font-noraml">创建时间</label>
+																			<div class="input-daterange input-group">
+																				<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+																				<span class="input-group-addon">到</span>
+																				<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+																			</div>
+																		</div>
+																		<div class="input-group">
+																			<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control">
+																			<span class="input-group-btn">
+																				<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+																				<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+																			</span>
+																		</div>
+																	</form>
+																</td>
+															</tr>
+														</table>
+														<div class="table-responsive table-scrollable">
+															<table class="table table-bordered table-striped  table-hover">
+																<thead>
+																<tr>
+																	<th style="width:20px;">#</th>
+																	<th>名称</th>
+																	<th>类型</th>
+																	<th>IP地址</th>
+																	<th>创建时间</th>
+																	<th>操作</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr ng-if="result.data.data && result.data.data.length>0" ng-repeat="item in result.data.data">
+																	<td>{{(result.data.pageIndex-1)*result.data.pageSize + $index+1}}</td>
+																	<td>{{item.userName}}</td>
+																	<td>{{item.type==0?'登录':'登出'}}</td>
+																	<td>{{item.ipAddr}}</td>
+																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>
+																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																	</td>
+																</tr>
+																<tr ng-if="result.data.data==null || result.data.data.length==0">
+																	<td colspan="6">
+																		<div class="alert"><strong>{{result.message||'暂无数据'}}</strong></div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+															<div class="b_page" id="tagPages"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{$index}}-2" class="tab-pane ">
+												<div class="float-e-margins">
+													<div class="">
+														2
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{$index}}-3" class="tab-pane ">
+												<div class="float-e-margins">
+													<div class="">
+														3
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{$index}}-4" class="tab-pane ">
+												<div class="float-e-margins">
+													<div class="">
+														4
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{$index}}-5" class="tab-pane ">
+												<div class="float-e-margins">
+													<div class="">
+														5
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/jquery.form.js" type="text/javascript" ></script>
+<script src="/plugins/hplus/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>
+
+<script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/pageTag.js"></script>
+
+<script type="text/javascript">
+    $(".data_5 .input-daterange").datepicker({
+        keyboardNavigation : !1,
+        forceParse : !1,
+        autoclose : !0
+    });
+    angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
+        $data = $scope;
+        $ngCompile=$compile;
+        $data.userId=sessionStorage.getItem(site.user.info);
+        staff.init(function(){
+            var staffAppJson = sessionStorage.getItem('hsd_staff_app');
+            if (staffAppJson) {
+                loadPage(1,JSON.parse(staffAppJson)[0]);
+            }
+        });
+        $scope.info = function (title,id) {
+            sessionStorage.setItem(site.userLoginLog.info,id);
+            openMyBoxLayer(title,site.userLoginLog.view+'_info.html');
+        };
+        $scope.page = function (pageIndex,app) {
+            loadPage(pageIndex,app);
+        }
+    });
+
+    var loadPage = function (pageIndex,app) {
+        if(pageIndex){
+            $('#pageNumA_'+app.id).val(pageIndex);
+        }else{
+            pageIndex=$('#pageNumA_'+app.id).val();
+        }
+        $.post( site.userLoginLog.page+pageIndex,$('#info_search_form_'+app.id).serialize(), function (result) {
+            $data.result=result;
+            $('#tagPages').html($ngCompile(tag.page(result.data,'page',app.id))($data));
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
+    }
+</script>
+</body>
+</html>

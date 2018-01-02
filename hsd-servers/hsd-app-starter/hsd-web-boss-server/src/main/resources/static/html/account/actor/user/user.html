@@ -115,6 +115,7 @@
 																<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('sign',item)" class="label label-success" ><i class="fa "></i> 网签记录</a>
 																<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('identity',item)" class="label label-warning" ><i class="fa "></i> 实名认证记录</a>
 																<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showLog('login',item)" class="label label-info" ><i class="fa "></i> 登录日志</a>
+																<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="showAccount(item)" class="label label-success" ><i class="fa "></i> 应用账户</a>
 															</div>
 														</div>
 													</td>
@@ -212,6 +213,10 @@
         $scope.tag = function (item) {
             sessionStorage.setItem(site.user.info,item.id);
             openMyBoxLayer('客户标签设置--'+item.name,site.user.view+'_edit_tag.html');
+        };
+        $scope.showAccount = function (item) {
+            sessionStorage.setItem(site.user.info,item.id);
+            openMyBoxLayer('客户账户系统--'+item.name,site.user.view+'_app.html');
         };
         $scope.member = function (item) {
             sessionStorage.setItem(site.member.info,item.id);

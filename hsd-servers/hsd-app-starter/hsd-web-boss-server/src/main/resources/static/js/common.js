@@ -370,6 +370,7 @@ var staff = {
             sessionStorage.removeItem("hsd_staff_authorizationToken");
             sessionStorage.removeItem("hsd_staff_authorizationInfoPerms");
             sessionStorage.removeItem("hsd_staff_authorizationInfoRoles");
+            sessionStorage.removeItem("hsd_staff_app");
             callback && callback();
             top.location.href = '/login.html';
         }, 'json');
@@ -379,6 +380,10 @@ var staff = {
         if (staffJson) {
             var staffInfo = JSON.parse(staffJson);
             $data.staffInfo = staffInfo;
+            var staffAppJson = sessionStorage.getItem('hsd_staff_app');
+            if (staffAppJson) {
+                $data.staffApps = JSON.parse(staffAppJson);
+            }
         }
         callback && callback();
         try {

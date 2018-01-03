@@ -126,7 +126,6 @@ public class UserController extends BaseController {
         }
         return result;
     }
-
     @RequiresPermissions("user:edit:blacklist")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "set/blacklist/{id}")
     @ALogOperation(type = "修改", desc = "客户表-设置黑名单")
@@ -143,6 +142,7 @@ public class UserController extends BaseController {
         }
         return result;
     }
+
     @RequiresPermissions("user:edit:blacklist")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/blacklist/{id}")
     @ALogOperation(type = "修改", desc = "客户表-取消黑名单")
@@ -154,6 +154,28 @@ public class UserController extends BaseController {
             if(id==null) throw new RuntimeException("参数异常!");
             UserDto dto = new UserDto(){{setId(id);}};
             result.data = userService.delBlacklist(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /** 获取app用户id */
+    private Long getAppUserId(String appId,Long userId){
+        Long appUserId=null;
+
+        return appUserId;
+    }
+
+    @RequiresPermissions("user:account:snapshot")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "account/snapshot")
+    @ApiOperation(value = "客户-账户快照")
+    public Response accountSnapshot(@ModelAttribute UserDto dto) {
+        log.info("TagController accountSnapshot.........");
+        Response result = new Response();
+        try {
+            if(dto==null) throw new RuntimeException("参数异常");
+            result.data = userService.setTags(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

@@ -2,7 +2,7 @@
 
 spring:
   application:
-    name: hsd-account-actor-web-boss
+    name: hsd-account-actor-web-boss #-wxg
   profiles:
     active: native
   cloud:

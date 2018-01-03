@@ -5,7 +5,7 @@ var apiPath = {
         channel: "http://192.168.108.100:28890/hsd-account-channel-web-portal",
         actor: "http://192.168.108.100:28890/hsd-account-actor-web-portal"
     }
-    ,util:{
+    ,msg:{
         sms: "http://192.168.108.100:28890/hsd-util-sms-web-portal"
     }
 };
@@ -74,11 +74,11 @@ var site = {
             , setting: apiPath.account.actor + "/api/account/actor/actor/member/save" //个人信息保存
         }
     }
-    ,util:{
+    ,msg:{
         sms:{
             imgCaptcha:{
-                 json: apiPath.util.sms+"/api/util/sms/imgCaptcha/json"
-                ,html: apiPath.util.sms+"/api/util/sms/imgCaptcha/html"
+                 json: apiPath.msg.sms+"/api/util/sms/imgCaptcha/json"
+                ,html: apiPath.msg.sms+"/api/util/sms/imgCaptcha/html"
             }
         }
     }

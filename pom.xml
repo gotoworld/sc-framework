@@ -14,7 +14,7 @@
         <module>hsd-framework-starter</module>
         <module>hsd-common</module>
         <module>hsd-account</module>
-        <module>hsd-util</module>
+        <module>hsd-msg</module>
     </modules>
 
 </project>

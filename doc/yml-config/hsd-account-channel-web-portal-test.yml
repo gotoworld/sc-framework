@@ -94,7 +94,7 @@ feign:
     enabled: true
   name:
     account.channel: hsd-account-channel-server
-    util.sms: hsd-util-sms-server
+    msg.sms: hsd-msg-sms-server
 
 hystrix:
   command:

@@ -3,7 +3,7 @@ var basePath = "http://localhost/";
 // var basePath = "http://192.168.108.100:8080/";
 var apiPath = {
     account: {
-        staff: "http://192.168.108.100:28890/hsd-account-staff-web-boss-wxg",
+        staff: "http://192.168.108.100:28890/hsd-account-staff-web-boss",
         channel: "http://192.168.108.100:28890/hsd-account-channel-web-boss",
         actor: "http://192.168.108.100:28890/hsd-account-actor-web-boss",
         finance: "http://192.168.108.100:28890/hsd-account-finance-web-boss"

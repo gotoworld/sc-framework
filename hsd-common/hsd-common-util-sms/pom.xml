@@ -12,8 +12,8 @@
     <artifactId>hsd-common-util-sms</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.hsd.util</groupId>
-            <artifactId>hsd-util-sms-api</artifactId>
+            <groupId>com.hsd.msg</groupId>
+            <artifactId>hsd-msg-sms-api</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

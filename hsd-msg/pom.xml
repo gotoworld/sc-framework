@@ -10,12 +10,12 @@
         <relativePath />
     </parent>
     
-    <groupId>com.hsd.util</groupId>
-    <artifactId>hsd-util</artifactId>
+    <groupId>com.hsd.msg</groupId>
+    <artifactId>hsd-msg</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
 
     <modules>
-        <module>hsd-util-sms</module>
+        <module>hsd-msg-sms</module>
     </modules>
 </project>

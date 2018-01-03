@@ -170,7 +170,7 @@ feign:
   okhttp:
     enabled: true
   name:
-    util.sms: ${spring.application.name}
+    msg.sms: ${spring.application.name}
 
 logging:
   #config: ./config/logback-spring.xml

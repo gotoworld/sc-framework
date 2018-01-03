@@ -82,15 +82,15 @@
         |-   |--hsd-framework-service                               | jar |   数据层等依赖与配置,可直接使用
         |-   |--hsd-framework-web                                   | jar |   后端模板控制层,可直接使用
         |-   |--hsd-framework-web-restful                           | pom |   前后端分离restful控制层,可直接使用
-        |--hsd-util                                                 | pom |   #工具服务#父模块，不应直接使用
-        |-   |--hsd-util-sms                                        | pom |   #短信服务#父模块，不应直接使用
-        |-        |--hsd-util-sms-api                               | pom |   
-        |-        |--hsd-util-sms-services                          | pom |   父模块，不应直接使用
-        |-             |--hsd-util-sms-biz                          | jar |   
-        |-             |--hsd-util-sms-dao                          | jar |   
-        |-             |--hsd-util-sms-server                       | app |   
-        |-        |--hsd-util-sms-web-boss                          | a+j |   
-        |-        |--hsd-util-sms-web-portal                        | a+j |   
+        |--hsd-msg                                                 | pom |   #工具服务#父模块，不应直接使用
+        |-   |--hsd-msg-sms                                        | pom |   #短信服务#父模块，不应直接使用
+        |-        |--hsd-msg-sms-api                               | pom |   
+        |-        |--hsd-msg-sms-services                          | pom |   父模块，不应直接使用
+        |-             |--hsd-msg-sms-biz                          | jar |   
+        |-             |--hsd-msg-sms-dao                          | jar |   
+        |-             |--hsd-msg-sms-server                       | app |   
+        |-        |--hsd-msg-sms-web-boss                          | a+j |   
+        |-        |--hsd-msg-sms-web-portal                        | a+j |   
         |--hsd-servers                                              | pom |   父模块，不应直接使用
         |-   |--hsd-eycode-server                                   | app |   #简单代码生成器#
         |-   |--hsd-app-starter                                     | pom |   #业务app集中部署#父模块，不应直接使用

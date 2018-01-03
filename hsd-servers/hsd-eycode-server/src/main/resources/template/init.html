@@ -192,13 +192,13 @@
                     _my_pkg='.'+_my_pkg;
                     _my_project='.'+_my_project;
 
-                    $('._domain_pkg').val('com.hsd'+_my_project+_my_pkg+'.entity');
-                    $('._dto_pkg').val('com.hsd'+_my_project+_my_pkg+'.dto');
-                    $('._mybatis_pkg').val('mybatis'+_my_project+_my_pkg+'');
-                    $('._dao_pkg').val('com.hsd'+_my_project+_my_pkg+'.dao');
-                    $('._api_pkg').val('com.hsd'+_my_project+_my_pkg+'.api');
-                    $('._biz_pkg').val('com.hsd'+_my_project+_my_pkg+'.service');
-                    $('._web_pkg').val('com.hsd'+_my_project+_my_pkg+'.web.controller');
+                    $('._domain_pkg').val('com.hsd'+_my_project+'.entity'+_my_pkg);
+                    $('._dto_pkg').val('com.hsd'+_my_project+'.dto'+_my_pkg);
+                    $('._mybatis_pkg').val('mybatis'+_my_project+''+_my_pkg);
+                    $('._dao_pkg').val('com.hsd'+_my_project+'.dao'+_my_pkg);
+                    $('._api_pkg').val('com.hsd'+_my_project+'.api'+_my_pkg);
+                    $('._biz_pkg').val('com.hsd'+_my_project+'.service'+_my_pkg);
+                    $('._web_pkg').val('com.hsd'+_my_project+'.web.controller'+_my_pkg);
                     $('._web_http').each(function(){
                         $(this).val('/boss/'+httpMyPkg.replace(/\./g,"/")+'/'+$(this).attr('data'));
                     });

@@ -155,7 +155,7 @@
             }
 
             $scope.loadImgCaptcha=function(){
-                $.post(site.util.sms.imgCaptcha.json, {},function (result) {
+                $.post(site.msg.sms.imgCaptcha.json, {},function (result) {
                     if (result.code == 0) {
                         $data.imgCaptcha=result.data;
                     } else {

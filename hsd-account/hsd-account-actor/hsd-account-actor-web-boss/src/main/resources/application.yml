@@ -92,7 +92,7 @@ feign:
     enabled: true
   name:
     account:
-      actor: hsd-account-actor-server
+      actor: hsd-account-actor-server #-wxg
       finance: hsd-account-finance-server
 
 hystrix:

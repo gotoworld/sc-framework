@@ -128,7 +128,7 @@ feign:
   okhttp:
     enabled: true
   name:
-    util.sms: hsd-util-sms-server
+    msg.sms: hsd-msg-sms-server
 
 logging:
   #config: ./config/logback-spring.xml

@@ -26874,7 +26874,7 @@ Table.Comment 0</a:SymbolContent>
 <a:Creator>Administrator</a:Creator>
 <a:ModificationDate>1512959843</a:ModificationDate>
 <a:Modifier>Administrator</a:Modifier>
-<a:Comment>app应用id</a:Comment>
+<a:Comment>应用系统id</a:Comment>
 <a:DataType>varchar(32)</a:DataType>
 <a:Length>32</a:Length>
 </o:Column>
@@ -27118,7 +27118,7 @@ Table.Comment 0</a:SymbolContent>
 <a:Creator>Administrator</a:Creator>
 <a:ModificationDate>1512962720</a:ModificationDate>
 <a:Modifier>Administrator</a:Modifier>
-<a:Comment>app应用id</a:Comment>
+<a:Comment>应用系统id</a:Comment>
 <a:DataType>varchar(32)</a:DataType>
 <a:Length>32</a:Length>
 </o:Column>

@@ -1,5 +1,6 @@
 package com.hsd.account.finance.dao;
 
+import com.hsd.account.finance.entity.AccountSubLoan;
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
 import org.apache.ibatis.annotations.Delete;
@@ -19,6 +20,13 @@ public interface IAccountSubLoanDao extends IBaseDao {
     @Select("select IFNULL(count(0),0) as count from account_sub_loan where  id = #{id} ")
     int isDataYN(IEntity entity) throws Exception;
 
+    /**
+     * 根据用户Id查询账户信息
+     * @param accountSubLoan
+     * @return
+     * @throws Exception
+     */
+    AccountSubLoan selectByUserId(AccountSubLoan accountSubLoan) throws Exception;
 
 
 }

@@ -95,5 +95,16 @@ public class AccountSubLoanService extends BaseService implements IAccountSubLoa
             return result;
         }
 
-
+        @Override
+        public AccountSubLoanDto findDataByUserId(AccountSubLoanDto dto) throws Exception {
+            AccountSubLoanDto result = null;
+            try {
+                AccountSubLoan entity = copyTo(dto, AccountSubLoan.class);
+                result = copyTo(accountSubLoanDao.selectByUserId(entity),AccountSubLoanDto.class);
+            } catch (Exception e) {
+                log.error("信息[详情]查询异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            return result;
+        }
 }

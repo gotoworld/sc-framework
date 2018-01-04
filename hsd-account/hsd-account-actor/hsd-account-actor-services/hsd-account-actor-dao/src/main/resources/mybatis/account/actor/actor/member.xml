@@ -207,7 +207,6 @@
         from member t1
         where 1=1
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
     </select>
 
     <!--信息列表 -->
@@ -217,6 +216,5 @@
         from member t1
         where 1=1
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
     </select>
 </mapper>

@@ -5,14 +5,14 @@
     <sql id="Base_Column_List">
          t1.id as "id"
         ,t1.staff_id as "staffId"
-        ,t1.app_staff_id as "appStaffId"
-        ,t1.app_id as "appId"
-        ,t1.app_name as "appName"
         ,t1.staff_name as "staffName"
         ,t1.type as "type"
         ,t1.ip_addr as "ipAddr"
         ,t1.device_mac as "deviceMac"
         ,t1.date_created as "dateCreated"
+        ,t1.app_staff_id as "appStaffId"
+        ,t1.app_id as "appId"
+        ,t1.app_name as "appName"
     </sql>
 
     <!-- 根据主键获取信息详情 -->
@@ -29,25 +29,25 @@
         insert into org_log_login (
             id
            ,staff_id
-           ,app_staff_id
-           ,app_id
-           ,app_name
            ,staff_name
            ,type 
            ,ip_addr 
            ,device_mac 
-           ,date_created 
+           ,date_created
+           ,app_staff_id
+           ,app_id
+           ,app_name
         ) values (
             #{id}
            ,#{staffId}
-           ,#{appStaffId}
-           ,#{appId}
-           ,#{appName}
            ,#{staffName}
            ,#{type} 
            ,#{ipAddr} 
            ,#{deviceMac} 
            ,now()
+           ,#{appStaffId}
+           ,#{appId}
+           ,#{appName}
         )
     </insert>
 
@@ -55,11 +55,11 @@
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
-        <if test="appId!=null and appId!=''">
-            and t1.app_id=#{appId}
-        </if>
         <if test="type!=null">
             and t1.type=#{type}
+        </if>
+        <if test="appId!=null and appId!=''">
+            and t1.app_id=#{appId}
         </if>
         <if test="appName!=null and appName!=''">
             and t1.app_name like concat('%',#{appName},'%')
@@ -80,7 +80,7 @@
         from org_log_login t1
         where 1=1
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
+        order by t1.id desc
     </select>
 
 </mapper>

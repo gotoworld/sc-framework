@@ -69,6 +69,9 @@ management.security.enabled: false
 
 
 eureka:
+  user:
+    name: admin
+    password: admin
   instance:
     preferIpAddress: true
     lease-renewal-interval-in-seconds: 1 # 续约到期时间（默认90秒）

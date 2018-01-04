@@ -95,8 +95,9 @@ feign:
   name:
     msg.sms: hsd-msg-sms-server
     account:
-      actor: hsd-account-actor-server
-      finance: hsd-account-finance-server
+      staff: hsd-account-staff-server #-wxg
+      actor: hsd-account-actor-server #-wxg
+      finance: hsd-account-finance-server #-wxg
 
 hystrix:
   command:

@@ -35,5 +35,10 @@
             <artifactId>hsd-account-finance-api</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.hsd.account</groupId>
+            <artifactId>hsd-account-actor-api</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

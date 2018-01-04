@@ -147,4 +147,18 @@
         <include refid="list_where_sql"/>
         order by t1.date_created desc
     </select>
+
+    <!-- 根据用户id获取信息详情 -->
+    <select id="selectByUserId" resultType="com.hsd.account.finance.entity.Account" parameterType="com.hsd.account.finance.entity.Account">
+        select
+        <include refid="Base_Column_List"/>
+        from account t1
+        where
+        state != 2
+        AND app_user_id = #{appUserId}
+        <if test="accountType != null ">
+            AND account_type = #{accountType}
+        </if>
+    </select>
+
 </mapper>

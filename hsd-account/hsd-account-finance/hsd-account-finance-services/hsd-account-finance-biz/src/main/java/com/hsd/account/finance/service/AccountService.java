@@ -95,5 +95,19 @@ public class AccountService extends BaseService implements IAccountService {
             return result;
         }
 
+        @Override
+        public AccountDto findDataByUserId(@RequestBody AccountDto dto) {
+            AccountDto result = null;
+            try {
+                Account entity = copyTo(dto, Account.class);
+                result = copyTo(accountDao.selectByUserId(entity),AccountDto.class);
+            } catch (Exception e) {
+                log.error("信息[详情]查询异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            return result;
+        }
+
+
 
 }

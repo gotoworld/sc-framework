@@ -43,4 +43,10 @@ public interface IAccountSubGoldService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     AccountSubGoldDto findDataById(AccountSubGoldDto dto) throws Exception;
+
+    /**
+     * <p>信息详情。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByUserId")
+    AccountSubGoldDto findDataByUserId(AccountSubGoldDto dto) throws Exception;
 }

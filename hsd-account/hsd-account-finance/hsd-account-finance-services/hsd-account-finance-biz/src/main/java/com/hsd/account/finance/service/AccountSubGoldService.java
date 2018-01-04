@@ -95,5 +95,16 @@ public class AccountSubGoldService extends BaseService implements IAccountSubGol
             return result;
         }
 
-
+        @Override
+        public AccountSubGoldDto findDataByUserId(AccountSubGoldDto dto) throws Exception {
+            AccountSubGoldDto result = null;
+            try {
+                AccountSubGold entity = copyTo(dto, AccountSubGold.class);
+                result = copyTo(accountSubGoldDao.selectByUserId(entity),AccountSubGoldDto.class);
+            } catch (Exception e) {
+                log.error("信息[详情]查询异常!", e);
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            return result;
+        }
 }

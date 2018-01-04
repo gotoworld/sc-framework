@@ -82,9 +82,8 @@
 													<th>登录名</th>
 													<th>昵称</th>
 													<th>性别</th>
-													<th>注册渠道</th>
 													<th>状态</th>
-													<th>客户类型</th>
+													<th>最后登录</th>
 													<th>登录次数</th>
 													<th>注册时间</th>
 													<th style="width:320px;">操作</th>
@@ -96,9 +95,8 @@
 													<td>{{item.account}}</td>
 													<td>{{item.name}}</td>
 													<td>{{genderEnum(item.gender)}}</td>
-													<td>{{item.registerChannel}}</td>
 													<td>{{stateEnum(item.state)}}</td>
-													<td>{{item.type==1?'会员':'渠道商'}}</td>
+													<td>{{item.lastLogin}}</td>
 													<td>{{item.count}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>

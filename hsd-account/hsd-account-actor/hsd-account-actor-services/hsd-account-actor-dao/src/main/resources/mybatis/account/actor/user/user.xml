@@ -14,6 +14,8 @@
         ,t1.register_channel as "registerChannel"
         ,t1.tags as "tags"
         ,t1.date_created as "dateCreated"
+        ,t1.last_login as "lastLogin"
+        ,t1.count as "count"
     </sql>
 
     <!-- 根据主键获取信息详情 -->

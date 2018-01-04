@@ -7,6 +7,7 @@ import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 /**
@@ -42,4 +43,23 @@ public interface IAccountBindThirdpartyService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     AccountBindThirdpartyDto findDataById(AccountBindThirdpartyDto dto) throws Exception;
+
+    /**
+     * <p>员工信息。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/bindCard")
+    Response bindCard(@RequestParam Long userId,@RequestParam Long accountId,@RequestParam String name,@RequestParam String cardNo,@RequestParam String certNo,@RequestParam String phone)  throws Exception;
+
+    /**
+     * <p>员工信息。
+     */
+    @RequestMapping(method = {RequestMethod.PUT},value = acPrefix + "/unbindCard")
+    Response unbindCard(@RequestParam Long userId,@RequestParam Long accountId,@RequestParam String cardNo)  throws Exception;
+
+    /**
+     * <p>信息详情。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByUserId")
+    List<AccountBindThirdpartyDto> findDataByUserId(AccountBindThirdpartyDto dto) throws Exception;
+
 }

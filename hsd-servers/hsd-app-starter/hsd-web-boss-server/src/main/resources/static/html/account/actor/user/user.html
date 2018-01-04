@@ -95,8 +95,8 @@
 													<td>{{item.account}}</td>
 													<td>{{item.name}}</td>
 													<td>{{genderEnum(item.gender)}}</td>
-													<td>{{stateEnum(item.state)}}</td>
-													<td>{{item.lastLogin}}</td>
+													<td ng-bind-html="stateEnum(item.state)"></td>
+													<td>{{item.lastLogin | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>{{item.count}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
@@ -228,9 +228,9 @@
 		$scope.stateEnum=function(key){
             var val="其它";
 			switch (key){
-				case 1:val="启用";break;
-				case 2:val="禁用";break;
-				case 3:val="黑名单";break;
+				case 1:val="<label class='label label-info'>启用</label>";break;
+				case 2:val="<label class='label label-warning'>禁用</label>";break;
+				case 3:val="<label class='label label-danger'>黑名单</label>";break;
 			}
 			return val;
 		};

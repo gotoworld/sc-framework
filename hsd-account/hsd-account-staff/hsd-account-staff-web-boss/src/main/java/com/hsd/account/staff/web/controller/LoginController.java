@@ -68,7 +68,7 @@ public class LoginController extends BaseController {
             }
             SysAppDto sysAppDto = sysAppService.findDataById(new SysAppDto(){{setId(appId);}});
             if (sysAppDto == null){
-                return  Response.error("APP应用不存在!");
+                return  Response.error("应用系统不存在!");
             }
             OrgStaffDto orgStaffDto = roleSourceService.findStaffByAccount(account, 0);
             String pwdhex = MD5.pwdMd5Hex(password);
@@ -183,6 +183,8 @@ public class LoginController extends BaseController {
                 logDto.setAppId(orgStaffDto.getAppId());
 //            logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
                 logLoginService.saveOrUpdateData(logDto);
+
+                redisHelper.del("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppStaffId()+"");
             } catch (Exception e) {
             }
             try {

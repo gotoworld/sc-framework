@@ -1,9 +1,9 @@
-package com.hsd.account.staff.service.org;
+package com.hsd.account.actor.service.user;
 
-import com.hsd.account.staff.api.org.IOrgStaffAppService;
-import com.hsd.account.staff.dao.org.IOrgStaffAppDao;
-import com.hsd.account.staff.dto.org.OrgStaffAppDto;
-import com.hsd.account.staff.entity.org.OrgStaffApp;
+import com.hsd.account.actor.api.user.IUserAppService;
+import com.hsd.account.actor.dao.user.IUserAppDao;
+import com.hsd.account.actor.dto.user.UserAppDto;
+import com.hsd.account.actor.entity.user.UserApp;
 import com.hsd.framework.IdGenerator;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -18,27 +18,27 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @FeignService
 @Slf4j
-public class OrgStaffAppService extends BaseService implements IOrgStaffAppService {
+public class UserAppService extends BaseService implements IUserAppService {
     @Autowired
-    private IOrgStaffAppDao orgStaffAppDao;
-    @Autowired
-    private IdGenerator idGenerator;
-
+    private IUserAppDao userAppDao;
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response saveOrUpdateData(@RequestBody OrgStaffAppDto dto) {
+    public Response saveOrUpdateData(@RequestBody UserAppDto dto) {
         Response result = new Response(0, "success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
-            OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
+            UserApp entity = copyTo(dto, UserApp.class);
             //判断数据是否存在
-            if (orgStaffAppDao.isDataYN(entity) != 0) {
+            if (userAppDao.isDataYN(entity) != 0) {
                 //数据存在
+
             } else {
                 //新增
-                orgStaffAppDao.insert(entity);
+                userAppDao.insert(entity);
                 result.data = entity.getId();
             }
         } catch (Exception e) {
@@ -47,17 +47,18 @@ public class OrgStaffAppService extends BaseService implements IOrgStaffAppServi
         }
         return result;
     }
+
     @Override
-    public OrgStaffAppDto findDataByAppIdAndStaffId(@RequestBody OrgStaffAppDto dto) {
-        OrgStaffAppDto result = null;
+    public UserAppDto findDataByAppIdAndUserId(@RequestBody UserAppDto dto) {
+        UserAppDto result = null;
         try {
-            OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);
-            result = copyTo(orgStaffAppDao.findDataByAppIdAndStaffId(entity), OrgStaffAppDto.class);
+            UserApp entity = copyTo(dto, UserApp.class);
+            result = copyTo(userAppDao.findDataByAppIdAndUserId(entity), UserAppDto.class);
             if (result == null) {
                 entity.setId(idGenerator.nextId());
-                orgStaffAppDao.insert(entity);
+                userAppDao.insert(entity);
                 dto.setId(entity.getId());
-                result=dto;
+                result = dto;
             }
         } catch (Exception e) {
             log.error("信息查询异常!", e);
@@ -65,6 +66,5 @@ public class OrgStaffAppService extends BaseService implements IOrgStaffAppServi
         }
         return result;
     }
-
 
 }

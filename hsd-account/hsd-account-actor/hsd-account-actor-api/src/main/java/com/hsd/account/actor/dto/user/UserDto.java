@@ -17,7 +17,7 @@ import java.util.Date;
 public class UserDto extends BaseDto {
     public enum userType{
         USER(1,"会员"),CHANNEL(2,"渠道商");
-        private userType(Integer _code,String _name){
+        userType(Integer _code, String _name){
             this.code=_code;
             this.name=_name;
         }
@@ -60,6 +60,11 @@ public class UserDto extends BaseDto {
      private String tags;
     /**注册时间*/
      private Date dateCreated;
+    /**最后登录日期*/
+    private Date lastLogin;
+    /**登录次数*/
+    private Integer count;
+
 
     /**风险评估*/
     private String riskAssess;

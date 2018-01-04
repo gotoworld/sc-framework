@@ -122,4 +122,48 @@
         <include refid="list_where_sql"/>
         
     </select>
+
+    <!-- 根据用户id获取信息详情 -->
+    <select id="selectBindThirdparty" resultType="com.hsd.account.finance.entity.AccountBindThirdparty" parameterType="com.hsd.account.finance.entity.AccountBindThirdparty">
+        select
+        <include refid="Base_Column_List"/>
+        from account_bind_thirdparty t1
+        where
+        state != 2
+        AND app_user_id = #{appUserId}
+        <if test="accountId != null ">
+            AND account_id = #{accountId}
+        </if>
+        <if test="thirdpartyType!=null">,
+            AND thirdparty_type = #{thirdpartyType}
+        </if>
+        <if test="thirdpartyAccount!=null">
+            AND thirdparty_account = #{thirdpartyAccount}
+        </if>
+    </select>
+
+    <!-- 数据更新 -->
+    <update id="updateByAccountAndCard" parameterType="com.hsd.account.finance.entity.AccountBindThirdparty">
+        update account_bind_thirdparty set bi_update_ts=now()
+        <if test="appUserId!=null">,app_user_id = #{appUserId}</if>
+        <if test="accountId!=null">,account_id = #{accountId}</if>
+        <if test="realName!=null">,real_name = #{realName}</if>
+        <if test="cardNo!=null">,card_no = #{cardNo}</if>
+        <if test="cellphone!=null">,cellphone = #{cellphone}</if>
+        <if test="thirdpartyCurrency!=null">,thirdparty_currency = #{thirdpartyCurrency}</if>
+        <if test="thirdpartyType!=null">,thirdparty_type = #{thirdpartyType}</if>
+        <if test="thirdpartyName!=null">,thirdparty_name = #{thirdpartyName}</if>
+        <if test="thirdpartyBranch!=null">,thirdparty_branch = #{thirdpartyBranch}</if>
+        <if test="thirdpartyAccount!=null">,thirdparty_account = #{thirdpartyAccount}</if>
+        <if test="thirdpartyDateExpiry!=null">,thirdparty_date_expiry = #{thirdpartyDateExpiry}</if>
+        <if test="state!=null">,state = #{state}</if>
+        <if test="dateBind!=null">,date_bind = #{dateBind}</if>
+        <if test="dateSuccess!=null">,date_success = #{dateSuccess}</if>
+        <if test="dateUnbind!=null">,date_unbind = #{dateUnbind}</if>
+        <if test="memo!=null">,memo = #{memo}</if>
+        where
+        account_id = #{accountId}
+        AND thirdparty_account = #{thirdpartyAccount}
+        AND app_user_id = #{appUserId}
+    </update>
 </mapper>

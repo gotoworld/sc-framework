@@ -3,10 +3,10 @@ var basePath = "http://localhost/";
 // var basePath = "http://192.168.108.100:8080/";
 var apiPath = {
     account: {
-        staff: "http://192.168.108.100:28890/hsd-account-staff-web-boss",
-        channel: "http://192.168.108.100:28890/hsd-account-channel-web-boss",
-        actor: "http://192.168.108.100:28890/hsd-account-actor-web-boss",
-        finance: "http://192.168.108.100:28890/hsd-account-finance-web-boss"
+        staff: "http://192.168.108.100:28890/hsd-account-staff-web-boss",//-wxg
+        channel: "http://192.168.108.100:28890/hsd-account-channel-web-boss",//-wxg
+        actor: "http://192.168.108.100:28890/hsd-account-actor-web-boss",//-wxg
+        finance: "http://192.168.108.100:28890/hsd-account-finance-web-boss"//-wxg
     }
 };
 var site = {
@@ -16,7 +16,7 @@ var site = {
         , refreshToken: apiPath.account.staff + "/boss/account/staff/sign/refreshToken" //刷新token
         , updatePwd: apiPath.account.staff + "/boss/account/staff/org/orgStaff/update/pwd" //密码更新
     }
-    , sysApp: {//APP应用表
+    , sysApp: {//应用系统表
         view: basePath + "/html/account/staff/sys/sys_app"
         ,page: apiPath.account.staff + "/boss/account/staff/sys/sysApp/page/"       //分页
         ,recycle: apiPath.account.staff + "/boss/account/staff/sys/sysApp/recycle/"       //回收站

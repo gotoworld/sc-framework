@@ -85,6 +85,7 @@
 													<th>注册渠道</th>
 													<th>状态</th>
 													<th>客户类型</th>
+													<th>登录次数</th>
 													<th>注册时间</th>
 													<th style="width:320px;">操作</th>
                                     			</tr>
@@ -98,6 +99,7 @@
 													<td>{{item.registerChannel}}</td>
 													<td>{{stateEnum(item.state)}}</td>
 													<td>{{item.type==1?'会员':'渠道商'}}</td>
+													<td>{{item.count}}</td>
 													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
 														<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 /**
- * <p>APP应用表 业务处理接口类。
+ * <p>应用系统表 业务处理接口类。
  */
 @FeignClient(value = "${feign.name.account.staff}",configuration = FeignConfiguration.class)//, fallback = TestServiceHystrix.class)
 public interface ISysAppService {

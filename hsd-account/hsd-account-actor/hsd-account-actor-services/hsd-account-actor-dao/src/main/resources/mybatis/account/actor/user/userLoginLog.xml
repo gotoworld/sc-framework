@@ -10,6 +10,9 @@
         ,t1.ip_addr as "ipAddr"
         ,t1.device_mac as "deviceMac"
         ,t1.date_created as "dateCreated"
+        ,t1.app_user_id as "appUserId"
+        ,t1.app_id as "appId"
+        ,t1.app_name as "appName"
     </sql>
 
     <!-- 根据主键获取信息详情 -->
@@ -22,23 +25,29 @@
     </select>
 
     <!-- 新增单条数据 -->
-    <insert id="insert" parameterType="com.hsd.account.actor.entity.user.UserLoginLog" useGeneratedKeys="true" keyProperty="id"  >
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.user.UserLoginLog">
         insert into user_login_log (
-         
-            user_id 
+            id
+           ,user_id
            ,user_name 
            ,type 
            ,ip_addr 
            ,device_mac 
-           ,date_created 
+           ,date_created
+           ,app_user_id
+           ,app_id
+           ,app_name
         ) values (
-         
-            #{userId} 
+            #{id}
+           ,#{userId}
            ,#{userName} 
            ,#{type} 
            ,#{ipAddr} 
            ,#{deviceMac} 
            ,now()
+           ,#{appUserId}
+           ,#{appId}
+           ,#{appName}
         )
     </insert>
 
@@ -46,7 +55,15 @@
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
-        and t1.user_id = #{userId}
+        <if test="type!=null">
+            and t1.type=#{type}
+        </if>
+        <if test="appId!=null and appId!=''">
+            and t1.app_id=#{appId}
+        </if>
+        <if test="appName!=null and appName!=''">
+            and t1.app_name like concat('%',#{appName},'%')
+        </if>
         <if test="keyword!=null and keyword!=''">
             and t1.name like concat('%',#{keyword},'%')
         </if>
@@ -63,9 +80,9 @@
         select
         <include refid="Base_Column_List"/>
         from user_login_log t1
-        where 1=1
+        where t1.user_id = #{userId}
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
+        order by t1.id desc
     </select>
 
 </mapper>

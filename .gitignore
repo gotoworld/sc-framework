@@ -1,0 +1,68 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+"doc/~$\347\273\274\345\220\210\350\264\246\346\210\267-\345\274\200\345\217\221\350\256\241\345\210\222V0.1.xlsx"
+hsd-account/hsd-account-actor/hsd-account-actor-api/target/
+hsd-account/hsd-account-actor/hsd-account-actor-services/hsd-account-actor-dao/target/
+hsd-account/hsd-account-actor/hsd-account-actor-services/hsd-account-actor-server/target/
+hsd-account/hsd-account-actor/hsd-account-actor-web-boss/target/
+hsd-account/hsd-account-actor/hsd-account-actor-web-portal/target/
+hsd-account/hsd-account-channel/hsd-account-channel-services/hsd-account-channel-biz/target/
+hsd-account/hsd-account-channel/hsd-account-channel-services/hsd-account-channel-dao/target/classes/mybatis/account/channel/.gitignore
+hsd-account/hsd-account-channel/hsd-account-channel-services/hsd-account-channel-server/target/
+hsd-account/hsd-account-channel/hsd-account-channel-web-boss/target/
+hsd-account/hsd-account-channel/hsd-account-channel-web-portal/target/
+hsd-account/hsd-account-finance/hsd-account-finance-api/target/
+hsd-account/hsd-account-finance/hsd-account-finance-web-portal/target/
+hsd-account/hsd-account-staff/hsd-account-staff-api/target/
+hsd-account/hsd-account-staff/hsd-account-staff-services/hsd-account-staff-biz/target/
+hsd-account/hsd-account-staff/hsd-account-staff-services/hsd-account-staff-dao/target/
+hsd-account/hsd-account-staff/hsd-account-staff-services/hsd-account-staff-server/target/
+hsd-account/hsd-account-staff/hsd-account-staff-web-boss/target/
+hsd-common/hsd-common-util-excel/target/
+hsd-common/hsd-common-util-sms/target/
+hsd-framework-starter/hsd-framework-amqp/target/
+hsd-framework-starter/hsd-framework-api/target/
+hsd-framework-starter/hsd-framework-cache/target/
+hsd-framework-starter/hsd-framework-core/target/
+hsd-framework-starter/hsd-framework-rule/target/
+hsd-framework-starter/hsd-framework-server/target/
+hsd-framework-starter/hsd-framework-service/target/
+hsd-framework-starter/hsd-framework-web-restful/target/
+hsd-framework-starter/hsd-framework-web/target/
+hsd-servers/hsd-app-starter/hsd-service-server/target/
+hsd-servers/hsd-app-starter/hsd-web-boss-server/target/
+hsd-servers/hsd-app-starter/hsd-web-portal-server/target/
+hsd-servers/hsd-eycode-server/target/
+hsd-servers/hsd-server-starter/hsd-config-server/target/
+hsd-servers/hsd-server-starter/hsd-eureka-server/target/
+hsd-servers/hsd-server-starter/hsd-file-server/target/
+hsd-servers/hsd-server-starter/hsd-gateway-server/target/
+hsd-servers/hsd-server-starter/hsd-health-server/target/
+hsd-servers/hsd-server-starter/hsd-zipkin-server/target/
+hsd-util/hsd-util-sms/hsd-util-sms-api/target/
+hsd-util/hsd-util-sms/hsd-util-sms-services/hsd-util-sms-biz/target/
+hsd-util/hsd-util-sms/hsd-util-sms-services/hsd-util-sms-dao/target/
+hsd-util/hsd-util-sms/hsd-util-sms-services/hsd-util-sms-server/target/
+hsd-util/hsd-util-sms/hsd-util-sms-web-boss/target/
+hsd-util/hsd-util-sms/hsd-util-sms-web-portal/target/
+logs/
+/hsd-account/hsd-account-actor/hsd-account-actor.iml
+/hsd-common/hsd-common.iml
+/hsd-account/hsd-account.iml
+/hsd-account/hsd-account-finance/hsd-account-finance.iml
+/hsd-account/hsd-account-channel/hsd-account-channel.iml

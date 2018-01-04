@@ -133,8 +133,8 @@ feign:
     enabled: true
   name:
     account:
-      finance: hsd-account-finance-server
-      staff: hsd-account-staff-server
+      finance: hsd-account-finance-server #-wxg
+      staff: hsd-account-staff-server #-wxg
 
 logging:
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"

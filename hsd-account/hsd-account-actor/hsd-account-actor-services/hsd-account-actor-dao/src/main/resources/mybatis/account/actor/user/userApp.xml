@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsd.account.actor.dao.user.IUserAppDao">
+
+    <!-- 新增单条数据 -->
+    <insert id="insert" parameterType="com.hsd.account.actor.entity.user.UserApp"  >
+        insert into user_app (
+            id 
+           ,user_id 
+           ,app_id 
+           ,date_created 
+           ,bi_update_ts 
+        ) values (
+            #{id} 
+           ,#{userId} 
+           ,#{appId} 
+           ,now()
+           ,now()
+        )
+    </insert>
+
+    <select id="findDataByAppIdAndUserId" resultType="com.hsd.account.actor.entity.user.UserApp" parameterType="com.hsd.account.actor.entity.user.UserApp">
+        select
+         t1.id as "id"
+        ,t1.user_id as "userId"
+        ,t1.app_id as "appId"
+        from user_app t1
+        where  t1.user_id = #{userId}
+        AND  t1.app_id =#{appId}
+    </select>
+</mapper>

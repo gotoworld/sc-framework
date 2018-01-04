@@ -5,6 +5,7 @@ import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,4 +44,10 @@ public interface IAccountService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataById")
     AccountDto findDataById(AccountDto dto) throws Exception;
+
+    /**
+     * <p>信息详情。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByUserId")
+    AccountDto findDataByUserId(AccountDto dto) throws Exception;
 }

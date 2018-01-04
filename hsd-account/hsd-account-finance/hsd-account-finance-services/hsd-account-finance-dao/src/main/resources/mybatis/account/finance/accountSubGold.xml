@@ -122,4 +122,17 @@
         <include refid="list_where_sql"/>
         order by t1.id desc
     </select>
+
+    <!-- 根据用户id获取信息详情 -->
+    <select id="selectByUserId" resultType="com.hsd.account.finance.entity.AccountSubGold" parameterType="com.hsd.account.finance.entity.AccountSubGold">
+        select
+        <include refid="Base_Column_List"/>
+        from account_sub_gold t1
+        where
+        state != 2
+        AND t1.app_user_id = #{appUserId}
+        <if test="type != null ">
+            AND type = #{type}
+        </if>
+    </select>
 </mapper>

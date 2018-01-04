@@ -40,7 +40,7 @@ spring:
         url: http://${spring.boot.admin.url}/turbine.stream
   datasource:
     driverClass: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.108.101:3306/hsd_test?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
+    url: jdbc:mysql://192.168.108.101:3306/hsd_account_actor_test?serverTimezone=GMT%2B8&noAccessToProcedureBodies=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf8
     username: root
     #password: AES:Jdd7GJIx8oXFqMvDfLqEVg==
 #    # 下面为连接池的补充设置，应用到上面所有数据源中

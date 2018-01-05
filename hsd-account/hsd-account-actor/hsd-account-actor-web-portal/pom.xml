@@ -20,13 +20,18 @@
             <version>${hsd.framework.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.hsd.account</groupId>
-            <artifactId>hsd-account-actor-api</artifactId>
+            <groupId>com.hsd.common</groupId>
+            <artifactId>hsd-common-util-sms</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.hsd.common</groupId>
-            <artifactId>hsd-common-util-sms</artifactId>
+            <groupId>com.hsd.account</groupId>
+            <artifactId>hsd-account-staff-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hsd.account</groupId>
+            <artifactId>hsd-account-actor-api</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

@@ -6,7 +6,7 @@ var apiPath = {
         actor: "http://192.168.108.100:28890/hsd-account-actor-web-portal"
     }
     ,msg:{
-        sms: "http://192.168.108.100:28890/hsd-util-sms-web-portal"
+        sms: "http://192.168.108.100:28890/hsd-msg-sms-web-portal"
     }
 };
 var site = {

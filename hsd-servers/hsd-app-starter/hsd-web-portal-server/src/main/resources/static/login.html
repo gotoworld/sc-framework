@@ -56,7 +56,9 @@
                         <input type="password"
                                onkeydown="$('#passwordXX').val($.md5($(this).val()));"
                                onchange="$('#passwordXX').val($.md5($(this).val()));"
+                               onblur="$('#passwordXX').val($.md5($(this).val()));"
                                class="form-control pword m-b" placeholder="密码"  required=""/>
+                        <input type="hidden" value="portal" name="appId"/>
                         <a href="/html/account/actor/user/findpwd.html">忘记密码了？</a>
                         <button type="submit" class="btn btn-success btn-block">登录</button>
                     </form>

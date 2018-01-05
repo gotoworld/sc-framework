@@ -39,4 +39,8 @@ public class User extends BaseEntity {
      private String tags;
      /**注册时间*/
      private Date dateCreated;
+     /**最后登录日期*/
+     private Date lastLogin;
+     /**登录次数*/
+     private Integer count;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>APP应用表 数据库处理接口类。
+ * <p>应用系统表 数据库处理接口类。
  */
 @Mapper
 public interface ISysAppDao extends IBaseDao {

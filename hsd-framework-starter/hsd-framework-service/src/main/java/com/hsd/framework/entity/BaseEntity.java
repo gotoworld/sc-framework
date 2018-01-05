@@ -16,8 +16,12 @@ public class BaseEntity extends AbstractEntity implements IEntity {
     private String account;
     /**  建立者ID */
     private Long createId;
+    /** 用户id */
+    private Long userId;
     /** app用户id */
     private Long appUserId;
+    /** 员工id */
+    private Long staffId;
     /** app员工id */
     private Long appStaffId;
     /** appId */

@@ -18,7 +18,7 @@ public interface IOrgStaffAppService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     Response saveOrUpdateData(OrgStaffAppDto dto) throws Exception;
 
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByAppIdAndStaffId")
-    OrgStaffAppDto findDataByAppIdAndStaffId(OrgStaffAppDto dto)throws Exception;
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/getSaveDataByAppIdAndStaffId")
+    OrgStaffAppDto getSaveDataByAppIdAndStaffId(OrgStaffAppDto dto)throws Exception;
 
 }

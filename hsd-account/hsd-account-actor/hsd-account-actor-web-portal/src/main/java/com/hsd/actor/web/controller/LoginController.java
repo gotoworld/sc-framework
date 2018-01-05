@@ -81,7 +81,7 @@ public class LoginController extends BaseController {
 
 
             //查询APP员工表
-            UserAppDto userAppDto = userAppService.findDataByAppIdAndUserId(new UserAppDto(){{setUserId(userDto.getId());setAppId(sysAppDto.getId());}});
+            UserAppDto userAppDto = userAppService.getSaveDataByAppIdAndUserId(new UserAppDto(){{setUserId(userDto.getId());setAppId(sysAppDto.getId());}});
             userDto.setAppUserId(userAppDto.getId());
             userDto.setAppId(sysAppDto.getId());
             userDto.setAppName(sysAppDto.getName());

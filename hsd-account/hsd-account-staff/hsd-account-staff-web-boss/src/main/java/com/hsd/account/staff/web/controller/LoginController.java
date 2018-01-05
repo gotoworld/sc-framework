@@ -66,14 +66,14 @@ public class LoginController extends BaseController {
             if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                 return Response.error("员工名或密码不能为空!");
             }
-            SysAppDto sysAppDto = sysAppService.findDataById(new SysAppDto(){{setId(appId);}});
-            if (sysAppDto == null){
-                return  Response.error("APP应用不存在!");
-            }
             OrgStaffDto orgStaffDto = roleSourceService.findStaffByAccount(account, 0);
             String pwdhex = MD5.pwdMd5Hex(password);
             if (orgStaffDto==null || !(account.equals(orgStaffDto.getAccount()) && pwdhex.equals(orgStaffDto.getPwd()))) {
                 return Response.error("登录失败,员工名或密码错误!");
+            }
+            SysAppDto sysAppDto = sysAppService.findDataById(new SysAppDto(){{setId(appId);}});
+            if (sysAppDto == null){
+                return  Response.error("应用系统不存在!");
             }
             roleSourceService.lastLogin(orgStaffDto);
 
@@ -183,6 +183,8 @@ public class LoginController extends BaseController {
                 logDto.setAppId(orgStaffDto.getAppId());
 //            logDto.setDeviceMac(IpUtil.getMACAddress(logDto.getIpAddr()));//MAC地址
                 logLoginService.saveOrUpdateData(logDto);
+
+                redisHelper.del("u:"+orgStaffDto.getId()+":"+orgStaffDto.getAppStaffId()+"");
             } catch (Exception e) {
             }
             try {

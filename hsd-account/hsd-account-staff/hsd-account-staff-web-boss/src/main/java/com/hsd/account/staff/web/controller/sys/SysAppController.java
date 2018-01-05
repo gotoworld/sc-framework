@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "APP应用表")
+@Api(description = "应用系统表")
 @RestController
 @Slf4j
 public class SysAppController extends BaseController {
@@ -117,7 +117,7 @@ public class SysAppController extends BaseController {
      */
     @RequiresPermissions("sysApp:phydel")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "phydel/{id}")
-    @ALogOperation(type = "删除", desc = "APP应用表-物理删除")
+    @ALogOperation(type = "删除", desc = "应用系统表-物理删除")
     @ApiOperation(value = "物理删除")
     public Response phydel(@PathVariable("id") String id) {
         log.info("SysAppController phydel.........");
@@ -138,7 +138,7 @@ public class SysAppController extends BaseController {
      */
     @RequiresPermissions("sysApp:del")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "del/{id}")
-    @ALogOperation(type = "删除", desc = "APP应用表-逻辑删除")
+    @ALogOperation(type = "删除", desc = "应用系统表-逻辑删除")
     @ApiOperation(value = "逻辑删除")
     public Response del(@PathVariable("id") String id) {
         log.info("SysAppController del.........");
@@ -159,7 +159,7 @@ public class SysAppController extends BaseController {
      */
     @RequiresPermissions("sysApp:recovery")
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"recovery/{id}")
-    @ALogOperation(type = "恢复", desc = "APP应用表")
+    @ALogOperation(type = "恢复", desc = "应用系统表")
     @ApiOperation(value = "恢复")
     public Response recovery(@PathVariable("id") String id) {
         log.info("SysAppController recovery.........");
@@ -177,7 +177,7 @@ public class SysAppController extends BaseController {
     @RequiresPermissions(value = {"sysApp:add", "sysApp:edit"}, logical = Logical.OR)
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT}, value = acPrefix + "save")
     @RfAccount2Bean
-    @ALogOperation(type = "修改", desc = "APP应用表")
+    @ALogOperation(type = "修改", desc = "应用系统表")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute SysAppDto dto, BindingResult bindingResult) {
         log.info("SysAppController save.........");

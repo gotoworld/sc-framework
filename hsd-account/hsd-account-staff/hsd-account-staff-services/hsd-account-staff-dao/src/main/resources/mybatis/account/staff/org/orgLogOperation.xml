@@ -79,7 +79,7 @@
         from org_log_operation t1
         where 1=1
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
+        order by t1.id desc
     </select>
 
 </mapper>

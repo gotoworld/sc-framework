@@ -13,11 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -78,6 +76,27 @@ public class AccountController extends BaseController{
                 result = accountService.saveOrUpdateData(dto);
                 request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
             }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * <p> 开户信息保存
+     */
+    @RequiresPermissions(value = {"account:updateState"}, logical = Logical.OR)
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.PUT},value = acPrefix + "updateState/{userId}")
+    @ApiOperation(value = "状态变更")
+    public Response updateState(@PathVariable("userId") Long userId, @RequestParam Long accountId, @RequestParam Integer state) {
+        log.info("AccountController save.........");
+        Response result = new Response("success");
+        try {
+            if(accountId == null || state == null){
+                throw new RuntimeException("参数异常");
+            }
+            accountService.updateState(userId,accountId,state);
+
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

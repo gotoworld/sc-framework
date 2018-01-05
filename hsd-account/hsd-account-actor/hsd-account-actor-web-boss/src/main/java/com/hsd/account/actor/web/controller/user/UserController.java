@@ -116,7 +116,7 @@ public class UserController extends BaseController {
     @ALogOperation(type = "修改", desc = "客户表-设置标签")
     @ApiOperation(value = "设置标签")
     public Response setTags(@ModelAttribute UserDto dto) {
-        log.info("TagController setTags.........");
+        log.info("UserController setTags.........");
         Response result = new Response();
         try {
             if(dto==null) throw new RuntimeException("参数异常");
@@ -131,7 +131,7 @@ public class UserController extends BaseController {
     @ALogOperation(type = "修改", desc = "客户表-设置黑名单")
     @ApiOperation(value = "设置黑名单")
     public Response setBlacklist(@PathVariable("id") Long id) {
-        log.info("TagController setBlacklist.........");
+        log.info("UserController setBlacklist.........");
         Response result = new Response();
         try {
             if(id==null) throw new RuntimeException("参数异常!");
@@ -148,34 +148,12 @@ public class UserController extends BaseController {
     @ALogOperation(type = "修改", desc = "客户表-取消黑名单")
     @ApiOperation(value = "取消黑名单")
     public Response delBlacklist(@PathVariable("id") Long id) {
-        log.info("TagController delBlacklist.........");
+        log.info("UserController delBlacklist.........");
         Response result = new Response();
         try {
             if(id==null) throw new RuntimeException("参数异常!");
             UserDto dto = new UserDto(){{setId(id);}};
             result.data = userService.delBlacklist(dto);
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
-
-    /** 获取app用户id */
-    private Long getAppUserId(String appId,Long userId){
-        Long appUserId=null;
-
-        return appUserId;
-    }
-
-    @RequiresPermissions("user:account:snapshot")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "account/snapshot")
-    @ApiOperation(value = "客户-账户快照")
-    public Response accountSnapshot(@ModelAttribute UserDto dto) {
-        log.info("TagController accountSnapshot.........");
-        Response result = new Response();
-        try {
-            if(dto==null) throw new RuntimeException("参数异常");
-            result.data = userService.setTags(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

@@ -6,7 +6,6 @@ import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "支付账户与三方账户绑定")
 @RestController
 @Slf4j
-public class AccountBindThirdpartyController extends BaseController {
+public class AccountBindThirdpartyController extends FinanceBaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IAccountBindThirdpartyService accountBindThirdpartyService;
@@ -34,6 +33,7 @@ public class AccountBindThirdpartyController extends BaseController {
         try {
             if (dto == null) dto = new AccountBindThirdpartyDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
+            dto.setAppUserId(getAppUserId(dto.getAppId(),dto.getUserId()));
             result.data = PageUtil.copy(accountBindThirdpartyService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -50,10 +50,7 @@ public class AccountBindThirdpartyController extends BaseController {
         log.info("AccountBindThirdpartyController info.........");
         Response result = new Response();
         try {
-            AccountBindThirdpartyDto dto = new AccountBindThirdpartyDto(){{
-                setId(id);
-            }};
-            result.data = accountBindThirdpartyService.findDataById(dto);
+            result.data = accountBindThirdpartyService.findDataById(new AccountBindThirdpartyDto(){{setId(id);}});
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

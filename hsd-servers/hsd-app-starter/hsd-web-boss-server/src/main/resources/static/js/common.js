@@ -5,7 +5,7 @@ var apiPath = {
     account: {
         staff: "http://192.168.108.100:28890/hsd-account-staff-web-boss",//-wxg
         channel: "http://192.168.108.100:28890/hsd-account-channel-web-boss",//-wxg
-        actor: "http://192.168.108.100:28890/hsd-account-actor-web-boss",//-wxg
+        actor: "http://192.168.108.100:28890/hsd-account-actor-web-boss",//
         finance: "http://192.168.108.100:28890/hsd-account-finance-web-boss"//-wxg
     }
 };
@@ -304,7 +304,11 @@ $.ajaxSetup({
 });
 $(document).ajaxComplete(function (event, xhr, settings) {
     if (xhr && xhr.responseText) {
-        var result = JSON.parse(xhr.responseText);
+        var result ={};
+        try {
+            result = JSON.parse(xhr.responseText);
+        } catch (e) {
+        }
         //console.info("result=="+JSON.stringify(result))
         if (result.code == 403||result.code == 110) {//授权验证失败!
             //alert('授权验证失败,请重新登陆!');

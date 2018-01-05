@@ -39,28 +39,33 @@
 						<div class="tab-content">
 							<div id="tab-app-{{appIndex}}" class="tab-pane {{appIndex==0?'active':''}}"  ng-repeat="app in staffApps" ng-init="appIndex=$index">
 								<div class="panel-body">
-									<div class="clients-list">
+									<div class="clients-list" ng-init="tagName=['','','','','','','']">
 										<ul class="nav nav-tabs" style="height: 39px;background-color:#eeeeee">
-											<li class="active"><a data-toggle="tab" href="#tab-acc-{{appIndex}}-1" aria-expanded="true">账户快照</a></li>
-											<li class=""><a data-toggle="tab" href="#tab-acc-{{appIndex}}-2" aria-expanded="false">黄金账户</a></li>
-											<li class=""><a data-toggle="tab" href="#tab-acc-{{appIndex}}-3" aria-expanded="false">网贷账户</a></li>
-											<li class=""><a data-toggle="tab" href="#tab-acc-{{appIndex}}-4" aria-expanded="false">支付账户</a></li>
-											<li class=""><a data-toggle="tab" href="#tab-acc-{{appIndex}}-5" aria-expanded="false">支付账户</a></li>
+											<li class="active"  ng-show='staff.hasPermission("snapshot:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-snapshot" aria-expanded="true">账户快照</a></li>
+											<li class="" ng-show='staff.hasPermission("account:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-account" aria-expanded="false">支付账户</a></li>
+											<li class="" ng-show='staff.hasPermission("accountSubGold:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-accountSubGold" aria-expanded="false">黄金账户</a></li>
+											<li class="" ng-show='staff.hasPermission("accountSubLoan:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-accountSubLoan" aria-expanded="false">网贷账户</a></li>
+											<li class="" ng-show='staff.hasPermission("accountBindThirdparty:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-accountBindThirdparty" aria-expanded="false">三方账户</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLog:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-accountLog" aria-expanded="false"> 交易记录</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLogFreeze:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-accountLogFreeze" aria-expanded="false">冻结记录</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLogRecharge:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-accountLogRecharge" aria-expanded="false">充值记录</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLogWithdrawal:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-accountLogWithdrawal" aria-expanded="false">提现流水</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLogOperational:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-accountLogOperational" aria-expanded="false"> 操作日志</a></li>
 										</ul>
 										<div class="tab-content">
-											<div id="tab-acc-{{appIndex}}-1" class="tab-pane active">
+											<div id="tab-acc-{{appIndex}}-{{tagName[appIndex]}}" class="tab-pane active" ng-init="tagName[appIndex]='snapshot'">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_1_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(1,appIndex,app.id,1)">
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_1_{{appIndex}}_{{app.id}}" value="{{appNodeArr(1,appIndex,app.id).data.pageIndex?appNodeArr(1,appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -93,8 +98,8 @@
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(1,appIndex,app.id).data.data && appNodeArr(1,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(1,appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(1,appIndex,app.id).data.pageIndex-1)*appNodeArr(1,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
 																	<td>{{item.userName}}</td>
 																	<td>{{item.type==0?'登录':'登出'}}</td>
 																	<td>{{item.ipAddr}}</td>
@@ -103,31 +108,31 @@
 																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(1,appIndex,app.id).data.data==null || appNodeArr(1,appIndex,app.id).data.data.length==0">
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
 																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(1,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_1_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-2" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagName[appIndex]}}" class="tab-pane " ng-init="tagName[{{appIndex}}]='account'">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_2_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(2,appIndex,app.id,1)">
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_2_{{appIndex}}_{{app.id}}" value="{{appNodeArr(2,appIndex,app.id).data.pageIndex?appNodeArr(2,appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -160,8 +165,8 @@
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(2,appIndex,app.id).data.data && appNodeArr(2,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(2,appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(2,appIndex,app.id).data.pageIndex-1)*appNodeArr(2,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
 																	<td>{{item.userName}}</td>
 																	<td>{{item.type==0?'登录':'登出'}}</td>
 																	<td>{{item.ipAddr}}</td>
@@ -170,31 +175,31 @@
 																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(2,appIndex,app.id).data.data==null || appNodeArr(2,appIndex,app.id).data.data.length==0">
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
 																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(2,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_2_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-3" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagName}}" class="tab-pane " ng-init="tagName='accountSubGold'">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_3_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(3,appIndex,app.id,1)">
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_3_{{appIndex}}_{{app.id}}" value="{{appNodeArr(3,appIndex,app.id).data.pageIndex?appNodeArr(3,appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -227,8 +232,8 @@
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(3,appIndex,app.id).data.data && appNodeArr(3,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(3,appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(3,appIndex,app.id).data.pageIndex-1)*appNodeArr(3,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
 																	<td>{{item.userName}}</td>
 																	<td>{{item.type==0?'登录':'登出'}}</td>
 																	<td>{{item.ipAddr}}</td>
@@ -237,31 +242,31 @@
 																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(3,appIndex,app.id).data.data==null || appNodeArr(3,appIndex,app.id).data.data.length==0">
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
 																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(3,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_3_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-4" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagName}}" class="tab-pane " ng-init="tagName='accountSubLoan'">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_4_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(4,appIndex,app.id,1)">
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_4_{{appIndex}}_{{app.id}}" value="{{appNodeArr(4,appIndex,app.id).data.pageIndex?appNodeArr(4,appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -294,8 +299,8 @@
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(4,appIndex,app.id).data.data && appNodeArr(4,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(4,appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(4,appIndex,app.id).data.pageIndex-1)*appNodeArr(4,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
 																	<td>{{item.userName}}</td>
 																	<td>{{item.type==0?'登录':'登出'}}</td>
 																	<td>{{item.ipAddr}}</td>
@@ -304,31 +309,31 @@
 																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(4,appIndex,app.id).data.data==null || appNodeArr(4,appIndex,app.id).data.data.length==0">
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
 																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(4,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_4_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-5" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagName}}" class="tab-pane " ng-init="tagName='accountBindThirdparty'">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_5_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(5,appIndex,app.id,1)">
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_5_{{appIndex}}_{{app.id}}" value="{{appNodeArr(5,appIndex,app.id).data.pageIndex?appNodeArr(5,appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -361,8 +366,8 @@
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(5,appIndex,app.id).data.data && appNodeArr(5,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(5,appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(5,appIndex,app.id).data.pageIndex-1)*appNodeArr(5,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
 																	<td>{{item.userName}}</td>
 																	<td>{{item.type==0?'登录':'登出'}}</td>
 																	<td>{{item.ipAddr}}</td>
@@ -371,14 +376,349 @@
 																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(5,appIndex,app.id).data.data==null || appNodeArr(5,appIndex,app.id).data.data.length==0">
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
 																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(5,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_5_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{appIndex}}-{{tagName}}" class="tab-pane " ng-init="tagName='accountLog'">
+												<div class="float-e-margins">
+													<div class="">
+														<table class="table">
+															<tr>
+																<td>
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
+																		  role="form" class="form-inline"
+																		  method="post"  accept-charset="UTF-8"
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
+																		<input type="hidden" name="userId" ng-value="userId">
+																		<input type="hidden" name="appId" ng-value="app.id">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
+																		<div class="form-group data_5" >
+																			<label class="font-noraml">创建时间</label>
+																			<div class="input-daterange input-group">
+																				<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+																				<span class="input-group-addon">到</span>
+																				<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+																			</div>
+																		</div>
+																		<div class="input-group">
+																			<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control">
+																			<span class="input-group-btn">
+																				<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+																				<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+																			</span>
+																		</div>
+																	</form>
+																</td>
+															</tr>
+														</table>
+														<div class="table-responsive table-scrollable">
+															<table class="table table-bordered table-striped  table-hover">
+																<thead>
+																<tr>
+																	<th style="width:20px;">#</th>
+																	<th>名称</th>
+																	<th>类型</th>
+																	<th>IP地址</th>
+																	<th>创建时间</th>
+																	<th>操作</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																	<td>{{item.userName}}</td>
+																	<td>{{item.type==0?'登录':'登出'}}</td>
+																	<td>{{item.ipAddr}}</td>
+																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>
+																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																	</td>
+																</tr>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
+																	<td colspan="6">
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{appIndex}}-{{tagName}}" class="tab-pane " ng-init="tagName='accountLogFreeze'">
+												<div class="float-e-margins">
+													<div class="">
+														<table class="table">
+															<tr>
+																<td>
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
+																		  role="form" class="form-inline"
+																		  method="post"  accept-charset="UTF-8"
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
+																		<input type="hidden" name="userId" ng-value="userId">
+																		<input type="hidden" name="appId" ng-value="app.id">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
+																		<div class="form-group data_5" >
+																			<label class="font-noraml">创建时间</label>
+																			<div class="input-daterange input-group">
+																				<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+																				<span class="input-group-addon">到</span>
+																				<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+																			</div>
+																		</div>
+																		<div class="input-group">
+																			<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control">
+																			<span class="input-group-btn">
+																				<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+																				<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+																			</span>
+																		</div>
+																	</form>
+																</td>
+															</tr>
+														</table>
+														<div class="table-responsive table-scrollable">
+															<table class="table table-bordered table-striped  table-hover">
+																<thead>
+																<tr>
+																	<th style="width:20px;">#</th>
+																	<th>名称</th>
+																	<th>类型</th>
+																	<th>IP地址</th>
+																	<th>创建时间</th>
+																	<th>操作</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																	<td>{{item.userName}}</td>
+																	<td>{{item.type==0?'登录':'登出'}}</td>
+																	<td>{{item.ipAddr}}</td>
+																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>
+																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																	</td>
+																</tr>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
+																	<td colspan="6">
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{appIndex}}-{{tagName}}" class="tab-pane " ng-init="tagName='accountLogRecharge'">
+												<div class="float-e-margins">
+													<div class="">
+														<table class="table">
+															<tr>
+																<td>
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
+																		  role="form" class="form-inline"
+																		  method="post"  accept-charset="UTF-8"
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
+																		<input type="hidden" name="userId" ng-value="userId">
+																		<input type="hidden" name="appId" ng-value="app.id">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
+																		<div class="form-group data_5" >
+																			<label class="font-noraml">创建时间</label>
+																			<div class="input-daterange input-group">
+																				<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+																				<span class="input-group-addon">到</span>
+																				<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+																			</div>
+																		</div>
+																		<div class="input-group">
+																			<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control">
+																			<span class="input-group-btn">
+																				<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+																				<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+																			</span>
+																		</div>
+																	</form>
+																</td>
+															</tr>
+														</table>
+														<div class="table-responsive table-scrollable">
+															<table class="table table-bordered table-striped  table-hover">
+																<thead>
+																<tr>
+																	<th style="width:20px;">#</th>
+																	<th>名称</th>
+																	<th>类型</th>
+																	<th>IP地址</th>
+																	<th>创建时间</th>
+																	<th>操作</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																	<td>{{item.userName}}</td>
+																	<td>{{item.type==0?'登录':'登出'}}</td>
+																	<td>{{item.ipAddr}}</td>
+																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>
+																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																	</td>
+																</tr>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
+																	<td colspan="6">
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{appIndex}}-{{tagName}}" class="tab-pane " ng-init="tagName='accountLogWithdrawal'">
+												<div class="float-e-margins">
+													<div class="">
+														<table class="table">
+															<tr>
+																<td>
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
+																		  role="form" class="form-inline"
+																		  method="post"  accept-charset="UTF-8"
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
+																		<input type="hidden" name="userId" ng-value="userId">
+																		<input type="hidden" name="appId" ng-value="app.id">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
+																		<div class="form-group data_5" >
+																			<label class="font-noraml">创建时间</label>
+																			<div class="input-daterange input-group">
+																				<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+																				<span class="input-group-addon">到</span>
+																				<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+																			</div>
+																		</div>
+																		<div class="input-group">
+																			<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control">
+																			<span class="input-group-btn">
+																				<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+																				<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+																			</span>
+																		</div>
+																	</form>
+																</td>
+															</tr>
+														</table>
+														<div class="table-responsive table-scrollable">
+															<table class="table table-bordered table-striped  table-hover">
+																<thead>
+																<tr>
+																	<th style="width:20px;">#</th>
+																	<th>名称</th>
+																	<th>类型</th>
+																	<th>IP地址</th>
+																	<th>创建时间</th>
+																	<th>操作</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																	<td>{{item.userName}}</td>
+																	<td>{{item.type==0?'登录':'登出'}}</td>
+																	<td>{{item.ipAddr}}</td>
+																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>
+																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																	</td>
+																</tr>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
+																	<td colspan="6">
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="tab-acc-{{appIndex}}-{{tagName}}" class="tab-pane " ng-init="tagName='accountLogOperational'">
+												<div class="float-e-margins">
+													<div class="">
+														<table class="table">
+															<tr>
+																<td>
+																	<form id="info_search_form_{{tagName}}_{{appIndex}}_{{app.id}}"
+																		  role="form" class="form-inline"
+																		  method="post"  accept-charset="UTF-8"
+																		  ng-submit="page(tagName,appIndex,app.id,1)">
+																		<input type="hidden" name="userId" ng-value="userId">
+																		<input type="hidden" name="appId" ng-value="app.id">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName,appIndex,app.id).data.pageIndex?appNodeArr(tagName,appIndex,app.id).data.pageIndex:1}}">
+																		<div class="form-group data_5" >
+																			<label class="font-noraml">创建时间</label>
+																			<div class="input-daterange input-group">
+																				<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
+																				<span class="input-group-addon">到</span>
+																				<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
+																			</div>
+																		</div>
+																		<div class="input-group">
+																			<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control">
+																			<span class="input-group-btn">
+																				<button type="submit" class="btn btn-sm btn-primary">搜索</button>
+																				<button type="reset" class="btn btn-sm btn-dafault">重置</button>
+																			</span>
+																		</div>
+																	</form>
+																</td>
+															</tr>
+														</table>
+														<div class="table-responsive table-scrollable">
+															<table class="table table-bordered table-striped  table-hover">
+																<thead>
+																<tr>
+																	<th style="width:20px;">#</th>
+																	<th>名称</th>
+																	<th>类型</th>
+																	<th>IP地址</th>
+																	<th>创建时间</th>
+																	<th>操作</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data && appNodeArr(tagName,appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName,appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagName,appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName,appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																	<td>{{item.userName}}</td>
+																	<td>{{item.type==0?'登录':'登出'}}</td>
+																	<td>{{item.ipAddr}}</td>
+																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>
+																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																	</td>
+																</tr>
+																<tr ng-if="appNodeArr(tagName,appIndex,app.id).data.data==null || appNodeArr(tagName,appIndex,app.id).data.data.length==0">
+																	<td colspan="6">
+																		<div class="alert"><strong>{{appNodeArr(tagName,appIndex,app.id).message||'暂无数据'}}</strong></div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+															<div class="b_page" id="tagPages_{{tagName}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
@@ -436,23 +776,23 @@
             sessionStorage.setItem(site.user.info,id);
             openMyBoxLayer(title,site.user.view+'_app_account_info_snapshot.html');
         };
-        $scope.page = function (tagIndex,ngIndex,appId,pageIndex) {
-            loadPage(tagIndex,ngIndex,appId,pageIndex);
-        }
-        $scope.appNodeArr = function (tagIndex,ngIndex,appId) {
-            return $data.appArr['app_'+tagIndex+'_'+ngIndex+'_'+appId];
+        $scope.page = function (tagName,ngIndex,appId,pageIndex) {
+            loadPage(tagName,ngIndex,appId,pageIndex);
+        };
+        $scope.appNodeArr = function (tagName,ngIndex,appId) {
+            return $data.appArr['app_'+tagName+'_'+ngIndex+'_'+appId];
         }
     });
 
-    var loadPage = function (tagIndex,ngIndex,appId,pageIndex) {
+    var loadPage = function (tagName,ngIndex,appId,pageIndex) {
         if(pageIndex){
-            $('#pageNumA_'+tagIndex+'_'+ngIndex+'_'+appId).val(pageIndex);
+            $('#pageNumA_'+tagName+'_'+ngIndex+'_'+appId).val(pageIndex);
         }else{
-            pageIndex=$('#pageNumA_'+tagIndex+'_'+ngIndex+'_'+appId).val();
+            pageIndex=$('#pageNumA_'+tagName+'_'+ngIndex+'_'+appId).val();
         }
-        $.post( site.userLoginLog.page+pageIndex,$('#info_search_form_'+tagIndex+'_'+ngIndex+'_'+appId).serialize(), function (result) {
-            $data.appArr['app_'+tagIndex+'_'+ngIndex+'_'+appId]=result;
-            $('#tagPages_'+tagIndex+'_'+ngIndex+'_'+appId).html($ngCompile(tag.page(result.data,'page',tagIndex+','+ngIndex+','+appId))($data));
+        $.post( site.userLoginLog.page+pageIndex,$('#info_search_form_'+tagName+'_'+ngIndex+'_'+appId).serialize(), function (result) {
+            $data.appArr['app_'+tagName+'_'+ngIndex+'_'+appId]=result;
+            $('#tagPages_'+tagName+'_'+ngIndex+'_'+appId).html($ngCompile(tag.page(result.data,'page',tagName+','+ngIndex+','+appId))($data));
             if(!$data.$$phase) $data.$apply();
         }, 'json');
     }

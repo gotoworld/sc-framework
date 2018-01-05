@@ -37,7 +37,6 @@ public class UserSnapshotController extends BaseController {
             UserSnapshotDto dto = new UserSnapshotDto();
             if (userId!=null) {
                 dto.setUserId(userId);
-
                 result.data = userSnapshotService.findDataById(dto);
             }
         } catch (Exception e) {

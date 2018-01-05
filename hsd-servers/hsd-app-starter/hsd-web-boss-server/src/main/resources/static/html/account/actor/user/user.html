@@ -82,10 +82,10 @@
 													<th>登录名</th>
 													<th>昵称</th>
 													<th>性别</th>
-													<th>注册渠道</th>
 													<th>状态</th>
-													<th>客户类型</th>
-													<th>注册时间</th>
+													<th>登录次数</th>
+                                                    <th>最后登录</th>
+                                                    <th>注册时间</th>
 													<th style="width:320px;">操作</th>
                                     			</tr>
                                     		</thead>
@@ -95,10 +95,10 @@
 													<td>{{item.account}}</td>
 													<td>{{item.name}}</td>
 													<td>{{genderEnum(item.gender)}}</td>
-													<td>{{item.registerChannel}}</td>
-													<td>{{stateEnum(item.state)}}</td>
-													<td>{{item.type==1?'会员':'渠道商'}}</td>
-													<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+													<td ng-bind-html="stateEnum(item.state)"></td>
+													<td>{{item.count}}</td>
+                                                    <td>{{item.lastLogin | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                                    <td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 													<td>
 														<a href="javascript:" ng-show='staff.hasPermission("user:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 														<a href="javascript:" ng-show='staff.hasPermission("user:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
@@ -228,9 +228,9 @@
 		$scope.stateEnum=function(key){
             var val="其它";
 			switch (key){
-				case 1:val="启用";break;
-				case 2:val="禁用";break;
-				case 3:val="黑名单";break;
+				case 1:val="<label class='label label-info'>启用</label>";break;
+				case 2:val="<label class='label label-warning'>禁用</label>";break;
+				case 3:val="<label class='label label-danger'>黑名单</label>";break;
 			}
 			return val;
 		};

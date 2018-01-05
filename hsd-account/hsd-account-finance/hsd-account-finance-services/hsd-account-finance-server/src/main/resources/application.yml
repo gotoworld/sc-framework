@@ -133,7 +133,8 @@ feign:
   name:
     account:
       finance: ${spring.application.name}
-      staff: hsd-account-actor-server #-wxg
+      staff: hsd-account-staff-server #-wxg
+      actor: hsd-account-actor-server #-wxg
 
 hystrix:
   command:

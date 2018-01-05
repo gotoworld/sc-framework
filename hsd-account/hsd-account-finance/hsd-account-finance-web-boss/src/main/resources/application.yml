@@ -135,6 +135,7 @@ feign:
     account:
       finance: hsd-account-finance-server #-wxg
       staff: hsd-account-staff-server #-wxg
+      actor: hsd-account-actor-server #-wxg
 
 logging:
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"

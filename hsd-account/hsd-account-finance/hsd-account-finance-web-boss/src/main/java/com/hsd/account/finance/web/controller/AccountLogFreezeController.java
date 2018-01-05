@@ -6,7 +6,6 @@ import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "账户-日志-资金冻结记录")
 @RestController
 @Slf4j
-public class AccountLogFreezeController extends BaseController {
+public class AccountLogFreezeController extends FinanceBaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IAccountLogFreezeService accountLogFreezeService;
@@ -34,6 +33,7 @@ public class AccountLogFreezeController extends BaseController {
         try {
             if (dto == null) dto = new AccountLogFreezeDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
+            dto.setAppUserId(getAppUserId(dto.getAppId(),dto.getUserId()));
             result.data = PageUtil.copy(accountLogFreezeService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -50,10 +50,7 @@ public class AccountLogFreezeController extends BaseController {
         log.info("AccountLogFreezeController info.........");
         Response result = new Response();
         try {
-            AccountLogFreezeDto dto = new AccountLogFreezeDto(){{
-                setId(id);
-            }};
-            result.data = accountLogFreezeService.findDataById(dto);
+            result.data = accountLogFreezeService.findDataById(new AccountLogFreezeDto(){{setId(id);}});
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

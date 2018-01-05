@@ -6,7 +6,6 @@ import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "子账户-实物贵金属")
 @RestController
 @Slf4j
-public class AccountSubGoldController extends BaseController {
+public class AccountSubGoldController extends FinanceBaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IAccountSubGoldService accountSubGoldService;
@@ -34,6 +33,7 @@ public class AccountSubGoldController extends BaseController {
         try {
             if (dto == null) dto = new AccountSubGoldDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
+            dto.setAppUserId(getAppUserId(dto.getAppId(),dto.getUserId()));
             result.data = PageUtil.copy(accountSubGoldService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -50,10 +50,7 @@ public class AccountSubGoldController extends BaseController {
         log.info("AccountSubGoldController info.........");
         Response result = new Response();
         try {
-            AccountSubGoldDto dto = new AccountSubGoldDto(){{
-                setId(id);
-            }};
-            result.data = accountSubGoldService.findDataById(dto);
+            result.data = accountSubGoldService.findDataById(new AccountSubGoldDto(){{setId(id);}});
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

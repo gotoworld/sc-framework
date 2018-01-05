@@ -55,7 +55,7 @@ spring:
     timeBetweenEvictionRunsMillis: 300000
     # 配置一个连接在池中最小生存的时间，单位是毫秒
     minEvictableIdleTimeMillis: 600000
-    #validationQuery: select "1"
+    validationQuery: select "1"
     testWhileIdle: true
     testOnBorrow: false
     testOnReturn: false

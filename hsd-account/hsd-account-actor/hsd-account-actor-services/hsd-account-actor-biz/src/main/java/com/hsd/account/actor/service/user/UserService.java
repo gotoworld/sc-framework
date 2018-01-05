@@ -234,6 +234,7 @@ public class UserService extends BaseService implements IUserService {
                 throw new RuntimeException("邮箱["+dto.getEmail()+"]已注册!");
             }
             entity.setPwd(MD5.pwdMd5Hex(entity.getPwd()));
+            entity.setId(idGenerator.nextId());
             //新增
             userDao.insert(entity);
             result.data=entity.getId();

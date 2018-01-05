@@ -75,16 +75,16 @@ public class JdbcConfig implements EnvironmentAware {
             dataSource.setValidationQuery(val);
         val = dataSourceResolver.getProperty("testOnBorrow");
         if (val != null)
-            dataSource.setTestOnBorrow(Boolean.getBoolean(val));
+            dataSource.setTestOnBorrow(Boolean.parseBoolean(val));
         val = dataSourceResolver.getProperty("testWhileIdle");
         if (val != null)
-            dataSource.setTestWhileIdle(Boolean.getBoolean(val));
+            dataSource.setTestWhileIdle(Boolean.parseBoolean(val));
         val = dataSourceResolver.getProperty("testOnReturn");
         if (val != null)
-            dataSource.setTestOnReturn(Boolean.getBoolean(val));
+            dataSource.setTestOnReturn(Boolean.parseBoolean(val));
         val = dataSourceResolver.getProperty("poolPreparedStatements");
         if (val != null)
-            dataSource.setPoolPreparedStatements(Boolean.getBoolean(val));
+            dataSource.setPoolPreparedStatements(Boolean.parseBoolean(val));
         val = dataSourceResolver.getProperty("maxPoolPreparedStatementPerConnectionSize");
         if (val != null)
             dataSource.setMaxPoolPreparedStatementPerConnectionSize(Converter.stringToInteger(val));
@@ -106,7 +106,7 @@ public class JdbcConfig implements EnvironmentAware {
 
         val = dataSourceResolver.getProperty("useGlobalDataSourceStat");
         if (val != null) {
-            dataSource.setUseGlobalDataSourceStat(Boolean.getBoolean(val));
+            dataSource.setUseGlobalDataSourceStat(Boolean.parseBoolean(val));
         }
         return dataSource;
     }

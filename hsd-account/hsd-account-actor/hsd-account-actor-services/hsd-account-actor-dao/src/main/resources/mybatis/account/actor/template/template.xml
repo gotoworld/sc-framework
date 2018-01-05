@@ -96,7 +96,7 @@
         from template t1
         where 1=1
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
+        order by t1.id desc
     </select>
 
     <!--信息列表 -->
@@ -106,6 +106,6 @@
         from template t1
         where 1=1
         <include refid="list_where_sql"/>
-        order by t1.date_created desc
+        order by t1.id desc
     </select>
 </mapper>

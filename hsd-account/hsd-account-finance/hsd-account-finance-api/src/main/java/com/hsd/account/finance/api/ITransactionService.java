@@ -1,8 +1,12 @@
 package com.hsd.account.finance.api;
 
+import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
+import com.hsd.account.finance.dto.AccountDto;
+import com.hsd.account.finance.dto.DeductMoneyDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,19 +23,19 @@ public interface ITransactionService {
      * <p>扣款。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deduct")
-    public Response deduct(@RequestParam("userId") Long userId, @RequestParam("accountId") Long accountId, @RequestParam("cardNo") String cardNo, @RequestParam("amount") BigDecimal amount) throws Exception;
+    public Response deduct(DeductMoneyDto dto) throws Exception;
 
     /**
      * <p>冻结。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/frozen")
-    public Response frozen(@RequestParam("userId") Long userId, @RequestParam("accountId") Long accountId, @RequestParam("amount") BigDecimal amount) throws Exception;
+    public Response frozen(AccountDto dto) throws Exception;
 
     /**
      * <p>解冻。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/frozen")
-    public Response unfreeze(@RequestParam("userId") Long userId, @RequestParam("accountId") Long accountId, @RequestParam("amount") BigDecimal amount) throws Exception;
+    public Response unfreeze(AccountDto dto) throws Exception;
 
 
 }

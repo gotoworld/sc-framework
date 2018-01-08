@@ -1,15 +1,12 @@
 package com.hsd.account.finance.api;
 
-import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.DeductMoneyDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 

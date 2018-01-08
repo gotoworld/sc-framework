@@ -54,12 +54,9 @@ public interface IAccountService {
 
     /**
      * 状态变更
-     * @param userId
-     * @param accountId
-     * @param state
      * @return
      * @throws Exception
      */
     @RequestMapping(method={RequestMethod.PUT},value = acPrefix + "updateState")
-    public Response updateState(@RequestParam("userId") Long userId, @RequestParam("accountId") Long accountId, @RequestParam("state") Integer state) throws Exception;
+    public Response updateState(AccountDto dto) throws Exception;
 }

@@ -1,72 +1,102 @@
 <!DOCTYPE html>
 <html lang="zh" ng-app="app">
 <head>
-<meta charset="utf-8" />
-<title>//TODO 客户照表 详情</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<meta name="description" content="memo of your site" />
-<meta name="author" content="author of the site" />
-<link rel="shortcut icon" href="/favicon.ico">
+    <meta charset="utf-8" />
+    <title>//TODO 用户账户-操作日志 详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="memo of your site" />
+    <meta name="author" content="author of the site" />
+    <link rel="shortcut icon" href="/favicon.ico">
 
-<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
-<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
 
-<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
-<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+    <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
-<link href="/css/common.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
 <div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="ibox float-e-margins">
-			<div class="form-horizontal ibox-content col-md-12">
+    <div class="row">
+        <div class="ibox float-e-margins">
+            <div class="form-horizontal ibox-content col-md-12">
 
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">客户id：</label>
+                    <label class="col-md-3 control-label">主键：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.userId}}
+                        {{item.id}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">可用余额：</label>
+                    <label class="col-md-3 control-label">域用户id：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.balance}}
+                        {{item.appUserId}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">可用积分：</label>
+                    <label class="col-md-3 control-label">用户名称：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.credit}}
+                        {{item.userName}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">可用合时币：</label>
+                    <label class="col-md-3 control-label">支付账户id：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.coin}}
+                        {{item.accountId}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">客户等级：</label>
+                    <label class="col-md-3 control-label">子账户类型：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.vipLevel}}
+                        {{item.accountSubType}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">VIP分数：</label>
+                    <label class="col-md-3 control-label">子账户id：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.vipScore}}
+                        {{item.accountSubId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">流水类型：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.type}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易时间：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易数据json：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.data}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易说明：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.memo}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">IP地址：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.ip}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">BI时间戳：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.biUpdateTs | date:'yyyy-MM-dd HH:mm:ss'}}
+                        {{item.biUpdateTs | date:'yyyy-MM-dd HH:mm:ss'}}
                     </div>
                 </div>
 
@@ -101,20 +131,20 @@
         $data = $scope;
         $ngCompile=$compile;
         staff.init(function(){
-           loadInfo(sessionStorage.getItem(site.userSnapshot.info));
+            loadInfo(sessionStorage.getItem(site.accountLogOperational.info));
         });
     });
     var loadInfo=function(id){
-        $.get(site.userSnapshot.info + id, {},function (result) {
-             //console.info("获取数据.." + JSON.stringify(result));
-             if (result.code == 0) {
-                 $data.item = result.data;
-             } else {
-                 $data.message = result.message;
-                 alert( result.message);
-             }
-             if(!$data.$$phase) $data.$apply();
-         }, 'json');
+        $.get(site.accountLogOperational.info + id, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.item = result.data;
+            } else {
+                $data.message = result.message;
+                alert( result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
     }
 </script>
 </body>

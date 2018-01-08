@@ -48,7 +48,7 @@ public class OrgStaffAppService extends BaseService implements IOrgStaffAppServi
         return result;
     }
     @Override
-    public OrgStaffAppDto findDataByAppIdAndStaffId(@RequestBody OrgStaffAppDto dto) {
+    public OrgStaffAppDto getSaveDataByAppIdAndStaffId(@RequestBody OrgStaffAppDto dto) {
         OrgStaffAppDto result = null;
         try {
             OrgStaffApp entity = copyTo(dto, OrgStaffApp.class);

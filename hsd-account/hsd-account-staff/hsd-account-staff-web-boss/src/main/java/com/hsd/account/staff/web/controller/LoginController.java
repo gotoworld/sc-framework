@@ -95,7 +95,7 @@ public class LoginController extends BaseController {
             if(!appFlag) return Response.error("登录失败,应用权限受限!");
 
             //查询APP员工表
-            OrgStaffAppDto userAppDto = userAppService.findDataByAppIdAndStaffId(new OrgStaffAppDto(){{setStaffId(orgStaffDto.getId());setAppId(sysAppDto.getId());}});
+            OrgStaffAppDto userAppDto = userAppService.getSaveDataByAppIdAndStaffId(new OrgStaffAppDto(){{setStaffId(orgStaffDto.getId());setAppId(sysAppDto.getId());}});
             orgStaffDto.setAppStaffId(userAppDto.getId());
             orgStaffDto.setAppId(sysAppDto.getId());
             orgStaffDto.setAppName(sysAppDto.getName());

@@ -109,8 +109,11 @@ public class AccountService extends BaseService implements IAccountService {
         }
 
     @Override
-    public Response updateState(Long userId, Long accountId, Integer state) throws Exception {
+    public Response updateState(@RequestBody AccountDto dto) throws Exception {
         Response result = new Response(0,"success");
+        Long accountId = dto.getId();
+        Long userId = dto.getAppUserId();
+        Integer state = dto.getState();
         Account account = new Account(){{setId(accountId);}};
         Account  userAccount = (Account)accountDao.selectByPrimaryKey(account);
         if(userAccount == null){

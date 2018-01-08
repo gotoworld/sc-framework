@@ -31,20 +31,16 @@ public class AccountBindThirdpartyController extends BaseController {
 
     /**
      * 绑卡
-     * @param name 姓名
-     * @param cardNo 卡号
-     * @param certNo 身份证号码
-     * @param phone 银行预留手机号
      * @return
      */
-    @RequiresPermissions("accountBindThirdparty:bind")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "bind/{userId}")
+    @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "bindCard/{userId}")
     @ApiOperation(value = "绑卡")
-    public Response bindCard(@PathVariable("userId") Long userId,@RequestParam Long accountId,@RequestParam String name,@RequestParam String cardNo,@RequestParam String certNo,@RequestParam String phone) {
-        log.info("AccountBindThirdpartyController info.........");
+    public Response bindCard(@ModelAttribute  AccountBindThirdpartyDto dtoa) {
+        log.info("AccountBindThirdpartyController bindCard.........");
         Response result = new Response("success");
         try {
-            return accountBindThirdpartyService.bindCard(userId,accountId,name,cardNo,certNo,phone);
+            AccountBindThirdpartyDto dto = new AccountBindThirdpartyDto();
+            return accountBindThirdpartyService.bindCard(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -54,10 +50,9 @@ public class AccountBindThirdpartyController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("accountBindThirdparty:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info")
     @ApiOperation(value = "信息详情")
-    public Response info(AccountBindThirdpartyDto dto) {
+    public Response info(@ModelAttribute AccountBindThirdpartyDto dto) {
         log.info("AccountBindThirdpartyController info.........");
         Response result = new Response("success");
         try {
@@ -70,19 +65,16 @@ public class AccountBindThirdpartyController extends BaseController {
 
     /**
      * 解绑
-     * @param userId
-     * @param accountId
-     * @param cardNo
      * @return
      */
     @RequiresPermissions("accountBindThirdparty:unbind")
-    @RequestMapping(method = RequestMethod.PUT, value = acPrefix + "unbind/{userId}")
+    @RequestMapping(method = RequestMethod.PUT, value = acPrefix + "unbindCard")
     @ApiOperation(value = "绑卡")
-    public Response unbindCard(@PathVariable("userId") Long userId,@RequestParam Long accountId,@RequestParam String cardNo) {
-        log.info("AccountBindThirdpartyController info.........");
+    public Response unbindCard(@ModelAttribute AccountBindThirdpartyDto dto) {
+        log.info("AccountBindThirdpartyController unbindCard.........");
         Response result = new Response("success");
         try {
-            return accountBindThirdpartyService.unbindCard(userId,accountId,cardNo);
+            return accountBindThirdpartyService.unbindCard(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

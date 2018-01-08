@@ -108,6 +108,21 @@ public class AccountService extends BaseService implements IAccountService {
             return result;
         }
 
-
-
+    @Override
+    public Response updateState(Long userId, Long accountId, Integer state) throws Exception {
+        Response result = new Response(0,"success");
+        Account account = new Account(){{setId(accountId);}};
+        Account  userAccount = (Account)accountDao.selectByPrimaryKey(account);
+        if(userAccount == null){
+            result = Response.error("账户不存在!");
+            return result;
+        }
+        if(userId != userAccount.getAppUserId()){
+            result = Response.error("用户账户不存在!");
+            return result;
+        }
+        userAccount.setState(state);
+        accountDao.update(userAccount);
+        return result;
+    }
 }

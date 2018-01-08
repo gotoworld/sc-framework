@@ -9,7 +9,6 @@ import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dao.IAccountBindThirdpartyDao;
 import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
-import com.hsd.account.finance.dto.AccountLogFreezeDto;
 import com.hsd.account.finance.entity.AccountBindThirdparty;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;

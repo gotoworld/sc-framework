@@ -5,6 +5,7 @@ import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 
@@ -18,19 +19,19 @@ public interface ITransactionService {
      * <p>扣款。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deduct")
-    public Response deduct(Long userId, Long accountId, String cardNo, BigDecimal amount) throws Exception;
+    public Response deduct(@RequestParam("userId") Long userId, @RequestParam("accountId") Long accountId, @RequestParam("cardNo") String cardNo, @RequestParam("amount") BigDecimal amount) throws Exception;
 
     /**
      * <p>冻结。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/frozen")
-    public Response frozen(Long userId, Long accountId, BigDecimal amount) throws Exception;
+    public Response frozen(@RequestParam("userId") Long userId, @RequestParam("accountId") Long accountId, @RequestParam("amount") BigDecimal amount) throws Exception;
 
     /**
      * <p>解冻。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/frozen")
-    public Response unfreeze(Long userId, Long accountId, BigDecimal amount) throws Exception;
+    public Response unfreeze(@RequestParam("userId") Long userId, @RequestParam("accountId") Long accountId, @RequestParam("amount") BigDecimal amount) throws Exception;
 
 
 }

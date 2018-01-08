@@ -28,11 +28,10 @@ public class TransactionController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("transaction:deduct")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "deduct/{userId}")
     @ApiOperation(value = "扣款")
     public Response deduct(@PathVariable("userId") Long userId, @RequestParam Long accountId, @RequestParam String cardNo, @RequestParam BigDecimal amount) {
-        log.info("TransactionController info.........");
+        log.info("TransactionController deduct.........");
         Response result = new Response();
         try {
             transactionService.deduct(userId,accountId,cardNo,amount);

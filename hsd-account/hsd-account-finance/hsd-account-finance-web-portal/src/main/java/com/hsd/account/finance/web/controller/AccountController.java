@@ -1,6 +1,7 @@
 package com.hsd.account.finance.web.controller;
 
 import com.hsd.account.finance.api.IAccountService;
+import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.auth.Logical;
@@ -85,14 +86,11 @@ public class AccountController extends BaseController{
      */
     @RequestMapping(method={RequestMethod.GET,RequestMethod.PUT},value = acPrefix + "updateState/{userId}")
     @ApiOperation(value = "状态变更")
-    public Response updateState(@PathVariable("userId") Long userId, @RequestParam Long accountId, @RequestParam Integer state) {
+    public Response updateState(@ModelAttribute AccountDto dto) {
         log.info("AccountController updateState.........");
         Response result = new Response("success");
         try {
-            if(accountId == null || state == null){
-                throw new RuntimeException("参数异常");
-            }
-            accountService.updateState(userId,accountId,state);
+            accountService.updateState(dto);
 
         } catch (Exception e) {
             result = Response.error(e.getMessage());

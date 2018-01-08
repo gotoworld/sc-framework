@@ -6,7 +6,6 @@ import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "支付账户")
 @RestController
 @Slf4j
-public class AccountController extends BaseController {
+public class AccountController extends FinanceBaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IAccountService accountService;
@@ -34,6 +33,7 @@ public class AccountController extends BaseController {
         try {
             if (dto == null) dto = new AccountDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
+            dto.setAppUserId(getAppUserId(dto.getAppId(),dto.getUserId()));
             result.data = PageUtil.copy(accountService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -50,10 +50,7 @@ public class AccountController extends BaseController {
         log.info("AccountController info.........");
         Response result = new Response();
         try {
-            AccountDto dto = new AccountDto(){{
-                setId(id);
-            }};
-            result.data = accountService.findDataById(dto);
+            result.data = accountService.findDataById(new AccountDto(){{ setId(id); }});
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

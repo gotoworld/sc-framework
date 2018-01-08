@@ -8,6 +8,7 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -60,5 +61,5 @@ public interface IAccountService {
      * @throws Exception
      */
     @RequestMapping(method={RequestMethod.PUT},value = acPrefix + "updateState")
-    public Response updateState(Long userId, Long accountId,Integer state) throws Exception;
+    public Response updateState(@RequestParam("userId") Long userId, @RequestParam("accountId") Long accountId, @RequestParam("state") Integer state) throws Exception;
 }

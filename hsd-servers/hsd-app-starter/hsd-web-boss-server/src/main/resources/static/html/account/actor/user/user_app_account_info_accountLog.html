@@ -1,72 +1,264 @@
 <!DOCTYPE html>
 <html lang="zh" ng-app="app">
 <head>
-<meta charset="utf-8" />
-<title>//TODO 客户照表 详情</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<meta name="description" content="memo of your site" />
-<meta name="author" content="author of the site" />
-<link rel="shortcut icon" href="/favicon.ico">
+    <meta charset="utf-8" />
+    <title>//TODO 账户-日志 详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="memo of your site" />
+    <meta name="author" content="author of the site" />
+    <link rel="shortcut icon" href="/favicon.ico">
 
-<link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-<link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-<link href="/plugins/hplus/css/animate.css" rel="stylesheet">
-<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
 
-<link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
-<link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-<script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+    <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
-<link href="/css/common.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
 <div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="ibox float-e-margins">
-			<div class="form-horizontal ibox-content col-md-12">
+    <div class="row">
+        <div class="ibox float-e-margins">
+            <div class="form-horizontal ibox-content col-md-12">
 
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">客户id：</label>
+                    <label class="col-md-3 control-label">主键：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.userId}}
+                        {{item.id}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">可用余额：</label>
+                    <label class="col-md-3 control-label">支付账户id：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.balance}}
+                        {{item.accountId}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">可用积分：</label>
+                    <label class="col-md-3 control-label">支付流水号：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.credit}}
+                        {{item.serialNumber}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">可用合时币：</label>
+                    <label class="col-md-3 control-label">交易金额：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.coin}}
+                        {{item.amount}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">客户等级：</label>
+                    <label class="col-md-3 control-label">货币类型0人民币：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.vipLevel}}
+                        {{item.currency}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">VIP分数：</label>
+                    <label class="col-md-3 control-label">操作者域用户id：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.vipScore}}
+                        {{item.opAppUserId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">操作者账户类型：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.opAccountType}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">操作者账户id：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.opAccountId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">操作者子账户类型：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.opAccountSubType}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">操作者子账户id：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.opAccountSubId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">对方域用户id：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.otherAppUserId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">对方账户类型：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.otherAccountType}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">对方账户id：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.otherAccountId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">对方子账户类型：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.otherAccountSubType}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">对方子账户id：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.otherAccountSubId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">外部交易时间：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.outTradeDate}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">外部订单号：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.outOrderNo}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">外部订单名称：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.outOrderName}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易状态：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.state}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">业务类型:1投资扣费,2收款,3充值,4提现,6奖励,7转账,8投资奖励,9融资,10扣费,11充值手续费,12提现撤销,13提现手续费,14借款管理费,15投资冻结资金,16投资撤回解冻资金,17投资奖励扣除,19还款,20内部调账,21结息,22原交易退款,23原交易撤销：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.tradeType}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">业务类型名称：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.tradeTypeName}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易渠道：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.tradeChannel}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易机构：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.tradeAgency}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易说明：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.tradeDesc}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">支付方式：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.payType}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">支付机构交易码,充值成功后回写,用于对账：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.payTradeNo}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">支付回馈：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.payResult}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">流水方向0存入1支出：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.isDirection}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">冲正标记0否1是：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.isCorrect}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">红字标记0否1是：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.isRed}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">会计科目代码：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.finSubjectCode}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">凭证id：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.finVoucherId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易数据json：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.data}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易操作人id：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.createId}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易操作人IP：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.createIp}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">交易时间：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">最后修改时间：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-md-3 control-label">备注：</label>
+                    <div class="col-md-9 form-control-static">
+                        {{item.memo}}
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-3 control-label">BI时间戳：</label>
                     <div class="col-md-9 form-control-static">
-                    {{item.biUpdateTs | date:'yyyy-MM-dd HH:mm:ss'}}
+                        {{item.biUpdateTs | date:'yyyy-MM-dd HH:mm:ss'}}
                     </div>
                 </div>
 
@@ -101,20 +293,20 @@
         $data = $scope;
         $ngCompile=$compile;
         staff.init(function(){
-           loadInfo(sessionStorage.getItem(site.userSnapshot.info));
+            loadInfo(sessionStorage.getItem(site.accountLog.info));
         });
     });
     var loadInfo=function(id){
-        $.get(site.userSnapshot.info + id, {},function (result) {
-             //console.info("获取数据.." + JSON.stringify(result));
-             if (result.code == 0) {
-                 $data.item = result.data;
-             } else {
-                 $data.message = result.message;
-                 alert( result.message);
-             }
-             if(!$data.$$phase) $data.$apply();
-         }, 'json');
+        $.get(site.accountLog.info + id, {},function (result) {
+            //console.info("获取数据.." + JSON.stringify(result));
+            if (result.code == 0) {
+                $data.item = result.data;
+            } else {
+                $data.message = result.message;
+                alert( result.message);
+            }
+            if(!$data.$$phase) $data.$apply();
+        }, 'json');
     }
 </script>
 </body>

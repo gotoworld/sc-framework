@@ -25,7 +25,7 @@ import java.util.List;
 public class AccountSubLoanController extends BaseController {
     @Autowired
     private IAccountSubLoanService accountSubLoanService;
-    private static final String acPrefix = "/boss/account/finance/accountSubLoan/";
+    private static final String acPrefix = "/portal/account/finance/accountSubLoan/";
 
     /**
      * <p> 信息详情。

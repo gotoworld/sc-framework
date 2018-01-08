@@ -34,7 +34,6 @@ public class AccountController extends BaseController{
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("account:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{userId}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
@@ -54,7 +53,6 @@ public class AccountController extends BaseController{
     /**
      * <p> 开户信息保存
      */
-    @RequiresPermissions(value = {"account:add", "account:edit"}, logical = Logical.OR)
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "save")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated AccountDto dto, BindingResult bindingResult) {
@@ -85,11 +83,10 @@ public class AccountController extends BaseController{
     /**
      * <p> 开户信息保存
      */
-    @RequiresPermissions(value = {"account:updateState"}, logical = Logical.OR)
     @RequestMapping(method={RequestMethod.GET,RequestMethod.PUT},value = acPrefix + "updateState/{userId}")
     @ApiOperation(value = "状态变更")
     public Response updateState(@PathVariable("userId") Long userId, @RequestParam Long accountId, @RequestParam Integer state) {
-        log.info("AccountController save.........");
+        log.info("AccountController updateState.........");
         Response result = new Response("success");
         try {
             if(accountId == null || state == null){

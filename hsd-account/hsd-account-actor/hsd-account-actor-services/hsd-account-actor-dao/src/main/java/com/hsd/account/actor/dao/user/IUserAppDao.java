@@ -14,7 +14,7 @@ public interface IUserAppDao extends IBaseDao {
     /**
      * 判断是否存在
      */
-    @Select("select IFNULL(count(0),0) as count from user_app where  ")
+    @Select("select IFNULL(count(0),0) as count from user_app where  user_id = #{userId} AND  app_id =#{appId}")
     int isDataYN(IEntity entity) throws Exception;
 
     Object findDataByAppIdAndUserId(IEntity entity) throws Exception;

@@ -137,6 +137,7 @@
 
     <!--列表通用条件-->
     <sql id="list_where_sql">
+        and t1.app_user_id = #{appUserId}
     </sql>
 
     <!--信息分页 -->

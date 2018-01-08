@@ -213,7 +213,7 @@ var site = {
         ,info: apiPath.account.actor + "/boss/account/actor/user/userLoginLog/info/"
     }
     //------------------------金融账户------------------------
-    , account: {//支付账户
+    , accountCapital: {//支付账户
         view: basePath + "/html/account/finance/account"
         ,page: apiPath.account.finance + "/boss/account/finance/account/page/"       //分页
         ,info: apiPath.account.finance + "/boss/account/finance/account/info/"       //详情

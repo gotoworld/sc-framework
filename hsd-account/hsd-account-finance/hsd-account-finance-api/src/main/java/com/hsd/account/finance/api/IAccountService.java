@@ -50,4 +50,15 @@ public interface IAccountService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByUserId")
     AccountDto findDataByUserId(AccountDto dto) throws Exception;
+
+    /**
+     * 状态变更
+     * @param userId
+     * @param accountId
+     * @param state
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(method={RequestMethod.PUT},value = acPrefix + "updateState")
+    public Response updateState(Long userId, Long accountId,Integer state) throws Exception;
 }

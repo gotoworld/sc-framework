@@ -25,7 +25,7 @@ import java.util.List;
 public class AccountSubGoldController extends BaseController {
     @Autowired
     private IAccountSubGoldService accountSubGoldService;
-    private static final String acPrefix = "/boss/account/finance/accountSubGold/";
+    private static final String acPrefix = "/portal/account/finance/accountSubGold/";
 
     /**
      * <p> 信息详情。

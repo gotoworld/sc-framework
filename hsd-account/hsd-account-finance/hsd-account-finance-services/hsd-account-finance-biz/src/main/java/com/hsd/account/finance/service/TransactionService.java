@@ -5,7 +5,6 @@ import com.hsd.account.finance.dao.IAccountBindThirdpartyDao;
 import com.hsd.account.finance.dao.IAccountDao;
 import com.hsd.account.finance.dao.IAccountLogDao;
 import com.hsd.account.finance.dao.IAccountLogFreezeDao;
-import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.AccountLogDto;
 import com.hsd.account.finance.dto.DeductMoneyDto;

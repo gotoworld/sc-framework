@@ -5,7 +5,10 @@ import com.hsd.account.finance.dao.IAccountBindThirdpartyDao;
 import com.hsd.account.finance.dao.IAccountDao;
 import com.hsd.account.finance.dao.IAccountLogDao;
 import com.hsd.account.finance.dao.IAccountLogFreezeDao;
+import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
+import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.AccountLogDto;
+import com.hsd.account.finance.dto.DeductMoneyDto;
 import com.hsd.account.finance.entity.Account;
 import com.hsd.account.finance.entity.AccountBindThirdparty;
 import com.hsd.account.finance.entity.AccountLog;
@@ -18,6 +21,7 @@ import com.hsd.framework.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -42,8 +46,12 @@ public class TransactionService extends BaseService implements ITransactionServi
     private IAccountLogFreezeDao accountLogFreezeDao;
 
     @Override
-    public Response deduct(Long userId, Long accountId, String cardNo, BigDecimal amount) throws Exception {
+    public Response deduct(@RequestBody DeductMoneyDto dto) throws Exception {
         Response result = new Response(0,"success");
+        Long userId = dto.getAppUserId();
+        Long accountId = dto.getAccountId();
+        String cardNo = dto.getCardNo();
+        BigDecimal amount = dto.getDeductMoney();
         AccountBindThirdparty accountBindThirdparty = new AccountBindThirdparty(){{
             setAppUserId(userId);
             setThirdpartyAccount(cardNo);
@@ -112,8 +120,11 @@ public class TransactionService extends BaseService implements ITransactionServi
 
 
     @Override
-    public Response frozen(Long userId, Long accountId, BigDecimal amount) throws Exception {
+    public Response frozen(@RequestBody AccountDto dto) throws Exception {
         Response result = new Response(0,"success");
+        Long accountId = dto.getId();
+        Long userId = dto.getAppUserId();
+        BigDecimal amount = dto.getFreezeMoney();
         Account account = new Account(){{setId(accountId);}};
         Account  userAccount = (Account)accountDao.selectByPrimaryKey(account);
         if(userAccount == null){
@@ -161,8 +172,11 @@ public class TransactionService extends BaseService implements ITransactionServi
 
 
     @Override
-    public Response unfreeze(Long userId, Long accountId, BigDecimal amount) throws Exception {
+    public Response unfreeze(@RequestBody AccountDto dto) throws Exception {
         Response result = new Response(0,"success");
+        Long accountId = dto.getId();
+        Long userId = dto.getAppUserId();
+        BigDecimal amount = dto.getFreezeMoney();
         Account account = new Account(){{setId(accountId);}};
         Account  userAccount = (Account)accountDao.selectByPrimaryKey(account);
         if(userAccount == null){

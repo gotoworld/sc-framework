@@ -39,100 +39,81 @@
 						<div class="tab-content">
 							<div id="tab-app-{{appIndex}}" class="tab-pane {{appIndex==0?'active':''}}"  ng-repeat="app in staffApps" ng-init="appIndex=$index">
 								<div class="panel-body">
-									<div class="clients-list" ng-init="tagName=['userSnapshot','account','accountSubGold','accountSubLoan','accountBindThirdparty','accountLog','accountLogFreeze','accountLogRecharge','accountLogWithdrawal','accountLogOperational']">
+									<div class="clients-list">
 										<ul class="nav nav-tabs" style="height: 39px;background-color:#eeeeee">
-											<li class="active"  ng-show='staff.hasPermission("userSnapshot:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[0]}}" aria-expanded="true">账户快照</a></li>
-											<li class="" ng-show='staff.hasPermission("account:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[1]}}" aria-expanded="false">支付账户</a></li>
-											<li class="" ng-show='staff.hasPermission("accountSubGold:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[2]}}" aria-expanded="false">黄金账户</a></li>
-											<li class="" ng-show='staff.hasPermission("accountSubLoan:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[3]}}" aria-expanded="false">网贷账户</a></li>
-											<li class="" ng-show='staff.hasPermission("accountBindThirdparty:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[4]}}" aria-expanded="false">三方账户</a></li>
-											<li class="" ng-show='staff.hasPermission("accountLog:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[5]}}" aria-expanded="false"> 交易记录</a></li>
-											<li class="" ng-show='staff.hasPermission("accountLogFreeze:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[6]}}" aria-expanded="false">冻结记录</a></li>
-											<li class="" ng-show='staff.hasPermission("accountLogRecharge:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[7]}}" aria-expanded="false">充值记录</a></li>
-											<li class="" ng-show='staff.hasPermission("accountLogWithdrawal:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[8]}}" aria-expanded="false">提现流水</a></li>
-											<li class="" ng-show='staff.hasPermission("accountLogOperational:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagName[9]}}" aria-expanded="false"> 操作日志</a></li>
+											<li class="active"  ng-show='staff.hasPermission("userSnapshot:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[0]}}" aria-expanded="true">账户快照</a></li>
+											<li class="" ng-show='staff.hasPermission("account:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[1]}}" aria-expanded="false">支付账户</a></li>
+											<li class="" ng-show='staff.hasPermission("accountSubGold:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[2]}}" aria-expanded="false">黄金账户</a></li>
+											<li class="" ng-show='staff.hasPermission("accountSubLoan:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[3]}}" aria-expanded="false">网贷账户</a></li>
+											<li class="" ng-show='staff.hasPermission("accountBindThirdparty:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[4]}}" aria-expanded="false">三方账户</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLog:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[5]}}" aria-expanded="false"> 交易记录</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLogFreeze:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[6]}}" aria-expanded="false">冻结记录</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLogRecharge:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[7]}}" aria-expanded="false">充值记录</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLogWithdrawal:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[8]}}" aria-expanded="false">提现流水</a></li>
+											<li class="" ng-show='staff.hasPermission("accountLogOperational:menu")'><a data-toggle="tab" href="#tab-acc-{{appIndex}}-{{tagNameArr[9]}}" aria-expanded="false"> 操作日志</a></li>
 										</ul>
 										<div class="tab-content">
-											<div id="tab-acc-{{appIndex}}-{{tagName[0]}}" class="tab-pane active">
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[0]}}" ng-show='staff.hasPermission("userSnapshot:menu")' class="tab-pane active">
 												<div class="float-e-margins">
-													<div class="">
-														<table class="table">
-															<tr>
-																<td>
-																	<form id="info_search_form_{{tagName[0]}}_{{appIndex}}_{{app.id}}"
-																		  role="form" class="form-inline"
-																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[0],appIndex,app.id,1)">
-																		<input type="hidden" name="userId" ng-value="userId">
-																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[0]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[0],appIndex,app.id).data.pageIndex?appNodeArr(tagName[0],appIndex,app.id).data.pageIndex:1}}">
-																		<div class="form-group data_5" >
-																			<label class="font-noraml">创建时间</label>
-																			<div class="input-daterange input-group">
-																				<input type="text" placeholder="点击输入起始时间"  class="input-sm form-control" name="dateBegin" value="" />
-																				<span class="input-group-addon">到</span>
-																				<input type="text" placeholder="点击输入截止时间"  class="input-sm form-control" name="dateEnd" value="" />
-																			</div>
-																		</div>
-																		<div class="input-group">
-																			<input type="text" name="keyword" placeholder="请输入关键词" class="input-sm form-control">
-																			<span class="input-group-btn">
-																				<button type="submit" class="btn btn-sm btn-primary">搜索</button>
-																				<button type="reset" class="btn btn-sm btn-dafault">重置</button>
-																			</span>
-																		</div>
-																	</form>
-																</td>
-															</tr>
-														</table>
-														<div class="table-responsive table-scrollable">
-															<table class="table table-bordered table-striped  table-hover">
-																<thead>
-																<tr>
-																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
-																	<th>操作</th>
-																</tr>
-																</thead>
-																<tbody>
-																<tr ng-if="appNodeArr(tagName[0],appIndex,app.id).data.data && appNodeArr(tagName[0],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[0],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[0],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[0],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
-																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-																	</td>
-																</tr>
-																<tr ng-if="appNodeArr(tagName[0],appIndex,app.id).data.data==null || appNodeArr(tagName[0],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[0],appIndex,app.id).message||'暂无数据'}}</strong></div>
-																	</td>
-																</tr>
-																</tbody>
-															</table>
-															<div class="b_page" id="tagPages_{{tagName[0]}}_{{appIndex}}_{{app.id}}"></div>
+													<div class="form-horizontal ibox-content col-md-12">
+														<div class="form-group clearfix">
+															<label class="col-md-3 control-label">客户id：</label>
+															<div class="col-md-9 form-control-static">
+																{{item.userId}}
+															</div>
+														</div>
+														<div class="form-group clearfix">
+															<label class="col-md-3 control-label">可用余额：</label>
+															<div class="col-md-9 form-control-static">
+																{{item.balance}}
+															</div>
+														</div>
+														<div class="form-group clearfix">
+															<label class="col-md-3 control-label">可用积分：</label>
+															<div class="col-md-9 form-control-static">
+																{{item.credit}}
+															</div>
+														</div>
+														<div class="form-group clearfix">
+															<label class="col-md-3 control-label">可用合时币：</label>
+															<div class="col-md-9 form-control-static">
+																{{item.coin}}
+															</div>
+														</div>
+														<div class="form-group clearfix">
+															<label class="col-md-3 control-label">客户等级：</label>
+															<div class="col-md-9 form-control-static">
+																{{item.vipLevel}}
+															</div>
+														</div>
+														<div class="form-group clearfix">
+															<label class="col-md-3 control-label">VIP分数：</label>
+															<div class="col-md-9 form-control-static">
+																{{item.vipScore}}
+															</div>
+														</div>
+														<div class="form-group clearfix">
+															<label class="col-md-3 control-label">BI时间戳：</label>
+															<div class="col-md-9 form-control-static">
+																{{item.biUpdateTs | date:'yyyy-MM-dd HH:mm:ss'}}
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[1]}}" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[1]}}" ng-show='staff.hasPermission("account:menu")' class="tab-pane ">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[1]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[1]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[1],appIndex,app.id,1)">
+																		  ng-submit="page(1,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[1]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[1],appIndex,app.id).data.pageIndex?appNodeArr(tagName[1],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[1]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[1],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[1],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -157,49 +138,61 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>账户名称</th>
+																	<th>账户类型</th>
+																	<th>充值次数</th>
+																	<th>开户时间</th>
+																	<th>首充时间</th>
+																	<th>账户币种</th>
+																	<th>账户状态</th>
+																	<th>提现次数</th>
+																	<th>注册时间</th>
+																	<th>更新时间</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[1],appIndex,app.id).data.data && appNodeArr(tagName[1],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[1],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[1],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[1],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[1],appIndex,app.id).data.data && appNodeArr(tagNameArr[1],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[1],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[1],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[1],appIndex,app.id).data.pageSize + $index+1}}</td>
+																	<td>{{item.aliasName}}</td>
+																	<td>{{item.accountType}}</td>
+																	<td>{{item.rechargeCount}}</td>
 																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.dateRechargeFirst | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.currency}}</td>
+																	<td>{{item.state}}</td>
+																	<td>{{item.withdrawCount}}</td>
+																	<td>{{item.dateUserRegister | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("account:info")' ng-click="info('i',1,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[1],appIndex,app.id).data.data==null || appNodeArr(tagName[1],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[1],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[1],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[1],appIndex,app.id).data.data.length==0">
+																	<td colspan="12">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[1],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[1]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[1]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[2]}}" class="tab-pane " >
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[2]}}" ng-show='staff.hasPermission("accountSubGold:menu")' class="tab-pane " >
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[2]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[2]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[2],appIndex,app.id,1)">
+																		  ng-submit="page(2,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[2]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[2],appIndex,app.id).data.pageIndex?appNodeArr(tagName[2],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[2]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[2],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[2],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -224,49 +217,53 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>子账户名称</th>
+																	<th>开户日期</th>
+																	<th>购买次数</th>
+																	<th>销户日期</th>
+																	<th>账户状态</th>
+																	<th>子账户类型</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[2],appIndex,app.id).data.data && appNodeArr(tagName[2],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[2],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[2],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[2],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
-																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[2],appIndex,app.id).data.data && appNodeArr(tagNameArr[2],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[2],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[2],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[2],appIndex,app.id).data.pageSize + $index+1}}</td>
+																	<td>{{item.aliasName}}</td>
+																	<td>{{item.dateOpen | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.buyCount}}</td>
+																	<td>{{item.dateClose | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.state}}</td>
+																	<td>{{item.type}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountSubGold:info")' ng-click="info('i',2,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[2],appIndex,app.id).data.data==null || appNodeArr(tagName[2],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[2],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[2],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[2],appIndex,app.id).data.data.length==0">
+																	<td colspan="8">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[2],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[2]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[2]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[3]}}" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[3]}}" ng-show='staff.hasPermission("accountSubLoan:menu")' class="tab-pane ">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[3]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[3]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[3],appIndex,app.id,1)">
+																		  ng-submit="page(3,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[3]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[3],appIndex,app.id).data.pageIndex?appNodeArr(tagName[3],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[3]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[3],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[3],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -291,49 +288,55 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>0投资/1贷款</th>
+																	<th>子账户名称</th>
+																	<th>开户日期</th>
+																	<th>销户日期</th>
+																	<th>账户类型</th>
+																	<th>币种</th>
+																	<th>账户状态</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[3],appIndex,app.id).data.data && appNodeArr(tagName[3],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[3],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[3],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[3],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
-																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[3],appIndex,app.id).data.data && appNodeArr(tagNameArr[3],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[3],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[3],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[3],appIndex,app.id).data.pageSize + $index+1}}</td>
+																	<td>{{item.balanceDirection}}</td>
+																	<td>{{item.aliasName}}</td>
+																	<td>{{item.dateOpen | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.dateClose | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.accountType}}</td>
+																	<td>{{item.currency}}</td>
+																	<td>{{item.state}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountSubLoan:info")' ng-click="info('i',3,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[3],appIndex,app.id).data.data==null || appNodeArr(tagName[3],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[3],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[3],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[3],appIndex,app.id).data.data.length==0">
+																	<td colspan="9">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[3],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[3]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[3]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[4]}}" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[4]}}" ng-show='staff.hasPermission("accountBindThirdparty:menu")' class="tab-pane ">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[4]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[4]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[4],appIndex,app.id,1)">
+																		  ng-submit="page(4,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[4]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[4],appIndex,app.id).data.pageIndex?appNodeArr(tagName[4],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[4]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[4],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[4],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -358,49 +361,59 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>解绑时间</th>
+																	<th>真实姓名</th>
+																	<th>三方账户类型0银行卡</th>
+																	<th>三方账号失效日期</th>
+																	<th>三方账户币种</th>
+																	<th>绑定时间</th>
+																	<th>预留手机号码</th>
+																	<th>状态</th>
+																	<th>身份证号码</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[4],appIndex,app.id).data.data && appNodeArr(tagName[4],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[4],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[4],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[4],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
-																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[4],appIndex,app.id).data.data && appNodeArr(tagNameArr[4],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[4],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[4],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[4],appIndex,app.id).data.pageSize + $index+1}}</td>
+																	<td>{{item.dateUnbind | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.realName}}</td>
+																	<td>{{item.thirdpartyType}}</td>
+																	<td>{{item.thirdpartyDateExpiry | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.thirdpartyCurrency}}</td>
+																	<td>{{item.dateBind | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.cellphone}}</td>
+																	<td>{{item.state}}</td>
+																	<td>{{item.cardNo}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountBindThirdparty:info")' ng-click="info('i',4,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[4],appIndex,app.id).data.data==null || appNodeArr(tagName[4],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[4],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[4],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[4],appIndex,app.id).data.data.length==0">
+																	<td colspan="11">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[4],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[4]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[4]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[5]}}" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[5]}}" ng-show='staff.hasPermission("accountLog:menu")' class="tab-pane ">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[5]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[5]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[5],appIndex,app.id,1)">
+																		  ng-submit="page(5,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[5]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[5],appIndex,app.id).data.pageIndex?appNodeArr(tagName[5],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[5]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[5],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[5],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -425,49 +438,65 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>交易金额</th>
+																	<th>支付回馈</th>
+																	<th>支付流水号</th>
+																	<th>业务类型名称</th>
+																	<th>交易时间</th>
+																	<th>操作者账户类型</th>
+																	<th>流水方向0存入1支出</th>
+																	<th>货币类型0人民币</th>
+																	<th>交易状态</th>
+																	<th>对方子账户类型</th>
+																	<th>交易说明</th>
+																	<th>业务类型:1投资扣费,2收款,3充值,4提现,6奖励,7转账,8投资奖励,9融资,10扣费,11充值手续费,12提现撤销,13提现手续费,14借款管理费,15投资冻结资金,16投资撤回解冻资金,17投资奖励扣除,19还款,20内部调账,21结息,22原交易退款,23原交易撤销</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[5],appIndex,app.id).data.data && appNodeArr(tagName[5],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[5],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[5],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[5],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[5],appIndex,app.id).data.data && appNodeArr(tagNameArr[5],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[5],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[5],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[5],appIndex,app.id).data.pageSize + $index+1}}</td>
+																	<td>{{item.amount}}</td>
+																	<td>{{item.payappNodeArr(tagNameArr[5],appIndex,app.id)}}</td>
+																	<td>{{item.serialNumber}}</td>
+																	<td>{{item.tradeTypeName}}</td>
 																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.opAccountType}}</td>
+																	<td>{{item.isDirection}}</td>
+																	<td>{{item.currency}}</td>
+																	<td>{{item.state}}</td>
+																	<td>{{item.otherAccountSubType}}</td>
+																	<td>{{item.tradeDesc}}</td>
+																	<td>{{item.tradeType}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountLog:info")' ng-click="info('i',5,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[5],appIndex,app.id).data.data==null || appNodeArr(tagName[5],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[5],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[5],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[5],appIndex,app.id).data.data.length==0">
+																	<td colspan="14">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[5],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[5]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[5]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[6]}}" class="tab-pane " >
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[6]}}" ng-show='staff.hasPermission("accountLogFreeze:menu")' class="tab-pane " >
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[6]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[6]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[6],appIndex,app.id,1)">
+																		  ng-submit="page(6,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[6]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[6],appIndex,app.id).data.pageIndex?appNodeArr(tagName[6],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[6]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[6],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[6],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -492,49 +521,47 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>操作类型</th>
+																	<th>金额</th>
+																	<th>冻结类型</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[6],appIndex,app.id).data.data && appNodeArr(tagName[6],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[6],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[6],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[6],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
-																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[6],appIndex,app.id).data.data && appNodeArr(tagNameArr[6],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[6],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[6],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[6],appIndex,app.id).data.pageSize + $index+1}}</td>
+																	<td>{{item.actionType}}</td>
+																	<td>{{item.amount}}</td>
+																	<td>{{item.freezeType}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountLogFreeze:info")' ng-click="info('i',6,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[6],appIndex,app.id).data.data==null || appNodeArr(tagName[6],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[6],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[6],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[6],appIndex,app.id).data.data.length==0">
+																	<td colspan="5">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[6],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[6]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[6]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[7]}}" class="tab-pane " >
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[7]}}" ng-show='staff.hasPermission("accountLogRecharge:menu")' class="tab-pane " >
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[7]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[7]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[7],appIndex,app.id,1)">
+																		  ng-submit="page(7,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[7]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[7],appIndex,app.id).data.pageIndex?appNodeArr(tagName[7],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[7]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[7],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[7],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -559,49 +586,67 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>支付回馈</th>
+																	<th>交易订单号</th>
+																	<th>成功时间</th>
+																	<th>子账户类型</th>
+																	<th>手续费</th>
+																	<th>支付机构交易码,充值成功后回写,用于对账</th>
+																	<th>用户名称</th>
+																	<th>支付账户id</th>
+																	<th>支付方式</th>
+																	<th>申请时间</th>
+																	<th>充值金额</th>
+																	<th>充值状态1申请2成功3失败4撤销</th>
+																	<th>到帐金额</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[7],appIndex,app.id).data.data && appNodeArr(tagName[7],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[7],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[7],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[7],appIndex,app.id).data.pageSize + appIndex+1}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[7],appIndex,app.id).data.data && appNodeArr(tagNameArr[7],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[7],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[7],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[7],appIndex,app.id).data.pageSize + $index+1}}</td>
+																	<td>{{item.payappNodeArr(tagNameArr[7],appIndex,app.id)}}</td>
+																	<td>{{item.tradeNo}}</td>
+																	<td>{{item.dateSuccess | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.accountSubType}}</td>
+																	<td>{{item.fee}}</td>
+																	<td>{{item.payTradeNo}}</td>
 																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
+																	<td>{{item.accountId}}</td>
+																	<td>{{item.payType}}</td>
 																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.money}}</td>
+																	<td>{{item.state}}</td>
+																	<td>{{item.accountMoney}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountLogRecharge:info")' ng-click="info('i',7,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[7],appIndex,app.id).data.data==null || appNodeArr(tagName[7],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[7],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[7],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[7],appIndex,app.id).data.data.length==0">
+																	<td colspan="15">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[7],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[7]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[7]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[8]}}" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[8]}}" ng-show='staff.hasPermission("accountLogWithdrawal:menu")' class="tab-pane ">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[8]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[8]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[8],appIndex,app.id,1)">
+																		  ng-submit="page(8,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[8]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[8],appIndex,app.id).data.pageIndex?appNodeArr(tagName[8],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[8]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[8],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[8],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -626,49 +671,61 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
-																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>流水号</th>
+																	<th>到账金额</th>
+																	<th>提现回馈</th>
+																	<th>提现时间</th>
+																	<th>提现金额</th>
+																	<th>提现机构交易码,成功后回写,用于对账</th>
+																	<th>提现手续费</th>
+																	<th>提现银行</th>
+																	<th>状态1待审核,2提现成功,3提现失败,4撤销提现</th>
+																	<th>审核时间</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[8],appIndex,app.id).data.data && appNodeArr(tagName[8],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[8],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[8],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[8],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[8],appIndex,app.id).data.data && appNodeArr(tagNameArr[8],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[8],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[8],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[8],appIndex,app.id).data.pageSize + $index+1}}</td>
+																	<td>{{item.serialNumber}}</td>
+																	<td>{{item.arriveMoney}}</td>
+																	<td>{{item.bankappNodeArr(tagNameArr[8],appIndex,app.id)}}</td>
 																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.money}}</td>
+																	<td>{{item.bankTradeNo}}</td>
+																	<td>{{item.fee}}</td>
+																	<td>{{item.bankName}}</td>
+																	<td>{{item.state}}</td>
+																	<td>{{item.dateAudited | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountLogWithdrawal:info")' ng-click="info('i',8,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[8],appIndex,app.id).data.data==null || appNodeArr(tagName[8],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[8],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[8],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[8],appIndex,app.id).data.data.length==0">
+																	<td colspan="12">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[8],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[8]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[8]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="tab-acc-{{appIndex}}-{{tagName[9]}}" class="tab-pane ">
+											<div id="tab-acc-{{appIndex}}-{{tagNameArr[9]}}" ng-show='staff.hasPermission("accountLogOperational:menu")' class="tab-pane ">
 												<div class="float-e-margins">
 													<div class="">
 														<table class="table">
 															<tr>
 																<td>
-																	<form id="info_search_form_{{tagName[9]}}_{{appIndex}}_{{app.id}}"
+																	<form id="info_search_form_{{tagNameArr[9]}}_{{appIndex}}_{{app.id}}"
 																		  role="form" class="form-inline"
 																		  method="post"  accept-charset="UTF-8"
-																		  ng-submit="page(tagName[9],appIndex,app.id,1)">
+																		  ng-submit="page(9,appIndex,app.id,1)">
 																		<input type="hidden" name="userId" ng-value="userId">
 																		<input type="hidden" name="appId" ng-value="app.id">
-																		<input type="hidden" name="pageNum" id="pageNumA_{{tagName[9]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagName[9],appIndex,app.id).data.pageIndex?appNodeArr(tagName[9],appIndex,app.id).data.pageIndex:1}}">
+																		<input type="hidden" name="pageNum" id="pageNumA_{{tagNameArr[9]}}_{{appIndex}}_{{app.id}}" value="{{appNodeArr(tagNameArr[9],appIndex,app.id).data.pageIndex?appNodeArr(tagNameArr[9],appIndex,app.id).data.pageIndex:1}}">
 																		<div class="form-group data_5" >
 																			<label class="font-noraml">创建时间</label>
 																			<div class="input-daterange input-group">
@@ -693,32 +750,36 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>名称</th>
-																	<th>类型</th>
+																	<th>交易时间</th>
+																	<th>子账户类型</th>
 																	<th>IP地址</th>
-																	<th>创建时间</th>
+																	<th>交易说明</th>
+																	<th>用户名称</th>
+																	<th>流水类型</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
-																<tr ng-if="appNodeArr(tagName[9],appIndex,app.id).data.data && appNodeArr(tagName[9],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagName[9],appIndex,app.id).data.data">
-																	<td>{{(appNodeArr(tagName[9],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagName[9],appIndex,app.id).data.pageSize + appIndex+1}}</td>
-																	<td>{{item.userName}}</td>
-																	<td>{{item.type==0?'登录':'登出'}}</td>
-																	<td>{{item.ipAddr}}</td>
+																<tr ng-if="appNodeArr(tagNameArr[9],appIndex,app.id).data.data && appNodeArr(tagNameArr[9],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[9],appIndex,app.id).data.data">
+																	<td>{{(appNodeArr(tagNameArr[9],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[9],appIndex,app.id).data.pageSize + $index+1}}</td>
 																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{item.accountSubType}}</td>
+																	<td>{{item.ip}}</td>
+																	<td>{{item.memo}}</td>
+																	<td>{{item.userName}}</td>
+																	<td>{{item.type}}</td>
 																	<td>
-																		<a href="javascript:" ng-show='staff.hasPermission("userLoginLog:info")' ng-click="info('i',item.id)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountLogOperational:info")' ng-click="info('i',9,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
 																</tr>
-																<tr ng-if="appNodeArr(tagName[9],appIndex,app.id).data.data==null || appNodeArr(tagName[9],appIndex,app.id).data.data.length==0">
-																	<td colspan="6">
-																		<div class="alert"><strong>{{appNodeArr(tagName[9],appIndex,app.id).message||'暂无数据'}}</strong></div>
+																<tr ng-if="appNodeArr(tagNameArr[9],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[9],appIndex,app.id).data.data.length==0">
+																	<td colspan="8">
+																		<div class="alert"><strong>{{appNodeArr(tagNameArr[9],appIndex,app.id).message||'暂无数据'}}</strong></div>
 																	</td>
 																</tr>
 																</tbody>
 															</table>
-															<div class="b_page" id="tagPages_{{tagName[9]}}_{{appIndex}}_{{app.id}}"></div>
+															<div class="b_page" id="tagPages_{{tagNameArr[9]}}_{{appIndex}}_{{app.id}}"></div>
 														</div>
 													</div>
 												</div>
@@ -759,6 +820,36 @@
             autoclose: !0
         });
     });
+    var tagNameArr=['userSnapshot'
+		,'accountCapital'
+		,'accountSubGold'
+		,'accountSubLoan'
+		,'accountBindThirdparty'
+		,'accountLog'
+		,'accountLogFreeze'
+		,'accountLogRecharge'
+		,'accountLogWithdrawal'
+		,'accountLogOperational'];
+    var pageArr=[site.userSnapshot.page
+        ,site.accountCapital.page
+        ,site.accountSubGold.page
+        ,site.accountSubLoan.page
+        ,site.accountBindThirdparty.page
+        ,site.accountLog.page
+        ,site.accountLogFreeze.page
+        ,site.accountLogRecharge.page
+        ,site.accountLogWithdrawal.page
+        ,site.accountLogOperational.page];
+    var infoArr=[site.userSnapshot.info
+        ,site.accountCapital.info
+        ,site.accountSubGold.info
+        ,site.accountSubLoan.info
+        ,site.accountBindThirdparty.info
+        ,site.accountLog.info
+        ,site.accountLogFreeze.info
+        ,site.accountLogRecharge.info
+        ,site.accountLogWithdrawal.info
+        ,site.accountLogOperational.info];
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
@@ -771,25 +862,25 @@
 				if(apps && apps.length>0)loadPage(1,1,apps[0].id,1);
             }
         });
-        $scope.info = function (title,id) {
-            sessionStorage.setItem(site.user.info,id);
-            openMyBoxLayer(title,site.user.view+'_app_account_info_snapshot.html');
+        $scope.info = function (title,tagIndex,id) {
+            sessionStorage.setItem(infoArr[tagIndex],id);
+            openMyBoxLayer(title,site.user.view+'_app_account_info_'+tagNameArr[tagIndex]+'.html');
         };
-        $scope.page = function (tagName,ngIndex,appId,pageIndex) {
-            loadPage(tagName,ngIndex,appId,pageIndex);
+        $scope.page = function (tagIndex,ngIndex,appId,pageIndex) {
+            loadPage(tagIndex,ngIndex,appId,pageIndex);
         };
         $scope.appNodeArr = function (tagName,ngIndex,appId) {
             return $data.appArr['app_'+tagName+'_'+ngIndex+'_'+appId];
         }
     });
-
-    var loadPage = function (tagName,ngIndex,appId,pageIndex) {
+    var loadPage = function (tagIndex,ngIndex,appId,pageIndex) {
+        var tagName=tagNameArr[tagIndex];
         if(pageIndex){
             $('#pageNumA_'+tagName+'_'+ngIndex+'_'+appId).val(pageIndex);
         }else{
             pageIndex=$('#pageNumA_'+tagName+'_'+ngIndex+'_'+appId).val();
         }
-        $.post( site.userLoginLog.page+pageIndex,$('#info_search_form_'+tagName+'_'+ngIndex+'_'+appId).serialize(), function (result) {
+        $.post(pageArr[tagIndex]+pageIndex,$('#info_search_form_'+tagName+'_'+ngIndex+'_'+appId).serialize(), function (result) {
             $data.appArr['app_'+tagName+'_'+ngIndex+'_'+appId]=result;
             $('#tagPages_'+tagName+'_'+ngIndex+'_'+appId).html($ngCompile(tag.page(result.data,'page',tagName+','+ngIndex+','+appId))($data));
             if(!$data.$$phase) $data.$apply();

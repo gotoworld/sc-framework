@@ -30,7 +30,6 @@ public class AccountSubGoldController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("accountSubGold:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{userId}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
@@ -50,7 +49,6 @@ public class AccountSubGoldController extends BaseController {
     /**
      * <p> 开户信息保存
      */
-    @RequiresPermissions(value = {"accountSubGold:add", "accountSubGold:edit"}, logical = Logical.OR)
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "save")
     @ApiOperation(value = "信息保存")
     public Response save(@Validated AccountSubGoldDto dto, BindingResult bindingResult) {

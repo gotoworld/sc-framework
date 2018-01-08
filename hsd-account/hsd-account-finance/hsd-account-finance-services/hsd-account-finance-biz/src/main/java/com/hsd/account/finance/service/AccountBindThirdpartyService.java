@@ -9,6 +9,7 @@ import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dao.IAccountBindThirdpartyDao;
 import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
+import com.hsd.account.finance.dto.AccountLogFreezeDto;
 import com.hsd.account.finance.entity.AccountBindThirdparty;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -121,8 +122,14 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
     }
 
     @Override
-        public Response bindCard(Long userId,Long accountId,String name, String cardNo, String certNo, String phone) {
+        public Response bindCard(@RequestBody AccountBindThirdpartyDto dto) {
             Response result = new Response(0,"success");
+            String name = dto.getRealName();
+            String cardNo = dto.getThirdpartyAccount();
+            String certNo = dto.getCardNo();
+            String phone = dto.getCellphone();
+            Long userId = dto.getAppUserId();
+            Long accountId = dto.getAccountId();
             if(StringUtils.isAnyEmpty(name,cardNo,certNo,phone)){
                 result = Response.error("绑卡信息缺失!");
                 return result;
@@ -154,10 +161,10 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
                     }
                 }
 
-                AccountDto dto = new AccountDto();
+                AccountDto accountDto = new AccountDto();
                 dto.setId(accountId);
                 //获取账户信息
-                AccountDto userAccount = accountService.findDataById(dto);
+                AccountDto userAccount = accountService.findDataById(accountDto);
                 if(userAccount == null){
                     result = Response.error("账户不存在!");
                     return result;
@@ -204,9 +211,12 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
         }
 
         @Override
-        public Response unbindCard(Long userId, Long accountId, String cardNo) throws Exception {
+        public Response unbindCard(@RequestBody AccountBindThirdpartyDto dto) throws Exception {
             Response result = new Response(0,"success");
             try {
+                Long userId = dto.getAppUserId();
+                String cardNo =  dto.getThirdpartyAccount();
+                Long accountId = dto.getAccountId();
                 AccountBindThirdparty accountBindThirdparty = new AccountBindThirdparty(){{
                     setAppUserId(userId);
                     setThirdpartyAccount(cardNo);

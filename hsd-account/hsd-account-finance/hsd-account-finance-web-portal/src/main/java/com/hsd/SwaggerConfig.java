@@ -22,7 +22,7 @@ public class SwaggerConfig {
                 .forCodeGeneration(true)
                 .pathMapping("/")// api测试请求地址
                 .select()
-                .paths(PathSelectors.regex("/api/.*"))// 过滤的接口
+                .paths(PathSelectors.regex("/portal/.*"))// 过滤的接口
                 .build();
     }
 

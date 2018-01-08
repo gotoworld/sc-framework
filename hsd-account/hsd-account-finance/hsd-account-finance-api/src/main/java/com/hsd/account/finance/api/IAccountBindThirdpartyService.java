@@ -48,13 +48,13 @@ public interface IAccountBindThirdpartyService {
      * <p>员工信息。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/bindCard")
-    Response bindCard(@RequestParam("userId") Long userId,@RequestParam("accountId") Long accountId,@RequestParam("name") String name,@RequestParam("cardNo") String cardNo,@RequestParam("certNo") String certNo,@RequestParam("phone") String phone)  throws Exception;
+    Response bindCard(AccountBindThirdpartyDto dto)  throws Exception;
 
     /**
      * <p>员工信息。
      */
     @RequestMapping(method = {RequestMethod.PUT},value = acPrefix + "/unbindCard")
-    Response unbindCard(@RequestParam("userId") Long userId,@RequestParam("accountId") Long accountId,@RequestParam("cardNo") String cardNo)  throws Exception;
+    Response unbindCard(AccountBindThirdpartyDto dto)  throws Exception;
 
     /**
      * <p>信息详情。

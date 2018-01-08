@@ -26,7 +26,7 @@ import java.util.List;
 public class AccountBindThirdpartyController extends BaseController {
     @Autowired
     private IAccountBindThirdpartyService accountBindThirdpartyService;
-    private static final String acPrefix = "/boss/account/finance/accountBindThirdparty/";
+    private static final String acPrefix = "/portal/account/finance/accountBindThirdparty/";
 
 
     /**

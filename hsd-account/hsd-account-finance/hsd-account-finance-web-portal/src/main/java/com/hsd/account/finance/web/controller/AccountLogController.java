@@ -20,7 +20,7 @@ public class AccountLogController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IAccountLogService accountLogService;
-    private static final String acPrefix = "/boss/account/finance/accountLog/";
+    private static final String acPrefix = "/portal/account/finance/accountLog/";
 
     /**
      * <p>信息分页 (未删除)。

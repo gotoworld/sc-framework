@@ -25,79 +25,74 @@
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="ibox float-e-margins">
-			<div class="form-horizontal ibox-content col-md-12">
+			<div class="form ibox-content col-md-12">
 
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">客户id：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.id}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">登录名：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.account}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">昵称：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.name}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">客户email：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.email}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">性别[0男1女2保密]：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.gender}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">手机号码：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.cellphone}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">客户类型 1会员2渠道商：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.type}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">状态 1、启用 2、禁用 3.黑名单 默认1：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.state}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">注册渠道 默认为other：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.registerChannel}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">标签：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.tags}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">注册时间：</label>
-                    <div class="col-md-9 form-control-static">
-                    {{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
+                <div class="col-sm-6 b-r">
 
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">登录名：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control" ng-bind-html="item.account"></label>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">昵称：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control" ng-bind-html="item.name"></label>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">手机：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control" ng-bind-html="item.cellphone"></label>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">邮箱：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control" ng-bind-html="item.email"></label>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">渠道：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control" ng-bind-html="item.registerChannel"></label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">性别：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control" ng-bind-html="genderEnum(item.gender)"></label>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">类型：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control">会员</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">状态：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control" ng-bind-html="stateEnum(item.state)"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group clearfix">
+                        <label class="col-md-5 control-label">标签：</label>
+                        <div class="col-md-12">
+                            <label  class="form-control" ng-bind-html="item.tags"></label>
+                        </div>
+                    </div>
+                </div>
                 <div class="clearfix "></div>
                 <div class="col-md-12" style="height: 50px;">
                     <div style="width: 200px; margin: 0 auto;">
-                        <a href="javascript:;" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
+                        <a href="javascript:" onclick="closeMyBoxLayer();"><i class="fa fa-gg"></i> 返回 <i class="fa fa-gg"></i> </a>
                     </div>
                 </div>
             </div>
@@ -127,6 +122,24 @@
         staff.init(function(){
            loadInfo(sessionStorage.getItem(site.user.info));
         });
+        $scope.stateEnum=function(key){
+            var val="其它";
+            switch (key){
+                case 1:val="<label class='label label-info'>启用</label>";break;
+                case 2:val="<label class='label label-warning'>禁用</label>";break;
+                case 3:val="<label class='label label-danger'>黑名单</label>";break;
+            }
+            return val;
+        };
+        $scope.genderEnum=function(key){
+            var val='未知';
+            switch(key){
+                case 0:val='男';break;
+                case 1:val='女';break;
+                case 2:val='保密';break;
+            }
+            return val;
+        };
     });
     var loadInfo=function(id){
         $.get(site.user.info + id, {},function (result) {

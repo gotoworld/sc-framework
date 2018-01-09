@@ -2,8 +2,12 @@ package com.hsd.account.finance.web.controller;
 
 import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dto.AccountDto;
+import com.hsd.account.finance.dto.op.AccountFreezeDto;
+import com.hsd.account.finance.dto.op.AccountReverseDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
+import com.hsd.framework.annotation.ALogOperation;
+import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.util.CommonConstant;
 import io.swagger.annotations.Api;
@@ -27,19 +31,22 @@ public class AccountController extends FinanceBaseController {
     @RequiresPermissions("account:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
-    public Response page(@ModelAttribute  AccountDto dto, @PathVariable("pageNum") Integer pageNum) {
+    public Response page(@ModelAttribute AccountDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountController page.........");
         Response result = new Response();
         try {
-            if (dto == null) dto = new AccountDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
+            if (dto == null) dto = new AccountDto() {{
+                setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
+            }};
             dto.setPageNum(pageNum);
-            dto.setAppUserId(getAppUserId(dto.getAppId(),dto.getUserId()));
+            dto.setAppUserId(getAppUserId(dto.getAppId(), dto.getUserId()));
             result.data = PageUtil.copy(accountService.findDataIsPage(dto));
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
+
     /**
      * <p> 信息详情。
      */
@@ -50,10 +57,63 @@ public class AccountController extends FinanceBaseController {
         log.info("AccountController info.........");
         Response result = new Response();
         try {
-            result.data = accountService.findDataById(new AccountDto(){{ setId(id); }});
+            result.data = accountService.findDataById(new AccountDto() {{
+                setId(id);
+            }});
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
+
+    @RequiresPermissions("account:op:freeze")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/freeze")
+    @ALogOperation(type = "变更", desc = "账户操作-冻结/解冻")
+    @ApiOperation(value = "账户操作-冻结/解冻")
+    @RfAccount2Bean
+    public Response freeze(@ModelAttribute AccountFreezeDto dto) {
+        log.info("AccountController freeze.........");
+        Response result = new Response();
+        try {
+            result.data = accountService.freeze(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequiresPermissions("account:op:reverse")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/reverse")
+    @ALogOperation(type = "变更", desc = "账户操作-冲正/抵扣")
+    @ApiOperation(value = "账户操作-冲正/抵扣")
+    @RfAccount2Bean
+    public Response reverse(@ModelAttribute AccountReverseDto dto) {
+        log.info("AccountController reverse.........");
+        Response result = new Response();
+        try {
+            result.data = accountService.reverse(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequiresPermissions("account:op:state")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "op/state/{id}")
+    @ALogOperation(type = "变更", desc = "账户操作-状态变更")
+    @ApiOperation(value = "账户操作-状态变更")
+    @RfAccount2Bean
+    public Response state(@PathVariable("id") Long id) {
+        log.info("AccountController state.........");
+        Response result = new Response();
+        try {
+            result.data = accountService.updateState(new AccountDto() {{
+                setId(id);
+            }});
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
 }

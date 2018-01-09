@@ -1,5 +1,8 @@
 /* CSS Document */
 
+
+label.form-control{background-color:rgb(252, 252, 252);;border: 0px;}
+
 .ng-cloak {
     display: none
 }

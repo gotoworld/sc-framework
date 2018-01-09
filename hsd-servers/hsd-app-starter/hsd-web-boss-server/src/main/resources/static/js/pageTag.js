@@ -145,11 +145,12 @@ var tag = {
         }
         // 汇总输出
         var pageCom = "";
+        pageCom += ("<a class=\"disabled\">共" + dataCount + "条</a>");
         // pageCom += ("<div class=\"b_page\">");
         pageCom += (prePage);
         pageCom += (midPage);
         pageCom += (nextPage);
-        pageCom += ("<a class=\"disabled\">共" + dataCount + "条</a>");
+        pageCom += ("<a class=\"disabled\">共" + pageInfo.pageCount+"页</a>");
         pageCom += ("<div class=\"clear\"></div>");
         // pageCom += ("</div>");
 

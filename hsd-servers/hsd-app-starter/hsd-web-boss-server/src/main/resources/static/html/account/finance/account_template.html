@@ -145,7 +145,7 @@
                                     				<td>
                                                       <a href="javascript:" ng-show='staff.hasPermission("accountTemplate:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 													  <a href="javascript:" ng-show='staff.hasPermission("accountTemplate:recovery")' ng-click="recovery(item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 恢复</a>
-                                                      <a href="javascript:" ng-show='staff.hasPermission("accountTemplate:pyhdel")' ng-click="pyhdel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
+                                                      <a href="javascript:" ng-show='staff.hasPermission("accountTemplate:phydel")' ng-click="phydel(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 物理删除</a>
                                                     </td>
                                     			</tr>
                                     			<tr ng-if="recycle.data.data==null || recycle.data.data.length==0">

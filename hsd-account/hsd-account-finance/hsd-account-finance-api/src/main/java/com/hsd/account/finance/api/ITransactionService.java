@@ -31,7 +31,7 @@ public interface ITransactionService {
     /**
      * <p>解冻。
      */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/frozen")
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/unfreeze")
     public Response unfreeze(AccountDto dto) throws Exception;
 
 

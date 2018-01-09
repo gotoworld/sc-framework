@@ -5,6 +5,7 @@ import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>支付账户 数据库处理接口类。
@@ -26,5 +27,13 @@ public interface IAccountDao extends IBaseDao {
      */
     Account selectByUserId(Account Account) throws Exception;
 
-
+    /** 冲正/抵扣 */
+    @Update("update account set state=1 where id = #{id}")
+    int reverse(Account Account) throws Exception;
+    /** 冻结 */
+    @Update("update account set state=1 where id = #{id}")
+    int freeze(Account Account) throws Exception;
+    /** 解冻 */
+    @Update("update account set state=0 where id = #{id}")
+    int unfreeze(Account Account) throws Exception;
 }

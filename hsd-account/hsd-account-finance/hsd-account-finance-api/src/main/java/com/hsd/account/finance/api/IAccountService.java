@@ -2,6 +2,8 @@ package com.hsd.account.finance.api;
 
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.finance.dto.AccountDto;
+import com.hsd.account.finance.dto.op.AccountFreezeDto;
+import com.hsd.account.finance.dto.op.AccountReverseDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -24,9 +26,6 @@ public interface IAccountService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/saveOrUpdateData")
     Response saveOrUpdateData(AccountDto dto) throws Exception;
 
-
-
-
     /**
      * <p>信息列表 分页。
      */
@@ -38,7 +37,6 @@ public interface IAccountService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataIsList")
     List<AccountDto> findDataIsList(AccountDto dto) throws Exception;
-
 
     /**
      * <p>信息详情。
@@ -54,9 +52,15 @@ public interface IAccountService {
 
     /**
      * 状态变更
-     * @return
-     * @throws Exception
      */
     @RequestMapping(method={RequestMethod.PUT},value = acPrefix + "updateState")
-    public Response updateState(AccountDto dto) throws Exception;
+    Response updateState(AccountDto dto) throws Exception;
+
+    /** <p>冲正/抵扣 */
+    @RequestMapping(method={RequestMethod.PUT},value = acPrefix + "reverse")
+    Response reverse(AccountReverseDto dto) throws Exception;
+
+    /** <p>冻结/解冻 */
+    @RequestMapping(method={RequestMethod.PUT},value = acPrefix + "freeze")
+    Response freeze(AccountFreezeDto dto) throws Exception;
 }

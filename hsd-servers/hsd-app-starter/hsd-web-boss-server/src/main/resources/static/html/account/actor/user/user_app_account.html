@@ -55,48 +55,24 @@
 										<div class="tab-content">
 											<div id="tab-acc-{{appIndex}}-{{tagNameArr[0]}}" ng-show='staff.hasPermission("userSnapshot:menu")' class="tab-pane active">
 												<div class="float-e-margins">
-													<div class="form-horizontal ibox-content col-md-12">
+													<div class="form-horizontal  col-md-12">
 														<div class="form-group clearfix">
-															<label class="col-md-3 control-label">客户id：</label>
-															<div class="col-md-9 form-control-static">
-																{{item.userId}}
+															<div class="contact-box" style="border-left: 0px;">
+																<div class="spiner-example">
+																	<div class="sk-spinner sk-spinner-cube-grid">
+																		<div class="sk-cube"></div>
+																		<div class="sk-cube"></div>
+																		<div class="sk-cube"></div>
+																		<div class="sk-cube"></div>
+																		<div class="sk-cube"></div>
+																		<div class="sk-cube"></div>
+																		<div class="sk-cube"></div>
+																		<div class="sk-cube"></div>
+																		<div class="sk-cube"></div>
+																	</div>
+																</div>
 															</div>
-														</div>
-														<div class="form-group clearfix">
-															<label class="col-md-3 control-label">可用余额：</label>
-															<div class="col-md-9 form-control-static">
-																{{item.balance}}
-															</div>
-														</div>
-														<div class="form-group clearfix">
-															<label class="col-md-3 control-label">可用积分：</label>
-															<div class="col-md-9 form-control-static">
-																{{item.credit}}
-															</div>
-														</div>
-														<div class="form-group clearfix">
-															<label class="col-md-3 control-label">可用合时币：</label>
-															<div class="col-md-9 form-control-static">
-																{{item.coin}}
-															</div>
-														</div>
-														<div class="form-group clearfix">
-															<label class="col-md-3 control-label">客户等级：</label>
-															<div class="col-md-9 form-control-static">
-																{{item.vipLevel}}
-															</div>
-														</div>
-														<div class="form-group clearfix">
-															<label class="col-md-3 control-label">VIP分数：</label>
-															<div class="col-md-9 form-control-static">
-																{{item.vipScore}}
-															</div>
-														</div>
-														<div class="form-group clearfix">
-															<label class="col-md-3 control-label">BI时间戳：</label>
-															<div class="col-md-9 form-control-static">
-																{{item.biUpdateTs | date:'yyyy-MM-dd HH:mm:ss'}}
-															</div>
+															<div class="clearfix"></div>
 														</div>
 													</div>
 												</div>
@@ -820,16 +796,6 @@
             autoclose: !0
         });
     });
-    var tagNameArr=['userSnapshot'
-		,'accountCapital'
-		,'accountSubGold'
-		,'accountSubLoan'
-		,'accountBindThirdparty'
-		,'accountLog'
-		,'accountLogFreeze'
-		,'accountLogRecharge'
-		,'accountLogWithdrawal'
-		,'accountLogOperational'];
     var pageArr=[site.userSnapshot.page
         ,site.accountCapital.page
         ,site.accountSubGold.page
@@ -855,6 +821,16 @@
         $ngCompile=$compile;
         $data.userId=sessionStorage.getItem(site.user.info);
         $data.appArr={};
+        $data.tagNameArr=['userSnapshot'
+            ,'accountCapital'
+            ,'accountSubGold'
+            ,'accountSubLoan'
+            ,'accountBindThirdparty'
+            ,'accountLog'
+            ,'accountLogFreeze'
+            ,'accountLogRecharge'
+            ,'accountLogWithdrawal'
+            ,'accountLogOperational'];
         staff.init(function(){
             var staffAppJson = sessionStorage.getItem('hsd_staff_app');
             if (staffAppJson) {
@@ -862,9 +838,9 @@
 				if(apps && apps.length>0)loadPage(1,1,apps[0].id,1);
             }
         });
-        $scope.info = function (title,tagIndex,id) {
-            sessionStorage.setItem(infoArr[tagIndex],id);
-            openMyBoxLayer(title,site.user.view+'_app_account_info_'+tagNameArr[tagIndex]+'.html');
+        $scope.info = function (title,tagIndex,item) {
+            sessionStorage.setItem(infoArr[tagIndex],item.id);
+            openMyBoxLayer(title,site.user.view+'_app_account_info_'+$data.tagNameArr[tagIndex]+'.html');
         };
         $scope.page = function (tagIndex,ngIndex,appId,pageIndex) {
             loadPage(tagIndex,ngIndex,appId,pageIndex);
@@ -874,7 +850,7 @@
         }
     });
     var loadPage = function (tagIndex,ngIndex,appId,pageIndex) {
-        var tagName=tagNameArr[tagIndex];
+        var tagName=$data.tagNameArr[tagIndex];
         if(pageIndex){
             $('#pageNumA_'+tagName+'_'+ngIndex+'_'+appId).val(pageIndex);
         }else{

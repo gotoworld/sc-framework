@@ -148,12 +148,12 @@ public class AccountTypeController extends BaseController {
     /**
      * <p>物理删除。
      */
-    @RequiresPermissions("accountType:pyhdel")
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "pyhdel/{id}")
+    @RequiresPermissions("accountType:phydel")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "phydel/{id}")
     @ALogOperation(type = "删除", desc = "账户类型-物理删除")
     @ApiOperation(value = "物理删除")
-    public Response pyhdel(@PathVariable("id") Long id) {
-        log.info("AccountTypeController pyhdel.........");
+    public Response phydel(@PathVariable("id") Long id) {
+        log.info("AccountTypeController phydel.........");
         Response result = new Response();
         try {
             if (id==null) {throw new RuntimeException("参数异常!");}

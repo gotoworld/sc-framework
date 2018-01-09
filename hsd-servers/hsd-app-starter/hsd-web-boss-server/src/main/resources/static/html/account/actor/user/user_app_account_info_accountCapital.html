@@ -197,11 +197,11 @@
         $data = $scope;
         $ngCompile=$compile;
         staff.init(function(){
-            loadInfo(sessionStorage.getItem(site.account.info));
+            loadInfo(sessionStorage.getItem(site.accountCapital.info));
         });
     });
     var loadInfo=function(id){
-        $.get(site.account.info + id, {},function (result) {
+        $.get(site.accountCapital.info + id, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 $data.item = result.data;

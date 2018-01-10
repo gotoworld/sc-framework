@@ -31,11 +31,11 @@ public interface IAccountDao extends IBaseDao {
 
     /** 冲正/抵扣 */
     @Update("update account set state=1 where id = #{id}")
-    int reverse(Account Account) throws Exception;
+    int reverse(IEntity entity) throws Exception;
     /** 冻结 */
     @Update("update account set state=1 where id = #{id}")
-    int freeze(Account Account) throws Exception;
+    int freeze(IEntity entity) throws Exception;
     /** 解冻 */
     @Update("update account set state=0 where id = #{id}")
-    int unfreeze(Account Account) throws Exception;
+    int unfreeze(IEntity entity) throws Exception;
 }

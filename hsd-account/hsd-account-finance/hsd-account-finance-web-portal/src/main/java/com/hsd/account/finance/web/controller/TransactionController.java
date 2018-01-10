@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 @Slf4j
 public class TransactionController extends BaseController {
 
-    private static final String acPrefix = "/portal/account/finance/transaction/";
+    private static final String acPrefix = "/api/account/finance/transaction/";
 
     @Autowired
     private ITransactionService transactionService;

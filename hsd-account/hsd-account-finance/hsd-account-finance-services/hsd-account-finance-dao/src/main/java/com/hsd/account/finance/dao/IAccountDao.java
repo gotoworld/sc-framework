@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * <p>支付账户 数据库处理接口类。
  */
@@ -20,12 +22,12 @@ public interface IAccountDao extends IBaseDao {
     int isDataYN(IEntity entity) throws Exception;
 
     /**
-     * 根据用户Id查询账户信息
+     * 根据查询账户信息
      * @param Account
      * @return
      * @throws Exception
      */
-    Account selectByUserId(Account Account) throws Exception;
+    List<Account> selectAccount(Account Account) throws Exception;
 
     /** 冲正/抵扣 */
     @Update("update account set state=1 where id = #{id}")

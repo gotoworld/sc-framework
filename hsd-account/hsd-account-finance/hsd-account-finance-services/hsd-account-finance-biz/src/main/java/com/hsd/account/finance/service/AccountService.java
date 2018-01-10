@@ -109,11 +109,11 @@ public class AccountService extends BaseService implements IAccountService {
     }
 
     @Override
-    public AccountDto findDataByUserId(@RequestBody AccountDto dto) {
-        AccountDto result = null;
+    public List<AccountDto> findAccount(@RequestBody AccountDto dto) {
+        List<AccountDto> result = null;
         try {
             Account entity = copyTo(dto, Account.class);
-            result = copyTo(accountDao.selectByUserId(entity), AccountDto.class);
+            result = copyTo(accountDao.selectAccount(entity), AccountDto.class);
         } catch (Exception e) {
             log.error("信息[详情]查询异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());

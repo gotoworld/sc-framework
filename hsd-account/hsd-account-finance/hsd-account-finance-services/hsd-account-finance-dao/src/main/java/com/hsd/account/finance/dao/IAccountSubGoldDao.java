@@ -1,5 +1,6 @@
 package com.hsd.account.finance.dao;
 
+import com.hsd.account.finance.entity.Account;
 import com.hsd.account.finance.entity.AccountSubGold;
 import com.hsd.framework.IBaseDao;
 import com.hsd.framework.IEntity;
@@ -27,5 +28,13 @@ public interface IAccountSubGoldDao extends IBaseDao {
      * @throws Exception
      */
     AccountSubGold selectByUserId(AccountSubGold accountSubGold) throws Exception;
-
+    /** 冲正/抵扣 */
+    @Update("update account_sub_gold set state=1 where id = #{id}")
+    int reverse(IEntity entity) throws Exception;
+    /** 冻结 */
+    @Update("update account_sub_gold set state=1 where id = #{id}")
+    int freeze(IEntity entity) throws Exception;
+    /** 解冻 */
+    @Update("update account_sub_gold set state=0 where id = #{id}")
+    int unfreeze(IEntity entity) throws Exception;
 }

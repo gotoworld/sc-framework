@@ -1,2 +1,0 @@
-
-    laydate({elem: '#bean-${t.columnNameFormat}',event: 'click'});

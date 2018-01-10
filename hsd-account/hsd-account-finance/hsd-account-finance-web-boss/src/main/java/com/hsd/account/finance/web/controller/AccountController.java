@@ -4,6 +4,7 @@ import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.op.AccountFreezeDto;
 import com.hsd.account.finance.dto.op.AccountReverseDto;
+import com.hsd.account.finance.dto.op.AccountStateDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
@@ -14,7 +15,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(description = "支付账户")
 @RestController
@@ -33,7 +39,7 @@ public class AccountController extends FinanceBaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute AccountDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountController page.........");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             if (dto == null) dto = new AccountDto() {{
                 setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
@@ -55,7 +61,7 @@ public class AccountController extends FinanceBaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountController info.........");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             result.data = accountService.findDataById(new AccountDto() {{
                 setId(id);
@@ -71,9 +77,9 @@ public class AccountController extends FinanceBaseController {
     @ALogOperation(type = "变更", desc = "账户操作-冻结/解冻")
     @ApiOperation(value = "账户操作-冻结/解冻")
     @RfAccount2Bean
-    public Response freeze(@ModelAttribute AccountFreezeDto dto) {
+    public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController freeze.........");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             result.data = accountService.freeze(dto);
         } catch (Exception e) {
@@ -87,9 +93,9 @@ public class AccountController extends FinanceBaseController {
     @ALogOperation(type = "变更", desc = "账户操作-冲正/抵扣")
     @ApiOperation(value = "账户操作-冲正/抵扣")
     @RfAccount2Bean
-    public Response reverse(@ModelAttribute AccountReverseDto dto) {
+    public Response reverse(@Validated @ModelAttribute AccountReverseDto dto, BindingResult bindingResult) {
         log.info("AccountController reverse.........");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             result.data = accountService.reverse(dto);
         } catch (Exception e) {
@@ -99,17 +105,28 @@ public class AccountController extends FinanceBaseController {
     }
 
     @RequiresPermissions("account:op:state")
-    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "op/state/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "op/state")
     @ALogOperation(type = "变更", desc = "账户操作-状态变更")
     @ApiOperation(value = "账户操作-状态变更")
     @RfAccount2Bean
-    public Response state(@PathVariable("id") Long id) {
+    public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
         log.info("AccountController state.........");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
-            result.data = accountService.updateState(new AccountDto() {{
-                setId(id);
-            }});
+            if (dto == null) return Response.error("参数获取异常!");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.toString()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+//                result.data = accountService.updateState(dto);
+            }
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

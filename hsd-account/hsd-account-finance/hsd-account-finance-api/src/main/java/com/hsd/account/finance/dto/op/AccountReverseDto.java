@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("账户-操作-冲正/抵扣 DTO")
+@ApiModel("账户-操作-冲正/抵扣")
 public class AccountReverseDto extends AccountLogFreezeDto {
 
 }

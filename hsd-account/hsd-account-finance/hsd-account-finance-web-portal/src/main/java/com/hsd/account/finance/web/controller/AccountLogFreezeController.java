@@ -20,7 +20,7 @@ public class AccountLogFreezeController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IAccountLogFreezeService accountLogFreezeService;
-    private static final String acPrefix = "/boss/account/finance/accountLogFreeze/";
+    private static final String acPrefix = "/api/account/finance/accountLogFreeze/";
 
     /**
      * <p>信息分页 (未删除)。

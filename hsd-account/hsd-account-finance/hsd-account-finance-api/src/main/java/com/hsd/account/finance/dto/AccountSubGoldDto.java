@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("子账户-实物贵金属 DTO")
-public class AccountSubGoldDto extends BaseDto {
+public class AccountSubGoldDto extends FinanceBaseDto {
      @ApiModelProperty("贵金属账户id")
      private Long id;
      @ApiModelProperty("域用户id")

@@ -744,24 +744,24 @@
 																<thead>
 																<tr>
 																	<th style="width:20px;">#</th>
-																	<th>交易时间</th>
-																	<th>子账户类型</th>
-																	<th>IP地址</th>
-																	<th>交易说明</th>
+																	<th>操作类型</th>
+																	<th>账户类型</th>
 																	<th>用户名称</th>
-																	<th>流水类型</th>
+																	<th>交易说明</th>
+																	<th>IP地址</th>
+																	<th>交易时间</th>
 																	<th>操作</th>
 																</tr>
 																</thead>
 																<tbody>
 																<tr ng-if="appNodeArr(tagNameArr[9],appIndex,app.id).data.data && appNodeArr(tagNameArr[9],appIndex,app.id).data.data.length>0" ng-repeat="item in appNodeArr(tagNameArr[9],appIndex,app.id).data.data">
 																	<td>{{(appNodeArr(tagNameArr[9],appIndex,app.id).data.pageIndex-1)*appNodeArr(tagNameArr[9],appIndex,app.id).data.pageSize + $index+1}}</td>
-																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+																	<td>{{opTypeEnum(item.type)}}</td>
 																	<td>{{item.accountSubType}}</td>
-																	<td>{{item.ip}}</td>
-																	<td>{{item.memo}}</td>
 																	<td>{{item.userName}}</td>
-																	<td>{{item.type}}</td>
+																	<td>{{item.memo}}</td>
+																	<td>{{item.createIp}}</td>
+																	<td>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 																	<td>
 																		<a href="javascript:" ng-show='staff.hasPermission("accountLogOperational:info")' ng-click="info('i',9,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 																	</td>
@@ -866,6 +866,15 @@
         $scope.appNodeArr = function (tagName,ngIndex,appId) {
             return $data.appArr['app_'+tagName+'_'+ngIndex+'_'+appId];
         }
+        $scope.opTypeEnum=function(key){
+            var result='未知';
+            switch (key){
+				case 1:result='冻结';break;
+				case 2:result='解冻';break;
+				case 3:result='状态变更';break;
+			}
+			return result;
+		}
     });
     var loadPage = function (tagIndex,ngIndex,appId,pageIndex) {
         var tagName=$data.tagNameArr[tagIndex];

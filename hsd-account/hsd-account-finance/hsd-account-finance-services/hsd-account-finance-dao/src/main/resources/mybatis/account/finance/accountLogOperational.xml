@@ -10,10 +10,11 @@
         ,t1.account_sub_type as "accountSubType"
         ,t1.account_sub_id as "accountSubId"
         ,t1.type as "type"
-        ,t1.date_created as "dateCreated"
         ,t1.data as "data"
         ,t1.memo as "memo"
-        ,t1.ip as "ip"
+        ,t1.create_id as "createId"
+        ,t1.create_ip as "createIp"
+        ,t1.date_created as "dateCreated"
         ,t1.bi_update_ts as "biUpdateTs"
     </sql>
 
@@ -36,11 +37,12 @@
            ,account_sub_type 
            ,account_sub_id 
            ,type 
-           ,date_created 
-           ,data 
-           ,memo 
-           ,ip 
-           ,bi_update_ts 
+           ,data
+           ,memo
+           ,create_id
+           ,create_ip
+           ,date_created
+           ,bi_update_ts
         ) values (
             #{id} 
            ,#{appUserId} 
@@ -49,10 +51,11 @@
            ,#{accountSubType} 
            ,#{accountSubId} 
            ,#{type} 
+           ,#{data}
+           ,#{memo}
+           ,#{createId}
+           ,#{createIp}
            ,now()
-           ,#{data} 
-           ,#{memo} 
-           ,#{ip} 
            ,now()
         )
     </insert>
@@ -69,7 +72,6 @@
              <if test="type!=null">,type = #{type}</if>
              <if test="data!=null">,data = #{data}</if>
              <if test="memo!=null">,memo = #{memo}</if>
-             <if test="ip!=null">,ip = #{ip}</if>
         where
         id = #{id}
     </update>

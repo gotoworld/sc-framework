@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("支付账户 DTO")
-public class AccountDto extends BaseDto {
+public class AccountDto extends FinanceBaseDto {
      @ApiModelProperty("主键")
      private Long id;
      @ApiModelProperty("域用户id,安全控制值")
@@ -42,7 +42,7 @@ public class AccountDto extends BaseDto {
      @ApiModelProperty("冻结资金,安全控制值")
 	 @NotNull(message="freeze_money不能为空")
      private BigDecimal freezeMoney;
-     @ApiModelProperty("冻结资金,安全控制值")
+     @ApiModelProperty("在途资金,安全控制值")
 	 @NotNull(message="in_float_money不能为空")
      private BigDecimal inFloatMoney;
      @ApiModelProperty("账户状态0生效1冻结2注销")

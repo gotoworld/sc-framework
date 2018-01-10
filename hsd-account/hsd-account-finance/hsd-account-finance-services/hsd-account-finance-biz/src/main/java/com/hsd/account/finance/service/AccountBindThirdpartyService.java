@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
@@ -130,10 +131,9 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
             String name = dto.getRealName();
             String cardNo = dto.getThirdpartyAccount();
             String certNo = dto.getCardNo();
-            String phone = dto.getCellphone();
             Long userId = dto.getAppUserId();
             Long accountId = dto.getAccountId();
-            if(StringUtils.isAnyEmpty(name,cardNo,certNo,phone)){
+            if(StringUtils.isAnyEmpty(name,cardNo,certNo)){
                 result = Response.error("绑卡信息缺失!");
                 return result;
             }
@@ -144,7 +144,6 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
                     setRealName(name);
                     setThirdpartyType(0);
                     setCardNo(certNo);
-                    setCellphone(phone);
                 }};
                 List<AccountBindThirdparty> accountBindThirdpartys = accountBindThirdpartyDao.selectBindThirdparty(accountBindThirdparty);
                 if(accountBindThirdpartys != null){
@@ -164,11 +163,13 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
                     }
                 }
 
-                AccountDto accountDto = new AccountDto();
-                dto.setId(accountId);
+                AccountDto accountDto = new AccountDto(){{
+                    setId(accountId);
+                    setAppUserId(userId);
+                }};
                 //获取账户信息
-                AccountDto userAccount = accountService.findDataById(accountDto);
-                if(userAccount == null){
+                List<AccountDto> userAccount = accountService.findAccount(accountDto);
+                if(CollectionUtils.isEmpty(userAccount)){
                     result = Response.error("账户不存在!");
                     return result;
                 }

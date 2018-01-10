@@ -30,7 +30,7 @@ public class AccountController extends BaseController{
 
     @Autowired
     private IAccountService accountService;
-    private static final String acPrefix = "/portal/account/finance/account/";
+    private static final String acPrefix = "/api/account/finance/account/";
 
     /**
      * <p> 信息详情。

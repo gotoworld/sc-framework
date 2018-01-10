@@ -39,7 +39,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("AccountController info.........");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             AccountDto dto = new AccountDto(){{
                 setAppUserId(userId);

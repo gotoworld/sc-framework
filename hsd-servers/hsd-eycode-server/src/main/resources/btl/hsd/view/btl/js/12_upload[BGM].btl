@@ -1,1 +1,0 @@
-    updte_single_bgm('upload_btn_${t.columnNameFormat}','upload_div_${t.columnNameFormat}','mp3','${t.columnNameFormat}');

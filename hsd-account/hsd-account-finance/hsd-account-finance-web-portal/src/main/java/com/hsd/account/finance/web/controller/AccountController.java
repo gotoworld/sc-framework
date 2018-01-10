@@ -44,7 +44,7 @@ public class AccountController extends BaseController{
             AccountDto dto = new AccountDto(){{
                 setAppUserId(userId);
             }};
-            result.data = accountService.findDataByUserId(dto);
+            result.data = accountService.findAccount(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

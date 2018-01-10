@@ -152,7 +152,7 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
-                result.data = accountService.updateState(ObjectCopy.copyTo(dto,AccountDto.class));
+                result.data = accountService.updateState(copyTo(dto,AccountDto.class));
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());

@@ -45962,7 +45962,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Creator>Administrator</a:Creator>
 <a:ModificationDate>1513304143</a:ModificationDate>
 <a:Modifier>Administrator</a:Modifier>
-<a:Comment>冻结资金,安全控制值</a:Comment>
+<a:Comment>在途资金,安全控制值</a:Comment>
 <a:DataType>decimal(18,3)</a:DataType>
 <a:Length>18</a:Length>
 <a:Precision>3</a:Precision>

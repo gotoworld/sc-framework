@@ -135,7 +135,7 @@
         <if test="accountId != null ">
             AND account_id = #{accountId}
         </if>
-        <if test="thirdpartyType!=null">,
+        <if test="thirdpartyType!=null">
             AND thirdparty_type = #{thirdpartyType}
         </if>
         <if test="thirdpartyAccount!=null">

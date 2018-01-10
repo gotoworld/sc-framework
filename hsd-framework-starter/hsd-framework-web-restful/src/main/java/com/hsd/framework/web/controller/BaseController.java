@@ -2,6 +2,7 @@ package com.hsd.framework.web.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.hsd.framework.ObjectCopy;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.PageDto;
 import com.hsd.framework.util.IpUtil;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class BaseController {
     protected HttpServletRequest request;
@@ -77,5 +79,18 @@ public class BaseController {
 
     public PageDto getPageDto(PageInfo pageInfo) {
         return PageUtil.copy(pageInfo);
+    }
+
+    public <T> T copyTo(Object obj,Class<T> toObj) throws Exception {
+        if(obj==null){
+            return null;
+        }
+        return  ObjectCopy.copyTo(obj, toObj);
+    }
+    public <T> List<T> copyTo(List from, Class<T> to){
+        if(from==null){
+            return null;
+        }
+        return  ObjectCopy.copyTo(from, to);
     }
 }

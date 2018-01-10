@@ -1,5 +1,6 @@
 package com.hsd.account.finance.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.actor.api.identity.IIdentityService;
@@ -35,6 +36,9 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
 
     @Autowired
     private IAccountService accountService;
+
+    @Autowired
+    private RequestThreeService requestThreeService;
 
     @Autowired
     private IIdentityService identityService;
@@ -191,8 +195,29 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
                 }
 
                 /**
-                 * 卡四要素认证
+                 * 卡三要素认证
                  */
+                JSONObject responseJson = requestThreeService.cardThreeElement(name,certNo,cardNo);
+                if(responseJson == null){
+                    result = Response.error("银行卡验证错误!");
+                    return result;
+                }
+                int errorCode = responseJson.getIntValue("errorCode");
+                JSONObject  data = responseJson.getJSONObject("data");
+                if(errorCode != 200){
+                    String  errorMsg = responseJson.getString("errorMsg");
+                    result.setCode(errorCode);
+                    result.setMessage(errorMsg);
+                    result.setData(data);
+                    return result;
+                }
+
+                String verifyResult = data.getString("verifyResult");
+
+                if(!"S".equalsIgnoreCase(verifyResult)){
+                    result = Response.error("信息不一致!");
+                    return result;
+                }
                 accountBindThirdparty.setMemo("首次绑定");
                 accountBindThirdparty.setId(idGenerator.nextId());
                 accountBindThirdparty.setState(0);
@@ -201,7 +226,6 @@ public class AccountBindThirdpartyService extends BaseService implements IAccoun
                 accountBindThirdparty.setAccountId(accountId);
                 accountBindThirdpartyDao.insert(accountBindThirdparty);
                 result.setData(accountBindThirdparty);
-
             } catch (Exception e) {
                 log.error("信息[详情]查询异常!", e);
                 throw new ServiceException(SysErrorCode.defaultError,e.getMessage());

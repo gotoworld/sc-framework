@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("账户-日志-资金冻结记录 DTO")
-public class AccountLogFreezeDto extends BaseDto {
+public class AccountLogFreezeDto extends FinanceBaseDto {
      @ApiModelProperty("主键")
      private Long id;
      @ApiModelProperty("域用户id")
@@ -31,6 +31,7 @@ public class AccountLogFreezeDto extends BaseDto {
      @NotNull(message="actionType不能为空[0冻结1解冻]")
      private Integer actionType;
      @ApiModelProperty("金额")
+     @NotNull(message="amount不能为空")
      private BigDecimal amount;
      @ApiModelProperty("冻结类型")
      private Integer freezeType;

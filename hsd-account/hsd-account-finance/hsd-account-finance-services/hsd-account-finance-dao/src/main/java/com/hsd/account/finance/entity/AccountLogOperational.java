@@ -25,16 +25,18 @@ public class AccountLogOperational extends BaseEntity {
      private Long accountSubType;
      /**子账户id*/
      private Long accountSubId;
-     /**流水类型*/
+     /**操作类型 1冻结,2解冻,3状态变更*/
      private Integer type;
-     /**交易时间*/
-     private Date dateCreated;
      /**交易数据json*/
      private String data;
      /**交易说明*/
      private String memo;
+     /**操作人id*/
+     private Long createId;
      /**IP地址*/
-     private String ip;
+     private String createIp;
+     /**交易时间*/
+     private Date dateCreated;
      /**BI时间戳*/
      private Date biUpdateTs;
 }

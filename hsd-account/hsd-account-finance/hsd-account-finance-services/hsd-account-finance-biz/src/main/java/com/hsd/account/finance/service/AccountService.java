@@ -19,6 +19,7 @@ import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.service.BaseService;
 import com.hsd.framework.util.CommonConstant;
+import com.hsd.framework.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
@@ -175,7 +176,10 @@ public class AccountService extends BaseService implements IAccountService {
 
             AccountLogOperational logOperational=copyTo(dto,AccountLogOperational.class);
             logOperational.setData(dto.toString());
-            logOperational.setMemo(dto.getActionType()==0?"冻结":"解冻");
+            logOperational.setType(dto.getActionType()==0?1:2);//1冻结,2解冻
+            logOperational.setMemo("管理员操作"+(dto.getActionType()==0?"[冻结]":"[解冻]"));
+            logOperational.setCreateId(dto.getCreateId());
+            logOperational.setCreateIp(dto.getIp());
             logOperationalDao.insert(logOperational);
 
         } catch (Exception e) {

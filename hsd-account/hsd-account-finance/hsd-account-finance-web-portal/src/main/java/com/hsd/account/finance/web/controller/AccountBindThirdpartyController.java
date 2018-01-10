@@ -31,6 +31,11 @@ public class AccountBindThirdpartyController extends BaseController {
 
     /**
      * 绑卡
+     * @param userId
+     * @param accountId
+     * @param name
+     * @param cardNo 卡号
+     * @param certNo 身份证号码
      * @return
      */
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "bindCard/{userId}")

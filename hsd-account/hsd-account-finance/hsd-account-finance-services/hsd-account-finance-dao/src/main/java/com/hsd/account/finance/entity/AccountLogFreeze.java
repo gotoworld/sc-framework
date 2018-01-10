@@ -20,7 +20,7 @@ public class AccountLogFreeze extends BaseEntity {
      private Long appUserId;
      /**支付账户id*/
      private Long accountId;
-     /**操作类型*/
+     /**操作类型[0冻结1解冻]*/
      private Integer actionType;
      /**金额*/
      private BigDecimal amount;

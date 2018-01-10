@@ -34,7 +34,7 @@ public class AccountSubLoanController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("AccountSubLoanController info.........");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             AccountSubLoanDto dto = new AccountSubLoanDto(){{
                 setAppUserId(userId);

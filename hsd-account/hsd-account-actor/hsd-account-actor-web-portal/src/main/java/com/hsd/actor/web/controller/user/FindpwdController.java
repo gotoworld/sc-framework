@@ -68,7 +68,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "验证码-短信推送")
     public Response captchaSms(@RequestParam("accid") Long accid, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("LoginController captchaSms");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             if (accid==null || ValidatorUtil.isNullEmpty(imgCaptchaId) || ValidatorUtil.isNullEmpty(imgCaptchaCode)) {
                 return Response.error("参数有误!");
@@ -98,7 +98,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "验证码-邮件推送")
     public Response captchaEmail(@RequestParam("accid") Long accid) {
         log.info("LoginController captchaEmail");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             if (accid==null) {
                 return Response.error("参数有误!");

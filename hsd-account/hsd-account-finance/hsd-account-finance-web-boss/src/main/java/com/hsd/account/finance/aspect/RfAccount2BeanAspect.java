@@ -54,13 +54,14 @@ public class RfAccount2BeanAspect {
                             log.debug("请求IP:" + ip);
                         }
 //                      System.out.printf(JSON.toJSONString(obj));
-                        ReflectUtil.setValueByFieldName2(obj, "createId", dto.getId());//创建者id
-                        ReflectUtil.setValueByFieldName2(obj, "account", dto.getAccount());
-                        ReflectUtil.setValueByFieldName2(obj, "staffId", dto.getId());
-                        ReflectUtil.setValueByFieldName2(obj, "staffName",dto.getName());
-                        ReflectUtil.setValueByFieldName2(obj, "appStaffId", dto.getAppStaffId());
-                        ReflectUtil.setValueByFieldName2(obj, "appId",dto.getAppId());
-                        ReflectUtil.setValueByFieldName2(obj, "appName", dto.getAppName());
+                        ReflectUtil.setValueByFieldName(obj, "createId", dto.getId());//创建者id
+                        ReflectUtil.setValueByFieldName(obj, "account", dto.getAccount());
+                        ReflectUtil.setValueByFieldName(obj, "staffId", dto.getId());
+                        ReflectUtil.setValueByFieldName(obj, "staffName",dto.getName());
+                        ReflectUtil.setValueByFieldName(obj, "appStaffId", dto.getAppStaffId());
+                        ReflectUtil.setValueByFieldName(obj, "appId",dto.getAppId());
+                        ReflectUtil.setValueByFieldName(obj, "appName", dto.getAppName());
+                        ReflectUtil.setValueByFieldName(obj, "ip", IpUtil.getIpAddr(request));
                         break;
                     }
                 }

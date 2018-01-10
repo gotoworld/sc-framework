@@ -51,11 +51,11 @@ public class RfAccount2BeanAspect {
                             log.debug("请求IP:" + ip);
                         }
 //                      System.out.printf(JSON.toJSONString(obj));
-                        ReflectUtil.setValueByFieldName2(obj,"createId", dto.getId());//创建者id
-//                        ReflectUtil.setValueByFieldName2(obj,"account", dto.getAccount());//id
-//                        ReflectUtil.setValueByFieldName2(obj,"createIp",ip);//创建者ip
-//                        ReflectUtil.setValueByFieldName2(obj,"updateId",dto.getId());//修改者id
-//                        ReflectUtil.setValueByFieldName2(obj,"updateIp",ip);//修改者ip
+                        ReflectUtil.setValueByFieldName(obj,"createId", dto.getId());//创建者id
+//                        ReflectUtil.setValueByFieldName(obj,"account", dto.getAccount());//id
+//                        ReflectUtil.setValueByFieldName(obj,"createIp",ip);//创建者ip
+//                        ReflectUtil.setValueByFieldName(obj,"updateId",dto.getId());//修改者id
+//                        ReflectUtil.setValueByFieldName(obj,"updateIp",ip);//修改者ip
                         break;
                     }
                 }

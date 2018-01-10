@@ -30,7 +30,7 @@ public class Account extends BaseEntity {
      private BigDecimal availableMoney;
      /**冻结资金,安全控制值*/
      private BigDecimal freezeMoney;
-     /**冻结资金,安全控制值*/
+     /**在途资金,安全控制值*/
      private BigDecimal inFloatMoney;
      /**账户状态0生效1冻结2注销*/
      private Integer state;

@@ -1,10 +1,13 @@
 package com.hsd.account.finance.aspect;
 
+import com.alibaba.fastjson.JSONObject;
+import com.hsd.account.actor.dto.user.UserDto;
 import com.hsd.account.staff.dto.org.OrgStaffDto;
 import com.hsd.framework.IDto;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ReflectUtil;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -52,10 +55,12 @@ public class RfAccount2BeanAspect {
                         }
 //                      System.out.printf(JSON.toJSONString(obj));
                         ReflectUtil.setValueByFieldName2(obj, "createId", dto.getId());//创建者id
-//                        ReflectUtil.setValueByFieldName2(obj,"account", OrgStaff.getAccount());//id
-//                        ReflectUtil.setValueByFieldName2(obj,"createIp",ip);//创建者ip
-//                        ReflectUtil.setValueByFieldName2(obj,"updateId",OrgStaff.getId());//修改者id
-//                        ReflectUtil.setValueByFieldName2(obj,"updateIp",ip);//修改者ip
+                        ReflectUtil.setValueByFieldName2(obj, "account", dto.getAccount());
+                        ReflectUtil.setValueByFieldName2(obj, "staffId", dto.getId());
+                        ReflectUtil.setValueByFieldName2(obj, "staffName",dto.getName());
+                        ReflectUtil.setValueByFieldName2(obj, "appStaffId", dto.getAppStaffId());
+                        ReflectUtil.setValueByFieldName2(obj, "appId",dto.getAppId());
+                        ReflectUtil.setValueByFieldName2(obj, "appName", dto.getAppName());
                         break;
                     }
                 }

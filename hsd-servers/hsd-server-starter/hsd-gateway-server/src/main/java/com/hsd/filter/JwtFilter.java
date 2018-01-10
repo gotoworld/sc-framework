@@ -67,7 +67,7 @@ public class JwtFilter implements Filter {
                                 throw new RuntimeException(jwtFilterProperties.getMessage().getForceOffline());
                             }
                         }
-                        key = "u:" + jsonObject.getString("id") + ":" + jsonObject.getString("appUserId");
+                        key = "u:" + jsonObject.getString("id") + ":" + jsonObject.getString("appStaffId");
                         String value= ""+redisHelper.get(key);
                         if (ValidatorUtil.notEmpty(value)
                                 && claims.getIssuedAt().getTime() != Long.parseLong(value)) {//用户最新token签发时间

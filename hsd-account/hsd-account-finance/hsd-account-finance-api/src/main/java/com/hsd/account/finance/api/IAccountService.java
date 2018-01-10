@@ -48,7 +48,7 @@ public interface IAccountService {
      * <p>信息详情。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByUserId")
-    AccountDto findDataByUserId(AccountDto dto) throws Exception;
+    List<AccountDto> findAccount(AccountDto dto) throws Exception;
 
     /**
      * 状态变更

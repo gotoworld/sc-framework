@@ -17,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("支付账户与三方账户绑定 DTO")
-public class AccountBindThirdpartyDto extends BaseDto {
+public class AccountBindThirdpartyDto extends FinanceBaseDto {
      @ApiModelProperty("主键")
      private Long id;
      @ApiModelProperty("域用户id")

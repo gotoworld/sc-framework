@@ -18,7 +18,4 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("账户-操作-资金冻结记录")
 public class AccountFreezeDto extends AccountLogFreezeDto {
-    @ApiModelProperty("操作类型")
-    @NotNull(message="actionType不能为空[0冻结1解冻]")
-    private Integer actionType;
 }

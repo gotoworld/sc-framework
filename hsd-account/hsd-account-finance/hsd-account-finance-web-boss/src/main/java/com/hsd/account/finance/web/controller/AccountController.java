@@ -5,6 +5,7 @@ import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.op.AccountFreezeDto;
 import com.hsd.account.finance.dto.op.AccountReverseDto;
 import com.hsd.account.finance.dto.op.AccountStateDto;
+import com.hsd.framework.ObjectCopy;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
@@ -81,7 +82,20 @@ public class AccountController extends FinanceBaseController {
         log.info("AccountController freeze.........");
         Response result = new Response("success");
         try {
-            result.data = accountService.freeze(dto);
+            if (dto == null) return Response.error("参数获取异常!");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result.data = accountService.freeze(dto);
+            }
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -97,7 +111,20 @@ public class AccountController extends FinanceBaseController {
         log.info("AccountController reverse.........");
         Response result = new Response("success");
         try {
-            result.data = accountService.reverse(dto);
+            if (dto == null) return Response.error("参数获取异常!");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "reverse." + dto.toString()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result.data = accountService.reverse(dto);
+            }
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -125,7 +152,7 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
-//                result.data = accountService.updateState(dto);
+                result.data = accountService.updateState(ObjectCopy.copyTo(dto,AccountDto.class));
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());

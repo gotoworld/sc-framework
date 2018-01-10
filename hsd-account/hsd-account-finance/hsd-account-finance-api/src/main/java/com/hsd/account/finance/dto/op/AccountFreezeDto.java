@@ -15,10 +15,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("账户-操作-资金冻结记录 DTO")
 public class AccountFreezeDto extends AccountLogFreezeDto {
-
+    @ApiModelProperty("冻结类型2222d")
+    @NotNull(message="freezeType不能为空")
+    private Integer freezeType;
 }

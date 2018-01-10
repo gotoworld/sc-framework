@@ -2,6 +2,7 @@ package com.hsd.account.finance.dto.op;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hsd.account.finance.dto.AccountLogFreezeDto;
+import com.hsd.account.finance.dto.FinanceBaseDto;
 import com.hsd.framework.dto.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("账户-操作-状态变更")
-public class AccountStateDto extends BaseDto {
+public class AccountStateDto extends FinanceBaseDto {
     @ApiModelProperty("主键")
     private Long id;
     @ApiModelProperty("域用户id,安全控制值")

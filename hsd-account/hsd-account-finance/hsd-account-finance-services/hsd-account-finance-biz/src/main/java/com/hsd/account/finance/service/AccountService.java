@@ -4,15 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.finance.api.IAccountLogOperationalService;
 import com.hsd.account.finance.api.IAccountService;
-import com.hsd.account.finance.dao.IAccountDao;
-import com.hsd.account.finance.dao.IAccountLogFreezeDao;
-import com.hsd.account.finance.dao.IAccountLogOperationalDao;
+import com.hsd.account.finance.dao.*;
 import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.op.AccountFreezeDto;
 import com.hsd.account.finance.dto.op.AccountReverseDto;
-import com.hsd.account.finance.entity.Account;
-import com.hsd.account.finance.entity.AccountLogFreeze;
-import com.hsd.account.finance.entity.AccountLogOperational;
+import com.hsd.account.finance.entity.*;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
@@ -36,6 +32,10 @@ import java.util.List;
 public class AccountService extends BaseService implements IAccountService {
     @Autowired
     private IAccountDao accountDao;
+    @Autowired
+    private IAccountSubGoldDao accountSubGoldDao;
+    @Autowired
+    private IAccountSubLoanDao accountSubLoanDao;
     @Autowired
     private IAccountLogFreezeDao logFreezeDao;
     @Autowired
@@ -165,12 +165,36 @@ public class AccountService extends BaseService implements IAccountService {
     public Response freeze(@RequestBody AccountFreezeDto dto) throws Exception {
         Response result = new Response("success");
         try {
-            //1.判断操作类型 冻结/解冻
-            //2.记录冻结日志
-            //3.记录操作日志
-            Account entity = copyTo(dto, Account.class);
-            accountDao.freeze(entity);
+            //.判断操作类型 冻结/解冻
+            //.判断冻结账户种类
+            //.执行[冻结/解冻]金额/数量 update 账户 set available_money=,freeze_money=,freezeTotalAmount= where id=
+            //.记录冻结日志
+            //.记录操作日志
 
+            //获取指定账户信息
+            switch (dto.getBizAccountType()){//业务账户0资金账户1黄金账户2网贷账户
+                case 0: {
+                    Account accountEntity = copyTo(dto, Account.class);
+                    accountDao.freeze(accountEntity);
+                    break;
+                }
+                case 1: {
+                    AccountSubGold accountSubGoldEntity = copyTo(dto, AccountSubGold.class);
+                    accountSubGoldDao.freeze(accountSubGoldEntity);
+                    break;
+                }
+                case 2: {
+                    AccountSubLoan accountSubLoanEntity = copyTo(dto, AccountSubLoan.class);
+                    accountSubGoldDao.freeze(accountSubLoanEntity);
+                    break;
+                }
+                default:{
+                    return Response.error("业务账户未知");
+                }
+            }
+
+
+            //获取
             AccountLogFreeze logFreezeEntity=copyTo(dto,AccountLogFreeze.class);
             logFreezeDao.insert(logFreezeEntity);
 
@@ -178,6 +202,7 @@ public class AccountService extends BaseService implements IAccountService {
             logOperational.setData(dto.toString());
             logOperational.setType(dto.getActionType()==0?1:2);//1冻结,2解冻
             logOperational.setMemo("管理员操作"+(dto.getActionType()==0?"[冻结]":"[解冻]"));
+            logOperational.setUserName(dto.getStaffName());
             logOperational.setCreateId(dto.getCreateId());
             logOperational.setCreateIp(dto.getIp());
             logOperationalDao.insert(logOperational);

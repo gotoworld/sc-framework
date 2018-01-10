@@ -1,7 +1,6 @@
-package com.hsd.account.finance.dto.op;
+package com.hsd.account.finance.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.hsd.account.finance.dto.AccountLogFreezeDto;
 import com.hsd.framework.dto.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,12 +10,12 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("账户-操作-冻结/解冻")
-public class AccountFreezeDto extends AccountLogFreezeDto {
-
+public class FinanceBaseDto extends BaseDto {
+    @ApiModelProperty("业务账户[0资金账户1黄金账户2网贷账户]")
+    @NotNull(message="bizAccountType不能为空")
+    private Integer bizAccountType;
 }

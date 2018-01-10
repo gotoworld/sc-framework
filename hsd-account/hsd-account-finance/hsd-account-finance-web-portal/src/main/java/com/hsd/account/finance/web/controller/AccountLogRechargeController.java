@@ -20,7 +20,7 @@ public class AccountLogRechargeController extends BaseController {
     private static final long serialVersionUID = -528422099490438672L;
     @Autowired
     private IAccountLogRechargeService accountLogRechargeService;
-    private static final String acPrefix = "/boss/account/finance/accountLogRecharge/";
+    private static final String acPrefix = "/api/account/finance/accountLogRecharge/";
 
     /**
      * <p>信息分页 (未删除)。

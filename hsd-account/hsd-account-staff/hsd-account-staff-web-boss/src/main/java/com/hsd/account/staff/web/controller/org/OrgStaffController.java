@@ -307,7 +307,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取所属组织")
 	public Response getStaff(@PathVariable("staffId") Long staffId) {
 		log.info("OrgStaffController getStaff.........");
-		Response result=new Response();
+		Response result=new Response("success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(staffId);
@@ -369,7 +369,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取个人已设置角色")
 	public Response getStaffRole(@PathVariable("staffId") Long staffId) {
 		log.info("OrgStaffController getStaffRole.........");
-		Response result=new Response();
+		Response result=new Response("success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(staffId);
@@ -384,7 +384,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取组织已设置角色")
 	public Response getOrgRole(@PathVariable("staffId") Long staffId) {
 		log.info("OrgStaffController getOrgRole.........");
-		Response result=new Response();
+		Response result=new Response("success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(staffId);

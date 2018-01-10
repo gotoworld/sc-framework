@@ -18,36 +18,33 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("用户账户-操作日志 DTO")
 public class AccountLogOperationalDto extends BaseDto {
-     @ApiModelProperty("主键")
-     private Long id;
-     @ApiModelProperty("域用户id")
-	 @NotNull(message="app_user_id不能为空")
-     private Long appUserId;
-     @ApiModelProperty("用户名称")
-	 @Size(max=25,message="user_name最大25字符")
-     private String userName;
-     @ApiModelProperty("支付账户id")
-	 @NotNull(message="account_id不能为空")
-     private Long accountId;
-     @ApiModelProperty("子账户类型")
-     private Long accountSubType;
-     @ApiModelProperty("子账户id")
-     private Long accountSubId;
-     @ApiModelProperty("流水类型")
-	 @NotNull(message="type不能为空")
-     private Integer type;
-     @ApiModelProperty("交易时间")
-     private Date dateCreated;
-     @ApiModelProperty("交易数据json")
-	 @Size(max=255,message="data最大255字符")
-     private String data;
-     @ApiModelProperty("交易说明")
-	 @NotNull(message="memo不能为空")@Size(max=80,message="memo最大80字符")
-     private String memo;
-     @ApiModelProperty("IP地址")
-	 @NotNull(message="ip不能为空")@Size(max=20,message="ip最大20字符")
-     private String ip;
-     @ApiModelProperty("BI时间戳")
-     private Date biUpdateTs;
+    @ApiModelProperty("主键")
+    private Long id;
+    @ApiModelProperty("域用户id")
+    private Long appUserId;
+    @ApiModelProperty("用户名称")
+    private String userName;
+    @ApiModelProperty("支付账户id")
+    @NotNull(message = "account_id不能为空")
+    private Long accountId;
+    @ApiModelProperty("子账户类型")
+    private Long accountSubType;
+    @ApiModelProperty("子账户id")
+    private Long accountSubId;
+    @ApiModelProperty("操作类型 操作类型 1冻结,2解冻,3状态变更")
+    private Integer type;
+    @ApiModelProperty("交易数据json")
+    private String data;
+    @ApiModelProperty("交易说明")
+    @NotNull(message = "memo不能为空")
+    private String memo;
+    @ApiModelProperty("操作人id")
+    private Long createId;
+    @ApiModelProperty("IP地址")
+    private String createIp;
+    @ApiModelProperty("交易时间")
+    private Date dateCreated;
+    @ApiModelProperty("BI时间戳")
+    private Date biUpdateTs;
 
 }

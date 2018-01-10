@@ -41,6 +41,8 @@ public class BaseDto extends AbstractEntity implements IDto {
     private String appName;
     /**鉴权token*/
     private String Authorization;
+    /** 客户端登录ip */
+    private String ip;
 
     private String str;
 }

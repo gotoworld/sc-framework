@@ -28,7 +28,7 @@ public class AccountLogFreezeDto extends BaseDto {
 	 @NotNull(message="account_id不能为空")
      private Long accountId;
      @ApiModelProperty("操作类型")
-     @NotNull(message="actionType不能为空")
+     @NotNull(message="actionType不能为空[0冻结1解冻]")
      private Integer actionType;
      @ApiModelProperty("金额")
      private BigDecimal amount;

@@ -35,11 +35,16 @@ public class AccountBindThirdpartyController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "bindCard/{userId}")
     @ApiOperation(value = "绑卡")
-    public Response bindCard(@PathVariable("userId") Long userId,@RequestParam Long accountId,@RequestParam String name,@RequestParam String cardNo,@RequestParam String certNo,@RequestParam(name="phone" ,defaultValue = "") Number phone) {
+    public Response bindCard(@PathVariable("userId") Long userId,@RequestParam Long accountId,@RequestParam String name,@RequestParam String cardNo,@RequestParam String certNo) {
         log.info("AccountBindThirdpartyController bindCard.........");
         Response result = new Response("success");
         try {
             AccountBindThirdpartyDto dto = new AccountBindThirdpartyDto();
+            dto.setAppUserId(userId);
+            dto.setAccountId(accountId);
+            dto.setRealName(name);
+            dto.setCardNo(certNo);
+            dto.setThirdpartyAccount(cardNo);
             return accountBindThirdpartyService.bindCard(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());

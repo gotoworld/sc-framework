@@ -24,7 +24,7 @@ public class AccountBindThirdpartyController extends FinanceBaseController {
     /**
      * <p>信息分页 (未删除)。
      */
-  //  @RequiresPermissions("accountBindThirdparty:menu")
+    @RequiresPermissions("accountBindThirdparty:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountBindThirdpartyDto dto, @PathVariable("pageNum") Integer pageNum) {

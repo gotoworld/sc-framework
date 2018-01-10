@@ -25,10 +25,14 @@ public class BaseDto extends AbstractEntity implements IDto {
     private Long createId;
     /** 用户id */
     private Long userId;
+    /** 用户名称 */
+    private String userName;
     /** app用户id */
     private Long appUserId;
     /** 员工id */
     private Long staffId;
+    /** 员工名称 */
+    private String staffName;
     /** app员工id */
     private Long appStaffId;
     /** appId */

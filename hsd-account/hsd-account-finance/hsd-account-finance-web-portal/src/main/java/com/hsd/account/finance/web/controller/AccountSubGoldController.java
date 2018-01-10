@@ -34,7 +34,7 @@ public class AccountSubGoldController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("AccountSubGoldController info.........");
-        Response result = new Response();
+        Response result = new Response("success");
         try {
             AccountSubGoldDto dto = new AccountSubGoldDto(){{
                 setAppUserId(userId);

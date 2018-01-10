@@ -21,7 +21,7 @@ public class FinanceBaseController extends BaseController {
         Long appUserId = ValidatorUtil.notEmpty(appUserObj)?Long.parseLong(appUserObj):null;
         if(appUserId==null){
             UserAppDto userAppDto=userAppService.findDataByAppIdAndUserId(new UserAppDto(){{setAppId(appId);setUserId(userId);}});
-            if(userAppDto!=null){
+            if(userAppDto!=null && userAppDto.getId()!=null){
                 appUserId=userAppDto.getId();
                 redisHelper.set("appUser:"+appId+":"+userId,appUserId);
             }else{

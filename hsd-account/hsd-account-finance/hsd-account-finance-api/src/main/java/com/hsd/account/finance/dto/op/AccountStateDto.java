@@ -16,10 +16,10 @@ public class AccountStateDto extends BaseDto {
     @ApiModelProperty("主键")
     private Long id;
     @ApiModelProperty("域用户id,安全控制值")
-    @NotNull(message="app_user_id不能为空")
+    @NotNull(message="appUserId不能为空")
     private Long appUserId;
     @ApiModelProperty("账户类型,安全控制值")
-    @NotNull(message="account_type不能为空")
+    @NotNull(message="accountType不能为空")
     private Long accountType;
     @ApiModelProperty("子账户类型")
     private Long accountSubType;

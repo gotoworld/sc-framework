@@ -145,7 +145,7 @@ public class AccountService extends BaseService implements IAccountService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response reverse(AccountReverseDto dto) throws Exception {
+    public Response reverse(@RequestBody AccountReverseDto dto) throws Exception {
         Response result = new Response("success");
         try {
             //1.判断操作类型 冲正/抵扣
@@ -161,7 +161,7 @@ public class AccountService extends BaseService implements IAccountService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response freeze(AccountFreezeDto dto) throws Exception {
+    public Response freeze(@RequestBody AccountFreezeDto dto) throws Exception {
         Response result = new Response("success");
         try {
             //1.判断操作类型 冻结/解冻
@@ -170,8 +170,13 @@ public class AccountService extends BaseService implements IAccountService {
             Account entity = copyTo(dto, Account.class);
             accountDao.freeze(entity);
 
-            logFreezeDao.insert(new AccountLogFreeze(){{}});
-            logOperationalDao.insert(new AccountLogOperational(){{}});
+            AccountLogFreeze logFreezeEntity=copyTo(dto,AccountLogFreeze.class);
+            logFreezeDao.insert(logFreezeEntity);
+
+            AccountLogOperational logOperational=copyTo(dto,AccountLogOperational.class);
+            logOperational.setData(dto.toString());
+            logOperational.setMemo(dto.getActionType()==0?"冻结":"解冻");
+            logOperationalDao.insert(logOperational);
 
         } catch (Exception e) {
             log.error("账户[冻结/解冻]异常!", e);

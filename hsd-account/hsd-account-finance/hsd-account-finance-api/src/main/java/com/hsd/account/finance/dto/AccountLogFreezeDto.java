@@ -20,6 +20,7 @@ import java.util.Date;
 @ApiModel("账户-日志-资金冻结记录 DTO")
 public class AccountLogFreezeDto extends FinanceBaseDto {
      @ApiModelProperty("主键")
+     @NotNull(message="id不能为空")
      private Long id;
      @ApiModelProperty("域用户id")
 	 @NotNull(message="app_user_id不能为空")

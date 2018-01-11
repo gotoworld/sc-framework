@@ -1,5 +1,7 @@
 package com.hsd.account.finance.web.controller;
 
+import com.hsd.account.actor.api.identity.IIdentityService;
+import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
@@ -30,6 +32,10 @@ public class AccountController extends BaseController{
 
     @Autowired
     private IAccountService accountService;
+
+    @Autowired
+    private IIdentityService identityService;
+
     private static final String acPrefix = "/api/account/finance/account/";
 
     /**
@@ -92,6 +98,40 @@ public class AccountController extends BaseController{
         try {
             accountService.updateState(dto);
 
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * <p> 实名认证信息
+     */
+    @RequestMapping(method={RequestMethod.GET},value = acPrefix + "identityInfo/{userId}")
+    @ApiOperation(value = "实名认证信息")
+    public Response identityInfo(@PathVariable("userId") Long userId) {
+        log.info("AccountController identityInfo.........");
+        Response result = new Response(0);
+        try {
+
+            //获取实名信息
+            IdentityDto identityDto = new IdentityDto();
+            identityDto.setUserId(userId);
+            IdentityDto userIdentity =  identityService.findDataById(identityDto);
+            if(userIdentity == null){
+                result = Response.error("未找到用户实名认证信息!");
+                return result;
+            }
+            Integer identityState = userIdentity.getState();
+            if(identityState == null || identityState.intValue() == 0){
+                result = Response.error("实名认证信息处理中!");
+                return result;
+            }
+            if(identityState == null || identityState.intValue() != 1){
+                result = Response.error("实名认证未成功!");
+                return result;
+            }
+            result.setData(userIdentity);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

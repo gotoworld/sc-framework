@@ -76,15 +76,18 @@
             <div class="col-sm-7">
                 <div class="signin-info">
                     <div class="logopanel m-b">
-                        <h1>[ DEMO /]</h1>
+                        <h1>合时代-您的财富合伙人 </h1>
                     </div>
                     <div class="m-b"></div>
-                    <h4>欢迎使用 <strong>合时代DEMO系统V0.1</strong></h4>
+                    <h4><strong></strong></h4>
                     <ul class="m-b">
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 管理员 admin/admin</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 普通员工 test/test</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>诚信</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>创新</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>专注</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>共赢</li>
+                        <li>我们愿帮助每一位客户通过实现财富增值,拥有更加成功的事业，更加美好的生活。</li>
                     </ul>
-                    <strong>运营后台.</strong>
+                    <strong></strong>
                 </div>
             </div>
             <div class="col-sm-5">
@@ -92,23 +95,12 @@
                                                                 -moz-box-shadow: 0px 1px 40px 0px rgba(140,146,163,0.2),inset 0px -1px 0px 0px #dededf;
                                                                 -webkit-box-shadow: 0px 1px 40px 0px rgba(140,146,163,0.2),inset 0px -1px 0px 0px #dededf;
                                                                 box-shadow: 0px 0px 40px 0px rgba(140,146,163,0.2),inset 0px -1px 0px 0px #dededf !important;">
-                    <h4 class="no-margins">员工登录：</h4>
+                    <h4 class="no-margins">员工登录</h4>
                     <h4 class="text-danger" ng-show="result.code!=0" ng-bind="result.message"></h4>
-                    <input type="text" value="admin" name="account" class="form-control uname" placeholder="用户名"/>
-                    <input type="hidden" value="21232f297a57a5a743894a0e4a801fc3" autocomplete="off" id="passwordA"
-                           name="password"/>
-                    <input type="password" value="admin"
-                           onkeyup="$('#passwordA').val($.md5($(this).val()));"
-                           onchange="$('#passwordA').val($.md5($(this).val()));"
-                           onblur="$('#passwordA').val($.md5($(this).val()));"
-                           class="form-control pword m-b"
-                           placeholder="密码"/>
-                    <!--<div class="checkbox" > -->
-                    <!--   <label > -->
-                    <!--       <input style="margin-top: 2px;" value="1" type="checkbox" class="checkbox" id="remember" name="remember"> 7天免登陆 -->
-                    <!--   </label> -->
-                    <!--</div> -->
                     <input type="hidden" value="sys" name="appId"/>
+                    <input type="text" value="" name="account" class="form-control uname" placeholder="用户名"/>
+                    <input type="hidden" value="" autocomplete="off" id="passwordA" name="password"/>
+                    <input type="password" value="admin" id='password'  class="form-control pword m-b"  placeholder="密码"/>
                     <button type="submit" class="btn btn-success btn-block">登录</button>
                 </form>
             </div>
@@ -128,6 +120,7 @@
     angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
         $data = $scope;
         $scope.uLogin = function () {
+            $('#passwordA').val($.md5($('#password').val()));
             staff.login($('#_login_form').serialize(), function () {
                 location.href = '/index.html';
             });

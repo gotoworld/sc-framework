@@ -33,9 +33,9 @@ public interface IAccountDao extends IBaseDao {
     @Update("update account set state=1 where id = #{id}")
     int reverse(IEntity entity) throws Exception;
     /** 冻结 */
-    @Update("update account set state=1 where id = #{id}")
+    @Update("update account set available_money=total_money-freeze_money-#{freezeMoney},freeze_money=freeze_money+#{freezeMoney} where id = #{id} and available_money>=#{freezeMoney}")
     int freeze(IEntity entity) throws Exception;
     /** 解冻 */
-    @Update("update account set state=0 where id = #{id}")
+    @Update("update account set available_money=total_money-freeze_money+#{freezeMoney},freeze_money=freeze_money-#{freezeMoney} where id = #{id} and freeze_money>=#{freezeMoney}")
     int unfreeze(IEntity entity) throws Exception;
 }

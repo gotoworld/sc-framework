@@ -1,5 +1,6 @@
 package com.hsd.account.finance.service;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.finance.api.IAccountLogOperationalService;
@@ -12,8 +13,12 @@ import com.hsd.account.finance.entity.*;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
+import com.hsd.framework.cache.redis.RedisLock;
+import com.hsd.framework.config.AppConfig;
 import com.hsd.framework.exception.ServiceException;
+import com.hsd.framework.lock.Lock;
 import com.hsd.framework.service.BaseService;
+import com.hsd.framework.util.ArithUtil;
 import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @FeignService
@@ -164,44 +170,61 @@ public class AccountService extends BaseService implements IAccountService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response freeze(@RequestBody AccountFreezeDto dto) throws Exception {
         Response result = new Response("success");
+        //加分布式锁 同一个账户相同时间
+        Lock lock = new RedisLock("lock:account-freeze:"+dto.getId(), 60 * 1000);
         try {
+            //.判断业务账户种类0资金账户1黄金账户2网贷账户
             //.判断操作类型 冻结/解冻
-            //.判断冻结账户种类
-            //.执行[冻结/解冻]金额/数量 update 账户 set available_money=,freeze_money=,freezeTotalAmount= where id=
+            //.执行[冻结/解冻]金额/数量 update 账户 set available_money=(可用金额=总额-冻结金额),freeze_money=(冻结金额=原始冻结金额+-本次冻结金额) where id=#{账户id}
             //.记录冻结日志
             //.记录操作日志
-
+            if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
+                return Response.error("业务账户未知");
+            }
+            if("#0#1#".indexOf("#"+dto.getActionType()+"#")==-1){
+                return Response.error("业务账户未知");
+            }
             //获取指定账户信息
-            switch (dto.getBizAccountType()){//业务账户0资金账户1黄金账户2网贷账户
-                case 0: {
-                    Account accountEntity = copyTo(dto, Account.class);
-                    accountDao.freeze(accountEntity);
+            switch (dto.getBizAccountType()){//业务账户
+                case 0: { //0资金账户
+                    //获取原始账户信息
+                    Account entity = (Account) accountDao.selectByPrimaryKey(new Account() {{ setId(dto.getId()); }});
+                    entity.setFreezeMoney(dto.getAmount());
+                    if (dto.getActionType() == 0) {//冻结 原始冻结金额+本次冻结金额
+                        if (accountDao.freeze(entity) == 0) return Response.error("可用金额不足");
+                    } else {//解冻 原始冻结金额-本次冻结金额
+                        if (accountDao.unfreeze(entity) == 0) return Response.error("可解冻金额不足");
+                    }
                     break;
                 }
-                case 1: {
-                    AccountSubGold accountSubGoldEntity = copyTo(dto, AccountSubGold.class);
-                    accountSubGoldDao.freeze(accountSubGoldEntity);
-                    break;
+                case 1: {//1黄金账户
+                    //AccountSubGold entity= (AccountSubGold) accountSubGoldDao.selectByPrimaryKey(new AccountSubGold(){{setId(dto.getId());}});
+                    //entity.setFreezeMoney(freezeAccount(dto.getActionType(),entity.getFreezeMoney(),dto.getAmount()));
+                    //accountSubGoldDao.freeze(entity);
+                    return Response.error("黄金账户,暂无[冻结/解冻]功能");
+                   // break;
                 }
-                case 2: {
-                    AccountSubLoan accountSubLoanEntity = copyTo(dto, AccountSubLoan.class);
-                    accountSubGoldDao.freeze(accountSubLoanEntity);
+                case 2:{ //2网贷账户
+                    AccountSubLoan entity = (AccountSubLoan) accountSubLoanDao.selectByPrimaryKey(new AccountSubLoan(){{setId(dto.getId());}});
+                    entity.setFreezeMoney(dto.getAmount());
+                    if (dto.getActionType() == 0) {//冻结 原始冻结金额+本次冻结金额
+                        if (accountSubLoanDao.freeze(entity) == 0) return Response.error("可用金额不足");
+                    } else {//解冻 原始冻结金额-本次冻结金额
+                        if (accountSubLoanDao.unfreeze(entity) == 0) return Response.error("可解冻金额不足");
+                    }
                     break;
-                }
-                default:{
-                    return Response.error("业务账户未知");
                 }
             }
 
-
-            //获取
             AccountLogFreeze logFreezeEntity=copyTo(dto,AccountLogFreeze.class);
+            logFreezeEntity.setId(idGenerator.nextId());
             logFreezeDao.insert(logFreezeEntity);
 
             AccountLogOperational logOperational=copyTo(dto,AccountLogOperational.class);
-            logOperational.setData(dto.toString());
+            logOperational.setId(idGenerator.nextId());
+            logOperational.setData(JSON.toJSONString(dto));
             logOperational.setType(dto.getActionType()==0?1:2);//1冻结,2解冻
-            logOperational.setMemo("管理员操作"+(dto.getActionType()==0?"[冻结]":"[解冻]"));
+            logOperational.setMemo(""+(dto.getActionType()==0?"[冻结]":"[解冻]")+dto.getAmount());
             logOperational.setUserName(dto.getStaffName());
             logOperational.setCreateId(dto.getCreateId());
             logOperational.setCreateIp(dto.getIp());
@@ -210,6 +233,8 @@ public class AccountService extends BaseService implements IAccountService {
         } catch (Exception e) {
             log.error("账户[冻结/解冻]异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }finally {
+            lock.unlock();//释放锁
         }
         return result;
     }

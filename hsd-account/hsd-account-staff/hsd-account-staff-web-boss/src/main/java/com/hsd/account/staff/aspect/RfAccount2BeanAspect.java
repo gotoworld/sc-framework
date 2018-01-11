@@ -51,8 +51,8 @@ public class RfAccount2BeanAspect {
 //                      System.out.printf(JSON.toJSONString(obj));
                         ReflectUtil.setValueByFieldName(obj, "createId", dto.getId());//创建者id
                         ReflectUtil.setValueByFieldName(obj, "appStaffId", dto.getAppStaffId());//app用户id
-                        ReflectUtil.setValueByFieldName(obj, "appId", dto.getAppId());//appId
-                        ReflectUtil.setValueByFieldName(obj, "appName", dto.getAppName());//app名称
+//                        ReflectUtil.setValueByFieldName(obj, "appId", dto.getAppId());//appId
+//                        ReflectUtil.setValueByFieldName(obj, "appName", dto.getAppName());//app名称
 //                        ReflectUtil.setValueByFieldName(obj, "account", dto.getAccount());//id
 //                        ReflectUtil.setValueByFieldName(obj,"createIp",ip);//创建者ip
 //                        ReflectUtil.setValueByFieldName(obj,"updateId",orgStaffDto.getId());//修改者id

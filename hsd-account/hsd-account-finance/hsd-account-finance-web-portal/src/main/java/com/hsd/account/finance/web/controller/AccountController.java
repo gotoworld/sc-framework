@@ -1,9 +1,15 @@
 package com.hsd.account.finance.web.controller;
 
+import com.hsd.account.actor.api.identity.IIdentityService;
+import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
+import com.hsd.account.finance.dto.op.AccountFreezeDto;
+import com.hsd.account.finance.dto.op.AccountStateDto;
 import com.hsd.framework.Response;
+import com.hsd.framework.annotation.ALogOperation;
+import com.hsd.framework.annotation.RfAccount2Bean;
 import com.hsd.framework.annotation.auth.Logical;
 import com.hsd.framework.annotation.auth.RequiresPermissions;
 import com.hsd.framework.web.controller.BaseController;
@@ -30,6 +36,10 @@ public class AccountController extends BaseController{
 
     @Autowired
     private IAccountService accountService;
+
+    @Autowired
+    private IIdentityService identityService;
+
     private static final String acPrefix = "/api/account/finance/account/";
 
     /**
@@ -81,21 +91,93 @@ public class AccountController extends BaseController{
         return result;
     }
 
-    /**
-     * <p> 开户信息保存
-     */
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.PUT},value = acPrefix + "updateState/{userId}")
-    @ApiOperation(value = "状态变更")
-    public Response updateState(@ModelAttribute AccountDto dto) {
-        log.info("AccountController updateState.........");
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "updateState")
+    @ALogOperation(type = "变更", desc = "账户操作-状态变更")
+    @ApiOperation(value = "账户操作-状态变更")
+    public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
+        log.info("AccountController state.........");
         Response result = new Response("success");
         try {
-            accountService.updateState(dto);
-
+            if (dto == null) return Response.error("参数获取异常!");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.toString()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result = accountService.updateState(copyTo(dto,AccountDto.class));
+            }
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
         return result;
     }
 
+
+    /**
+     * <p> 实名认证信息
+     */
+    @RequestMapping(method={RequestMethod.GET},value = acPrefix + "identityInfo/{userId}")
+    @ApiOperation(value = "实名认证信息")
+    public Response identityInfo(@PathVariable("userId") Long userId) {
+        log.info("AccountController identityInfo.........");
+        Response result = new Response(0);
+        try {
+
+            //获取实名信息
+            IdentityDto identityDto = new IdentityDto();
+            identityDto.setUserId(userId);
+            IdentityDto userIdentity =  identityService.findDataById(identityDto);
+            if(userIdentity == null){
+                result = Response.error("未找到用户实名认证信息!");
+                return result;
+            }
+            Integer identityState = userIdentity.getState();
+            if(identityState == null || identityState.intValue() == 0){
+                result = Response.error("实名认证信息处理中!");
+                return result;
+            }
+            if(identityState == null || identityState.intValue() != 1){
+                result = Response.error("实名认证未成功!");
+                return result;
+            }
+            result.setData(userIdentity);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "freeze")
+    @ALogOperation(type = "变更", desc = "账户操作-冻结/解冻")
+    @ApiOperation(value = "账户操作-冻结/解冻")
+    @RfAccount2Bean
+    public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
+        log.info("AccountController freeze.........");
+        Response result = new Response("success");
+        try {
+            if (dto == null) return Response.error("参数获取异常!");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result = accountService.freeze(dto);
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 }

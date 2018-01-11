@@ -26,13 +26,13 @@ public interface ITransactionService {
      * <p>冻结。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/frozen")
-    public Response frozen(AccountDto dto) throws Exception;
+    public Response amountFrozen(AccountDto dto) throws Exception;
 
     /**
      * <p>解冻。
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/unfreeze")
-    public Response unfreeze(AccountDto dto) throws Exception;
+    public Response amountUnfreeze(AccountDto dto) throws Exception;
 
 
 }

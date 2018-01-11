@@ -22,17 +22,4 @@ public interface ITransactionService {
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/deduct")
     public Response deduct(DeductMoneyDto dto) throws Exception;
 
-    /**
-     * <p>冻结。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/frozen")
-    public Response frozen(AccountDto dto) throws Exception;
-
-    /**
-     * <p>解冻。
-     */
-    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/unfreeze")
-    public Response unfreeze(AccountDto dto) throws Exception;
-
-
 }

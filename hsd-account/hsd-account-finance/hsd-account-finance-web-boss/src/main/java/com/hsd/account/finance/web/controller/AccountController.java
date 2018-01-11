@@ -94,7 +94,7 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
-                result.data = accountService.freeze(dto);
+                result = accountService.freeze(dto);
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -123,7 +123,7 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
-                result.data = accountService.reverse(dto);
+                result = accountService.reverse(dto);
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());
@@ -152,7 +152,7 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
-                result.data = accountService.updateState(copyTo(dto,AccountDto.class));
+                result = accountService.updateState(copyTo(dto,AccountDto.class));
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());

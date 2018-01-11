@@ -174,15 +174,12 @@ public class AccountService extends BaseService implements IAccountService {
         Lock lock = new RedisLock("lock:account-freeze:"+dto.getId(), 60 * 1000);
         try {
             //.判断业务账户种类0资金账户1黄金账户2网贷账户
-            //.判断操作类型 冻结/解冻
-            //.执行[冻结/解冻]金额/数量 update 账户 set available_money=(可用金额=总额-冻结金额),freeze_money=(冻结金额=原始冻结金额+-本次冻结金额) where id=#{账户id}
-            //.记录冻结日志
-            //.记录操作日志
             if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
                 return Response.error("业务账户未知");
             }
+            //.判断操作类型 冻结/解冻
             if("#0#1#".indexOf("#"+dto.getActionType()+"#")==-1){
-                return Response.error("业务账户未知");
+                return Response.error("操作类型未知");
             }
             //获取指定账户信息
             switch (dto.getBizAccountType()){//业务账户
@@ -215,11 +212,12 @@ public class AccountService extends BaseService implements IAccountService {
                     break;
                 }
             }
-
+            //.记录冻结日志
             AccountLogFreeze logFreezeEntity=copyTo(dto,AccountLogFreeze.class);
             logFreezeEntity.setId(idGenerator.nextId());
             logFreezeDao.insert(logFreezeEntity);
 
+            //.记录操作日志
             AccountLogOperational logOperational=copyTo(dto,AccountLogOperational.class);
             logOperational.setId(idGenerator.nextId());
             logOperational.setData(JSON.toJSONString(dto));

@@ -74,7 +74,7 @@ public class ChannelInfoController extends BaseController {
     @ApiOperation(value = "信息完善")
     public Response save(@Validated @ModelAttribute ChannelInfoDto dto, BindingResult bindingResult) {
         log.info("ChannelInfoController edit.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "edit." + dto.getToken()))) {

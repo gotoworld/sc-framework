@@ -35,7 +35,7 @@ public class TemplateService extends BaseService implements ITemplateService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response saveOrUpdateData(@RequestBody TemplateDto dto) throws Exception {
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             Template entity = copyTo(dto, Template.class);

@@ -40,7 +40,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  OrgInfoDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("OrgInfoController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) {
                 dto = new OrgInfoDto();
@@ -63,7 +63,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "信息分页(精简信息)")
     public Response briefPage(@ModelAttribute  OrgInfoDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("OrgInfoController briefPage.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) {
                 dto = new OrgInfoDto();
@@ -86,7 +86,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "回收站 分页")
     public Response recyclePage(@ModelAttribute OrgInfoDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("OrgInfoController recyclePage.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) {
                 dto = new OrgInfoDto();
@@ -109,7 +109,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "信息树")
     public Response jsonTree() {
         log.info("OrgInfoController jsonTree.........");
-        Response result=new Response(0, "success");
+        Response result=new Response();
         try {
             result.data=orgInfoService.findDataIsTree(new OrgInfoDto());
         } catch (Exception e) {
@@ -125,7 +125,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("OrgInfoController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             OrgInfoDto dto=new OrgInfoDto();
             dto.setId(id);
@@ -144,7 +144,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("OrgInfoController del.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             OrgInfoDto dto = new OrgInfoDto();
             dto.setId(id);
@@ -164,7 +164,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated OrgInfoDto dto, BindingResult bindingResult) {
         log.info("OrgInfoController save.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
@@ -191,7 +191,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "获取组织已设置角色")
     public Response getOrgRole(@PathVariable("orgId") Long orgId) {
         log.info("OrgInfoController getOrgRole.........");
-        Response result=new Response(0, "success");
+        Response result=new Response();
         try {
             OrgInfoDto orgInfoDto=new OrgInfoDto();
             orgInfoDto.setId(orgId);
@@ -208,7 +208,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "添加角色")
     public Response addRole(@ModelAttribute OrgOrgVsRoleDto dto) {
         log.info("OrgInfoController addRole.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             result = orgInfoService.addRole(dto);
@@ -223,7 +223,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "删除角色")
     public Response delRole(@ModelAttribute OrgOrgVsRoleDto dto) {
         log.info("OrgInfoController delRole.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             result = orgInfoService.delRole(dto);
@@ -237,7 +237,7 @@ public class OrgInfoController extends BaseController {
     public Response getStaff(@PathVariable("orgId") Long orgId
                              ,@RequestParam(name = "level",required = false) String level) {
         log.info("OrgInfoController getStaff.........");
-        Response result=new Response(0, "success");
+        Response result=new Response();
         try {
             OrgOrgVsStaffDto orgVsStaffDto=new OrgOrgVsStaffDto();
             orgVsStaffDto.setOrgId(orgId);
@@ -254,7 +254,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "添加人员")
     public Response setStaff(@ModelAttribute OrgOrgVsStaffDto dto) {
         log.info("OrgInfoController addStaff.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             result = orgInfoService.addStaff(dto);
@@ -269,7 +269,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "删除人员")
     public Response delStaff(@ModelAttribute OrgOrgVsStaffDto dto) {
         log.info("OrgInfoController delStaff.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             result = orgInfoService.delStaff(dto);
@@ -284,7 +284,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "设置部门负责人")
     public Response setManager(@RequestParam("orgId") Long orgId,@RequestParam("manager") Long manager) {
         log.info("OrgInfoController setManager.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (orgId == null || manager==null)throw new RuntimeException("参数异常");
             OrgInfoDto dto=new OrgInfoDto(){{setId(orgId);setManager(manager);}};
@@ -299,7 +299,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "获取部门负责人")
     public Response getManager(@PathVariable("orgId") Long orgId) {
         log.info("OrgInfoController getManager.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result = orgInfoService.getManager(new OrgInfoDto(){{setId(orgId);}});
         } catch (Exception e) {
@@ -312,7 +312,7 @@ public class OrgInfoController extends BaseController {
     public Response getStaffCode(@PathVariable("orgCode") String orgCode
             ,@RequestParam(name = "level",required = false) String level) {
         log.info("OrgInfoController getStaffCode.........");
-        Response result=new Response(0, "success");
+        Response result=new Response();
         try {
             OrgOrgVsStaffDto orgVsStaffDto=new OrgOrgVsStaffDto();
             orgVsStaffDto.setCode(orgCode);
@@ -327,7 +327,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "获取组织内员工所有职级-根据组织CODE")
     public Response findOrgLevel(@PathVariable("orgCode") String orgCode) {
         log.info("OrgInfoController findOrgLevel.........");
-        Response result=new Response(0, "success");
+        Response result=new Response();
         try {
             OrgOrgVsStaffDto orgVsStaffDto=new OrgOrgVsStaffDto();
             orgVsStaffDto.setCode(orgCode);
@@ -344,7 +344,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "获取组织列表-根据组织类型")
     public Response list(@PathVariable("type") Integer type) {
         log.info("OrgInfoController list bytype.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             OrgInfoDto dto = new OrgInfoDto();
             dto.setType(type);//类型0企业1部门2组
@@ -363,7 +363,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "获取组织列表-根据上级机构")
     public Response listSub(@PathVariable("orgCode") String orgCode) {
         log.info("OrgInfoController listSub........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             OrgInfoDto dto = new OrgInfoDto();
             dto.setCode(orgCode);
@@ -382,7 +382,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "获取组织及下级组织内人员->传入公司或部门的code")
     public Response findOrgChildStaffIsList(@PathVariable("orgCode") String orgCode) {
         log.info("OrgInfoController findOrgChildStaffIsList........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             OrgInfoDto dto = new OrgInfoDto();
             dto.setCode(orgCode);
@@ -403,7 +403,7 @@ public class OrgInfoController extends BaseController {
     @ApiOperation(value = "恢复")
     public Response recovery(@PathVariable("id") Long id) {
         log.info("OrgInfoController del.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             OrgInfoDto dto=new OrgInfoDto();
             dto.setId(id);

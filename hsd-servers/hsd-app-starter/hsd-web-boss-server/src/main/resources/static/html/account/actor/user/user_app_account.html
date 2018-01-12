@@ -161,8 +161,8 @@
 																	<td>{{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 																	<td>
 																		<a href="javascript:" ng-show='staff.hasPermission("account:info")' ng-click="info('i',1,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-																		<a href="javascript:" ng-show='staff.hasPermission("account:op:freeze")' ng-click="freeze('i',1,item)" rel="nofollow" class="label label-warning" ><i class="fa fa-bookmark"></i> 冻结</a>
-																		<a href="javascript:" ng-show='staff.hasPermission("account:op:unfreeze")' ng-click="unfreeze('i',1,item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 解冻</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("account:op:freeze")' ng-click="freeze(appIndex,app.id,1,item)" rel="nofollow" class="label label-warning" ><i class="fa fa-bookmark"></i> 冻结</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("account:op:unfreeze")' ng-click="unfreeze(appIndex,app.id,1,item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 解冻</a>
 																	</td>
 																</tr>
 																<tr ng-if="appNodeArr(tagNameArr[1],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[1],appIndex,app.id).data.data.length==0">
@@ -235,8 +235,8 @@
 																	<td>{{item.type}}</td>
 																	<td>
 																		<a href="javascript:" ng-show='staff.hasPermission("accountSubGold:info")' ng-click="info('i',2,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-																		<a href="javascript:" ng-show='staff.hasPermission("account:op:freeze")' ng-click="freeze('i',2,item)" rel="nofollow" class="label label-warning" ><i class="fa fa-bookmark"></i> 冻结</a>
-																		<a href="javascript:" ng-show='staff.hasPermission("account:op:unfreeze")' ng-click="unfreeze('2',1,item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 解冻</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountSubGold:op:freeze")' ng-click="freeze(appIndex,app.id,2,item)" rel="nofollow" class="label label-warning" ><i class="fa fa-bookmark"></i> 冻结</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountSubGold:op:unfreeze")' ng-click="unfreeze(appIndex,app.id,2,item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 解冻</a>
 																	</td>
 																</tr>
 																<tr ng-if="appNodeArr(tagNameArr[2],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[2],appIndex,app.id).data.data.length==0">
@@ -311,8 +311,8 @@
 																	<td>{{item.state}}</td>
 																	<td>
 																		<a href="javascript:" ng-show='staff.hasPermission("accountSubLoan:info")' ng-click="info('i',3,item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
-																		<a href="javascript:" ng-show='staff.hasPermission("account:op:freeze")' ng-click="freeze('i',3,item)" rel="nofollow" class="label label-warning" ><i class="fa fa-bookmark"></i> 冻结</a>
-																		<a href="javascript:" ng-show='staff.hasPermission("account:op:unfreeze")' ng-click="unfreeze('i',3,item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 解冻</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountSubLoan:op:freeze")' ng-click="freeze(appIndex,app.id,3,item)" rel="nofollow" class="label label-warning" ><i class="fa fa-bookmark"></i> 冻结</a>
+																		<a href="javascript:" ng-show='staff.hasPermission("accountSubLoan:op:unfreeze")' ng-click="unfreeze(appIndex,app.id,3,item)" rel="nofollow" class="label label-success" ><i class="fa fa-bookmark"></i> 解冻</a>
 																	</td>
 																</tr>
 																<tr ng-if="appNodeArr(tagNameArr[3],appIndex,app.id).data.data==null || appNodeArr(tagNameArr[3],appIndex,app.id).data.data.length==0">
@@ -875,12 +875,18 @@
             sessionStorage.setItem(infoArr[tagIndex],item.id);
             openMyBoxLayer(title,site.user.view+'_app_account_info_'+$data.tagNameArr[tagIndex]+'.html');
         };
-        $scope.freeze = function (title,tagIndex,item) {
+        $scope.freeze = function (ngIndex,appId,tagIndex,item) {
             sessionStorage.setItem(infoArr[tagIndex],item.id);
+            sessionStorage.setItem(infoArr[tagIndex]+'/ngIndex',ngIndex);
+            sessionStorage.setItem(infoArr[tagIndex]+'/appId',appId);
+            sessionStorage.setItem(infoArr[tagIndex]+'/tagIndex',tagIndex);
             openMyBoxLayer('冻结',site.user.view+'_app_account_freeze_'+$data.tagNameArr[tagIndex]+'.html');
         };
-        $scope.unfreeze = function (title,tagIndex,item) {
+        $scope.unfreeze = function (ngIndex,appId,tagIndex,item) {
             sessionStorage.setItem(infoArr[tagIndex],item.id);
+            sessionStorage.setItem(infoArr[tagIndex]+'/ngIndex',ngIndex);
+            sessionStorage.setItem(infoArr[tagIndex]+'/appId',appId);
+            sessionStorage.setItem(infoArr[tagIndex]+'/tagIndex',tagIndex);
             openMyBoxLayer('解冻',site.user.view+'_app_account_unfreeze_'+$data.tagNameArr[tagIndex]+'.html');
         };
         $scope.page = function (pageIndex,ngIndex,appId,tagIndex) {
@@ -901,7 +907,7 @@
     });
     var loadPage = function (pageIndex,ngIndex,appId,tagIndex) {
         var tagName=$data.tagNameArr[tagIndex];
-        if(pageIndex){
+        if(util.notEmpty(pageIndex)){
             $('#pageNumA_'+tagName+'_'+ngIndex+'_'+appId).val(pageIndex);
         }else{
             pageIndex=$('#pageNumA_'+tagName+'_'+ngIndex+'_'+appId).val();

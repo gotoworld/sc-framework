@@ -30,7 +30,7 @@ public class OrgLogLoginController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  OrgLogLoginDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("OrgLogLoginController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) {
                dto = new OrgLogLoginDto();
@@ -54,7 +54,7 @@ public class OrgLogLoginController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("OrgLogLoginController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             OrgLogLoginDto dto = new OrgLogLoginDto();
             if (id!=null) {

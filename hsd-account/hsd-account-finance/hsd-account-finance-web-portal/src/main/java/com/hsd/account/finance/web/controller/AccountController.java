@@ -92,7 +92,6 @@ public class AccountController extends BaseController{
     }
 
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "updateState")
-    @ALogOperation(type = "变更", desc = "账户操作-状态变更")
     @ApiOperation(value = "账户操作-状态变更")
     public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
         log.info("AccountController state.........");
@@ -154,9 +153,7 @@ public class AccountController extends BaseController{
     }
 
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "freeze")
-    @ALogOperation(type = "变更", desc = "账户操作-冻结/解冻")
     @ApiOperation(value = "账户操作-冻结/解冻")
-    @RfAccount2Bean
     public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController freeze.........");
         Response result = new Response(0, "success");

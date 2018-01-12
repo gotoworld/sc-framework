@@ -51,7 +51,7 @@ public class AccountSubLoanController extends BaseController {
      */
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "save")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated AccountSubLoanDto dto, BindingResult bindingResult) {
+    public Response save(@Validated @ModelAttribute AccountSubLoanDto dto, BindingResult bindingResult) {
         log.info("AccountSubLoanController save.........");
         Response result = new Response(0,"success");
         try {

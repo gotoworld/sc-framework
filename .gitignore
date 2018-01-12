@@ -1,6 +1,7 @@
 logs/
 .idea/
 *.iml
+*.yml
 hsd-account/*.iml
 hsd-account/hsd-account-actor/*.iml
 hsd-account/hsd-account-actor/hsd-account-actor-api/*.iml

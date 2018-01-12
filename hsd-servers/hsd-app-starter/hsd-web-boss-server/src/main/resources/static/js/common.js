@@ -217,21 +217,33 @@ var site = {
         view: basePath + "/html/account/finance/account"
         ,page: apiPath.account.finance + "/boss/account/finance/account/page/"       //分页
         ,info: apiPath.account.finance + "/boss/account/finance/account/info/"       //详情
-    }
-    , accountBindThirdparty: {//支付账户与三方账户绑定
-        view: basePath + "/html/account/finance/account_bind_thirdparty"
-        ,page: apiPath.account.finance + "/boss/account/finance/accountBindThirdparty/page/"       //分页
-        ,info: apiPath.account.finance + "/boss/account/finance/accountBindThirdparty/info/"       //详情
+        ,freeze: apiPath.account.finance + "/boss/account/finance/account/op/freeze"   //冻结
+        ,unfreeze: apiPath.account.finance + "/boss/account/finance/account/op/unfreeze"   //解冻
+        ,state: apiPath.account.finance + "/boss/account/finance/account/op/state"   //状态变更
+        ,reverse: apiPath.account.finance + "/boss/account/finance/account/op/reverse"   //冲正/抵扣
     }
     , accountSubGold: {//子账户-实物贵金属
         view: basePath + "/html/account/finance/account_sub_gold"
         ,page: apiPath.account.finance + "/boss/account/finance/accountSubGold/page/"       //分页
         ,info: apiPath.account.finance + "/boss/account/finance/accountSubGold/info/"       //详情
+        ,freeze: apiPath.account.finance + "/boss/account/finance/accountSubGold/op/freeze"   //冻结
+        ,unfreeze: apiPath.account.finance + "/boss/account/finance/accountSubGold/op/unfreeze"   //解冻
+        ,state: apiPath.account.finance + "/boss/account/finance/accountSubGold/op/state"   //状态变更
+        ,reverse: apiPath.account.finance + "/boss/account/finance/accountSubGold/op/reverse"   //冲正/抵扣
     }
     , accountSubLoan: {//子账户-P2P网贷
         view: basePath + "/html/account/finance/account_sub_loan"
         ,page: apiPath.account.finance + "/boss/account/finance/accountSubLoan/page/"       //分页
         ,info: apiPath.account.finance + "/boss/account/finance/accountSubLoan/info/"       //详情
+        ,freeze: apiPath.account.finance + "/boss/account/finance/accountSubLoan/op/freeze"   //冻结
+        ,unfreeze: apiPath.account.finance + "/boss/account/finance/accountSubLoan/op/unfreeze"   //解冻
+        ,state: apiPath.account.finance + "/boss/account/finance/accountSubLoan/op/state"   //状态变更
+        ,reverse: apiPath.account.finance + "/boss/account/finance/accountSubLoan/op/reverse"   //冲正/抵扣
+    }
+    , accountBindThirdparty: {//支付账户与三方账户绑定
+        view: basePath + "/html/account/finance/account_bind_thirdparty"
+        ,page: apiPath.account.finance + "/boss/account/finance/accountBindThirdparty/page/"       //分页
+        ,info: apiPath.account.finance + "/boss/account/finance/accountBindThirdparty/info/"       //详情
     }
     , accountTemplate: {//账户模板
         view: basePath + "/html/account/finance/account_template"

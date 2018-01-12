@@ -87,7 +87,7 @@
 											<td>
 												<a href="javascript:" ng-show='staff.hasPermission("sysApp:info")' ng-click="info('i',item)" rel="nofollow" class="label label-info" ><i class="fa fa-bookmark"></i> 详情</a>
 												<a href="javascript:" ng-show='staff.hasPermission("sysApp:edit")' ng-click="edit('e',item)" class="label label-success" ><i class="fa fa-edit"></i> 编辑</a>
-												<a href="javascript:" ng-show='staff.hasPermission("sysApp:del")' ng-click="del(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
+												<a href="javascript:" ng-show='staff.hasPermission("sysApp:del")  && item.noDelFlag==0' ng-click="del(item)" rel="nofollow" class="label label-danger" ><i class="fa fa-trash-o"></i> 删除</a>
 											</td>
 										</tr>
 										<tr ng-if="result.data.data==null || result.data.data.length==0">

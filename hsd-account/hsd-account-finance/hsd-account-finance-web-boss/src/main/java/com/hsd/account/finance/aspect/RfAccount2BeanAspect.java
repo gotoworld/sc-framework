@@ -7,6 +7,7 @@ import com.hsd.framework.IDto;
 import com.hsd.framework.util.IpUtil;
 import com.hsd.framework.util.JwtUtil;
 import com.hsd.framework.util.ReflectUtil;
+import com.hsd.framework.util.ValidatorUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -55,13 +56,19 @@ public class RfAccount2BeanAspect {
                         }
 //                      System.out.printf(JSON.toJSONString(obj));
                         ReflectUtil.setValueByFieldName(obj, "createId", dto.getId());//创建者id
-                        ReflectUtil.setValueByFieldName(obj, "account", dto.getAccount());
-                        ReflectUtil.setValueByFieldName(obj, "staffId", dto.getId());
-                        ReflectUtil.setValueByFieldName(obj, "staffName",dto.getName());
-                        ReflectUtil.setValueByFieldName(obj, "appStaffId", dto.getAppStaffId());
-                        ReflectUtil.setValueByFieldName(obj, "appId",dto.getAppId());
-                        ReflectUtil.setValueByFieldName(obj, "appName", dto.getAppName());
-                        ReflectUtil.setValueByFieldName(obj, "ip", IpUtil.getIpAddr(request));
+                        if(ValidatorUtil.isEmpty(ReflectUtil.getValueByFieldName(obj,"account")))
+                            ReflectUtil.setValueByFieldName(obj, "account", dto.getAccount());
+                        if(ValidatorUtil.isEmpty(ReflectUtil.getValueByFieldName(obj,"staffId")))
+                            ReflectUtil.setValueByFieldName(obj, "staffId", dto.getId());
+                        if(ValidatorUtil.isEmpty(ReflectUtil.getValueByFieldName(obj,"staffName")))
+                         ReflectUtil.setValueByFieldName(obj, "staffName",dto.getName());
+                        if(ValidatorUtil.isEmpty(ReflectUtil.getValueByFieldName(obj,"appStaffId")))
+                            ReflectUtil.setValueByFieldName(obj, "appStaffId", dto.getAppStaffId());
+                        if(ValidatorUtil.isEmpty(ReflectUtil.getValueByFieldName(obj,"appId")))
+                            ReflectUtil.setValueByFieldName(obj, "appId",dto.getAppId());
+                        if(ValidatorUtil.isEmpty(ReflectUtil.getValueByFieldName(obj,"appName")))
+                            ReflectUtil.setValueByFieldName(obj, "appName", dto.getAppName());
+                        ReflectUtil.setValueByFieldName(obj, "ip", ip);
                         break;
                     }
                 }

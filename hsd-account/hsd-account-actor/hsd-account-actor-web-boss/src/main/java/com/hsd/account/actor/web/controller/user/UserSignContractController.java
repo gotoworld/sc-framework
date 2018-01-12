@@ -30,7 +30,7 @@ public class UserSignContractController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  UserSignContractDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("UserSignContractController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) {
                dto = new UserSignContractDto();
@@ -56,7 +56,7 @@ public class UserSignContractController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("UserSignContractController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             UserSignContractDto dto = new UserSignContractDto();
             if (id!=null) {

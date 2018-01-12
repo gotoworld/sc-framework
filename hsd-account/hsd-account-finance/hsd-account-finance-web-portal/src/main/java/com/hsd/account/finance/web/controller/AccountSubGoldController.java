@@ -34,7 +34,7 @@ public class AccountSubGoldController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("AccountSubGoldController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             AccountSubGoldDto dto = new AccountSubGoldDto(){{
                 setAppUserId(userId);
@@ -53,7 +53,7 @@ public class AccountSubGoldController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated AccountSubGoldDto dto, BindingResult bindingResult) {
         log.info("AccountSubGoldController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

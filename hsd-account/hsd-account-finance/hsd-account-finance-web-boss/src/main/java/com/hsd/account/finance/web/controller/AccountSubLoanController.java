@@ -29,7 +29,7 @@ public class AccountSubLoanController extends FinanceBaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountSubLoanDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountSubLoanController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new AccountSubLoanDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -48,7 +48,7 @@ public class AccountSubLoanController extends FinanceBaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountSubLoanController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             result.data = accountSubLoanService.findDataById(new AccountSubLoanDto(){{setId(id);}});
         } catch (Exception e) {

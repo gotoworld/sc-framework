@@ -28,7 +28,7 @@ public class BusinessTypeController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  BusinessTypeDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("BusinessTypeController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) {
                dto = new BusinessTypeDto();
@@ -51,7 +51,7 @@ public class BusinessTypeController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("BusinessTypeController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             BusinessTypeDto dto = new BusinessTypeDto();
             if (id!=null) {

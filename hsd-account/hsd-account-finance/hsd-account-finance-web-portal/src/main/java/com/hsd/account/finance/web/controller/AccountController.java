@@ -153,58 +153,6 @@ public class AccountController extends BaseController{
         return result;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/freeze")
-    @ApiOperation(value = "账户操作-冻结")
-    public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
-        log.info("AccountController freeze.........");
-        Response result = new Response(0, "success");
-        try {
-            if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
-                throw new RuntimeException("请不要重复提交!");
-            }
-            if (bindingResult.hasErrors()) {
-                String errorMsg = "";
-                List<ObjectError> errorList = bindingResult.getAllErrors();
-                for (ObjectError error : errorList) {
-                    errorMsg += (error.getDefaultMessage()) + ";";
-                }
-                result = Response.error(errorMsg);
-            } else {
-                result = accountService.freeze(dto);
-            }
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/unfreeze")
-    @ApiOperation(value = "账户操作-解冻")
-    public Response unfreeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
-        log.info("AccountController unfreeze.........");
-        Response result = new Response(0, "success");
-        try {
-            if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
-                throw new RuntimeException("请不要重复提交!");
-            }
-            if (bindingResult.hasErrors()) {
-                String errorMsg = "";
-                List<ObjectError> errorList = bindingResult.getAllErrors();
-                for (ObjectError error : errorList) {
-                    errorMsg += (error.getDefaultMessage()) + ";";
-                }
-                result = Response.error(errorMsg);
-            } else {
-                result = accountService.freeze(dto);
-            }
-        } catch (Exception e) {
-            result = Response.error(e.getMessage());
-        }
-        return result;
-    }
-
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/recharge")
     @ApiOperation(value = "账户操作-充值")
     public Response recharge(@Validated @ModelAttribute AccountRechargeDto dto, BindingResult bindingResult) {

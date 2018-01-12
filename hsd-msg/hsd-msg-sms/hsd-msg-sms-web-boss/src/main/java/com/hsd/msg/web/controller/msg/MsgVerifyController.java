@@ -30,7 +30,7 @@ public class MsgVerifyController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  MsgVerifyDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("MsgVerifyController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) dto = new MsgVerifyDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -52,7 +52,7 @@ public class MsgVerifyController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("MsgVerifyController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (id!=null) {throw new RuntimeException("参数异常!");}
             MsgVerifyDto dto = new MsgVerifyDto(){{

@@ -30,7 +30,7 @@ public class IdentityLogController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  IdentityLogDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("IdentityLogController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new IdentityLogDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -52,7 +52,7 @@ public class IdentityLogController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("IdentityLogController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");};
             IdentityLogDto dto = new IdentityLogDto(){{

@@ -2,6 +2,7 @@ package com.hsd.account.finance.web.controller;
 
 import com.hsd.account.finance.api.IAccountSubGoldService;
 import com.hsd.account.finance.dto.AccountSubGoldDto;
+import com.hsd.account.finance.dto.op.AccountTransferDto;
 import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.auth.Logical;
@@ -75,4 +76,6 @@ public class AccountSubGoldController extends BaseController {
         }
         return result;
     }
+
+
 }

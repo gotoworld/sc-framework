@@ -3,6 +3,7 @@ package com.hsd.account.finance.api;
 import com.github.pagehelper.PageInfo;
 import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.op.AccountFreezeDto;
+import com.hsd.account.finance.dto.op.AccountRechargeDto;
 import com.hsd.account.finance.dto.op.AccountReverseDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
@@ -63,4 +64,8 @@ public interface IAccountService {
     /** <p>冻结/解冻 */
     @RequestMapping(method={RequestMethod.PUT},value = acPrefix + "freeze")
     Response freeze(AccountFreezeDto dto) throws Exception;
+
+    /** <p>充值 */
+    @RequestMapping(method={RequestMethod.PUT},value = acPrefix + "recharge")
+    Response recharge(AccountRechargeDto dto) throws Exception;
 }

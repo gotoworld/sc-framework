@@ -32,7 +32,7 @@ public class UserSnapshotController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("UserSnapshotController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             UserSnapshotDto dto = new UserSnapshotDto();
             if (userId!=null) {

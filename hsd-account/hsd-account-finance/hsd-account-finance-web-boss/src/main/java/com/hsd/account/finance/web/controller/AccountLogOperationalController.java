@@ -29,7 +29,7 @@ public class AccountLogOperationalController extends FinanceBaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountLogOperationalDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountLogOperationalController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new AccountLogOperationalDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -49,7 +49,7 @@ public class AccountLogOperationalController extends FinanceBaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountLogOperationalController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             result.data = accountLogOperationalService.findDataById(new AccountLogOperationalDto(){{setId(id); }});
         } catch (Exception e) {

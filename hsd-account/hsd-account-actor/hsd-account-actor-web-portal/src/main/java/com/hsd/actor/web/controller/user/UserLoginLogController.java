@@ -30,7 +30,7 @@ public class UserLoginLogController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute UserLoginLogDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("UserrLoginLogController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) {
                dto = new UserLoginLogDto();

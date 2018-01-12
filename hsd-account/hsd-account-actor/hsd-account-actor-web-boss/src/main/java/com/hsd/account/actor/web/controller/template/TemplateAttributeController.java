@@ -28,7 +28,7 @@ public class TemplateAttributeController extends BaseController {
     @ApiOperation(value = "信息列表")
     public Response list(@RequestParam("templateId") Long templateId) {
         log.info("TemplateAttributeController list.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             TemplateAttributeDto dto = new TemplateAttributeDto(){{ setTemplateId(templateId); }};
             result.data = templateAttributeService.findDataIsList(dto);

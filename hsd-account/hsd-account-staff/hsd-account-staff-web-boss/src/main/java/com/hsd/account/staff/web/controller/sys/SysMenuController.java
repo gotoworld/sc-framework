@@ -38,7 +38,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  SysMenuDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("SysMenuController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) {
                dto = new SysMenuDto();
@@ -63,7 +63,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "信息树")
     public Response jsonTree() {
         log.info("SysMenuController jsonTree.........");
-        Response result=new Response("success");
+        Response result=new Response(0, "success");
         try {
             result.data=sysMenuService.findDataIsTree(new SysMenuDto());
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("SysMenuController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             SysMenuDto dto = new SysMenuDto();
             if (id!=null) {
@@ -104,7 +104,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("SysMenuController del.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             SysMenuDto dto = new SysMenuDto();
             dto.setId(id);
@@ -125,7 +125,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute SysMenuDto dto, BindingResult bindingResult) {
         log.info("SysMenuController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

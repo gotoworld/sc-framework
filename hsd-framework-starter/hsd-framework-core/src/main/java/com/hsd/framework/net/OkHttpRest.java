@@ -1,6 +1,7 @@
 package com.hsd.framework.net;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.hsd.framework.Response;
 import com.hsd.framework.util.Converter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
@@ -8,6 +9,7 @@ import okhttp3.OkHttpClient;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.http.converter.FormHttpMessageConverter;
@@ -23,6 +25,7 @@ import java.nio.charset.Charset;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -530,5 +533,13 @@ public class OkHttpRest {
 
     public void doPut(String url, Object body, Map<String, String> paramMap) {
         this.restTemplate.put(url, body, paramMap);
+    }
+
+    public static void main(String[] args) {
+        OkHttpRest okHttpRest=OkHttpRest.getHttpClient("staff-boss");//开启http连接池
+        okHttpRest.addHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");//设置请求头
+        Map parameter=new HashMap(){{put("account","admin");put("password","21232f297a57a5a743894a0e4a801fc3");put("appId","sys");}};//参数
+        Response response=okHttpRest.doPost("http://192.168.108.100:28890/hsd-account-staff-web-boss/boss/account/staff/sign/login",parameter, Response.class);
+        System.out.println(response);
     }
 }

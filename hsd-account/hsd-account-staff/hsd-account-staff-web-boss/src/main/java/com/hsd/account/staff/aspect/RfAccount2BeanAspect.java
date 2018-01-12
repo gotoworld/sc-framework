@@ -63,6 +63,11 @@ public class RfAccount2BeanAspect {
             }
             log.debug("=====前置通知结束=====");
         } catch (Exception e) {
+
+
+
+
+
             //记录本地异常日志
             log.error("异常信息:{}", e.getMessage());
         }

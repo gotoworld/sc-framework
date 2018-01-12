@@ -58,7 +58,6 @@
              <if test="loginUrl!=null">,login_url = #{loginUrl}</if>
              <if test="mainUrl!=null">,main_url = #{mainUrl}</if>
              <if test="memo!=null">,memo = #{memo}</if>
-             <if test="createId!=null">,create_id = #{createId}</if>
         where
         id = #{id}
     </update>

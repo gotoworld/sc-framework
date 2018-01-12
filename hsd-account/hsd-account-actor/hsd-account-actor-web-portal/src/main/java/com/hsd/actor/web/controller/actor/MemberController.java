@@ -41,7 +41,7 @@ public class MemberController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info() {
         log.info("MemberController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result.data = memberService.findDataById(new MemberDto(){{
                 setUserId(JwtUtil.getSubject(UserDto.class).getId());
@@ -61,7 +61,7 @@ public class MemberController extends BaseController {
     @RfAccount2Bean
     public Response save(@Validated @ModelAttribute MemberDto dto, BindingResult bindingResult) {
         log.info("MemberController save.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

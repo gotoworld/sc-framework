@@ -30,7 +30,7 @@ public class UserSnapshotController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info() {
         log.info("UserSnapshotController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             UserSnapshotDto dto = new UserSnapshotDto(){{setUserId(JwtUtil.getSubject(UserDto.class).getId());}};
             result.data = userSnapshotService.findDataById(dto);

@@ -29,7 +29,7 @@ public class AccountLogFreezeController extends FinanceBaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountLogFreezeDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountLogFreezeController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) dto = new AccountLogFreezeDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -48,7 +48,7 @@ public class AccountLogFreezeController extends FinanceBaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountLogFreezeController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result.data = accountLogFreezeService.findDataById(new AccountLogFreezeDto(){{setId(id);}});
         } catch (Exception e) {

@@ -5,10 +5,7 @@ import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
-import com.hsd.account.finance.dto.op.AccountFreezeDto;
-import com.hsd.account.finance.dto.op.AccountRechargeDto;
-import com.hsd.account.finance.dto.op.AccountStateDto;
-import com.hsd.account.finance.dto.op.AccountWithdrawalDto;
+import com.hsd.account.finance.dto.op.*;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
@@ -199,6 +196,36 @@ public class AccountController extends BaseController{
                 result = Response.error(errorMsg);
             } else {
                 result = accountService.withdrawal(dto);
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * <p> 开户信息保存
+     */
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "transfer")
+    @ApiOperation(value = "转账")
+    public Response transfer(@Validated @ModelAttribute AccountTransferDto dto, BindingResult bindingResult) {
+        log.info("AccountSubGoldController transfer.........");
+        Response result = new Response(0, "success");
+        try {
+            if (dto == null)throw new RuntimeException("参数异常");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "transfer." + dto.getToken()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result = accountService.transfer(dto);
+                request.getSession().setAttribute(acPrefix + "transfer." + dto.getToken(), "1");
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());

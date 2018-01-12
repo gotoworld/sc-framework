@@ -77,7 +77,6 @@ public class AccountBindThirdpartyController extends BaseController {
      * 解绑
      * @return
      */
-    @RequiresPermissions("accountBindThirdparty:unbind")
     @RequestMapping(method = RequestMethod.PUT, value = acPrefix + "unbindCard")
     @ApiOperation(value = "绑卡")
     public Response unbindCard(@ModelAttribute AccountBindThirdpartyDto dto) {

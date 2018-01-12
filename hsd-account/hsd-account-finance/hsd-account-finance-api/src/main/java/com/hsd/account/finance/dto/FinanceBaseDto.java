@@ -16,6 +16,5 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FinanceBaseDto extends BaseDto {
     @ApiModelProperty("业务账户[0资金账户1黄金账户2网贷账户]")
-    @NotNull(message="bizAccountType不能为空")
     private Integer bizAccountType;
 }

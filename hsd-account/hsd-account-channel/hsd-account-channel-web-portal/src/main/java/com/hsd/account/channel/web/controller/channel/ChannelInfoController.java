@@ -50,7 +50,7 @@ public class ChannelInfoController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("ChannelInfoController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             ChannelInfoDto dto = new ChannelInfoDto();
             if (id!=null) {
@@ -74,7 +74,7 @@ public class ChannelInfoController extends BaseController {
     @ApiOperation(value = "信息完善")
     public Response save(@Validated @ModelAttribute ChannelInfoDto dto, BindingResult bindingResult) {
         log.info("ChannelInfoController edit.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "edit." + dto.getToken()))) {
@@ -100,7 +100,7 @@ public class ChannelInfoController extends BaseController {
     @ApiOperation(value = "渠道商类型列表")
     public Response list() {
         log.info("ChannelInfoController list.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
            
         	ChannelTypeDto dto= new ChannelTypeDto();

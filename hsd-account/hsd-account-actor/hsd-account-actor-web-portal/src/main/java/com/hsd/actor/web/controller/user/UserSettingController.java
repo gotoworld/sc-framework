@@ -96,7 +96,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "手机号绑定-推送-短信验证码")
     public Response phoneBindSms(@RequestParam("cellphone") String cellphone, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("UserSettingController phoneBindSms.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             MsgVerifyDto verifyDto = new MsgVerifyDto() {{
                 setImgCaptchaId(imgCaptchaId);
@@ -126,7 +126,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "手机号验证-推送-短信验证码")
     public Response phoneVerifySms(@RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("UserSettingController phoneVerifySms.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             MsgVerifyDto verifyDto = new MsgVerifyDto() {{
                 setImgCaptchaId(imgCaptchaId);
@@ -155,7 +155,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "手机号修改-推送-短信验证码")
     public Response phoneUpdateSms(@RequestParam("cellphone") String cellphone, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("UserSettingController phoneUpdateSms.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(cellphone)) throw new RuntimeException("手机号不能为空!");
 
@@ -179,7 +179,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "手机号-验证")
     public Response phoneVerify(@RequestParam("smsCaptcha") String smsCaptcha) {
         log.info("UserSettingController phoneBind.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(smsCaptcha)) return Response.error("参数有误!");
 
@@ -209,7 +209,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "手机号-绑定")
     public Response phoneBind(@RequestParam("cellphone") String cellphone, @RequestParam("smsCaptcha") String smsCaptcha) {
         log.info("UserSettingController phoneBind.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(cellphone) || ValidatorUtil.isEmpty(smsCaptcha)) return Response.error("参数有误!");
             Long userId = getCurrentUserId();
@@ -241,7 +241,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "手机号-修改")
     public Response phoneUpdate(@RequestParam("cellphone") String cellphone, @RequestParam("smsCaptcha") String smsCaptcha) {
         log.info("UserSettingController phoneUpdate.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(cellphone) || ValidatorUtil.isEmpty(smsCaptcha)) return Response.error("参数有误!");
             Long userId = getCurrentUserId();
@@ -272,7 +272,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "登录密码-修改")
     public Response pwdLoginUpdate(@RequestParam("oldpwd") String oldpwd, @RequestParam("newpwd") String newpwd) {
         log.info("UserSettingController pwdLoginUpdate.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(oldpwd) || ValidatorUtil.isEmpty(newpwd)) return Response.error("参数有误!");
             userService.updatePwd(new UserDto() {{
@@ -290,7 +290,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "实名认证")
     public Response identity(@ModelAttribute IdentityDto dto) {
         log.info("UserSettingController identity.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getRealName()) || ValidatorUtil.isEmpty(dto.getCredentialNumber()) || ValidatorUtil.isEmpty(dto.getImgCaptchaId()) || ValidatorUtil.isEmpty(dto.getImgCaptchaCode()))
                 return Response.error("参数有误!");
@@ -316,7 +316,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "交易密码-设置")
     public Response pwdTradeSetting(@RequestParam("tradePwd") String tradePwd) {
         log.info("UserSettingController pwdTradeSetting.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(tradePwd)) return Response.error("参数有误!");
             userService.pwdTradeSetting(new UserDto() {{
@@ -333,7 +333,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "交易密码-修改")
     public Response pwdTradeUpdate(@RequestParam("oldTradePwd") String oldTradePwd, @RequestParam("newTradePwd") String newTradePwd) {
         log.info("UserSettingController pwdTradeUpdate.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(oldTradePwd) || ValidatorUtil.isEmpty(newTradePwd))
                 return Response.error("参数有误!");
@@ -352,7 +352,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "找回交易密码-验证短信验证码-推送")
     public Response pwdTradeResetVerifySms(@RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("UserSettingController pwdTradeResetVerifySms.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(imgCaptchaId) || ValidatorUtil.isEmpty(imgCaptchaCode))
                 return Response.error("参数有误!");
@@ -386,7 +386,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "找回交易密码-验证短信验证码-验证")
     public Response pwdTradeResetVerify(@RequestParam("credentialNumber") String credentialNumber, @RequestParam("smsCaptcha") String smsCaptcha) {
         log.info("UserSettingController pwdTradeResetVerify.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(credentialNumber) || ValidatorUtil.isEmpty(smsCaptcha))
                 return Response.error("参数有误!");
@@ -421,7 +421,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "找回交易密码-密码重置")
     public Response pwdTradeResetSetting(@RequestParam("tradePwd") String tradePwd) {
         log.info("UserSettingController pwdTradeResetSetting.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(tradePwd)) return Response.error("参数有误!");
             Long userId = getCurrentUserId();
@@ -443,7 +443,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "邮箱绑定")
     public Response emailBind(@RequestParam("email") String email, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("UserSettingController emailBind.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(email) || ValidatorUtil.isEmpty(imgCaptchaId) || ValidatorUtil.isEmpty(imgCaptchaCode)) return Response.error("参数有误!");
 
@@ -472,7 +472,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "邮箱验证")
     public Response emailVerify( @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("UserSettingController emailVerify.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(imgCaptchaId) || ValidatorUtil.isEmpty(imgCaptchaCode)) return Response.error("参数有误!");
 
@@ -501,7 +501,7 @@ public class UserSettingController extends BaseController {
     @ApiOperation(value = "邮箱修改")
     public Response emailUpdate(@RequestParam("email") String email, @RequestParam("emailCaptcha") String emailCaptcha) {
         log.info("UserSettingController emailUpdate.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (ValidatorUtil.isEmpty(email) || ValidatorUtil.isEmpty(emailCaptcha)) return Response.error("参数有误!");
             Long userId = getCurrentUserId();

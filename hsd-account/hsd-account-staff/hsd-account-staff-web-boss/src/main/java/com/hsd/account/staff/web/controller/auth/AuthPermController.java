@@ -63,7 +63,7 @@ public class AuthPermController extends BaseController {
     @ApiOperation(value = "信息树")
     public Response jsonTree() {
         log.info("AuthPermController jsonTree.........");
-        Response result=new Response();
+        Response result=new Response(0,"success");
         try {
             result.data=authPermService.findDataIsTree(new AuthPermDto());
         } catch (Exception e) {
@@ -104,7 +104,7 @@ public class AuthPermController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") String id) {
         log.info("AuthPermController del.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             result.message = authPermService.deleteDataById(new AuthPermDto(){{setId(id);}});
         } catch (Exception e) {
@@ -123,7 +123,7 @@ public class AuthPermController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute AuthPermDto dto, BindingResult bindingResult) {
         log.info("AuthPermController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

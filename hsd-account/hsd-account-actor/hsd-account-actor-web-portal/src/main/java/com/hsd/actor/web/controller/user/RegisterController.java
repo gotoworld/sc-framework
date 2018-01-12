@@ -41,7 +41,7 @@ public class RegisterController extends BaseController {
     @ApiOperation(value = "客户注册")
     public Response reg(@Validated @ModelAttribute UserDto dto, BindingResult bindingResult) {
         log.info("RegisterController reg.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

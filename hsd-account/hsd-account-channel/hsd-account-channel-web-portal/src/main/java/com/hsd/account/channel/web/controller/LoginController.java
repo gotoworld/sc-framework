@@ -51,7 +51,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "登录")
     public Response login(@RequestParam("account") String account , @RequestParam("pwd") String pwd ) throws Exception {
         log.info("ChannelLoginController login");
-        Response result = new Response();
+        Response result = new Response(0,"success");
             try {
                 if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(pwd)) {
                     return Response.error("用户名或密码不能为空!");
@@ -82,7 +82,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "登出")
     public Response logout() {
         log.info("channelController logout.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             log.debug("准备退出!");
             try {
@@ -102,7 +102,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "刷新token")
     public Response refreshToken() {
         log.info("StaffController refreshToken.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             String authorization = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
             Claims claims = JwtUtil.parseJWT(authorization);
@@ -130,7 +130,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "修改密码")
     public Response modifyPwd(@RequestParam("id") Long id, @RequestParam("pwd") String pwd , @RequestParam("newpwd") String newpwd) throws Exception{
     	log.info("channelController modifyPwd ........");
-    	Response result = new Response();
+    	Response result = new Response(0,"success");
     	ChannelInfoDto dto = new ChannelInfoDto();
 		dto.setId(id);
     	try {

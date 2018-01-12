@@ -101,7 +101,7 @@ public class ChannelInfoController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("ChannelInfoController del.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             ChannelInfoDto dto = new ChannelInfoDto();
             dto.setId(id);
@@ -122,7 +122,7 @@ public class ChannelInfoController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute ChannelInfoDto dto, BindingResult bindingResult) {
         log.info("ChannelInfoController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
@@ -154,7 +154,7 @@ public class ChannelInfoController extends BaseController {
     @ApiOperation(value = "信息恢复")
     public Response recovery(@PathVariable("id") Long id){
     	log.info("ChannelInfoController recovery.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             ChannelInfoDto dto = new ChannelInfoDto();
             dto.setId(id);
@@ -177,7 +177,7 @@ public class ChannelInfoController extends BaseController {
     @ApiOperation(value = "重置密码")
     public Response resetPwd(@PathVariable("id") Long id){
     	log.info("ChannelInfoController resetPwd........."); 
-    	 Response result = new Response();
+    	 Response result = new Response(0,"success");
          try {
              ChannelInfoDto dto = new ChannelInfoDto();
              dto.setId(id);
@@ -195,7 +195,7 @@ public class ChannelInfoController extends BaseController {
 	@ApiOperation(value = "批量上传")
 	public Response addBatch(@RequestParam("fileUrl") String fileUrl) {
 		log.info("ChannelInfoController addBatch.........");
-		Response result = new Response();
+		Response result = new Response(0,"success");
 		try {
 			result=channelInfoService.addBatch(fileUrl);
 		} catch (Exception e) {

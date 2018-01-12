@@ -8,6 +8,7 @@ import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dao.*;
 import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.op.AccountFreezeDto;
+import com.hsd.account.finance.dto.op.AccountRechargeDto;
 import com.hsd.account.finance.dto.op.AccountReverseDto;
 import com.hsd.account.finance.entity.*;
 import com.hsd.framework.Response;
@@ -46,6 +47,9 @@ public class AccountService extends BaseService implements IAccountService {
     private IAccountLogFreezeDao logFreezeDao;
     @Autowired
     private IAccountLogOperationalDao logOperationalDao;
+
+    @Autowired
+    private IAccountLogRechargeDao logRechargeDao;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -147,6 +151,18 @@ public class AccountService extends BaseService implements IAccountService {
         }
         userAccount.setState(state);
         accountDao.update(userAccount);
+
+        //.记录操作日志
+        AccountLogOperational logOperational=copyTo(dto,AccountLogOperational.class);
+        logOperational.setId(idGenerator.nextId());
+        logOperational.setData(JSON.toJSONString(dto));
+        logOperational.setType(3);
+        logOperational.setMemo("状态变更"+dto.getState());
+        logOperational.setUserName(dto.getStaffName());
+        logOperational.setCreateId(dto.getCreateId());
+        logOperational.setCreateIp(dto.getIp());
+        logOperationalDao.insert(logOperational);
+
         return result;
     }
 
@@ -230,6 +246,63 @@ public class AccountService extends BaseService implements IAccountService {
 
         } catch (Exception e) {
             log.error("账户[冻结/解冻]异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }finally {
+            lock.unlock();//释放锁
+        }
+        return result;
+    }
+
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response recharge(@RequestBody AccountRechargeDto dto) throws Exception {
+        Response result = new Response(0, "success");
+        //加分布式锁 同一个账户相同时间
+        Lock lock = new RedisLock("lock:account-recharge:"+dto.getId(), 60 * 1000);
+        try {
+            //.判断业务账户种类0资金账户1黄金账户2网贷账户
+            if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
+                return Response.error("业务账户未知");
+            }
+            //获取指定账户信息
+            switch (dto.getBizAccountType()){//业务账户
+                case 0: { //0资金账户
+                    return Response.error("资金账户,暂无[充值]功能");
+                }
+                case 1: {//1黄金账户
+                    AccountSubGold entity= (AccountSubGold) accountSubGoldDao.selectByPrimaryKey(new AccountSubGold(){{setId(dto.getId());}});
+                    if(entity == null){
+                        return Response.error("未找到黄金账户！");
+                    }
+                    if(entity.getState() != 0){
+                        return Response.error("黄金账户不正常！");
+                    }
+                    entity.setTotalGold(dto.getAccountMoney());
+                    if (accountSubGoldDao.recharge(entity) == 0) return Response.error("未找到黄金账户或账户状态不正常!");
+                     break;
+                }
+                case 2:{ //2网贷账户
+                    AccountSubLoan entity = (AccountSubLoan) accountSubLoanDao.selectByPrimaryKey(new AccountSubLoan(){{setId(dto.getId());}});
+                    if(entity == null){
+                        return Response.error("未找到网贷账户！");
+                    }
+                    if(entity.getState() != 0){
+                        return Response.error("网贷账户不正常！");
+                    }
+                    entity.setAvailableMoney(dto.getAccountMoney());
+                    entity.setTotalMoney(dto.getAccountMoney());
+                    if (accountSubLoanDao.recharge(entity) == 0) return Response.error("未找到网贷账户或账户状态不正常!");
+                    break;
+                }
+            }
+            //.记录冻结日志
+            AccountLogRecharge logRechargeEntity=copyTo(dto,AccountLogRecharge.class);
+            logRechargeEntity.setId(idGenerator.nextId());
+            logRechargeDao.insert(logRechargeEntity);
+
+        } catch (Exception e) {
+            log.error("账户[充值]异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
         }finally {
             lock.unlock();//释放锁

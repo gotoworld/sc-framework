@@ -38,7 +38,7 @@ public class ImgCaptchaController {
     /** 校验码json */
     @RequestMapping(value = acPrefix+"/json", method = {RequestMethod.POST, RequestMethod.GET})
     public Response json(HttpServletRequest request, HttpServletResponse response) {
-        Response result=new Response(0, "success");
+        Response result=new Response();
         try {
             // 设置页面不缓存
             response.setHeader("Pragma", "No-cache");

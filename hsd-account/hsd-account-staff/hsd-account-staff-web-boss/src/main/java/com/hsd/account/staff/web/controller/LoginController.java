@@ -61,7 +61,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "登录")
     public Response login(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("appId") String appId) {
         log.info("LoginController login");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (ValidatorUtil.isNullEmpty(account) || ValidatorUtil.isNullEmpty(password)) {
                 return Response.error("员工名或密码不能为空!");
@@ -164,7 +164,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "登出")
     public Response logout() {
         log.info("StaffController logout.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             log.debug("准备退出!");
             try {
@@ -204,7 +204,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "刷新token")
     public Response refreshToken() {
         log.info("StaffController refreshToken.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             String authorization = request.getHeader(CommonConstant.JWT_HEADER_TOKEN_KEY);
             Claims claims = JwtUtil.parseJWT(authorization);

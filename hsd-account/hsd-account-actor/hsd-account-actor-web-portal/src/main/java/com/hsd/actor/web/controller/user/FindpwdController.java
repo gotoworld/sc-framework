@@ -37,7 +37,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "获取账户")
     public Response getAccount(@ModelAttribute UserDto dto) {
         log.info("FindpwdController getAccount.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getAccount()) || ValidatorUtil.isEmpty(dto.getImgCaptchaCode())) return Response.error("参数有误!");
 
@@ -68,7 +68,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "验证码-短信推送")
     public Response captchaSms(@RequestParam("accid") Long accid, @RequestParam("imgCaptchaId") String imgCaptchaId, @RequestParam("imgCaptchaCode") String imgCaptchaCode) {
         log.info("LoginController captchaSms");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (accid==null || ValidatorUtil.isNullEmpty(imgCaptchaId) || ValidatorUtil.isNullEmpty(imgCaptchaCode)) {
                 return Response.error("参数有误!");
@@ -98,7 +98,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "验证码-邮件推送")
     public Response captchaEmail(@RequestParam("accid") Long accid) {
         log.info("LoginController captchaEmail");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (accid==null) {
                 return Response.error("参数有误!");
@@ -125,7 +125,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "验证码校验-短信")
     public Response verifyCaptchaSms(@ModelAttribute UserDto dto) {
         log.info("FindpwdController verifyCaptchaSms.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null || (dto.getId()==null) || ValidatorUtil.isEmpty(dto.getCaptcha()))
                 return Response.error("参数有误!");
@@ -152,7 +152,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "验证码校验-邮件")
     public Response verifyCaptchaEmail(@ModelAttribute UserDto dto) {
         log.info("FindpwdController verifyCaptchaEmail.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getAccount()) || ValidatorUtil.isEmpty(dto.getCaptcha()))
                 return Response.error("参数有误!");
@@ -179,7 +179,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "状态验证-找回密码前置条件已通过")
     public Response verifystate(@RequestParam("accid") Long accid) {
         log.info("FindpwdController verifystate.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (accid == null ) return Response.error("参数有误!");
             if(!"1".equals(redisHelper.get(findPwdStatePreix + accid)))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");
@@ -192,7 +192,7 @@ public class FindpwdController extends BaseController {
     @ApiOperation(value = "密码修改")
     public Response restPwd(@ModelAttribute UserDto dto) {
         log.info("FindpwdController restPwd.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null || dto.getId()==null || ValidatorUtil.isEmpty(dto.getPwd())) return Response.error("参数有误!");
             if(!"1".equals(redisHelper.get(findPwdStatePreix + dto.getId())))  return Response.error("身份验证未通过或已过期,请先进行身份验证!");

@@ -114,7 +114,7 @@ public class ChannelTypeController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("ChannelTypeController del.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             ChannelTypeDto dto = new ChannelTypeDto();
             dto.setId(id);
@@ -135,7 +135,7 @@ public class ChannelTypeController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute ChannelTypeDto dto, BindingResult bindingResult) {
         log.info("ChannelTypeController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

@@ -121,7 +121,7 @@ public class SysAppController extends BaseController {
     @ApiOperation(value = "物理删除")
     public Response phydel(@PathVariable("id") String id) {
         log.info("SysAppController phydel.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
            if (id==null) {throw new RuntimeException("参数异常!");}
             SysAppDto dto = new SysAppDto(){{
@@ -142,7 +142,7 @@ public class SysAppController extends BaseController {
     @ApiOperation(value = "逻辑删除")
     public Response del(@PathVariable("id") String id) {
         log.info("SysAppController del.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
            if (id==null) {throw new RuntimeException("参数异常!");}
             SysAppDto dto = new SysAppDto(){{
@@ -163,7 +163,7 @@ public class SysAppController extends BaseController {
     @ApiOperation(value = "恢复")
     public Response recovery(@PathVariable("id") String id) {
         log.info("SysAppController recovery.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             result.message=sysAppService.recoveryDataById(new SysAppDto(){{setId(id);}});
         } catch (Exception e) {
@@ -181,7 +181,7 @@ public class SysAppController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute SysAppDto dto, BindingResult bindingResult) {
         log.info("SysAppController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

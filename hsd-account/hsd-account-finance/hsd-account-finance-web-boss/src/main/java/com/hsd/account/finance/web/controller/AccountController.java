@@ -80,7 +80,7 @@ public class AccountController extends FinanceBaseController {
     @RfAccount2Bean
     public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController freeze.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.getToken()))) {
@@ -110,7 +110,7 @@ public class AccountController extends FinanceBaseController {
     @RfAccount2Bean
     public Response unfreeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController unfreeze.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.getToken()))) {
@@ -141,7 +141,7 @@ public class AccountController extends FinanceBaseController {
     @RfAccount2Bean
     public Response reverse(@Validated @ModelAttribute AccountReverseDto dto, BindingResult bindingResult) {
         log.info("AccountController reverse.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "reverse." + dto.getToken()))) {
@@ -171,7 +171,7 @@ public class AccountController extends FinanceBaseController {
     @RfAccount2Bean
     public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
         log.info("AccountController state.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.getToken()))) {

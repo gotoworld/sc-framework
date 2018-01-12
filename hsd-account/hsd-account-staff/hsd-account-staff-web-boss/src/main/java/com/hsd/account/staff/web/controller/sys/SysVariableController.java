@@ -38,7 +38,7 @@ public class SysVariableController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  SysVariableDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("SysVariableController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) {
                dto = new SysVariableDto();
@@ -61,7 +61,7 @@ public class SysVariableController extends BaseController {
     @ApiOperation(value = "信息列表")
     public Response list(@PathVariable("code") String code) {
         log.info("SysVariableController list.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             SysVariableDto dto = new SysVariableDto();
             dto.setCode(code);
@@ -82,7 +82,7 @@ public class SysVariableController extends BaseController {
     @ApiOperation(value = "信息树")
     public Response jsonTree() {
         log.info("SysVariableController jsonTree.........");
-        Response result=new Response("success");
+        Response result=new Response(0, "success");
         try {
             result.data=sysVariableService.findDataIsTree(new SysVariableDto());
         } catch (Exception e) {
@@ -100,7 +100,7 @@ public class SysVariableController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("SysVariableController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             SysVariableDto dto = new SysVariableDto();
             if (id!=null) {
@@ -123,7 +123,7 @@ public class SysVariableController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("SysVariableController del.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             SysVariableDto dto = new SysVariableDto();
             dto.setId(id);
@@ -144,7 +144,7 @@ public class SysVariableController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute SysVariableDto dto, BindingResult bindingResult) {
         log.info("SysVariableController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

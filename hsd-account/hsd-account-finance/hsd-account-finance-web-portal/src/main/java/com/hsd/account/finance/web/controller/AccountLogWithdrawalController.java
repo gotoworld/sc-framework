@@ -29,7 +29,7 @@ public class AccountLogWithdrawalController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountLogWithdrawalDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountLogWithdrawalController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) dto = new AccountLogWithdrawalDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -46,7 +46,7 @@ public class AccountLogWithdrawalController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountLogWithdrawalController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result.data = accountLogWithdrawalService.findDataById(new AccountLogWithdrawalDto(){{setId(id);}});
         } catch (Exception e) {

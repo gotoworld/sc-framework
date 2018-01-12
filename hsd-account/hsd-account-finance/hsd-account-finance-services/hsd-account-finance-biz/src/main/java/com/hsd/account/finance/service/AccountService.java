@@ -50,7 +50,7 @@ public class AccountService extends BaseService implements IAccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response saveOrUpdateData(@RequestBody AccountDto dto) {
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             Account entity = copyTo(dto, Account.class);
@@ -129,7 +129,7 @@ public class AccountService extends BaseService implements IAccountService {
 
     @Override
     public Response updateState(@RequestBody AccountDto dto) throws Exception {
-        Response result = new Response(0, "success");
+        Response result = new Response();
         Long accountId = dto.getId();
         Long userId = dto.getAppUserId();
         Integer state = dto.getState();
@@ -153,7 +153,7 @@ public class AccountService extends BaseService implements IAccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response reverse(@RequestBody AccountReverseDto dto) throws Exception {
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             //1.判断操作类型 冲正/抵扣
             //2.记录操作日志
@@ -169,7 +169,7 @@ public class AccountService extends BaseService implements IAccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response freeze(@RequestBody AccountFreezeDto dto) throws Exception {
-        Response result = new Response(0, "success");
+        Response result = new Response();
         //加分布式锁 同一个账户相同时间
         Lock lock = new RedisLock("lock:account-freeze:"+dto.getId(), 60 * 1000);
         try {
@@ -181,7 +181,11 @@ public class AccountService extends BaseService implements IAccountService {
             if("#0#1#".indexOf("#"+dto.getActionType()+"#")==-1){
                 return Response.error("操作类型未知");
             }
-            //获取指定账户信息
+
+            //TODO 获取用户资金账户绑定银行卡
+            //TODO 调用接口执行转账
+
+            //系统账户快照更新-获取指定账户信息
             switch (dto.getBizAccountType()){//业务账户
                 case 0: { //0资金账户
                     //获取原始账户信息

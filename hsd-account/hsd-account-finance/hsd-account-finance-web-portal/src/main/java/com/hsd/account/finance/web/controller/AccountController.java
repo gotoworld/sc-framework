@@ -49,7 +49,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("AccountController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             AccountDto dto = new AccountDto(){{
                 setAppUserId(userId);
@@ -68,7 +68,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "信息保存")
     public Response save(@Validated AccountDto dto, BindingResult bindingResult) {
         log.info("AccountController save.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
@@ -95,7 +95,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "账户操作-状态变更")
     public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
         log.info("AccountController state.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.toString()))) {
@@ -156,7 +156,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "账户操作-冻结/解冻")
     public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController freeze.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {

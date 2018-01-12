@@ -38,7 +38,7 @@ public class TagController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  TagDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("TagController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new TagDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -57,7 +57,7 @@ public class TagController extends BaseController {
     @ApiOperation(value = "信息列表")
     public Response list(@ModelAttribute  TagDto dto) {
         log.info("TagController userId.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null||dto.getType()==null) {throw new RuntimeException("参数异常!");}
             result.data = tagService.findDataIsList(dto);
@@ -77,7 +77,7 @@ public class TagController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("TagController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");}
             TagDto dto = new TagDto(){{
@@ -99,7 +99,7 @@ public class TagController extends BaseController {
     @ApiOperation(value = "物理删除")
     public Response phydel(@PathVariable("id") Long id) {
         log.info("TagController phydel.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");};
             TagDto dto = new TagDto(){{
@@ -122,7 +122,7 @@ public class TagController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute TagDto dto, BindingResult bindingResult) {
         log.info("TagController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

@@ -29,7 +29,7 @@ public class AccountSubGoldController extends FinanceBaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountSubGoldDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountSubGoldController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new AccountSubGoldDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -48,7 +48,7 @@ public class AccountSubGoldController extends FinanceBaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountSubGoldController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             result.data = accountSubGoldService.findDataById(new AccountSubGoldDto(){{setId(id);}});
         } catch (Exception e) {

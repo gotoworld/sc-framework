@@ -38,7 +38,7 @@ public class AuthPermController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute AuthPermDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AuthPermController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) {
                dto = new AuthPermDto();
@@ -63,7 +63,7 @@ public class AuthPermController extends BaseController {
     @ApiOperation(value = "信息树")
     public Response jsonTree() {
         log.info("AuthPermController jsonTree.........");
-        Response result=new Response(0, "success");
+        Response result=new Response();
         try {
             result.data=authPermService.findDataIsTree(new AuthPermDto());
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class AuthPermController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") String id) {
         log.info("AuthPermController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             AuthPermDto dto = new AuthPermDto();
             if (id!=null) {
@@ -104,7 +104,7 @@ public class AuthPermController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") String id) {
         log.info("AuthPermController del.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result.message = authPermService.deleteDataById(new AuthPermDto(){{setId(id);}});
         } catch (Exception e) {
@@ -123,7 +123,7 @@ public class AuthPermController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute AuthPermDto dto, BindingResult bindingResult) {
         log.info("AuthPermController save.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

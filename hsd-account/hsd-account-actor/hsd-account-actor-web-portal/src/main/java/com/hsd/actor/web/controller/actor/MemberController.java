@@ -61,7 +61,7 @@ public class MemberController extends BaseController {
     @RfAccount2Bean
     public Response save(@Validated @ModelAttribute MemberDto dto, BindingResult bindingResult) {
         log.info("MemberController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

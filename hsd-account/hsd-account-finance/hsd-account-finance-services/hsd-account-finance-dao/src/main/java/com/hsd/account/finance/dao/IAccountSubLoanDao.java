@@ -38,7 +38,10 @@ public interface IAccountSubLoanDao extends IBaseDao {
     /** 解冻 */
     @Update("update account_sub_loan set available_money=total_money-freeze_money+#{freezeMoney},freeze_money=freeze_money-#{freezeMoney} where id = #{id} and freeze_money>=#{freezeMoney}")
     int unfreeze(IEntity entity) throws Exception;
-
+    /** 充值*/
     @Update("update account_sub_loan set available_money = available_money + #{availableMoney},total_money = total_money + #{totalMoney} where id = #{id} and state = 0")
     int recharge(IEntity entity) throws Exception;
+    /** 提现 */
+    @Update("update account_sub_loan set available_money = available_money - #{availableMoney} ,total_money = total_money - #{totalMoney} where id = #{id} and state = 0 and available_money >= #{availableMoney}")
+    int withdrawal(IEntity entity) throws Exception;
 }

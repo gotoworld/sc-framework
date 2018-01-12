@@ -53,7 +53,7 @@ public class AccountSubGoldController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated AccountSubGoldDto dto, BindingResult bindingResult) {
         log.info("AccountSubGoldController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

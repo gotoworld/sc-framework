@@ -85,7 +85,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute UserDto dto, BindingResult bindingResult) {
         log.info("UserController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
@@ -117,7 +117,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "设置标签")
     public Response setTags(@ModelAttribute UserDto dto) {
         log.info("UserController setTags.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if(dto==null) throw new RuntimeException("参数异常");
             result.data = userService.setTags(dto);
@@ -132,7 +132,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "设置黑名单")
     public Response setBlacklist(@PathVariable("id") Long id) {
         log.info("UserController setBlacklist.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if(id==null) throw new RuntimeException("参数异常!");
             UserDto dto = new UserDto(){{setId(id);}};
@@ -149,7 +149,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "取消黑名单")
     public Response delBlacklist(@PathVariable("id") Long id) {
         log.info("UserController delBlacklist.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if(id==null) throw new RuntimeException("参数异常!");
             UserDto dto = new UserDto(){{setId(id);}};

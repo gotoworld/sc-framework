@@ -2,7 +2,7 @@
 <html lang="zh" ng-app="app">
 <head>
     <meta charset="utf-8" />
-    <title>//TODO 支付账户 详情</title>
+    <title>//TODO 客户表 新增/编辑</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta name="description" content="memo of your site" />
@@ -19,163 +19,137 @@
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
 
     <link href="/css/common.css" rel="stylesheet">
+    <script src="/js/jQuery.md5.js" type="text/javascript"></script>
 </head>
 
 <body class="gray-bg ng-cloak" ng-controller="app-ctrl" ng-cloak>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="ibox float-e-margins">
-            <div class="form-horizontal ibox-content col-md-12">
+            <div class="ibox-content col-md-12">
+                <form id="user_01" method="post" class="form m-t" ng-submit="save()" accept-charset="UTF-8" >
+                    <input type="hidden" name="id" value="{{item.id}}" />
+                    <input type="hidden" name="token" value="" ng-value="item.token || uuidToken" />
+                    <input type="hidden" name="newFlag" value="{{newFlag!=0?0:1}}" />
+                    <div class="clearfix "></div>
+                    <div class="col-sm-6 b-r">
 
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">主键：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.id}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">域用户id,安全控制值：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.appUserId}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">账户类型,安全控制值：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.accountType}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">账户名称：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.aliasName}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">账户币种,安全控制值：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.currency}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">账户总额,安全控制值：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.totalMoney}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">可用余额,安全控制值：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.availableMoney}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">冻结资金,安全控制值：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.freezeMoney}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">冻结资金,安全控制值：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.inFloatMoney}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">账户状态0生效1冻结2注销：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.state}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">账户模板id：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.accountTemplateId}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">模板值（json形式保存）：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.expandJson}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">开户时间：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">更新时间：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.dateUpdated | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">校验码md5,安全控制值编码：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.checkValue}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">充值次数：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.rechargeCount}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">充值总额：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.rechargeTotalAmount}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">首次充值时间：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.dateRechargeFirst | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">提现次数：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.withdrawCount}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">提现总额：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.withdrawTotalAmount}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">客户注册时间：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.dateUserRegister | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">会计科目代码：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.finSubjectCode}}
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label class="col-md-3 control-label">BI时间戳：</label>
-                    <div class="col-md-9 form-control-static">
-                        {{item.biUpdateTs | date:'yyyy-MM-dd HH:mm:ss'}}
-                    </div>
-                </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">登录名：</label>
+                            <div class="col-md-12">
+                                <input ng-if="!(util.notEmpty(item.account))" id="bean-account" name="account" value="{{item.account}}" class="form-control" type="text"  placeholder="请输入登录名"  required="" aria-required="true"  aria-describedby="bean-account-error"  maxlength="64"   aria-invalid="true">
+                                <label ng-if="(util.notEmpty(item.account))" class="form-control">{{item.account}}</label>
+                                <span id="bean-account-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">昵称：</label>
+                            <div class="col-md-12">
+                                <input id="bean-name" name="name" value="{{item.name}}" class="form-control" type="text"  placeholder="请输入登录名"  required="" aria-required="true"  aria-describedby="bean-name-error"  maxlength="64"   aria-invalid="true">
+                                <span id="bean-name-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
 
-                <div class="clearfix "></div>
-                <div class="col-md-12" style="height: 50px;">
-                    <div style="width: 200px; margin: 0 auto;">
-                        <a href="javascript:" class="btn btn-primary" onclick="closeMyBoxLayer();">返回</a>
+                        <div class="form-group clearfix" ng-if="!(util.notEmpty(item.account))">
+                            <label class="col-md-5 control-label">登录密码：</label>
+                            <div class="col-md-12">
+                                <input id="bean-pwdA" name="pwd" type="hidden"  >
+                                <input value="" class="form-control" type="password"
+                                       onkeydown="$('#bean-pwdA').val($.md5($(this).val()));"
+                                       onchange="$('#bean-pwdA').val($.md5($(this).val()));" placeholder="请输入登录密码"  required="" aria-required="true"  aria-describedby="bean-pwd-error"  maxlength="64"   aria-invalid="true">
+                                <span id="bean-pwd-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix" ng-if="!(util.notEmpty(item.account))">
+                            <label class="col-md-5 control-label">交易密码：</label>
+                            <div class="col-md-12">
+                                <input id="bean-tradePwdA" name="tradePwd" type="hidden" >
+                                <input  value="" class="form-control" type="password"
+                                        onkeydown="$('#bean-tradePwdA').val($.md5($(this).val()));"
+                                        onchange="$('#bean-tradePwdA').val($.md5($(this).val()));" placeholder="请输入交易密码"  aria-describedby="bean-tradePwd-error"  maxlength="64"   aria-invalid="true">
+                                <span id="bean-tradePwd-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">手机号码：</label>
+                            <div class="col-md-12">
+                                <input id="bean-cellphone" name="cellphone" value="{{item.cellphone}}" class="form-control" type="tel"  placeholder="请输入手机号码"  aria-describedby="bean-cellphone-error"  maxlength="18"   aria-invalid="true">
+                                <span id="bean-cellphone-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">邮箱：</label>
+                            <div class="col-md-12">
+                                <input id="bean-email" name="email" value="{{item.email}}" class="form-control" type="email"  placeholder="请输入客户email"  aria-describedby="bean-email-error"  maxlength="100"   aria-invalid="true">
+                                <span id="bean-email-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <!--<div class="form-group clearfix">-->
+                        <!--<label class="col-md-5 control-label">注册渠道：</label>-->
+                        <!--<div class="col-md-12">-->
+                        <!--<input id="bean-registerChannel" name="registerChannel" value="{{item.registerChannel}}" class="form-control" type="text"  placeholder="请输入注册渠道 默认为other"  aria-describedby="bean-registerChannel-error"  maxlength="50"   aria-invalid="true">-->
+                        <!--<span id="bean-registerChannel-error" class="help-block m-b-none"></span>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
                     </div>
-                </div>
+                    <div class="col-sm-6">
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">性别：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择性别" id="bean-gender" name="gender" class="form-control"   aria-describedby="bean-gender-error"   aria-invalid="true">
+                                    <option value="2" ng-selected="item.gender==2">保密</option>
+                                    <option value="0" ng-selected="item.gender==0">男</option>
+                                    <option value="1" ng-selected="item.gender==1">女</option>
+                                </select>
+                                <span id="bean-gender-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">客户类型：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择客户类型" id="bean-type" name="type" class="form-control"   aria-describedby="bean-type-error"   aria-invalid="true">
+                                    <option value="1" ng-selected="item.type==1">会员</option>
+                                    <option value="2" ng-selected="item.type==2">渠道商</option>
+                                </select>
+                                <span id="bean-type-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">状态：</label>
+                            <div class="col-md-12">
+                                <select data-placeholder="选择状态" id="bean-state" name="state" class="form-control"   aria-describedby="bean-state-error"   aria-invalid="true">
+                                    <option value="1" ng-selected="item.state==1">启用</option>
+                                    <option value="2" ng-selected="item.state==2">禁用</option>
+                                    <option value="3" ng-selected="item.state==3">黑名单</option>
+                                </select>
+                                <span id="bean-state-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">标签：</label>
+                            <div class="col-md-12">
+                                <textarea id="bean-tags" name="tags" class="form-control"  placeholder="请输入标签" style="height: 50px" aria-describedby="bean-tags-error"  maxlength="1000"   aria-invalid="true">{{item.tags}}</textarea>
+                                <span id="bean-tags-error" class="help-block m-b-none"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix "></div>
+                    <div class="col-md-12" style="height: 50px;">
+                        <div style="width: 200px; margin: 0 auto;">
+                            <input class="btn btn-primary" type="submit" value="保存" /> | <a href="javascript:" onclick="closeMyBoxLayer();">返回</a>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 <!--<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>-->
 <script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="/js/jquery.form.js" type="text/javascript" ></script>
@@ -189,19 +163,44 @@
 <script src="/plugins/layer/layer.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 
+
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
+
 <script type="text/javascript">
+    function formValidate(){
+        setTimeout(function(){
+            $("#user_01").validate();
+        },1000);
+    }
+
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope,$compile) {
         $data = $scope;
         $ngCompile=$compile;
         staff.init(function(){
-            loadInfo(sessionStorage.getItem(site.accountCapital.info));
+            $data.newFlag=sessionStorage.getItem(site.user.info);
+            if($data.newFlag) $data.uuidToken=util.guid();
+            if(sessionStorage.getItem(site.user.info) && sessionStorage.getItem(site.user.info)!=0){
+                loadInfo(sessionStorage.getItem(site.user.info));
+            }
         });
+        $scope.save = function () {
+            if($("#user_01").valid()){
+                $.post(site.user.save, $('#user_01').serialize(),function (result) {
+                    //console.info("获取数据.." + JSON.stringify(result));
+                    if (result.code == 0) {
+                        alert('保存成功!');
+                        parent.location.href = site.user.view+'.html';
+                    } else {
+                        alert(result.message);
+                    }
+                }, 'json');
+            }
+        }
     });
     var loadInfo=function(id){
-        $.get(site.accountCapital.info + id, {},function (result) {
+        $.get(site.user.info + id, {},function (result) {
             //console.info("获取数据.." + JSON.stringify(result));
             if (result.code == 0) {
                 $data.item = result.data;
@@ -211,7 +210,12 @@
             }
             if(!$data.$$phase) $data.$apply();
         }, 'json');
-    }
+    };
+
+    $(document).ready(function(){
+        formValidate();
+    });
 </script>
 </body>
 </html>
+

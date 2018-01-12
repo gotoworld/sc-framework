@@ -6,7 +6,7 @@ var apiPath = {
         staff: "http://192.168.108.100:28890/hsd-account-staff-web-boss",//-wxg
         channel: "http://192.168.108.100:28890/hsd-account-channel-web-boss",//-wxg
         actor: "http://192.168.108.100:28890/hsd-account-actor-web-boss",//
-        finance: "http://192.168.108.100:28890/hsd-account-finance-web-boss-wxg"//-wxg
+        finance: "http://192.168.108.100:28890/hsd-account-finance-web-boss"//-wxg
     }
 };
 var site = {

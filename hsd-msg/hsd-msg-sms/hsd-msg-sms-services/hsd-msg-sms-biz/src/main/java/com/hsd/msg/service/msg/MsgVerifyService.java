@@ -79,7 +79,7 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
 
     @Override
     public Response pushVerifyCode(@RequestBody MsgVerifyDto dto) {
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             //检查图片验证码是否正确//限制恶意刷短信
             dto.setImgCaptchaDel(true);
@@ -104,7 +104,7 @@ public class MsgVerifyService extends BaseService implements IMsgVerifyService {
     }
 
     public Response checkVerifyCode(@RequestBody MsgVerifyDto dto) {
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null || ValidatorUtil.isEmpty(dto.getSmsAddress())) throw new RuntimeException("参数有误!");
             MsgVerify msgVerify = copyTo(dto, MsgVerify.class);

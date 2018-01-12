@@ -56,7 +56,7 @@ public class AccountService extends BaseService implements IAccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response saveOrUpdateData(@RequestBody AccountDto dto) {
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) throw new RuntimeException("参数异常!");
             Account entity = copyTo(dto, Account.class);
@@ -135,7 +135,7 @@ public class AccountService extends BaseService implements IAccountService {
 
     @Override
     public Response updateState(@RequestBody AccountDto dto) throws Exception {
-        Response result = new Response();
+        Response result = new Response(0,"success");
         Long accountId = dto.getId();
         Long userId = dto.getAppUserId();
         Integer state = dto.getState();
@@ -171,7 +171,7 @@ public class AccountService extends BaseService implements IAccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response reverse(@RequestBody AccountReverseDto dto) throws Exception {
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             //1.判断操作类型 冲正/抵扣
             //2.记录操作日志
@@ -187,7 +187,7 @@ public class AccountService extends BaseService implements IAccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response freeze(@RequestBody AccountFreezeDto dto) throws Exception {
-        Response result = new Response();
+        Response result = new Response(0,"success");
         //加分布式锁 同一个账户相同时间
         Lock lock = new RedisLock("lock:account-freeze:"+dto.getId(), 60 * 1000);
         try {

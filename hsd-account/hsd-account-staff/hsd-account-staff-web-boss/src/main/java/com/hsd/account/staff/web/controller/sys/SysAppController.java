@@ -148,7 +148,7 @@ public class SysAppController extends BaseController {
             SysAppDto dto = new SysAppDto(){{
             setId(id);
            }};
-            result.message = sysAppService.deleteData(dto);
+            result.message = sysAppService.deleteDataById(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

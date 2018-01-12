@@ -39,7 +39,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  ${tcfg.tableNameFormat!}Dto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("${tcfg.tableNameFormat!}Controller page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) dto = new ${tcfg.tableNameFormat!}Dto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -62,7 +62,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @ApiOperation(value = "信息树")
     public Response jsonTree() {
         log.info("${tcfg.tableNameFormat!}Controller jsonTree.........");
-        Response result=new Response(0, "success");
+        Response result=new Response();
         try {
             result.data=${tableNameL}Service.findDataIsTree(new ${tcfg.tableNameFormat!}Dto());
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") ${t.javaType} ${t.columnNameFormat}@[ } /]) {
         log.info("${tcfg.tableNameFormat!}Controller info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
             @[ for(t in pks){ /]
@@ -108,7 +108,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") ${t.javaType} ${t.columnNameFormat}@[ } /]) {
         log.info("${tcfg.tableNameFormat!}Controller del.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
             @[ for(t in pks){ /]
@@ -131,7 +131,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @ApiOperation(value = "物理删除")
     public Response phydel(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") ${t.javaType} ${t.columnNameFormat}@[ } /]) {
         log.info("${tcfg.tableNameFormat!}Controller phydel.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
            ${tcfg.tableNameFormat!}Dto dto = new ${tcfg.tableNameFormat!}Dto(){{
            @[ for(t in pks){ /]
@@ -157,7 +157,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute ${tcfg.tableNameFormat!}Dto dto, BindingResult bindingResult) {
         log.info("${tcfg.tableNameFormat!}Controller save.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

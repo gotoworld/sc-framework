@@ -133,7 +133,7 @@ feign:
     enabled: true
   name:
     account:
-      finance: hsd-account-finance-server-wxg
+      finance: hsd-account-finance-server #-wxg
       staff: hsd-account-staff-server #-wxg
       actor: hsd-account-actor-server #-wxg
 

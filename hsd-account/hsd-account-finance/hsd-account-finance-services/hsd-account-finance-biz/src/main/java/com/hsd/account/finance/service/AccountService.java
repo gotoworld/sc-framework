@@ -7,10 +7,8 @@ import com.hsd.account.finance.api.IAccountLogOperationalService;
 import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dao.*;
 import com.hsd.account.finance.dto.AccountDto;
-import com.hsd.account.finance.dto.op.AccountFreezeDto;
-import com.hsd.account.finance.dto.op.AccountRechargeDto;
-import com.hsd.account.finance.dto.op.AccountReverseDto;
-import com.hsd.account.finance.dto.op.AccountWithdrawalDto;
+import com.hsd.account.finance.dto.AccountLogDto;
+import com.hsd.account.finance.dto.op.*;
 import com.hsd.account.finance.entity.*;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -52,6 +50,9 @@ public class AccountService extends BaseService implements IAccountService {
     private IAccountLogRechargeDao logRechargeDao;
     @Autowired
     private IAccountLogWithdrawalDao logWithdrawalDao;
+    @Autowired
+    private IAccountLogDao logAccountDao;
+
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -367,6 +368,77 @@ public class AccountService extends BaseService implements IAccountService {
             log.error("账户[提现]异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
         }finally {
+            lock.unlock();//释放锁
+        }
+        return result;
+    }
+
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response transfer(AccountTransferDto dto)  throws Exception {
+        Response result = new Response(0, "success");
+        //.记录提现日志
+        AccountLog accountLog=copyTo(dto,AccountLog.class);
+        accountLog.setId(idGenerator.nextId());
+
+        //加分布式锁 同一个账户相同时间
+        Lock lock = new RedisLock("lock:account-transfer:"+dto.getId(), 60 * 1000);
+        try {
+            //.判断业务账户种类0资金账户1黄金账户2网贷账户
+            if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
+                return Response.error("业务账户未知");
+            }
+            accountLog.setState(1);
+            //获取指定账户信息
+            switch (dto.getBizAccountType()){//业务账户
+                case 0: { //0资金账户
+                    return Response.error("资金账户,暂无[转账]功能");
+                }
+                case 1: {//1黄金账户
+                    AccountSubGold entityOut= (AccountSubGold) accountSubGoldDao.selectByPrimaryKey(new AccountSubGold(){{setId(dto.getOpAccountId());}});
+                    if(entityOut == null){
+                        accountLog.setMemo("未找到转出黄金账户！");
+                        return Response.error("未找到转出黄金账户！");
+                    }
+                    if(entityOut.getState() != 0){
+                        accountLog.setMemo("转出黄金账户状态不正常！");
+                        return Response.error("转出黄金账户状态不正常！");
+                    }
+
+                    AccountSubGold entityIn= (AccountSubGold) accountSubGoldDao.selectByPrimaryKey(new AccountSubGold(){{setId(dto.getOtherAccountId());}});
+                    if(entityIn == null){
+                        accountLog.setMemo("未找到转出黄金账户！");
+                        return Response.error("未找到转出黄金账户！");
+                    }
+                    if(entityIn.getState() != 0){
+                        accountLog.setMemo("转出黄金账户状态不正常！");
+                        return Response.error("转出黄金账户状态不正常！");
+                    }
+
+                    if (accountSubGoldDao.withdrawal(entityOut) == 0){
+                        accountLog.setMemo("黄金账户余额不足或账户状态不正常！");
+                        throw new Exception("黄金账户余额不足或账户状态不正常！");
+                    }
+
+                    if(accountSubGoldDao.recharge(entityIn) == 0){
+                        accountLog.setMemo("转入账户状态不正常！");
+                        throw new Exception("转入账户状态不正常！");
+                    }
+                    accountLog.setState(0);
+                    break;
+                }
+                case 2:{ //2网贷账户
+                    return Response.error("网贷账户,暂无[转账]功能");
+                }
+            }
+            accountLog.setState(0);
+        } catch (Exception e) {
+            log.error("账户[转账]异常!", e);
+            accountLog.setState(1);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }finally {
+            logAccountDao.insert(accountLog);
             lock.unlock();//释放锁
         }
         return result;

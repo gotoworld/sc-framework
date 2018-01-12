@@ -87,7 +87,7 @@ public class BusinessTypeController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("BusinessTypeController del.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             BusinessTypeDto dto = new BusinessTypeDto();
             dto.setId(id);
@@ -108,7 +108,7 @@ public class BusinessTypeController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute BusinessTypeDto dto, BindingResult bindingResult) {
         log.info("BusinessTypeController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

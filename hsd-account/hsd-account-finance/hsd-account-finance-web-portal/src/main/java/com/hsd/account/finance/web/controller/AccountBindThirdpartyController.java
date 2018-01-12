@@ -42,7 +42,7 @@ public class AccountBindThirdpartyController extends BaseController {
     @ApiOperation(value = "绑卡")
     public Response bindCard(@PathVariable("userId") Long userId,@RequestParam Long accountId,@RequestParam String name,@RequestParam String cardNo,@RequestParam String certNo) {
         log.info("AccountBindThirdpartyController bindCard.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             AccountBindThirdpartyDto dto = new AccountBindThirdpartyDto();
             dto.setAppUserId(userId);
@@ -81,7 +81,7 @@ public class AccountBindThirdpartyController extends BaseController {
     @ApiOperation(value = "绑卡")
     public Response unbindCard(@ModelAttribute AccountBindThirdpartyDto dto) {
         log.info("AccountBindThirdpartyController unbindCard.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             return accountBindThirdpartyService.unbindCard(dto);
         } catch (Exception e) {

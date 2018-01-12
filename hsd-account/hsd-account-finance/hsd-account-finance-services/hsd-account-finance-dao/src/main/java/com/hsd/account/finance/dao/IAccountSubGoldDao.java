@@ -37,8 +37,11 @@ public interface IAccountSubGoldDao extends IBaseDao {
     /** 解冻 */
     @Update("update account_sub_gold set state=0 where id = #{id}")
     int unfreeze(IEntity entity) throws Exception;
-
+    /** 充值*/
     @Update("update account_sub_gold set total_gold = total_gold + #{totalGold} where id = #{id} and state = 0")
     int recharge(IEntity entity) throws Exception;
+    /** 提现 */
+    @Update("update account_sub_gold set total_gold = total_gold - #{totalGold} where id = #{id} and state = 0 and total_gold >= #{totalGold}")
+    int withdrawal(IEntity entity) throws Exception;
 
 }

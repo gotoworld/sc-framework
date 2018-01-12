@@ -48,7 +48,7 @@ public class OrgStaffController extends BaseController {
 	public Response page(@ModelAttribute OrgStaffDto dto, @PathVariable("pageNum") Integer pageNum
 			,@RequestParam(name = "level",required = false) String level) {
 		log.info("OrgStaffController page.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (dto == null) {
 				dto = new OrgStaffDto();
@@ -71,7 +71,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "回收站 分页")
 	public Response recyclePage(@ModelAttribute OrgStaffDto dto, @PathVariable("pageNum") Integer pageNum) {
 		log.info("OrgStaffController recyclePage.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (dto == null) {
 				dto = new OrgStaffDto();
@@ -90,7 +90,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "详情-根据id")
 	public Response info(@PathVariable("id") Long id) {
 		log.info("OrgStaffController info.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(id);
@@ -105,7 +105,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "详情-根据账号")
 	public Response infoByAccount(@PathVariable("account") String account) {
 		log.info("OrgStaffController infoByAccount.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setAccount(account);
@@ -120,7 +120,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "详情-根据工号")
 	public Response infoByJobNo(@PathVariable("jobNo") String jobNo) {
 		log.info("OrgStaffController infoByJobNo.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setJobNo(jobNo);
@@ -139,7 +139,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "逻辑删除")
 	public Response del(@PathVariable("id") Long id) {
 		log.info("OrgStaffController del.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto orgStaff = JwtUtil.getSubject(OrgStaffDto.class);
 			if(orgStaff.getId().equals(id)){
@@ -162,7 +162,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "恢复")
 	public Response recovery(@PathVariable("id") Long id) {
 		log.info("OrgStaffController del.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(id);
@@ -176,7 +176,7 @@ public class OrgStaffController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isAccountYN/{account}")
 	@ApiOperation(value = "判断员工[账号]是否存在")
 	public Response isAccountYN(@PathVariable("account") String account) {
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			result.data=orgStaffService.isAccountYN(account);
 		} catch (Exception e) {
@@ -187,7 +187,7 @@ public class OrgStaffController extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"isJobNoYN/{jobNo}")
 	@ApiOperation(value = "判断员工[工号]是否存在")
 	public Response isJobNoYN(@PathVariable("jobNo") String jobNo) {
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			result.data=orgStaffService.isJobNoYN(jobNo);
 		} catch (Exception e) {
@@ -205,7 +205,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "信息保存")
 	public Response save(@Validated OrgStaffDto dto, BindingResult bindingResult) {
 		log.info("OrgStaffController save.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (dto == null)throw new RuntimeException("参数异常");
 			if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
@@ -245,7 +245,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "密码修改")
 	public Response updatePwd(@ModelAttribute OrgStaffDto dto) {
 		log.info("OrgStaffController updatePwd.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if(dto==null||ValidatorUtil.isNullEmpty(dto.getOldpwd())||ValidatorUtil.isNullEmpty(dto.getNewpwd())||ValidatorUtil.isNullEmpty(dto.getConfirmpwd())) return Response.error("参数异常!");
 			if(!dto.getNewpwd().equals(dto.getConfirmpwd()))throw new RuntimeException("两次密码不一致!");
@@ -268,7 +268,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "员工密码重置")
 	public Response resetPwd(@PathVariable("id") Long id) {
 		log.info("OrgStaffController resetPwd.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(id);
@@ -288,7 +288,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "信息分页(精简字段)")
 	public Response briefPage(@ModelAttribute OrgStaffDto dto, @PathVariable("pageNum") Integer pageNum) {
 		log.info("OrgStaffController briefPage.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (dto == null) {
 				dto = new OrgStaffDto();
@@ -307,7 +307,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取所属组织")
 	public Response getStaff(@PathVariable("staffId") Long staffId) {
 		log.info("OrgStaffController getStaff.........");
-		Response result=new Response("success");
+		Response result=new Response(0, "success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(staffId);
@@ -323,7 +323,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "添加组织")
 	public Response addOrg(@ModelAttribute OrgOrgVsStaffDto dto) {
 		log.info("OrgStaffController addOrg.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (dto == null)throw new RuntimeException("参数异常");
 			result = orgStaffService.addOrg(dto);
@@ -339,7 +339,7 @@ public class OrgStaffController extends BaseController {
 	@RfAccount2Bean
 	public Response delOrg(@ModelAttribute OrgOrgVsStaffDto dto) {
 		log.info("OrgStaffController delOrg.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (dto == null)throw new RuntimeException("参数异常");
 			result = orgStaffService.delOrg(dto);
@@ -356,7 +356,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "批量新增")
 	public Response addBatch(@RequestParam("fileUrl") String fileUrl) {
 		log.info("OrgStaffController addBatch.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			result=orgStaffService.addBatch(fileUrl);
 		} catch (Exception e) {
@@ -369,7 +369,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取个人已设置角色")
 	public Response getStaffRole(@PathVariable("staffId") Long staffId) {
 		log.info("OrgStaffController getStaffRole.........");
-		Response result=new Response("success");
+		Response result=new Response(0, "success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(staffId);
@@ -384,7 +384,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取组织已设置角色")
 	public Response getOrgRole(@PathVariable("staffId") Long staffId) {
 		log.info("OrgStaffController getOrgRole.........");
-		Response result=new Response("success");
+		Response result=new Response(0, "success");
 		try {
 			OrgStaffDto dto=new OrgStaffDto();
 			dto.setId(staffId);
@@ -400,7 +400,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "添加角色")
 	public Response addRole(@ModelAttribute AuthStaffVsRoleDto dto) {
 		log.info("OrgStaffController addRole.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (dto == null)throw new RuntimeException("参数异常");
 			result = orgStaffService.addRole(dto);
@@ -416,7 +416,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "删除角色")
 	public Response delRole(@ModelAttribute AuthStaffVsRoleDto dto) {
 		log.info("OrgStaffController delRole.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (dto == null)throw new RuntimeException("参数异常");
 			result = orgStaffService.delRole(dto);
@@ -431,7 +431,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "设置上级领导")
 	public Response setLeadership(@RequestParam("staffId") Long staffId,@RequestParam("leadership") Long leadership) {
 		log.info("OrgStaffController setLeadership.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			if (staffId == null || leadership==null)throw new RuntimeException("参数异常");
 			OrgStaffDto dto=new OrgStaffDto();
@@ -449,7 +449,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取上级领导")
 	public Response getLeadership(@PathVariable("staffId") Long staffId) {
 		log.info("OrgStaffController getLeadership.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			result = orgStaffService.getLeadership(new OrgStaffDto(){{setId(staffId);}});
 		} catch (Exception e) {
@@ -465,7 +465,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取员工-根据员工和上级级别")
 	public Response getStaffByStaffIdAndleadershipLevel(@PathVariable("account") String account,@RequestParam("level") String level) {
 		log.info("OrgStaffController getStaffByStaffIdAndleadershipLevel.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto dto = new OrgStaffDto();
 			dto.setAccount(account);
@@ -484,7 +484,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取员工-根据员工和上级级别")
 	public Response getStaffLeadershipAll(@PathVariable("account") String account) {
 		log.info("OrgStaffController getStaffLeadershipAll.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto dto = new OrgStaffDto();
 			dto.setAccount(account);
@@ -498,7 +498,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取用户及用户所在组织")
 	public Response findStaffAndOrgDataIsList() {
 		log.info("OrgStaffController findStaffAndOrgDataIsList.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			OrgStaffDto dto = new OrgStaffDto();
 			result.data=orgStaffService.findStaffAndOrgDataIsList(dto);
@@ -512,7 +512,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "获取不同类型最大的员工号")
 	public Response getMaxJobNo() {
 		log.info("OrgStaffController getMaxJobNo.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try {
 			result.data=orgStaffService.getMaxJobNo();
 		} catch (Exception e) {
@@ -529,7 +529,7 @@ public class OrgStaffController extends BaseController {
 	@ApiOperation(value = "offline")
 	public  Response offline(@PathVariable("id") Long id){
 		log.info("OrgStaffController offline.........");
-		Response result = new Response("success");
+		Response result = new Response(0, "success");
 		try{
 			redisHelper.set("u:offline:"+id,new Date().getTime(),CommonConstant.JWT_TTL, TimeUnit.MILLISECONDS);
 		}catch (Exception e){

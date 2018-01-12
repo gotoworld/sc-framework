@@ -38,7 +38,7 @@ public class IdentityController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  IdentityDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("IdentityController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new IdentityDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -60,7 +60,7 @@ public class IdentityController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("IdentityController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (userId==null) {throw new RuntimeException("参数异常!");};
             IdentityDto dto = new IdentityDto(){{
@@ -84,7 +84,7 @@ public class IdentityController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute IdentityDto dto, BindingResult bindingResult) {
         log.info("IdentityController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

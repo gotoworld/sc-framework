@@ -42,7 +42,7 @@ public class MemberController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute MemberDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("MemberController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) {
                 dto = new MemberDto();
@@ -67,7 +67,7 @@ public class MemberController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("userId") Long userId) {
         log.info("MemberController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             MemberDto dto = new MemberDto();
             if (userId != null) {
@@ -90,7 +90,7 @@ public class MemberController extends BaseController {
 //    @ApiOperation(value = "信息删除")
 //    public Response del(@PathVariable("userId") Long userId) {
 //        log.info("MemberController del.........");
-//        Response result = new Response("success");
+//        Response result = new Response(0, "success");
 //        try {
 //            MemberDto dto = new MemberDto();
 //            dto.setUserId(userId);
@@ -111,7 +111,7 @@ public class MemberController extends BaseController {
     @RfAccount2Bean
     public Response save(@Validated @ModelAttribute MemberDto dto, BindingResult bindingResult) {
         log.info("MemberController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

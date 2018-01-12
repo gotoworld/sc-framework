@@ -2,7 +2,7 @@
 
 spring:
   application:
-    name: hsd-account-finance-web-boss-wxg
+    name: hsd-account-finance-web-boss #-wxg
   profiles:
     active: native
   cloud:

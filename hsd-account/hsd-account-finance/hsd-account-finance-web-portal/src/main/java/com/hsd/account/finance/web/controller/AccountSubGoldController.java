@@ -51,7 +51,7 @@ public class AccountSubGoldController extends BaseController {
      */
     @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "save")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated AccountSubGoldDto dto, BindingResult bindingResult) {
+    public Response save(@Validated @ModelAttribute AccountSubGoldDto dto, BindingResult bindingResult) {
         log.info("AccountSubGoldController save.........");
         Response result = new Response(0, "success");
         try {

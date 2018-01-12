@@ -59,7 +59,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"page")
 	public String page(HttpServletRequest request, HttpServletResponse response,${tcfg.tableNameFormat!} dto) {
 		log.info("${tcfg.tableNameFormat!}Controller page.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
 		try {
             if(dto==null) dto = new ${tcfg.tableNameFormat!}();
             PageInfo<?> page=new PageInfo<>(${tableNameL}Service.findDataIsPage(dto));
@@ -81,7 +81,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value=acPrefix+"edit/@[ for(t in pks){ /]${tLP.index==1?'':'/'}{${t.columnNameFormat}}@[ } /]")
 	public String edit(${tcfg.tableNameFormat!} dto,@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /]) {
 		log.info("${tcfg.tableNameFormat!}Controller edit.........");
-		Response result = new Response();
+		Response result = new Response(0,"success");
 		try {
             int pageNum=getPageNum(dto);
             if (@[ for(t in pks){ /]${tLP.index==1?'':' && '}${t.columnNameFormat}!=null@[ } /]) {
@@ -114,7 +114,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	@ALogOperation(type="删除",desc="${tcfg.tableComment}")
 	public String del(@[ for(t in pks){ /]${tLP.index==1?'':','}@PathVariable("${t.columnNameFormat}") Long ${t.columnNameFormat}@[ } /], RedirectAttributesModelMap modelMap) {
 		log.info("${tcfg.tableNameFormat!}Controller del.........");
-		Response result = new Response();
+		Response result = new Response(0,"success");
 		try {
 			${tcfg.tableNameFormat!} dto=new ${tcfg.tableNameFormat!}();
 			@[ for(t in pks){ /]
@@ -142,7 +142,7 @@ public class ${tcfg.tableNameFormat!}Controller extends BaseController {
 	@ALogOperation(type="修改",desc="${tcfg.tableComment}")
 	public String save(@Validated ${tcfg.tableNameFormat!} dto,BindingResult bindingResult,RedirectAttributesModelMap modelMap) {
 		log.info("${tcfg.tableNameFormat!}Controller save.........");
-		Response result = new Response();
+		Response result = new Response(0,"success");
         try {
 		    if(dto==null) return Response.error("参数异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

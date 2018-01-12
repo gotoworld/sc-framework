@@ -41,7 +41,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountTemplateDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountTemplateController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new AccountTemplateDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -60,7 +60,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response recycle(@ModelAttribute  AccountTemplateDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountTemplateController recycle.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new AccountTemplateDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -79,7 +79,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountTemplateController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             AccountTemplateDto dto = new AccountTemplateDto(){{
                 setId(id);
@@ -101,7 +101,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("AccountTemplateController del.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");}
             AccountTemplateDto dto = new AccountTemplateDto(){{
@@ -122,7 +122,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "恢复")
     public Response recovery(@PathVariable("id") Long id) {
         log.info("AccountTemplateController recovery.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             result.message=accountTemplateService.recoveryDataById(new AccountTemplateDto(){{setId(id);}});
         } catch (Exception e) {
@@ -139,7 +139,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "物理删除")
     public Response phydel(@PathVariable("id") Long id) {
         log.info("AccountTemplateController phydel.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");}
             AccountTemplateDto dto = new AccountTemplateDto(){{
@@ -162,7 +162,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute AccountTemplateDto dto, BindingResult bindingResult) {
         log.info("AccountTemplateController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

@@ -38,7 +38,7 @@ public class AuthRoleController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute AuthRoleDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AuthRoleController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) {
                dto = new AuthRoleDto();
@@ -61,7 +61,7 @@ public class AuthRoleController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response list(@ModelAttribute AuthRoleDto dto) {
         log.info("AuthRoleController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) {
                dto = new AuthRoleDto();
@@ -83,7 +83,7 @@ public class AuthRoleController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AuthRoleController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             AuthRoleDto dto = new AuthRoleDto();
             if (id!=null) {
@@ -106,7 +106,7 @@ public class AuthRoleController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("AuthRoleController del.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             AuthRoleDto dto = new AuthRoleDto();
             dto.setId(id);
@@ -127,7 +127,7 @@ public class AuthRoleController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute AuthRoleDto dto, BindingResult bindingResult) {
         log.info("AuthRoleController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
@@ -155,7 +155,7 @@ public class AuthRoleController extends BaseController {
     @ApiOperation(value = "获取当前角色已有(功能/权限)")
     public Response perm(@RequestParam(name = "roleId") Long roleId) {
         log.info("AuthRoleController perm.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             AuthRoleDto dto=new AuthRoleDto();
             dto.setId(roleId);
@@ -170,7 +170,7 @@ public class AuthRoleController extends BaseController {
     @ApiOperation(value = "获取当前角色已有(菜单)")
     public Response menu(@RequestParam(name = "roleId") Long roleId) {
         log.info("AuthRoleController menu.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             AuthRoleDto dto=new AuthRoleDto();
             dto.setId(roleId);
@@ -185,7 +185,7 @@ public class AuthRoleController extends BaseController {
     @ApiOperation(value = "获取当前角色已有(应用)")
     public Response app(@RequestParam(name = "roleId") Long roleId) {
         log.info("AuthRoleController app.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             AuthRoleDto dto=new AuthRoleDto();
             dto.setId(roleId);

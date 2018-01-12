@@ -43,5 +43,7 @@ public class SysAppDto extends BaseDto {
      private Date dateCreated;
     @ApiModelProperty("更新时间")
      private Date dateUpdated;
+    /**已存在的禁止删除(0否1是)*/
+    private Integer noDelFlag;
 
 }

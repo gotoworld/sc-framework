@@ -75,8 +75,8 @@ public class AccountController extends FinanceBaseController {
 
     @RequiresPermissions("account:op:freeze")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/freeze")
-    @ALogOperation(type = "变更", desc = "账户操作-冻结")
-    @ApiOperation(value = "账户操作-冻结")
+    @ALogOperation(type = "变更", desc = "资金账户-冻结")
+    @ApiOperation(value = "资金账户-冻结")
     @RfAccount2Bean
     public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController freeze.........");
@@ -94,6 +94,8 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                dto.setActionType(0);//0冻结1解冻
+                dto.setBizAccountType(0);//0资金账户1黄金账户2网贷账户
                 result = accountService.freeze(dto);
             }
         } catch (Exception e) {
@@ -103,8 +105,8 @@ public class AccountController extends FinanceBaseController {
     }
     @RequiresPermissions("account:op:unfreeze")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/unfreeze")
-    @ALogOperation(type = "变更", desc = "账户操作-解冻")
-    @ApiOperation(value = "账户操作-解冻")
+    @ALogOperation(type = "变更", desc = "资金账户-解冻")
+    @ApiOperation(value = "资金账户-解冻")
     @RfAccount2Bean
     public Response unfreeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController unfreeze.........");
@@ -122,6 +124,8 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                dto.setActionType(1);//0冻结1解冻
+                dto.setBizAccountType(0);//0资金账户1黄金账户2网贷账户
                 result = accountService.freeze(dto);
             }
         } catch (Exception e) {
@@ -132,8 +136,8 @@ public class AccountController extends FinanceBaseController {
 
     @RequiresPermissions("account:op:reverse")
     @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/reverse")
-    @ALogOperation(type = "变更", desc = "账户操作-冲正/抵扣")
-    @ApiOperation(value = "账户操作-冲正/抵扣")
+    @ALogOperation(type = "变更", desc = "资金账户-冲正/抵扣")
+    @ApiOperation(value = "资金账户-冲正/抵扣")
     @RfAccount2Bean
     public Response reverse(@Validated @ModelAttribute AccountReverseDto dto, BindingResult bindingResult) {
         log.info("AccountController reverse.........");
@@ -151,6 +155,7 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                dto.setBizAccountType(0);//0资金账户1黄金账户2网贷账户
                 result = accountService.reverse(dto);
             }
         } catch (Exception e) {
@@ -160,9 +165,9 @@ public class AccountController extends FinanceBaseController {
     }
 
     @RequiresPermissions("account:op:state")
-    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "op/state")
-    @ALogOperation(type = "变更", desc = "账户操作-状态变更")
-    @ApiOperation(value = "账户操作-状态变更")
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/state")
+    @ALogOperation(type = "变更", desc = "资金账户-状态变更")
+    @ApiOperation(value = "资金账户-状态变更")
     @RfAccount2Bean
     public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
         log.info("AccountController state.........");
@@ -180,6 +185,7 @@ public class AccountController extends FinanceBaseController {
                 }
                 result = Response.error(errorMsg);
             } else {
+                dto.setBizAccountType(0);//0资金账户1黄金账户2网贷账户
                 result = accountService.updateState(copyTo(dto,AccountDto.class));
             }
         } catch (Exception e) {

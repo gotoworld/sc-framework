@@ -34,7 +34,7 @@ public class TransactionController extends BaseController {
     @ApiOperation(value = "扣款")
     public Response deduct(@ModelAttribute DeductMoneyDto dto) {
         log.info("TransactionController deduct.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             transactionService.deduct(dto);
         } catch (Exception e) {

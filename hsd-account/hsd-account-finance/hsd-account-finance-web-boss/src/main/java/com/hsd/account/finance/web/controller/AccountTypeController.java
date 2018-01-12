@@ -38,7 +38,7 @@ public class AccountTypeController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountTypeDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountTypeController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new AccountTypeDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -57,7 +57,7 @@ public class AccountTypeController extends BaseController {
     @ApiOperation(value = "回收站")
     public Response recycle(@ModelAttribute  AccountTypeDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountTypeController recycle.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new AccountTypeDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -76,7 +76,7 @@ public class AccountTypeController extends BaseController {
     @ApiOperation(value = "信息列表")
     public Response list(@ModelAttribute  AccountTypeDto dto) {
         log.info("AccountTypeController list.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) dto = new AccountTypeDto();
             dto.setDelFlag(0);
@@ -94,7 +94,7 @@ public class AccountTypeController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountTypeController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             AccountTypeDto dto = new AccountTypeDto(){{
                 setId(id);
@@ -116,7 +116,7 @@ public class AccountTypeController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("AccountTypeController del.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");}
             AccountTypeDto dto = new AccountTypeDto(){{
@@ -137,7 +137,7 @@ public class AccountTypeController extends BaseController {
     @ApiOperation(value = "恢复")
     public Response recovery(@PathVariable("id") Long id) {
         log.info("AccountTypeController recovery.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             result.message=accountTypeService.recoveryDataById(new AccountTypeDto(){{setId(id);}});
         } catch (Exception e) {
@@ -154,7 +154,7 @@ public class AccountTypeController extends BaseController {
     @ApiOperation(value = "物理删除")
     public Response phydel(@PathVariable("id") Long id) {
         log.info("AccountTypeController phydel.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");}
             AccountTypeDto dto = new AccountTypeDto(){{
@@ -177,7 +177,7 @@ public class AccountTypeController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute AccountTypeDto dto, BindingResult bindingResult) {
         log.info("AccountTypeController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

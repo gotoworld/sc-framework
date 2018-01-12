@@ -23,7 +23,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息列表")
     public Response list( @RequestParam("userType") Integer userType) {
         log.info("TemplateController list.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             TemplateDto dto = new TemplateDto(){{ setUserType(userType); }};
             result.data = templateService.findDataIsList(dto);
@@ -40,7 +40,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("TemplateController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");};
             TemplateDto dto = new TemplateDto(){{

@@ -32,7 +32,7 @@ public class UserSignContractController extends BaseController {
     @ApiOperation(value = "信息列表")
     public Response list() {
         log.info("UserSignContractController list.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             UserSignContractDto dto = new UserSignContractDto(){{ setUserId(JwtUtil.getSubject(UserDto.class).getId()); }};
             result.data = userSignContractService.findDataIsList(dto);
@@ -48,7 +48,7 @@ public class UserSignContractController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("UserSignContractController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             UserSignContractDto dto = new UserSignContractDto();
             if (id!=null) {
@@ -70,7 +70,7 @@ public class UserSignContractController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute UserSignContractDto dto, BindingResult bindingResult) {
         log.info("UserSignContractController save.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

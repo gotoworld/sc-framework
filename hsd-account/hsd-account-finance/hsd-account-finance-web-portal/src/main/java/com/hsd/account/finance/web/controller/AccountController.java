@@ -70,7 +70,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "信息保存")
     public Response save(@Validated AccountDto dto, BindingResult bindingResult) {
         log.info("AccountController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null)throw new RuntimeException("参数异常");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
@@ -97,7 +97,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "账户操作-状态变更")
     public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
         log.info("AccountController state.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.toString()))) {
@@ -158,7 +158,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "账户操作-充值")
     public Response recharge(@Validated @ModelAttribute AccountRechargeDto dto, BindingResult bindingResult) {
         log.info("AccountController recharge.........");
-        Response result = new Response(0, "success");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "recharge." + dto.toString()))) {
@@ -184,7 +184,7 @@ public class AccountController extends BaseController{
     @ApiOperation(value = "账户操作-提现")
     public Response withdrawal(@Validated @ModelAttribute AccountWithdrawalDto dto, BindingResult bindingResult) {
         log.info("AccountController recharge.........");
-        Response result = new Response(0, "success");
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "withdrawal." + dto.toString()))) {

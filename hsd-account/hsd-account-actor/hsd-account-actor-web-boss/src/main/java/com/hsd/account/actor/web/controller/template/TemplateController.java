@@ -100,7 +100,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("TemplateController del.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");};
             TemplateDto dto = new TemplateDto(){{
@@ -123,7 +123,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute TemplateDto dto, BindingResult bindingResult) {
         log.info("TemplateController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

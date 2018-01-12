@@ -101,7 +101,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("AccountTemplateController del.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");}
             AccountTemplateDto dto = new AccountTemplateDto(){{
@@ -122,7 +122,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "恢复")
     public Response recovery(@PathVariable("id") Long id) {
         log.info("AccountTemplateController recovery.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             result.message=accountTemplateService.recoveryDataById(new AccountTemplateDto(){{setId(id);}});
         } catch (Exception e) {
@@ -139,7 +139,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "物理删除")
     public Response phydel(@PathVariable("id") Long id) {
         log.info("AccountTemplateController phydel.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (id==null) {throw new RuntimeException("参数异常!");}
             AccountTemplateDto dto = new AccountTemplateDto(){{
@@ -162,7 +162,7 @@ public class AccountTemplateController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute AccountTemplateDto dto, BindingResult bindingResult) {
         log.info("AccountTemplateController save.........");
-        Response result = new Response();
+        Response result = new Response(0,"success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

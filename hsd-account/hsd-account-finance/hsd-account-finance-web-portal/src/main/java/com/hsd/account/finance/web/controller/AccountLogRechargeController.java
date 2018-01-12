@@ -25,7 +25,6 @@ public class AccountLogRechargeController extends BaseController {
     /**
      * <p>信息分页 (未删除)。
      */
-    @RequiresPermissions("accountLogRecharge:menu")
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "page/{pageNum}")
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountLogRechargeDto dto, @PathVariable("pageNum") Integer pageNum) {
@@ -43,7 +42,6 @@ public class AccountLogRechargeController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequiresPermissions("accountLogRecharge:info")
     @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{id}")
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {

@@ -27,7 +27,7 @@ public class SchemaInfoController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix)
     public String init(@ModelAttribute SchemaInfo dto) {
         log.info("SchemaInfoController init.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             result.data = schemaInfoService.findDbIsList(dto);
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class SchemaInfoController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "table")
     public String table(@ModelAttribute SchemaInfo dto) {
         log.info("SchemaInfoController table.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             result.data = schemaInfoService.findTableIsList(dto);
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class SchemaInfoController extends BaseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = acPrefix + "column")
     public String column(@ModelAttribute SchemaInfo dto) {
         log.info("SchemaInfoController column.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             Map<String,List> resultMap=new HashMap<>();
             if(dto.getTables()!=null){
@@ -83,7 +83,7 @@ public class SchemaInfoController extends BaseController {
     @RfAccount2Bean
     public String templateRender(SchemaInfo dto) {
         log.info("SchemaInfoController templateRender.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         if (dto != null && dto.getTables()!=null && dto.getTables().size()>0) {
             try {
                 //1.获取表集合

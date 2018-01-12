@@ -6,7 +6,9 @@ import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
 import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.op.AccountFreezeDto;
+import com.hsd.account.finance.dto.op.AccountRechargeDto;
 import com.hsd.account.finance.dto.op.AccountStateDto;
+import com.hsd.account.finance.dto.op.AccountWithdrawalDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.annotation.ALogOperation;
 import com.hsd.framework.annotation.RfAccount2Bean;
@@ -152,14 +154,14 @@ public class AccountController extends BaseController{
         return result;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "freeze")
-    @ApiOperation(value = "账户操作-冻结/解冻")
-    public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
-        log.info("AccountController freeze.........");
-        Response result = new Response();
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/recharge")
+    @ApiOperation(value = "账户操作-充值")
+    public Response recharge(@Validated @ModelAttribute AccountRechargeDto dto, BindingResult bindingResult) {
+        log.info("AccountController recharge.........");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "recharge." + dto.toString()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {
@@ -170,7 +172,33 @@ public class AccountController extends BaseController{
                 }
                 result = Response.error(errorMsg);
             } else {
-                result = accountService.freeze(dto);
+                result = accountService.recharge(dto);
+            }
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = acPrefix + "op/withdrawal")
+    @ApiOperation(value = "账户操作-提现")
+    public Response withdrawal(@Validated @ModelAttribute AccountWithdrawalDto dto, BindingResult bindingResult) {
+        log.info("AccountController recharge.........");
+        Response result = new Response(0, "success");
+        try {
+            if (dto == null) return Response.error("参数获取异常!");
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "withdrawal." + dto.toString()))) {
+                throw new RuntimeException("请不要重复提交!");
+            }
+            if (bindingResult.hasErrors()) {
+                String errorMsg = "";
+                List<ObjectError> errorList = bindingResult.getAllErrors();
+                for (ObjectError error : errorList) {
+                    errorMsg += (error.getDefaultMessage()) + ";";
+                }
+                result = Response.error(errorMsg);
+            } else {
+                result = accountService.withdrawal(dto);
             }
         } catch (Exception e) {
             result = Response.error(e.getMessage());

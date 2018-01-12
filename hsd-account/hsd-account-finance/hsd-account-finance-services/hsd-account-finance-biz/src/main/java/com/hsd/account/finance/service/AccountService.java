@@ -10,6 +10,7 @@ import com.hsd.account.finance.dto.AccountDto;
 import com.hsd.account.finance.dto.op.AccountFreezeDto;
 import com.hsd.account.finance.dto.op.AccountRechargeDto;
 import com.hsd.account.finance.dto.op.AccountReverseDto;
+import com.hsd.account.finance.dto.op.AccountWithdrawalDto;
 import com.hsd.account.finance.entity.*;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
@@ -47,9 +48,10 @@ public class AccountService extends BaseService implements IAccountService {
     private IAccountLogFreezeDao logFreezeDao;
     @Autowired
     private IAccountLogOperationalDao logOperationalDao;
-
     @Autowired
     private IAccountLogRechargeDao logRechargeDao;
+    @Autowired
+    private IAccountLogWithdrawalDao logWithdrawalDao;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -296,13 +298,69 @@ public class AccountService extends BaseService implements IAccountService {
                     break;
                 }
             }
-            //.记录冻结日志
+            //.记录充值日志
             AccountLogRecharge logRechargeEntity=copyTo(dto,AccountLogRecharge.class);
             logRechargeEntity.setId(idGenerator.nextId());
             logRechargeDao.insert(logRechargeEntity);
 
         } catch (Exception e) {
             log.error("账户[充值]异常!", e);
+            throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }finally {
+            lock.unlock();//释放锁
+        }
+        return result;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response withdrawal(AccountWithdrawalDto dto) throws Exception {
+        Response result = new Response(0, "success");
+        //加分布式锁 同一个账户相同时间
+        Lock lock = new RedisLock("lock:account-withdrawal:"+dto.getId(), 60 * 1000);
+        try {
+            //.判断业务账户种类0资金账户1黄金账户2网贷账户
+            if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
+                return Response.error("业务账户未知");
+            }
+            //获取指定账户信息
+            switch (dto.getBizAccountType()){//业务账户
+                case 0: { //0资金账户
+                    return Response.error("资金账户,暂无[提现]功能");
+                }
+                case 1: {//1黄金账户
+                    AccountSubGold entity= (AccountSubGold) accountSubGoldDao.selectByPrimaryKey(new AccountSubGold(){{setId(dto.getId());}});
+                    if(entity == null){
+                        return Response.error("未找到黄金账户！");
+                    }
+                    if(entity.getState() != 0){
+                        return Response.error("黄金账户不正常！");
+                    }
+                    entity.setTotalGold(dto.getMoney());
+                    if (accountSubGoldDao.withdrawal(entity) == 0) return Response.error("未找到黄金账户或账户状态不正常!");
+                    break;
+                }
+                case 2:{ //2网贷账户
+                    AccountSubLoan entity = (AccountSubLoan) accountSubLoanDao.selectByPrimaryKey(new AccountSubLoan(){{setId(dto.getId());}});
+                    if(entity == null){
+                        return Response.error("未找到网贷账户！");
+                    }
+                    if(entity.getState() != 0){
+                        return Response.error("网贷账户不正常！");
+                    }
+                    entity.setAvailableMoney(dto.getMoney());
+                    entity.setTotalMoney(dto.getMoney());
+                    if (accountSubLoanDao.withdrawal(entity) == 0) return Response.error("未找到网贷账户或账户状态不正常!");
+                    break;
+                }
+            }
+            //.记录提现日志
+            AccountLogWithdrawal logWithdrawalEntity=copyTo(dto,AccountLogWithdrawal.class);
+            logWithdrawalEntity.setId(idGenerator.nextId());
+            logWithdrawalDao.insert(logWithdrawalEntity);
+
+        } catch (Exception e) {
+            log.error("账户[提现]异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
         }finally {
             lock.unlock();//释放锁

@@ -43,7 +43,7 @@ public class AccountSubGoldController extends FinanceBaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountSubGoldDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountSubGoldController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) dto = new AccountSubGoldDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -62,7 +62,7 @@ public class AccountSubGoldController extends FinanceBaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountSubGoldController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result.data = accountSubGoldService.findDataById(new AccountSubGoldDto(){{setId(id);}});
         } catch (Exception e) {
@@ -77,10 +77,10 @@ public class AccountSubGoldController extends FinanceBaseController {
     @RfAccount2Bean
     public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountSubGoldController freeze.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {
@@ -107,10 +107,10 @@ public class AccountSubGoldController extends FinanceBaseController {
     @RfAccount2Bean
     public Response unfreeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountSubGoldController unfreeze.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {
@@ -138,10 +138,10 @@ public class AccountSubGoldController extends FinanceBaseController {
     @RfAccount2Bean
     public Response reverse(@Validated @ModelAttribute AccountReverseDto dto, BindingResult bindingResult) {
         log.info("AccountSubGoldController reverse.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "reverse." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "reverse." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {
@@ -168,10 +168,10 @@ public class AccountSubGoldController extends FinanceBaseController {
     @RfAccount2Bean
     public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
         log.info("AccountSubGoldController state.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {

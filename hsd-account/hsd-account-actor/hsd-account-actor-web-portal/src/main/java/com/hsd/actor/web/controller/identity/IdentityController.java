@@ -30,7 +30,7 @@ public class IdentityController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info() {
         log.info("IdentityController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             IdentityDto dto = new IdentityDto(){{
                 setUserId(JwtUtil.getSubject(UserDto.class).getId());

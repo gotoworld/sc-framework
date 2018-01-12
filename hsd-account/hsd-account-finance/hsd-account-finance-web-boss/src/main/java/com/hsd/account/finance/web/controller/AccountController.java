@@ -40,7 +40,7 @@ public class AccountController extends FinanceBaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute AccountDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) dto = new AccountDto() {{
                 setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT);
@@ -62,7 +62,7 @@ public class AccountController extends FinanceBaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result.data = accountService.findDataById(new AccountDto() {{
                 setId(id);
@@ -80,10 +80,10 @@ public class AccountController extends FinanceBaseController {
     @RfAccount2Bean
     public Response freeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController freeze.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {
@@ -110,10 +110,10 @@ public class AccountController extends FinanceBaseController {
     @RfAccount2Bean
     public Response unfreeze(@Validated @ModelAttribute AccountFreezeDto dto, BindingResult bindingResult) {
         log.info("AccountController unfreeze.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "freeze." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {
@@ -141,10 +141,10 @@ public class AccountController extends FinanceBaseController {
     @RfAccount2Bean
     public Response reverse(@Validated @ModelAttribute AccountReverseDto dto, BindingResult bindingResult) {
         log.info("AccountController reverse.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "reverse." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "reverse." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {
@@ -171,10 +171,10 @@ public class AccountController extends FinanceBaseController {
     @RfAccount2Bean
     public Response state(@Validated @ModelAttribute AccountStateDto dto, BindingResult bindingResult) {
         log.info("AccountController state.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.toString()))) {
+            if ("1".equals(request.getSession().getAttribute(acPrefix + "state." + dto.getToken()))) {
                 throw new RuntimeException("请不要重复提交!");
             }
             if (bindingResult.hasErrors()) {

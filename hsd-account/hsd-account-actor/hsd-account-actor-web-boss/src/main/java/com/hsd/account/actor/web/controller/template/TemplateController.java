@@ -41,7 +41,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  TemplateDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("TemplateController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) dto = new TemplateDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -57,7 +57,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息列表")
     public Response list( @RequestParam("userType") Integer userType) {
         log.info("TemplateController list.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             TemplateDto dto = new TemplateDto(){{ setUserType(userType); }};
             result.data = templateService.findDataIsList(dto);
@@ -77,7 +77,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("TemplateController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (id==null) {throw new RuntimeException("参数异常!");};
             TemplateDto dto = new TemplateDto(){{
@@ -100,7 +100,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("TemplateController del.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (id==null) {throw new RuntimeException("参数异常!");};
             TemplateDto dto = new TemplateDto(){{
@@ -123,7 +123,7 @@ public class TemplateController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute TemplateDto dto, BindingResult bindingResult) {
         log.info("TemplateController save.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

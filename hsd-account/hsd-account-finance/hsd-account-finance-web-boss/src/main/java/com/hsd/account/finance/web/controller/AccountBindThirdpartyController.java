@@ -29,7 +29,7 @@ public class AccountBindThirdpartyController extends FinanceBaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  AccountBindThirdpartyDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("AccountBindThirdpartyController page.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             if (dto == null) dto = new AccountBindThirdpartyDto(){{ setPageSize(CommonConstant.PAGEROW_DEFAULT_COUNT); }};
             dto.setPageNum(pageNum);
@@ -48,7 +48,7 @@ public class AccountBindThirdpartyController extends FinanceBaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("AccountBindThirdpartyController info.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result.data = accountBindThirdpartyService.findDataById(new AccountBindThirdpartyDto(){{setId(id);}});
         } catch (Exception e) {

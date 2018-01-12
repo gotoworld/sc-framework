@@ -28,7 +28,7 @@ public class AccountTemplateAttributeController extends BaseController {
     @ApiOperation(value = "信息列表")
     public Response list(@RequestParam("templateId") Long templateId) {
         log.info("AccountTemplateAttributeController list.........");
-        Response result = new Response(0, "success");
+        Response result = new Response();
         try {
             result.data = accountTemplateAttributeService.findDataIsList(new AccountTemplateAttributeDto(){{setTemplateId(templateId);}});
         } catch (Exception e) {

@@ -38,7 +38,7 @@ public class BusinessTypeController extends BaseController {
     @ApiOperation(value = "信息分页")
     public Response page(@ModelAttribute  BusinessTypeDto dto, @PathVariable("pageNum") Integer pageNum) {
         log.info("BusinessTypeController page.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) {
                dto = new BusinessTypeDto();
@@ -64,7 +64,7 @@ public class BusinessTypeController extends BaseController {
     @ApiOperation(value = "信息详情")
     public Response info(@PathVariable("id") Long id) {
         log.info("BusinessTypeController info.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             BusinessTypeDto dto = new BusinessTypeDto();
             if (id!=null) {
@@ -87,7 +87,7 @@ public class BusinessTypeController extends BaseController {
     @ApiOperation(value = "信息删除")
     public Response del(@PathVariable("id") Long id) {
         log.info("BusinessTypeController del.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             BusinessTypeDto dto = new BusinessTypeDto();
             dto.setId(id);
@@ -108,7 +108,7 @@ public class BusinessTypeController extends BaseController {
     @ApiOperation(value = "信息保存")
     public Response save(@Validated @ModelAttribute BusinessTypeDto dto, BindingResult bindingResult) {
         log.info("BusinessTypeController save.........");
-        Response result = new Response("success");
+        Response result = new Response(0, "success");
         try {
             if (dto == null) return Response.error("参数获取异常!");
             if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {

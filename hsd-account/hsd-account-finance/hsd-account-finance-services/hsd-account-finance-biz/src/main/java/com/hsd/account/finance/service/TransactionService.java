@@ -33,7 +33,7 @@ import java.util.List;
  */
 @FeignService
 @Slf4j
-public class TransactionService extends BaseService implements ITransactionService {
+public class TransactionService extends FinanceBaseService implements ITransactionService {
 
     @Autowired
     private IAccountBindThirdpartyDao accountBindThirdpartyDao;
@@ -59,7 +59,7 @@ public class TransactionService extends BaseService implements ITransactionServi
             return result;
         }
 
-        Lock lock = new RedisLock("lock:account-deduct:"+accountId, 60 * 1000);
+        Lock lock = new RedisLock(redisTemplate,"lock:account-deduct:"+accountId, 60 * 1000);
         try{
             AccountBindThirdparty accountBindThirdparty = new AccountBindThirdparty(){{
                 setAppUserId(userId);

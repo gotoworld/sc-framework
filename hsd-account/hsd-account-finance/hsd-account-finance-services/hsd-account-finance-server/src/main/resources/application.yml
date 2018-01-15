@@ -182,5 +182,6 @@ hsd:
   common:
     appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
 
-risk:
-  url: http://192.168.108.154:48040/datacenter/bankcard3item/verify
+#数据中心地址
+datacenter:
+  url: http://192.168.108.154:48040/datacenter/

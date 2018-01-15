@@ -50,27 +50,17 @@ public class AccountSubGoldController extends BaseController {
     /**
      * <p> 开户信息保存
      */
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "save")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "open/{userId}")
     @ApiOperation(value = "信息保存")
-    public Response save(@Validated @ModelAttribute AccountSubGoldDto dto, BindingResult bindingResult) {
-        log.info("AccountSubGoldController save.........");
+    public Response open(@PathVariable("userId") Long userId,@RequestParam Long accountType) {
+        log.info("AccountSubGoldController open.........");
         Response result = new Response(0,"success");
         try {
-            if (dto == null)throw new RuntimeException("参数异常");
-            if ("1".equals(request.getSession().getAttribute(acPrefix + "save." + dto.getToken()))) {
-                throw new RuntimeException("请不要重复提交!");
-            }
-            if (bindingResult.hasErrors()) {
-                String errorMsg = "";
-                List<ObjectError> errorList = bindingResult.getAllErrors();
-                for (ObjectError error : errorList) {
-                    errorMsg += (error.getDefaultMessage()) + ";";
-                }
-                result = Response.error(errorMsg);
-            } else {
-                result = accountSubGoldService.saveOrUpdateData(dto);
-                request.getSession().setAttribute(acPrefix + "save." + dto.getToken(), "1");
-            }
+            AccountSubGoldDto dto = new AccountSubGoldDto(){{
+                setAppUserId(userId);
+                setType(accountType);
+            }};
+            result.data = accountSubGoldService.open(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }

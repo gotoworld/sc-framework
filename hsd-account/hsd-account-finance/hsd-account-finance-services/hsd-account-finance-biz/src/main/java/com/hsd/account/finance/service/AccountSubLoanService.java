@@ -7,6 +7,7 @@ import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.finance.api.IAccountSubLoanService;
 import com.hsd.account.finance.dao.IAccountDao;
 import com.hsd.account.finance.dao.IAccountSubLoanDao;
+import com.hsd.account.finance.dao.IAccountTypeDao;
 import com.hsd.account.finance.dto.AccountSubLoanDto;
 import com.hsd.account.finance.entity.Account;
 import com.hsd.account.finance.entity.AccountSubLoan;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class AccountSubLoanService extends BaseService implements IAccountSubLoa
 
     @Autowired
     private IIdentityService identityService;
+
+    @Autowired
+    private IAccountTypeDao accountTypeDao;
 
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -122,7 +127,7 @@ public class AccountSubLoanService extends BaseService implements IAccountSubLoa
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-    public Response open(AccountSubLoanDto dto) throws Exception {
+    public Response open(@RequestBody AccountSubLoanDto dto) throws Exception {
         Response result = new Response(0,"success");
         try {
             if (dto == null)throw new RuntimeException("参数异常!");
@@ -133,12 +138,13 @@ public class AccountSubLoanService extends BaseService implements IAccountSubLoa
                 throw new RuntimeException("参数异常!");
             }
             AccountType accountType = new AccountType(){{setId(type);}};
-            AccountType accountTypeS = (AccountType)accountDao.selectByPrimaryKey(entity);
-            if(accountTypeS == null){
+            AccountType accountTypeS = (AccountType)accountTypeDao.selectByPrimaryKey(accountType);
+            if(accountTypeS == null || 0 != accountTypeS.getDelFlag()){
                 result = Response.error("要开通的账户类型不存在!");
                 return result;
             }
             entity.setAliasName(accountTypeS.getName());
+
 
             //获取实名信息
             IdentityDto identityDto = new IdentityDto();
@@ -148,9 +154,10 @@ public class AccountSubLoanService extends BaseService implements IAccountSubLoa
                 result = Response.error("未找到用户实名认证信息,请先实名认证!");
                 return result;
             }
-            //判断数据是否存在
-            if (accountSubLoanDao.isDataYN(entity) != 0) {
-                result = Response.error("黄金账户已开通,每个用户只能开通一个黄金账户!");
+
+            AccountSubLoan accountSubLoan = accountSubLoanDao.selectByUserId(entity);
+            if(accountSubLoan != null){
+                result = Response.error("网贷账户已开通,每个用户只能开通一个网贷账户!");
                 return result;
             }
 
@@ -163,6 +170,18 @@ public class AccountSubLoanService extends BaseService implements IAccountSubLoa
 
             entity.setState(0);
             entity.setDateOpen(new Date());
+            entity.setAccountTemplateId(1l);
+            entity.setCurrency(0);
+            entity.setTotalMoney(BigDecimal.ZERO);
+            entity.setAvailableMoney(BigDecimal.ZERO);
+            entity.setFreezeMoney(BigDecimal.ZERO);
+            entity.setDueIn(BigDecimal.ZERO);
+            entity.setStayStill(BigDecimal.ZERO);
+            entity.setStayInterest(BigDecimal.ZERO);
+            entity.setMakeInterest(BigDecimal.ZERO);
+            entity.setMakeReward(BigDecimal.ZERO);
+            entity.setOverdue(BigDecimal.ZERO);
+            entity.setAccountTemplateId(1l);
             //新增
             accountSubLoanDao.insert(entity);
 
@@ -170,11 +189,15 @@ public class AccountSubLoanService extends BaseService implements IAccountSubLoa
             Account account = copyTo(entity, Account.class);
             account.setId(accountId);
             //需要默认开得资金账户类型
-            account.setAccountType(0l); //待定
-            account.setAliasName("网贷个人资金账户");
+            account.setAccountType(type); //待定
+            account.setAliasName(accountTypeS.getName());
             account.setCurrency(0);
             account.setState(0);
-            account.setBiUpdateTs(new Date());
+            account.setTotalMoney(BigDecimal.ZERO);
+            account.setAvailableMoney(BigDecimal.ZERO);
+            account.setFreezeMoney(BigDecimal.ZERO);
+            account.setInFloatMoney(BigDecimal.ZERO);
+            account.setAccountTemplateId(1l);
             //新增
             accountDao.insert(account);
             result.data=entity.getId();

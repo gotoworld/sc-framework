@@ -23,7 +23,7 @@ import java.util.List;
 
 @FeignService
 @Slf4j
-public class AccountLogWithdrawalService extends BaseService implements IAccountLogWithdrawalService {
+public class AccountLogWithdrawalService extends FinanceBaseService implements IAccountLogWithdrawalService {
     @Autowired
     private IAccountLogWithdrawalDao accountLogWithdrawalDao;
 

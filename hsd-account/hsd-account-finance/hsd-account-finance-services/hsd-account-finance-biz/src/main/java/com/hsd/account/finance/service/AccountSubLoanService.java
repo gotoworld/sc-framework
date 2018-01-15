@@ -23,7 +23,7 @@ import java.util.List;
 
 @FeignService
 @Slf4j
-public class AccountSubLoanService extends BaseService implements IAccountSubLoanService {
+public class AccountSubLoanService extends FinanceBaseService implements IAccountSubLoanService {
     @Autowired
     private IAccountSubLoanDao accountSubLoanDao;
 

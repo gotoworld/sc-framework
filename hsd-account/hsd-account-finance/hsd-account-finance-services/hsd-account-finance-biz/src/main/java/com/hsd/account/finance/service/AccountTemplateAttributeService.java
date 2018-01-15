@@ -16,7 +16,7 @@ import java.util.List;
 
 @FeignService
 @Slf4j
-public class AccountTemplateAttributeService extends BaseService implements IAccountTemplateAttributeService {
+public class AccountTemplateAttributeService extends FinanceBaseService implements IAccountTemplateAttributeService {
     @Autowired
     private IAccountTemplateAttributeDao accountTemplateAttributeDao;
 

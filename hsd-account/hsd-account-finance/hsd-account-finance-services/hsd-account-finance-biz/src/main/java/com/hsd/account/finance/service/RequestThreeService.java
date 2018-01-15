@@ -21,8 +21,8 @@ public class RequestThreeService {
     private HttpRestClient httpRestClient;
 
     //风控接口地址
-    @Value("${risk.url}")
-    private String riskUrl;
+    @Value("${datacenter.url}")
+    private String datacenterUrl;
 
     /**
      * 卡三要素
@@ -38,7 +38,27 @@ public class RequestThreeService {
         map.add("userName",name);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        String responseStr =  httpRestClient.doPost(riskUrl,map, String.class);
+        String responseStr =  httpRestClient.doPost(datacenterUrl+"bankcard3item/verify",map, String.class);
+        JSONObject responseJson = JSONObject.parseObject(responseStr);
+        return responseJson;
+    }
+
+    /**
+     * 卡四要素
+     * @param name 姓名
+     * @param certNo 身份证号码
+     * @param cardNo 银行卡号
+     * @return
+     */
+    public JSONObject cardFourElement(String name, String certNo, String cardNo, String phone) throws Exception{
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("userBankCard",cardNo);
+        map.add("userIdCard",certNo);
+        map.add("userName",name);
+        map.add("userPhoneNo",phone);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        String responseStr =  httpRestClient.doPost(datacenterUrl+"bankcard4item/verify",map, String.class);
         JSONObject responseJson = JSONObject.parseObject(responseStr);
         return responseJson;
     }

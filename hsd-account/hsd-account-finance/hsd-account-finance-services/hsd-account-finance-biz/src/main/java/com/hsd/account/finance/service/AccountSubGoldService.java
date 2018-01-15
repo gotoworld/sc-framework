@@ -7,6 +7,7 @@ import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.finance.api.IAccountSubGoldService;
 import com.hsd.account.finance.dao.IAccountDao;
 import com.hsd.account.finance.dao.IAccountSubGoldDao;
+import com.hsd.account.finance.dao.IAccountTypeDao;
 import com.hsd.account.finance.dto.AccountSubGoldDto;
 import com.hsd.account.finance.entity.Account;
 import com.hsd.account.finance.entity.AccountSubGold;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class AccountSubGoldService extends BaseService implements IAccountSubGol
 
     @Autowired
     private IAccountDao accountDao;
+
+    @Autowired
+    private IAccountTypeDao accountTypeDao;
 
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -122,7 +127,7 @@ public class AccountSubGoldService extends BaseService implements IAccountSubGol
 
         @Override
         @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
-        public Response open(AccountSubGoldDto dto) throws Exception {
+        public Response open(@RequestBody AccountSubGoldDto dto) throws Exception {
             Response result = new Response(0,"success");
             try {
                 if (dto == null)throw new RuntimeException("参数异常!");
@@ -133,8 +138,8 @@ public class AccountSubGoldService extends BaseService implements IAccountSubGol
                     throw new RuntimeException("参数异常!");
                 }
                 AccountType accountType = new AccountType(){{setId(type);}};
-                AccountType accountTypeS = (AccountType)accountDao.selectByPrimaryKey(entity);
-                if(accountTypeS == null){
+                AccountType accountTypeS = (AccountType)accountTypeDao.selectByPrimaryKey(accountType);
+                if(accountTypeS == null || 0 != accountTypeS.getDelFlag()){
                     result = Response.error("要开通的账户类型不存在!");
                     return result;
                 }
@@ -148,8 +153,9 @@ public class AccountSubGoldService extends BaseService implements IAccountSubGol
                     result = Response.error("未找到用户实名认证信息,请先实名认证!");
                     return result;
                 }
-                //判断数据是否存在
-                if (accountSubGoldDao.isDataYN(entity) != 0) {
+
+                AccountSubGold accountSubGold = accountSubGoldDao.selectByUserId(entity);
+                if(accountSubGold != null){
                     result = Response.error("黄金账户已开通,每个用户只能开通一个黄金账户!");
                     return result;
                 }
@@ -163,6 +169,7 @@ public class AccountSubGoldService extends BaseService implements IAccountSubGol
 
                 entity.setState(0);
                 entity.setDateOpen(new Date());
+                entity.setAccountTemplateId(1l);
                 //新增
                 accountSubGoldDao.insert(entity);
 
@@ -174,7 +181,11 @@ public class AccountSubGoldService extends BaseService implements IAccountSubGol
                 account.setAliasName(accountTypeS.getName());
                 account.setCurrency(0);
                 account.setState(0);
-                account.setBiUpdateTs(new Date());
+                account.setTotalMoney(BigDecimal.ZERO);
+                account.setAvailableMoney(BigDecimal.ZERO);
+                account.setFreezeMoney(BigDecimal.ZERO);
+                account.setInFloatMoney(BigDecimal.ZERO);
+                account.setAccountTemplateId(1l);
                 //新增
                 accountDao.insert(account);
                 result.data=entity.getId();

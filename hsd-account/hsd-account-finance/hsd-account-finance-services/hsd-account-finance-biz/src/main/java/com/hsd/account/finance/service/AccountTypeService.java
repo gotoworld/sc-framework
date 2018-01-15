@@ -23,7 +23,7 @@ import java.util.List;
 
 @FeignService
 @Slf4j
-public class AccountTypeService extends BaseService implements IAccountTypeService {
+public class AccountTypeService extends FinanceBaseService implements IAccountTypeService {
     @Autowired
     private IAccountTypeDao accountTypeDao;
 

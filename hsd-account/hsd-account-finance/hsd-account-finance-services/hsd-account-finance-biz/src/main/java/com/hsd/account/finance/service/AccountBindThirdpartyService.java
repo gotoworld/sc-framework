@@ -31,7 +31,7 @@ import java.util.List;
 
 @FeignService
 @Slf4j
-public class AccountBindThirdpartyService extends BaseService implements IAccountBindThirdpartyService {
+public class AccountBindThirdpartyService extends FinanceBaseService implements IAccountBindThirdpartyService {
     @Autowired
     private IAccountBindThirdpartyDao accountBindThirdpartyDao;
 

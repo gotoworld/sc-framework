@@ -2,20 +2,12 @@ package com.hsd.account.finance.web.controller;
 
 import com.hsd.account.finance.api.IAccountBindThirdpartyService;
 import com.hsd.account.finance.dto.AccountBindThirdpartyDto;
-import com.hsd.account.finance.dto.AccountDto;
-import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.auth.Logical;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
-import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +32,8 @@ public class AccountBindThirdpartyController extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.POST}, value = acPrefix + "bindCard/{userId}")
     @ApiOperation(value = "绑卡")
-    public Response bindCard(@PathVariable("userId") Long userId,@RequestParam Long accountId,@RequestParam String name,@RequestParam String cardNo,@RequestParam String certNo) {
+    public Response bindCard(@PathVariable("userId") Long userId,@RequestParam Long accountId,@RequestParam String name,
+                             @RequestParam String cardNo,@RequestParam String certNo,@RequestParam String phone) {
         log.info("AccountBindThirdpartyController bindCard.........");
         Response result = new Response(0,"success");
         try {
@@ -50,6 +43,7 @@ public class AccountBindThirdpartyController extends BaseController {
             dto.setRealName(name);
             dto.setCardNo(certNo);
             dto.setThirdpartyAccount(cardNo);
+            dto.setCellphone(phone);
             return accountBindThirdpartyService.bindCard(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());

@@ -133,7 +133,8 @@ public class AccountBindThirdpartyService extends FinanceBaseService implements 
             String certNo = dto.getCardNo();
             Long userId = dto.getAppUserId();
             Long accountId = dto.getAccountId();
-            if(StringUtils.isAnyEmpty(name,cardNo,certNo)){
+            String phone = dto.getCellphone();
+            if(StringUtils.isAnyEmpty(name,cardNo,certNo,phone)){
                 result = Response.error("绑卡信息缺失!");
                 return result;
             }
@@ -198,7 +199,7 @@ public class AccountBindThirdpartyService extends FinanceBaseService implements 
                 /**
                  * 卡三要素认证
                  */
-                JSONObject responseJson = requestThreeService.cardThreeElement(name,certNo,cardNo);
+                JSONObject responseJson = requestThreeService.cardFourElement(name,certNo,cardNo,phone);
                 if(responseJson == null){
                     result = Response.error("银行卡验证错误!");
                     return result;

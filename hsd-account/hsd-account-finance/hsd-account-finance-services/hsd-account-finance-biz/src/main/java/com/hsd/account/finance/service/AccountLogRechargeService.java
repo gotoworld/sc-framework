@@ -23,7 +23,7 @@ import java.util.List;
 
 @FeignService
 @Slf4j
-public class AccountLogRechargeService extends BaseService implements IAccountLogRechargeService {
+public class AccountLogRechargeService extends FinanceBaseService implements IAccountLogRechargeService {
     @Autowired
     private IAccountLogRechargeDao accountLogRechargeDao;
 

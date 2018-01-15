@@ -3,6 +3,7 @@ package com.hsd.framework.cache.redis;
 import com.hsd.framework.lock.AbstractLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -11,18 +12,15 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class RedisLock extends AbstractLock {
-    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     // 锁的名字
     protected String lockKey;
     // 锁的有效时长(毫秒)
     protected long lockExpires = 2000;
     private RedisSerializer<String> serializer;
-
     public RedisLock(RedisTemplate redisTemplate, String lockKey) {
         this(redisTemplate, lockKey, 2000);
     }
-
     /**
      * @param lockExpires 毫秒，锁过期时间
      */
@@ -32,10 +30,10 @@ public class RedisLock extends AbstractLock {
         this.lockExpires = lockExpires;
     }
 
-    public RedisLock(String lockKey, long lockExpires) {
-        this.lockKey = lockKey;
-        this.lockExpires = lockExpires;
-    }
+//    public RedisLock(String lockKey, long lockExpires) {
+//        this.lockKey = lockKey;
+//        this.lockExpires = lockExpires;
+//    }
 
     @Override
     protected void unlock0() {

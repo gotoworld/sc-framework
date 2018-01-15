@@ -3,39 +3,32 @@ package com.hsd.account.finance.service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.hsd.account.finance.api.IAccountLogOperationalService;
 import com.hsd.account.finance.api.IAccountService;
 import com.hsd.account.finance.dao.*;
 import com.hsd.account.finance.dto.AccountDto;
-import com.hsd.account.finance.dto.AccountLogDto;
 import com.hsd.account.finance.dto.op.*;
 import com.hsd.account.finance.entity.*;
 import com.hsd.framework.Response;
 import com.hsd.framework.SysErrorCode;
 import com.hsd.framework.annotation.FeignService;
 import com.hsd.framework.cache.redis.RedisLock;
-import com.hsd.framework.config.AppConfig;
 import com.hsd.framework.exception.ServiceException;
 import com.hsd.framework.lock.Lock;
 import com.hsd.framework.service.BaseService;
-import com.hsd.framework.util.ArithUtil;
 import com.hsd.framework.util.CommonConstant;
-import com.hsd.framework.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @FeignService
 @Slf4j
-public class AccountService extends BaseService implements IAccountService {
+public class AccountService extends FinanceBaseService implements IAccountService {
     @Autowired
     private IAccountDao accountDao;
     @Autowired
@@ -52,7 +45,6 @@ public class AccountService extends BaseService implements IAccountService {
     private IAccountLogWithdrawalDao logWithdrawalDao;
     @Autowired
     private IAccountLogDao logAccountDao;
-
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
@@ -173,14 +165,69 @@ public class AccountService extends BaseService implements IAccountService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
     public Response reverse(@RequestBody AccountReverseDto dto) throws Exception {
         Response result = new Response(0,"success");
+        //加分布式锁 同一个账户相同时间
+        Lock lock = new RedisLock(redisTemplate,"lock:account-reverse:"+dto.getId(), 60 * 1000);
         try {
             //1.判断操作类型 冲正/抵扣
-            //2.记录操作日志
-            Account entity = copyTo(dto, Account.class);
-            accountDao.reverse(entity);
+
+            //.判断业务账户种类0资金账户1黄金账户2网贷账户
+            if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
+                return Response.error("业务账户未知");
+            }
+            //.判断操作类型 冲正/抵扣
+            if("#0#1#".indexOf("#"+dto.getActionType()+"#")==-1){
+                return Response.error("操作类型未知");
+            }
+            if(lock.tryLock(50*1000)) {//加锁块
+                //TODO 获取用户资金账户绑定银行卡
+                //TODO 调用接口执行转账
+
+                //系统账户快照更新-获取指定账户信息
+                switch (dto.getBizAccountType()) {//业务账户
+                    case 0: { //0资金账户
+                        //获取原始账户信息
+                        Account entity = (Account) accountDao.selectByPrimaryKey(new Account() {{
+                            setId(dto.getId());
+                        }});
+                        entity.setFreezeMoney(dto.getAmount());
+                        break;
+                    }
+                    case 1: {//1黄金账户
+                        //AccountSubGold entity= (AccountSubGold) accountSubGoldDao.selectByPrimaryKey(new AccountSubGold(){{setId(dto.getId());}});
+                        //entity.setFreezeMoney(freezeAccount(dto.getActionType(),entity.getFreezeMoney(),dto.getAmount()));
+                        //accountSubGoldDao.freeze(entity);
+                        return Response.error("黄金账户,暂无[冲正/抵扣]功能");
+                        // break;
+                    }
+                    case 2: { //2网贷账户
+                        AccountSubLoan entity = (AccountSubLoan) accountSubLoanDao.selectByPrimaryKey(new AccountSubLoan() {{
+                            setId(dto.getId());
+                        }});
+                        entity.setFreezeMoney(dto.getAmount());
+                        break;
+                    }
+                }
+                //.记录交易日志
+                AccountLog logAccountEntity = copyTo(dto, AccountLog.class);
+                logAccountEntity.setId(idGenerator.nextId());
+                logAccountDao.insert(logAccountEntity);
+
+                //.记录操作日志
+                AccountLogOperational logOperational = copyTo(dto, AccountLogOperational.class);
+                logOperational.setId(idGenerator.nextId());
+                logOperational.setData(JSON.toJSONString(dto));
+                logOperational.setType(dto.getActionType() == 0 ? 1 : 2);//冲正/抵扣
+                logOperational.setMemo("" + (dto.getActionType() == 0 ? "[冲正]" : "[抵扣]") + dto.getAmount());
+                logOperational.setUserName(dto.getStaffName());
+                logOperational.setCreateId(dto.getCreateId());
+                logOperational.setCreateIp(dto.getIp());
+                logOperationalDao.insert(logOperational);
+            }
         } catch (Exception e) {
             log.error("账户[冲正/抵扣]异常!", e);
             throw new ServiceException(SysErrorCode.defaultError, e.getMessage());
+        }finally {
+            lock.unlock();
         }
         return result;
     }
@@ -190,7 +237,7 @@ public class AccountService extends BaseService implements IAccountService {
     public Response freeze(@RequestBody AccountFreezeDto dto) throws Exception {
         Response result = new Response(0,"success");
         //加分布式锁 同一个账户相同时间
-        Lock lock = new RedisLock("lock:account-freeze:"+dto.getId(), 60 * 1000);
+        Lock lock = new RedisLock(redisTemplate,"lock:account-freeze:"+dto.getId(), 60 * 1000);
         try {
             //.判断业务账户种类0资金账户1黄金账户2网贷账户
             if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
@@ -270,7 +317,7 @@ public class AccountService extends BaseService implements IAccountService {
     public Response recharge(@RequestBody AccountRechargeDto dto) throws Exception {
         Response result = new Response(0, "success");
         //加分布式锁 同一个账户相同时间
-        Lock lock = new RedisLock("lock:account-recharge:"+dto.getId(), 60 * 1000);
+        Lock lock = new RedisLock(redisTemplate,"lock:account-recharge:"+dto.getId(), 60 * 1000);
         try {
             //.判断业务账户种类0资金账户1黄金账户2网贷账户
             if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
@@ -331,7 +378,7 @@ public class AccountService extends BaseService implements IAccountService {
     public Response withdrawal(AccountWithdrawalDto dto) throws Exception {
         Response result = new Response(0, "success");
         //加分布式锁 同一个账户相同时间
-        Lock lock = new RedisLock("lock:account-withdrawal:"+dto.getId(), 60 * 1000);
+        Lock lock = new RedisLock(redisTemplate,"lock:account-withdrawal:"+dto.getId(), 60 * 1000);
         try {
             //.判断业务账户种类0资金账户1黄金账户2网贷账户
             if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){
@@ -397,7 +444,7 @@ public class AccountService extends BaseService implements IAccountService {
         accountLog.setId(idGenerator.nextId());
 
         //加分布式锁 同一个账户相同时间
-        Lock lock = new RedisLock("lock:account-transfer:"+dto.getId(), 60 * 1000);
+        Lock lock = new RedisLock(redisTemplate,"lock:account-transfer:"+dto.getId(), 60 * 1000);
         try {
             //.判断业务账户种类0资金账户1黄金账户2网贷账户
             if("#0#1#2#".indexOf("#"+dto.getBizAccountType()+"#")==-1){

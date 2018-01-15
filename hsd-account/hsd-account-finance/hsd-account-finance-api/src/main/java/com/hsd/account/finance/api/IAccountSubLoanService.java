@@ -49,4 +49,10 @@ public interface IAccountSubLoanService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/findDataByUserId")
     AccountSubLoanDto findDataByUserId(AccountSubLoanDto dto) throws Exception;
+
+    /**
+     * <p>开户。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/open")
+    Response open(AccountSubLoanDto dto) throws Exception;
 }

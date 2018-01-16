@@ -17,13 +17,15 @@ import org.springframework.stereotype.Component;
 public class MsgVerifyTask {
     @Autowired
     private IMsgVerifyDao msgVerifyDao;
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
     /**
      * <p>清理已过期验证码未使用信息
      */
     @Scheduled(cron = "0 0/30 * * * * ")
     public void clearVerifyExpire() {
         try {
-            Lock lock = new RedisLock("lock:clear-verify-expire", 5 * 60 * 1000);
+            Lock lock = new RedisLock(redisTemplate,"lock:clear-verify-expire", 5 * 60 * 1000);
             if (lock.tryLock(3 * 60 * 1000)) {
                 log.debug("===============清理已过期验证码未使用信息====================");
                 try {

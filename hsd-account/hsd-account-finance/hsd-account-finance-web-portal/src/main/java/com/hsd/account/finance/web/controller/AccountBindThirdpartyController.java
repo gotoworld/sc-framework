@@ -72,7 +72,7 @@ public class AccountBindThirdpartyController extends BaseController {
      * @return
      */
     @RequestMapping(method = RequestMethod.PUT, value = acPrefix + "unbindCard")
-    @ApiOperation(value = "绑卡")
+    @ApiOperation(value = "解绑")
     public Response unbindCard(@ModelAttribute AccountBindThirdpartyDto dto) {
         log.info("AccountBindThirdpartyController unbindCard.........");
         Response result = new Response(0,"success");

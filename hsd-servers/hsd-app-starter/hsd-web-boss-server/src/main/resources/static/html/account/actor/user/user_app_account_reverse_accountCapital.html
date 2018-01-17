@@ -36,21 +36,21 @@
                     <div class="clearfix "></div>
                     <div class="col-sm-6 b-r">
                         <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">用户编号：</label>
+                            <label class="col-md-5 control-label">用户账号：</label>
                             <div class="col-md-12">
-                                <label  class="form-control" >{{item.account}}</label>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-md-5 control-label">用户类别：</label>
-                            <div class="col-md-12">
-                                <label  class="form-control" >{{item.userType}}</label>
+                                <label  class="form-control" >{{userItem.account}}</label>
                             </div>
                         </div>
                         <div class="form-group clearfix">
                             <label class="col-md-5 control-label">用户姓名：</label>
                             <div class="col-md-12">
-                                <label  class="form-control" >{{item.userName}}</label>
+                                <label  class="form-control" >{{userItem.name}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">用户标签：</label>
+                            <div class="col-md-12">
+                                <label  class="form-control" >{{userItem.tags}}</label>
                             </div>
                         </div>
                     </div>
@@ -116,6 +116,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope, $compile) {
         $data = $scope;
         $ngCompile = $compile;
+        $data.userItem=JSON.parse(sessionStorage.getItem(site.user.info+'item'));
         staff.init(function () {
             if ($data.newFlag) $data.uuidToken = util.guid();
             if (sessionStorage.getItem(site.accountCapital.info) && sessionStorage.getItem(site.accountCapital.info) != 0) {

@@ -6,10 +6,13 @@ import com.hsd.account.actor.api.identity.IIdentityService;
 import com.hsd.account.actor.dto.identity.IdentityDto;
 import com.hsd.account.finance.api.IAccountSubGoldService;
 import com.hsd.account.finance.dao.IAccountDao;
+import com.hsd.account.finance.dao.IAccountLogDao;
 import com.hsd.account.finance.dao.IAccountSubGoldDao;
 import com.hsd.account.finance.dao.IAccountTypeDao;
+import com.hsd.account.finance.dto.AccountLogDto;
 import com.hsd.account.finance.dto.AccountSubGoldDto;
 import com.hsd.account.finance.entity.Account;
+import com.hsd.account.finance.entity.AccountLog;
 import com.hsd.account.finance.entity.AccountSubGold;
 import com.hsd.account.finance.entity.AccountType;
 import com.hsd.framework.Response;
@@ -23,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;
@@ -40,6 +44,9 @@ public class AccountSubGoldService extends FinanceBaseService implements IAccoun
 
     @Autowired
     private IAccountDao accountDao;
+
+    @Autowired
+    private IAccountLogDao accountLogDao;
 
     @Autowired
     private IAccountTypeDao accountTypeDao;
@@ -195,4 +202,128 @@ public class AccountSubGoldService extends FinanceBaseService implements IAccoun
             }
             return result;
         }
+
+        @Override
+        @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+        public Response buyIn(@RequestBody AccountLogDto dto) throws Exception {
+            Response result = new Response(0,"success");
+            int transactionState = 1;
+            try {
+                Long userId = dto.getAppUserId();
+                Long accountType = dto.getOpAccountType();
+                Long subAccountType = dto.getOpAccountSubType();
+                AccountSubGold accountSubGold = new AccountSubGold();
+                accountSubGold.setUserId(userId);
+                accountSubGold.setType(subAccountType);
+                AccountSubGold accountSubGoldR =  accountSubGoldDao.selectByUserId(accountSubGold);
+                if(accountSubGoldR == null){
+                    result = Response.error("账户未找到，请先开通账户!");
+                    return result;
+                }
+                if(accountSubGoldR.getState() != 0){
+                    result = Response.error("账户当前状态不能进行买入!");
+                    return result;
+                }
+                Account account = new Account();
+                account.setAppUserId(userId);
+                account.setAccountType(accountType);
+                List<Account> accounts = accountDao.selectAccount(account);
+                if(CollectionUtils.isEmpty(accounts)){
+                    result = Response.error("资金账户未找到!");
+                    return result;
+                }
+                Account accountr = null;
+                for(Account accountTemp : accounts){
+                    if(accountTemp.getState() == 0){
+                        accountr = accountTemp;
+                        break;
+                    }
+                }
+                if(accountr == null){
+                    result = Response.error("资金账户当前状态不能进行买入!");
+                    return result;
+                }
+                //银行扣款
+                accountSubGoldR.setTotalGold(dto.getAmount());
+                if (accountSubGoldDao.recharge(accountSubGoldR) == 0) return Response.error("未找到黄金账户或账户状态不正常!");
+                transactionState = 0;
+            } catch (Exception e) {
+                transactionState = 1;
+                log.error("信息保存异常!", e);
+                result = Response.error("交易失败!");
+                throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+            }
+            finally {
+                Long id = idGenerator.nextId();
+                AccountLog accountLog = copyTo(dto, AccountLog.class);
+                accountLog.setId(id);
+                accountLog.setState(transactionState);
+                accountLog.setMemo(result.getMessage());
+                accountLogDao.insert(accountLog);
+            }
+            return result;
+        }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = CommonConstant.DB_DEFAULT_TIMEOUT, rollbackFor = {Exception.class, RuntimeException.class})
+    public Response buyOut(AccountLogDto dto) throws Exception {
+        Response result = new Response(0,"success");
+        int transactionState = 1;
+        try {
+            Long userId = dto.getAppUserId();
+            Long accountType = dto.getOpAccountType();
+            Long subAccountType = dto.getOpAccountSubType();
+            AccountSubGold accountSubGold = new AccountSubGold();
+            accountSubGold.setUserId(userId);
+            accountSubGold.setType(subAccountType);
+            AccountSubGold accountSubGoldR =  accountSubGoldDao.selectByUserId(accountSubGold);
+            if(accountSubGoldR == null){
+                result = Response.error("账户未找到，请先开通账户!");
+                return result;
+            }
+            if(accountSubGoldR.getState() != 0){
+                result = Response.error("账户当前状态不能进行卖出!");
+                return result;
+            }
+            Account account = new Account();
+            account.setAppUserId(userId);
+            account.setAccountType(accountType);
+            List<Account> accounts = accountDao.selectAccount(account);
+            if(CollectionUtils.isEmpty(accounts)){
+                result = Response.error("资金账户未找到!");
+                return result;
+            }
+            Account accountr = null;
+            for(Account accountTemp : accounts){
+                if(accountTemp.getState() == 0){
+                    accountr = accountTemp;
+                    break;
+                }
+            }
+            if(accountr == null){
+                result = Response.error("资金账户当前状态不能进行卖出!");
+                return result;
+            }
+            accountSubGoldR.setTotalGold(dto.getAmount());
+            if (accountSubGoldDao.withdrawal(accountSubGoldR) == 0) return Response.error("黄金账户余额不足或账户状态不正常!");
+
+            //转钱到银行
+
+            transactionState = 0;
+        } catch (Exception e) {
+            transactionState = 1;
+            log.error("信息保存异常!", e);
+            result = Response.error("交易失败!");
+            throw new ServiceException(SysErrorCode.defaultError,e.getMessage());
+        }
+        finally {
+            Long id = idGenerator.nextId();
+            AccountLog accountLog = copyTo(dto, AccountLog.class);
+            accountLog.setId(id);
+            accountLog.setState(transactionState);
+            accountLog.setMemo(result.getMessage());
+            accountLogDao.insert(accountLog);
+        }
+        return result;
+    }
 }

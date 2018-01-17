@@ -1,21 +1,14 @@
 package com.hsd.account.finance.web.controller;
 
 import com.hsd.account.finance.api.IAccountSubGoldService;
+import com.hsd.account.finance.dto.AccountLogDto;
 import com.hsd.account.finance.dto.AccountSubGoldDto;
-import com.hsd.account.finance.dto.op.AccountTransferDto;
-import com.hsd.framework.PageUtil;
 import com.hsd.framework.Response;
-import com.hsd.framework.annotation.auth.Logical;
-import com.hsd.framework.annotation.auth.RequiresPermissions;
-import com.hsd.framework.util.CommonConstant;
 import com.hsd.framework.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -67,5 +60,37 @@ public class AccountSubGoldController extends BaseController {
         return result;
     }
 
+
+    /**
+     * <p> 买入
+     */
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "buyIn")
+    @ApiOperation(value = "买入")
+    public Response buyIn(@ModelAttribute AccountLogDto dto){
+        log.info("AccountSubGoldController buyIn.........");
+        Response result = new Response(0,"success");
+        try {
+            result = accountSubGoldService.buyIn(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * <p> 卖出
+     */
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "buyOut")
+    @ApiOperation(value = "卖出")
+    public Response buyOut(@ModelAttribute AccountLogDto dto){
+        log.info("AccountSubGoldController buyOut.........");
+        Response result = new Response(0,"success");
+        try {
+            result = accountSubGoldService.buyOut(dto);
+        } catch (Exception e) {
+            result = Response.error(e.getMessage());
+        }
+        return result;
+    }
 
 }

@@ -14,6 +14,15 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  aop:
+    auto: true
+    proxy-target-class: true
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
+    base-url: http://192.168.108.101:9411
   #rabbitmq:
     #addresses: 192.168.108.100:5672,192.168.108.101:5672,192.168.108.102:5672
     #username: user-dev
@@ -31,6 +40,30 @@ spring:
       turbine:
         clusters: default
         url: http://${spring.boot.admin.url}/turbine.stream
+#  redis:
+#    cluster:
+#      enable: false #启用redis集群
+#      #max-redirects: 3
+#      nodes: 192.168.108.100:7000,192.168.108.100:7001,192.168.108.100:7002,192.168.108.100:7003,192.168.108.100:7004,192.168.108.100:7005
+#    database: 10
+#    secondary-database: 11
+#    host: 192.168.108.101
+#    port: 6379
+##    password:
+#    timeout: 1800000
+#    idGenNodes: #host:port:luaSha@password 192.168.108.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c@AES:Jdd7GJIx8oXFqMvDfLqEVg==
+#      - 192.168.108.100:6379:c5809078fa6d652e0b0232d552a9d06d37fe819c
+#      - 192.168.108.101:6379:accb7a987d4fb0fd85c57dc5a609529f80ec3722
+#      - 192.168.108.102:6379:f55f781ca4a00a133728488e15a554c070b17255
+#    pool:
+#      max-active: 8
+#      max-total: 50
+#      max-wait-millis: 15000
+#      test-on-borrow: true
+#      max-idle: 10
+#      max-wait: -1
+#      min-idle: 0
+#    session-expire: 7200000
 
 eureka:
   user:
@@ -59,7 +92,7 @@ hsd:
     fileServer:
       rootFolder: d:/home/hsd/file/
       upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: /upload/ #http://192.168.108.100:28888/upload/
+      download: http://192.168.108.100:28890/hsd-file-server/upload/ #/upload/
       image:
         executorServiceSize: 5
         n1:

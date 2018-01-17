@@ -36,25 +36,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.hsd.framework</groupId>
-            <artifactId>hsd-framework-core</artifactId>
+            <artifactId>hsd-framework-web-restful</artifactId>
             <version>${hsd.framework.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>de.codecentric</groupId>
-                    <artifactId>spring-boot-admin-starter-client</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.ibeetl</groupId>
-                    <artifactId>beetl</artifactId>
+                    <groupId>com.hsd.framework</groupId>
+                    <artifactId>hsd-framework-cache</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

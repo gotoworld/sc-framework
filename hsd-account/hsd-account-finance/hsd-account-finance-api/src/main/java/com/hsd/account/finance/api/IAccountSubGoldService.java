@@ -1,6 +1,7 @@
 package com.hsd.account.finance.api;
 
 import com.github.pagehelper.PageInfo;
+import com.hsd.account.finance.dto.AccountLogDto;
 import com.hsd.account.finance.dto.AccountSubGoldDto;
 import com.hsd.framework.Response;
 import com.hsd.framework.config.FeignConfiguration;
@@ -55,5 +56,17 @@ public interface IAccountSubGoldService {
      */
     @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/open")
     Response open(AccountSubGoldDto dto) throws Exception;
+
+    /**
+     * <p>买入。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/buyIn")
+    Response buyIn(AccountLogDto dto) throws Exception;
+
+    /**
+     * <p>卖出。
+     */
+    @RequestMapping(method = {RequestMethod.POST},value = acPrefix + "/buyOut")
+    Response buyOut(AccountLogDto dto) throws Exception;
 
 }

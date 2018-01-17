@@ -64,7 +64,7 @@ hsd:
     fileServer:
       rootFolder: /mnt/file/
       upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: http://192.168.108.100:28890/hsd-file-server/upload/ #/upload/
+      download: http://192.168.108.199:28890/hsd-file-server/upload/ #/upload/
       image:
         executorServiceSize: 5
         n1:

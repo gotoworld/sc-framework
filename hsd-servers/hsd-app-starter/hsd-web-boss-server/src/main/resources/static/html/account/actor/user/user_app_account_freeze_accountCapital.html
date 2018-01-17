@@ -35,6 +35,26 @@
                     <div class="clearfix "></div>
                     <div class="col-sm-6 b-r">
                         <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">用户账号：</label>
+                            <div class="col-md-12">
+                                <label  class="form-control" >{{userItem.account}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">用户姓名：</label>
+                            <div class="col-md-12">
+                                <label  class="form-control" >{{userItem.name}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-md-5 control-label">用户标签：</label>
+                            <div class="col-md-12">
+                                <label  class="form-control" >{{userItem.tags}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group clearfix">
                             <label class="col-md-5 control-label">冻结类型：</label>
                             <div class="col-md-12">
                                 <select data-placeholder="冻结类型" id="bean-freezeType" name="freezeType"  class="form-control" aria-describedby="bean-freezeType-error" aria-invalid="true">
@@ -48,8 +68,6 @@
                                 <input id="bean-amount" name="amount" value="" class="form-control" type="number"  placeholder="请输入冻结金额" required="" aria-required="true" aria-invalid="true">
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
                         <div class="form-group clearfix">
                             <label class="col-md-5 control-label">外部业务编码：</label>
                             <div class="col-md-12">
@@ -98,6 +116,7 @@
     angular.module("app", ['ngSanitize']).controller("app-ctrl", function ($scope, $compile) {
         $data = $scope;
         $ngCompile = $compile;
+        $data.userItem=JSON.parse(sessionStorage.getItem(site.user.info+'item'));
         staff.init(function () {
             if ($data.newFlag) $data.uuidToken = util.guid();
             if (sessionStorage.getItem(site.accountCapital.info) && sessionStorage.getItem(site.accountCapital.info) != 0) {

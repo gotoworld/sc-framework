@@ -14,6 +14,15 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  aop:
+    auto: true
+    proxy-target-class: true
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    enabled: true
+    base-url: http://192.168.108.101:9411
   #rabbitmq:
     #addresses: 192.168.108.100:5672,192.168.108.101:5672,192.168.108.102:5672
     #username: user-dev
@@ -23,10 +32,6 @@ spring:
   boot:
     admin:
       url: http://192.168.108.100:8889
-#      client:
-#          metadata:
-#            user.name: ${security.user.name}
-#            user.password: ${security.user.password}
       routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,heapdump,loggers,auditevents,hystrix.stream
       turbine:
         clusters: default
@@ -50,17 +55,16 @@ eureka:
       enabled: true # 开启健康检查（需要spring-boot-starter-actuator依赖
 
 logging:
-  #config: ./config/logback-spring.xml
   file: "/mnt/app/${spring.application.name}/logs/log_start.log"
 
 # 自定义配置
 hsd:
   common:
-    appPrefix: pro_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
+    appPrefix: dev_   #指定app前缀（开发中可使用IP），系统在队列名、Cache名等前会自动加上前缀，以便不同环境冲突
     fileServer:
       rootFolder: /mnt/file/
       upload: ${hsd.common.fileServer.rootFolder}upload/
-      download: http://192.168.108.100:28888/upload/
+      download: http://192.168.108.100:28890/hsd-file-server/upload/ #/upload/
       image:
         executorServiceSize: 5
         n1:

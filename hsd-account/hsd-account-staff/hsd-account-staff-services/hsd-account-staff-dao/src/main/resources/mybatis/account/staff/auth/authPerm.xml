@@ -136,7 +136,8 @@
                 DISTINCT(t1.match_str) as "matchStr"
                 from auth_perm t1
                 inner join auth_role_vs_perm t4 on (t1.id=t4.perm_id)
-                inner join org_org_vs_role t2 on (t2.role_id=t2.role_id)
+                inner join auth_role t5 on (t5.id=t4.role_id and t5.del_flag=0)
+                inner join org_org_vs_role t2 on (t2.role_id=t4.role_id)
                 inner join org_org_vs_staff t3 on (t2.org_id=t3.org_id and t3.staff_id=#{staffId})
                 where t1.del_flag=0  and t1.app_id=#{appId}
             </otherwise>

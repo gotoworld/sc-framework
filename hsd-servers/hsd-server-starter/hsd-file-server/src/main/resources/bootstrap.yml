@@ -1,11 +1,11 @@
 spring:
   application:
-    name: hsd-file-server
+    name: hsd-file-server #-wxg
   profiles:
     active: native
   cloud:
     config:
-      enabled: true
+      enabled: false
       uri: http://192.168.108.100:8888
       profile: dev
       label: master

@@ -54,14 +54,14 @@
         |-             |--hsd-account-channel-server                | app |   
         |-        |--hsd-account-channel-web-boss                   | a+j |   
         |-        |--hsd-account-channel-web-portal                 | a+j |   
-        |-   |--hsd-account-platform                                | pom |   父模块，不应直接使用
-        |-        |--hsd-account-platform-api                       | jar |   
-        |-        |--hsd-account-platform-services                  | pom |   父模块，不应直接使用
-        |-             |--hsd-account-platform-biz                  | jar |   
-        |-             |--hsd-account-platform-dao                  | jar |   
-        |-             |--hsd-account-platform-server               | app |   
-        |-        |--hsd-account-platform-web-boss                  | a+j |   
-        |-        |--hsd-account-platform-web-portal                | a+j |   
+        |-   |--hsd-account-finance                                 | pom |   父模块，不应直接使用
+        |-        |--hsd-account-finance-api                        | jar |   
+        |-        |--hsd-account-finance-services                   | pom |   父模块，不应直接使用
+        |-             |--hsd-account-finance-biz                   | jar |   
+        |-             |--hsd-account-finance-dao                   | jar |   
+        |-             |--hsd-account-finance-server                | app |   
+        |-        |--hsd-account-finance-web-boss                   | a+j |   
+        |-        |--hsd-account-finance-web-portal                 | a+j |   
         |-   |--hsd-account-staff                                   | pom |   #员工管理# 父模块，不应直接使用
         |-        |--hsd-account-staff-api                          | jar |   
         |-        |--hsd-account-staff-services                     | pom |   父模块，不应直接使用
@@ -82,15 +82,15 @@
         |-   |--hsd-framework-service                               | jar |   数据层等依赖与配置,可直接使用
         |-   |--hsd-framework-web                                   | jar |   后端模板控制层,可直接使用
         |-   |--hsd-framework-web-restful                           | pom |   前后端分离restful控制层,可直接使用
-        |--hsd-msg                                                 | pom |   #工具服务#父模块，不应直接使用
-        |-   |--hsd-msg-sms                                        | pom |   #短信服务#父模块，不应直接使用
-        |-        |--hsd-msg-sms-api                               | pom |   
-        |-        |--hsd-msg-sms-services                          | pom |   父模块，不应直接使用
-        |-             |--hsd-msg-sms-biz                          | jar |   
-        |-             |--hsd-msg-sms-dao                          | jar |   
-        |-             |--hsd-msg-sms-server                       | app |   
-        |-        |--hsd-msg-sms-web-boss                          | a+j |   
-        |-        |--hsd-msg-sms-web-portal                        | a+j |   
+        |--hsd-msg                                                  | pom |   #工具服务#父模块，不应直接使用
+        |-   |--hsd-msg-sms                                         | pom |   #短信服务#父模块，不应直接使用
+        |-        |--hsd-msg-sms-api                                | pom |   
+        |-        |--hsd-msg-sms-services                           | pom |   父模块，不应直接使用
+        |-             |--hsd-msg-sms-biz                           | jar |   
+        |-             |--hsd-msg-sms-dao                           | jar |   
+        |-             |--hsd-msg-sms-server                        | app |   
+        |-        |--hsd-msg-sms-web-boss                           | a+j |   
+        |-        |--hsd-msg-sms-web-portal                         | a+j |   
         |--hsd-servers                                              | pom |   父模块，不应直接使用
         |-   |--hsd-eycode-server                                   | app |   #简单代码生成器#
         |-   |--hsd-app-starter                                     | pom |   #业务app集中部署#父模块，不应直接使用

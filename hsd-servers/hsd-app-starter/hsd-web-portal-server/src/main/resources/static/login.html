@@ -52,13 +52,9 @@
                         <h4 class="no-margins">欢迎登录本站</h4>
                         <h4 class="text-danger" ng-show="result.code!=0" ng-bind="result.message"></h4>
                         <input type="text" name="account" class="form-control uname" placeholder="用户名"  required=""/>
-                        <input type="hidden" name="password" id="passwordXX" />
-                        <input type="password"
-                               onkeydown="$('#passwordXX').val($.md5($(this).val()));"
-                               onchange="$('#passwordXX').val($.md5($(this).val()));"
-                               onblur="$('#passwordXX').val($.md5($(this).val()));"
-                               class="form-control pword m-b" placeholder="密码"  required=""/>
                         <input type="hidden" value="portal" name="appId"/>
+                        <input type="hidden" name="password" id="passwordXX" />
+                        <input type="password" class="form-control pword m-b" id="password" placeholder="密码"  required=""/>
                         <a href="/html/account/actor/user/findpwd.html">忘记密码了？</a>
                         <button type="submit" class="btn btn-success btn-block">登录</button>
                     </form>
@@ -88,6 +84,7 @@
         angular.module("app", []).controller("app-ctrl", function ($scope, $http) {
             $data = $scope;
             $scope.Login = function () {
+                $('#passwordXX').val($.md5($('#password').val()));
                 user.login($('#_login_form').serialize(), function () {
                     location.href = '/html/account/actor/home.html';
                 });

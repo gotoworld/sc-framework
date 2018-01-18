@@ -31,7 +31,8 @@ var tag = {
         var hasPrevious = pageInfo.pageIndex <= 1 ? false : true;
         /** 画面显示的页码数量 */
         var pageNoCount = 15;
-
+        /** 计算分页起始页 */
+        var tempPageNo=Math.ceil(currentPageNo/pageNoCount);
         // 上一页
         var prePage = "";
         if (hasPrevious) {
@@ -41,8 +42,6 @@ var tag = {
         } else {
             prePage += ("<a class=\"disabled\">上一页</a>");
         }
-
-
         // 下一页
         var nextPage = "";
         if (hasNext) {
@@ -52,17 +51,11 @@ var tag = {
         } else {
             nextPage += ("<a class=\"disabled\">下一页</a>");
         }
-
-
         // 中间页
         var midPage = "";
 
-        // 只有一页数据
-        if (pageCount == 1) {
-            midPage += ("<a class=\"on\">1</a>");
-
-            // 总页数<=显示页数
-        } else if (pageCount > 1 && pageCount <= pageNoCount) {
+        // 总页数<=显示页数
+        if (pageCount >= 1 && pageCount <= pageNoCount) {
             for (var i = 1; i <= pageCount; i++) {
                 if (currentPageNo == i) {
                     midPage += ("<a class=\"on\">" + i + "</a>");
@@ -72,84 +65,48 @@ var tag = {
                     midPage += ("</a>");
                 }
             }
-
-            // 总页数>显示页数
-        } else if (pageCount > pageNoCount) {
-
-            // 当前页数在起始显示页数内
-            if (currentPageNo <= pageNoCount) {
-                for (var i = 1; i <= pageCount; i++) {
-                    if (currentPageNo == i) {
-                        midPage += ("<a class=\"on\">" + i + "</a>");
-                    } else {
-                        midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(i) + "\">");
-                        midPage += (i);
-                        midPage += ("</a>");
-                    }
-                    if (i == pageNoCount) {
-                        // 加上...
-                        midPage += (HTML_3DOT_STRING);
-                        // 加上末页数字
-                        midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(pageInfo.pageCount) + "\">");
-                        midPage += (pageCount);
-                        midPage += ("</a>");
-                        break;
-                    }
+        } else if (pageCount > pageNoCount) {// 总页数>显示页数
+            var i = 1;
+            if(tempPageNo>=1) i=(tempPageNo-1)*pageNoCount+1;
+            var HTML_3DOT_STRING_FLAG=false;
+            for (;i <= tempPageNo*pageNoCount && i<=pageCount; i++) {
+                if(tempPageNo>1 && !HTML_3DOT_STRING_FLAG){
+                    // 加上首页数字
+                    midPage += "<a href=\"javascript:;\" ng-click=\"" + getPageFunc(1) + "\">";
+                    midPage += (1);
+                    midPage += ("</a>");
+                    // 加上...
+                    midPage += (HTML_3DOT_STRING);
+                    HTML_3DOT_STRING_FLAG=true;
                 }
-
-                // 当前页数在末页显示页数内
-            } else if (currentPageNo > (pageCount - pageNoCount)) {
-
-                // 加上首页数字
-                midPage += "<a href=\"javascript:;\" ng-click=\"" + getPageFunc(1) + "\">";
-                midPage += (1);
-                midPage += ("</a>");
-                // 加上...
-                midPage += (HTML_3DOT_STRING);
-
-                for (var i = (pageCount - pageNoCount + 1); i <= pageCount; i++) {
-                    if (currentPageNo == i) {
-                        midPage += ("<a class=\"on\">" + i + "</a>");
-                    } else {
-                        midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(i) + "\">");
-                        midPage += (i);
-                        midPage += ("</a>");
-                    }
+                if (currentPageNo == i) {
+                    midPage += ("<a class=\"on\">" + i + "</a>");
+                } else {
+                    midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(i) + "\">");
+                    midPage += (i);
+                    midPage += ("</a>");
                 }
-            } else {
-                // 加上首页数字
-                midPage += "<a href=\"javascript:;\" ng-click=\"" + getPageFunc(1) + "\">";
-                midPage += (1);
-                midPage += ("</a>");
-                // 加上...
-                midPage += (HTML_3DOT_STRING);
-                for (var i = currentPageNo; i < (currentPageNo + pageNoCount); i++) {
-                    if (currentPageNo == i) {
-                        midPage += ("<a class=\"on\">" + i + "</a>");
-                    } else {
-                        midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(i) + "\">");
-                        midPage += (i);
-                        midPage += ("</a>");
-                    }
+                if (i == tempPageNo*pageNoCount) {
+                    // 加上...
+                    midPage += (HTML_3DOT_STRING);
+                    // 加上末页数字
+                    midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(pageInfo.pageCount) + "\">");
+                    midPage += (pageCount);
+                    midPage += ("</a>");
+                    break;
                 }
-                // 加上...
-                midPage += (HTML_3DOT_STRING);
-                // 加上末页数字
-                midPage += ("<a href=\"javascript:;\" ng-click=\"" + getPageFunc(pageInfo.pageCount) + "\">");
-                midPage += (pageCount);
-                midPage += ("</a>");
             }
-            // 没有数据
-        } else {
+        } else { // 没有数据
             midPage += HTML_3DOT_STRING;
         }
         // 汇总输出
         var pageCom = "";
+        pageCom += ("<a class=\"disabled\">共" + dataCount + "条</a>");
         // pageCom += ("<div class=\"b_page\">");
         pageCom += (prePage);
         pageCom += (midPage);
         pageCom += (nextPage);
-        pageCom += ("<a class=\"disabled\">共" + dataCount + "条</a>");
+        pageCom += ("<a class=\"disabled\">共" + pageInfo.pageCount+"页</a>");
         pageCom += ("<div class=\"clear\"></div>");
         // pageCom += ("</div>");
 

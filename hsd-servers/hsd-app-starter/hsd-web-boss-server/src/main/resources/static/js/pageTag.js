@@ -31,7 +31,8 @@ var tag = {
         var hasPrevious = pageInfo.pageIndex <= 1 ? false : true;
         /** 画面显示的页码数量 */
         var pageNoCount = 15;
-
+        /** 计算分页起始页 */
+        var tempPageNo=Math.ceil(currentPageNo/pageNoCount);
         // 上一页
         var prePage = "";
         if (hasPrevious) {
@@ -41,8 +42,6 @@ var tag = {
         } else {
             prePage += ("<a class=\"disabled\">上一页</a>");
         }
-
-
         // 下一页
         var nextPage = "";
         if (hasNext) {
@@ -52,11 +51,6 @@ var tag = {
         } else {
             nextPage += ("<a class=\"disabled\">下一页</a>");
         }
-        var tempPageCount=Math.ceil(pageCount/pageNoCount);
-        var tempPageNo=Math.ceil(currentPageNo/pageNoCount);
-        console.info(tempPageCount)//分页条变化次数
-        console.info(tempPageNo)//分页条变化次数
-
         // 中间页
         var midPage = "";
 

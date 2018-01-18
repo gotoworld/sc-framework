@@ -23,16 +23,17 @@ public class AccountSubLoanController extends BaseController {
     /**
      * <p> 信息详情。
      */
-    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info/{userId}")
+    @RequestMapping(method = RequestMethod.GET, value = acPrefix + "info")
     @ApiOperation(value = "信息详情")
-    public Response info(@PathVariable("userId") Long userId) {
+    public Response info(@RequestParam Long userId,@RequestParam Long accountType) {
         log.info("AccountSubLoanController info.........");
         Response result = new Response();
         try {
             AccountSubLoanDto dto = new AccountSubLoanDto(){{
                 setAppUserId(userId);
+                setAccountType(accountType);
             }};
-            result.data = accountSubLoanService.findDataById(dto);
+            result.data = accountSubLoanService.findDataByUserId(dto);
         } catch (Exception e) {
             result = Response.error(e.getMessage());
         }
@@ -42,9 +43,9 @@ public class AccountSubLoanController extends BaseController {
     /**
      * <p> 开户信息保存
      */
-    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "open/{userId}")
+    @RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "open")
     @ApiOperation(value = "信息保存")
-    public Response open(@PathVariable("userId") Long userId, @RequestParam Long accountType) {
+    public Response open(@RequestParam Long userId, @RequestParam Long accountType) {
         log.info("AccountSubLoanController open.........");
         Response result = new Response(0,"success");
         try {

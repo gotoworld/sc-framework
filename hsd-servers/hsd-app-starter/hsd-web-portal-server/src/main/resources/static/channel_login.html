@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>demo</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <style>
+        .modal-dialog{top:20%;}
+    </style>
+</head>
+
+<body class="gray-bg top-navigation ng-cloak" ng-controller="app-ctrl" ng-cloak>
+<div class="fixed-sidebar border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation" style="width: 1330px;background: #ffffff;margin: 0px auto;">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <label class="navbar-brand" style="margin-bottom: 0px;">DEMO</label>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a aria-expanded="false" role="button" href="/index.html"> 首页</a>
+                </li>
+                <li class="">
+                    <a aria-expanded="false" role="button" href="#"> 关于我们</a>
+                </li>
+                <li class="">
+                    <a aria-expanded="false" role="button" href="#"> 安全保障</a>
+                </li>
+                <li class="">
+                    <a aria-expanded="false" role="button" href="#"> 渠道数据</a>
+                </li>
+                <li class="">
+                    <a aria-expanded="false" role="button" href="#"> 运营报告</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a ng-show="!util.notEmpty(channelInfoUser.account)" data-toggle="modal" href="/index.html#channel-form">
+                        <i class="fa fa-sign-in"></i> 渠道商登录
+                    </a>
+                    <a ng-show="util.notEmpty(channelInfoUser.account)" aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user-secret"></i>我的账户 <span class="caret"></span>
+                    </a>
+                    <ul ng-show="util.notEmpty(channelInfoUser.account)" role="menu" class="dropdown-menu">
+                        <li><a href="/html/account/channel/home.html">我的投资</a> </li>
+                        <li><a href="/html/account/channel/home.html">我的借款</a> </li>
+                        <li><a href="/html/account/channel/home.html">资金明细</a> </li>
+                        <li><a href="#" ng-click="channel.logout()">安全退出 <i class="fa fa-sign-out"></i> </a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="wrapper" style="width: 1330px;background: #ffffff;margin: 10px auto;height: 1200px;">
+    <div class="" style="margin: 10px 30px 0px 30px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="row   white-bg dashboard-header">
+                        <div class="col-sm-12">
+                            <blockquote class="text-warning" style="font-size:14px">
+                                <h4 class="text-danger">渠道商首页</h4>
+                            </blockquote>
+                            <hr>
+                        </div>
+                        <div class="col-sm-12">
+                            <h2>..</h2>
+                            <div style="min-height:600px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="pull-right">
+        By：demo
+    </div>
+    <div>
+        <strong>Copyright</strong> demo &copy; 2017
+    </div>
+</div>
+<div id="channel-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6 b-r">
+                        <h3 class="m-t-none m-b">欢迎登录本站</h3>
+                        <h4 class="text-danger" ng-show="result.code!=0" ng-bind="result.message"></h4>
+                        <form id="channel-login"  ng-submit="channelLogin()">
+                            <div class="form-group">
+                                <label>渠道商账号：</label>
+                                <input type="text" name="account" placeholder="请输入渠道商账号" class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>密码：</label>
+                                <input type="hidden" name="pwd" id="pwdA" />
+                                <input type="password" placeholder="请输入密码"  id="password" class="form-control" required="">
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                    <strong>登录</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="/plugins/hplus/js/jquery.min.js?v=2.1.4"></script>
+<script src="/plugins/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<!-- 自定义js -->
+<!--<script src="/plugins/hplus/js/content.js?v=1.0.0"></script>-->
+<!--<script src="/plugins/hplus/js/plugins/iCheck/icheck.min.js"></script>-->
+
+
+<script type="text/javascript" src="/js/jQuery.md5.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/channel-common.js"></script>
+<script type="text/javascript">
+    angular.module("app", []).controller("app-ctrl", function ($scope) {
+        $data = $scope;
+        $data.util = util;
+        $data.channel = channel;
+        channel.info(function(){});
+        $scope.channelLogin = function () {
+            $('#pwdA').val($.md5($('#password').val()));
+            channel.login($('#channel-login').serialize(), function () {
+                location.href = '/html/account/channel/home.html';
+            });
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -80,12 +80,12 @@ public class JwtFilter implements Filter {
                 }
                 chain.doFilter(request, response);
             } catch (final SignatureException e) {
-                WebUtil.sendJson(httpServletResponse, Response.error(403, "gt签名验证失败!" + e.getMessage()));
+                WebUtil.sendJson(httpServletResponse, Response.error(403, "gt签名验证失败!"));
             } catch (ExpiredJwtException e) {
-                WebUtil.sendJson(httpServletResponse, Response.error(403, "gt授权过期!" + e.getMessage()));
+                WebUtil.sendJson(httpServletResponse, Response.error(403, "gt授权过期!"));
             } catch (Throwable e) {
                 log.error("授权检查异常", e);
-                WebUtil.sendJson(httpServletResponse, Response.error(403, "gt授权检查异常!" + e.getMessage()));
+                WebUtil.sendJson(httpServletResponse, Response.error(403, "gt授权检查异常!"));
             }
         }
     }

@@ -108,12 +108,14 @@ public class RedisConfig extends CachingConfigurerSupport {
 			redisConnectionFactory=new JedisConnectionFactory(jedisPoolConfig());
 			redisConnectionFactory.setDatabase(redisProperties.getSecondaryDatabase());
 			redisConnectionFactory.setHostName(redisProperties.getHost());
-			redisConnectionFactory.setTimeout(redisProperties.getTimeout());
 			redisConnectionFactory.setPort(redisProperties.getPort());
-			redisConnectionFactory.afterPropertiesSet();
+			redisConnectionFactory.setTimeout(redisProperties.getTimeout());
 		}
 		if(ValidatorUtil.notEmpty(redisProperties.getPassword())){
 			redisConnectionFactory.setPassword(AppConfig.checkPassword(redisProperties.getPassword()));
+		}
+		if(!redisProperties().getCluster().isEnable()){
+			redisConnectionFactory.afterPropertiesSet();
 		}
 		return redisConnectionFactory;
 	}

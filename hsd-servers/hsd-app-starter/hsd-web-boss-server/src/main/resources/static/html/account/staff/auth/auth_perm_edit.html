@@ -12,7 +12,9 @@
 <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
 <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
-<link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/plugins/hplus/css/plugins/jsTree/style.min.css" rel="stylesheet">
+
+    <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
 
 <link href="/plugins/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
 <link href="/plugins/hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
@@ -80,14 +82,16 @@
 
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择父级节点--</label>
-                            <div class="col-md-12" style="height: 400px;overflow-y: scroll;">
+                            <div class="col-md-12"  id="jstree1" style="height: 400px;overflow-y: scroll;">
                                 <ul>
-                                    <li>
+                                    <li class="jstree-open">
                                         <label ng-style="item.parentId==null||item.parentId==''?{color:'red'}:''"><input type="radio" name="parentId" value="" ng-checked="item.parentId==null||item.parentId==''">根节点</label>
-                                    </li>
-                                    <li ng-repeat="t in nodes">
-                                        <label ng-style="item.parentId==t.id?{color:'red'}:''"><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
-                                        <ul ng-include="'../tree_radio.html'" ng-init="child=t.nodes;parentId=item.parentId;_self_id=item.id;name='parentId'"></ul>
+                                        <ul>
+                                            <li ng-repeat="t in nodes" class="{{t.nodes && t.nodes.length>0?'jstree-open':''}}">
+                                                <label ng-style="item.parentId==t.id?{color:'red'}:''"><input ng-if="item.id!=t.id" type="radio" name="parentId" ng-value="t.id" ng-checked="item.parentId==t.id">{{t.name}}</label>
+                                                <ul ng-include="'../tree_radio.html'" ng-init="child=t.nodes;_self_id=item.id;name='parentId'"></ul>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                                 <span id="bean-parentId-error" class="help-block m-b-none"></span>
@@ -118,6 +122,7 @@
 <script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 <script src="/plugins/layer/layer.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/global.js"></script>
+<script src="/plugins/hplus/js/plugins/jsTree/jstree.min.js"></script>
 
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
@@ -182,6 +187,22 @@
                 alert(result.message);
             }
             if(!$data.$$phase) $data.$apply();
+            setTimeout(function(){
+                $('#jstree1').jstree({
+                    'core': {
+                        'check_callback': false
+                    },
+                    'plugins': ['types'],
+                    'types': {
+                        'default': {
+                            'icon': 'none'
+                        },
+                    }
+                }).bind("select_node.jstree", function (event, data) {
+                    $('#'+data.node.id+'_anchor').removeClass("jstree-clicked");
+                    $('#'+data.node.id+'_anchor input:not(:checked)').prop("checked", true);
+                });
+            },50);
         }, 'json');
     }
     function loadAppList(){

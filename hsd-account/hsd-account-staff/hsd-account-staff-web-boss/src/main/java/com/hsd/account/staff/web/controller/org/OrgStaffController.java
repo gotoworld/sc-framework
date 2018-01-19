@@ -445,7 +445,6 @@ public class OrgStaffController extends BaseController {
 	}
 	@RequiresPermissions("orgStaff:menu")
 	@RequestMapping(method={RequestMethod.GET,RequestMethod.POST},value = acPrefix + "get/leadership/{staffId}")
-	@ALogOperation(type = "获取上级领导", desc = "组织架构_员工")
 	@ApiOperation(value = "获取上级领导")
 	public Response getLeadership(@PathVariable("staffId") Long staffId) {
 		log.info("OrgStaffController getLeadership.........");

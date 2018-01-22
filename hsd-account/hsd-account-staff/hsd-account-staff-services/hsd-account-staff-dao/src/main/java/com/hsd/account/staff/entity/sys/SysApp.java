@@ -17,9 +17,9 @@ public class SysApp extends BaseEntity {
      private String id;
      /**系统名称*/
      private String name;
-     /**主页登链*/
-     private String loginUrl;
      /**登录链接*/
+     private String loginUrl;
+     /**主页登链*/
      private String mainUrl;
      /**备注*/
      private String memo;

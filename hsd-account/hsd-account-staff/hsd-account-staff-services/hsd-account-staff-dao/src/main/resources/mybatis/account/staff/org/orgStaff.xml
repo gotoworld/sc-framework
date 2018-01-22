@@ -80,7 +80,7 @@
             ,#{t.cellphone}
             ,#{t.avatar}
             ,#{t.email}
-            ,#{t.type}
+            ,0
             ,null
             ,0
             ,#{t.state}
@@ -135,7 +135,7 @@
         ,#{cellphone}
         ,#{avatar}
         ,#{email}
-        ,#{type}
+        ,0
         ,null
         ,0
         ,#{state}
@@ -162,7 +162,7 @@
         <if test="cellphone!=null">,cellphone = #{cellphone}</if>
         <if test="avatar!=null">,avatar = #{avatar}</if>
         <if test="email!=null">,email = #{email}</if>
-        <if test="type!=null">,type = #{type}</if>
+        <!--<if test="type!=null">,type = #{type}</if>-->
         <if test="state!=null">,state = #{state}</if>
         <if test="effDate!=null">,eff_date = #{effDate}</if>
         <if test="expDate!=null">,exp_date = #{expDate}</if>

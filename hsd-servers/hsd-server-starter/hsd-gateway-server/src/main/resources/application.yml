@@ -159,8 +159,8 @@ hsd:
       forceOffline: 凭证已被强制吊销！
       tokenExpire: 您的授权已失效或已在其它地方登录!
     excludeUrlPatterns:
-      - /hsd-account-staff-web-boss/boss/account/staff/sign/*
-      - /hsd-account-channel-web-portal/api/account/channel/sign/*
-      - /hsd-account-actor-web-portal/api/account/actor/findpwd/*
-      - /hsd-account-actor-web-portal/api/account/actor/sign/*
-      - /hsd-account-actor-web-portal/api/account/actor/register/*
+      - /hsd-account-staff-web-boss/boss/account/staff/sign/**
+      - /hsd-account-channel-web-portal/api/account/channel/sign/**
+      - /hsd-account-actor-web-portal/api/account/actor/findpwd/**
+      - /hsd-account-actor-web-portal/api/account/actor/sign/**
+      - /hsd-account-actor-web-portal/api/account/actor/register/**

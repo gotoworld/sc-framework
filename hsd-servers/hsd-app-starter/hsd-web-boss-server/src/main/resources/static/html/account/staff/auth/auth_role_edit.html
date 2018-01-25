@@ -12,7 +12,7 @@
 <link href="/plugins/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="/plugins/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
 <link href="/plugins/hplus/css/animate.css" rel="stylesheet">
-<link href="/plugins/hplus/css/plugins/jsTree/style.min.css" rel="stylesheet">
+<link href="/plugins/hplus/css/plugins/jquery-treeview/jquery.treeview.css" rel="stylesheet" />
 
 <link href="/plugins/hplus/css/style.css?v=4.1.0" rel="stylesheet">
 
@@ -63,10 +63,10 @@
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择角色功能--</label>
                             <div class="col-md-12" id="permNodesTree" style="height: 400px;overflow-y: scroll;">
-                                <ul>
-                                    <li ng-repeat="t in permNodes" class="{{t.nodes && t.nodes.length>0?'jstree-open':''}}">
+                                <ul  class="treeview-gray treeview">
+                                    <li ng-repeat="t in permNodes" class="{{t.nodes && t.nodes.length>0?'open':''}}">
                                         <label ng-style="checkPermId(t.id)?{color:'red'}:''"><input type="checkbox" name="permIds" ng-value="t.id" ng-checked="checkPermId(t.id)"  ng-click="checkChildPermId($event)">{{t.name}}</label>
-                                        <ul ng-include="'tree_checkbox_role_vs_perm.html'" ng-init="child=t.nodes;name='permIds'"></ul>
+                                        <ul ng-if="t.nodes && t.nodes.length>0" ng-include="'tree_checkbox_role_vs_perm.html'" ng-init="child=t.nodes;name='permIds'"></ul>
                                     </li>
                                 </ul>
                             </div>
@@ -77,10 +77,10 @@
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择角色菜单--</label>
                             <div class="col-md-12" id="menuNodesTree" style="height: 400px;overflow-y: scroll;">
-                                <ul>
-                                    <li ng-repeat="t in menuNodes" class="{{t.nodes && t.nodes.length>0?'jstree-open':''}}">
+                                <ul  class="treeview-gray treeview">
+                                    <li ng-repeat="t in menuNodes" class="{{t.nodes && t.nodes.length>0?'open':''}}">
                                         <label ng-style="checkMenuId(t.id)?{color:'red'}:''"><input type="checkbox" name="menuIds" ng-value="t.id" ng-checked="checkMenuId(t.id)" ng-click="checkChildMenuId($event)">{{t.name}}</label>
-                                        <ul ng-include="'tree_checkbox_role_vs_menu.html'" ng-init="child=t.nodes;name='menuIds'"></ul>
+                                        <ul ng-if="t.nodes && t.nodes.length>0" ng-include="'tree_checkbox_role_vs_menu.html'" ng-init="child=t.nodes;name='menuIds'"></ul>
                                     </li>
                                 </ul>
                             </div>
@@ -90,8 +90,8 @@
                         <div class="form-group clearfix" >
                             <label class="col-md-12 control-label">--请选择角色应用--</label>
                             <div class="col-md-12" id="appNodesTree" style="height: 400px;overflow-y: scroll;">
-                                <ul>
-                                    <li ng-repeat="t in appNodes" class="{{t.nodes && t.nodes.length>0?'jstree-open':''}}">
+                                <ul class="treeview-gray treeview">
+                                    <li ng-repeat="t in appNodes">
                                         <label ng-style="checkAppId(t.id)?{color:'red'}:''"><input type="checkbox" name="appIds" ng-value="t.id" ng-checked="checkAppId(t.id)" ng-click="checkChildAppId($event)">{{t.name}}</label>
                                     </li>
                                 </ul>
@@ -122,7 +122,7 @@
 <script src="/plugins/hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 <script src="/plugins/layer/layer.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/global.js"></script>
-<script src="/plugins/hplus/js/plugins/jsTree/jstree.min.js"></script>
+<script src="/plugins/hplus/js/plugins/jquery-treeview/jquery.treeview.js" type="text/javascript"></script>
 
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
@@ -206,7 +206,7 @@
             if($(event.target).is(':checked')){
                 $(event.target).parent().parent().find('input[type=checkbox]').each(function(i){
                     if(!($scope.checkMenuId($(this).val()))){
-                        $data.roleMenuNodes.push(util.parseInt($(this).val()));
+                        $data.roleMenuNodes.push($(this).val());
                     }
                 });
             }else{
@@ -240,25 +240,7 @@
             if(!$data.$$phase) $data.$apply();
 
             setTimeout(function(){
-                $('#permNodesTree').jstree({
-                    'core': {
-                        'check_callback': false
-                    },
-                    'plugins': ['types'],//,'checkbox'
-                    'types': {
-                        'default': {
-                            'icon': 'none'
-                        },
-                    }
-                }).bind("select_node.jstree", function (event, data) {
-                   $('#'+data.node.id+'_anchor').removeClass("jstree-clicked");
-                    var checkboxObj=$('#'+data.node.id+'_anchor input');
-                    if($(checkboxObj).is(':checked')){
-                        $(checkboxObj).prop("checked", false);
-                    }else{
-                        $(checkboxObj).prop("checked", true);
-                    }
-                });
+                $('#permNodesTree').treeview();
             },50);
         }, 'json');
     }
@@ -279,25 +261,7 @@
             if(!$data.$$phase) $data.$apply();
 
             setTimeout(function(){
-                $('#rolePermNodesTree').jstree({
-                    'core': {
-                        'check_callback': false
-                    },
-                    'plugins': ['types'],
-                    'types': {
-                        'default': {
-                            'icon': 'none'
-                        },
-                    }
-                }).bind("select_node.jstree", function (event, data) {
-                    $('#'+data.node.id+'_anchor').removeClass("jstree-clicked");
-                    var checkboxObj=$('#'+data.node.id+'_anchor input');
-                    if($(checkboxObj).is(':checked')){
-                        $(checkboxObj).prop("checked", false);
-                    }else{
-                        $(checkboxObj).prop("checked", true);
-                    }
-                });
+                $('#rolePermNodesTree').treeview();
             },50);
         }, 'json');
     }
@@ -311,25 +275,7 @@
             }
             if(!$data.$$phase) $data.$apply();
             setTimeout(function(){
-                $('#menuNodesTree').jstree({
-                    'core': {
-                        'check_callback': false
-                    },
-                    'plugins': ['types'],
-                    'types': {
-                        'default': {
-                            'icon': 'none'
-                        },
-                    }
-                }).bind("select_node.jstree", function (event, data) {
-                    $('#'+data.node.id+'_anchor').removeClass("jstree-clicked");
-                    var checkboxObj=$('#'+data.node.id+'_anchor input');
-                    if($(checkboxObj).is(':checked')){
-                        $(checkboxObj).prop("checked", false);
-                    }else{
-                        $(checkboxObj).prop("checked", true);
-                    }
-                });
+                $('#menuNodesTree').treeview();
             },50);
         }, 'json');
     }
